@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { userService } from '../../../../lib/database'
+import { userService } from '../../../lib/database'
 
 export async function POST(request) {
   try {
