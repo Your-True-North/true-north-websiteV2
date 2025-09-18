@@ -1,7 +1,7 @@
-// app/api/videos/route.js
+// app/api/videos/route.ts
 import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { videoService } from '../../lib/database'
+import { videoService } from '../../lib/database.ts'
 
 export async function GET(request) {
   try {
@@ -15,10 +15,10 @@ export async function GET(request) {
       videos = await videoService.getAllVideos()
     }
 
-    return NextResponse.json({ videos })
+    return NextResponse.tson({ videos })
   } catch (error) {
     console.error('Error fetching videos:', error)
-    return NextResponse.json(
+    return NextResponse.tson(
       { error: 'Failed to fetch videos' },
       { status: 500 }
     )
@@ -30,7 +30,7 @@ export async function POST(request) {
     // Check authentication and admin role
     const authHeader = request.headers.get('authorization')
     if (!authHeader) {
-      return NextResponse.json(
+      return NextResponse.tson(
         { error: 'Authentication required' },
         { status: 401 }
       )
@@ -40,28 +40,28 @@ export async function POST(request) {
     const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET || 'your-secret-key')
     
     if (decoded.role !== 'admin') {
-      return NextResponse.json(
+      return NextResponse.tson(
         { error: 'Admin access required' },
         { status: 403 }
       )
     }
 
-    const videoData = await request.json()
+    const videoData = await request.tson()
     
     // Validate required fields
     if (!videoData.title || !videoData.youtubeUrl || !videoData.category) {
-      return NextResponse.json(
+      return NextResponse.tson(
         { error: 'Title, YouTube URL, and category are required' },
         { status: 400 }
       )
     }
 
     const video = await videoService.createVideo(videoData)
-    return NextResponse.json({ success: true, video })
+    return NextResponse.tson({ success: true, video })
 
   } catch (error) {
     console.error('Error creating video:', error)
-    return NextResponse.json(
+    return NextResponse.tson(
       { error: 'Failed to create video' },
       { status: 500 }
     )

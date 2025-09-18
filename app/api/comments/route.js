@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { commentService } from '../../lib/database'
+import { commentService } from '../../lib/database.ts'
 
 export async function GET(request) {
   try {
@@ -8,29 +8,29 @@ export async function GET(request) {
     const videoId = searchParams.get('videoId')
     
     if (!videoId) {
-      return NextResponse.json({ error: 'Video ID required' }, { status: 400 })
+      return NextResponse.tson({ error: 'Video ID required' }, { status: 400 })
     }
 
     const comments = await commentService.getComments(videoId)
-    return NextResponse.json({ comments })
+    return NextResponse.tson({ comments })
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch comments' }, { status: 500 })
+    return NextResponse.tson({ error: 'Failed to fetch comments' }, { status: 500 })
   }
 }
 
 export async function POST(request) {
   try {
-    const { videoId, content, token } = await request.json()
+    const { videoId, content, token } = await request.tson()
     
     if (!token) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+      return NextResponse.tson({ error: 'Authentication required' }, { status: 401 })
     }
 
     const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET)
     const comment = await commentService.createComment(videoId, decoded.userId, content)
     
-    return NextResponse.json({ comment })
+    return NextResponse.tson({ comment })
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create comment' }, { status: 500 })
+    return NextResponse.tson({ error: 'Failed to create comment' }, { status: 500 })
   }
 }

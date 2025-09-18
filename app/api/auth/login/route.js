@@ -1,15 +1,15 @@
-// app/api/auth/login/route.js
+// app/api/auth/login/route.ts
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { userService } from '../../../lib/database'
+import { userService } from '../../../lib/database.ts'
 
 export async function POST(request) {
   try {
-    const { email, password } = await request.json()
+    const { email, password } = await request.tson()
 
     if (!email || !password) {
-      return NextResponse.json(
+      return NextResponse.tson(
         { error: 'Email and password are required' },
         { status: 400 }
       )
@@ -19,7 +19,7 @@ export async function POST(request) {
     const user = await userService.findByEmail(email)
     
     if (!user) {
-      return NextResponse.json(
+      return NextResponse.tson(
         { error: 'Invalid credentials' },
         { status: 401 }
       )
@@ -27,7 +27,7 @@ export async function POST(request) {
 
     // Check if user is active
     if (!user.isActive) {
-      return NextResponse.json(
+      return NextResponse.tson(
         { error: 'Account is inactive. Please contact support.' },
         { status: 401 }
       )
@@ -37,7 +37,7 @@ export async function POST(request) {
     const isValidPassword = await bcrypt.compare(password, user.password)
     
     if (!isValidPassword) {
-      return NextResponse.json(
+      return NextResponse.tson(
         { error: 'Invalid credentials' },
         { status: 401 }
       )
@@ -71,7 +71,7 @@ export async function POST(request) {
       joinDate: user.joinDate
     }
 
-    return NextResponse.json({
+    return NextResponse.tson({
       success: true,
       user: userData,
       token
@@ -79,7 +79,7 @@ export async function POST(request) {
 
   } catch (error) {
     console.error('Login error:', error)
-    return NextResponse.json(
+    return NextResponse.tson(
       { error: 'Internal server error' },
       { status: 500 }
     )

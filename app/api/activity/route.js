@@ -1,14 +1,14 @@
-// app/api/activity/route.js
+// app/api/activity/route.ts
 import { NextResponse } from 'next/server'
-import { activityService } from '../../lib/database'
+import { activityService } from '../../lib/database.ts'
 
 export async function GET() {
   try {
     const activities = await activityService.getRecentActivities(20)
-    return NextResponse.json({ activities })
+    return NextResponse.tson({ activities })
   } catch (error) {
     console.error('Error fetching activities:', error)
-    return NextResponse.json(
+    return NextResponse.tson(
       { error: 'Failed to fetch activities' },
       { status: 500 }
     )
