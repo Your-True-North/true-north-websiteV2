@@ -1,7 +1,7 @@
 // app/api/videos/[id]/route.ts
 import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { videoService } from '../../../lib/database.ts'
+import { videoService } from '../../../lib/database'
 
 export async function PUT(request, { params }) {
   try {
