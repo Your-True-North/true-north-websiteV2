@@ -1,0 +1,148 @@
+"use client";
+import { useState } from "react";
+
+const Q = [
+  { k: "regulation", q: "How regulated do you feel day‑to‑day?", a: ["Low", "Medium", "High"] },
+  { k: "clarity", q: "How clear are your priorities?", a: ["Foggy", "Somewhat", "Clear"] },
+  { k: "support", q: "What support do you want now?", a: ["Tools", "Community", "1:1 Depth"] },
+];
+
+export default function SoulMirrorQuiz() {
+  const [i, setI] = useState(0);
+  const [ans, setAns] = useState<string[]>([]);
+  if (i >= Q.length) {
+    const need = ans[2];
+    const route = need === "1:1 Depth" ? "/work#one-to-one" : need === "Community" ? "/circle" : "/library";
+    return (
+      <div className="quiz-result">
+        <p>Your next step: <a className="accent-text" href={route}>{need}</a>.</p>
+      </div>
+    );
+  }
+  return (
+    <div className="quiz">
+      <p className="h3">{Q[i].q}</p>
+      <div className="quiz-row">
+        {Q[i].a.map((opt) => (
+          <button key={opt} className="btn-secondary" onClick={() => { setAns([...ans, opt]); setI(i + 1); }}>
+            {opt}
+          </button>
+        ))}
+      </div>
+</div>
+  );
+}
+"use client";
+import { useState } from "react";
+
+const Q = [
+  { k: "regulation", q: "How regulated do you feel day‑to‑day?", a: ["Low", "Medium", "High"] },
+  { k: "clarity", q: "How clear are your priorities?", a: ["Foggy", "Somewhat", "Clear"] },
+  { k: "support", q: "What support do you want now?", a: ["Tools", "Community", "1:1 Depth"] },
+];
+
+export default function SoulMirrorQuiz() {
+  const [i, setI] = useState(0);
+  const [ans, setAns] = useState<string[]>([]);
+  if (i >= Q.length) {
+    const need = ans[2];
+    const route = need === "1:1 Depth" ? "/work#one-to-one" : need === "Community" ? "/circle" : "/library";
+    return (
+      <div className="quiz-result">
+        <p>Your next step: <a className="accent-text" href={route}>{need}</a>.</p>
+      </div>
+    );
+  }
+  return (
+    <div className="quiz">
+      <p className="h3">{Q[i].q}</p>
+      <div className="quiz-row">
+        {Q[i].a.map((opt) => (
+          <button key={opt} className="btn-secondary" onClick={() => { setAns([...ans, opt]); setI(i + 1); }}>
+            {opt}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+"use client";
+import { useState } from "react";
+
+const Q = [
+  { k: "regulation", q: "How regulated do you feel day‑to‑day?", a: ["Low", "Medium", "High"] },
+  { k: "clarity", q: "How clear are your priorities?", a: ["Foggy", "Somewhat", "Clear"] },
+  { k: "support", q: "What support do you want now?", a: ["Tools", "Community", "1:1 Depth"] },
+];
+
+export default function SoulMirrorQuiz() {
+  const [i, setI] = useState(0);
+  const [ans, setAns] = useState<string[]>([]);
+  if (i >= Q.length) {
+    const need = ans[2];
+    const route = need === "1:1 Depth" ? "/work#one-to-one" : need === "Community" ? "/circle" : "/library";
+    return (
+      <div className="quiz-result">
+        <p>Your next step: <a className="accent-text" href={route}>{need}</a>.</p>
+      </div>
+    );
+  }
+  return (
+    <div className="quiz">
+      <p className="h3">{Q[i].q}</p>
+      <div className="quiz-row">
+        {Q[i].a.map((opt) => (
+          <button key={opt} className="btn-secondary" onClick={() => { setAns([...ans, opt]); setI(i + 1); }}>
+            {opt}
+          </button>
+        ))}
+      </div>
+    </div>
+  );}}"use client";
+import { useState } from "react";
+
+const Q = [
+  { k: "regulation", q: "How regulated do you feel day‑to‑day?", a: ["Low", "Medium", "High"] },
+  { k: "clarity", q: "How clear are your priorities?", a: ["Foggy", "Somewhat", "Clear"] },
+  { k: "support", q: "What support do you want now?", a: ["Tools", "Community", "1:1 Depth"] },
+];
+
+export default function SoulMirrorQuiz() {
+  const [i, setI] = useState(0);
+  const [ans, setAns] = useState<string[]>([]);
+  if (i >= Q.length) {
+    const need = ans[2];
+    const route = need === "1:1 Depth" ? "/work#one-to-one" : need === "Community" ? "/circle" : "/library";
+    return (
+      <div className="quiz-result">
+        <p>Your next step: <a className="accent-text" href={route}>{need}</a>.</p>
+      </div>
+    );
+  }
+  return (
+    <div className="quiz">
+      <p className="h3">{Q[i].q}</p>
+      <div className="quiz-row">
+        {Q[i].a.map((opt) => (
+          <button key={opt} className="btn-secondary" onClick={() => { setAns([...ans, opt]); setI(i + 1); }}>
+            {opt}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}echo '"use client";' > app/components/SoulMirrorQuiz.tsx
+echo 'import { useState } from "react";' >> app/components/SoulMirrorQuiz.tsx
+echo '' >> app/components/SoulMirrorQuiz.tsx
+echo 'const Q = [' >> app/components/SoulMirrorQuiz.tsx
+echo '  { k: "regulation", q: "How regulated do you feel day‑to‑day?", a: ["Low", "Medium", "High"] },' >> app/components/SoulMirrorQuiz.tsx
+echo '  { k: "clarity", q: "How clear are your priorities?", a: ["Foggy", "Somewhat", "Clear"] },' >> app/components/SoulMirrorQuiz.tsx
+echo '  { k: "support", q: "What support do you want now?", a: ["Tools", "Community", "1:1 Depth"] },' >> app/components/SoulMirrorQuiz.tsx
+echo '];' >> app/components/SoulMirrorQuiz.tsx
+echo '"use client";' > app/components/SoulMirrorQuiz.tsx
+echo 'import { useState } from "react";' >> app/components/SoulMirrorQuiz.tsx
+echo '' >> app/components/SoulMirrorQuiz.tsx
+echo 'const Q = [' >> app/components/SoulMirrorQuiz.tsx
+echo '  { k: "regulation", q: "How regulated do you feel day‑to‑day?", a: ["Low", "Medium", "High"] },' >> app/components/SoulMirrorQuiz.tsx
+echo '  { k: "clarity", q: "How clear are your priorities?", a: ["Foggy", "Somewhat", "Clear"] },' >> app/components/SoulMirrorQuiz.tsx
+echo '  { k: "support", q: "What support do you want now?", a: ["Tools", "Community", "1:1 Depth"] },' >> app/components/SoulMirrorQuiz.tsx
+echo '];' >> app/components/SoulMirrorQuiz.tsx

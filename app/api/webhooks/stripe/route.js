@@ -1,0 +1,6 @@
+DATABASE_URL="your_database_connection_string_here"
+NEXTAUTH_SECRET="your_super_secret_jwt_key_here"
+SMTP_HOST=smtp.gmail.com
+SMTP_USER=mason@truenorth.com
+SMTP_PASS=your_gmail_app_password
+FROM_EMAIL=mason@truenorth.com

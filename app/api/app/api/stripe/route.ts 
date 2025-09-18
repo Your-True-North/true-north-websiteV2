@@ -1,0 +1,173 @@
+// app/api/stripe/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+})
+
+export async function POST(request: NextRequest) {
+  try {
+    const { 
+      serviceType, 
+      email, 
+      firstName, 
+      sessions = [],  // Array of session objects: [{type: 'breathwork', count: 2}, {type: 'energy_healing', count: 1}]
+      isPackage = false 
+    } = await request.json()
+
+    if (!email || !serviceType) {
+      return NextResponse.json(
+        { error: 'Email and service type are required' }, 
+        { status: 400 }
+      )
+    }
+
+    // Define pricing
+    const pricing = {
+      breathwork: 20000, // £200 in pence
+      energy_healing: 12000, // £120 in pence
+      circle_subscription: 5000 // £50/month in pence
+    }
+
+    let amount: number
+    let description: string
+    let mode: 'payment' | 'subscription' = 'payment'
+
+    // Calculate pricing based on service type
+    if (serviceType === 'circle_subscription') {
+      amount = pricing.circle_subscription
+      description = 'Circle of Return Monthly Membership'
+      mode = 'subscription'
+    } else if (serviceType === 'session_package' && isPackage) {
+      // Calculate total for mixed sessions package
+      let totalAmount = 0
+      let sessionDescriptions: string[] = []
+      let totalSessions = 0
+
+      sessions.forEach((session: {type: string, count: number}) => {
+        const sessionPrice = pricing[session.type as keyof typeof pricing] as number
+        totalAmount += sessionPrice * session.count
+        totalSessions += session.count
+        
+        if (session.type === 'breathwork') {
+          sessionDescriptions.push(`${session.count}x Breathwork Journey (120 min)`)
+        } else if (session.type === 'energy_healing') {
+          sessionDescriptions.push(`${session.count}x Energy Healing (60 min)`)
+        }
+      })
+
+      if (totalSessions !== 3) {
+        return NextResponse.json(
+          { error: 'Package must contain exactly 3 sessions' }, 
+          { status: 400 }
+        )
+      }
+
+      // Apply 15% discount
+      amount = Math.round(totalAmount * 0.85)
+      const savings = totalAmount - amount
+      description = `3-Session Package: ${sessionDescriptions.join(' + ')} - Save £${(savings / 100).toFixed(2)} (15% off)`
+    } else {
+      // Single session
+      if (serviceType === 'breathwork') {
+        amount = pricing.breathwork
+        description = 'Breathwork Journey Session (120 minutes)'
+      } else if (serviceType === 'energy_healing') {
+        amount = pricing.energy_healing
+        description = 'Energy Healing Experience (60 minutes)'
+      } else {
+        return NextResponse.json(
+          { error: 'Invalid service type' }, 
+          { status: 400 }
+        )
+      }
+    }
+
+    const baseParams = {
+      customer_email: email,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/work`,
+      metadata: {
+        serviceType,
+        email,
+        firstName: firstName || '',
+        isPackage: isPackage.toString(),
+        sessionCount: sessionCount.toString()
+      }
+    }
+
+    let session: Stripe.Checkout.Session
+
+    if (mode === 'subscription') {
+      // Create subscription for Circle of Return
+      session = await stripe.checkout.sessions.create({
+        ...baseParams,
+        mode: 'subscription',
+        line_items: [
+          {
+            price_data: {
+              currency: 'gbp',
+              product_data: {
+                name: description,
+                description: 'Monthly membership for ongoing support and community healing'
+              },
+              unit_amount: amount,
+              recurring: {
+                interval: 'month'
+              }
+            },
+            quantity: 1
+          }
+        ],
+        subscription_data: {
+          metadata: {
+            serviceType: 'circle_subscription',
+            email
+          }
+        }
+      })
+    } else {
+      // Create one-time payment for sessions
+      session = await stripe.checkout.sessions.create({
+        ...baseParams,
+        mode: 'payment',
+        line_items: [
+          {
+            price_data: {
+              currency: 'gbp',
+              product_data: {
+                name: description,
+                description: isPackage 
+                  ? `Package of ${sessionCount} sessions with 15% discount`
+                  : 'Individual session booking'
+              },
+              unit_amount: amount
+            },
+            quantity: 1
+          }
+        ],
+        payment_intent_data: {
+          metadata: {
+            serviceType,
+            email,
+            isPackage: isPackage.toString(),
+            sessionCount: sessionCount.toString()
+          }
+        }
+      })
+    }
+
+    return NextResponse.json({ 
+      sessionId: session.id,
+      url: session.url 
+    })
+
+  } catch (error) {
+    console.error('Stripe API Error:', error)
+    return NextResponse.json(
+      { error: 'Failed to create payment session. Please try again.' }, 
+      { status: 500 }
+    )
+  }
+}

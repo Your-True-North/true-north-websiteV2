@@ -1,0 +1,70 @@
+"use client";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import VeilLink from "@/app/components/VeilLink";
+import SoulMirrorQuiz from "@/app/components/SoulMirrorQuiz";
+import AskDi from "@/app/components/AskDi";
+
+export default function HomePage() {
+  return (
+    <div className="home">
+      <section className="section hero">
+        <div className="container hero-wrap">
+          <motion.h1 className="h1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            True North
+          </motion.h1>
+          <motion.p className="lead" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            Spiritual transformation that's grounded, practical, and alive. No fluff. Come home to the part of you that already knows.
+          </motion.p>
+          <div className="cta-row">
+            <VeilLink href="/circle/enter" className="btn-primary cor-link">
+              Enter the Path
+            </VeilLink>
+            <Link href="/work" className="btn-secondary">Work with Me</Link>
+          </div>
+        </div>
+        <div className="hero-stats">
+          <div className="stat"><span>15–20h/wk</span> Work Rhythm</div>
+          <div className="stat"><span>£10k+/mo</span> Consistent Flow</div>
+          <div className="stat"><span>Community</span> The Circle of Return</div>
+        </div>
+      </section>
+
+      <section className="section offers">
+        <div className="container cards">
+          <div className="card card-hover">
+            <h3 className="h3">1:1 — True North</h3>
+            <p>Deep, structured, somatic-led work. Clarity, regulation, and execution without drama.</p>
+            <Link href="/work#one-to-one" className="btn-secondary">Explore</Link>
+          </div>
+          <div className="card card-hover">
+            <h3 className="h3">The Circle of Return</h3>
+            <p>£50/month. Tools, practices, and live sessions. A steady place to grow.</p>
+            <Link href="/circle" className="btn-secondary">See Inside</Link>
+          </div>
+          <div className="card card-hover">
+            <h3 className="h3">Library — Free</h3>
+            <p>Breathwork, somatic practices, and guides. New downloads weekly.</p>
+            <Link href="/library" className="btn-secondary">Get Access</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section alt">
+        <div className="container">
+          <h2 className="h2">Soul Mirror</h2>
+          <p className="muted">A 30‑second pulse check that points you to the right next step.</p>
+          <SoulMirrorQuiz />
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container ask-di">
+          <h2 className="h2">Ask Di</h2>
+          <p className="muted">A clean channel. Ask one question. Keep it simple.</p>
+          <AskDi />
+        </div>
+      </section>
+    </div>
+  );
+}

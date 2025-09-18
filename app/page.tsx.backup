@@ -1,0 +1,377 @@
+'use client'
+import Navigation from './components/Navigation'
+import Footer from './components/Footer'
+import MysticalBackground from './components/MysticalBackground'
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
+
+export default function Home() {
+ const [shimmerPhase, setShimmerPhase] = useState(0)
+
+ useEffect(() => {
+   const interval = setInterval(() => {
+     setShimmerPhase(prev => (prev + 1) % 4)
+   }, 180000) // 3 minutes between transitions
+
+   return () => clearInterval(interval)
+ }, [])
+
+ // Subtle shimmer variations - staying in dark mystical palette
+ const shimmerThemes = [
+   // Phase 1: Deep sage shimmer
+   {
+     primary: '#9bc4b8',
+     accent: '#d4af37',
+     shimmer: 'rgba(155, 196, 184, 0.12)' // Soft sage glow
+   },
+   // Phase 2: Emerald shimmer
+   {
+     primary: '#7fb069',
+     accent: '#f4a261',
+     shimmer: 'rgba(127, 176, 105, 0.10)' // Soft emerald glow
+   },
+   // Phase 3: Teal shimmer
+   {
+     primary: '#6a994e',
+     accent: '#e76f51',
+     shimmer: 'rgba(106, 153, 78, 0.14)' // Subtle teal glow
+   },
+   // Phase 4: Return to sage
+   {
+     primary: '#8db4a8',
+     accent: '#c49c30',
+     shimmer: 'rgba(141, 180, 168, 0.08)' // Gentle sage return
+   }
+ ]
+
+ const currentTheme = shimmerThemes[shimmerPhase]
+
+ return (
+   <>
+     <style jsx global>{`
+       :root {
+         --primary: ${currentTheme.primary};
+         --accent: ${currentTheme.accent};
+         --shimmer-color: ${currentTheme.shimmer};
+       }
+       
+       /* Subtle shimmer overlay */
+       .page-container::before {
+         content: '';
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100vh;
+         background: radial-gradient(ellipse at 30% 50%, var(--shimmer-color) 0%, transparent 50%);
+         pointer-events: none;
+         z-index: 1;
+         opacity: 0.6;
+         transition: background 15s ease-in-out, opacity 15s ease-in-out;
+       }
+       
+       /* Gentle shimmer animation */
+       .shimmer-accent {
+         position: relative;
+         overflow: hidden;
+       }
+       
+       .shimmer-accent::after {
+         content: '';
+         position: absolute;
+         top: 0;
+         left: -100%;
+         width: 100%;
+         height: 100%;
+         background: linear-gradient(
+           90deg,
+           transparent 0%,
+           var(--shimmer-color) 50%,
+           transparent 100%
+         );
+         animation: shimmer 8s ease-in-out infinite;
+       }
+       
+       @keyframes shimmer {
+         0% {
+           left: -100%;
+           opacity: 0;
+         }
+         25% {
+           opacity: 0.3;
+         }
+         50% {
+           opacity: 0.5;
+         }
+         75% {
+           opacity: 0.3;
+         }
+         100% {
+           left: 100%;
+           opacity: 0;
+         }
+       }
+       
+       /* Primary color transitions - keeping dark theme */
+       .accent-text {
+         transition: color 15s ease-in-out;
+       }
+       
+       .btn-primary,
+       .btn-secondary {
+         transition: all 0.3s ease, color 15s ease-in-out, background-color 15s ease-in-out, border-color 15s ease-in-out;
+       }
+     `}</style>
+     
+     <Navigation />
+     <MysticalBackground />
+     
+     <main className="page-container">
+       {/* Hero Section - Right side image, cropped to upper half */}
+       <section className="section" style={{paddingTop: '6rem', position: 'relative', overflow: 'hidden'}}>
+         {/* Background Photo with Seamless Blend - Cropped to upper half */}
+         <div style={{
+           position: 'absolute',
+           top: 0,
+           right: 0,
+           bottom: 0,
+           width: '60%',
+           backgroundImage: 'url(/serious.jpg)',
+           backgroundSize: 'cover',
+           backgroundPosition: 'center top', // Show head/shoulders area
+           backgroundRepeat: 'no-repeat',
+           opacity: 0.2,
+           zIndex: 1,
+           clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' // Ensures clean crop
+         }}>
+           {/* Seamless blend gradient from left - same as before */}
+           <div style={{
+             position: 'absolute',
+             inset: 0,
+             background: `linear-gradient(90deg, #0a0a0b 0%, #0a0a0b 10%, rgba(10, 10, 11, 0.8) 20%, rgba(10, 10, 11, 0.4) 40%, transparent 60%)`
+           }}></div>
+         </div>
+
+         <div className="container" style={{position: 'relative', zIndex: 2}}>
+           <div style={{maxWidth: '800px'}}>
+             <div style={{
+               display: 'inline-block',
+               background: 'rgba(56, 72, 93, 0.1)',
+               border: '1px solid var(--border-primary)',
+               padding: '0.4rem 0.8rem',
+               borderRadius: '20px',
+               fontSize: '0.75rem',
+               color: 'var(--text-muted)',
+               marginBottom: '2rem',
+               backdropFilter: 'blur(10px)'
+             }}>
+               Transformational Inner Work
+             </div>
+             
+             <h1 className="h1 shimmer-accent" style={{fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', marginBottom: '1rem'}}>
+               Transform Your Pain Into <span className="accent-text">Power</span>
+             </h1>
+             
+             <p className="body-large" style={{marginBottom: '3rem', maxWidth: '600px', fontSize: '1.1rem'}}>
+               Not another coach. Not test another quick fix. This is a return — to the self you were
+               before the noise, before the performance, before you learned to shrink.
+             </p>
+             
+             <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+               <Link href="/work" className="btn-primary" style={{borderRadius: '0.3rem', padding: '0.8rem 1.5rem', fontSize: '0.95rem'}}>
+                 Start Your Journey
+                 <span>→</span>
+               </Link>
+               <Link href="/about" className="btn-secondary" style={{borderRadius: '0.3rem', padding: '0.8rem 1.5rem', fontSize: '0.95rem'}}>
+                 My Story
+               </Link>
+             </div>
+           </div>
+         </div>
+       </section>
+
+       {/* Philosophy Section */}
+       <section className="section section-alt">
+         <div className="container">
+           <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center'}}>
+             <div>
+               <h2 className="h2 shimmer-accent" style={{color: 'var(--text-primary-inverse)', fontSize: '2.5rem'}}>
+                 This work isn't about becoming someone new
+               </h2>
+               <p className="body-large" style={{marginBottom: '2rem', color: 'rgba(246, 246, 246, 0.9)', fontSize: '1.1rem'}}>
+                 It's about returning to who you were before the world told you to be different.
+               </p>
+               <p className="body" style={{color: 'rgba(246, 246, 246, 0.8)', fontSize: '1rem'}}>
+                 You weren't born to carry chaos forever. You're here to evolve. To lead.
+                 To rise through the fire. What blocks you isn't weakness — it's <em style={{color: 'var(--primary)'}}>old survival</em>,
+                 old weight, old patterns that no longer serve.
+               </p>
+             </div>
+             
+             <div className="card">
+               <blockquote style={{borderLeft: '3px solid var(--primary)', paddingLeft: '2rem'}}>
+                 <p style={{
+                   fontFamily: "'Playfair Display', serif",
+                   fontSize: '1.25rem',
+                   fontStyle: 'italic',
+                   color: 'var(--primary)',
+                   marginBottom: '1rem'
+                 }}>
+                   "Anger is a choice. Spirituality is how it feels, not how it looks."
+                 </p>
+                 <footer className="body-small">
+                   Core Principle
+                 </footer>
+               </blockquote>
+             </div>
+           </div>
+         </div>
+       </section>
+
+       {/* How We Work */}
+       <section className="section">
+         <div className="container">
+           <div style={{textAlign: 'center', marginBottom: '4rem'}}>
+             <h2 className="h2 shimmer-accent" style={{fontSize: '2.5rem'}}>How We Work</h2>
+             <p className="body-large" style={{fontSize: '1.1rem'}}>Proven methods. Raw honesty. Real transformation.</p>
+           </div>
+           
+           <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem'}}>
+             {[
+               {
+                 title: 'Somatic Therapy',
+                 subtitle: 'Body-based healing',
+                 description: 'Your body holds memories your mind has forgotten. We work through the body to heal trauma and release stuck energy.'
+               },
+               {
+                 title: 'Breathwork',
+                 subtitle: 'Ancient wisdom, modern application',
+                 description: 'Powerful breathing techniques that move energy, clear blocks, and create breakthrough moments.'
+               },
+               {
+                 title: 'Energy Work',
+                 subtitle: 'Reiki & energy healing',
+                 description: 'Working with the subtle energies that influence your emotions, thoughts, and life patterns.'
+               }
+             ].map((item, i) => (
+               <div key={i} className="card">
+                 <h3 className="h3 shimmer-accent" style={{fontSize: '1.4rem'}}>{item.title}</h3>
+                 <p className="body-small accent-text" style={{marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.8rem'}}>
+                   {item.subtitle}
+                 </p>
+                 <p className="body" style={{fontSize: '0.95rem'}}>{item.description}</p>
+               </div>
+             ))}
+           </div>
+         </div>
+       </section>
+
+       {/* Testimonials */}
+       <section className="section section-alt">
+         <div className="container">
+           <div style={{textAlign: 'center', marginBottom: '4rem'}}>
+             <h2 className="h2 shimmer-accent" style={{color: 'var(--text-primary-inverse)', fontSize: '2.5rem'}}>Those Who've Made the Return</h2>
+           </div>
+           
+           <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', maxWidth: '1000px', margin: '0 auto'}}>
+             {[
+               {
+                 title: "From Chaos to Clarity", 
+                 name: "Real Client Story",
+                 url: "https://youtube.com/shorts/7Y1upKm8bZk?si=KYoItIaSY4zuXXvE",
+                 embedId: "7Y1upKm8bZk"
+               },
+               {
+                 title: "Breaking the Cycle", 
+                 name: "Authentic Transformation",
+                 url: "https://youtube.com/shorts/ubCK70jYQDI?si=P59aEULtgACMfRvP",
+                 embedId: "ubCK70jYQDI"
+               },
+               {
+                 title: "Finding My Power", 
+                 name: "Client Journey",
+                 url: "https://youtube.com/shorts/UfbMIxlCzgM?si=gak_rQHaxbalwKeI",
+                 embedId: "UfbMIxlCzgM"
+               },
+               {
+                 title: "The Return Journey", 
+                 name: "Deep Work Results",
+                 url: "#",
+                 embedId: null
+               }
+             ].map((video, i) => (
+               <div key={i} className="card" style={{padding: '0', overflow: 'hidden'}}>
+                 <div style={{
+                   aspectRatio: '9/16',
+                   background: video.embedId ? '#000' : 'linear-gradient(135deg, var(--bg-tertiary), var(--primary))',
+                   display: 'flex',
+                   alignItems: 'center',
+                   justifyContent: 'center',
+                   position: 'relative'
+                 }}>
+                   {video.embedId ? (
+                     <iframe
+                       width="100%"
+                       height="100%"
+                       src={`https://www.youtube.com/embed/${video.embedId}`}
+                       title={video.title}
+                       frameBorder="0"
+                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                       allowFullScreen
+                       style={{border: 'none'}}
+                     />
+                   ) : (
+                     <div 
+                       onClick={() => window.open(video.url, '_blank')}
+                       style={{
+                         width: '50px',
+                         height: '50px',
+                         background: 'rgba(246, 246, 246, 0.9)',
+                         borderRadius: '50%',
+                         display: 'flex',
+                         alignItems: 'center',
+                         justifyContent: 'center',
+                         cursor: 'pointer',
+                         transition: 'transform 0.2s ease'
+                       }}
+                     >
+                       <span style={{color: 'var(--primary)', fontSize: '1rem', marginLeft: '3px'}}>▶</span>
+                     </div>
+                   )}
+                 </div>
+                 <div style={{padding: '1.5rem'}}>
+                   <h4 style={{color: 'var(--text-primary)', marginBottom: '0.5rem', fontSize: '1rem'}}>{video.title}</h4>
+                   <p className="body-small" style={{fontSize: '0.85rem'}}>{video.name}</p>
+                 </div>
+               </div>
+             ))}
+           </div>
+         </div>
+       </section>
+
+       {/* CTA Section */}
+       <section className="section">
+         <div className="container">
+           <div style={{textAlign: 'center', maxWidth: '600px', margin: '0 auto'}}>
+             <h2 className="h2 shimmer-accent" style={{fontSize: '2.5rem'}}>Ready to Begin Your Return?</h2>
+             <p className="body-large" style={{marginBottom: '3rem', fontSize: '1.1rem'}}>
+               The path isn't easy. But neither is staying where you are.
+             </p>
+             <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+               <Link href="/contact" className="btn-primary" style={{borderRadius: '0.3rem', padding: '0.8rem 1.5rem', fontSize: '0.95rem'}}>
+                 Book Discovery Call
+                 <span>→</span>
+               </Link>
+               <Link href="/library" className="btn-secondary" style={{borderRadius: '0.3rem', padding: '0.8rem 1.5rem', fontSize: '0.95rem'}}>
+                 Free Resources
+               </Link>
+             </div>
+           </div>
+         </div>
+       </section>
+     </main>
+     
+     <Footer />
+   </>
+ )
+}

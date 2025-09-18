@@ -1,0 +1,10 @@
+:root{
+  --bg:#0b0c0e;          /* deep charcoal */
+  --surface:#121417;     /* card surface */
+  --ink:#E6E6E6;         /* primary text */
+  --muted:#9aa3ad;       /* secondary text */
+  --brand:#6f7cff;       /* steel indigo */
+  --accent:#c3a46a;      /* antique gold */
+  --radius:14px;
+  --space:24px;
+}

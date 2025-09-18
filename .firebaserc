@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "true-north-6ac7f",
+    "cd ~/Downloads/truenorth-final": "true-north-6ac7f"
+  },
+  "targets": {},
+  "etags": {}
+}

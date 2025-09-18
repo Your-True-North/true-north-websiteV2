@@ -1,0 +1,84 @@
+Last login: Fri Aug 15 10:17:08 on ttys000
+mase@Mases-MacBook-Air ~ % node -v
+npm -v
+
+v22.18.0
+10.9.3
+mase@Mases-MacBook-Air ~ % pkill -f "next|node" 2>/dev/null || true
+
+cd ~/Downloads
+npx create-next-app@latest truenorth-final --ts --tailwind --eslint --app --src-dir=false --use-npm --import-alias "@/*"
+
+The directory truenorth-final contains files that could conflict:
+
+  README.md
+  app/
+  eslint.config.mjs
+  next-env.d.ts
+  next.config.ts
+  node_modules/
+  package-lock.json
+  package.json
+  postcss.config.mjs
+  public/
+  saveclip.sh
+  tailwind.config.js
+  tsconfig.json
+
+Either try using a new directory name, or remove the files listed above.
+
+mase@Mases-MacBook-Air Downloads % cd ~/Downloads/truenorth-final
+printf '#!/bin/zsh\npbpaste > "$1"\n' > saveclip.sh
+chmod +x saveclip.sh
+npm i -D @tailwindcss/typography
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; background-color:#0B0C10; color:#F6F6F4; }
+.container { @apply max-w-6xl mx-auto px-4; }
+
+/* Soft compass cursor; falls back if image is missing */
+body { cursor: url('/brand/compass-cursor.png') 16 16, auto; }
+
+a { @apply underline-offset-4 decoration-zinc-600 hover:decoration-gold; }
+h1,h2,h3 { @apply font-serif tracking-tight; }
+./saveclip.sh app/globals.css
+
+zsh: parse error near `}'
+mase@Mases-MacBook-Air Downloads % >....                                        
+        <Link href="/about" className="hover:text-gold">About</Link>
+        <Link href="/contact" className="hover:text-gold">Contact</Link>
+        <Link href="/book" className="hover:text-gold">Book</Link>      
+      </nav>                                             
+    </header>
+  )
+}            
+mkdir -p components
+./saveclip.sh components/Header.tsx
+export default function Footer() {
+  return (
+    <footer className="container py-12 text-sm text-zinc-400">    
+      <div className="border-t border-zinc-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">                                      
+        <p>© {new Date().getFullYear()} True North. All rights reserved.</p>
+        <p className="text-zinc-500">Built with honesty, discipline, and breath.</p>         
+      </div>
+    </footer>
+  )                
+}                                  
+./saveclip.sh components/Footer.tsx
+
+zsh: parse error near `\n'
+mase@Mases-MacBook-Air Downloads % echo OK
+
+OK
+mase@Mases-MacBook-Air Downloads % cd ~/Downloads/truenorth-final
+pwd
+
+/Users/mase/Downloads/truenorth-final
+mase@Mases-MacBook-Air truenorth-final % printf '#!/bin/zsh\npbpaste > "$1"\n' > saveclip.sh
+chmod +x saveclip.sh
+ls -l saveclip.sh
+./saveclip.sh tailwind.config.js
+sed -n '1,6p' tailwind.config.js
+

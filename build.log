@@ -1,0 +1,33 @@
+
+> truenorth-final@1.0.0 build
+> next build
+
+  ▲ Next.js 14.2.3
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/9) ...
+   Generating static pages (2/9) 
+   Generating static pages (4/9) 
+   Generating static pages (6/9) 
+ ✓ Generating static pages (9/9)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    152 B          87.2 kB
+├ ○ /_not-found                          871 B          87.9 kB
+├ ○ /about                               152 B          87.2 kB
+├ ○ /contact                             152 B          87.2 kB
+├ ○ /the-circle-of-return                152 B          87.2 kB
+└ ○ /work                                152 B          87.2 kB
++ First Load JS shared by all            87.1 kB
+  ├ chunks/23-3f55565a71a9d17c.js        31.6 kB
+  ├ chunks/fd9d1056-62aaf4b921c84028.js  53.6 kB
+  └ other shared chunks (total)          1.86 kB
+
+
+○  (Static)  prerendered as static content
+
