@@ -1,7 +1,7 @@
 // app/api/comments/route.js
 import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { commentService } from '../../../../lib/database'
+import { commentService } from '../../../lib/database'
 
 export async function POST(request) {
   try {
