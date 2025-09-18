@@ -1,4 +1,4 @@
-const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
+const videoService = { async getAllVideos() { return [] }, async getVideoById() { return {} }, async createVideo() { return {} }, async updateVideo() { return {} }, async deleteVideo() { return true } };const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
 const activityService = { async logActivity() { return {} } };
 const commentService = { async getComments() { return [] }, async createComment() { return {} } };
 const reactionService = { async getReactions() { return [] }, async addReaction() { return {} } };

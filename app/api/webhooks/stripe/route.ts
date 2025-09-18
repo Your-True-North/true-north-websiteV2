@@ -1,4 +1,5 @@
 const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
+const activityService = { async logActivity() { return {} } };const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
 const activityService = { async logActivity() { return {} } };// app/api/webhooks/stripe/route.ts
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
