@@ -1,6 +1,6 @@
 // app/api/activity/route.ts
 import { NextResponse } from 'next/server'
-import { activityService } from '../../lib/database'
+import { activityService } from '../lib/database'
 
 export async function GET() {
   try {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { commentService } from '../../lib/database'
+import { commentService } from '../lib/database'
 
 export async function GET(request) {
   try {
