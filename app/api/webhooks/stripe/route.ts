@@ -1,5 +1,19 @@
-const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
-const activityService = { async logActivity() { return {} } };const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
+const userService = { 
+  async createUser(userData) { 
+    const user = { id: Date.now(), ...userData, createdAt: new Date() }; 
+    console.log("Created user:", user); 
+    return user; 
+  }, 
+  async findUserByEmail(email) { return null; } 
+};
+const activityService = { 
+  async createActivity(activityData) { 
+    const activity = { id: Date.now(), ...activityData, createdAt: new Date() }; 
+    console.log("Created activity:", activity); 
+    return activity; 
+  }, 
+  async logActivity() { return {}; } 
+};
 const activityService = { async logActivity() { return {} } };// app/api/webhooks/stripe/route.ts
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
