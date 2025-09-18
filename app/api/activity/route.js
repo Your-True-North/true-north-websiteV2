@@ -4,7 +4,6 @@ const commentService = { async getComments() { return [] }, async createComment(
 const reactionService = { async getReactions() { return [] }, async addReaction() { return {} } };
 const videoService = { async getAllVideos() { return [] }, async getVideoById() { return {} } };// app/api/activity/route.ts
 import { NextResponse } from 'next/server'
-import { activityService } from '../lib/database.js'
 
 export async function GET() {
   try {

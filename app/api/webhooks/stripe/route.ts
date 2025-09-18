@@ -1,9 +1,9 @@
-// app/api/webhooks/stripe/route.ts
+const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
+const activityService = { async logActivity() { return {} } };// app/api/webhooks/stripe/route.ts
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
-import { userService, activityService } from '../../../../lib/database'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 

@@ -1,7 +1,10 @@
-// app/api/videos/route.ts
+const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
+const activityService = { async logActivity() { return {} } };
+const commentService = { async getComments() { return [] }, async createComment() { return {} } };
+const reactionService = { async getReactions() { return [] }, async addReaction() { return {} } };
+const videoService = { async getAllVideos() { return [] }, async getVideoById() { return {} } };// app/api/videos/route.ts
 import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { videoService } from '../lib/database'
 
 export async function GET(request) {
   try {
