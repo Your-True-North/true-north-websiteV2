@@ -1,9 +1,9 @@
-// app/api/webhooks/stripe/route.js
+// app/api/webhooks/stripe/route.ts
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
-import { userService, activityService } from '../../../lib/database'
+import { userService, activityService } from '../../../../lib/database'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
