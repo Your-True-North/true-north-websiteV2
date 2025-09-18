@@ -1,7 +1,7 @@
 // app/api/reactions/route.js
 import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { reactionService } from '../lib/database'
+import { reactionService } from '../lib/database.js'
 
 export async function POST(request) {
   try {
