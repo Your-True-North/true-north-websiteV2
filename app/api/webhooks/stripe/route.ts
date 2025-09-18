@@ -1,4 +1,3 @@
-const userService = { 
   async createUser(userData) { 
     const user = { id: Date.now(), ...userData, createdAt: new Date() }; 
     console.log("Created user:", user); 
