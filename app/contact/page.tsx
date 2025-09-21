@@ -112,6 +112,31 @@ export default function Contact() {
        .btn-secondary {
          transition: all 0.3s ease, color 15s ease-in-out, background-color 15s ease-in-out, border-color 15s ease-in-out;
        }
+
+       @media (max-width: 768px) {
+         .contact-grid {
+           grid-template-columns: 1fr !important;
+           gap: 2rem !important;
+         }
+         
+         .contact-form input,
+         .contact-form textarea {
+           font-size: 16px !important;
+         }
+         
+         .contact-bottom-grid {
+           grid-template-columns: 1fr !important;
+           gap: 1.5rem !important;
+         }
+         
+         .container {
+           padding: 0 1rem !important;
+         }
+         
+         .section {
+           padding-top: 6rem !important;
+         }
+       }
      `}</style>
      
      <Navigation />
@@ -127,9 +152,9 @@ export default function Contact() {
              </p>
            </div>
 
-           <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'start'}}>
+           <div className="contact-grid" style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'start'}}>
              {/* Contact Form */}
-             <div className="card">
+             <div className="card contact-form">
                <h2 className="h2 shimmer-accent">Discovery Call</h2>
                <p className="body" style={{marginBottom: '2rem'}}>
                  This isn't a sales call. It's a conversation about where you are, 
@@ -291,7 +316,7 @@ export default function Contact() {
            {/* Bottom Section */}
            <div className="card" style={{marginTop: '4rem', textAlign: 'center'}}>
              <h2 className="h2 shimmer-accent">Other Ways to Connect</h2>
-             <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
+             <div className="contact-bottom-grid" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
                <div>
                  <h4 style={{color: 'var(--primary)', marginBottom: '0.5rem'}}>Circle Waitlist</h4>
                  <p className="body-small" style={{marginBottom: '1rem'}}>
