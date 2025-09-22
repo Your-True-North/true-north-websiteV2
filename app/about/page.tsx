@@ -23,7 +23,7 @@ export default function About() {
   useEffect(() => {
     const interval = setInterval(() => {
       setShimmerPhase(prev => (prev + 1) % 4)
-    }, 180000) // 3 minutes between transitions
+    }, 180000)
 
     return () => clearInterval(interval)
   }, [])
@@ -60,7 +60,6 @@ export default function About() {
       <div className="page-container">
         <Navigation />
         
-        {/* Hero Section - Full screen on mobile */}
         <section className="section" style={{ 
           paddingTop: isMobile ? '0' : '2rem', 
           paddingBottom: isMobile ? '0' : '4rem',
@@ -69,7 +68,6 @@ export default function About() {
           display: 'flex',
           alignItems: 'center'
         }}>
-          {/* Background image */}
           <div style={{
             position: 'absolute',
             top: isMobile ? '0' : '50%',
@@ -87,7 +85,6 @@ export default function About() {
             zIndex: 1
           }} />
           
-          {/* Mobile gradient overlay */}
           {isMobile && (
             <div style={{
               position: 'absolute',
@@ -105,65 +102,70 @@ export default function About() {
             zIndex: 10,
             padding: isMobile ? '0 1rem' : undefined
           }}>
-            {/* Text overlaid on image */}
             <div style={{ 
               textAlign: 'center', 
               maxWidth: '900px', 
               margin: '0 auto'
             }}>
               <h1 className="h1" style={{ 
-                marginBottom: '2rem',
-                fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : undefined,
+                marginBottom: isMobile ? '0.5rem' : '1rem',
+                fontSize: isMobile ? 'clamp(1.8rem, 7vw, 2.5rem)' : undefined,
                 textShadow: isMobile ? '2px 2px 4px rgba(0, 0, 0, 0.7)' : undefined
               }}>
-                I am True North
+                TRUE NORTH
               </h1>
               <p className="body-large" style={{ 
-                marginBottom: '4rem',
+                marginBottom: isMobile ? '1rem' : '2rem',
+                fontSize: isMobile ? '0.85rem' : '1rem',
+                lineHeight: '1.4',
+                fontWeight: '600',
+                textShadow: isMobile ? '1px 1px 2px rgba(0, 0, 0, 0.7)' : undefined,
+                letterSpacing: '1px',
+                textTransform: 'uppercase'
+              }}>
+                Coaching, Breathwork, Energy Work, Somatic Therapy
+              </p>
+              <p className="body-large" style={{ 
+                marginBottom: isMobile ? '2rem' : '4rem',
                 fontSize: isMobile ? '1rem' : '1.3rem',
                 lineHeight: '1.6',
                 fontWeight: '400',
                 textShadow: isMobile ? '1px 1px 2px rgba(0, 0, 0, 0.7)' : undefined
               }}>
-                I hold the space where people stop pretending they're okay 
-                and safely meet and heal what's underneath
+                I'm not a guru. I'm not your therapist. I'm someone who's lived it.
               </p>
-              <Link href="/library" className="btn-primary">
-                Start Your Journey Free
+              <Link href="/work" className="btn-primary">
+                Start Your Journey
               </Link>
             </div>
           </div>
         </section>
 
-        {/* Standard card layout like other pages */}
         <section className="section section-alt">
           <div className="container">
             <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-              <h2 className="h2" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                From Darkness to Light
-              </h2>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
-                <div className="card">
-                  <h3 className="h3">The Raw Beginning</h3>
-                  <p className="body">
+              <div style={{ maxWidth: '900px', margin: '0 auto', marginBottom: '4rem' }}>
+                <div className="body-large" style={{ lineHeight: '1.8', fontSize: '1.1rem' }}>
+                  <p style={{ marginBottom: '2rem' }}>
+                    My name is Mason but I go by True North.
+                  </p>
+                  <p style={{ marginBottom: '2rem' }}>
                     <strong style={{ color: currentTheme.accent }}>Addiction. Depression. Prison. Violence.</strong><br />
-                    That was my life for years. I was stuck in a cycle of pain, trying to numb what I didn't know how to face.
+                    That was my life for years. I was stuck in a cycle of pain, and trying to numb what I didn't know how to face.
                   </p>
-                </div>
-                
-                <div className="card">
-                  <h3 className="h3">External Success, Internal Emptiness</h3>
-                  <p className="body">
+                  <p style={{ marginBottom: '2rem' }}>
                     I broke free from that world, built businesses, became a pro athlete, and on paper… I'd "made it." 
-                    But I still felt disconnected. Still felt lost.
+                    But I still felt disconnected. Still felt lost. Still carrying a weight that I couldn't name.
                   </p>
-                </div>
-                
-                <div className="card">
-                  <h3 className="h3">The Turning Point</h3>
-                  <p className="body" style={{ fontStyle: 'italic', color: currentTheme.primary }}>
-                    "So I stopped looking outward and started doing the real work."
+                  <p style={{ 
+                    fontSize: '1.2rem', 
+                    fontWeight: '600', 
+                    color: currentTheme.primary, 
+                    textAlign: 'center',
+                    padding: '2rem 0',
+                    fontStyle: 'italic'
+                  }}>
+                    So I stopped looking outward and started doing the real work.
                   </p>
                 </div>
               </div>
@@ -171,62 +173,97 @@ export default function About() {
           </div>
         </section>
 
-        {/* The Journey */}
         <section className="section">
           <div className="container">
-            <h2 className="h2" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              The Journey Inward
-            </h2>
-            
             <div style={{ maxWidth: '900px', margin: '0 auto', marginBottom: '4rem' }}>
-              <p className="body-large" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+              <p className="body-large" style={{ marginBottom: '3rem', lineHeight: '1.8' }}>
                 Over the last decade, I've travelled across the world, from jungles to ashrams, 
                 training with spiritual teachers, somatic experts, and coaches who literally 
                 cracked me open in ways that showed me the stuff I'd been avoiding.
               </p>
+              
+              <p className="body-large" style={{ marginBottom: '3rem', lineHeight: '1.8' }}>
+                I immersed myself in breathwork, nervous system healing, men's work, emotional mastery, and deep self-inquiry. 
+                I studied everything from somatic therapy to NLP, coaching to energy work. Not to escape myself, but to <em>meet</em> myself.
+              </p>
+              
+              <p style={{ 
+                fontSize: '1.5rem', 
+                fontFamily: 'Playfair Display, serif', 
+                textAlign: 'center',
+                color: currentTheme.primary,
+                marginBottom: '2rem'
+              }}>
+                And what I found? Was peace. Power. And purpose.
+              </p>
             </div>
+          </div>
+        </section>
+
+        <section className="section section-alt">
+          <div className="container">
+            <h2 className="h2" style={{ 
+              textAlign: 'center', 
+              marginBottom: '3rem',
+              fontSize: isMobile ? '2rem' : '2.5rem',
+              fontWeight: 'bold'
+            }}>
+              NOW, I HELP PEOPLE LIKE YOU FIND THE SAME.
+            </h2>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
-              <div className="card">
-                <h3 className="h3">Deep Immersion</h3>
-                <p className="body">
-                  Breathwork, nervous system healing, men's work, emotional mastery, and deep self-inquiry. 
-                  Everything from somatic therapy to NLP, coaching to energy work.
-                </p>
+            <div style={{ maxWidth: '900px', margin: '0 auto', marginBottom: '3rem' }}>
+              <p className="body-large" style={{ 
+                textAlign: 'center', 
+                marginBottom: '3rem',
+                lineHeight: '1.8'
+              }}>
+                Not with hype. Not with surface-level talk.<br />
+                With real tools that work in the body, in the mind, in spirit, and in life.
+              </p>
+              
+              <div className="body-large" style={{ lineHeight: '1.8', marginBottom: '3rem' }}>
+                <ul style={{ listStyle: 'none', padding: 0 }}>
+                  <li style={{ marginBottom: '1rem' }}>• If you're stuck in anger, shame, anxiety, or burnout…</li>
+                  <li style={{ marginBottom: '1rem' }}>• If you struggle for motivation and passion…</li>
+                  <li style={{ marginBottom: '1rem' }}>• If you've lost yourself in the chaos…</li>
+                  <li style={{ marginBottom: '1rem' }}>• If you know deep down you're built for more…</li>
+                </ul>
               </div>
               
-              <div className="card">
-                <h3 className="h3">The Purpose</h3>
-                <p className="body">
-                  Not to escape myself, but to meet myself. To find what I'd been avoiding and heal it at the source.
-                </p>
-              </div>
+              <p className="body-large" style={{ 
+                textAlign: 'center', 
+                marginBottom: '3rem',
+                fontWeight: '600'
+              }}>
+                Then I'm here to walk beside you through this journey.
+              </p>
               
-              <div className="card" style={{ backgroundColor: currentTheme.primary + '15', border: `1px solid ${currentTheme.primary}40` }}>
-                <h3 className="h3" style={{ color: currentTheme.primary }}>What I Found</h3>
-                <p style={{ fontSize: '1.5rem', fontFamily: 'Playfair Display, serif', marginBottom: '1rem' }}>
-                  Peace. Power. Purpose.
-                </p>
-                <p className="body-small">Not with hype. Not with surface-level talk.</p>
+              <div style={{ textAlign: 'center' }}>
+                <Link href="/work" className="btn-primary" style={{ fontSize: '1.1rem', padding: '1rem 2rem' }}>
+                  Start Your Shift
+                </Link>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Training & Credentials - EXPANDED */}
-        <section className="section section-alt">
+        <section className="section">
           <div className="container">
             <h2 className="h2" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              Built on Real Training
+              Professional Credentials
             </h2>
             
-            <div style={{ maxWidth: '900px', margin: '0 auto', marginBottom: '4rem' }}>
-              <div className="body" style={{ lineHeight: '1.8', fontSize: '1.1rem' }}>
+            <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+              <h3 className="h3" style={{ marginBottom: '2rem', color: currentTheme.accent }}>
+                Licenses & Certifications
+              </h3>
+              
+              <div className="body" style={{ lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '3rem' }}>
                 <p style={{ marginBottom: '2rem' }}>
                   I'm a certified coach and a member of the <strong style={{ color: currentTheme.accent }}>ICF</strong>, <strong style={{ color: currentTheme.accent }}>EMCC</strong>, and the <strong style={{ color: currentTheme.accent }}>Association for Coaching</strong> — three of the most respected bodies in the coaching world.
                 </p>
                 <p style={{ marginBottom: '2rem' }}>
-                  I'm a certified <strong style={{ color: currentTheme.accent }}>breathwork practitioner</strong>, trained by <strong style={{ color: currentTheme.accent }}>BreathOnIt</strong>, and recognised by the <strong style={{ color: currentTheme.accent }}>International Breathwork Foundation (IBF)</strong>.
+                  I'm a certified <strong style={{ color: currentTheme.accent }}>breathwork practitioner</strong>, trained by <strong style={{ color: currentTheme.accent }}>BreathOnIt</strong> (Los Angeles), and recognised by the <strong style={{ color: currentTheme.accent }}>International Breathwork Foundation (IBF)</strong>.
                 </p>
                 <p style={{ marginBottom: '2rem' }}>
                   I hold formal certification in <strong style={{ color: currentTheme.accent }}>trauma-informed somatic therapy</strong>, trained under some of the world's leading voices in the field — including teachers like <strong style={{ color: currentTheme.accent }}>Dr. Gabor Maté</strong>.
@@ -250,108 +287,95 @@ export default function About() {
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="section">
+        <section className="section section-alt">
           <div className="container">
             <h2 className="h2" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              How Transformation Actually Happens
+              Professional Experience
             </h2>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
-              <div className="card">
-                <h3 className="h3">Real Experience</h3>
-                <p className="body">
-                  My work is shaped by real life… not just textbooks. I've lived through addiction, 
-                  trauma, heartbreak, and financial ruin. I know how to meet people where they're at.
-                </p>
-              </div>
+            <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+              <p className="body-large" style={{ 
+                textAlign: 'center', 
+                marginBottom: '3rem',
+                fontWeight: '600',
+                fontSize: '1.2rem'
+              }}>
+                My work is shaped by real life… not just textbooks.
+              </p>
               
-              <div className="card">
-                <h3 className="h3">Body-Based Work</h3>
-                <p className="body">
-                  <strong>Transformation doesn't happen in your head — it happens in your body.</strong> 
-                  We work with your nervous system, breath, and cellular memory.
+              <div className="body" style={{ lineHeight: '1.8', fontSize: '1.1rem' }}>
+                <p style={{ marginBottom: '2rem' }}>
+                  I've lived through addiction, trauma, heartbreak, and financial ruin. These experiences taught me what no training ever could… how to meet people where they're at, with depth, empathy, and truth.
                 </p>
-              </div>
-              
-              <div className="card">
-                <h3 className="h3">Proven Results</h3>
-                <p className="body">
-                  Clients leave with clarity, direction, and a deeper connection to who they really are. 
-                  We cut through the noise and get to the root fast.
+                <p style={{ marginBottom: '2rem' }}>
+                  I spent over 7 years running one of London's early corporate wellness companies, delivering coaching and mental health support to teams inside global tech firms, pharmaceutical giants, and construction leaders.
+                </p>
+                <p style={{ marginBottom: '2rem' }}>
+                  I've seen both sides of the system, the pressure on employees and the blind spots of leadership.
+                </p>
+                <p style={{ marginBottom: '2rem' }}>
+                  In my 1:1 practice, I've worked with high performers across industries who hit external success but still feel unfulfilled.
+                </p>
+                <p style={{ 
+                  fontSize: '1.2rem', 
+                  fontWeight: '600', 
+                  color: currentTheme.primary, 
+                  textAlign: 'center',
+                  padding: '2rem 0'
+                }}>
+                  Over time, I've learned how to cut through the noise and get to the root of what's missing in life, fast. Clients leave with clarity, direction, and a deeper connection to who they really are.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Final CTA */}
+        <section className="section">
+          <div className="container">
+            <h2 className="h2" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+              What I Believe
+            </h2>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
+              <div className="card">
+                <p className="body" style={{ fontSize: '1.1rem', fontWeight: '500' }}>
+                  You are not broken — but you are blocked.
+                </p>
+              </div>
+              
+              <div className="card">
+                <p className="body" style={{ fontSize: '1.1rem', fontWeight: '500' }}>
+                  Your pain is part of your power — if you learn how to work with it.
+                </p>
+              </div>
+              
+              <div className="card">
+                <p className="body" style={{ fontSize: '1.1rem', fontWeight: '500' }}>
+                  You don't need fixing — you need to feel.
+                </p>
+              </div>
+              
+              <div className="card" style={{ backgroundColor: currentTheme.primary + '15', border: `1px solid ${currentTheme.primary}40` }}>
+                <p className="body" style={{ fontSize: '1.1rem', fontWeight: '500', color: currentTheme.primary }}>
+                  Transformation doesn't happen in your head — it happens in your body.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="section section-alt">
           <div className="container">
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <h2 className="h2">Ready to Stop Pretending?</h2>
-              <p className="body-large">
-                The truth is hard to hear, but we already knew it. 
-                No one can do the pushups for you, my friend.
+              <h2 className="h2" style={{ marginBottom: '2rem' }}>
+                This isn't for everyone. But if it's for you, you'll know.
+              </h2>
+              <p className="body-large" style={{ marginBottom: '3rem', lineHeight: '1.8' }}>
+                Let's shift what's been holding you back and help you step into who you truly are — grounded, clear, and powerful.
               </p>
-            </div>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
-              <div className="card" style={{ textAlign: 'center' }}>
-                <h3 className="h3">Start Free</h3>
-                <p className="body" style={{ marginBottom: '2rem' }}>
-                  Weekly resources for your journey of self-discovery
-                </p>
-                <Link href="/library" className="btn-secondary">Browse Library</Link>
-              </div>
-              
-              <div 
-                className="card" 
-                style={{ 
-                  textAlign: 'center',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-              >
-                <div 
-                  style={{
-                    position: 'absolute',
-                    top: '-150%',
-                    left: '0',
-                    width: '100%',
-                    height: '400%',
-                    background: 'linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.05) 48%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.05) 52%, transparent 100%)',
-                    animation: 'corShimmer 8s ease-in-out infinite',
-                    pointerEvents: 'none'
-                  }} 
-                />
-                <div style={{ position: 'relative', zIndex: 2 }}>
-                  <h3 className="h3">Join The CoR</h3>
-                  <p className="body" style={{ marginBottom: '2rem' }}>
-                    A portal to self-discovery
-                  </p>
-                  <Link href="/circle" className="btn-secondary">Learn More</Link>
-                </div>
-              </div>
-              
-              <div className="card" style={{ 
-                textAlign: 'center', 
-                backgroundColor: currentTheme.primary, 
-                color: 'var(--bg-primary)',
-                transition: 'background-color 8s ease-in-out'
-              }}>
-                <h3 className="h3" style={{ color: 'var(--bg-primary)' }}>Work 1:1</h3>
-                <p className="body" style={{ marginBottom: '2rem', color: 'var(--bg-primary)' }}>
-                  Ready for deep, personalized transformation
-                </p>
-                <Link 
-                  href="/contact" 
-                  className="btn-primary" 
-                  style={{ backgroundColor: 'var(--bg-primary)', color: currentTheme.primary }}
-                >
-                  Book Discovery Call
-                </Link>
-              </div>
+              <Link href="/work" className="btn-primary" style={{ fontSize: '1.1rem', padding: '1rem 2rem' }}>
+                Start Your Shift
+              </Link>
             </div>
           </div>
         </section>
