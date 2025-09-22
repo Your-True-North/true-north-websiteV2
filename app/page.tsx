@@ -31,7 +31,6 @@ export default function Home() {
     }
   }, [])
 
-  // Soul Mirror Quiz Questions
   const questions = [
     {
       id: 1,
