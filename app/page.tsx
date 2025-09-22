@@ -255,16 +255,24 @@ export default function Home() {
                 fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.5rem, 6vw, 4.5rem)', 
                 marginBottom: '1rem'
               }}>
-                This is a space for real <span className="accent-text">change</span>
+                What you think, feel and do isn't <span className="accent-text">random</span>
               </h1>
               
               <p className="body-large" style={{
-                marginBottom: '3rem', 
+                marginBottom: '2rem', 
                 maxWidth: isMobile ? '100%' : '600px', 
                 fontSize: isMobile ? '1rem' : '1.1rem'
               }}>
-                Not another coach. Not another quick fix. This is a return — to the self you were
-                before the noise, before the performance, before you learned to shrink.
+                It's a pattern. It's a protection. It's your truth trying to speak through a body that's never had the space to be heard.
+              </p>
+
+              <p className="body-large" style={{
+                marginBottom: '3rem', 
+                maxWidth: isMobile ? '100%' : '600px', 
+                fontSize: isMobile ? '1rem' : '1.1rem',
+                fontWeight: '600'
+              }}>
+                This isn't coaching. This isn't performance. This is a return to the self underneath the noise, the reactions, and the pressure.
               </p>
               
               <div style={{
@@ -305,22 +313,27 @@ export default function Home() {
                   color: 'var(--text-primary-inverse)', 
                   fontSize: isMobile ? '2rem' : '2.5rem'
                 }}>
-                  This work isn't about becoming someone new
+                  This work isn't about trying to become someone new
                 </h2>
                 <p className="body-large" style={{
                   marginBottom: '2rem', 
                   color: 'rgba(246, 246, 246, 0.9)', 
                   fontSize: isMobile ? '1rem' : '1.1rem'
                 }}>
-                  It's about returning to who you were before the world told you to be different.
+                  It's about returning to who you are before the world told you to be something else.
+                </p>
+                <p className="body" style={{
+                  color: 'rgba(246, 246, 246, 0.8)', 
+                  fontSize: isMobile ? '0.9rem' : '1rem',
+                  marginBottom: '1.5rem'
+                }}>
+                  You weren't born to carry this weight forever. You're here to shift. To elevate. To meet what's in the way and move through it.
                 </p>
                 <p className="body" style={{
                   color: 'rgba(246, 246, 246, 0.8)', 
                   fontSize: isMobile ? '0.9rem' : '1rem'
                 }}>
-                  You weren't born to carry chaos forever. You're here to evolve. To lead.
-                  To rise through the fire. What blocks you isn't weakness — it's old survival,
-                  old weight, old patterns that no longer serve.
+                  Struggle isn't weakness. It's survival. It's guidance. It's your body letting you know it's time to change the pattern.
                 </p>
               </div>
               
@@ -332,9 +345,9 @@ export default function Home() {
                     color: 'var(--primary)', 
                     marginBottom: '1rem'
                   }}>
-                    "Your anger is a choice, and connecting to spirit holds the answer. Continue your journey and this will become clear."
+                    "Your anger, your reactions, your escapes are not random. They're patterns. And once you reconnect to your truth, new choices become possible. Keep going and it will all make sense from the inside."
                   </p>
-                  <footer className="body-small">Core Principle</footer>
+                  <footer className="body-small" style={{fontWeight: 'bold'}}>— Core Principle</footer>
                 </blockquote>
               </div>
             </div>
@@ -345,27 +358,44 @@ export default function Home() {
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '4rem'}}>
               <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>My Modalities</h2>
-              <p className="body-large" style={{fontSize: isMobile ? '1rem' : '1.1rem'}}>Proven methods. Raw honesty. Real transformation.</p>
+              <p className="body-large" style={{fontSize: isMobile ? '1rem' : '1.1rem'}}>Proven methods for real transformation.</p>
             </div>
             
             <div style={{
               display: 'grid', 
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', 
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', 
               gap: '2rem'
             }}>
               {[
-                { title: 'Somatic Therapy', subtitle: 'Body-based healing', description: 'Your body holds memories your mind has forgotten. We work through the body to heal trauma and release stuck energy.' },
-                { title: 'Breathwork', subtitle: 'Ancient wisdom, modern application', description: 'Powerful breathing techniques that move energy, clear blocks, and create breakthrough moments.' },
-                { title: 'Energy Work', subtitle: 'Reiki & energy healing', description: 'Working with the subtle energies that influence your emotions, thoughts, and life patterns.' },
-                { title: 'Integrative Coaching', subtitle: 'The foundation that connects it all', description: 'My coaching approach blends psychology, humanistic principles, and somatic work to create lasting transformation that honors both mind and spirit.' }
+                { 
+                  title: 'Somatic Therapy', 
+                  subtitle: 'Body-based healing', 
+                  description: 'Your body remembers what your mind learned to forget. Together, we work with physical sensation, breath, and stored emotion to release trauma, restore safety, and rebuild trust with your nervous system.' 
+                },
+                { 
+                  title: 'Breathwork', 
+                  subtitle: 'Ancient wisdom, modern application', 
+                  description: 'Your breath is one of the most powerful tools you have. These guided sessions clear stuck energy, regulate emotion, and create the conditions for clarity, breakthrough, and deep emotional release.' 
+                },
+                { 
+                  title: 'Energy Work', 
+                  subtitle: 'Energetic recalibration and emotional clearing', 
+                  description: 'Your energetic field holds more than just emotion - it holds patterns, imprints, and memory. This work helps release what no longer belongs, clear inherited blocks, and restore your natural state of clarity, flow, and grounded presence.' 
+                },
+                { 
+                  title: 'Integrative Coaching', 
+                  subtitle: 'Depth work that moves the whole system', 
+                  description: 'This is where everything comes together - nervous system, psychology, emotion, and direction. We don\'t just talk about change. We build it. Rooted in somatic practice and real accountability, this is coaching that honours your story and leads you forward with purpose.' 
+                }
               ].map((item, i) => (
                 <div key={i} className="card">
-                  <h3 className="h3 shimmer-accent" style={{fontSize: isMobile ? '1.2rem' : '1.4rem'}}>{item.title}</h3>
+                  <h3 className="h3 shimmer-accent" style={{fontSize: isMobile ? '1.2rem' : '1.4rem', fontWeight: 'bold'}}>{item.title}</h3>
                   <p className="body-small accent-text" style={{
                     marginBottom: '1rem', 
                     textTransform: 'uppercase', 
                     letterSpacing: '1px', 
-                    fontSize: '0.8rem'
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold'
                   }}>
                     {item.subtitle}
                   </p>
@@ -382,12 +412,12 @@ export default function Home() {
               <h2 className="h2 shimmer-accent" style={{
                 color: 'var(--text-primary-inverse)', 
                 fontSize: isMobile ? '2rem' : '2.5rem'
-              }}>The Soul Mirror</h2>
+              }}>Where You Are Now</h2>
               <p className="body-large" style={{
                 color: 'rgba(246, 246, 246, 0.9)', 
                 fontSize: isMobile ? '1rem' : '1.1rem'
               }}>
-                Four questions to help you see where you are and what you need next
+                A simple four question check-in to help you see what's really going on — and where to go from here.
               </p>
             </div>
 
