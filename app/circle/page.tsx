@@ -1,388 +1,482 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
 import Navigation from '../components/Navigation'
-import './cosmic.css'
+import Footer from '../components/Footer'
+import MysticalBackground from '../components/MysticalBackground'
+import { useState, useEffect } from 'react'
 
 export default function Circle() {
+  const [isMobile, setIsMobile] = useState(false)
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [pricingPlan, setPricingPlan] = useState('monthly')
-  const [showVideoText, setShowVideoText] = useState(true)
-  const [videoMuted, setVideoMuted] = useState(true)
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const videoRef = useRef(null)
+  const [message, setMessage] = useState('')
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+    setMessage('')
+
     try {
-      const response = await fetch('/api/convertkit', {
+      const response = await fetch('/api/convertkit/waitlist', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email,
-          tags: ['THE_CoR_WAITLIST_TAG_ID'],
-          formId: 'THE_ECO_SYSTEM_ID'
-        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
       })
 
+      const data = await response.json()
+
       if (response.ok) {
-        setIsSubmitted(true)
+        setMessage("You're on the waitlist. Check your email.")
         setEmail('')
+      } else {
+        setMessage(data.error || 'Something went wrong. Try again.')
       }
     } catch (error) {
-      console.error('Subscription error:', error)
+      setMessage('Connection error. Try again.')
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const handleVideoPlay = () => {
-    setTimeout(() => {
-      setShowVideoText(false);
-    }, 2000);
-  };
-
-  const handleVideoClick = () => {
-    setVideoMuted(false);
-    setShowVideoText(false);
-  };
-
-  const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const handleRestart = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-      setIsPlaying(true);
-    }
-  };
-
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      videoRef.current?.parentElement?.requestFullscreen()?.then(() => {
-        setIsFullscreen(true)
-      }).catch(err => {
-        console.log('Error attempting to enable fullscreen:', err)
-      })
-    } else {
-      document.exitFullscreen()?.then(() => {
-        setIsFullscreen(false)
-      })
-    }
-  }
-
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement)
-    }
-    
-    document.addEventListener('fullscreenchange', handleFullscreenChange)
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange)
-  }, [])
-
-  useEffect(() => {
-    const setVh = () => {
-      const vh = window.innerHeight * 0.01
-      document.documentElement.style.setProperty('--vh', `${vh}px`)
-    }
-    setVh()
-    window.addEventListener('resize', setVh)
-    return () => window.removeEventListener('resize', setVh)
-  }, [])
-
   return (
     <>
       <Navigation />
+      <MysticalBackground />
       
-      <section className="video-hero-responsive">
-        <div className="video-hero-container">
-          <div className="video-wrapper">
-            <video
-              ref={videoRef}
-              className="hero-video"
-              autoPlay
-              muted={videoMuted}
-              loop
-              playsInline
-              poster="/circle-video-poster.jpg"
-              onPlay={handleVideoPlay}
-              onClick={handleVideoClick}
-              controls={false}
-            >
-              <source src="/circle-intro-video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+      <main className="page-container">
+        <section className="section" style={{
+          paddingTop: isMobile ? '6rem' : '8rem',
+          paddingBottom: '4rem'
+        }}>
+          <div className="container" style={{maxWidth: '900px', margin: '0 auto'}}>
             
-            {showVideoText && (
-              <div className="video-overlay">
-                <div className="video-content">
-                  <h1>Watch first</h1>
-                  <p>Is this the beginning of your shift?</p>
-                  {videoMuted && (
-                    <p className="click-unmute">
-                      Click to unmute
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-
-            <div className="custom-video-controls">
-              <button className="video-control-btn expand-btn" onClick={toggleFullscreen} title="Fullscreen">
-                ⛶
-              </button>
-              <button className="video-control-btn" onClick={handlePlayPause}>
-                {isPlaying ? '⏸' : '▶'}
-              </button>
-              <button className="video-control-btn" onClick={handleRestart}>
-                ⏮
-              </button>
+            <div style={{textAlign: 'center', marginBottom: '4rem'}}>
+              <h1 style={{
+                fontSize: isMobile ? '2.5rem' : '3.5rem',
+                marginBottom: '2rem',
+                color: '#ffffff',
+                fontWeight: '700',
+                lineHeight: '1.1'
+              }}>
+                The Circle of Return
+              </h1>
             </div>
-          </div>
-        </div>
-      </section>
-      
-      <div className="cosmic-hero">
-        <main className="page-container">
-          <section className="section circle-content">
-            <div className="container">
+
+            <div style={{
+              fontSize: isMobile ? '1.1rem' : '1.2rem',
+              lineHeight: '1.8',
+              color: 'rgba(255, 255, 255, 0.9)',
+              marginBottom: '4rem'
+            }}>
+              <p style={{marginBottom: '1.5rem'}}>
+                This isn't a community or a group coaching programme.
+              </p>
+              <p style={{marginBottom: '2.5rem'}}>
+                If you join, you're entering a portal - a space to return to yourself. Return to your truth.
+              </p>
               
-              <div className="intro-text">
-                <div className="intro-content">
-                  <p className="intro-paragraph">
-                    You're not about to join a community. You're entering a portal for you to return to yourself. 
-                    To return to your truth. To Source. To love. To embodiment. To now.
-                  </p>
-                  <p className="intro-italic">
-                    You've built your current identity on societal expectations.
-                  </p>
-                  <p className="intro-paragraph">
-                    However, there is a more fearless, confident, and powerful you underneath the pain of your wounds.
-                  </p>
-                  <p className="wisdom-quote">
-                    Know this: There is wisdom in your wounds, purpose and power in your pain.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pillars-section">
-                <h2 className="section-title">
-                  🜁 Pillars for The Circle of Return:
-                </h2>
-                
-                <div className="pillars-weave">
-                  <div className="pillar-weave">
-                    <div className="pillar-visual">1</div>
-                    <div className="pillar-content">
-                      <h3 className="pillar-title">Healing Without Performing</h3>
-                      <p className="pillar-description">No small talking. No pretending. Just truth.</p>
-                    </div>
-                  </div>
-
-                  <div className="pillar-weave">
-                    <div className="pillar-visual">2</div>
-                    <div className="pillar-content">
-                      <h3 className="pillar-title">Grounded Spirituality</h3>
-                      <p className="pillar-description">Oneness, return to source, find inner-peace.</p>
-                    </div>
-                  </div>
-
-                  <div className="pillar-weave">
-                    <div className="pillar-visual">3</div>
-                    <div className="pillar-content">
-                      <h3 className="pillar-title">Masculine-Led Container</h3>
-                      <p className="pillar-description">Strong edges, soft centre.</p>
-                    </div>
-                  </div>
-
-                  <div className="pillar-weave">
-                    <div className="pillar-visual">4</div>
-                    <div className="pillar-content">
-                      <h3 className="pillar-title">Somatic Rewiring</h3>
-                      <p className="pillar-description">Feeling it. Releasing it. Discovering what's under it.</p>
-                    </div>
-                  </div>
-
-                  <div className="pillar-weave">
-                    <div className="pillar-visual">5</div>
-                    <div className="pillar-content">
-                      <h3 className="pillar-title">Devoted Growth</h3>
-                      <p className="pillar-description">Not motivational hype, just soul-led accountability.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="whats-inside-section">
-                <h2 className="section-title">
-                  🜂 What's Inside the Circle of Return:
-                </h2>
-                
-                <p className="section-subtitle">
-                  This isn't content you'll forget in 48 hours. <strong>This is nervous system work, soul work, 
-                  and real change from the inside out.</strong>
-                </p>
-
-                <div className="features-grid">
-                  {[
-                    "Weekly coaching prompts & self-reflection practices - To keep you anchored in truth, even when life tries to pull you out.",
-                    "Live workshops & Q&As - For when the emotions get big, the questions get loud, and you need real-time guidance.",
-                    "Proven emotional regulation tools - So you stop spiralling in stress and start moving from centre — clean, clear, grounded.",
-                    "Monthly themes - To bring focus, rhythm, and depth to your growth — no more scattered self-help.",
-                    "Supportive private community - Because healing in isolation isn't healing. This is your space to be witnessed, guided, and held.",
-                    "Guest speakers & expert sessions - To expand your perspective, stretch your soul, and deepen your capacity."
-                  ].map((feature, index) => (
-                    <div key={index} className="premium-card feature-card">
-                      <span className="feature-check">✔</span>
-                      <p className="feature-text">{feature}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="who-for-section">
-                <h2 className="section-title">
-                  ⟁ Who This Is For -
-                </h2>
-                
-                <div className="who-for-content">
-                  <p className="who-for-intro">
-                    This is for the person who knows deep down, there's more:
-                  </p>
-                  <div className="more-list">
-                    <p>More peace.</p>
-                    <p>More purpose.</p>
-                    <p>More clarity.</p>
-                    <p>More money.</p>
-                    <p>More you…</p>
-                  </div>
-                  <p className="who-for-main">
-                    And you're finally ready to stop circling the edge of your healing and walk into the centre of it.
-                  </p>
-                  <p className="who-for-conclusion">
-                    Whether you're navigating anger, stress, self-sabotage, or just feeling lost — this is your space to return.
-                  </p>
-                </div>
-              </div>
-
-              <div className="premium-card pricing-section">
-                <div className="pre-launch-badge">
-                  Pre-Launch Offer - Limited Time Only
-                </div>
-                
-                <h2 className="pricing-title">The Investment</h2>
-                
-                <div className="pricing-toggle">
-                  <button 
-                    className={`pricing-option ${pricingPlan === 'monthly' ? 'active' : ''}`}
-                    onClick={() => setPricingPlan('monthly')}
-                  >
-                    Monthly
-                  </button>
-                  <button 
-                    className={`pricing-option ${pricingPlan === 'yearly' ? 'active' : ''}`}
-                    onClick={() => setPricingPlan('yearly')}
-                  >
-                    Yearly (Save £150)
-                  </button>
-                </div>
-                
-                <div className="glow-price pricing-amount">
-                  {pricingPlan === 'yearly' ? '£450' : '£50'}
-                  <span className="pricing-period">
-                    {pricingPlan === 'yearly' ? 'per year' : 'per month'}
-                  </span>
-                </div>
-                
-                <div className="post-launch-card">
-                  <p className="post-launch-text">
-                    Post-Launch: The Circle journey will be £800 per year
-                  </p>
-                </div>
-                
-                <div className="investment-description">
-                  <p className="investment-gift">
-                    This investment is a gift to yourself — an answer to your inner call for the shift you know needs to be made.
-                  </p>
-                  <p>You can cancel anytime. No pressure. No contracts. No tactics.</p>
-                  <p>Just you, choosing to come home at your own pace, in your own time.</p>
-                  <p className="investment-italic">When you're ready, the door opens. The Circle begins.</p>
-                  <p className="investment-question">Will you answer to your inner-voice?</p>
-                </div>
-
-                {!isSubmitted ? (
-                  <div className="waitlist-section">
-                    <h3 className="waitlist-title">
-                      ⊛ JOIN THE WAITLIST FOR THE CIRCLE OF RETURN
-                    </h3>
-                    <p className="waitlist-subtitle">
-                      No pressure. Just support, structure, and real shifts.
-                    </p>
-                    
-                    <form onSubmit={handleSubmit} className="waitlist-form">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
-                        required
-                        className="waitlist-input"
-                      />
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="waitlist-button"
-                      >
-                        {isSubmitting ? 'Joining...' : 'Join The Circle'}
-                      </button>
-                    </form>
-                  </div>
-                ) : (
-                  <div className="success-message">
-                    <h3>Welcome to The Circle</h3>
-                    <p>You'll receive updates as we prepare to launch in January 2025.</p>
-                  </div>
-                )}
-                
-                <p className="privacy-note">
-                  I respect your privacy. Unsubscribe at any time.
-                </p>
-              </div>
-
-              <div className="closing-section">
-                <h2 className="brand-title">TRUE NORTH</h2>
-                <p className="closing-quote">
-                  "You don't need to figure it all out on your own anymore. You just need the right space, 
-                  guidance, and momentum. This is it."
-                </p>
-                <p className="closing-invitation">
-                  Join The Circle and let's start building the life you know you're meant for.
-                </p>
-                <p className="closing-ready">
-                  You're not here by accident. You're ready — and this is your next step.
-                </p>
-                <p className="final-call">
-                  Join me in The Circle of Return
-                </p>
-              </div>
-
+              <p style={{marginBottom: '1.5rem'}}>
+                You've built your current identity around survival, pressure, and who you <strong>should</strong> be in a world full of expectations.
+              </p>
+              
+              <p style={{marginBottom: '1.5rem'}}>
+                But something deeper has been calling and you've felt it for a while.
+              </p>
+              
+              <p style={{marginBottom: '1.5rem'}}>
+                You're seeking connection with the self you <em>know</em> is there. The version of you that's more fearless, more grounded, more powerful but still stuck beneath the pain from your wounds.
+              </p>
+              
+              <p style={{
+                fontWeight: '600',
+                color: '#ffffff',
+                fontSize: isMobile ? '1.2rem' : '1.3rem',
+                marginTop: '2rem'
+              }}>
+                Know this: there's wisdom in your wounds. There's purpose in your pain.
+              </p>
             </div>
-          </section>
-        </main>
-      </div>
+
+            <div style={{
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+              margin: '4rem 0'
+            }} />
+
+            <div style={{marginBottom: '4rem'}}>
+              <h2 style={{
+                fontSize: isMobile ? '1.8rem' : '2.2rem',
+                marginBottom: '2.5rem',
+                color: '#ffffff',
+                fontWeight: '700'
+              }}>
+                Core Principles of The Circle of Return
+              </h2>
+
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '2rem'
+              }}>
+                {[
+                  {
+                    title: '1. No performance.',
+                    desc: "You won't find small talk here. Just people doing the real work—quietly, consistently, and without needing to prove anything."
+                  },
+                  {
+                    title: '2. Return, not reinvention.',
+                    desc: "This isn't about becoming someone new. It's about coming back to who you are underneath the survival, the pain, and the patterns."
+                  },
+                  {
+                    title: '3. No pressure to perform healing.',
+                    desc: "You don't need to explain, impress, or have it all figured out. You just need to show up - messy, honest, and ready."
+                  },
+                  {
+                    title: '4. We meet what's real.',
+                    desc: "There's no bypassing here. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity."
+                  },
+                  {
+                    title: '5. This is body-first, truth-led work.',
+                    desc: "The shifts happen in the nervous system. In your breath. In your relationships."
+                  },
+                  {
+                    title: '6. You're not here to be fixed.',
+                    desc: "You're here to return to what's always been underneath, waiting to be remembered."
+                  }
+                ].map((principle, index) => (
+                  <div key={index} style={{
+                    padding: '1.5rem',
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    borderLeft: '3px solid rgba(255, 255, 255, 0.4)',
+                    borderRadius: '6px'
+                  }}>
+                    <h3 style={{
+                      fontSize: isMobile ? '1.1rem' : '1.2rem',
+                      color: '#ffffff',
+                      marginBottom: '0.5rem',
+                      fontWeight: '600'
+                    }}>
+                      {principle.title}
+                    </h3>
+                    <p style={{
+                      fontSize: isMobile ? '1rem' : '1.1rem',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      lineHeight: '1.6',
+                      margin: 0
+                    }}>
+                      {principle.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+              margin: '4rem 0'
+            }} />
+
+            <div style={{marginBottom: '4rem'}}>
+              <h2 style={{
+                fontSize: isMobile ? '1.8rem' : '2.2rem',
+                marginBottom: '2rem',
+                color: '#ffffff',
+                fontWeight: '700'
+              }}>
+                🜂 What's Inside The Circle of Return
+              </h2>
+              
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.9)',
+                marginBottom: '2.5rem',
+                lineHeight: '1.7'
+              }}>
+                This isn't content you'll forget in 48 hours. This is nervous system work, soul work, and real change from the inside out.
+              </p>
+
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem'
+              }}>
+                {[
+                  {
+                    title: 'Weekly coaching prompts + self-reflection practices',
+                    desc: 'To keep you anchored in truth even when life tries to pull you out of it.'
+                  },
+                  {
+                    title: 'Live calls, workshops + real-time guidance',
+                    desc: 'For when the emotions hit, the questions rise, and you need somewhere solid to land.'
+                  },
+                  {
+                    title: 'Tools for emotional regulation + pattern rewiring',
+                    desc: 'Not theory. Practice. So you stop spiralling and start moving from centre — clean, clear, steady.'
+                  },
+                  {
+                    title: 'Monthly themes that build rhythm + depth',
+                    desc: 'No more random content or scattered self-help. Each month has a focus, a structure, and a direction.'
+                  },
+                  {
+                    title: 'A space to be witnessed, challenged, and held',
+                    desc: "You're not doing this alone. This is where people show up for each other, without judgement or performance."
+                  },
+                  {
+                    title: 'Guest sessions from experts who go deep, not wide',
+                    desc: 'To stretch your perspective, deepen your capacity, and support your return.'
+                  }
+                ].map((item, index) => (
+                  <div key={index} style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    alignItems: 'flex-start'
+                  }}>
+                    <span style={{
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '1.2rem',
+                      flexShrink: 0,
+                      marginTop: '0.2rem'
+                    }}>✔</span>
+                    <div>
+                      <strong style={{
+                        color: '#ffffff',
+                        fontSize: isMobile ? '1.05rem' : '1.1rem',
+                        display: 'block',
+                        marginBottom: '0.3rem'
+                      }}>
+                        {item.title}
+                      </strong>
+                      <p style={{
+                        color: 'rgba(255, 255, 255, 0.75)',
+                        fontSize: isMobile ? '0.95rem' : '1rem',
+                        lineHeight: '1.6',
+                        margin: 0
+                      }}>
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+              margin: '4rem 0'
+            }} />
+
+            <div style={{marginBottom: '4rem'}}>
+              <h2 style={{
+                fontSize: isMobile ? '1.8rem' : '2.2rem',
+                marginBottom: '2rem',
+                color: '#ffffff',
+                fontWeight: '700'
+              }}>
+                ⟁ Who This Is For
+              </h2>
+
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.9)',
+                marginBottom: '2rem',
+                lineHeight: '1.7'
+              }}>
+                This is for the person who knows deep down that there's more:
+              </p>
+
+              <div style={{
+                fontSize: isMobile ? '1.15rem' : '1.25rem',
+                color: '#ffffff',
+                marginBottom: '2rem',
+                lineHeight: '2',
+                paddingLeft: isMobile ? '1rem' : '2rem'
+              }}>
+                <p style={{margin: '0.5rem 0'}}>More purpose.</p>
+                <p style={{margin: '0.5rem 0'}}>More clarity.</p>
+                <p style={{margin: '0.5rem 0'}}>More money.</p>
+                <p style={{margin: '0.5rem 0'}}>More peace.</p>
+                <p style={{margin: '0.5rem 0'}}>More of everything you feel you lack.</p>
+              </div>
+
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.9)',
+                marginBottom: '1.5rem',
+                lineHeight: '1.7',
+                fontWeight: '500'
+              }}>
+                You're done circling the edge of your healing and ready to walk into the centre of it.
+              </p>
+
+              <p style={{
+                fontSize: isMobile ? '1.05rem' : '1.15rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.7'
+              }}>
+                Whether you're navigating anger, addictions, pressure, self-sabotage, or just feeling lost - this is the space to return to yourself.
+              </p>
+            </div>
+
+            <div style={{
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+              margin: '4rem 0'
+            }} />
+
+            <div style={{
+              textAlign: 'center',
+              padding: isMobile ? '2.5rem 1.5rem' : '3rem 2rem',
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
+              borderRadius: '6px',
+              border: '1px solid rgba(255, 255, 255, 0.15)'
+            }}>
+              <h2 style={{
+                fontSize: isMobile ? '1.6rem' : '2rem',
+                color: '#ffffff',
+                marginBottom: '1.5rem',
+                fontWeight: '700'
+              }}>
+                The investment in yourself is a gift.
+              </h2>
+              
+              <p style={{
+                fontSize: isMobile ? '1.05rem' : '1.15rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                marginBottom: '1.5rem',
+                lineHeight: '1.7'
+              }}>
+                You've tried other things. Maybe therapy. Maybe courses. Maybe content and Maybe nothing at all... but the pattern keeps repeating.
+              </p>
+              
+              <p style={{
+                fontSize: isMobile ? '1.15rem' : '1.3rem',
+                color: '#ffffff',
+                fontWeight: '600',
+                marginBottom: '2rem'
+              }}>
+                Breaking the pattern starts now.
+              </p>
+
+              <p style={{
+                fontSize: '0.95rem',
+                color: 'rgba(255, 255, 255, 0.6)',
+                marginBottom: '2rem'
+              }}>
+                You can cancel anytime. No pressure. No contracts.
+              </p>
+
+              <form onSubmit={handleSubmit} style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                maxWidth: '500px',
+                margin: '0 auto'
+              }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  style={{
+                    padding: '1rem',
+                    fontSize: '1rem',
+                    borderRadius: '6px',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    color: '#ffffff',
+                    outline: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)'
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)'
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                  }}
+                />
+                
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={{
+                    padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
+                    background: isSubmitting ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.9)',
+                    color: '#000000',
+                    border: 'none',
+                    fontWeight: '700',
+                    borderRadius: '6px',
+                    fontSize: isMobile ? '1rem' : '1.1rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isSubmitting) {
+                      e.currentTarget.style.background = '#ffffff'
+                      e.currentTarget.style.transform = 'translateY(-2px)'
+                      e.currentTarget.style.boxShadow = '0 10px 20px rgba(255, 255, 255, 0.2)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSubmitting) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
+                      e.currentTarget.style.transform = 'translateY(0)'
+                      e.currentTarget.style.boxShadow = 'none'
+                    }
+                  }}
+                >
+                  {isSubmitting ? 'Joining...' : '⊛ Join the Waitlist'}
+                </button>
+
+                {message && (
+                  <p style={{
+                    textAlign: 'center',
+                    color: message.includes('error') || message.includes('wrong') ? '#ff6b6b' : '#4ade80',
+                    fontSize: '0.95rem',
+                    marginTop: '0.5rem'
+                  }}>
+                    {message}
+                  </p>
+                )}
+              </form>
+            </div>
+
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </>
   )
 }
