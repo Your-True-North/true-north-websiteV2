@@ -1254,48 +1254,4 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     transform: scale(1.5); 
     opacity: 0.6; 
   }
-}/* Base font - Sans for everything except headings */
-* {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* Body text specifically sans */
-body, p, div, span, a, button, input, textarea, nav, .nav-links {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-}
-
-/* Headings ONLY get serif */
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: 'Playfair Display', serif !important;
-}
-
-/* Desktop nav - SANS */
-.nav-links a {
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  font-weight: 500;
-  transition: all 0.3s ease, color 8s ease-in-out;
-}
-
-/* Mobile nav - ALSO SANS (not serif!) */
-.mobile-nav-content a {
-  color: var(--text-primary);
-  text-decoration: none;
-  font-size: 1.5rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  font-weight: 500;
-  transition: all 0.3s ease, color 8s ease-in-out;
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
-/* Hero spacing fix */
-@media (min-width: 769px) {
-  .work-page-hero {
-    padding-top: 8rem !important;
-  }
 }

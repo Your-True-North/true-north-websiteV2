@@ -160,7 +160,6 @@ export default function Work() {
       )}
 
       <main className="page-container">
-        {/* Hero Section */}
         <section className="section" style={{
           paddingTop: isMobile ? '0' : '5rem',
           position: 'relative',
@@ -169,6 +168,7 @@ export default function Work() {
           alignItems: isMobile ? 'center' : 'initial',
           justifyContent: isMobile ? 'center' : 'initial'
         }}>
+          
           <div className="container" style={{
             position: 'relative',
             zIndex: 10,
@@ -221,8 +221,6 @@ export default function Work() {
 
         <section className="section" style={{paddingTop: isMobile ? '3rem' : '0'}}>
           <div className="container">
-            
-            {/* 1:1 Coaching */}
             <div style={{
               marginBottom: '5rem',
               padding: isMobile ? '2rem' : '3rem',
@@ -288,7 +286,7 @@ export default function Work() {
               }}>
                 {[
                   { title: 'Phase 1: Self-Awareness', desc: 'Identify the unconscious patterns running your life. Deep, honest self-awareness.' },
-                  { title: 'Phase 2: Somatic Integration', desc: 'Enter the body. Access the subconscious through your body stored intelligence.' },
+                  { title: 'Phase 2: Somatic Integration', desc: 'Enter the body. Access the subconscious through your body\'s stored intelligence.' },
                   { title: 'Phase 3: Aligned Action', desc: 'Anchor new habits rooted in your values. Become more you.' }
                 ].map((phase, index) => (
                   <div key={index} style={{
@@ -317,6 +315,251 @@ export default function Work() {
                     <p style={{color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.95rem', lineHeight: '1.4'}}>
                       {phase.desc}
                     </p>
+
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '2rem'
+                  }}>
+                    <div style={{
+                      fontSize: '2.2rem', 
+                      fontWeight: '300', 
+                      color: 'rgba(255, 255, 255, 0.9)'
+                    }}>£120</div>
+                    <div style={{color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem'}}>90 minutes</div>
+                  </div>
+
+                  <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+                    <a 
+                      href="https://buy.stripe.com/cNi4gA9D17Mp0BibPV9IQ0g"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'block',
+                        padding: '1rem',
+                        background: 'rgba(255, 255, 255, 0.9)',
+                        color: '#000',
+                        textDecoration: 'none',
+                        fontWeight: '700',
+                        borderRadius: '6px',
+                        textAlign: 'center',
+                        fontSize: '0.95rem',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#ffffff'
+                        e.currentTarget.style.transform = 'translateY(-1px)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
+                        e.currentTarget.style.transform = 'translateY(0)'
+                      }}
+                    >
+                      Ready to Book - £120
+                    </a>
+                    
+                    <a 
+                      href={createWhatsAppLink("Hi Mason, I'd like to learn more about the Energy Healing Experience. What exactly happens during this 60-minute session and how do I know if it's right for me?")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'block',
+                        padding: '1rem',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        color: '#ffffff',
+                        textDecoration: 'none',
+                        fontWeight: '600',
+                        borderRadius: '6px',
+                        textAlign: 'center',
+                        fontSize: '0.95rem',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    >
+                      Learn More
+                    </a>
+                  </div>
+
+                  <div style={{
+                    marginTop: '1.5rem',
+                    paddingTop: '1rem',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                    fontSize: '0.8rem',
+                    color: 'rgba(255, 255, 255, 0.6)'
+                  }}>
+                    Available online (Zoom) or in-person • Energetic clearing, chakra balancing, nervous system regulation
+                  </div>
+                </div>
+              </div>
+
+              <div style={{
+                textAlign: 'center',
+                padding: '2rem',
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '6px',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                maxWidth: '700px',
+                margin: '3rem auto 0'
+              }}>
+                <p style={{
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  fontSize: '1rem',
+                  lineHeight: '1.5',
+                  margin: 0
+                }}>
+                  <strong style={{color: 'rgba(255, 255, 255, 0.9)'}}>Two paths to choose from:</strong> Curious about the work? Click "Learn More" to understand what each session involves. 
+                  Ready to commit? Click "Ready to Book" and secure your session immediately.
+                </p>
+              </div>
+            </div>
+
+            <div style={{
+              textAlign: 'center',
+              padding: isMobile ? '2rem 1rem' : '3rem 2rem',
+              background: 'rgba(255, 255, 255, 0.03)',
+              borderRadius: '6px',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              animation: 'slideUp 0.8s ease-out 1.2s both'
+            }}>
+              <h3 style={{
+                fontSize: isMobile ? '1.5rem' : '2rem',
+                marginBottom: '1rem',
+                color: '#ffffff',
+                fontWeight: '600'
+              }}>
+                Ready to begin your return?
+              </h3>
+              <p style={{
+                fontSize: isMobile ? '1rem' : '1.1rem',
+                color: 'rgba(255, 255, 255, 0.7)',
+                marginBottom: '2rem',
+                maxWidth: '500px',
+                margin: '0 auto 2rem'
+              }}>
+                Whether you're ready for deep transformation or just starting to explore, 
+                there's a path that's right for where you are now.
+              </p>
+              <div style={{
+                display: 'flex', 
+                gap: '1.5rem', 
+                justifyContent: 'center', 
+                flexWrap: 'wrap',
+                flexDirection: isMobile ? 'column' : 'row',
+                alignItems: 'center'
+              }}>
+                <a href="/library" style={{
+                  display: 'inline-block',
+                  padding: '1rem 2rem',
+                  background: 'transparent',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '6px',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  transition: 'all 0.3s ease',
+                  width: isMobile ? '100%' : 'auto'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                }}>
+                  Free Resources
+                </a>
+                <a 
+                  href={createWhatsAppLink("Hi Mason, I'm interested in exploring transformation work. Could you help me understand which path might be right for my current situation?")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-block',
+                    padding: '1rem 2rem',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    color: '#000000',
+                    textDecoration: 'none',
+                    fontWeight: '600',
+                    borderRadius: '6px',
+                    fontSize: '1rem',
+                    transition: 'all 0.3s ease',
+                    width: isMobile ? '100%' : 'auto'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#ffffff'
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
+                >
+                  Let's Talk
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+      
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes breathe {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.9;
+          }
+          50% {
+            transform: scale(1.02);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.8;
+          }
+          50% {
+            opacity: 1;
+          }
+        }
+      `}</style>
+    </>
+  )
+}
                   </div>
                 ))}
               </div>
@@ -369,7 +612,6 @@ export default function Work() {
               </div>
             </div>
 
-            {/* Circle of Return */}
             <div style={{
               marginBottom: '5rem',
               padding: isMobile ? '2rem' : '3rem',
@@ -447,7 +689,6 @@ export default function Work() {
               </div>
             </div>
 
-            {/* Individual Sessions */}
             <div style={{marginBottom: '5rem'}}>
               <div style={{textAlign: 'center', marginBottom: '4rem'}}>
                 <h2 style={{
@@ -480,7 +721,6 @@ export default function Work() {
                 gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
                 gap: '3rem'
               }}>
-                {/* Breathwork Journey Card */}
                 <div style={{
                   padding: '2.5rem',
                   background: 'rgba(255, 255, 255, 0.03)',
@@ -619,7 +859,6 @@ export default function Work() {
                   </div>
                 </div>
 
-                {/* Energy Healing Card */}
                 <div style={{
                   padding: '2.5rem',
                   background: 'rgba(255, 255, 255, 0.03)',
@@ -670,253 +909,5 @@ export default function Work() {
                     lineHeight: '1.5',
                     marginBottom: '2rem'
                   }}>
-                    90 minutes of deep energetic clearing and spiritual realignment. Reiki-based healing 
+                    60 minutes of deep energetic clearing and spiritual realignment. Reiki-based healing 
                     that works with your body's natural energy systems.
-                  </p>
-
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: '2rem'
-                  }}>
-                    <div style={{
-                      fontSize: '2.2rem', 
-                      fontWeight: '300', 
-                      color: 'rgba(255, 255, 255, 0.9)'
-                    }}>£120</div>
-                    <div style={{color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem'}}>90 minutes</div>
-                  </div>
-
-                  <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                    <a 
-                      href="https://buy.stripe.com/cNi4gA9D17Mp0BibPV9IQ0g"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'block',
-                        padding: '1rem',
-                        background: 'rgba(255, 255, 255, 0.9)',
-                        color: '#000',
-                        textDecoration: 'none',
-                        fontWeight: '700',
-                        borderRadius: '6px',
-                        textAlign: 'center',
-                        fontSize: '0.95rem',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#ffffff'
-                        e.currentTarget.style.transform = 'translateY(-1px)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
-                        e.currentTarget.style.transform = 'translateY(0)'
-                      }}
-                    >
-                      Ready to Book - £120
-                    </a>
-                    
-                    <a 
-                      href={createWhatsAppLink("Hi Mason, I'd like to learn more about the Energy Healing Experience. What exactly happens during this 90-minute session and how do I know if it's right for me?")}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'block',
-                        padding: '1rem',
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        color: '#ffffff',
-                        textDecoration: 'none',
-                        fontWeight: '600',
-                        borderRadius: '6px',
-                        textAlign: 'center',
-                        fontSize: '0.95rem',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                      }}
-                    >
-                      Learn More
-                    </a>
-                  </div>
-
-                  <div style={{
-                    marginTop: '1.5rem',
-                    paddingTop: '1rem',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                    fontSize: '0.8rem',
-                    color: 'rgba(255, 255, 255, 0.6)'
-                  }}>
-                    Available online (Zoom) or in-person • Energetic clearing, chakra balancing, nervous system regulation
-                  </div>
-                </div>
-              </div>
-
-              {/* Connection Note */}
-              <div style={{
-                textAlign: 'center',
-                padding: '2rem',
-                background: 'rgba(255, 255, 255, 0.05)',
-                borderRadius: '6px',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                maxWidth: '700px',
-                margin: '3rem auto 0'
-              }}>
-                <p style={{
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  fontSize: '1rem',
-                  lineHeight: '1.5',
-                  margin: 0
-                }}>
-                  <strong style={{color: 'rgba(255, 255, 255, 0.9)'}}>Two paths to choose from:</strong> Curious about the work? Click "Learn More" to understand what each session involves. 
-                  Ready to commit? Click "Ready to Book" and secure your session immediately.
-                </p>
-              </div>
-            </div>
-
-            {/* Bottom CTA */}
-            <div style={{
-              textAlign: 'center',
-              padding: isMobile ? '2rem 1rem' : '3rem 2rem',
-              background: 'rgba(255, 255, 255, 0.03)',
-              borderRadius: '6px',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              animation: 'slideUp 0.8s ease-out 1.2s both'
-            }}>
-              <h3 style={{
-                fontSize: isMobile ? '1.5rem' : '2rem',
-                marginBottom: '1rem',
-                color: '#ffffff',
-                fontWeight: '600'
-              }}>
-                Ready to begin your return?
-              </h3>
-              <p style={{
-                fontSize: isMobile ? '1rem' : '1.1rem',
-                color: 'rgba(255, 255, 255, 0.7)',
-                marginBottom: '2rem',
-                maxWidth: '500px',
-                margin: '0 auto 2rem'
-              }}>
-                Whether you're ready for deep transformation or just starting to explore, 
-                there's a path that's right for where you are now.
-              </p>
-              <div style={{
-                display: 'flex', 
-                gap: '1.5rem', 
-                justifyContent: 'center', 
-                flexWrap: 'wrap',
-                flexDirection: isMobile ? 'column' : 'row',
-                alignItems: 'center'
-              }}>
-                <a href="/library" style={{
-                  display: 'inline-block',
-                  padding: '1rem 2rem',
-                  background: 'transparent',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  color: 'white',
-                  textDecoration: 'none',
-                  borderRadius: '6px',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  transition: 'all 0.3s ease',
-                  width: isMobile ? '100%' : 'auto'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                }}>
-                  Free Resources
-                </a>
-                <a 
-                  href={createWhatsAppLink("Hi Mason, I'm interested in exploring transformation work. Could you help me understand which path might be right for my current situation?")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-block',
-                    padding: '1rem 2rem',
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    color: '#000000',
-                    textDecoration: 'none',
-                    fontWeight: '600',
-                    borderRadius: '6px',
-                    fontSize: '1rem',
-                    transition: 'all 0.3s ease',
-                    width: isMobile ? '100%' : 'auto'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#ffffff'
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
-                    e.currentTarget.style.transform = 'translateY(0)'
-                  }}
-                >
-                  Let's Talk
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      
-      <Footer />
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes breathe {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 0.9;
-          }
-          50% {
-            transform: scale(1.02);
-            opacity: 1;
-          }
-        }
-        
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 0.8;
-          }
-          50% {
-            opacity: 1;
-          }
-        }
-      `}</style>
-    </>
-  )
-}
