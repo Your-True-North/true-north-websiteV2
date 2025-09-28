@@ -1,32 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 
-interface NavigationProps {
-  triggerTransition?: (callback: () => void) => void;
-}
-
-export default function Navigation({ triggerTransition }: NavigationProps) {
+export default function Navigation() 
  const [isOpen, setIsOpen] = useState(false);
-
- const handleNavClick = (href: string) => {
-   setIsOpen(false);
-   
-   if (triggerTransition) {
-     triggerTransition(() => {
-       window.location.href = href;
-     });
-   } else {
-     window.location.href = href;
-   }
- };
 
  return (
    <>
      <nav className="nav">
        <div className="nav-container">
-         <button onClick={() => handleNavClick('/')} className="nav-logo">
+         <Link href="/" className="nav-logo">
            <Image
              src="/white white star.png"
              alt="True North"
@@ -35,20 +20,20 @@ export default function Navigation({ triggerTransition }: NavigationProps) {
              className="nav-logo-image"
              priority
            />
-         </button>
+         </Link>
 
          <div className="desktop-nav">
            <ul className="nav-links">
-             <li><button onClick={() => handleNavClick('/')}>Home</button></li>
-             <li><button onClick={() => handleNavClick('/about')}>About</button></li>
-             <li><button onClick={() => handleNavClick('/work')}>Work With Me</button></li>
+             <li><Link href="/">Home</Link></li>
+             <li><Link href="/about">About</Link></li>
+             <li><Link href="/work">Work With Me</Link></li>
              <li>
-               <button onClick={() => handleNavClick('/circle')} className="cor-link">
+               <Link href="/circle" className="cor-link">
                  The CoR
-               </button>
+               </Link>
              </li>
-             <li><button onClick={() => handleNavClick('/library')}>Library</button></li>
-             <li><button onClick={() => handleNavClick('/contact')}>Contact</button></li>
+             <li><Link href="/library">Library</Link></li>
+             <li><Link href="/contact">Contact</Link></li>
            </ul>
          </div>
 
@@ -69,14 +54,14 @@ export default function Navigation({ triggerTransition }: NavigationProps) {
 
      <div className={`mobile-nav ${isOpen ? 'open' : ''}`}>
        <div className="mobile-nav-content">
-         <button onClick={() => handleNavClick('/')}>Home</button>
-         <button onClick={() => handleNavClick('/about')}>About</button>
-         <button onClick={() => handleNavClick('/work')}>Work With Me</button>
-         <button onClick={() => handleNavClick('/circle')} className="cor-link">
+         <Link href="/" onClick={() => setIsOpen(false)}>Home</Link>
+         <Link href="/about" onClick={() => setIsOpen(false)}>About</Link>
+         <Link href="/work" onClick={() => setIsOpen(false)}>Work With Me</Link>
+         <Link href="/circle" onClick={() => setIsOpen(false)} className="cor-link">
            The CoR
-         </button>
-         <button onClick={() => handleNavClick('/library')}>Library</button>
-         <button onClick={() => handleNavClick('/contact')}>Contact</button>
+         </Link>
+         <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
+         <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
        </div>
      </div>
 

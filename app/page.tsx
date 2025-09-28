@@ -254,7 +254,7 @@ export default function Home() {
                 fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.5rem, 6vw, 4.5rem)', 
                 marginBottom: '1rem'
               }}>
-                What you think, feel and do isn't <span className="accent-text">random</span>
+                What you're thinking, feeling and acting isn't <span className="accent-text">random</span>
               </h1>
               
               <p className="body-large" style={{
@@ -262,7 +262,7 @@ export default function Home() {
                 maxWidth: isMobile ? '100%' : '600px', 
                 fontSize: isMobile ? '1rem' : '1.1rem'
               }}>
-                It's a pattern. It's a protection. It's your truth trying to speak through a body that's never had the space to be heard.
+                It's a form of protection. It's your truth trying to speak through a body that's never had the space to be heard.
               </p>
 
               <p className="body-large" style={{
