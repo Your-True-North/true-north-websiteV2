@@ -487,7 +487,7 @@ export default function Work() {
                         transition: 'all 0.3s ease'
                       }}
                     >
-                      Ready to Book - £200
+                      Book Now
                     </a>
                     
                     <a 
@@ -595,7 +595,7 @@ export default function Work() {
                         transition: 'all 0.3s ease'
                       }}
                     >
-                      Ready to Book - £120
+                      Book Now
                     </a>
                     
                     <a 
