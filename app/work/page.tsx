@@ -231,20 +231,6 @@ export default function Work() {
               position: 'relative',
               transition: 'all 0.4s ease',
               animation: 'slideUp 0.8s ease-out 0.2s both'
-            }}
-            onMouseEnter={(e) => {
-              if (!isMobile) {
-                e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.2)'
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (!isMobile) {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'
-                e.currentTarget.style.boxShadow = 'none'
-              }
             }}>
               <div style={{
                 position: 'absolute',
@@ -294,27 +280,288 @@ export default function Work() {
                     background: 'rgba(0, 0, 0, 0.3)',
                     borderLeft: '3px solid rgba(255, 255, 255, 0.6)',
                     borderRadius: '6px',
-                    transition: 'all 0.3s ease',
-                    animation: `slideUp 0.8s ease-out ${0.4 + index * 0.1}s both`
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isMobile) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)'
-                      e.currentTarget.style.borderLeftColor = 'rgba(255, 255, 255, 0.9)'
-                      e.currentTarget.style.transform = 'translateX(5px)'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isMobile) {
-                      e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)'
-                      e.currentTarget.style.borderLeftColor = 'rgba(255, 255, 255, 0.6)'
-                      e.currentTarget.style.transform = 'translateX(0)'
-                    }
+                    transition: 'all 0.3s ease'
                   }}>
                     <h4 style={{color: 'rgba(255, 255, 255, 0.9)', marginBottom: '0.5rem', fontSize: '1.1rem'}}>{phase.title}</h4>
                     <p style={{color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.95rem', lineHeight: '1.4'}}>
                       {phase.desc}
                     </p>
+                  </div>
+                ))}
+              </div>
+
+              <blockquote style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                fontStyle: 'italic',
+                color: 'rgba(255, 255, 255, 0.9)',
+                textAlign: 'center',
+                margin: '2rem 0',
+                padding: '1rem',
+                borderLeft: 'none',
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '6px'
+              }}>
+                "This is high-level, high-impact coaching — for those who are serious about change."
+              </blockquote>
+
+              <div style={{textAlign: 'center'}}>
+                <a 
+                  href={createWhatsAppLink("Hi Mason, I'm interested in your 12-week 1:1 coaching program. I'm ready for deep transformation and want to discuss if we're a good fit for this level of work.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-block',
+                    padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    color: '#000000',
+                    textDecoration: 'none',
+                    fontWeight: '700',
+                    borderRadius: '6px',
+                    fontSize: isMobile ? '1rem' : '1.1rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Apply for 1:1 Work
+                </a>
+              </div>
+            </div>
+
+            <div style={{
+              marginBottom: '5rem',
+              padding: isMobile ? '2rem' : '3rem',
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              borderRadius: '6px',
+              transition: 'all 0.4s ease',
+              animation: 'slideUp 0.8s ease-out 0.6s both'
+            }}>
+              <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: isMobile ? '2rem' : '2.8rem', 
+                  marginBottom: '1rem', 
+                  color: '#ffffff', 
+                  fontWeight: '700'
+                }}>
+                  The Circle of Return
+                </h2>
+                <p style={{
+                  fontSize: isMobile ? '1.1rem' : '1.3rem',
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  marginBottom: '1rem'
+                }}>
+                  Ongoing community for committed souls who want to keep elevating
+                </p>
+                <p style={{
+                  fontSize: '1rem',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontStyle: 'italic'
+                }}>
+                  Because transformation happens in relationship.
+                </p>
+              </div>
+
+              <div style={{textAlign: 'center'}}>
+                <a href="/circle" style={{
+                  display: 'inline-block',
+                  padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
+                  background: 'transparent',
+                  border: '2px solid rgba(255, 255, 255, 0.7)',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  textDecoration: 'none',
+                  fontWeight: '700',
+                  borderRadius: '6px',
+                  fontSize: isMobile ? '1rem' : '1.1rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  transition: 'all 0.3s ease'
+                }}>
+                  Learn More
+                </a>
+              </div>
+            </div>
+
+            <div style={{marginBottom: '5rem'}}>
+              <div style={{textAlign: 'center', marginBottom: '4rem'}}>
+                <h2 style={{
+                  fontSize: isMobile ? '2rem' : '2.8rem',
+                  marginBottom: '1rem',
+                  color: '#ffffff',
+                  fontWeight: '700'
+                }}>
+                  Individual Sessions
+                </h2>
+                <p style={{
+                  fontSize: isMobile ? '1.1rem' : '1.3rem',
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  maxWidth: '600px',
+                  margin: '0 auto 1rem'
+                }}>
+                  Targeted healing experiences designed to create breakthrough moments in your transformation journey
+                </p>
+                <p style={{
+                  fontSize: '0.9rem',
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  fontStyle: 'italic'
+                }}>
+                  Get 15% off when you book a pack of 5 (mix & match)
+                </p>
+              </div>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
+                gap: '3rem'
+              }}>
+                <div style={{
+                  padding: '2.5rem',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '6px',
+                  position: 'relative',
+                  transition: 'all 0.4s ease'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '-8px',
+                    right: '1rem',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    padding: '0.2rem 0.8rem',
+                    fontSize: '0.7rem',
+                    fontWeight: '600',
+                    borderRadius: '6px'
+                  }}>
+                    BREATHWORK
+                  </div>
+
+                  <h3 style={{
+                    fontSize: isMobile ? '1.5rem' : '2rem', 
+                    marginBottom: '1rem', 
+                    color: '#ffffff', 
+                    fontWeight: '600'
+                  }}>
+                    Breathwork Journey
+                  </h3>
+                  <p style={{
+                    fontSize: '1rem',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    lineHeight: '1.5',
+                    marginBottom: '2rem'
+                  }}>
+                    120 minutes of deep somatic release and spiritual awakening. This isn't relaxation - 
+                    this is transformation through conscious breathing and energy work.
+                  </p>
+
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '2rem'
+                  }}>
+                    <div style={{
+                      fontSize: '2.2rem', 
+                      fontWeight: '300', 
+                      color: 'rgba(255, 255, 255, 0.9)'
+                    }}>£200</div>
+                    <div style={{color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem'}}>120 minutes</div>
+                  </div>
+
+                  <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+                    <a 
+                      href="https://buy.stripe.com/28E9AU9D1c2Fck01bh9IQ0f"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'block',
+                        padding: '1rem',
+                        background: 'rgba(255, 255, 255, 0.9)',
+                        color: '#000',
+                        textDecoration: 'none',
+                        fontWeight: '700',
+                        borderRadius: '6px',
+                        textAlign: 'center',
+                        fontSize: '0.95rem',
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      Ready to Book - £200
+                    </a>
+                    
+                    <a 
+                      href={createWhatsAppLink("Hi Mason, I'd like to learn more about the Breathwork Journey session. What exactly does this 120-minute experience involve and how do I know if it's right for me?")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'block',
+                        padding: '1rem',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        color: '#ffffff',
+                        textDecoration: 'none',
+                        fontWeight: '600',
+                        borderRadius: '6px',
+                        textAlign: 'center',
+                        fontSize: '0.95rem',
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      Learn More
+                    </a>
+                  </div>
+
+                  <div style={{
+                    marginTop: '1.5rem',
+                    paddingTop: '1rem',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                    fontSize: '0.8rem',
+                    color: 'rgba(255, 255, 255, 0.6)'
+                  }}>
+                    Available online (Zoom) or in-person • Deep breathing patterns, somatic release, emotional processing
+                  </div>
+                </div>
+
+                <div style={{
+                  padding: '2.5rem',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '6px',
+                  position: 'relative',
+                  transition: 'all 0.4s ease'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '-8px',
+                    right: '1rem',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: '#ffffff',
+                    padding: '0.2rem 0.8rem',
+                    fontSize: '0.7rem',
+                    fontWeight: '600',
+                    borderRadius: '6px'
+                  }}>
+                    ENERGY HEALING
+                  </div>
+
+                  <h3 style={{
+                    fontSize: isMobile ? '1.5rem' : '2rem', 
+                    marginBottom: '1rem', 
+                    color: '#ffffff', 
+                    fontWeight: '600'
+                  }}>
+                    Energy Healing Experience
+                  </h3>
+                  <p style={{
+                    fontSize: '1rem',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    lineHeight: '1.5',
+                    marginBottom: '2rem'
+                  }}>
+                    90 minutes of deep energetic clearing and spiritual realignment. Reiki-based healing 
+                    that works with your body's natural energy systems.
+                  </p>
 
                   <div style={{
                     display: 'flex',
@@ -347,20 +594,12 @@ export default function Work() {
                         fontSize: '0.95rem',
                         transition: 'all 0.3s ease'
                       }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#ffffff'
-                        e.currentTarget.style.transform = 'translateY(-1px)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
-                        e.currentTarget.style.transform = 'translateY(0)'
-                      }}
                     >
                       Ready to Book - £120
                     </a>
                     
                     <a 
-                      href={createWhatsAppLink("Hi Mason, I'd like to learn more about the Energy Healing Experience. What exactly happens during this 60-minute session and how do I know if it's right for me?")}
+                      href={createWhatsAppLink("Hi Mason, I'd like to learn more about the Energy Healing Experience. What exactly happens during this 90-minute session and how do I know if it's right for me?")}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
@@ -375,14 +614,6 @@ export default function Work() {
                         textAlign: 'center',
                         fontSize: '0.95rem',
                         transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
                       }}
                     >
                       Learn More
@@ -468,14 +699,6 @@ export default function Work() {
                   fontWeight: '500',
                   transition: 'all 0.3s ease',
                   width: isMobile ? '100%' : 'auto'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
                 }}>
                   Free Resources
                 </a>
@@ -494,14 +717,6 @@ export default function Work() {
                     fontSize: '1rem',
                     transition: 'all 0.3s ease',
                     width: isMobile ? '100%' : 'auto'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#ffffff'
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
-                    e.currentTarget.style.transform = 'translateY(0)'
                   }}
                 >
                   Let's Talk
@@ -560,354 +775,3 @@ export default function Work() {
     </>
   )
 }
-                  </div>
-                ))}
-              </div>
-
-              <blockquote style={{
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
-                fontStyle: 'italic',
-                color: 'rgba(255, 255, 255, 0.9)',
-                textAlign: 'center',
-                margin: '2rem 0',
-                padding: '1rem',
-                borderLeft: 'none',
-                background: 'rgba(255, 255, 255, 0.05)',
-                borderRadius: '6px'
-              }}>
-                "This is high-level, high-impact coaching — for those who are serious about change."
-              </blockquote>
-
-              <div style={{textAlign: 'center'}}>
-                <a 
-                  href={createWhatsAppLink("Hi Mason, I'm interested in your 12-week 1:1 coaching program. I'm ready for deep transformation and want to discuss if we're a good fit for this level of work.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-block',
-                    padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    color: '#000000',
-                    textDecoration: 'none',
-                    fontWeight: '700',
-                    borderRadius: '6px',
-                    fontSize: isMobile ? '1rem' : '1.1rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#ffffff'
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = '0 10px 20px rgba(255, 255, 255, 0.2)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = 'none'
-                  }}
-                >
-                  Apply for 1:1 Work
-                </a>
-              </div>
-            </div>
-
-            <div style={{
-              marginBottom: '5rem',
-              padding: isMobile ? '2rem' : '3rem',
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '6px',
-              transition: 'all 0.4s ease',
-              animation: 'slideUp 0.8s ease-out 0.6s both'
-            }}
-            onMouseEnter={(e) => {
-              if (!isMobile) {
-                e.currentTarget.style.transform = 'translateY(-3px)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)'
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (!isMobile) {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'
-              }
-            }}>
-              <div style={{textAlign: 'center', marginBottom: '2rem'}}>
-                <h2 style={{
-                  fontSize: isMobile ? '2rem' : '2.8rem', 
-                  marginBottom: '1rem', 
-                  color: '#ffffff', 
-                  fontWeight: '700'
-                }}>
-                  The Circle of Return
-                </h2>
-                <p style={{
-                  fontSize: isMobile ? '1.1rem' : '1.3rem',
-                  color: 'rgba(255, 255, 255, 0.85)',
-                  marginBottom: '1rem'
-                }}>
-                  Ongoing community for committed souls who want to keep elevating
-                </p>
-                <p style={{
-                  fontSize: '1rem',
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontStyle: 'italic'
-                }}>
-                  Because transformation happens in relationship.
-                </p>
-              </div>
-
-              <div style={{textAlign: 'center'}}>
-                <a href="/circle" style={{
-                  display: 'inline-block',
-                  padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
-                  background: 'transparent',
-                  border: '2px solid rgba(255, 255, 255, 0.7)',
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  textDecoration: 'none',
-                  fontWeight: '700',
-                  borderRadius: '6px',
-                  fontSize: isMobile ? '1rem' : '1.1rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.9)'
-                  e.currentTarget.style.color = '#ffffff'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.7)'
-                  e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'
-                }}>
-                  Learn More
-                </a>
-              </div>
-            </div>
-
-            <div style={{marginBottom: '5rem'}}>
-              <div style={{textAlign: 'center', marginBottom: '4rem'}}>
-                <h2 style={{
-                  fontSize: isMobile ? '2rem' : '2.8rem',
-                  marginBottom: '1rem',
-                  color: '#ffffff',
-                  fontWeight: '700'
-                }}>
-                  Individual Sessions
-                </h2>
-                <p style={{
-                  fontSize: isMobile ? '1.1rem' : '1.3rem',
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  maxWidth: '600px',
-                  margin: '0 auto 1rem'
-                }}>
-                  Targeted healing experiences designed to create breakthrough moments in your transformation journey
-                </p>
-                <p style={{
-                  fontSize: '0.9rem',
-                  color: 'rgba(255, 255, 255, 0.6)',
-                  fontStyle: 'italic'
-                }}>
-                  Get 15% off when you book a pack of 5 (mix & match)
-                </p>
-              </div>
-
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
-                gap: '3rem'
-              }}>
-                <div style={{
-                  padding: '2.5rem',
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px',
-                  position: 'relative',
-                  transition: 'all 0.4s ease'
-                }}
-                onMouseEnter={(e) => {
-                  if (!isMobile) {
-                    e.currentTarget.style.transform = 'translateY(-5px)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isMobile) {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'
-                  }
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    top: '-8px',
-                    right: '1rem',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#ffffff',
-                    padding: '0.2rem 0.8rem',
-                    fontSize: '0.7rem',
-                    fontWeight: '600',
-                    borderRadius: '6px'
-                  }}>
-                    BREATHWORK
-                  </div>
-
-                  <h3 style={{
-                    fontSize: isMobile ? '1.5rem' : '2rem', 
-                    marginBottom: '1rem', 
-                    color: '#ffffff', 
-                    fontWeight: '600'
-                  }}>
-                    Breathwork Journey
-                  </h3>
-                  <p style={{
-                    fontSize: '1rem',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    lineHeight: '1.5',
-                    marginBottom: '2rem'
-                  }}>
-                    120 minutes of deep somatic release and spiritual awakening. This isn't relaxation - 
-                    this is transformation through conscious breathing and energy work.
-                  </p>
-
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: '2rem'
-                  }}>
-                    <div style={{
-                      fontSize: '2.2rem', 
-                      fontWeight: '300', 
-                      color: 'rgba(255, 255, 255, 0.9)'
-                    }}>£200</div>
-                    <div style={{color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem'}}>120 minutes</div>
-                  </div>
-
-                  <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                    <a 
-                      href="https://buy.stripe.com/28E9AU9D1c2Fck01bh9IQ0f"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'block',
-                        padding: '1rem',
-                        background: 'rgba(255, 255, 255, 0.9)',
-                        color: '#000',
-                        textDecoration: 'none',
-                        fontWeight: '700',
-                        borderRadius: '6px',
-                        textAlign: 'center',
-                        fontSize: '0.95rem',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#ffffff'
-                        e.currentTarget.style.transform = 'translateY(-1px)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
-                        e.currentTarget.style.transform = 'translateY(0)'
-                      }}
-                    >
-                      Ready to Book - £200
-                    </a>
-                    
-                    <a 
-                      href={createWhatsAppLink("Hi Mason, I'd like to learn more about the Breathwork Journey session. What exactly does this 120-minute experience involve and how do I know if it's right for me?")}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'block',
-                        padding: '1rem',
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        color: '#ffffff',
-                        textDecoration: 'none',
-                        fontWeight: '600',
-                        borderRadius: '6px',
-                        textAlign: 'center',
-                        fontSize: '0.95rem',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                      }}
-                    >
-                      Learn More
-                    </a>
-                  </div>
-
-                  <div style={{
-                    marginTop: '1.5rem',
-                    paddingTop: '1rem',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                    fontSize: '0.8rem',
-                    color: 'rgba(255, 255, 255, 0.6)'
-                  }}>
-                    Available online (Zoom) or in-person • Deep breathing patterns, somatic release, emotional processing
-                  </div>
-                </div>
-
-                <div style={{
-                  padding: '2.5rem',
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px',
-                  position: 'relative',
-                  transition: 'all 0.4s ease'
-                }}
-                onMouseEnter={(e) => {
-                  if (!isMobile) {
-                    e.currentTarget.style.transform = 'translateY(-5px)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isMobile) {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'
-                  }
-                }}>
-                  <div style={{
-                    position: 'absolute',
-                    top: '-8px',
-                    right: '1rem',
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#ffffff',
-                    padding: '0.2rem 0.8rem',
-                    fontSize: '0.7rem',
-                    fontWeight: '600',
-                    borderRadius: '6px'
-                  }}>
-                    ENERGY HEALING
-                  </div>
-
-                  <h3 style={{
-                    fontSize: isMobile ? '1.5rem' : '2rem', 
-                    marginBottom: '1rem', 
-                    color: '#ffffff', 
-                    fontWeight: '600'
-                  }}>
-                    Energy Healing Experience
-                  </h3>
-                  <p style={{
-                    fontSize: '1rem',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    lineHeight: '1.5',
-                    marginBottom: '2rem'
-                  }}>
-                    60 minutes of deep energetic clearing and spiritual realignment. Reiki-based healing 
-                    that works with your body's natural energy systems.

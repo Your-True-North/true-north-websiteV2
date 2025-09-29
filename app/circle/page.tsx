@@ -144,7 +144,7 @@ export default function Circle() {
                     desc: "You don't need to explain, impress, or have it all figured out. You just need to show up - messy, honest, and ready."
                   },
                   {
-                    title: '4. We meet what's real.',
+                    title: '4. We meet what is real.',
                     desc: "There's no bypassing here. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity."
                   },
                   {
@@ -152,7 +152,7 @@ export default function Circle() {
                     desc: "The shifts happen in the nervous system. In your breath. In your relationships."
                   },
                   {
-                    title: '6. You're not here to be fixed.',
+                    title: '6. You\'re not here to be fixed.',
                     desc: "You're here to return to what's always been underneath, waiting to be remembered."
                   }
                 ].map((principle, index) => (
