@@ -55,30 +55,181 @@ export default function Circle() {
       <Navigation />
       <MysticalBackground />
       
-      <main className="page-container">
+      {/* Diagonal Shimmer Effect */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+        pointerEvents: 'none',
+        zIndex: 1
+      }}>
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              width: '2px',
+              height: '100%',
+              background: 'linear-gradient(180deg, transparent, rgba(255,255,255,0.15), transparent)',
+              animation: `shimmer ${8 + i * 2}s linear infinite`,
+              animationDelay: `${i * 2}s`,
+              transform: 'rotate(-45deg)',
+              transformOrigin: 'top left'
+            }}
+          />
+        ))}
+      </div>
+      
+      <main className="page-container" style={{position: 'relative', zIndex: 2}}>
+        {/* Hero Section with Video */}
         <section className="section" style={{
           paddingTop: isMobile ? '6rem' : '8rem',
-          paddingBottom: '4rem'
+          paddingBottom: '2rem'
         }}>
-          <div className="container" style={{maxWidth: '900px', margin: '0 auto'}}>
+          <div className="container" style={{maxWidth: '1200px', margin: '0 auto'}}>
             
-            <div style={{textAlign: 'center', marginBottom: '4rem'}}>
+            <div style={{textAlign: 'center', marginBottom: '3rem'}}>
               <h1 style={{
                 fontSize: isMobile ? '2.5rem' : '3.5rem',
                 marginBottom: '2rem',
                 color: '#ffffff',
                 fontWeight: '700',
-                lineHeight: '1.1'
+                lineHeight: '1.1',
+                background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.8) 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
               }}>
                 The Circle of Return
               </h1>
+              
+              {/* Login Buttons */}
+              <div style={{
+                display: 'flex',
+                gap: '1rem',
+                justifyContent: 'center',
+                marginBottom: '3rem',
+                flexWrap: 'wrap'
+              }}>
+                <a
+                  href="/auth/login"
+                  style={{
+                    padding: '0.8rem 1.5rem',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                  }}
+                >
+                  Member Login
+                </a>
+                <a
+                  href="/admin"
+                  style={{
+                    padding: '0.8rem 1.5rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    textDecoration: 'none',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.color = '#ffffff'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'
+                  }}
+                >
+                  Admin Access
+                </a>
+              </div>
+
+              {/* YouTube Video Embed */}
+              <div style={{
+                marginBottom: '3rem',
+                maxWidth: '900px',
+                margin: '0 auto 3rem auto'
+              }}>
+                <div style={{
+                  position: 'relative',
+                  paddingBottom: '56.25%',
+                  height: 0,
+                  overflow: 'hidden',
+                  borderRadius: '6px',
+                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                }}>
+                  {/* Charcoal Grey Overlay */}
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'radial-gradient(circle at center, transparent 30%, rgba(30, 30, 30, 0.4) 70%, rgba(20, 20, 20, 0.8) 100%)',
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                    borderRadius: '6px'
+                  }} />
+                  
+                  <iframe
+                    src="YOUR_YOUTUBE_VIDEO_ID_HERE"
+                    title="Circle of Return Introduction"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 'none'
+                    }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <p style={{
+                  fontSize: '0.85rem',
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  marginTop: '1rem',
+                  fontStyle: 'italic'
+                }}>
+                  Replace YOUR_YOUTUBE_VIDEO_ID_HERE with your actual YouTube embed URL
+                </p>
+              </div>
             </div>
 
             <div style={{
               fontSize: isMobile ? '1.1rem' : '1.2rem',
               lineHeight: '1.8',
               color: 'rgba(255, 255, 255, 0.9)',
-              marginBottom: '4rem'
+              marginBottom: '4rem',
+              padding: isMobile ? '2rem' : '3rem',
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              borderRadius: '6px',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
               <p style={{marginBottom: '1.5rem'}}>
                 This isn't a community or a group coaching programme.
@@ -103,7 +254,11 @@ export default function Circle() {
                 fontWeight: '600',
                 color: '#ffffff',
                 fontSize: isMobile ? '1.2rem' : '1.3rem',
-                marginTop: '2rem'
+                marginTop: '2rem',
+                background: 'linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.9) 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
               }}>
                 Know this: there's wisdom in your wounds. There's purpose in your pain.
               </p>
@@ -160,7 +315,17 @@ export default function Circle() {
                     padding: '1.5rem',
                     background: 'rgba(255, 255, 255, 0.03)',
                     borderLeft: '3px solid rgba(255, 255, 255, 0.4)',
-                    borderRadius: '6px'
+                    borderRadius: '6px',
+                    backdropFilter: 'blur(10px)',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'
+                    e.currentTarget.style.borderLeftColor = 'rgba(255, 255, 255, 0.6)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'
+                    e.currentTarget.style.borderLeftColor = 'rgba(255, 255, 255, 0.4)'
                   }}>
                     <h3 style={{
                       fontSize: isMobile ? '1.1rem' : '1.2rem',
@@ -342,7 +507,8 @@ export default function Circle() {
               padding: isMobile ? '2.5rem 1.5rem' : '3rem 2rem',
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
               borderRadius: '6px',
-              border: '1px solid rgba(255, 255, 255, 0.15)'
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(20px)'
             }}>
               <h2 style={{
                 fontSize: isMobile ? '1.6rem' : '2rem',
@@ -466,6 +632,15 @@ export default function Circle() {
       <Footer />
 
       <style jsx>{`
+        @keyframes shimmer {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 200%;
+          }
+        }
+        
         @keyframes fadeInUp {
           from {
             opacity: 0;
