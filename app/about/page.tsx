@@ -68,34 +68,31 @@ export default function About() {
           display: 'flex',
           alignItems: 'center'
         }}>
+          {/* Background Image */}
           <div style={{
             position: 'absolute',
-            top: isMobile ? '0' : '50%',
-            left: isMobile ? '0' : '50%',
-            transform: isMobile ? 'none' : 'translate(-50%, -50%)',
-            width: isMobile ? '100%' : '600px',
-            height: isMobile ? '100%' : '600px',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
             backgroundImage: 'url(/glasses.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            opacity: isMobile ? 0.7 : 0.25,
-            maskImage: isMobile ? 'none' : 'radial-gradient(circle, black 50%, transparent 80%)',
-            WebkitMaskImage: isMobile ? 'none' : 'radial-gradient(circle, black 50%, transparent 80%)',
-            filter: isMobile ? 'none' : `drop-shadow(0 0 60px ${currentTheme.shimmer})`,
             zIndex: 1
           }} />
-          
-          {isMobile && (
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              background: 'linear-gradient(180deg, rgba(10,10,11,0.3) 0%, rgba(10,10,11,0.1) 50%, rgba(10,10,11,0.4) 100%)',
-              zIndex: 2
-            }} />
-          )}
+
+          {/* Dark Overlay for Text Contrast */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: isMobile 
+              ? 'linear-gradient(180deg, rgba(10,10,11,0.75) 0%, rgba(10,10,11,0.5) 50%, rgba(10,10,11,0.8) 100%)'
+              : 'radial-gradient(ellipse at center, rgba(10,10,11,0.4) 0%, rgba(10,10,11,0.7) 60%, rgba(10,10,11,0.9) 100%)',
+            zIndex: 2
+          }} />
           
           <div className="container" style={{ 
             position: 'relative', 
@@ -110,7 +107,7 @@ export default function About() {
               <h1 className="h1" style={{ 
                 marginBottom: isMobile ? '0.5rem' : '1rem',
                 fontSize: isMobile ? 'clamp(1.8rem, 7vw, 2.5rem)' : undefined,
-                textShadow: isMobile ? '2px 2px 4px rgba(0, 0, 0, 0.7)' : undefined
+                color: '#ffffff'
               }}>
                 TRUE NORTH
               </h1>
@@ -119,9 +116,9 @@ export default function About() {
                 fontSize: isMobile ? '0.85rem' : '1rem',
                 lineHeight: '1.4',
                 fontWeight: '600',
-                textShadow: isMobile ? '1px 1px 2px rgba(0, 0, 0, 0.7)' : undefined,
                 letterSpacing: '1px',
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
+                color: 'rgba(255, 255, 255, 0.9)'
               }}>
                 Coaching, Breathwork, Energy Work, Somatic Therapy
               </p>
@@ -130,7 +127,7 @@ export default function About() {
                 fontSize: isMobile ? '1rem' : '1.3rem',
                 lineHeight: '1.6',
                 fontWeight: '400',
-                textShadow: isMobile ? '1px 1px 2px rgba(0, 0, 0, 0.7)' : undefined
+                color: '#ffffff'
               }}>
                 I'm not a guru. I'm not your therapist. I'm someone who's lived it.
               </p>
