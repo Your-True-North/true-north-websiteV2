@@ -152,7 +152,7 @@ export default function Circle() {
                     desc: "The shifts happen in the nervous system. In your breath. In your relationships."
                   },
                   {
-                    title: '6. You\'re not here to be fixed.',
+                    title: '6. You are not here to be fixed.',
                     desc: "You're here to return to what's always been underneath, waiting to be remembered."
                   }
                 ].map((principle, index) => (
