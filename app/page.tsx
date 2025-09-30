@@ -217,15 +217,15 @@ export default function Home() {
             backgroundImage: 'url(/serious.jpg)', 
             backgroundSize: 'cover',
             backgroundPosition: isMobile ? 'center center' : 'center top', 
-            opacity: isMobile ? 0.7 : 0.2, 
             zIndex: 1
           }}>
+            {/* Darker overlay */}
             <div style={{
               position: 'absolute', 
               inset: 0,
               background: isMobile 
-                ? 'linear-gradient(to bottom, rgba(10, 10, 11, 0.6) 0%, rgba(10, 10, 11, 0.4) 50%, rgba(10, 10, 11, 0.7) 100%)'
-                : 'linear-gradient(90deg, #0a0a0b 0%, #0a0a0b 10%, rgba(10, 10, 11, 0.8) 20%, rgba(10, 10, 11, 0.4) 40%, transparent 60%)'
+                ? 'linear-gradient(to bottom, rgba(10, 10, 11, 0.75) 0%, rgba(10, 10, 11, 0.6) 50%, rgba(10, 10, 11, 0.85) 100%)'
+                : 'linear-gradient(90deg, #0a0a0b 0%, rgba(10, 10, 11, 0.95) 15%, rgba(10, 10, 11, 0.85) 30%, rgba(10, 10, 11, 0.6) 50%, transparent 70%)'
             }}></div>
           </div>
 
@@ -251,27 +251,20 @@ export default function Home() {
               </div>
               
               <h1 className="h1 shimmer-accent" style={{
-                fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.5rem, 6vw, 4.5rem)', 
-                marginBottom: '1rem'
+                fontSize: isMobile ? 'clamp(2.2rem, 9vw, 3.5rem)' : 'clamp(3rem, 7vw, 5rem)', 
+                marginBottom: '1.5rem',
+                lineHeight: '1.1'
               }}>
                 How you're thinking, feeling and acting isn't <span className="accent-text">random</span>
               </h1>
               
               <p className="body-large" style={{
-                marginBottom: '2rem', 
-                maxWidth: isMobile ? '100%' : '600px', 
-                fontSize: isMobile ? '1rem' : '1.1rem'
-              }}>
-                It's protection. It's your truth trying to speak through a body that's never had the space to be heard.
-              </p>
-
-              <p className="body-large" style={{
                 marginBottom: '3rem', 
-                maxWidth: isMobile ? '100%' : '600px', 
-                fontSize: isMobile ? '1rem' : '1.1rem',
-                fontWeight: '600'
+                maxWidth: isMobile ? '100%' : '650px', 
+                fontSize: isMobile ? '1.05rem' : '1.2rem',
+                lineHeight: '1.7'
               }}>
-                This isn't coaching. This isn't performance. This is a return to the self underneath the pressure and your reactions.
+                It's protection. It's your truth showing itself in your behaviour, your emotions, your patterns — because it's never had the chance to be heard.
               </p>
               
               <div style={{
@@ -281,16 +274,16 @@ export default function Home() {
                 justifyContent: isMobile ? 'center' : 'flex-start'
               }}>
                 <Link href="/work" className="btn-primary" style={{
-                  borderRadius: '0.3rem', 
-                  padding: '0.8rem 1.5rem', 
-                  fontSize: '0.95rem'
+                  borderRadius: '6px', 
+                  padding: '1rem 2rem', 
+                  fontSize: '1rem'
                 }}>
                   Start Your Journey <span>→</span>
                 </Link>
                 <Link href="/about" className="btn-secondary" style={{
-                  borderRadius: '0.3rem', 
-                  padding: '0.8rem 1.5rem', 
-                  fontSize: '0.95rem'
+                  borderRadius: '6px', 
+                  padding: '1rem 2rem', 
+                  fontSize: '1rem'
                 }}>
                   My Story
                 </Link>
@@ -502,16 +495,16 @@ export default function Home() {
                     flexWrap: 'wrap'
                   }}>
                     <Link href={recommendations[recommendation].link} className="btn-primary" style={{
-                      borderRadius: '0.3rem', 
-                      padding: '0.8rem 1.5rem', 
-                      fontSize: '0.95rem'
+                      borderRadius: '6px', 
+                      padding: '1rem 2rem', 
+                      fontSize: '1rem'
                     }}>
                       {recommendations[recommendation].cta} <span>→</span>
                     </Link>
                     <button onClick={resetQuiz} className="btn-secondary" style={{
-                      borderRadius: '0.3rem', 
-                      padding: '0.8rem 1.5rem', 
-                      fontSize: '0.95rem'
+                      borderRadius: '6px', 
+                      padding: '1rem 2rem', 
+                      fontSize: '1rem'
                     }}>
                       Take Again
                     </button>
@@ -590,16 +583,16 @@ export default function Home() {
                 flexWrap: 'wrap'
               }}>
                 <Link href="/contact" className="btn-primary" style={{
-                  borderRadius: '0.3rem', 
-                  padding: '0.8rem 1.5rem', 
-                  fontSize: '0.95rem'
+                  borderRadius: '6px', 
+                  padding: '1rem 2rem', 
+                  fontSize: '1rem'
                 }}>
                   Book Discovery Call <span>→</span>
                 </Link>
                 <Link href="/library" className="btn-secondary" style={{
-                  borderRadius: '0.3rem', 
-                  padding: '0.8rem 1.5rem', 
-                  fontSize: '0.95rem'
+                  borderRadius: '6px', 
+                  padding: '1rem 2rem', 
+                  fontSize: '1rem'
                 }}>
                   Free Resources
                 </Link>

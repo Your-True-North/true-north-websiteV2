@@ -1,58 +1,87 @@
-const userService = { async createUser() { return {} }, async findUserByEmail() { return null } };
-const activityService = { async logActivity() { return {} } };
-const commentService = { async getComments() { return [] }, async createComment() { return {} } };
-const reactionService = { async getReactions() { return [] }, async addReaction() { return {} } };
-const videoService = { async getAllVideos() { return [] }, async getVideoById() { return {} } };// app/api/auth/login/route.ts
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { Pool } from 'pg'
 
-export async function POST(request) {
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+})
+
+const userService = {
+  async findByEmail(email: string) {
+    const result = await pool.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email]
+    )
+    return result.rows[0] || null
+  },
+
+  async updateLastLogin(userId: number) {
+    await pool.query(
+      'UPDATE users SET last_login = NOW() WHERE id = $1',
+      [userId]
+    )
+  },
+
+  getUserLevel(joinDate: Date) {
+    const now = new Date()
+    const daysSinceJoin = Math.floor((now.getTime() - new Date(joinDate).getTime()) / (1000 * 60 * 60 * 24))
+    
+    if (daysSinceJoin < 30) {
+      return { level: 'Seeker', daysUntilNext: 30 - daysSinceJoin, nextLevel: 'Explorer' }
+    } else if (daysSinceJoin < 90) {
+      return { level: 'Explorer', daysUntilNext: 90 - daysSinceJoin, nextLevel: 'Pathfinder' }
+    } else if (daysSinceJoin < 180) {
+      return { level: 'Pathfinder', daysUntilNext: 180 - daysSinceJoin, nextLevel: 'Guide' }
+    } else {
+      return { level: 'Guide', daysUntilNext: 0, nextLevel: null }
+    }
+  }
+}
+
+export async function POST(request: Request) {
   try {
-    const { email, password } = await request.tson()
+    const { email, password } = await request.json()
 
     if (!email || !password) {
-      return NextResponse.tson(
+      return NextResponse.json(
         { error: 'Email and password are required' },
         { status: 400 }
       )
     }
 
-    // Find user by email
     const user = await userService.findByEmail(email)
     
     if (!user) {
-      return NextResponse.tson(
+      return NextResponse.json(
         { error: 'Invalid credentials' },
         { status: 401 }
       )
     }
 
-    // Check if user is active
-    if (!user.isActive) {
-      return NextResponse.tson(
+    if (!user.is_active) {
+      return NextResponse.json(
         { error: 'Account is inactive. Please contact support.' },
         { status: 401 }
       )
     }
 
-    // Verify password
     const isValidPassword = await bcrypt.compare(password, user.password)
     
     if (!isValidPassword) {
-      return NextResponse.tson(
+      return NextResponse.json(
         { error: 'Invalid credentials' },
         { status: 401 }
       )
     }
 
-    // Update last login
     await userService.updateLastLogin(user.id)
 
-    // Get user level
-    const levelInfo = userService.getUserLevel(user.joinDate)
+    const levelInfo = userService.getUserLevel(user.join_date)
 
-    // Create JWT token
     const token = jwt.sign(
       { 
         userId: user.id, 
@@ -71,18 +100,27 @@ export async function POST(request) {
       level: levelInfo.level,
       daysUntilNext: levelInfo.daysUntilNext,
       nextLevel: levelInfo.nextLevel,
-      joinDate: user.joinDate
+      joinDate: user.join_date
     }
 
-    return NextResponse.tson({
+    const response = NextResponse.json({
       success: true,
       user: userData,
       token
     })
 
+    response.cookies.set('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30
+    })
+
+    return response
+
   } catch (error) {
     console.error('Login error:', error)
-    return NextResponse.tson(
+    return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
     )
