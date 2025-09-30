@@ -11,7 +11,7 @@ const pool = new Pool({
 })
 
 const userService = {
-  async findByEmail(email: string) {
+  async findByEmail(email) {
     const result = await pool.query(
       'SELECT * FROM users WHERE email = $1',
       [email]
@@ -19,14 +19,14 @@ const userService = {
     return result.rows[0] || null
   },
 
-  async updateLastLogin(userId: number) {
+  async updateLastLogin(userId) {
     await pool.query(
       'UPDATE users SET last_login = NOW() WHERE id = $1',
       [userId]
     )
   },
 
-  getUserLevel(joinDate: Date) {
+  getUserLevel(joinDate) {
     const now = new Date()
     const daysSinceJoin = Math.floor((now.getTime() - new Date(joinDate).getTime()) / (1000 * 60 * 60 * 24))
     
@@ -42,7 +42,7 @@ const userService = {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request) {
   try {
     const { email, password } = await request.json()
 
