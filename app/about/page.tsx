@@ -62,13 +62,12 @@ export default function About() {
         
         <section className="section" style={{ 
           paddingTop: isMobile ? '0' : '2rem', 
-          paddingBottom: isMobile ? '0' : '4rem',
+          paddingBottom: isMobile ? '3rem' : '4rem',
           position: 'relative',
           minHeight: isMobile ? '100vh' : '90vh',
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'flex-end'
         }}>
-          {/* Background Image */}
           <div style={{
             position: 'absolute',
             top: 0,
@@ -77,11 +76,10 @@ export default function About() {
             height: '100%',
             backgroundImage: 'url(/glasses.jpg)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: isMobile ? 'center top' : 'center',
             zIndex: 1
           }} />
 
-          {/* Dark Overlay for Text Contrast */}
           <div style={{
             position: 'absolute',
             top: 0,
@@ -89,8 +87,8 @@ export default function About() {
             width: '100%',
             height: '100%',
             background: isMobile 
-              ? 'linear-gradient(180deg, rgba(10,10,11,0.75) 0%, rgba(10,10,11,0.5) 50%, rgba(10,10,11,0.8) 100%)'
-              : 'radial-gradient(ellipse at center, rgba(10,10,11,0.4) 0%, rgba(10,10,11,0.7) 60%, rgba(10,10,11,0.9) 100%)',
+              ? 'linear-gradient(180deg, rgba(10,10,11,0.80) 0%, rgba(10,10,11,0.60) 50%, rgba(10,10,11,0.90) 100%)'
+              : 'radial-gradient(ellipse at center, rgba(10,10,11,0.50) 0%, rgba(10,10,11,0.75) 60%, rgba(10,10,11,0.95) 100%)',
             zIndex: 2
           }} />
           
@@ -102,37 +100,38 @@ export default function About() {
             <div style={{ 
               textAlign: 'center', 
               maxWidth: '900px', 
-              margin: '0 auto'
+              margin: '0 auto',
+              paddingBottom: isMobile ? '2rem' : '3rem'
             }}>
+              <div style={{
+                display: 'inline-block', 
+                background: 'rgba(56, 72, 93, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.2)', 
+                padding: '0.4rem 0.8rem',
+                borderRadius: '20px', 
+                fontSize: '0.75rem', 
+                color: 'rgba(255, 255, 255, 0.7)',
+                marginBottom: '1.5rem', 
+                backdropFilter: 'blur(10px)'
+              }}>
+                My Story
+              </div>
+              
               <h1 className="h1" style={{ 
-                marginBottom: isMobile ? '0.5rem' : '1rem',
-                fontSize: isMobile ? 'clamp(1.8rem, 7vw, 2.5rem)' : undefined,
-                color: '#ffffff'
+                marginBottom: isMobile ? '1.5rem' : '2rem',
+                fontSize: isMobile ? 'clamp(1.8rem, 7vw, 2.5rem)' : 'clamp(2.5rem, 5vw, 3.5rem)',
+                color: '#ffffff',
+                lineHeight: '1.2'
               }}>
-                TRUE NORTH
+                I'm not your guru. I'm not your therapist. I'm your guide as someone who's lived it.
               </h1>
-              <p className="body-large" style={{ 
-                marginBottom: isMobile ? '1rem' : '2rem',
-                fontSize: isMobile ? '0.85rem' : '1rem',
-                lineHeight: '1.4',
-                fontWeight: '600',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                color: 'rgba(255, 255, 255, 0.9)'
+              
+              <Link href="/work" className="btn-primary" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem'
               }}>
-                Coaching, Breathwork, Energy Work, Somatic Therapy
-              </p>
-              <p className="body-large" style={{ 
-                marginBottom: isMobile ? '2rem' : '4rem',
-                fontSize: isMobile ? '1rem' : '1.3rem',
-                lineHeight: '1.6',
-                fontWeight: '400',
-                color: '#ffffff'
-              }}>
-                I'm not a guru. I'm not your therapist. I'm someone who's lived it.
-              </p>
-              <Link href="/work" className="btn-primary">
-                Start Your Journey
+                Start Your Journey <span>→</span>
               </Link>
             </div>
           </div>
@@ -236,8 +235,8 @@ export default function About() {
               </p>
               
               <div style={{ textAlign: 'center' }}>
-                <Link href="/work" className="btn-primary" style={{ fontSize: '1.1rem', padding: '1rem 2rem' }}>
-                  Start Your Shift
+                <Link href="/work" className="btn-primary" style={{ fontSize: '1.1rem', padding: '1rem 2rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                  Start Your Shift <span>→</span>
                 </Link>
               </div>
             </div>
@@ -370,8 +369,8 @@ export default function About() {
               <p className="body-large" style={{ marginBottom: '3rem', lineHeight: '1.8' }}>
                 Let's shift what's been holding you back and help you step into who you truly are — grounded, clear, and powerful.
               </p>
-              <Link href="/work" className="btn-primary" style={{ fontSize: '1.1rem', padding: '1rem 2rem' }}>
-                Start Your Shift
+              <Link href="/work" className="btn-primary" style={{ fontSize: '1.1rem', padding: '1rem 2rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                Start Your Shift <span>→</span>
               </Link>
             </div>
           </div>
@@ -380,13 +379,13 @@ export default function About() {
         <Footer />
       </div>
       
-<style jsx>{`
-  @keyframes shimmer {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-200%); }
-    100% { transform: translateY(-400%); }
-  }
-`}</style>
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-200%); }
+          100% { transform: translateY(-400%); }
+        }
+      `}</style>
     </>
   )
 }
