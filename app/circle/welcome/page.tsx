@@ -222,7 +222,7 @@ export default function CircleWelcome() {
               {[
                 {
                   title: 'Within minutes',
-                  desc: 'Your email will arrive. Inside, you'll find your member login and the gateway to The Circle. Check everywhere — inbox, promotions, spam. It's there, waiting.'
+                  desc: "Your email will arrive. Inside, you'll find your member login and the gateway to The Circle. Check everywhere — inbox, promotions, spam. It's there, waiting."
                 },
                 {
                   title: 'Your first step',
