@@ -172,11 +172,11 @@ export default function CircleWelcome() {
               fontWeight: '300'
             }}>
               <p style={{ marginBottom: '2rem' }}>
-                This isn't about becoming someone new.
+                This isn&apos;t about becoming someone new.
               </p>
               
               <p style={{ marginBottom: '2rem' }}>
-                It's about returning to who you've always been underneath the noise, 
+                It&apos;s about returning to who you&apos;ve always been underneath the noise, 
                 the expectations, and the patterns that kept you stuck.
               </p>
 
@@ -222,19 +222,19 @@ export default function CircleWelcome() {
               {[
                 {
                   title: 'Within minutes',
-                  desc: "Your email will arrive. Inside, you'll find your member login and the gateway to The Circle. Check everywhere — inbox, promotions, spam. It's there, waiting."
+                  desc: "Your email will arrive. Inside, you&apos;ll find your member login and the gateway to The Circle. Check everywhere — inbox, promotions, spam. It&apos;s there, waiting."
                 },
                 {
                   title: 'Your first step',
-                  desc: 'Enter the private portal. Inside, you'll discover the Foundation Module — your guided introduction to the work. No rush. No pressure. Just presence.'
+                  desc: "Enter the private portal. Inside, you&apos;ll discover the Foundation Module — your guided introduction to the work. No rush. No pressure. Just presence."
                 },
                 {
                   title: 'The weekly rhythm',
-                  desc: 'New content drops every week. Live sessions. Somatic practices. Real-time guidance. This is where the nervous system shifts and the patterns break.'
+                  desc: "New content drops every week. Live sessions. Somatic practices. Real-time guidance. This is where the nervous system shifts and the patterns break."
                 },
                 {
                   title: 'The community',
-                  desc: 'You're not doing this alone. Inside The Circle, others are walking the same path — showing up messy, honest, and committed to the return.'
+                  desc: "You&apos;re not doing this alone. Inside The Circle, others are walking the same path — showing up messy, honest, and committed to the return."
                 }
               ].map((item, index) => (
                 <div key={index} style={{
