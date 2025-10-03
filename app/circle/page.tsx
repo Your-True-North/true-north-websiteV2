@@ -1,6 +1,5 @@
 'use client'
 import Navigation from '../components/Navigation'
-import Footer from '../components/Footer'
 import MysticalBackground from '../components/MysticalBackground'
 import { useState, useEffect } from 'react'
 
@@ -9,6 +8,7 @@ export default function Circle() {
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState('')
+  const [pricingPlan, setPricingPlan] = useState('yearly')
   
   useEffect(() => {
     const checkMobile = () => {
@@ -67,7 +67,7 @@ export default function Circle() {
       const data = await response.json()
 
       if (response.ok) {
-        setMessage("You're on the waitlist. Check your email.")
+        setMessage("You&apos;re on the waitlist. Check your email.")
         setEmail('')
       } else {
         setMessage(data.error || 'Something went wrong. Try again.')
@@ -172,7 +172,7 @@ export default function Circle() {
               textShadow: '0 2px 10px rgba(0,0,0,0.8)',
               lineHeight: '1.6'
             }}>
-              This isn't a community or a group coaching programme.
+              This isn&apos;t a community or a group coaching programme.
             </p>
 
             <button
@@ -232,7 +232,7 @@ export default function Circle() {
                   textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
                   lineHeight: '1.4'
                 }}>
-                  If you join, you're entering a portal - a space to return to yourself. 
+                  If you join, you&apos;re entering a portal - a space to return to yourself. 
                   <span style={{
                     background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%)',
                     WebkitBackgroundClip: 'text',
@@ -258,7 +258,7 @@ export default function Circle() {
                   backdropFilter: 'blur(10px)'
                 }}>
                   <p style={{marginBottom: 0}}>
-                    You've built your current identity around survival, pressure, and who you <strong style={{color: '#ffffff'}}>should</strong> be in a world full of expectations.
+                    You&apos;ve built your current identity around survival, pressure, and who you <strong style={{color: '#ffffff'}}>should</strong> be in a world full of expectations.
                   </p>
                 </div>
                 
@@ -270,7 +270,7 @@ export default function Circle() {
                   backdropFilter: 'blur(10px)'
                 }}>
                   <p style={{marginBottom: 0}}>
-                    But something deeper has been calling and you've felt it for a while.
+                    But something deeper has been calling and you&apos;ve felt it for a while.
                   </p>
                 </div>
                 
@@ -282,7 +282,7 @@ export default function Circle() {
                   backdropFilter: 'blur(10px)'
                 }}>
                   <p style={{marginBottom: 0}}>
-                    You're seeking connection with the self you <em style={{color: 'rgba(123, 166, 155, 0.9)', fontStyle: 'normal', fontWeight: '600'}}>know</em> is there. The version of you that's more fearless, more grounded, more powerful but still stuck beneath the pain from your wounds.
+                    You&apos;re seeking connection with the self you <em style={{color: 'rgba(123, 166, 155, 0.9)', fontStyle: 'normal', fontWeight: '600'}}>know</em> is there. The version of you that&apos;s more fearless, more grounded, more powerful but still stuck beneath the pain from your wounds.
                   </p>
                 </div>
               </div>
@@ -303,9 +303,9 @@ export default function Circle() {
                   lineHeight: '1.3',
                   marginBottom: 0
                 }}>
-                  Know this: there's wisdom in your wounds. 
+                  Know this: there&apos;s wisdom in your wounds. 
                   <br />
-                  There's purpose in your pain.
+                  There&apos;s purpose in your pain.
                 </p>
               </div>
             </div>
@@ -334,27 +334,27 @@ export default function Circle() {
                 {[
                   {
                     title: '1. No performance.',
-                    desc: "You won't find small talk here. Just people doing the real work—quietly, consistently, and without needing to prove anything."
+                    desc: "You won&apos;t find small talk here. Just people doing the real work—quietly, consistently, and without needing to prove anything."
                   },
                   {
                     title: '2. Return, not reinvention.',
-                    desc: "This isn't about becoming someone new. It's about coming back to who you are underneath the survival, the pain, and the patterns."
+                    desc: "This isn&apos;t about becoming someone new. It&apos;s about coming back to who you are underneath the survival, the pain, and the patterns."
                   },
                   {
                     title: '3. No pressure to perform healing.',
-                    desc: "You don't need to explain, impress, or have it all figured out. You just need to show up - messy, honest, and ready."
+                    desc: "You don&apos;t need to explain, impress, or have it all figured out. You just need to show up - messy, honest, and ready."
                   },
                   {
-                    title: "4. We meet what's real.",
-                    desc: "There's no bypassing here. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity."
+                    title: "4. We meet what&apos;s real.",
+                    desc: "There&apos;s no bypassing here. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity."
                   },
                   {
                     title: '5. This is body-first, truth-led work.',
                     desc: "The shifts happen in the nervous system. In your breath. In your relationships."
                   },
                   {
-                    title: "6. You're not here to be fixed.",
-                    desc: "You're here to return to what's always been underneath, waiting to be remembered."
+                    title: "6. You&apos;re not here to be fixed.",
+                    desc: "You&apos;re here to return to what&apos;s always been underneath, waiting to be remembered."
                   }
                 ].map((principle, index) => (
                   <div key={index} style={{
@@ -397,7 +397,7 @@ export default function Circle() {
                 color: '#ffffff',
                 fontWeight: '700'
               }}>
-                🜂 What's Inside The Circle of Return
+                🜂 What&apos;s Inside The Circle of Return
               </h2>
               
               <p style={{
@@ -406,7 +406,7 @@ export default function Circle() {
                 marginBottom: '2.5rem',
                 lineHeight: '1.7'
               }}>
-                This isn't content you'll forget in 48 hours. This is nervous system work, soul work, and real change from the inside out.
+                This isn&apos;t content you&apos;ll forget in 48 hours. This is nervous system work, soul work, and real change from the inside out.
               </p>
 
               <div style={{
@@ -433,7 +433,7 @@ export default function Circle() {
                   },
                   {
                     title: 'A space to be witnessed, challenged, and held',
-                    desc: "You're not doing this alone. This is where people show up for each other, without judgement or performance."
+                    desc: "You&apos;re not doing this alone. This is where people show up for each other, without judgement or performance."
                   },
                   {
                     title: 'Guest sessions from experts who go deep, not wide',
@@ -496,7 +496,7 @@ export default function Circle() {
                 marginBottom: '2rem',
                 lineHeight: '1.7'
               }}>
-                This is for the person who knows deep down that there's more:
+                This is for the person who knows deep down that there&apos;s more:
               </p>
 
               <div style={{
@@ -520,7 +520,7 @@ export default function Circle() {
                 lineHeight: '1.7',
                 fontWeight: '500'
               }}>
-                You're done circling the edge of your healing and ready to walk into the centre of it.
+                You&apos;re done circling the edge of your healing and ready to walk into the centre of it.
               </p>
 
               <p style={{
@@ -528,7 +528,7 @@ export default function Circle() {
                 color: 'rgba(255, 255, 255, 0.85)',
                 lineHeight: '1.7'
               }}>
-                Whether you're navigating anger, addictions, pressure, self-sabotage, or just feeling lost - this is the space to return to yourself.
+                Whether you&apos;re navigating anger, addictions, pressure, self-sabotage, or just feeling lost - this is the space to return to yourself.
               </p>
             </div>
 
@@ -538,52 +538,249 @@ export default function Circle() {
               margin: '4rem 0'
             }} />
 
+            {/* PRICING SECTION */}
             <div style={{
               textAlign: 'center',
               padding: isMobile ? '2.5rem 1.5rem' : '3rem 2rem',
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-              borderRadius: '6px',
-              border: '1px solid rgba(255, 255, 255, 0.15)'
+              borderRadius: '12px',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              marginBottom: '3rem'
             }}>
+              <div style={{
+                display: 'inline-block',
+                padding: '0.5rem 1.5rem',
+                background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.2), rgba(212, 175, 55, 0.2))',
+                border: '1px solid rgba(123, 166, 155, 0.4)',
+                borderRadius: '20px',
+                marginBottom: '2rem',
+                fontSize: '0.9rem',
+                fontWeight: '600',
+                color: 'rgba(255, 255, 255, 0.9)',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase'
+              }}>
+                Pre-Launch Founding Members
+              </div>
+
               <h2 style={{
-                fontSize: isMobile ? '1.6rem' : '2rem',
+                fontSize: isMobile ? '1.8rem' : '2.4rem',
                 color: '#ffffff',
-                marginBottom: '1.5rem',
+                marginBottom: '1rem',
                 fontWeight: '700'
               }}>
-                The investment in yourself is a gift.
+                Join The Circle of Return
               </h2>
               
               <p style={{
                 fontSize: isMobile ? '1.05rem' : '1.15rem',
                 color: 'rgba(255, 255, 255, 0.85)',
-                marginBottom: '1.5rem',
-                lineHeight: '1.7'
+                marginBottom: '3rem',
+                lineHeight: '1.7',
+                maxWidth: '650px',
+                margin: '0 auto 3rem'
               }}>
-                You've tried other things. Maybe therapy. Maybe courses. Maybe content and Maybe nothing at all... but the pattern keeps repeating.
-              </p>
-              
-              <p style={{
-                fontSize: isMobile ? '1.15rem' : '1.3rem',
-                color: '#ffffff',
-                fontWeight: '600',
-                marginBottom: '2rem'
-              }}>
-                Breaking the pattern starts now.
+                You&apos;ve tried other things. Maybe therapy. Maybe courses. Maybe content and maybe nothing at all... but the pattern keeps repeating.
               </p>
 
+              {/* Pricing Toggle */}
+              <div style={{
+                display: 'inline-flex',
+                background: 'rgba(0, 0, 0, 0.3)',
+                borderRadius: '50px',
+                padding: '4px',
+                marginBottom: '2.5rem',
+                border: '1px solid rgba(255, 255, 255, 0.1)'
+              }}>
+                <button
+                  onClick={() => setPricingPlan('monthly')}
+                  style={{
+                    padding: isMobile ? '0.8rem 1.8rem' : '1rem 2.5rem',
+                    background: pricingPlan === 'monthly' ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
+                    color: pricingPlan === 'monthly' ? '#000' : 'rgba(255, 255, 255, 0.7)',
+                    border: 'none',
+                    borderRadius: '50px',
+                    fontSize: isMobile ? '0.95rem' : '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setPricingPlan('yearly')}
+                  style={{
+                    padding: isMobile ? '0.8rem 1.8rem' : '1rem 2.5rem',
+                    background: pricingPlan === 'yearly' ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
+                    color: pricingPlan === 'yearly' ? '#000' : 'rgba(255, 255, 255, 0.7)',
+                    border: 'none',
+                    borderRadius: '50px',
+                    fontSize: isMobile ? '0.95rem' : '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    position: 'relative'
+                  }}
+                >
+                  Yearly
+                  <span style={{
+                    position: 'absolute',
+                    top: '-8px',
+                    right: '-8px',
+                    background: 'linear-gradient(135deg, #4ade80, #22c55e)',
+                    color: '#000',
+                    fontSize: '0.65rem',
+                    padding: '2px 6px',
+                    borderRadius: '10px',
+                    fontWeight: '700'
+                  }}>
+                    SAVE £150
+                  </span>
+                </button>
+              </div>
+
+              {/* Pricing Display */}
+              <div style={{
+                marginBottom: '2rem'
+              }}>
+                {pricingPlan === 'monthly' ? (
+                  <div>
+                    <div style={{
+                      fontSize: isMobile ? '3rem' : '4rem',
+                      fontWeight: '700',
+                      color: '#ffffff',
+                      marginBottom: '0.5rem'
+                    }}>
+                      £50
+                      <span style={{
+                        fontSize: isMobile ? '1.2rem' : '1.5rem',
+                        fontWeight: '400',
+                        color: 'rgba(255, 255, 255, 0.7)'
+                      }}>
+                        /month
+                      </span>
+                    </div>
+                    <p style={{
+                      fontSize: '0.95rem',
+                      color: 'rgba(255, 255, 255, 0.6)',
+                      marginBottom: '2rem'
+                    }}>
+                      Billed monthly • Cancel anytime
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <div style={{
+                      fontSize: isMobile ? '3rem' : '4rem',
+                      fontWeight: '700',
+                      color: '#ffffff',
+                      marginBottom: '0.5rem'
+                    }}>
+                      £450
+                      <span style={{
+                        fontSize: isMobile ? '1.2rem' : '1.5rem',
+                        fontWeight: '400',
+                        color: 'rgba(255, 255, 255, 0.7)'
+                      }}>
+                        /year
+                      </span>
+                    </div>
+                    <p style={{
+                      fontSize: '1rem',
+                      color: '#4ade80',
+                      fontWeight: '600',
+                      marginBottom: '0.3rem'
+                    }}>
+                      Save £150 per year
+                    </p>
+                    <p style={{
+                      fontSize: '0.9rem',
+                      color: 'rgba(255, 255, 255, 0.6)',
+                      marginBottom: '2rem'
+                    }}>
+                      That&apos;s just £37.50/month
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* CTA Button */}
+              <a
+                href={pricingPlan === 'monthly' 
+                  ? 'https://buy.stripe.com/9B66oIcPd1o1do42fl9IQ0h'
+                  : 'https://buy.stripe.com/6oU14og1p2s52Jq9HN9IQ0i'
+                }
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.8rem',
+                  padding: isMobile ? '1.2rem 2.5rem' : '1.4rem 3rem',
+                  background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.95), rgba(212, 175, 55, 0.95))',
+                  color: '#000',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: isMobile ? '1.1rem' : '1.2rem',
+                  fontWeight: '700',
+                  textDecoration: 'none',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 10px 30px rgba(123, 166, 155, 0.3)',
+                  marginBottom: '2rem'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)'
+                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(123, 166, 155, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(123, 166, 155, 0.3)'
+                }}
+              >
+                Join The Circle →
+              </a>
+
               <p style={{
-                fontSize: '0.95rem',
+                fontSize: '0.9rem',
                 color: 'rgba(255, 255, 255, 0.6)',
                 marginBottom: '2rem'
               }}>
-                You can cancel anytime. No pressure. No contracts.
+                No contracts. Cancel anytime.
               </p>
+
+              <p style={{
+                fontSize: isMobile ? '1.2rem' : '1.4rem',
+                color: '#ffffff',
+                fontWeight: '600',
+                marginTop: '2rem'
+              }}>
+                Breaking the pattern starts now.
+              </p>
+            </div>
+
+            <div style={{
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+              margin: '4rem 0'
+            }} />
+
+            {/* Member Login & Waitlist Section */}
+            <div style={{
+              textAlign: 'center',
+              padding: isMobile ? '2.5rem 1.5rem' : '3rem 2rem'
+            }}>
+              <h3 style={{
+                fontSize: isMobile ? '1.5rem' : '1.8rem',
+                color: '#ffffff',
+                marginBottom: '2rem',
+                fontWeight: '600'
+              }}>
+                Already a Member?
+              </h3>
 
               <div style={{
                 display: 'flex',
                 gap: '1rem',
-                marginBottom: '2rem',
+                marginBottom: '3rem',
                 justifyContent: 'center',
                 flexWrap: 'wrap'
               }}>
@@ -612,6 +809,22 @@ export default function Circle() {
                   Member Login
                 </button>
               </div>
+
+              <div style={{
+                height: '1px',
+                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                margin: '3rem auto',
+                maxWidth: '300px'
+              }} />
+
+              <h3 style={{
+                fontSize: isMobile ? '1.3rem' : '1.5rem',
+                color: 'rgba(255, 255, 255, 0.9)',
+                marginBottom: '1.5rem',
+                fontWeight: '500'
+              }}>
+                Want updates before the next opening?
+              </h3>
 
               <form onSubmit={handleSubmit} style={{
                 display: 'flex',
@@ -696,8 +909,6 @@ export default function Circle() {
           </div>
         </section>
       </main>
-
-      <Footer />
 
       <style jsx>{`
         .shimmer-line {
