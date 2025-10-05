@@ -1,4 +1,20 @@
-'use client'
+{/* CTA Button */}
+              <a
+                href={pricingPlan === 'monthly' 
+                  ? 'https://buy.stripe.com/9B66oIcPd1o1do42fl9IQ0h'
+                  : 'https://buy.stripe.com/6oU14og1p2s52Jq9HN9IQ0i'
+                }
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  padding: isMobile ? '1.3rem 3rem' : '1.5rem 3.5rem',
+                  background: '#ffffff',
+                  color: '#000',
+                  border: 'none',
+                  borderRadius: '6px',
+                  fontSize: isMobile ? '1.05rem' : '1.15rem',
+                  fontWeight:'use client'
 import Navigation from '../components/Navigation'
 import MysticalBackground from '../components/MysticalBackground'
 import { useState, useEffect } from 'react'
