@@ -1,20 +1,4 @@
-{/* CTA Button */}
-              <a
-                href={pricingPlan === 'monthly' 
-                  ? 'https://buy.stripe.com/9B66oIcPd1o1do42fl9IQ0h'
-                  : 'https://buy.stripe.com/6oU14og1p2s52Jq9HN9IQ0i'
-                }
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  padding: isMobile ? '1.3rem 3rem' : '1.5rem 3.5rem',
-                  background: '#ffffff',
-                  color: '#000',
-                  border: 'none',
-                  borderRadius: '6px',
-                  fontSize: isMobile ? '1.05rem' : '1.15rem',
-                  fontWeight:'use client'
+'use client'
 import Navigation from '../components/Navigation'
 import MysticalBackground from '../components/MysticalBackground'
 import { useState, useEffect } from 'react'
@@ -83,7 +67,7 @@ export default function Circle() {
       const data = await response.json()
 
       if (response.ok) {
-        setMessage("You&apos;re on the waitlist. Check your email.")
+        setMessage("You are on the waitlist. Check your email.")
         setEmail('')
       } else {
         setMessage(data.error || 'Something went wrong. Try again.')
@@ -118,7 +102,6 @@ export default function Circle() {
           height: '100vh',
           overflow: 'hidden'
         }}>
-          {/* Video Background */}
           <div style={{
             position: 'absolute',
             top: 0,
@@ -146,7 +129,6 @@ export default function Circle() {
             />
           </div>
 
-          {/* Overlay */}
           <div style={{
             position: 'absolute',
             top: 0,
@@ -157,7 +139,6 @@ export default function Circle() {
             zIndex: 2
           }}></div>
 
-          {/* Content */}
           <div style={{
             position: 'relative',
             zIndex: 3,
@@ -188,7 +169,7 @@ export default function Circle() {
               textShadow: '0 2px 10px rgba(0,0,0,0.8)',
               lineHeight: '1.6'
             }}>
-              This isn&apos;t a community or a group coaching programme.
+              This is not a community or a group coaching programme.
             </p>
 
             <button
@@ -248,7 +229,7 @@ export default function Circle() {
                   textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
                   lineHeight: '1.4'
                 }}>
-                  If you join, you&apos;re entering a portal - a space to return to yourself. 
+                  If you join, you are entering a portal - a space to return to yourself. 
                   <span style={{
                     background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%)',
                     WebkitBackgroundClip: 'text',
@@ -269,36 +250,36 @@ export default function Circle() {
                 <div style={{
                   background: 'rgba(255, 255, 255, 0.03)',
                   padding: '1.5rem',
-                  borderRadius: '12px',
+                  borderRadius: '6px',
                   borderLeft: '4px solid rgba(123, 166, 155, 0.4)',
                   backdropFilter: 'blur(10px)'
                 }}>
                   <p style={{marginBottom: 0}}>
-                    You&apos;ve built your current identity around survival, pressure, and who you <strong style={{color: '#ffffff'}}>should</strong> be in a world full of expectations.
+                    You have built your current identity around survival, pressure, and who you <strong style={{color: '#ffffff'}}>should</strong> be in a world full of expectations.
                   </p>
                 </div>
                 
                 <div style={{
                   background: 'rgba(255, 255, 255, 0.03)',
                   padding: '1.5rem',
-                  borderRadius: '12px',
+                  borderRadius: '6px',
                   borderLeft: '4px solid rgba(123, 166, 155, 0.4)',
                   backdropFilter: 'blur(10px)'
                 }}>
                   <p style={{marginBottom: 0}}>
-                    But something deeper has been calling and you&apos;ve felt it for a while.
+                    But something deeper has been calling and you have felt it for a while.
                   </p>
                 </div>
                 
                 <div style={{
                   background: 'rgba(255, 255, 255, 0.03)',
                   padding: '1.5rem',
-                  borderRadius: '12px',
+                  borderRadius: '6px',
                   borderLeft: '4px solid rgba(123, 166, 155, 0.4)',
                   backdropFilter: 'blur(10px)'
                 }}>
                   <p style={{marginBottom: 0}}>
-                    You&apos;re seeking connection with the self you <em style={{color: 'rgba(123, 166, 155, 0.9)', fontStyle: 'normal', fontWeight: '600'}}>know</em> is there. The version of you that&apos;s more fearless, more grounded, more powerful but still stuck beneath the pain from your wounds.
+                    You are seeking connection with the self you <em style={{color: 'rgba(123, 166, 155, 0.9)', fontStyle: 'normal', fontWeight: '600'}}>know</em> is there. The version of you that is more fearless, more grounded, more powerful but still stuck beneath the pain from your wounds.
                   </p>
                 </div>
               </div>
@@ -308,7 +289,7 @@ export default function Circle() {
                 marginTop: '3rem',
                 padding: '2rem',
                 background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
-                borderRadius: '16px',
+                borderRadius: '6px',
                 border: '2px solid rgba(123, 166, 155, 0.2)'
               }}>
                 <p style={{
@@ -319,9 +300,9 @@ export default function Circle() {
                   lineHeight: '1.3',
                   marginBottom: 0
                 }}>
-                  Know this: there&apos;s wisdom in your wounds. 
+                  Know this: there is wisdom in your wounds. 
                   <br />
-                  There&apos;s purpose in your pain.
+                  There is purpose in your pain.
                 </p>
               </div>
             </div>
@@ -350,27 +331,27 @@ export default function Circle() {
                 {[
                   {
                     title: '1. No performance.',
-                    desc: "You won&apos;t find small talk here. Just people doing the real work—quietly, consistently, and without needing to prove anything."
+                    desc: "You will not find small talk here. Just people doing the real work—quietly, consistently, and without needing to prove anything."
                   },
                   {
                     title: '2. Return, not reinvention.',
-                    desc: "This isn&apos;t about becoming someone new. It&apos;s about coming back to who you are underneath the survival, the pain, and the patterns."
+                    desc: "This is not about becoming someone new. It is about coming back to who you are underneath the survival, the pain, and the patterns."
                   },
                   {
                     title: '3. No pressure to perform healing.',
-                    desc: "You don&apos;t need to explain, impress, or have it all figured out. You just need to show up - messy, honest, and ready."
+                    desc: "You do not need to explain, impress, or have it all figured out. You just need to show up - messy, honest, and ready."
                   },
                   {
-                    title: "4. We meet what&apos;s real.",
-                    desc: "There&apos;s no bypassing here. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity."
+                    title: "4. We meet what is real.",
+                    desc: "There is no bypassing here. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity."
                   },
                   {
                     title: '5. This is body-first, truth-led work.',
                     desc: "The shifts happen in the nervous system. In your breath. In your relationships."
                   },
                   {
-                    title: "6. You&apos;re not here to be fixed.",
-                    desc: "You&apos;re here to return to what&apos;s always been underneath, waiting to be remembered."
+                    title: "6. You are not here to be fixed.",
+                    desc: "You are here to return to what has always been underneath, waiting to be remembered."
                   }
                 ].map((principle, index) => (
                   <div key={index} style={{
@@ -413,7 +394,7 @@ export default function Circle() {
                 color: '#ffffff',
                 fontWeight: '700'
               }}>
-                🜂 What&apos;s Inside The Circle of Return
+                🜂 What Is Inside The Circle of Return
               </h2>
               
               <p style={{
@@ -422,7 +403,7 @@ export default function Circle() {
                 marginBottom: '2.5rem',
                 lineHeight: '1.7'
               }}>
-                This isn&apos;t content you&apos;ll forget in 48 hours. This is nervous system work, soul work, and real change from the inside out.
+                This is not content you will forget in 48 hours. This is nervous system work, soul work, and real change from the inside out.
               </p>
 
               <div style={{
@@ -449,7 +430,7 @@ export default function Circle() {
                   },
                   {
                     title: 'A space to be witnessed, challenged, and held',
-                    desc: "You&apos;re not doing this alone. This is where people show up for each other, without judgement or performance."
+                    desc: "You are not doing this alone. This is where people show up for each other, without judgement or performance."
                   },
                   {
                     title: 'Guest sessions from experts who go deep, not wide',
@@ -512,7 +493,7 @@ export default function Circle() {
                 marginBottom: '2rem',
                 lineHeight: '1.7'
               }}>
-                This is for the person who knows deep down that there&apos;s more:
+                This is for the person who knows deep down that there is more:
               </p>
 
               <div style={{
@@ -536,7 +517,7 @@ export default function Circle() {
                 lineHeight: '1.7',
                 fontWeight: '500'
               }}>
-                You&apos;re done circling the edge of your healing and ready to walk into the centre of it.
+                You are done circling the edge of your healing and ready to walk into the centre of it.
               </p>
 
               <p style={{
@@ -544,7 +525,7 @@ export default function Circle() {
                 color: 'rgba(255, 255, 255, 0.85)',
                 lineHeight: '1.7'
               }}>
-                Whether you&apos;re navigating anger, addictions, pressure, self-sabotage, or just feeling lost - this is the space to return to yourself.
+                Whether you are navigating anger, addictions, pressure, self-sabotage, or just feeling lost - this is the space to return to yourself.
               </p>
             </div>
 
@@ -559,21 +540,22 @@ export default function Circle() {
               textAlign: 'center',
               padding: isMobile ? '2.5rem 1.5rem' : '3rem 2rem',
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
-              borderRadius: '12px',
+              borderRadius: '6px',
               border: '1px solid rgba(255, 255, 255, 0.15)',
               marginBottom: '3rem'
             }}>
+              {/* Premium Slick Badge */}
               <div style={{
                 display: 'inline-block',
-                padding: '0.5rem 1.5rem',
-                background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.2), rgba(212, 175, 55, 0.2))',
-                border: '1px solid rgba(123, 166, 155, 0.4)',
-                borderRadius: '20px',
+                padding: '0.6rem 1.8rem',
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08))',
+                border: '1px solid rgba(255, 255, 255, 0.25)',
+                borderRadius: '6px',
                 marginBottom: '2rem',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                color: 'rgba(255, 255, 255, 0.9)',
-                letterSpacing: '0.05em',
+                fontSize: '0.85rem',
+                fontWeight: '700',
+                color: '#ffffff',
+                letterSpacing: '0.1em',
                 textTransform: 'uppercase'
               }}>
                 Pre-Launch Founding Members
@@ -596,10 +578,10 @@ export default function Circle() {
                 maxWidth: '650px',
                 margin: '0 auto 3rem'
               }}>
-                You&apos;ve tried other things. Maybe therapy. Maybe courses. Maybe content and maybe nothing at all... but the pattern keeps repeating.
+                You have tried other things. Maybe therapy. Maybe courses. Maybe content and maybe nothing at all... but the pattern keeps repeating.
               </p>
 
-              {/* Pricing Toggle */}
+              {/* EXACT SAME PILL TOGGLE AS BEFORE */}
               <div style={{
                 display: 'inline-flex',
                 background: 'rgba(0, 0, 0, 0.3)',
@@ -715,7 +697,7 @@ export default function Circle() {
                       color: 'rgba(255, 255, 255, 0.6)',
                       marginBottom: '2rem'
                     }}>
-                      That&apos;s just £37.50/month
+                      That is just £37.50/month
                     </p>
                   </div>
                 )}
@@ -735,7 +717,7 @@ export default function Circle() {
                   background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.95), rgba(212, 175, 55, 0.95))',
                   color: '#000',
                   border: 'none',
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   fontSize: isMobile ? '1.1rem' : '1.2rem',
                   fontWeight: '700',
                   textDecoration: 'none',
