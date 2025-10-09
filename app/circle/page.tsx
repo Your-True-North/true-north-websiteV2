@@ -9,6 +9,7 @@ export default function Circle() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState('')
   const [pricingPlan, setPricingPlan] = useState('yearly')
+  const [showWaitlistPopup, setShowWaitlistPopup] = useState(false)
   
   useEffect(() => {
     const checkMobile = () => {
@@ -581,11 +582,11 @@ export default function Circle() {
                 You have tried other things. Maybe therapy. Maybe courses. Maybe content and maybe nothing at all... but the pattern keeps repeating.
               </p>
 
-              {/* EXACT SAME PILL TOGGLE AS BEFORE */}
+              {/* Toggle with 3px border radius */}
               <div style={{
                 display: 'inline-flex',
                 background: 'rgba(0, 0, 0, 0.3)',
-                borderRadius: '50px',
+                borderRadius: '3px',
                 padding: '4px',
                 marginBottom: '2.5rem',
                 border: '1px solid rgba(255, 255, 255, 0.1)'
@@ -597,7 +598,7 @@ export default function Circle() {
                     background: pricingPlan === 'monthly' ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
                     color: pricingPlan === 'monthly' ? '#000' : 'rgba(255, 255, 255, 0.7)',
                     border: 'none',
-                    borderRadius: '50px',
+                    borderRadius: '3px',
                     fontSize: isMobile ? '0.95rem' : '1rem',
                     fontWeight: '600',
                     cursor: 'pointer',
@@ -613,7 +614,7 @@ export default function Circle() {
                     background: pricingPlan === 'yearly' ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
                     color: pricingPlan === 'yearly' ? '#000' : 'rgba(255, 255, 255, 0.7)',
                     border: 'none',
-                    borderRadius: '50px',
+                    borderRadius: '3px',
                     fontSize: isMobile ? '0.95rem' : '1rem',
                     fontWeight: '600',
                     cursor: 'pointer',
@@ -630,7 +631,7 @@ export default function Circle() {
                     color: '#000',
                     fontSize: '0.65rem',
                     padding: '2px 6px',
-                    borderRadius: '10px',
+                    borderRadius: '3px',
                     fontWeight: '700'
                   }}>
                     SAVE £150
@@ -703,12 +704,9 @@ export default function Circle() {
                 )}
               </div>
 
-              {/* CTA Button */}
-              <a
-                href={pricingPlan === 'monthly' 
-                  ? 'https://buy.stripe.com/9B66oIcPd1o1do42fl9IQ0h'
-                  : 'https://buy.stripe.com/6oU14og1p2s52Jq9HN9IQ0i'
-                }
+              {/* CTA Button - Opens Waitlist Popup */}
+              <button
+                onClick={() => setShowWaitlistPopup(true)}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -720,7 +718,7 @@ export default function Circle() {
                   borderRadius: '6px',
                   fontSize: isMobile ? '1.1rem' : '1.2rem',
                   fontWeight: '700',
-                  textDecoration: 'none',
+                  cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   boxShadow: '0 10px 30px rgba(123, 166, 155, 0.3)',
                   marginBottom: '2rem'
@@ -735,7 +733,7 @@ export default function Circle() {
                 }}
               >
                 Join The Circle →
-              </a>
+              </button>
 
               <p style={{
                 fontSize: '0.9rem',
@@ -942,6 +940,10 @@ export default function Circle() {
             opacity: 1;
             transform: translateY(0);
           }
+        }
+
+        input::placeholder {
+          color: rgba(255, 255, 255, 0.4);
         }
       `}</style>
     </>
