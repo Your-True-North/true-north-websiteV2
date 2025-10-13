@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { Pool } from 'pg'
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
@@ -21,7 +21,7 @@ const userService = {
 
   async updateLastLogin(userId) {
     await pool.query(
-      'UPDATE users SET last_login = NOW() WHERE id = $1',
+      'UPDATE users SET "lastLogin" = NOW() WHERE id = $1',
       [userId]
     )
   },
@@ -62,7 +62,7 @@ export async function POST(request) {
       )
     }
 
-    if (!user.is_active) {
+    if (!user.isActive) {
       return NextResponse.json(
         { error: 'Account is inactive. Please contact support.' },
         { status: 401 }
@@ -80,7 +80,7 @@ export async function POST(request) {
 
     await userService.updateLastLogin(user.id)
 
-    const levelInfo = userService.getUserLevel(user.join_date)
+    const levelInfo = userService.getUserLevel(user.joinDate || new Date())
 
     const token = jwt.sign(
       { 
@@ -100,7 +100,7 @@ export async function POST(request) {
       level: levelInfo.level,
       daysUntilNext: levelInfo.daysUntilNext,
       nextLevel: levelInfo.nextLevel,
-      joinDate: user.join_date
+      joinDate: user.joinDate
     }
 
     const response = NextResponse.json({
