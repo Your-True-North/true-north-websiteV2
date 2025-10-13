@@ -11,19 +11,27 @@ const pool = new Pool({
 export async function POST(request) {
   try {
     const { email, password } = await request.json()
-
-    if (!email || !password) {
-      return NextResponse.json({ error: 'Email and password required' }, { status: 400 })
-    }
+    
+    console.log('=== LOGIN ATTEMPT ===')
+    console.log('Email:', email)
+    console.log('DATABASE_PUBLIC_URL exists?', !!process.env.DATABASE_PUBLIC_URL)
+    console.log('DATABASE_URL exists?', !!process.env.DATABASE_URL)
 
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+    console.log('Query result rows:', result.rows.length)
+    
     const user = result.rows[0]
     
     if (!user) {
+      console.log('No user found')
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
+    
+    console.log('User found:', user.email)
+    console.log('Stored hash:', user.password)
 
     const isValidPassword = await bcrypt.compare(password, user.password)
+    console.log('Password valid?', isValidPassword)
     
     if (!isValidPassword) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
