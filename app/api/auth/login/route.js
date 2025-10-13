@@ -5,107 +5,39 @@ import { Pool } from 'pg'
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: { rejectUnauthorized: false }
 })
-
-const userService = {
-  async findByEmail(email) {
-    const result = await pool.query(
-      'SELECT * FROM users WHERE email = $1',
-      [email]
-    )
-    return result.rows[0] || null
-  },
-
-  async updateLastLogin(userId) {
-    await pool.query(
-      'UPDATE users SET "lastLogin" = NOW() WHERE id = $1',
-      [userId]
-    )
-  },
-
-  getUserLevel(joinDate) {
-    const now = new Date()
-    const daysSinceJoin = Math.floor((now.getTime() - new Date(joinDate).getTime()) / (1000 * 60 * 60 * 24))
-    
-    if (daysSinceJoin < 30) {
-      return { level: 'Seeker', daysUntilNext: 30 - daysSinceJoin, nextLevel: 'Explorer' }
-    } else if (daysSinceJoin < 90) {
-      return { level: 'Explorer', daysUntilNext: 90 - daysSinceJoin, nextLevel: 'Pathfinder' }
-    } else if (daysSinceJoin < 180) {
-      return { level: 'Pathfinder', daysUntilNext: 180 - daysSinceJoin, nextLevel: 'Guide' }
-    } else {
-      return { level: 'Guide', daysUntilNext: 0, nextLevel: null }
-    }
-  }
-}
 
 export async function POST(request) {
   try {
     const { email, password } = await request.json()
 
     if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email and password are required' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Email and password required' }, { status: 400 })
     }
 
-    const user = await userService.findByEmail(email)
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+    const user = result.rows[0]
     
     if (!user) {
-      return NextResponse.json(
-        { error: 'Invalid credentials' },
-        { status: 401 }
-      )
-    }
-
-    if (!user.isActive) {
-      return NextResponse.json(
-        { error: 'Account is inactive. Please contact support.' },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password)
     
     if (!isValidPassword) {
-      return NextResponse.json(
-        { error: 'Invalid credentials' },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    await userService.updateLastLogin(user.id)
-
-    const levelInfo = userService.getUserLevel(user.joinDate || new Date())
-
     const token = jwt.sign(
-      { 
-        userId: user.id, 
-        email: user.email, 
-        role: user.role 
-      },
-      process.env.NEXTAUTH_SECRET || 'your-secret-key',
+      { userId: user.id, email: user.email, role: user.role },
+      process.env.NEXTAUTH_SECRET,
       { expiresIn: '30d' }
     )
 
-    const userData = {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-      level: levelInfo.level,
-      daysUntilNext: levelInfo.daysUntilNext,
-      nextLevel: levelInfo.nextLevel,
-      joinDate: user.joinDate
-    }
-
     const response = NextResponse.json({
       success: true,
-      user: userData,
+      user: { id: user.id, email: user.email, name: user.name, role: user.role },
       token
     })
 
@@ -120,9 +52,6 @@ export async function POST(request) {
 
   } catch (error) {
     console.error('Login error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
