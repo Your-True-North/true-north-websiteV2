@@ -200,19 +200,37 @@ export default function Circle() {
 
               <div style={{
                 display: 'grid',
-                gap: '1rem',
-                maxWidth: '500px',
-                margin: '0 auto 3rem',
-                textAlign: 'left'
+                gap: '1.5rem',
+                maxWidth: '600px',
+                margin: '0 auto 3rem'
               }}>
-                {['More purpose', 'More clarity', 'More money', 'More peace', 'More of everything you feel you lack'].map((item, i) => (
+                {[
+                  { main: 'More purpose', sub: 'Stop wondering what you are here for' },
+                  { main: 'More clarity', sub: 'Know what you want without second-guessing' },
+                  { main: 'More money', sub: 'Build the life you keep putting off' },
+                  { main: 'More peace', sub: 'Sleep without your mind racing' },
+                  { main: 'More of everything you feel you lack', sub: 'Access the power you know is there' }
+                ].map((item, i) => (
                   <div key={i} style={{
-                    fontSize: isMobile ? '1.1rem' : '1.2rem',
-                    color: '#ffffff',
-                    padding: '0.8rem 0',
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                    padding: '1.5rem 0',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
                   }}>
-                    {item}
+                    <div style={{
+                      fontSize: isMobile ? '1.15rem' : '1.25rem',
+                      color: '#ffffff',
+                      marginBottom: '0.5rem',
+                      fontWeight: '400'
+                    }}>
+                      {item.main}
+                    </div>
+                    <div style={{
+                      fontSize: isMobile ? '0.95rem' : '1rem',
+                      color: 'rgba(255, 255, 255, 0.6)',
+                      fontWeight: '300',
+                      lineHeight: '1.5'
+                    }}>
+                      {item.sub}
+                    </div>
                   </div>
                 ))}
               </div>
