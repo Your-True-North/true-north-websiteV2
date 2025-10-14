@@ -40,64 +40,95 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Member Login</h1>
-          <p className="text-gray-400">Access your transformation journey</p>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Mystical Background */}
+      <div className="fixed inset-0 bg-[#0a0a0b]">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] animate-pulse delay-700"></div>
         </div>
+      </div>
 
-        <form onSubmit={handleSubmit} className="bg-zinc-900 p-8 rounded-lg border border-zinc-800">
-          {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded text-red-400 text-sm">
-              {error}
+      {/* Content */}
+      <div className="relative z-10 min-h-screen flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md">
+          {/* Logo */}
+          <Link href="/" className="block text-center mb-12 group">
+            <h1 className="text-3xl font-light text-white tracking-wider mb-2 group-hover:opacity-80 transition-opacity">
+              TRUE NORTH
+            </h1>
+            <p className="text-sm text-white/40 font-light tracking-wide">Member Portal</p>
+          </Link>
+
+          {/* Login Card */}
+          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-md p-8 shadow-2xl">
+            <h2 className="text-2xl font-light text-white mb-2 text-center">Welcome Back</h2>
+            <p className="text-white/50 text-sm text-center mb-8 font-light">
+              Continue your transformation journey
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-md">
+                  <p className="text-red-400 text-sm font-light">{error}</p>
+                </div>
+              )}
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-light text-white/70 mb-2">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={loading}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-md text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-all font-light disabled:opacity-50"
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-light text-white/70 mb-2">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={loading}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-md text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-all font-light disabled:opacity-50"
+                  placeholder="Enter your password"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 bg-white text-black font-light rounded-md hover:bg-white/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Accessing Portal...' : 'Enter Portal'}
+              </button>
+            </form>
+
+            <div className="mt-8 text-center">
+              <Link 
+                href="/" 
+                className="text-sm text-white/50 hover:text-white/80 transition-colors font-light inline-flex items-center gap-2"
+              >
+                <span>←</span> Back to home
+              </Link>
             </div>
-          )}
-
-          <div className="mb-6">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-4 py-3 bg-black border border-zinc-700 rounded text-white focus:outline-none focus:border-white transition-colors"
-              placeholder="your@email.com"
-            />
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-4 py-3 bg-black border border-zinc-700 rounded text-white focus:outline-none focus:border-white transition-colors"
-              placeholder="Enter your password"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-white text-black font-medium rounded hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-
-          <div className="mt-6 text-center">
-            <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
-              ← Back to home
-            </Link>
-          </div>
-        </form>
+          <p className="text-center text-white/30 text-xs mt-8 font-light">
+            Need access? <Link href="/circle" className="text-white/50 hover:text-white/80 transition-colors">Join the Circle</Link>
+          </p>
+        </div>
       </div>
     </div>
   )
