@@ -76,11 +76,11 @@ export default function JourneyPage() {
   const [selectedVideo, setSelectedVideo] = useState(null)
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('truenorthUser')
+    const savedUser = localStorage.getItem('user')
     if (savedUser) {
       setUser(JSON.parse(savedUser))
     } else {
-      window.location.href = '/login'
+      window.location.href = '/auth/login'
     }
   }, [])
 
