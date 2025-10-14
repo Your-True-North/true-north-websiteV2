@@ -10,6 +10,9 @@ module.exports = {
         inter: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         crimson: ['var(--font-crimson)', 'serif'],
       },
+      backdropBlur: {
+        xs: '2px',
+      }
     },
   },
   plugins: [],
