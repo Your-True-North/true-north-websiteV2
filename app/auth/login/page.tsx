@@ -40,42 +40,127 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
       {/* Mystical Background */}
-      <div className="fixed inset-0 bg-[#0a0a0b]">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] animate-pulse delay-700"></div>
+      <div style={{ position: 'fixed', inset: 0, background: '#0a0a0b' }}>
+        <div style={{ position: 'absolute', inset: 0, opacity: 0.3 }}>
+          <div style={{
+            position: 'absolute',
+            top: '25%',
+            left: '25%',
+            width: '24rem',
+            height: '24rem',
+            background: 'radial-gradient(circle, rgba(155, 196, 184, 0.2) 0%, transparent 70%)',
+            borderRadius: '50%',
+            filter: 'blur(120px)',
+            animation: 'pulse 4s ease-in-out infinite'
+          }}></div>
+          <div style={{
+            position: 'absolute',
+            bottom: '25%',
+            right: '25%',
+            width: '24rem',
+            height: '24rem',
+            background: 'radial-gradient(circle, rgba(127, 176, 105, 0.2) 0%, transparent 70%)',
+            borderRadius: '50%',
+            filter: 'blur(120px)',
+            animation: 'pulse 4s ease-in-out infinite 700ms'
+          }}></div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '3rem 1rem'
+      }}>
+        <div style={{ width: '100%', maxWidth: '28rem' }}>
           {/* Logo */}
-          <Link href="/" className="block text-center mb-12 group">
-            <h1 className="text-3xl font-light text-white tracking-wider mb-2 group-hover:opacity-80 transition-opacity">
+          <Link href="/" style={{
+            display: 'block',
+            textAlign: 'center',
+            marginBottom: '3rem',
+            textDecoration: 'none'
+          }}>
+            <h1 style={{
+              fontSize: 'clamp(1.875rem, 5vw, 3rem)',
+              fontWeight: 300,
+              color: '#fff',
+              letterSpacing: '0.1em',
+              marginBottom: '0.5rem',
+              transition: 'opacity 0.3s ease'
+            }}>
               TRUE NORTH
             </h1>
-            <p className="text-sm text-white/40 font-light tracking-wide">Member Portal</p>
+            <p style={{
+              fontSize: '0.875rem',
+              color: 'rgba(255, 255, 255, 0.4)',
+              fontWeight: 300,
+              letterSpacing: '0.05em'
+            }}>
+              Member Portal
+            </p>
           </Link>
 
           {/* Login Card */}
-          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-md p-8 shadow-2xl">
-            <h2 className="text-2xl font-light text-white mb-2 text-center">Welcome Back</h2>
-            <p className="text-white/50 text-sm text-center mb-8 font-light">
+          <div style={{
+            backdropFilter: 'blur(20px)',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '12px',
+            padding: 'clamp(1.5rem, 4vw, 2rem)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+              fontWeight: 300,
+              color: '#fff',
+              marginBottom: '0.5rem',
+              textAlign: 'center'
+            }}>
+              Welcome Back
+            </h2>
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontSize: '0.875rem',
+              textAlign: 'center',
+              marginBottom: '2rem',
+              fontWeight: 300
+            }}>
               Continue your transformation journey
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {error && (
-                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-md">
-                  <p className="text-red-400 text-sm font-light">{error}</p>
+                <div style={{
+                  padding: '1rem',
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  border: '1px solid rgba(239, 68, 68, 0.2)',
+                  borderRadius: '8px'
+                }}>
+                  <p style={{
+                    color: 'rgba(248, 113, 113, 1)',
+                    fontSize: '0.875rem',
+                    fontWeight: 300
+                  }}>
+                    {error}
+                  </p>
                 </div>
               )}
 
               <div>
-                <label htmlFor="email" className="block text-sm font-light text-white/70 mb-2">
+                <label htmlFor="email" style={{
+                  display: 'block',
+                  fontSize: '0.875rem',
+                  fontWeight: 300,
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  marginBottom: '0.5rem'
+                }}>
                   Email
                 </label>
                 <input
@@ -85,13 +170,33 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={loading}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-md text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-all font-light disabled:opacity-50"
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    fontWeight: 300,
+                    outline: 'none',
+                    transition: 'all 0.3s ease',
+                    opacity: loading ? 0.5 : 1
+                  }}
                   placeholder="your@email.com"
+                  onFocus={(e) => e.target.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
+                  onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
                 />
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-light text-white/70 mb-2">
+                <label htmlFor="password" style={{
+                  display: 'block',
+                  fontSize: '0.875rem',
+                  fontWeight: 300,
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  marginBottom: '0.5rem'
+                }}>
                   Password
                 </label>
                 <input
@@ -101,35 +206,98 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={loading}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-md text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-all font-light disabled:opacity-50"
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    fontWeight: 300,
+                    outline: 'none',
+                    transition: 'all 0.3s ease',
+                    opacity: loading ? 0.5 : 1
+                  }}
                   placeholder="Enter your password"
+                  onFocus={(e) => e.target.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
+                  onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-white text-black font-light rounded-md hover:bg-white/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  width: '100%',
+                  padding: '0.875rem',
+                  background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                  color: '#000',
+                  fontWeight: 500,
+                  fontSize: '1rem',
+                  borderRadius: '8px',
+                  border: 'none',
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.3s ease',
+                  opacity: loading ? 0.5 : 1
+                }}
+                onMouseEnter={(e) => !loading && (e.currentTarget.style.transform = 'translateY(-2px)')}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
                 {loading ? 'Accessing Portal...' : 'Enter Portal'}
               </button>
             </form>
 
-            <div className="mt-8 text-center">
+            <div style={{ marginTop: '2rem', textAlign: 'center' }}>
               <Link 
                 href="/" 
-                className="text-sm text-white/50 hover:text-white/80 transition-colors font-light inline-flex items-center gap-2"
+                style={{
+                  fontSize: '0.875rem',
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  textDecoration: 'none',
+                  fontWeight: 300,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'color 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
               >
                 <span>←</span> Back to home
               </Link>
             </div>
           </div>
 
-          <p className="text-center text-white/30 text-xs mt-8 font-light">
-            Need access? <Link href="/circle" className="text-white/50 hover:text-white/80 transition-colors">Join the Circle</Link>
+          <p style={{
+            textAlign: 'center',
+            color: 'rgba(255, 255, 255, 0.3)',
+            fontSize: '0.75rem',
+            marginTop: '2rem',
+            fontWeight: 300
+          }}>
+            Need access? <Link 
+              href="/circle" 
+              style={{
+                color: 'rgba(255, 255, 255, 0.5)',
+                textDecoration: 'none',
+                transition: 'color 0.3s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(155, 196, 184, 0.8)'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
+            >
+              Join the Circle
+            </Link>
           </p>
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.5; }
+        }
+      `}} />
     </div>
   )
 }

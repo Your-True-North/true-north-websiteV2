@@ -107,10 +107,11 @@ export default function JourneyPage() {
     <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
       <Navigation />
       
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1.5rem' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1rem' }}>
+        {/* Mobile: Stack everything vertically */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'minmax(250px, 1fr) minmax(0, 2.5fr) minmax(250px, 1fr)', 
+          gridTemplateColumns: window.innerWidth < 768 ? '1fr' : window.innerWidth < 1024 ? '1fr 2fr' : 'minmax(250px, 1fr) minmax(0, 2.5fr) minmax(250px, 1fr)',
           gap: '1.5rem',
         }}>
           
@@ -122,8 +123,8 @@ export default function JourneyPage() {
               borderRadius: '12px', 
               border: '1px solid rgba(255, 255, 255, 0.1)', 
               padding: '1.5rem',
-              position: 'sticky',
-              top: '6rem'
+              position: window.innerWidth >= 1024 ? 'sticky' : 'relative',
+              top: window.innerWidth >= 1024 ? '6rem' : 'auto'
             }}>
               
               <div style={{ marginBottom: '2rem' }}>
@@ -260,7 +261,7 @@ export default function JourneyPage() {
             }}>
               
               <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                <h1 style={{ fontSize: '1.75rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+                <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', fontWeight: 600, marginBottom: '0.5rem' }}>
                   {selectedCategory === "All" ? "All Videos" : selectedCategory}
                 </h1>
                 <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem' }}>
@@ -273,7 +274,7 @@ export default function JourneyPage() {
               <div style={{ padding: '1.5rem' }}>
                 <div style={{ 
                   display: 'grid', 
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                  gridTemplateColumns: window.innerWidth < 640 ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
                   gap: '1.5rem' 
                 }}>
                   {filteredVideos.map((video) => (
@@ -334,7 +335,8 @@ export default function JourneyPage() {
                           gap: '1rem', 
                           color: 'rgba(255, 255, 255, 0.6)', 
                           fontSize: '0.85rem', 
-                          marginBottom: '0.75rem' 
+                          marginBottom: '0.75rem',
+                          flexWrap: 'wrap'
                         }}>
                           <span>{video.duration}</span>
                           <span>•</span>
@@ -371,44 +373,46 @@ export default function JourneyPage() {
             </div>
           </div>
 
-          {/* Right Sidebar */}
-          <div>
-            <div style={{ 
-              background: 'rgba(255, 255, 255, 0.03)', 
-              backdropFilter: 'blur(20px)', 
-              borderRadius: '12px', 
-              border: '1px solid rgba(255, 255, 255, 0.1)', 
-              padding: '1.5rem',
-              position: 'sticky',
-              top: '6rem'
-            }}>
-              <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem' }}>Community Activity</h2>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {mockActivity.map((activity, index) => (
-                  <div 
-                    key={index} 
-                    style={{ 
-                      padding: '1rem', 
-                      background: 'rgba(255, 255, 255, 0.02)', 
-                      borderRadius: '8px', 
-                      borderLeft: '2px solid rgba(155, 196, 184, 0.4)' 
-                    }}
-                  >
-                    <div style={{ color: '#9bc4b8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
-                      {activity.user}
+          {/* Right Sidebar - Hide on mobile */}
+          {window.innerWidth >= 1024 && (
+            <div>
+              <div style={{ 
+                background: 'rgba(255, 255, 255, 0.03)', 
+                backdropFilter: 'blur(20px)', 
+                borderRadius: '12px', 
+                border: '1px solid rgba(255, 255, 255, 0.1)', 
+                padding: '1.5rem',
+                position: 'sticky',
+                top: '6rem'
+              }}>
+                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem' }}>Community Activity</h2>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {mockActivity.map((activity, index) => (
+                    <div 
+                      key={index} 
+                      style={{ 
+                        padding: '1rem', 
+                        background: 'rgba(255, 255, 255, 0.02)', 
+                        borderRadius: '8px', 
+                        borderLeft: '2px solid rgba(155, 196, 184, 0.4)' 
+                      }}
+                    >
+                      <div style={{ color: '#9bc4b8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                        {activity.user}
+                      </div>
+                      <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                        {activity.action}
+                      </div>
+                      <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem' }}>
+                        {activity.time}
+                      </div>
                     </div>
-                    <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
-                      {activity.action}
-                    </div>
-                    <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem' }}>
-                      {activity.time}
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -436,7 +440,7 @@ export default function JourneyPage() {
               maxWidth: '56rem', 
               width: '100%', 
               maxHeight: '90vh', 
-              overflow: 'hidden' 
+              overflow: 'auto' 
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -447,7 +451,7 @@ export default function JourneyPage() {
               padding: '1.5rem', 
               borderBottom: '1px solid rgba(255, 255, 255, 0.1)' 
             }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>{selectedVideo.title}</h2>
+              <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 600, paddingRight: '1rem' }}>{selectedVideo.title}</h2>
               <button 
                 onClick={() => setSelectedVideo(null)}
                 style={{ 
@@ -456,7 +460,8 @@ export default function JourneyPage() {
                   background: 'none', 
                   border: 'none', 
                   cursor: 'pointer',
-                  lineHeight: 1
+                  lineHeight: 1,
+                  flexShrink: 0
                 }}
               >
                 ×
@@ -466,7 +471,7 @@ export default function JourneyPage() {
             <div style={{ padding: '1.5rem' }}>
               <div style={{
                 width: '100%',
-                height: '24rem',
+                height: 'clamp(16rem, 40vw, 24rem)',
                 borderRadius: '8px',
                 marginBottom: '1rem',
                 display: 'flex',
@@ -487,7 +492,7 @@ export default function JourneyPage() {
                     fontSize: '2rem',
                     paddingLeft: '5px'
                   }}>▶</div>
-                  <p style={{ color: 'rgba(255, 255, 255, 0.6)' }}>YouTube Player ({selectedVideo.duration})</p>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>YouTube Player ({selectedVideo.duration})</p>
                 </div>
               </div>
               
@@ -497,7 +502,8 @@ export default function JourneyPage() {
                 gap: '1.5rem', 
                 color: 'rgba(255, 255, 255, 0.6)', 
                 fontSize: '0.85rem', 
-                marginBottom: '1rem' 
+                marginBottom: '1rem',
+                flexWrap: 'wrap'
               }}>
                 <span>{selectedVideo.duration}</span>
                 <span>•</span>
@@ -506,11 +512,11 @@ export default function JourneyPage() {
                 <span>{selectedVideo.category}</span>
               </div>
               
-              <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1rem' }}>
+              <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
                 {selectedVideo.description}
               </p>
               
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <span>❤️</span>
                   <span>{selectedVideo.likes}</span>
