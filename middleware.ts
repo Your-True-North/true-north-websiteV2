@@ -5,14 +5,15 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('auth_token')?.value
   const isAuthPage = request.nextUrl.pathname.startsWith('/auth')
   const isMembersPage = request.nextUrl.pathname.startsWith('/members')
+  const isJourneyPage = request.nextUrl.pathname.startsWith('/journey')
 
-  // If trying to access members without token, redirect to login
-  if (isMembersPage && !token) {
+  // If trying to access protected pages without token, redirect to login
+  if ((isMembersPage || isJourneyPage) && !token) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 
-  // If has token, allow access to members (API routes will verify JWT properly)
-  if (isMembersPage && token) {
+  // If has token, allow access to protected pages
+  if ((isMembersPage || isJourneyPage) && token) {
     return NextResponse.next()
   }
 
@@ -25,5 +26,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/members/:path*', '/auth/:path*']
+  matcher: ['/members/:path*', '/auth/:path*', '/journey/:path*']
 }
