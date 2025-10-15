@@ -45,8 +45,8 @@ export default function MembersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center">
-        <div className="text-white/50 font-light animate-pulse">Entering portal...</div>
+      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Entering portal...</div>
       </div>
     )
   }
@@ -62,70 +62,211 @@ export default function MembersPage() {
 
   const levelStages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
   const currentStageIndex = levelStages.indexOf(user.level)
+  const levelColors: { [key: string]: string } = {
+    'Seeker': '#9bc4b8',
+    'Explorer': '#7fb069',
+    'Pathfinder': '#6a994e',
+    'Guide': '#8db4a8'
+  }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white">
-      {/* Animated Background Orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px] animate-pulse"></div>
-        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
+      {/* Animated Background */}
+      <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+        <div style={{
+          position: 'absolute',
+          top: '25%',
+          left: '-12rem',
+          width: '24rem',
+          height: '24rem',
+          background: 'radial-gradient(circle, rgba(155, 196, 184, 0.1) 0%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(100px)',
+          animation: 'pulse 4s ease-in-out infinite'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '25%',
+          right: '-12rem',
+          width: '24rem',
+          height: '24rem',
+          background: 'radial-gradient(circle, rgba(127, 176, 105, 0.1) 0%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(100px)',
+          animation: 'pulse 4s ease-in-out infinite 1s'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '600px',
+          height: '600px',
+          background: 'radial-gradient(circle, rgba(106, 153, 78, 0.05) 0%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(120px)',
+          animation: 'pulse 4s ease-in-out infinite 2s'
+        }}></div>
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-20 border-b border-white/5 backdrop-blur-xl bg-black/20">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <Link href="/" className="group">
-            <div className="text-2xl font-light tracking-[0.2em] text-white/90 group-hover:text-white transition-colors">
-              TRUE NORTH
-            </div>
+      <nav style={{
+        position: 'relative',
+        zIndex: 20,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(20px)',
+        background: 'rgba(0, 0, 0, 0.2)'
+      }}>
+        <div style={{
+          maxWidth: '80rem',
+          margin: '0 auto',
+          padding: '1.25rem 1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem'
+        }}>
+          <Link href="/" style={{
+            fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
+            fontWeight: 300,
+            letterSpacing: '0.2em',
+            color: 'rgba(255, 255, 255, 0.9)',
+            textDecoration: 'none',
+            transition: 'color 0.3s ease'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+          onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
+            TRUE NORTH
           </Link>
-          <button
-            onClick={handleLogout}
-            className="px-5 py-2 text-sm font-light border border-white/10 rounded-md hover:bg-white/5 hover:border-white/20 transition-all"
-          >
-            Sign Out
-          </button>
+          
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <Link href="/journey" style={{
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 300,
+              border: '1px solid rgba(155, 196, 184, 0.3)',
+              borderRadius: '8px',
+              color: '#9bc4b8',
+              textDecoration: 'none',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
+              e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+            }}>
+              My Journey
+            </Link>
+            <button
+              onClick={handleLogout}
+              style={{
+                padding: '0.5rem 1.25rem',
+                fontSize: '0.875rem',
+                fontWeight: 300,
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '8px',
+                background: 'transparent',
+                color: '#fff',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       </nav>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+      <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '2rem 1.5rem' }}>
         {/* Hero Section */}
-        <div className="text-center mb-20">
-          <div className="inline-block mb-6">
-            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/10 flex items-center justify-center backdrop-blur-xl">
-              <svg className="w-10 h-10 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <div style={{ display: 'inline-block', marginBottom: '1.5rem' }}>
+            <div style={{
+              width: '5rem',
+              height: '5rem',
+              borderRadius: '50%',
+              background: `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backdropFilter: 'blur(20px)'
+            }}>
+              <svg style={{ width: '2.5rem', height: '2.5rem', color: 'rgba(255, 255, 255, 0.8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
           </div>
-          <h1 className="text-5xl md:text-6xl font-light mb-4 tracking-tight">
-            Welcome back, <span className="text-white/70">{user.name}</span>
+          <h1 style={{
+            fontSize: 'clamp(2rem, 6vw, 3.75rem)',
+            fontWeight: 300,
+            marginBottom: '1rem',
+            letterSpacing: '-0.02em'
+          }}>
+            Welcome back, <span style={{ color: 'rgba(255, 255, 255, 0.7)' }}>{user.name}</span>
           </h1>
-          <p className="text-white/40 text-lg font-light">Your transformation journey continues</p>
+          <p style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: 'clamp(1rem, 2vw, 1.125rem)', fontWeight: 300 }}>
+            Your transformation journey continues
+          </p>
         </div>
 
         {/* Journey Progress Card */}
-        <div className="mb-16 backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-md p-10 relative overflow-hidden">
-          <div className="relative">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-10">
+        <div style={{
+          marginBottom: '2rem',
+          backdropFilter: 'blur(20px)',
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '12px',
+          padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{ position: 'relative' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: window.innerWidth < 1024 ? '1fr' : '1fr auto',
+              alignItems: 'center',
+              gap: '3rem',
+              marginBottom: '2.5rem'
+            }}>
               {/* Level Info */}
-              <div className="text-center lg:text-left flex-1">
-                <div className="text-xs tracking-widest text-white/40 mb-3 font-light">YOUR JOURNEY</div>
-                <div className="text-5xl font-light mb-4">{user.level}</div>
+              <div style={{ textAlign: window.innerWidth < 1024 ? 'center' : 'left' }}>
+                <div style={{
+                  fontSize: '0.75rem',
+                  letterSpacing: '0.1em',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  marginBottom: '0.75rem',
+                  fontWeight: 300
+                }}>
+                  YOUR JOURNEY
+                </div>
+                <div style={{ fontSize: 'clamp(2.5rem, 6vw, 3rem)', fontWeight: 300, marginBottom: '1rem', color: levelColors[user.level] }}>
+                  {user.level}
+                </div>
                 {user.nextLevel ? (
-                  <div className="text-white/50 font-light">
-                    <span className="text-2xl font-light">{user.daysUntilNext}</span> days until {user.nextLevel}
+                  <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>
+                    <span style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 300 }}>{user.daysUntilNext}</span> days until {user.nextLevel}
                   </div>
                 ) : (
-                  <div className="text-white/60 font-light">Journey complete</div>
+                  <div style={{ color: 'rgba(255, 255, 255, 0.6)', fontWeight: 300 }}>Journey complete</div>
                 )}
               </div>
 
-              {/* Circular Progress Indicator */}
-              <div className="relative">
-                <svg className="w-48 h-48 -rotate-90">
-                  {/* Background circle */}
+              {/* Circular Progress */}
+              <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+                <svg style={{ width: '12rem', height: '12rem', transform: 'rotate(-90deg)' }}>
                   <circle
                     cx="96"
                     cy="96"
@@ -133,32 +274,46 @@ export default function MembersPage() {
                     stroke="currentColor"
                     strokeWidth="6"
                     fill="none"
-                    className="text-white/5"
+                    style={{ color: 'rgba(255, 255, 255, 0.05)' }}
                   />
-                  {/* Progress circle */}
                   <circle
                     cx="96"
                     cy="96"
                     r="88"
-                    stroke="currentColor"
+                    stroke={levelColors[user.level]}
                     strokeWidth="6"
                     fill="none"
                     strokeDasharray={2 * Math.PI * 88}
                     strokeDashoffset={2 * Math.PI * 88 * (1 - getLevelProgress() / 100)}
                     strokeLinecap="round"
-                    className="text-white transition-all duration-1000 ease-out"
-                    style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.5))' }}
+                    style={{
+                      transition: 'all 1s ease-out',
+                      filter: `drop-shadow(0 0 8px ${levelColors[user.level]}80)`
+                    }}
                   />
                 </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className="text-4xl font-light">{Math.round(getLevelProgress())}%</div>
-                  <div className="text-xs text-white/40 font-light mt-1">Complete</div>
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <div style={{ fontSize: '2.5rem', fontWeight: 300 }}>{Math.round(getLevelProgress())}%</div>
+                  <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.4)', fontWeight: 300, marginTop: '0.25rem' }}>
+                    Complete
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Journey Path */}
-            <div className="grid grid-cols-4 gap-3">
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: window.innerWidth < 640 ? '1fr 1fr' : 'repeat(4, 1fr)',
+              gap: '0.75rem'
+            }}>
               {levelStages.map((stage, index) => {
                 const isActive = index <= currentStageIndex
                 const isCurrent = index === currentStageIndex
@@ -166,30 +321,60 @@ export default function MembersPage() {
                 return (
                   <div
                     key={stage}
-                    className={`relative p-6 rounded-md transition-all duration-500 ${
-                      isCurrent
-                        ? 'bg-white/10 border-2 border-white/30 shadow-lg shadow-white/10'
+                    style={{
+                      position: 'relative',
+                      padding: '1.5rem',
+                      borderRadius: '8px',
+                      transition: 'all 0.5s ease',
+                      background: isCurrent
+                        ? 'rgba(255, 255, 255, 0.1)'
                         : isActive
-                        ? 'bg-white/5 border border-white/20'
-                        : 'bg-white/[0.02] border border-white/5 opacity-40'
-                    }`}
+                        ? 'rgba(255, 255, 255, 0.05)'
+                        : 'rgba(255, 255, 255, 0.02)',
+                      border: isCurrent
+                        ? `2px solid ${levelColors[stage]}40`
+                        : isActive
+                        ? '1px solid rgba(255, 255, 255, 0.2)'
+                        : '1px solid rgba(255, 255, 255, 0.05)',
+                      opacity: isActive ? 1 : 0.4
+                    }}
                   >
-                    <div className={`text-xs tracking-wider mb-3 font-light transition-colors ${
-                      isCurrent ? 'text-white' : 'text-white/50'
-                    }`}>
+                    <div style={{
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.05em',
+                      marginBottom: '0.75rem',
+                      fontWeight: 300,
+                      transition: 'color 0.3s ease',
+                      color: isCurrent ? '#fff' : 'rgba(255, 255, 255, 0.5)'
+                    }}>
                       {stage.toUpperCase()}
                     </div>
-                    <div className="flex items-center justify-center">
-                      <div className={`w-3 h-3 rounded-full transition-all ${
-                        isCurrent
-                          ? 'bg-white shadow-lg shadow-white/50 animate-pulse'
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{
+                        width: '0.75rem',
+                        height: '0.75rem',
+                        borderRadius: '50%',
+                        transition: 'all 0.3s ease',
+                        background: isCurrent
+                          ? levelColors[stage]
                           : isActive
-                          ? 'bg-white/60'
-                          : 'bg-white/20'
-                      }`}></div>
+                          ? 'rgba(255, 255, 255, 0.6)'
+                          : 'rgba(255, 255, 255, 0.2)',
+                        boxShadow: isCurrent ? `0 0 20px ${levelColors[stage]}80` : 'none',
+                        animation: isCurrent ? 'pulse 2s ease-in-out infinite' : 'none'
+                      }}></div>
                     </div>
                     {isCurrent && (
-                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
+                      <div style={{
+                        position: 'absolute',
+                        top: '-0.25rem',
+                        right: '-0.25rem',
+                        width: '0.5rem',
+                        height: '0.5rem',
+                        background: levelColors[stage],
+                        borderRadius: '50%',
+                        animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite'
+                      }}></div>
                     )}
                   </div>
                 )
@@ -199,32 +384,71 @@ export default function MembersPage() {
         </div>
 
         {/* Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-16">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: window.innerWidth < 1024 ? '1fr' : 'repeat(2, 1fr)',
+          gap: '2rem',
+          marginBottom: '2rem'
+        }}>
           {/* Circle Content */}
-          <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-md p-8 hover:border-white/20 transition-all">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div style={{
+            backdropFilter: 'blur(20px)',
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '12px',
+            padding: '2rem',
+            transition: 'border 0.3s ease'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
+          onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{
+                width: '2.5rem',
+                height: '2.5rem',
+                borderRadius: '50%',
+                background: 'rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-light">Circle of Return</h3>
+              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300 }}>Circle of Return</h3>
             </div>
-            <p className="text-white/50 mb-8 font-light leading-relaxed">
+            <p style={{ color: 'rgba(255, 255, 255, 0.5)', marginBottom: '2rem', fontWeight: 300, lineHeight: 1.6 }}>
               Exclusive transformational content and teachings
             </p>
-            <div className="space-y-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {['Weekly Teaching Videos', 'Live Session Replays', 'Community Discussions'].map((item, i) => (
                 <div
                   key={i}
-                  className="group p-4 bg-white/5 border border-white/10 rounded-md hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer"
+                  style={{
+                    padding: '1rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  }}
                 >
-                  <div className="flex items-center justify-between">
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div>
-                      <div className="text-xs text-white/40 mb-1 font-light">COMING SOON</div>
-                      <div className="font-light group-hover:text-white transition-colors">{item}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.4)', marginBottom: '0.25rem', fontWeight: 300 }}>
+                        COMING SOON
+                      </div>
+                      <div style={{ fontWeight: 300, transition: 'color 0.3s ease' }}>{item}</div>
                     </div>
-                    <svg className="w-5 h-5 text-white/20 group-hover:text-white/40 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg style={{ width: '1.25rem', height: '1.25rem', color: 'rgba(255, 255, 255, 0.2)', transition: 'color 0.3s ease' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -234,16 +458,33 @@ export default function MembersPage() {
           </div>
 
           {/* Quick Actions */}
-          <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-md p-8 hover:border-white/20 transition-all">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div style={{
+            backdropFilter: 'blur(20px)',
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '12px',
+            padding: '2rem',
+            transition: 'border 0.3s ease'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
+          onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{
+                width: '2.5rem',
+                height: '2.5rem',
+                borderRadius: '50%',
+                background: 'rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-light">Quick Access</h3>
+              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300 }}>Quick Access</h3>
             </div>
-            <div className="space-y-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[
                 { title: 'Book a Session', desc: 'Schedule your breakthrough', href: '/work', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
                 { title: 'Resource Library', desc: 'Transformation tools', href: '/library', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
@@ -252,18 +493,48 @@ export default function MembersPage() {
                 <Link
                   key={i}
                   href={action.href}
-                  className="group flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-md hover:bg-white/10 hover:border-white/20 transition-all"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    padding: '1rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    color: '#fff',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  }}
                 >
-                  <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/20 transition-all flex-shrink-0">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div style={{
+                    width: '3rem',
+                    height: '3rem',
+                    borderRadius: '50%',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <svg style={{ width: '1.5rem', height: '1.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={action.icon} />
                     </svg>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-light group-hover:text-white transition-colors">{action.title}</div>
-                    <div className="text-sm text-white/40 font-light">{action.desc}</div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontWeight: 300, transition: 'color 0.3s ease' }}>{action.title}</div>
+                    <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.4)', fontWeight: 300 }}>{action.desc}</div>
                   </div>
-                  <svg className="w-5 h-5 text-white/20 group-hover:text-white/40 group-hover:translate-x-1 transition-all flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg style={{ width: '1.25rem', height: '1.25rem', color: 'rgba(255, 255, 255, 0.2)', flexShrink: 0, transition: 'all 0.3s ease' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
@@ -273,21 +544,35 @@ export default function MembersPage() {
         </div>
 
         {/* Account Info */}
-        <div className="backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-md p-8">
-          <h3 className="text-xl font-light mb-6 flex items-center gap-3">
-            <svg className="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div style={{
+          backdropFilter: 'blur(20px)',
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '12px',
+          padding: '2rem'
+        }}>
+          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <svg style={{ width: '1.25rem', height: '1.25rem', color: 'rgba(255, 255, 255, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
             Account Details
           </h3>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: window.innerWidth < 768 ? '1fr' : 'repeat(2, 1fr)',
+            gap: '2rem'
+          }}>
             <div>
-              <div className="text-xs tracking-wider text-white/40 mb-2 font-light">EMAIL ADDRESS</div>
-              <div className="font-light text-white/90">{user.email}</div>
+              <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: 'rgba(255, 255, 255, 0.4)', marginBottom: '0.5rem', fontWeight: 300 }}>
+                EMAIL ADDRESS
+              </div>
+              <div style={{ fontWeight: 300, color: 'rgba(255, 255, 255, 0.9)' }}>{user.email}</div>
             </div>
             <div>
-              <div className="text-xs tracking-wider text-white/40 mb-2 font-light">MEMBER SINCE</div>
-              <div className="font-light text-white/90">
+              <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: 'rgba(255, 255, 255, 0.4)', marginBottom: '0.5rem', fontWeight: 300 }}>
+                MEMBER SINCE
+              </div>
+              <div style={{ fontWeight: 300, color: 'rgba(255, 255, 255, 0.9)' }}>
                 {new Date(user.joinDate).toLocaleDateString('en-US', { 
                   month: 'long', 
                   day: 'numeric', 
@@ -298,6 +583,19 @@ export default function MembersPage() {
           </div>
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.5; }
+        }
+        @keyframes ping {
+          75%, 100% {
+            transform: scale(2);
+            opacity: 0;
+          }
+        }
+      `}} />
     </div>
   )
 }
