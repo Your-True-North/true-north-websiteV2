@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Navigation from '../components/Navigation'
-import { Play, MessageCircle, Heart } from 'lucide-react'
 
 const mockVideos = [
   {
@@ -72,13 +71,18 @@ const mockActivity = [
 
 export default function JourneyPage() {
   const [user, setUser] = useState(null)
-  const [selectedCategory, setSelectedCategory] = useState("Foundation Work")
+  const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedVideo, setSelectedVideo] = useState(null)
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
     if (savedUser) {
-      setUser(JSON.parse(savedUser))
+      try {
+        setUser(JSON.parse(savedUser))
+      } catch (err) {
+        console.error('Failed to parse user data:', err)
+        window.location.href = '/auth/login'
+      }
     } else {
       window.location.href = '/auth/login'
     }
@@ -91,75 +95,153 @@ export default function JourneyPage() {
   const currentLevel = { name: "Seeker", color: "#9bc4b8" }
   const nextLevelDays = 45
 
-  if (!user) return <div>Loading...</div>
+  if (!user) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Loading your journey...</div>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white">
+    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
       <Navigation />
       
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1.5rem' }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'minmax(250px, 1fr) minmax(0, 2.5fr) minmax(250px, 1fr)', 
+          gap: '1.5rem',
+        }}>
           
-          <div className="lg:col-span-1">
-            <div className="bg-white/3 backdrop-blur-xl rounded-xl border border-white/10 p-6 sticky top-24">
+          {/* Left Sidebar */}
+          <div>
+            <div style={{ 
+              background: 'rgba(255, 255, 255, 0.03)', 
+              backdropFilter: 'blur(20px)', 
+              borderRadius: '12px', 
+              border: '1px solid rgba(255, 255, 255, 0.1)', 
+              padding: '1.5rem',
+              position: 'sticky',
+              top: '6rem'
+            }}>
               
-              <div className="mb-8">
-                <h3 className="text-sm font-semibold text-white/60 uppercase tracking-wide mb-4">Categories</h3>
-                <div className="space-y-2">
+              <div style={{ marginBottom: '2rem' }}>
+                <h3 style={{ 
+                  fontSize: '0.75rem', 
+                  fontWeight: 600, 
+                  color: 'rgba(255, 255, 255, 0.6)', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '0.1em', 
+                  marginBottom: '1rem' 
+                }}>Categories</h3>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   <button
                     onClick={() => setSelectedCategory("All")}
-                    className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all ${
-                      selectedCategory === "All" 
-                        ? "bg-[#9bc4b8]/15 border border-[#9bc4b8]/40 text-[#9bc4b8]" 
-                        : "bg-white/2 border border-white/5 hover:bg-white/8"
-                    }`}
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      padding: '0.75rem',
+                      borderRadius: '8px',
+                      background: selectedCategory === "All" ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                      border: selectedCategory === "All" ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
+                      color: selectedCategory === "All" ? '#9bc4b8' : '#fff',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
                   >
-                    <div className="w-5 h-5 bg-gradient-to-r from-[#9bc4b8] to-[#7fb069] rounded flex items-center justify-center text-xs font-semibold text-black">
-                      ∀
-                    </div>
-                    <span className="flex-1 text-left">All Videos</span>
-                    <span className="bg-white/10 px-2 py-1 rounded-full text-xs">{mockVideos.length}</span>
+                    <div style={{ 
+                      width: '20px', 
+                      height: '20px', 
+                      background: 'linear-gradient(45deg, #9bc4b8, #7fb069)', 
+                      borderRadius: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.7rem',
+                      fontWeight: 600,
+                      color: '#000'
+                    }}>∀</div>
+                    <span style={{ flex: 1, textAlign: 'left', fontSize: '0.9rem' }}>All Videos</span>
+                    <span style={{ 
+                      background: 'rgba(255, 255, 255, 0.1)', 
+                      padding: '2px 8px', 
+                      borderRadius: '12px', 
+                      fontSize: '0.75rem' 
+                    }}>{mockVideos.length}</span>
                   </button>
                   
                   {mockCategories.map((category) => (
                     <button
                       key={category.name}
                       onClick={() => setSelectedCategory(category.name)}
-                      className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all ${
-                        selectedCategory === category.name 
-                          ? "bg-[#9bc4b8]/15 border border-[#9bc4b8]/40 text-[#9bc4b8]" 
-                          : "bg-white/2 border border-white/5 hover:bg-white/8"
-                      }`}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.75rem',
+                        padding: '0.75rem',
+                        borderRadius: '8px',
+                        background: selectedCategory === category.name ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                        border: selectedCategory === category.name ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
+                        color: selectedCategory === category.name ? '#9bc4b8' : '#fff',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
                     >
-                      <div 
-                        className="w-5 h-5 rounded flex items-center justify-center text-xs font-semibold text-black"
-                        style={{ background: `linear-gradient(45deg, ${category.color}, #7fb069)` }}
-                      >
-                        {category.icon}
-                      </div>
-                      <span className="flex-1 text-left text-sm">{category.name}</span>
-                      <span className="bg-white/10 px-2 py-1 rounded-full text-xs">{category.count}</span>
+                      <div style={{ 
+                        width: '20px', 
+                        height: '20px', 
+                        background: `linear-gradient(45deg, ${category.color}, #7fb069)`,
+                        borderRadius: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '0.75rem'
+                      }}>{category.icon}</div>
+                      <span style={{ flex: 1, textAlign: 'left', fontSize: '0.85rem' }}>{category.name}</span>
+                      <span style={{ 
+                        background: 'rgba(255, 255, 255, 0.1)', 
+                        padding: '2px 8px', 
+                        borderRadius: '12px', 
+                        fontSize: '0.75rem' 
+                      }}>{category.count}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold text-white/60 uppercase tracking-wide mb-4">Your Progress</h3>
-                <div 
-                  className="p-4 rounded-lg border"
-                  style={{
-                    background: `linear-gradient(45deg, ${currentLevel.color}15, ${currentLevel.color}08)`,
-                    borderColor: `${currentLevel.color}40`
-                  }}
-                >
-                  <div 
-                    className="inline-block px-3 py-1 rounded-full text-xs font-semibold text-black mb-2"
-                    style={{ background: `linear-gradient(45deg, ${currentLevel.color}, #7fb069)` }}
-                  >
+                <h3 style={{ 
+                  fontSize: '0.75rem', 
+                  fontWeight: 600, 
+                  color: 'rgba(255, 255, 255, 0.6)', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '0.1em', 
+                  marginBottom: '1rem' 
+                }}>Your Progress</h3>
+                <div style={{
+                  padding: '1rem',
+                  borderRadius: '8px',
+                  background: `linear-gradient(45deg, ${currentLevel.color}15, ${currentLevel.color}08)`,
+                  border: `1px solid ${currentLevel.color}40`
+                }}>
+                  <div style={{ 
+                    display: 'inline-block',
+                    padding: '0.5rem 0.75rem',
+                    borderRadius: '12px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    color: '#000',
+                    background: `linear-gradient(45deg, ${currentLevel.color}, #7fb069)`,
+                    marginBottom: '0.5rem'
+                  }}>
                     Level 2 - {currentLevel.name}
                   </div>
-                  <div className="text-sm text-white/80">
+                  <div style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.8)' }}>
                     Next level: {nextLevelDays} days
                   </div>
                 </div>
@@ -167,58 +249,117 @@ export default function JourneyPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-2">
-            <div className="bg-white/3 backdrop-blur-xl rounded-xl border border-white/10 overflow-hidden">
+          {/* Main Content */}
+          <div>
+            <div style={{ 
+              background: 'rgba(255, 255, 255, 0.03)', 
+              backdropFilter: 'blur(20px)', 
+              borderRadius: '12px', 
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              overflow: 'hidden'
+            }}>
               
-              <div className="p-6 border-b border-white/10">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h1 className="text-2xl font-semibold mb-2">
-                      {selectedCategory === "All" ? "All Videos" : selectedCategory}
-                    </h1>
-                    <p className="text-white/70">
-                      {selectedCategory === "All" 
-                        ? "Your complete transformation journey" 
-                        : `${filteredVideos.length} videos in this category`}
-                    </p>
-                  </div>
-                </div>
+              <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+                  {selectedCategory === "All" ? "All Videos" : selectedCategory}
+                </h1>
+                <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem' }}>
+                  {selectedCategory === "All" 
+                    ? "Your complete transformation journey" 
+                    : `${filteredVideos.length} videos in this category`}
+                </p>
               </div>
 
-              <div className="p-6">
-                <div className="grid gap-6 grid-cols-1 xl:grid-cols-2">
+              <div style={{ padding: '1.5rem' }}>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                  gap: '1.5rem' 
+                }}>
                   {filteredVideos.map((video) => (
                     <div 
                       key={video.id}
-                      className="bg-white/3 rounded-xl border border-white/8 overflow-hidden hover:border-[#9bc4b8]/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
                       onClick={() => setSelectedVideo(video)}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.03)',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.border = '1px solid rgba(155, 196, 184, 0.3)'
+                        e.currentTarget.style.transform = 'translateY(-4px)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.08)'
+                        e.currentTarget.style.transform = 'translateY(0)'
+                      }}
                     >
-                      <div 
-                        className="h-48 relative flex items-center justify-center"
-                        style={{
-                          background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))'
-                        }}
-                      >
-                        <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <Play className="w-5 h-5 text-black ml-0.5" />
-                        </div>
+                      <div style={{
+                        height: '12rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))'
+                      }}>
+                        <div style={{
+                          width: '3rem',
+                          height: '3rem',
+                          background: 'rgba(255, 255, 255, 0.9)',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '1.2rem',
+                          paddingLeft: '3px'
+                        }}>▶</div>
                       </div>
                       
-                      <div className="p-4">
-                        <h3 className="font-semibold mb-2 line-clamp-2">{video.title}</h3>
-                        <div className="flex items-center gap-4 text-white/60 text-sm mb-3">
+                      <div style={{ padding: '1rem' }}>
+                        <h3 style={{ 
+                          fontWeight: 600, 
+                          marginBottom: '0.5rem', 
+                          fontSize: '1rem',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        }}>{video.title}</h3>
+                        
+                        <div style={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: '1rem', 
+                          color: 'rgba(255, 255, 255, 0.6)', 
+                          fontSize: '0.85rem', 
+                          marginBottom: '0.75rem' 
+                        }}>
                           <span>{video.duration}</span>
                           <span>•</span>
                           <span>{video.uploadDate}</span>
                         </div>
                         
-                        <div className="flex items-center gap-4">
-                          <div className="flex items-center gap-1.5 text-white/60 text-sm">
-                            <MessageCircle className="w-4 h-4" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                          <div style={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: '0.375rem', 
+                            color: 'rgba(255, 255, 255, 0.6)', 
+                            fontSize: '0.85rem' 
+                          }}>
+                            <span>💬</span>
                             <span>{video.comments}</span>
                           </div>
-                          <div className="flex items-center gap-1.5 text-white/60 text-sm">
-                            <Heart className="w-4 h-4" />
+                          <div style={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: '0.375rem', 
+                            color: 'rgba(255, 255, 255, 0.6)', 
+                            fontSize: '0.85rem' 
+                          }}>
+                            <span>❤️</span>
                             <span>{video.likes}</span>
                           </div>
                         </div>
@@ -230,16 +371,39 @@ export default function JourneyPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-1">
-            <div className="bg-white/3 backdrop-blur-xl rounded-xl border border-white/10 p-6 sticky top-24">
-              <h2 className="text-lg font-semibold mb-6">Community Activity</h2>
+          {/* Right Sidebar */}
+          <div>
+            <div style={{ 
+              background: 'rgba(255, 255, 255, 0.03)', 
+              backdropFilter: 'blur(20px)', 
+              borderRadius: '12px', 
+              border: '1px solid rgba(255, 255, 255, 0.1)', 
+              padding: '1.5rem',
+              position: 'sticky',
+              top: '6rem'
+            }}>
+              <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem' }}>Community Activity</h2>
               
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {mockActivity.map((activity, index) => (
-                  <div key={index} className="p-4 bg-white/2 rounded-lg border-l-2 border-[#9bc4b8]/40">
-                    <div className="text-[#9bc4b8] font-semibold text-sm mb-1">{activity.user}</div>
-                    <div className="text-white/80 text-sm mb-2">{activity.action}</div>
-                    <div className="text-white/50 text-xs">{activity.time}</div>
+                  <div 
+                    key={index} 
+                    style={{ 
+                      padding: '1rem', 
+                      background: 'rgba(255, 255, 255, 0.02)', 
+                      borderRadius: '8px', 
+                      borderLeft: '2px solid rgba(155, 196, 184, 0.4)' 
+                    }}
+                  >
+                    <div style={{ color: '#9bc4b8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                      {activity.user}
+                    </div>
+                    <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                      {activity.action}
+                    </div>
+                    <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem' }}>
+                      {activity.time}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -248,35 +412,93 @@ export default function JourneyPage() {
         </div>
       </div>
 
+      {/* Video Modal */}
       {selectedVideo && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0a0a0b] rounded-xl border border-white/20 max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <h2 className="text-xl font-semibold">{selectedVideo.title}</h2>
+        <div 
+          style={{ 
+            position: 'fixed', 
+            inset: 0, 
+            background: 'rgba(0, 0, 0, 0.8)', 
+            backdropFilter: 'blur(4px)', 
+            zIndex: 50, 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            padding: '1rem' 
+          }}
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div 
+            style={{ 
+              background: '#0a0a0b', 
+              borderRadius: '12px', 
+              border: '1px solid rgba(255, 255, 255, 0.2)', 
+              maxWidth: '56rem', 
+              width: '100%', 
+              maxHeight: '90vh', 
+              overflow: 'hidden' 
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'space-between', 
+              padding: '1.5rem', 
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)' 
+            }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>{selectedVideo.title}</h2>
               <button 
                 onClick={() => setSelectedVideo(null)}
-                className="text-white/60 hover:text-white text-2xl"
+                style={{ 
+                  color: 'rgba(255, 255, 255, 0.6)', 
+                  fontSize: '1.5rem', 
+                  background: 'none', 
+                  border: 'none', 
+                  cursor: 'pointer',
+                  lineHeight: 1
+                }}
               >
                 ×
               </button>
             </div>
             
-            <div className="p-6">
-              <div 
-                className="w-full h-64 md:h-96 rounded-lg mb-4 flex items-center justify-center"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))'
-                }}
-              >
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Play className="w-8 h-8 text-black ml-1" />
-                  </div>
-                  <p className="text-white/60">YouTube Player ({selectedVideo.duration})</p>
+            <div style={{ padding: '1.5rem' }}>
+              <div style={{
+                width: '100%',
+                height: '24rem',
+                borderRadius: '8px',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{
+                    width: '5rem',
+                    height: '5rem',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 1rem',
+                    fontSize: '2rem',
+                    paddingLeft: '5px'
+                  }}>▶</div>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.6)' }}>YouTube Player ({selectedVideo.duration})</p>
                 </div>
               </div>
               
-              <div className="flex items-center gap-6 text-white/60 text-sm mb-4">
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '1.5rem', 
+                color: 'rgba(255, 255, 255, 0.6)', 
+                fontSize: '0.85rem', 
+                marginBottom: '1rem' 
+              }}>
                 <span>{selectedVideo.duration}</span>
                 <span>•</span>
                 <span>{selectedVideo.uploadDate}</span>
@@ -284,15 +506,17 @@ export default function JourneyPage() {
                 <span>{selectedVideo.category}</span>
               </div>
               
-              <p className="text-white/80 mb-4">{selectedVideo.description}</p>
+              <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1rem' }}>
+                {selectedVideo.description}
+              </p>
               
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2">
-                  <Heart className="w-5 h-5" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>❤️</span>
                   <span>{selectedVideo.likes}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <MessageCircle className="w-5 h-5" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>💬</span>
                   <span>{selectedVideo.comments}</span>
                 </div>
               </div>
