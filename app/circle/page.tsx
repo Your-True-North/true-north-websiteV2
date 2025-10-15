@@ -1,7 +1,7 @@
 'use client'
 import Navigation from '../components/Navigation'
 import MysticalBackground from '../components/MysticalBackground'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Circle() {
   const [isMobile, setIsMobile] = useState(false)
@@ -10,8 +10,6 @@ export default function Circle() {
   const [message, setMessage] = useState('')
   const [pricingPlan, setPricingPlan] = useState('yearly')
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false)
-  const [videoPlaying, setVideoPlaying] = useState(false)
-  const videoRef = useRef(null)
   
   useEffect(() => {
     const checkMobile = () => {
@@ -23,25 +21,6 @@ export default function Circle() {
     
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
-
-  // Play video on user interaction
-  useEffect(() => {
-    const handleInteraction = () => {
-      if (!videoPlaying && videoRef.current) {
-        setVideoPlaying(true)
-      }
-    }
-
-    window.addEventListener('scroll', handleInteraction, { once: true })
-    window.addEventListener('mousemove', handleInteraction, { once: true })
-    window.addEventListener('touchstart', handleInteraction, { once: true })
-
-    return () => {
-      window.removeEventListener('scroll', handleInteraction)
-      window.removeEventListener('mousemove', handleInteraction)
-      window.removeEventListener('touchstart', handleInteraction)
-    }
-  }, [videoPlaying])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -60,7 +39,6 @@ export default function Circle() {
       const data = await response.json()
 
       if (response.ok) {
-        // Redirect to Stripe payment
         const stripeUrl = pricingPlan === 'monthly' 
           ? 'https://buy.stripe.com/9B66oIcPd1o1do42fl9IQ0h'
           : 'https://buy.stripe.com/6oU14og1p2s52Jq9HN9IQ0i'
@@ -92,34 +70,29 @@ export default function Circle() {
           alignItems: 'center',
           justifyContent: 'center'
         }}>
-          <div ref={videoRef} style={{
+          <div style={{
             position: 'absolute',
             top: 0,
             left: 0,
             width: '100%',
-            height: '100%',
-            opacity: videoPlaying ? 1 : 0,
-            transition: 'opacity 1s ease'
+            height: '100%'
           }}>
-            {videoPlaying && (
-              <iframe
-                src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&mute=1&controls=0&loop=1&playlist=YOUR_VIDEO_ID&rel=0&modestbranding=1"
-                title="Circle of Return"
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  width: isMobile ? '100%' : '177.77vh',
-                  height: isMobile ? '56.25vw' : '100%',
-                  minWidth: '100%',
-                  minHeight: '100%',
-                  transform: 'translate(-50%, -50%)',
-                  border: 'none',
-                  pointerEvents: 'none'
-                }}
-                allow="autoplay; encrypted-media"
-              />
-            )}
+            <iframe
+              src="https://www.youtube.com/embed/-U2z-wETEm0?autoplay=1&mute=1&controls=1&loop=1&playlist=-U2z-wETEm0&rel=0&modestbranding=1"
+              title="Circle of Return"
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: isMobile ? '100%' : '177.77vh',
+                height: isMobile ? '56.25vw' : '100%',
+                minWidth: '100%',
+                minHeight: '100%',
+                transform: 'translate(-50%, -50%)',
+                border: 'none'
+              }}
+              allow="autoplay; encrypted-media"
+            />
           </div>
 
           <div style={{

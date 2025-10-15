@@ -84,18 +84,18 @@ export default function LoginPage() {
           <Link href="/" style={{
             display: 'block',
             textAlign: 'center',
-            marginBottom: '3rem',
+            marginBottom: '4rem',
             textDecoration: 'none'
           }}>
             <h1 style={{
-              fontSize: 'clamp(1.875rem, 5vw, 3rem)',
+              fontSize: 'clamp(2rem, 5vw, 3rem)',
               fontWeight: 300,
               color: '#fff',
               letterSpacing: '0.1em',
-              marginBottom: '0.5rem',
+              marginBottom: '0.75rem',
               transition: 'opacity 0.3s ease'
             }}>
-              TRUE NORTH
+              The CoR
             </h1>
             <p style={{
               fontSize: '0.875rem',
