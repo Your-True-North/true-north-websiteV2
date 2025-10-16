@@ -78,16 +78,14 @@ export default function Circle() {
             height: '100%'
           }}>
             <iframe
-              src="https://www.youtube.com/embed/-U2z-wETEm0?autoplay=1&mute=1&controls=1&loop=1&playlist=-U2z-wETEm0&rel=0&modestbranding=1"
+              src="https://www.youtube.com/embed/-U2z-wETEm0?autoplay=0&mute=0&controls=1&loop=1&playlist=-U2z-wETEm0&rel=0"
               title="Circle of Return"
               style={{
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
-                width: isMobile ? '100%' : '177.77vh',
-                height: isMobile ? '56.25vw' : '100%',
-                minWidth: '100%',
-                minHeight: '100%',
+                width: '100%',
+                height: '100%',
                 transform: 'translate(-50%, -50%)',
                 border: 'none'
               }}

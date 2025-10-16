@@ -73,6 +73,16 @@ export default function JourneyPage() {
   const [user, setUser] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedVideo, setSelectedVideo] = useState(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
@@ -108,10 +118,9 @@ export default function JourneyPage() {
       <Navigation />
       
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1rem' }}>
-        {/* Mobile: Stack everything vertically */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: window.innerWidth < 768 ? '1fr' : window.innerWidth < 1024 ? '1fr 2fr' : 'minmax(250px, 1fr) minmax(0, 2.5fr) minmax(250px, 1fr)',
+          gridTemplateColumns: isMobile ? '1fr' : '280px 1fr',
           gap: '1.5rem',
         }}>
           
@@ -123,8 +132,8 @@ export default function JourneyPage() {
               borderRadius: '12px', 
               border: '1px solid rgba(255, 255, 255, 0.1)', 
               padding: '1.5rem',
-              position: window.innerWidth >= 1024 ? 'sticky' : 'relative',
-              top: window.innerWidth >= 1024 ? '6rem' : 'auto'
+              position: isMobile ? 'relative' : 'sticky',
+              top: isMobile ? 'auto' : '6rem'
             }}>
               
               <div style={{ marginBottom: '2rem' }}>
@@ -274,7 +283,7 @@ export default function JourneyPage() {
               <div style={{ padding: '1.5rem' }}>
                 <div style={{ 
                   display: 'grid', 
-                  gridTemplateColumns: window.innerWidth < 640 ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
                   gap: '1.5rem' 
                 }}>
                   {filteredVideos.map((video) => (
@@ -371,11 +380,49 @@ export default function JourneyPage() {
                 </div>
               </div>
             </div>
+
+            {/* Community Activity - Mobile */}
+            {isMobile && (
+              <div style={{ 
+                background: 'rgba(255, 255, 255, 0.03)', 
+                backdropFilter: 'blur(20px)', 
+                borderRadius: '12px', 
+                border: '1px solid rgba(255, 255, 255, 0.1)', 
+                padding: '1.5rem',
+                marginTop: '1.5rem'
+              }}>
+                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem' }}>Community Activity</h2>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {mockActivity.map((activity, index) => (
+                    <div 
+                      key={index} 
+                      style={{ 
+                        padding: '1rem', 
+                        background: 'rgba(255, 255, 255, 0.02)', 
+                        borderRadius: '8px', 
+                        borderLeft: '2px solid rgba(155, 196, 184, 0.4)' 
+                      }}
+                    >
+                      <div style={{ color: '#9bc4b8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                        {activity.user}
+                      </div>
+                      <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                        {activity.action}
+                      </div>
+                      <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem' }}>
+                        {activity.time}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Right Sidebar - Hide on mobile */}
-          {window.innerWidth >= 1024 && (
-            <div>
+          {/* Right Sidebar - Desktop Only */}
+          {!isMobile && (
+            <div style={{ gridColumn: '3 / 4' }}>
               <div style={{ 
                 background: 'rgba(255, 255, 255, 0.03)', 
                 backdropFilter: 'blur(20px)', 
@@ -533,4 +580,3 @@ export default function JourneyPage() {
     </div>
   )
 }
-// Force rebuild
