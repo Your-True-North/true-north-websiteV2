@@ -204,7 +204,7 @@ export default function Home() {
           position: 'relative', 
           overflow: 'hidden',
           display: isMobile ? 'flex' : 'block',
-          alignItems: isMobile ? 'center' : 'normal'
+          alignItems: isMobile ? 'flex-end' : 'normal', paddingBottom: isMobile ? '4rem' : '0'
         }}>
           <div style={{
             position: 'absolute', 
