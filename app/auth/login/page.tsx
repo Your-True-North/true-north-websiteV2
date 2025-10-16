@@ -32,7 +32,7 @@ export default function LoginPage() {
       }
 
       localStorage.setItem('user', JSON.stringify(data.user))
-      router.push('/members')
+      router.push('/journey')
     } catch (err) {
       setError('Something went wrong. Try again.')
       setLoading(false)
