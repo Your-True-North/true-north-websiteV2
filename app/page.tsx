@@ -1,6 +1,5 @@
 'use client'
 import Navigation from './components/Navigation'
-import Footer from './components/Footer'
 import MysticalBackground from './components/MysticalBackground'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
@@ -602,7 +601,6 @@ export default function Home() {
         </section>
       </main>
       
-      <Footer />
     </>
   )
 }

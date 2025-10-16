@@ -32,6 +32,16 @@ export default function Navigation() {
              </li>
              <li><Link href="/library">Library</Link></li>
              <li><Link href="/contact">Contact</Link></li>
+             <li>
+               <Link href="/auth/login" style={{
+                 padding: '0.5rem 1.25rem',
+                 background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                 color: '#000',
+                 borderRadius: '6px',
+                 fontWeight: '600',
+                 transition: 'all 0.3s ease'
+               }}>Login</Link>
+             </li>
            </ul>
          </div>
 
@@ -58,6 +68,15 @@ export default function Navigation() {
          <Link href="/circle" onClick={() => setIsOpen(false)}>The CoR</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+         <Link href="/auth/login" onClick={() => setIsOpen(false)} style={{
+           marginTop: '1rem',
+           padding: '0.75rem 1.5rem',
+           background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+           color: '#000',
+           borderRadius: '6px',
+           fontWeight: '600',
+           textAlign: 'center'
+         }}>Login</Link>
        </div>
      </div>
 

@@ -1,6 +1,5 @@
 'use client'
 import Navigation from '../components/Navigation'
-import Footer from '../components/Footer'
 import MysticalBackground from '../components/MysticalBackground'
 import { useState, useEffect } from 'react'
 
@@ -271,7 +270,7 @@ export default function Work() {
                 marginBottom: '2.5rem'
               }}>
                 {[
-                  { title: 'Phase 1: Self-Awareness', desc: 'Identify the unconscious patterns running your life. Deep, honest self-awareness.' },
+                  { title: 'Phase 1: Self-Exploration', desc: 'Identify the unconscious patterns running your life. Deep, honest self-awareness.' },
                   { title: 'Phase 2: Somatic Integration', desc: 'Enter the body. Access the subconscious through your body\'s stored intelligence.' },
                   { title: 'Phase 3: Aligned Action', desc: 'Anchor new habits rooted in your values. Become more you.' }
                 ].map((phase, index) => (
@@ -301,7 +300,7 @@ export default function Work() {
                 background: 'rgba(255, 255, 255, 0.05)',
                 borderRadius: '6px'
               }}>
-                "This is high-level, high-impact coaching — for those who are serious about change."
+                "This is high-level, high-impact intestive work for those who are serious about change."
               </blockquote>
 
               <div style={{textAlign: 'center'}}>
@@ -727,7 +726,6 @@ export default function Work() {
         </section>
       </main>
       
-      <Footer />
       
       <style jsx>{`
         @keyframes fadeInUp {
