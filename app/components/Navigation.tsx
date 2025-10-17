@@ -33,7 +33,7 @@ export default function Navigation() {
              <li><Link href="/library">Library</Link></li>
              <li><Link href="/contact">Contact</Link></li>
              <li>
-               <Link href="/auth/login" style={{
+               <Link href="/auth/login" className="breathing-button" style={{
                  padding: '0.5rem 1.25rem',
                  background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                  color: '#000',
@@ -61,6 +61,79 @@ export default function Navigation() {
      </nav>
 
      <div className={`mobile-nav ${isOpen ? 'open' : ''}`}>
+       <button 
+         className="mobile-nav-close"
+         onClick={() => setIsOpen(false)}
+         style={{
+           position: 'absolute',
+           top: '1.5rem',
+           right: '1.5rem',
+           background: 'transparent',
+           border: 'none',
+           cursor: 'pointer',
+           zIndex: 1001,
+           padding: '0.5rem',
+           width: '40px',
+           height: '40px',
+           display: 'flex',
+           alignItems: 'center',
+           justifyContent: 'center'
+         }}
+       >
+         <div style={{
+           position: 'relative',
+           width: '28px',
+           height: '28px'
+         }}>
+           <div style={{
+             position: 'absolute',
+             top: '50%',
+             left: '50%',
+             transform: 'translate(-50%, -50%)',
+             width: '5px',
+             height: '5px',
+             background: 'rgba(255, 255, 255, 0.4)',
+             borderRadius: '50%'
+           }}></div>
+           <div style={{
+             position: 'absolute',
+             top: '0',
+             left: '50%',
+             transform: 'translateX(-50%) rotate(45deg)',
+             width: '1.5px',
+             height: '10px',
+             background: 'rgba(255, 255, 255, 0.7)'
+           }}></div>
+           <div style={{
+             position: 'absolute',
+             right: '0',
+             top: '50%',
+             transform: 'translateY(-50%) rotate(45deg)',
+             width: '10px',
+             height: '1.5px',
+             background: 'rgba(255, 255, 255, 0.7)'
+           }}></div>
+           <div style={{
+             position: 'absolute',
+             bottom: '0',
+             left: '50%',
+             transform: 'translateX(-50%) rotate(45deg)',
+             width: '1.5px',
+             height: '10px',
+             background: 'rgba(255, 255, 255, 0.7)'
+           }}></div>
+           <div style={{
+             position: 'absolute',
+             left: '0',
+             top: '50%',
+             transform: 'translateY(-50%) rotate(45deg)',
+             width: '10px',
+             height: '1.5px',
+             background: 'rgba(255, 255, 255, 0.7)'
+           }}></div>
+         </div>
+       </button>
+
        <div className="mobile-nav-content">
          <Link href="/" onClick={() => setIsOpen(false)}>Home</Link>
          <Link href="/about" onClick={() => setIsOpen(false)}>About</Link>
@@ -68,14 +141,15 @@ export default function Navigation() {
          <Link href="/circle" onClick={() => setIsOpen(false)}>The CoR</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
-         <Link href="/auth/login" onClick={() => setIsOpen(false)} style={{
+         <Link href="/auth/login" onClick={() => setIsOpen(false)} className="breathing-button" style={{
            marginTop: '1rem',
            padding: '0.75rem 1.5rem',
            background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
            color: '#000',
            borderRadius: '6px',
            fontWeight: '600',
-           textAlign: 'center'
+           textAlign: 'center',
+           display: 'block'
          }}>Login</Link>
        </div>
      </div>

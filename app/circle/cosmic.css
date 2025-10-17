@@ -1,8 +1,5 @@
 body.circle-page {
-  background: 
-    radial-gradient(circle at 30% 20%, rgba(20, 20, 60, 0.1) 0%, transparent 80%),
-    radial-gradient(circle at 70% 80%, rgba(10, 10, 30, 0.15) 0%, transparent 70%),
-    linear-gradient(135deg, #0a0a0a 0%, #0f0f15 50%, #0a0a0a 100%) !important;
+  background: linear-gradient(135deg, #0a0a0a 0%, #0f0f15 50%, #0a0a0a 100%) !important;
 }
 
 .breathing-title {
@@ -17,6 +14,21 @@ body.circle-page {
   50% {
     transform: scale(1.02);
     text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.breathing-button {
+  animation: breatheButton 4s ease-in-out infinite;
+}
+
+@keyframes breatheButton {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(155, 196, 184, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(155, 196, 184, 0.6);
   }
 }
 

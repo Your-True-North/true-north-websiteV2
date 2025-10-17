@@ -2,6 +2,7 @@
 import Navigation from '../components/Navigation'
 import MysticalBackground from '../components/MysticalBackground'
 import { useState, useEffect, useRef } from 'react'
+import { Play, Pause, RotateCcw } from 'lucide-react'
 
 export default function Circle() {
   const [isMobile, setIsMobile] = useState(false)
@@ -11,6 +12,8 @@ export default function Circle() {
   const [pricingPlan, setPricingPlan] = useState('yearly')
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [playerReady, setPlayerReady] = useState(false)
+  const [showOverlay, setShowOverlay] = useState(true)
   const playerRef = useRef(null)
   
   useEffect(() => {
@@ -25,50 +28,82 @@ export default function Circle() {
   }, [])
 
   useEffect(() => {
-    // Load YouTube IFrame API
-    const tag = document.createElement('script')
-    tag.src = 'https://www.youtube.com/iframe_api'
-    const firstScriptTag = document.getElementsByTagName('script')[0]
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    if (!window.YT) {
+      const tag = document.createElement('script')
+      tag.src = 'https://www.youtube.com/iframe_api'
+      const firstScriptTag = document.getElementsByTagName('script')[0]
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    }
 
-    window.onYouTubeIframeAPIReady = () => {
-      playerRef.current = new window.YT.Player('youtube-player', {
-        videoId: '-U2z-wETEm0',
-        playerVars: {
-          controls: 0,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0,
-          fs: 0,
-          playsinline: 1
-        },
-        events: {
-          onStateChange: (event) => {
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              setIsPlaying(true)
-            } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
-              setIsPlaying(false)
-            }
-          }
-        }
-      })
+    return () => {
+      if (playerRef.current) {
+        playerRef.current.destroy()
+      }
     }
   }, [])
 
+  useEffect(() => {
+    if (isPlaying && !playerRef.current && window.YT) {
+      const initPlayer = () => {
+        playerRef.current = new window.YT.Player('youtube-player', {
+          videoId: '-U2z-wETEm0',
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
+            fs: 1,
+            playsinline: 1
+          },
+          events: {
+            onReady: () => {
+              setPlayerReady(true)
+              setShowOverlay(false)
+            },
+            onStateChange: (event) => {
+              if (event.data === window.YT.PlayerState.PLAYING) {
+                setIsPlaying(true)
+                setShowOverlay(false)
+              } else if (event.data === window.YT.PlayerState.PAUSED) {
+                setIsPlaying(false)
+              } else if (event.data === window.YT.PlayerState.ENDED) {
+                setIsPlaying(false)
+                setShowOverlay(true)
+              }
+            }
+          }
+        })
+      }
+
+      if (window.YT.Player) {
+        initPlayer()
+      } else {
+        window.onYouTubeIframeAPIReady = initPlayer
+      }
+    }
+  }, [isPlaying])
+
   const handlePlayPause = () => {
-    if (!playerRef.current) return
-    
-    if (isPlaying) {
-      playerRef.current.pauseVideo()
-    } else {
-      playerRef.current.playVideo()
+    if (playerRef.current && playerReady) {
+      if (isPlaying) {
+        playerRef.current.pauseVideo()
+      } else {
+        playerRef.current.playVideo()
+      }
     }
   }
 
   const handleRewind = () => {
-    if (!playerRef.current) return
-    const currentTime = playerRef.current.getCurrentTime()
-    playerRef.current.seekTo(Math.max(0, currentTime - 10))
+    if (playerRef.current && playerReady) {
+      const currentTime = playerRef.current.getCurrentTime()
+      playerRef.current.seekTo(Math.max(0, currentTime - 10), true)
+    }
+  }
+
+  const handleInitialPlay = () => {
+    setIsPlaying(true)
+    setShowOverlay(false)
   }
 
   const handleSubmit = async (e) => {
@@ -109,7 +144,6 @@ export default function Circle() {
       <MysticalBackground />
       
       <main style={{ position: 'relative' }}>
-        {/* Video Hero */}
         <section style={{
           position: 'relative',
           width: '100%',
@@ -135,135 +169,166 @@ export default function Circle() {
                 width: '100%',
                 height: '100%',
                 transform: 'translate(-50%, -50%)',
-                pointerEvents: 'none'
+                pointerEvents: showOverlay ? 'none' : 'auto',
+                opacity: showOverlay ? 0 : 1,
+                transition: 'opacity 0.3s ease'
               }}
             />
           </div>
 
-          {/* Dark overlay - only show when not playing */}
-          {!isPlaying && (
+          {showOverlay && (
             <div style={{
               position: 'absolute',
               top: 0,
               left: 0,
               width: '100%',
               height: '100%',
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%)',
-              zIndex: 1,
-              transition: 'opacity 0.5s ease'
-            }} />
-          )}
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.15), rgba(127, 176, 105, 0.15))',
+              backdropFilter: 'blur(10px)',
+              zIndex: 10,
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              gap: isMobile ? '2rem' : '3rem',
+              padding: isMobile ? '2rem' : '4rem'
+            }}
+            onClick={handleInitialPlay}
+            >
+              <div style={{
+                textAlign: 'center',
+                maxWidth: '600px'
+              }}>
+                <h2 className="breathing-title" style={{
+                  fontSize: isMobile ? '1.8rem' : '2.5rem',
+                  fontWeight: '600',
+                  color: '#fff',
+                  marginBottom: '1rem',
+                  lineHeight: '1.2',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  Circle of Return
+                </h2>
+                <p style={{
+                  fontSize: isMobile ? '1rem' : '1.2rem',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  lineHeight: '1.6',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                }}>
+                  A space to remember who you are
+                </p>
+              </div>
 
-          {/* Text overlay - hide when playing */}
-          {!isPlaying && (
-            <div style={{
-              position: 'relative',
-              zIndex: 2,
-              textAlign: 'center',
-              padding: isMobile ? '2rem 1.5rem' : '3rem 2rem',
-              maxWidth: '900px',
-              transition: 'opacity 0.5s ease'
-            }}>
-              <h1 style={{
-                fontSize: isMobile ? 'clamp(2.5rem, 10vw, 3.5rem)' : 'clamp(3.5rem, 6vw, 5rem)',
-                color: '#ffffff',
-                fontWeight: '300',
-                marginBottom: '1.5rem',
-                letterSpacing: '-0.02em',
-                lineHeight: '1.1'
-              }}>
-                The Circle of Return
-              </h1>
-              
+              <div style={{
+                width: isMobile ? '70px' : '90px',
+                height: isMobile ? '70px' : '90px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease',
+                cursor: 'pointer',
+                boxShadow: '0 10px 30px rgba(155, 196, 184, 0.3)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.1)'
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(155, 196, 184, 0.5)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)'
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.3)'
+              }}
+              >
+                <Play size={isMobile ? 28 : 36} color="#000" fill="#000" style={{ marginLeft: '4px' }} />
+              </div>
+
               <p style={{
-                fontSize: isMobile ? '1.1rem' : '1.3rem',
-                color: 'rgba(255,255,255,0.85)',
-                fontWeight: '300',
-                lineHeight: '1.6',
-                maxWidth: '600px',
-                margin: '0 auto'
+                fontSize: isMobile ? '0.9rem' : '1rem',
+                color: 'rgba(255, 255, 255, 0.7)',
+                textAlign: 'center',
+                marginTop: isMobile ? '-1rem' : '0'
               }}>
-                This is not a community or a group coaching programme.
+                {isMobile ? 'Tap to watch' : 'Click to watch'}
               </p>
             </div>
           )}
 
-          {/* Custom Video Controls */}
-          <div style={{
-            position: 'absolute',
-            bottom: '2rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 3,
-            display: 'flex',
-            gap: '1rem',
-            alignItems: 'center',
-            padding: '1rem 1.5rem',
-            background: 'rgba(0, 0, 0, 0.7)',
-            backdropFilter: 'blur(10px)',
-            borderRadius: '50px',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
-          }}>
-            {/* Rewind Button */}
-            <button
-              onClick={handleRewind}
-              style={{
-                width: '3rem',
-                height: '3rem',
-                borderRadius: '50%',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                color: '#fff',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s ease',
-                fontSize: '1.2rem'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
-                e.currentTarget.style.transform = 'scale(1.1)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                e.currentTarget.style.transform = 'scale(1)'
-              }}
-            >
-              ⏪
-            </button>
+          {isPlaying && playerReady && (
+            <div style={{
+              position: 'absolute',
+              bottom: isMobile ? '2rem' : '1.5rem',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              gap: '1rem',
+              zIndex: 100,
+              padding: '0.75rem 1.5rem',
+              background: 'rgba(0, 0, 0, 0.7)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '50px',
+              border: '1px solid rgba(155, 196, 184, 0.3)',
+              transition: 'opacity 0.3s ease'
+            }}>
+              <button
+                onClick={handleRewind}
+                style={{
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '50%',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.3)'
+                  e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                }}
+              >
+                <RotateCcw size={20} color="#fff" />
+              </button>
 
-            {/* Play/Pause Button */}
-            <button
-              onClick={handlePlayPause}
-              style={{
-                width: '4rem',
-                height: '4rem',
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                border: 'none',
-                color: '#000',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s ease',
-                fontSize: '1.5rem',
-                fontWeight: 'bold',
-                boxShadow: '0 4px 20px rgba(155, 196, 184, 0.4)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.1)'
-                e.currentTarget.style.boxShadow = '0 6px 30px rgba(155, 196, 184, 0.6)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)'
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(155, 196, 184, 0.4)'
-              }}
-            >
-              {isPlaying ? '⏸' : '▶'}
-            </button>
-          </div>
+              <button
+                onClick={handlePlayPause}
+                style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                  border: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)'
+                  e.currentTarget.style.boxShadow = '0 5px 20px rgba(155, 196, 184, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)'
+                  e.currentTarget.style.boxShadow = 'none'
+                }}
+              >
+                {isPlaying ? (
+                  <Pause size={24} color="#000" fill="#000" />
+                ) : (
+                  <Play size={24} color="#000" fill="#000" style={{ marginLeft: '2px' }} />
+                )}
+              </button>
+            </div>
+          )}
         </section>
 
         <div style={{
@@ -272,7 +337,6 @@ export default function Circle() {
           padding: isMobile ? '0 1.5rem' : '0 2rem'
         }}>
 
-          {/* Who This Is For - FIRST */}
           <section style={{
             padding: isMobile ? '4rem 0' : '6rem 0'
           }}>
@@ -357,7 +421,6 @@ export default function Circle() {
             margin: isMobile ? '3rem 0' : '4rem 0'
           }} />
 
-          {/* Portal Intro */}
           <section style={{
             padding: isMobile ? '3rem 0' : '5rem 0',
             textAlign: 'center'
@@ -438,7 +501,6 @@ export default function Circle() {
             margin: isMobile ? '3rem 0' : '4rem 0'
           }} />
 
-          {/* What's Inside */}
           <section style={{
             padding: isMobile ? '3rem 0' : '5rem 0'
           }}>
@@ -524,7 +586,6 @@ export default function Circle() {
             margin: isMobile ? '3rem 0' : '4rem 0'
           }} />
 
-          {/* Core Principles */}
           <section style={{
             padding: isMobile ? '3rem 0' : '5rem 0'
           }}>
@@ -625,7 +686,6 @@ export default function Circle() {
             margin: isMobile ? '3rem 0' : '4rem 0'
           }} />
 
-          {/* Pricing */}
           <section style={{
             padding: isMobile ? '3rem 0 4rem' : '5rem 0 6rem',
             textAlign: 'center'
@@ -652,7 +712,6 @@ export default function Circle() {
               You have tried other things. Maybe therapy. Maybe courses. Maybe content and maybe nothing at all... but the pattern keeps repeating.
             </p>
 
-            {/* Toggle - Compact, 3px corners */}
             <div style={{
               display: 'inline-flex',
               gap: '0.5rem',
@@ -713,7 +772,6 @@ export default function Circle() {
               </button>
             </div>
 
-            {/* Price Display */}
             <div style={{
               marginBottom: '2.5rem'
             }}>
@@ -780,7 +838,6 @@ export default function Circle() {
               )}
             </div>
 
-            {/* CTA */}
             <button
               onClick={() => setShowWaitlistPopup(true)}
               style={{
@@ -830,7 +887,6 @@ export default function Circle() {
         </div>
       </main>
 
-      {/* Founding Member Access Popup */}
       {showWaitlistPopup && (
         <div 
           onClick={() => setShowWaitlistPopup(false)}
@@ -996,7 +1052,6 @@ export default function Circle() {
           }
         }
 
-        /* Smooth scroll for mobile cards */
         div::-webkit-scrollbar {
           display: none;
         }
