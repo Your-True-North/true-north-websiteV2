@@ -1,11 +1,17 @@
 'use client'
 import Navigation from '../components/Navigation'
 import MysticalBackground from '../components/MysticalBackground'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { X, Play, Pause, RotateCcw } from 'lucide-react'
 
 export default function Work() {
   const [isMobile, setIsMobile] = useState(false)
   const [showPackPopup, setShowPackPopup] = useState(false)
+  const [showVSL, setShowVSL] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [playerReady, setPlayerReady] = useState(false)
+  const [showCTA, setShowCTA] = useState(false)
+  const playerRef = useRef(null)
   const whatsappNumber = "+447449052909"
   
   useEffect(() => {
@@ -29,6 +35,107 @@ export default function Work() {
       clearTimeout(timer)
     }
   }, [])
+
+  useEffect(() => {
+    if (showVSL) {
+      document.body.style.overflow = 'hidden'
+      const timer = setTimeout(() => {
+        setShowCTA(true)
+      }, 180000) // 3 minutes
+      return () => {
+        clearTimeout(timer)
+        document.body.style.overflow = 'unset'
+        if (playerRef.current) {
+          playerRef.current.destroy()
+        }
+      }
+    }
+  }, [showVSL])
+
+  useEffect(() => {
+    if (isPlaying && !playerRef.current && window.YT) {
+      const initPlayer = () => {
+        playerRef.current = new window.YT.Player('vsl-youtube-player', {
+          videoId: 'p7GKlXWpBw4',
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
+            fs: 1,
+            playsinline: 1
+          },
+          events: {
+            onReady: () => setPlayerReady(true),
+            onStateChange: (event) => {
+              if (event.data === window.YT.PlayerState.PLAYING) {
+                setIsPlaying(true)
+              } else if (event.data === window.YT.PlayerState.PAUSED) {
+                setIsPlaying(false)
+              } else if (event.data === window.YT.PlayerState.ENDED) {
+                setShowCTA(true)
+              }
+            }
+          }
+        })
+      }
+
+      if (window.YT.Player) {
+        initPlayer()
+      } else {
+        window.onYouTubeIframeAPIReady = initPlayer
+      }
+    }
+  }, [isPlaying])
+
+  useEffect(() => {
+    if (showVSL && !window.YT) {
+      const tag = document.createElement('script')
+      tag.src = 'https://www.youtube.com/iframe_api'
+      const firstScriptTag = document.getElementsByTagName('script')[0]
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    }
+  }, [showVSL])
+
+  const handlePlayPause = () => {
+    if (playerRef.current && playerReady) {
+      if (isPlaying) {
+        playerRef.current.pauseVideo()
+      } else {
+        playerRef.current.playVideo()
+      }
+    }
+  }
+
+  const handleRewind = () => {
+    if (playerRef.current && playerReady) {
+      const currentTime = playerRef.current.getCurrentTime()
+      playerRef.current.seekTo(Math.max(0, currentTime - 10), true)
+    }
+  }
+
+  const handleInitialPlay = () => {
+    setIsPlaying(true)
+  }
+
+  const handleBookCall = () => {
+    window.open('https://calendly.com/callwithmason/introduction', '_blank')
+  }
+
+  const handleSkipToBooking = () => {
+    window.open('https://calendly.com/callwithmason/introduction', '_blank')
+  }
+
+  const closeVSL = () => {
+    setShowVSL(false)
+    setIsPlaying(false)
+    setShowCTA(false)
+    if (playerRef.current) {
+      playerRef.current.destroy()
+      playerRef.current = null
+    }
+  }
   
   const createWhatsAppLink = (message) => {
     return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
@@ -154,6 +261,329 @@ export default function Work() {
                 Transformation happens in commitment
               </p>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showVSL && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.95)',
+          backdropFilter: 'blur(20px)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: isMobile ? '0' : '2rem'
+        }}>
+          <button
+            onClick={closeVSL}
+            style={{
+              position: 'absolute',
+              top: isMobile ? '1rem' : '2rem',
+              right: isMobile ? '1rem' : '2rem',
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '50%',
+              width: '48px',
+              height: '48px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              zIndex: 10000
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
+              e.currentTarget.style.transform = 'rotate(90deg)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+              e.currentTarget.style.transform = 'rotate(0deg)'
+            }}
+          >
+            <X size={24} color="#fff" />
+          </button>
+
+          <div style={{
+            maxWidth: isMobile ? '100%' : '900px',
+            width: '100%',
+            height: isMobile ? '100vh' : 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: isMobile ? '0' : '2rem',
+            justifyContent: isMobile ? 'center' : 'flex-start'
+          }}>
+            {!isPlaying && !isMobile && (
+              <div style={{
+                textAlign: 'center'
+              }}>
+                <h2 style={{
+                  fontSize: '2rem',
+                  fontWeight: '600',
+                  color: '#fff',
+                  marginBottom: '0.5rem',
+                  lineHeight: '1.3'
+                }}>
+                  Before We Talk...
+                </h2>
+                <p style={{
+                  fontSize: '1.1rem',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  maxWidth: '600px',
+                  margin: '0 auto'
+                }}>
+                  Watch this short message to see if we're aligned
+                </p>
+              </div>
+            )}
+
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              height: isMobile ? '100vh' : 'auto',
+              paddingBottom: isMobile ? '0' : '56.25%',
+              background: '#000',
+              borderRadius: isMobile ? '0' : '12px',
+              overflow: 'hidden',
+              border: isMobile ? 'none' : '2px solid rgba(155, 196, 184, 0.3)',
+              boxShadow: isMobile ? 'none' : '0 20px 60px rgba(0, 0, 0, 0.5)'
+            }}>
+              {!isPlaying ? (
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                  background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))',
+                  cursor: 'pointer'
+                }}
+                onClick={handleInitialPlay}
+                >
+                  {isMobile && (
+                    <p style={{
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '1.2rem',
+                      fontWeight: '600',
+                      marginBottom: '1rem',
+                      textAlign: 'center',
+                      padding: '0 2rem'
+                    }}>
+                      Before We Talk...
+                    </p>
+                  )}
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.1)'
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.5)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)'
+                    e.currentTarget.style.boxShadow = 'none'
+                  }}
+                  >
+                    <Play size={32} color="#000" fill="#000" style={{ marginLeft: '4px' }} />
+                  </div>
+                  {isMobile && (
+                    <p style={{
+                      color: 'rgba(255, 255, 255, 0.6)',
+                      fontSize: '0.9rem',
+                      marginTop: '0.5rem'
+                    }}>
+                      Tap to watch
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <div
+                    id="vsl-youtube-player"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%'
+                    }}
+                  />
+                  
+                  <div style={{
+                    position: 'absolute',
+                    bottom: isMobile ? '2rem' : '1.5rem',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    gap: '1rem',
+                    zIndex: 100,
+                    padding: '0.75rem 1.5rem',
+                    background: 'rgba(0, 0, 0, 0.7)',
+                    backdropFilter: 'blur(10px)',
+                    borderRadius: '50px',
+                    border: '1px solid rgba(155, 196, 184, 0.3)'
+                  }}>
+                    <button
+                      onClick={handleRewind}
+                      style={{
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '50%',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(155, 196, 184, 0.3)'
+                        e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                      }}
+                    >
+                      <RotateCcw size={20} color="#fff" />
+                    </button>
+
+                    <button
+                      onClick={handlePlayPause}
+                      style={{
+                        width: '52px',
+                        height: '52px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                        border: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)'
+                        e.currentTarget.style.boxShadow = '0 5px 20px rgba(155, 196, 184, 0.5)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)'
+                        e.currentTarget.style.boxShadow = 'none'
+                      }}
+                    >
+                      {isPlaying ? (
+                        <Pause size={24} color="#000" fill="#000" />
+                      ) : (
+                        <Play size={24} color="#000" fill="#000" style={{ marginLeft: '2px' }} />
+                      )}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {showCTA && (
+              <div style={{
+                textAlign: 'center',
+                padding: isMobile ? '1.5rem' : '2rem',
+                background: 'rgba(255, 255, 255, 0.03)',
+                borderRadius: '12px',
+                border: '1px solid rgba(155, 196, 184, 0.2)'
+              }}>
+                <h3 style={{
+                  fontSize: isMobile ? '1.3rem' : '1.5rem',
+                  fontWeight: '600',
+                  color: '#fff',
+                  marginBottom: '1rem'
+                }}>
+                  Ready to Begin?
+                </h3>
+                <p style={{
+                  fontSize: '1rem',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  marginBottom: '1.5rem',
+                  maxWidth: '500px',
+                  margin: '0 auto 1.5rem auto'
+                }}>
+                  If what I shared resonates with where you are, let's have a conversation.
+                </p>
+                <button
+                  onClick={handleBookCall}
+                  style={{
+                    padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
+                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    color: '#000',
+                    border: 'none',
+                    borderRadius: '6px',
+                    fontSize: isMobile ? '1rem' : '1.1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    width: isMobile ? '100%' : 'auto'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = 'none'
+                  }}
+                >
+                  Book Your Discovery Call
+                </button>
+              </div>
+            )}
+
+            {!showCTA && isPlaying && (
+              <div style={{
+                textAlign: 'center'
+              }}>
+                <button
+                  onClick={handleSkipToBooking}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    padding: '0.8rem 1.5rem',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
+                    e.currentTarget.style.color = '#9bc4b8'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'
+                  }}
+                >
+                  Already know you're ready? Skip to booking →
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -304,10 +734,8 @@ export default function Work() {
               </blockquote>
 
               <div style={{textAlign: 'center'}}>
-                <a 
-                  href={createWhatsAppLink("Hi Mason, I'm interested in your 12-week 1:1 coaching program. I'm ready for deep transformation and want to discuss if we're a good fit for this level of work.")}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setShowVSL(true)}
                   style={{
                     display: 'inline-block',
                     padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
@@ -319,11 +747,21 @@ export default function Work() {
                     fontSize: isMobile ? '1rem' : '1.1rem',
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px',
-                    transition: 'all 0.3s ease'
+                    transition: 'all 0.3s ease',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(255, 255, 255, 0.3)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  Apply for 1:1 Work
-                </a>
+                  See If We're Aligned
+                </button>
               </div>
             </div>
 
