@@ -199,7 +199,7 @@ export default function Home() {
       
       <main className="page-container">
         <section className="section" style={{
-          paddingTop: isMobile ? '8rem' : '8rem',
+          paddingTop: isMobile ? '0' : '5rem',
           height: isMobile ? '100vh' : 'auto',
           position: 'relative', 
           overflow: 'hidden',
