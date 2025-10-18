@@ -235,8 +235,6 @@ export default function Home() {
             width: isMobile ? '90%' : 'auto'
           }}>
             <div style={{maxWidth: isMobile ? '100%' : '800px'}}>
-              }}>
-              </div>
               
               <h1 className="h1 shimmer-accent" style={{
                 fontSize: isMobile ? 'clamp(2.2rem, 9vw, 3.5rem)' : 'clamp(3rem, 7vw, 5rem)', 
