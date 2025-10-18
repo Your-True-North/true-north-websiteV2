@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Navigation from '../components/Navigation'
+import Link from 'next/link'
 
 const mockVideos = [
   {
@@ -98,6 +98,12 @@ export default function JourneyPage() {
     }
   }, [])
 
+  const handleLogout = () => {
+    localStorage.removeItem('user')
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+    window.location.href = '/'
+  }
+
   const filteredVideos = selectedCategory === "All" 
     ? mockVideos 
     : mockVideos.filter(video => video.category === selectedCategory)
@@ -115,7 +121,85 @@ export default function JourneyPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
-      <Navigation />
+      {/* Navigation */}
+      <nav style={{
+        position: 'relative',
+        zIndex: 20,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(20px)',
+        background: 'rgba(0, 0, 0, 0.2)'
+      }}>
+        <div style={{
+          maxWidth: '80rem',
+          margin: '0 auto',
+          padding: '1.25rem 1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem'
+        }}>
+          <Link href="/" style={{
+            fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
+            fontWeight: 300,
+            letterSpacing: '0.2em',
+            color: 'rgba(255, 255, 255, 0.9)',
+            textDecoration: 'none',
+            transition: 'color 0.3s ease'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+          onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
+            TRUE NORTH
+          </Link>
+          
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <Link href="/members" style={{
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 300,
+              border: '1px solid rgba(155, 196, 184, 0.3)',
+              borderRadius: '8px',
+              color: '#9bc4b8',
+              textDecoration: 'none',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
+              e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+            }}>
+              Dashboard
+            </Link>
+            <button
+              onClick={handleLogout}
+              style={{
+                padding: '0.5rem 1.25rem',
+                fontSize: '0.875rem',
+                fontWeight: 300,
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '8px',
+                background: 'transparent',
+                color: '#fff',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </nav>
       
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1rem' }}>
         <div style={{ 

@@ -235,16 +235,6 @@ export default function Home() {
             width: isMobile ? '90%' : 'auto'
           }}>
             <div style={{maxWidth: isMobile ? '100%' : '800px'}}>
-              <div style={{
-                display: 'inline-block', 
-                background: 'rgba(56, 72, 93, 0.1)',
-                border: '1px solid var(--border-primary)', 
-                padding: '0.4rem 0.8rem',
-                borderRadius: '20px', 
-                fontSize: '0.75rem', 
-                color: 'var(--text-muted)',
-                marginBottom: '2rem', 
-                backdropFilter: 'blur(10px)'
               }}>
               </div>
               

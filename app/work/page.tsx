@@ -330,7 +330,7 @@ export default function Work() {
                   marginBottom: '0.5rem',
                   lineHeight: '1.3'
                 }}>
-                  Before We Talk...
+                  Wait... Before You Book Your Call
                 </h2>
                 <p style={{
                   fontSize: '1.1rem',
@@ -380,7 +380,7 @@ export default function Work() {
                       textAlign: 'center',
                       padding: '0 2rem'
                     }}>
-                      Before We Talk...
+                      Wait... Before You Book Your Call
                     </p>
                   )}
                   <div style={{
@@ -760,7 +760,7 @@ export default function Work() {
                     e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  See If We're Aligned
+                  Book Your Discovery Call
                 </button>
               </div>
             </div>
