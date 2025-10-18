@@ -246,7 +246,6 @@ export default function Home() {
                 marginBottom: '2rem', 
                 backdropFilter: 'blur(10px)'
               }}>
-                Transformational Inner Work
               </div>
               
               <h1 className="h1 shimmer-accent" style={{
@@ -408,7 +407,7 @@ export default function Home() {
                 color: 'rgba(246, 246, 246, 0.9)', 
                 fontSize: isMobile ? '1rem' : '1.1rem'
               }}>
-                A simple four question check-in to help you see what's really going on — and where to go from here.
+                A simple four question check-in to help you see what's really going on, and where to go from here.
               </p>
             </div>
 
@@ -517,7 +516,7 @@ export default function Home() {
         <section className="section">
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '4rem'}}>
-              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>Those Who've Made the Return</h2>
+              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>Those Who've Made the Return to Truth</h2>
             </div>
             
             <div style={{
