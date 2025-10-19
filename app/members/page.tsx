@@ -189,7 +189,7 @@ export default function MembersPage() {
         </div>
       </nav>
 
-      <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '6rem 1.5rem 2rem' }}>
+      <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '8rem 1.5rem 2rem' }}>
         {/* Hero Section */}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <div style={{ display: 'inline-block', marginBottom: '1.5rem' }}>
