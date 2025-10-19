@@ -1,35 +1,19 @@
-'use client'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [user, setUser] = useState(null)
-  const pathname = usePathname()
-  const router = useRouter()
+ const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const userData = localStorage.getItem('user')
-    if (userData) {
-      try {
-        setUser(JSON.parse(userData))
-      } catch (e) {
-        setUser(null)
-      }
-    }
-  }, [pathname])
-
-  const handleLogout = () => {
-    localStorage.removeItem('user')
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    setUser(null)
-    setIsOpen(false)
-    router.push('/')
-  }
-
-  return (
+ return (
+   <>
+     <nav className="nav">
+       <div className="nav-container">
+         <Link href="/" className="nav-logo">
+           <Image
+             src="/white white star.png"
              alt="True North"
              width={72}
              height={72}
@@ -53,29 +37,15 @@ export default function Navigation() {
                  padding: '0.5rem 1.25rem',
                  background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                  color: '#000',
-             <li>
-               {user ? (
-                 <button onClick={handleLogout} className="breathing-button" style={{
-                   padding: '0.5rem 1.25rem',
-                   background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                   color: '#000',
-                   borderRadius: '6px',
-                   fontWeight: '600',
-                   transition: 'all 0.3s ease',
-                   border: 'none',
-                   cursor: 'pointer'
-                 }}>Logout</button>
-               ) : (
-                 <Link href="/auth/login" className="breathing-button" style={{
-                   padding: '0.5rem 1.25rem',
-                   background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                   color: '#000',
-                   borderRadius: '6px',
-                   fontWeight: '600',
-                   transition: 'all 0.3s ease'
-                 }}>Login</Link>
-               )}
+                 borderRadius: '6px',
+                 fontWeight: '600',
+                 transition: 'all 0.3s ease'
+               }}>Login</Link>
              </li>
+           </ul>
+         </div>
+
+         <button 
            className="mobile-nav-toggle"
            onClick={() => setIsOpen(!isOpen)}
          >
@@ -183,33 +153,13 @@ export default function Navigation() {
          }}>Login</Link>
        </div>
      </div>
-             <li>
-               {user ? (
-                 <button onClick={handleLogout} className="breathing-button" style={{
-                   padding: '0.5rem 1.25rem',
-                   background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                   color: '#000',
-                   borderRadius: '6px',
-                   fontWeight: '600',
-                   transition: 'all 0.3s ease',
-                   display: 'block',
-                   width: '100%',
-                   textAlign: 'center',
-                   border: 'none',
-                   cursor: 'pointer'
-                 }}>Logout</button>
-               ) : (
-                 <Link href="/auth/login" onClick={() => setIsOpen(false)} className="breathing-button" style={{
-                   padding: '0.5rem 1.25rem',
-                   background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                   color: '#000',
-                   borderRadius: '6px',
-                   fontWeight: '600',
-                   transition: 'all 0.3s ease',
-                   display: 'block',
-                   textAlign: 'center'
-                 }}>Login</Link>
-               )}
-             </li>
+
+     {isOpen && (
+       <div 
+         className="mobile-nav-overlay"
+         onClick={() => setIsOpen(false)}
+       />
+     )}
+   </>
  );
 }
