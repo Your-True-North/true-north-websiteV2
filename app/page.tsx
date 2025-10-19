@@ -257,7 +257,7 @@ export default function Home() {
                 display: 'flex', 
                 gap: '1rem', 
                 flexWrap: 'wrap',
-                justifyContent: isMobile ? 'center' : 'flex-start'
+                justifyContent: isMobile ? 'center' : 'flex-start', marginBottom: '4rem'
               }}>
                 <Link href="/work" className="btn-primary" style={{
                   borderRadius: '6px', 
