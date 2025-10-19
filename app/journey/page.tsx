@@ -201,7 +201,7 @@ export default function JourneyPage() {
         </div>
       </nav>
       
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '8rem 1rem 2rem' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '10rem 1rem 2rem' }}>
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: isMobile ? '1fr' : '280px 1fr',
