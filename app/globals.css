@@ -408,6 +408,10 @@ body {
   z-index: 998;
 }
 
+.mobile-nav-content button {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
 .desktop-nav {
   display: flex;
 }
@@ -692,6 +696,10 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+.mobile-nav-content button {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
   .desktop-nav {
     display: none;
   }
