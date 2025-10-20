@@ -177,16 +177,32 @@ export default function Navigation() {
          <Link href="/circle" onClick={() => setIsOpen(false)}>The CoR</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
-         <Link href="/auth/login" onClick={() => setIsOpen(false)} className="breathing-button" style={{
-           marginTop: '1rem',
-           padding: '0.75rem 1.5rem',
-           background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-           color: '#000',
-           borderRadius: '6px',
-           fontWeight: '600',
-           textAlign: 'center',
-           display: 'block'
-         }}>Login</Link>
+         {user ? (
+           <button onClick={handleLogout} className="breathing-button" style={{
+             marginTop: '1rem',
+             padding: '0.75rem 1.5rem',
+             background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+             color: '#000',
+             borderRadius: '6px',
+             fontWeight: '600',
+             textAlign: 'center',
+             display: 'block',
+             width: '100%',
+             border: 'none',
+             cursor: 'pointer'
+           }}>Logout</button>
+         ) : (
+           <Link href="/auth/login" onClick={() => setIsOpen(false)} className="breathing-button" style={{
+             marginTop: '1rem',
+             padding: '0.75rem 1.5rem',
+             background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+             color: '#000',
+             borderRadius: '6px',
+             fontWeight: '600',
+             textAlign: 'center',
+             display: 'block'
+           }}>Login</Link>
+         )}
        </div>
      </div>
 
