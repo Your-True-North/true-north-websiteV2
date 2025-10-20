@@ -14,7 +14,7 @@ export default function ResetPasswordPage() {
     setLoading(true)
 
     try {
-      const res = await fetch('/api/auth/reset-password', {
+      const res = await fetch('/api/auth/request-reset', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -37,16 +37,20 @@ export default function ResetPasswordPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
       <div style={{ maxWidth: '28rem', width: '100%' }}>
-        <Link href="/auth/login" style={{ display: 'block', textAlign: 'center', marginBottom: '2rem', color: '#fff', textDecoration: 'none' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 300, marginBottom: '0.5rem' }}>Reset Password</h1>
-        </Link>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <h1 style={{ fontSize: '2rem', fontWeight: 300, color: '#fff', marginBottom: '0.5rem' }}>Reset Password</h1>
+          <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.875rem' }}>Enter your email to receive reset instructions</p>
+        </div>
 
         {sent ? (
           <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', padding: '2rem', textAlign: 'center' }}>
-            <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: '1rem' }}>Check your email</p>
-            <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>We've sent password reset instructions to {email}</p>
-            <Link href="/auth/login" style={{ display: 'inline-block', marginTop: '1.5rem', color: '#9bc4b8', textDecoration: 'none' }}>
-              Back to login
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✓</div>
+            <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: '0.5rem', fontSize: '1.25rem', fontWeight: 500 }}>Check your email</p>
+            <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem', marginBottom: '2rem' }}>
+              We've sent password reset instructions to<br/><strong style={{ color: '#9bc4b8' }}>{email}</strong>
+            </p>
+            <Link href="/auth/login" style={{ display: 'inline-block', padding: '0.75rem 1.5rem', background: 'linear-gradient(135deg, #9bc4b8, #7fb069)', color: '#000', fontWeight: 600, borderRadius: '8px', textDecoration: 'none' }}>
+              Back to Login
             </Link>
           </div>
         ) : (
@@ -58,29 +62,53 @@ export default function ResetPasswordPage() {
                 </div>
               )}
               
-              <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
-                style={{ width: '100%', padding: '0.75rem', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '8px', color: '#fff', marginBottom: '1.5rem' }}
-                placeholder="your@email.com"
-              />
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>Email Address</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={loading}
+                  style={{ 
+                    width: '100%', 
+                    padding: '0.75rem', 
+                    background: 'rgba(255, 255, 255, 0.05)', 
+                    border: '1px solid rgba(255, 255, 255, 0.1)', 
+                    borderRadius: '8px', 
+                    color: '#fff',
+                    fontSize: '1rem',
+                    outline: 'none'
+                  }}
+                  placeholder="your@email.com"
+                />
+              </div>
               
               <button
                 type="submit"
                 disabled={loading}
-                style={{ width: '100%', padding: '0.875rem', background: 'linear-gradient(135deg, #9bc4b8, #7fb069)', color: '#000', fontWeight: 600, borderRadius: '8px', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.5 : 1 }}
+                style={{ 
+                  width: '100%', 
+                  padding: '0.875rem', 
+                  background: 'linear-gradient(135deg, #9bc4b8, #7fb069)', 
+                  color: '#000', 
+                  fontWeight: 600, 
+                  fontSize: '1rem',
+                  borderRadius: '8px', 
+                  border: 'none', 
+                  cursor: loading ? 'not-allowed' : 'pointer', 
+                  opacity: loading ? 0.5 : 1 
+                }}
               >
                 {loading ? 'Sending...' : 'Send Reset Link'}
               </button>
             </form>
             
-            <Link href="/auth/login" style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.875rem', textDecoration: 'none' }}>
-              Back to login
-            </Link>
+            <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+              <Link href="/auth/login" style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.875rem', textDecoration: 'none' }}>
+                ← Back to Login
+              </Link>
+            </div>
           </div>
         )}
       </div>
