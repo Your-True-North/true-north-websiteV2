@@ -336,7 +336,7 @@ body {
   text-align: center;
 }
 
-.mobile-nav-content a {
+.mobile-nav-content a, .mobile-nav-content button {
   color: var(--text-primary);
   text-decoration: none;
   font-size: 1.5rem;
