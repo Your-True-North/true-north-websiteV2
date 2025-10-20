@@ -264,22 +264,6 @@ export default function LoginPage() {
                 onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
                 onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
               >
-            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-              <Link 
-                href="/auth/reset-password" 
-                style={{
-                  fontSize: '0.875rem',
-                  color: 'rgba(255, 255, 255, 0.5)',
-                  textDecoration: 'none',
-                  fontWeight: 300,
-                  transition: 'color 0.3s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(155, 196, 184, 0.8)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
-              >
-                Forgot your password?
-              </Link>
-            </div>
                 <span>←</span> Back to home
               </Link>
             </div>
