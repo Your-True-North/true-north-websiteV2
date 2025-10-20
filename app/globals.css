@@ -1270,3 +1270,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
+
+.mobile-nav.open .mobile-nav-content button {
+  animation: slideFromBottom 1.5s ease-out forwards;
+  animation-delay: 1.3s;
+}
