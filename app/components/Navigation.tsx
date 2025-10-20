@@ -177,7 +177,22 @@ export default function Navigation() {
          <Link href="/circle" onClick={() => setIsOpen(false)}>The CoR</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
-         <Link href="/auth/login" onClick={() => setIsOpen(false)} className="breathing-button" style={{
+         {user ? (
+                   <button onClick={handleLogout} className="breathing-button" style={{
+                     padding: '0.5rem 1.25rem',
+                     background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                     color: '#000',
+                     borderRadius: '6px',
+                     fontWeight: '600',
+                     transition: 'all 0.3s ease',
+                     display: 'block',
+                     width: '100%',
+                     textAlign: 'center',
+                     border: 'none',
+                     cursor: 'pointer'
+                   }}>Logout</button>
+                 ) : (
+                   <Link href="/auth/login" onClick={() => setIsOpen(false)} className="breathing-button" style={{
            marginTop: '1rem',
            padding: '0.75rem 1.5rem',
            background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
