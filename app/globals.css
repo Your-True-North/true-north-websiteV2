@@ -330,16 +330,6 @@ body {
 }
 
 .mobile-nav-content {
-}
-
-.mobile-nav-content > * {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
-.mobile-nav-content button {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
   display: flex;
   flex-direction: column;
   gap: 2rem;
