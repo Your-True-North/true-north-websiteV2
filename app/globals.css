@@ -369,7 +369,12 @@ body {
   animation-delay: 0.9s;
 }
 .mobile-nav.open .mobile-nav-content a:nth-child(6) { 
-  animation: slideFromRight 1.5s ease-out forwards;
+.mobile-nav.open .mobile-nav-content a:nth-child(7),
+.mobile-nav.open .mobile-nav-content button {
+  animation: slideFromTop 1.5s ease-out forwards;
+  animation-delay: 1.3s;
+  opacity: 1 !important;
+}  animation: slideFromRight 1.5s ease-out forwards;
   animation-delay: 1.1s;
 }
 
