@@ -1,11 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Navigation() {
  const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData));
+      } catch (e) {
+        setUser(null);
+      }
+    }
+  }, [pathname]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    setUser(null);
+    setIsOpen(false);
+    router.push('/');
+  };
 
  return (
    <>
@@ -33,14 +56,27 @@ export default function Navigation() {
              <li><Link href="/library">Library</Link></li>
              <li><Link href="/contact">Contact</Link></li>
              <li>
-               <Link href="/auth/login" className="breathing-button" style={{
-                 padding: '0.5rem 1.25rem',
-                 background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                 color: '#000',
-                 borderRadius: '6px',
-                 fontWeight: '600',
-                 transition: 'all 0.3s ease'
-               }}>Login</Link>
+               {user ? (
+                 <button onClick={handleLogout} className="breathing-button" style={{
+                   padding: '0.5rem 1.25rem',
+                   background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                   color: '#000',
+                   borderRadius: '6px',
+                   fontWeight: '600',
+                   transition: 'all 0.3s ease',
+                   border: 'none',
+                   cursor: 'pointer'
+                 }}>Logout</button>
+               ) : (
+                 <Link href="/auth/login" className="breathing-button" style={{
+                   padding: '0.5rem 1.25rem',
+                   background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                   color: '#000',
+                   borderRadius: '6px',
+                   fontWeight: '600',
+                   transition: 'all 0.3s ease'
+                 }}>Login</Link>
+               )}
              </li>
            </ul>
          </div>
