@@ -200,7 +200,7 @@ export default function Navigation() {
              borderRadius: '6px',
              fontWeight: '600',
              textAlign: 'center',
-             display: 'block'
+             display: 'block', opacity: '1'
            }}>Login</Link>
          )}
        </div>
