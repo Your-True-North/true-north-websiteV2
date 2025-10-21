@@ -120,7 +120,7 @@ export default function JourneyPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
         position: 'relative',
