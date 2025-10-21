@@ -1,350 +1,786 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Navigation from '../components/Navigation'
-import { Plus, Edit, Trash2, Save, X, Calendar, Users, PlayCircle, MessageCircle } from 'lucide-react'
+import Link from 'next/link'
 
-const mockVideosData = [
-  {
-    id: 1,
-    title: "The Foundation of True Self",
-    duration: "25 min",
-    uploadDate: "2024-09-13",
-    category: "Foundation Work",
-    youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    description: "Essential understanding of who you really are beneath the conditioning.",
-    comments: 24,
-    likes: 156,
-    status: "published"
-  },
-  {
-    id: 2,
-    title: "Releasing Childhood Patterns", 
-    duration: "32 min",
-    uploadDate: "2024-09-06",
-    category: "Foundation Work",
-    youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    description: "How to identify and release patterns formed in childhood.",
-    comments: 18,
-    likes: 203,
-    status: "published"
-  },
-  {
-    id: 3,
-    title: "Conscious Connected Breathing",
-    duration: "45 min",
-    uploadDate: "2024-09-14",
-    category: "Breathwork Sessions",
-    youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    description: "A guided breathwork session for deep emotional release.",
-    comments: 31,
-    likes: 187,
-    status: "published"
+interface DashboardData {
+  stats: {
+    totalVideos: number
+    totalMembers: number
+    totalComments: number
+    totalReactions: number
+    videosThisMonth: number
   }
-]
+  topMembers: Array<{
+    id: string
+    name: string
+    email: string
+    level: string
+    comment_count: string
+    reaction_count: string
+    total_engagement: string
+  }>
+  recentActivity: Array<{
+    type: string
+    title: string
+    description: string | null
+    createdat: string
+    user_name: string | null
+    user_email: string | null
+    video_title: string | null
+  }>
+  topVideos: Array<{
+    id: string
+    title: string
+    category: string
+    comment_count: string
+    reaction_count: string
+    total_engagement: string
+  }>
+}
+
+interface Video {
+  id: string
+  title: string
+  description: string
+  youtubeurl: string
+  youtubeid: string
+  category: string
+  duration: number | null
+  status: string
+  uploaddate: string
+  comment_count: string
+  reaction_count: string
+}
 
 const categories = ["Foundation Work", "Breathwork Sessions", "Energy Healing", "Integration Practices"]
 
 export default function AdminPage() {
-  const [user, setUser] = useState(null)
-  const [videos, setVideos] = useState(mockVideosData)
-  const [editingVideo, setEditingVideo] = useState(null)
+  const [user, setUser] = useState<any>(null)
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
+  const [videos, setVideos] = useState<Video[]>([])
+  const [loading, setLoading] = useState(true)
   const [showAddVideo, setShowAddVideo] = useState(false)
+  const [editingVideo, setEditingVideo] = useState<Video | null>(null)
   const [newVideo, setNewVideo] = useState({
     title: '',
     duration: '',
     category: 'Foundation Work',
     youtubeUrl: '',
     description: '',
-    status: 'draft'
+    status: 'published'
   })
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('truenorthUser')
+    const savedUser = localStorage.getItem('user')
     if (savedUser) {
-      const userData = JSON.parse(savedUser)
-      if (userData.role !== 'admin') {
-        window.location.href = '/journey'
-        return
+      try {
+        const userData = JSON.parse(savedUser)
+        if (userData.role !== 'admin') {
+          window.location.href = '/journey'
+          return
+        }
+        setUser(userData)
+        loadDashboardData()
+        loadVideos()
+      } catch (err) {
+        window.location.href = '/auth/login'
       }
-      setUser(userData)
     } else {
-      window.location.href = '/login'
+      window.location.href = '/auth/login'
     }
   }, [])
 
-  const extractYouTubeId = (url) => {
-    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
-    return match ? match[1] : ''
+  const loadDashboardData = async () => {
+    try {
+      const res = await fetch('/api/admin/dashboard')
+      const data = await res.json()
+      setDashboardData(data)
+    } catch (error) {
+      console.error('Failed to load dashboard data:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleSaveVideo = () => {
-    if (editingVideo) {
-      setVideos(videos.map(v => 
-        v.id === editingVideo.id 
-          ? { ...editingVideo, youtubeId: extractYouTubeId(editingVideo.youtubeUrl) }
-          : v
-      ))
-      setEditingVideo(null)
-    } else {
-      const newId = Math.max(...videos.map(v => v.id)) + 1
-      const videoToAdd = {
-        ...newVideo,
-        id: newId,
-        youtubeId: extractYouTubeId(newVideo.youtubeUrl),
-        uploadDate: new Date().toISOString().split('T')[0],
-        comments: 0,
-        likes: 0
-      }
-      setVideos([...videos, videoToAdd])
-      setNewVideo({
-        title: '',
-        duration: '',
-        category: 'Foundation Work',
-        youtubeUrl: '',
-        description: '',
-        status: 'draft'
+  const loadVideos = async () => {
+    try {
+      const res = await fetch('/api/admin/videos')
+      const data = await res.json()
+      setVideos(data.videos || [])
+    } catch (error) {
+      console.error('Failed to load videos:', error)
+    }
+  }
+
+  const handleSaveVideo = async () => {
+    try {
+      const videoData = editingVideo || newVideo
+
+      const res = await fetch('/api/admin/videos', {
+        method: editingVideo ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editingVideo ? {
+          id: editingVideo.id,
+          ...videoData
+        } : videoData)
       })
-      setShowAddVideo(false)
+
+      if (res.ok) {
+        await loadVideos()
+        await loadDashboardData()
+        setEditingVideo(null)
+        setShowAddVideo(false)
+        setNewVideo({
+          title: '',
+          duration: '',
+          category: 'Foundation Work',
+          youtubeUrl: '',
+          description: '',
+          status: 'published'
+        })
+      }
+    } catch (error) {
+      console.error('Failed to save video:', error)
+      alert('Failed to save video')
     }
   }
 
-  const handleDeleteVideo = (id) => {
-    if (window.confirm('Are you sure you want to delete this video?')) {
-      setVideos(videos.filter(v => v.id !== id))
+  const handleDeleteVideo = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this video?')) return
+
+    try {
+      const res = await fetch(`/api/admin/videos?id=${id}`, { method: 'DELETE' })
+      if (res.ok) {
+        await loadVideos()
+        await loadDashboardData()
+      }
+    } catch (error) {
+      console.error('Failed to delete video:', error)
+      alert('Failed to delete video')
     }
   }
 
-  if (!user) return <div>Loading...</div>
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    })
+  }
+
+  const formatTime = (dateString: string) => {
+    const date = new Date(dateString)
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime()
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMins / 60)
+    const diffDays = Math.floor(diffHours / 24)
+
+    if (diffMins < 1) return 'just now'
+    if (diffMins < 60) return `${diffMins}m ago`
+    if (diffHours < 24) return `${diffHours}h ago`
+    if (diffDays < 7) return `${diffDays}d ago`
+    return formatDate(dateString)
+  }
+
+  if (loading || !user) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Loading dashboard...</div>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] text-white">
-      <Navigation />
+    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingTop: '6rem' }}>
+      {/* Navigation */}
+      <nav style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(20px)',
+        background: 'rgba(0, 0, 0, 0.8)'
+      }}>
+        <div style={{
+          maxWidth: '80rem',
+          margin: '0 auto',
+          padding: '1.25rem 1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
+          <Link href="/" style={{
+            fontSize: '1.5rem',
+            fontWeight: 300,
+            letterSpacing: '0.2em',
+            color: '#fff',
+            textDecoration: 'none'
+          }}>
+            TRUE NORTH
+          </Link>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-            <div className="flex items-center gap-3 mb-2">
-              <PlayCircle className="w-8 h-8 text-[#9bc4b8]" />
-              <div>
-                <div className="text-2xl font-bold">{videos.length}</div>
-                <div className="text-white/60 text-sm">Total Videos</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-            <div className="flex items-center gap-3 mb-2">
-              <Users className="w-8 h-8 text-[#7fb069]" />
-              <div>
-                <div className="text-2xl font-bold">127</div>
-                <div className="text-white/60 text-sm">Active Members</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-            <div className="flex items-center gap-3 mb-2">
-              <MessageCircle className="w-8 h-8 text-[#6a994e]" />
-              <div>
-                <div className="text-2xl font-bold">486</div>
-                <div className="text-white/60 text-sm">Total Comments</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-            <div className="flex items-center gap-3 mb-2">
-              <Calendar className="w-8 h-8 text-[#8db4a8]" />
-              <div>
-                <div className="text-2xl font-bold">12</div>
-                <div className="text-white/60 text-sm">This Month</div>
-              </div>
-            </div>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <Link href="/members" style={{
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 300,
+              border: '1px solid rgba(155, 196, 184, 0.3)',
+              borderRadius: '8px',
+              color: '#9bc4b8',
+              textDecoration: 'none'
+            }}>
+              Members Dashboard
+            </Link>
+            <Link href="/journey" style={{
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 300,
+              border: '1px solid rgba(155, 196, 184, 0.3)',
+              borderRadius: '8px',
+              color: '#9bc4b8',
+              textDecoration: 'none'
+            }}>
+              Journey
+            </Link>
           </div>
         </div>
+      </nav>
 
-        <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
-          <div className="p-6 border-b border-white/10">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">Video Management</h2>
-              <button
-                onClick={() => setShowAddVideo(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#9bc4b8] to-[#7fb069] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
-              >
-                <Plus className="w-5 h-5" />
-                Add Video
-              </button>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1rem' }}>
+        <div style={{ marginBottom: '2rem' }}>
+          <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: '0.5rem' }}>Admin Dashboard</h1>
+          <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.95rem' }}>
+            Manage your community, videos, and track engagement
+          </p>
+        </div>
+
+        {/* Stats Grid */}
+        {dashboardData && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1.5rem',
+            marginBottom: '2rem'
+          }}>
+            <div style={{
+              background: 'rgba(155, 196, 184, 0.1)',
+              border: '1px solid rgba(155, 196, 184, 0.2)',
+              borderRadius: '12px',
+              padding: '1.5rem'
+            }}>
+              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+                Total Videos
+              </div>
+              <div style={{ fontSize: '2rem', fontWeight: 600, color: '#9bc4b8' }}>
+                {dashboardData.stats.totalVideos}
+              </div>
+              <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', marginTop: '0.5rem' }}>
+                {dashboardData.stats.videosThisMonth} this month
+              </div>
+            </div>
+
+            <div style={{
+              background: 'rgba(127, 176, 105, 0.1)',
+              border: '1px solid rgba(127, 176, 105, 0.2)',
+              borderRadius: '12px',
+              padding: '1.5rem'
+            }}>
+              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+                Members
+              </div>
+              <div style={{ fontSize: '2rem', fontWeight: 600, color: '#7fb069' }}>
+                {dashboardData.stats.totalMembers}
+              </div>
+            </div>
+
+            <div style={{
+              background: 'rgba(106, 153, 78, 0.1)',
+              border: '1px solid rgba(106, 153, 78, 0.2)',
+              borderRadius: '12px',
+              padding: '1.5rem'
+            }}>
+              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+                Comments
+              </div>
+              <div style={{ fontSize: '2rem', fontWeight: 600, color: '#6a994e' }}>
+                {dashboardData.stats.totalComments}
+              </div>
+            </div>
+
+            <div style={{
+              background: 'rgba(141, 180, 168, 0.1)',
+              border: '1px solid rgba(141, 180, 168, 0.2)',
+              borderRadius: '12px',
+              padding: '1.5rem'
+            }}>
+              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+                Reactions
+              </div>
+              <div style={{ fontSize: '2rem', fontWeight: 600, color: '#8db4a8' }}>
+                {dashboardData.stats.totalReactions}
+              </div>
             </div>
           </div>
+        )}
 
-          <div className="p-6">
-            <div className="space-y-4">
-              {videos.map((video) => (
-                <div key={video.id} className="bg-white/5 rounded-lg border border-white/10 p-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-semibold mb-2">{video.title}</h3>
-                      <div className="flex items-center gap-4 text-sm text-white/60 mb-2">
-                        <span>{video.duration}</span>
-                        <span>•</span>
-                        <span>{video.category}</span>
-                        <span>•</span>
-                        <span>{video.uploadDate}</span>
-                        <span>•</span>
-                        <span className={`px-2 py-1 rounded-full text-xs ${
-                          video.status === 'published' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
-                        }`}>
-                          {video.status}
-                        </span>
-                      </div>
-                      <p className="text-white/80 text-sm">{video.description}</p>
+        {/* Main Content Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
+
+          {/* Top Engaged Members */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '12px',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              padding: '1.5rem',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+              background: 'rgba(155, 196, 184, 0.05)'
+            }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>🌟 Top Engaged Members</h2>
+              <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginTop: '0.25rem' }}>
+                Members to personally reach out to
+              </p>
+            </div>
+            <div style={{ padding: '1rem', maxHeight: '400px', overflowY: 'auto' }}>
+              {dashboardData?.topMembers.map((member, index) => (
+                <div key={member.id} style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '1rem',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  borderRadius: '8px',
+                  marginBottom: '0.75rem',
+                  border: '1px solid rgba(255, 255, 255, 0.05)'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div style={{
+                      width: '2rem',
+                      height: '2rem',
+                      borderRadius: '50%',
+                      background: index < 3 ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : 'rgba(255, 255, 255, 0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.875rem',
+                      fontWeight: 600
+                    }}>
+                      {index + 1}
                     </div>
-                    
-                    <div className="flex items-center gap-2 ml-4">
-                      <button
-                        onClick={() => setEditingVideo(video)}
-                        className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteVideo(video.id)}
-                        className="p-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                    <div>
+                      <div style={{ fontWeight: 500 }}>{member.name}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                        {member.email}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#9bc4b8' }}>
+                      {member.total_engagement} actions
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                      {member.comment_count} comments · {member.reaction_count} likes
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Recent Activity Feed */}
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '12px',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              padding: '1.5rem',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+              background: 'rgba(127, 176, 105, 0.05)'
+            }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>📊 Recent Activity</h2>
+              <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginTop: '0.25rem' }}>
+                Live community engagement feed
+              </p>
+            </div>
+            <div style={{ padding: '1rem', maxHeight: '400px', overflowY: 'auto' }}>
+              {dashboardData?.recentActivity.map((activity, index) => (
+                <div key={index} style={{
+                  padding: '0.75rem',
+                  borderLeft: '2px solid rgba(155, 196, 184, 0.3)',
+                  marginBottom: '0.75rem',
+                  paddingLeft: '1rem'
+                }}>
+                  <div style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                    <span style={{ fontWeight: 500, color: '#9bc4b8' }}>
+                      {activity.user_name || 'Unknown'}
+                    </span>
+                    {' '}
+                    <span style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                      {activity.title}
+                    </span>
+                  </div>
+                  {activity.video_title && (
+                    <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.25rem' }}>
+                      on "{activity.video_title}"
+                    </div>
+                  )}
+                  <div style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.4)' }}>
+                    {formatTime(activity.createdat)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Video Management */}
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.03)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '12px',
+          overflow: 'hidden'
+        }}>
+          <div style={{
+            padding: '1.5rem',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <div>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>🎥 Video Management</h2>
+              <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginTop: '0.25rem' }}>
+                Upload and manage community videos
+              </p>
+            </div>
+            <button
+              onClick={() => setShowAddVideo(true)}
+              style={{
+                padding: '0.75rem 1.5rem',
+                background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                color: '#000',
+                borderRadius: '8px',
+                border: 'none',
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontSize: '0.875rem'
+              }}
+            >
+              + Add Video
+            </button>
+          </div>
+
+          <div style={{ padding: '1.5rem' }}>
+            {videos.map((video) => (
+              <div key={video.id} style={{
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.05)',
+                borderRadius: '8px',
+                padding: '1rem',
+                marginBottom: '1rem'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                  <div style={{ flex: 1 }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+                      {video.title}
+                    </h3>
+                    <div style={{
+                      display: 'flex',
+                      gap: '1rem',
+                      fontSize: '0.75rem',
+                      color: 'rgba(255, 255, 255, 0.6)',
+                      marginBottom: '0.5rem'
+                    }}>
+                      <span>{video.category}</span>
+                      <span>•</span>
+                      <span>{formatDate(video.uploaddate)}</span>
+                      <span>•</span>
+                      <span style={{
+                        padding: '2px 8px',
+                        borderRadius: '4px',
+                        background: video.status === 'published' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(234, 179, 8, 0.2)',
+                        color: video.status === 'published' ? '#4ade80' : '#fbbf24'
+                      }}>
+                        {video.status}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                      💬 {video.comment_count} comments · ❤️ {video.reaction_count} reactions
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button
+                      onClick={() => setEditingVideo(video)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        background: 'rgba(155, 196, 184, 0.1)',
+                        color: '#9bc4b8',
+                        border: '1px solid rgba(155, 196, 184, 0.3)',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '0.75rem'
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteVideo(video.id)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        background: 'rgba(239, 68, 68, 0.1)',
+                        color: '#ef4444',
+                        border: '1px solid rgba(239, 68, 68, 0.3)',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '0.75rem'
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
+      {/* Add/Edit Video Modal */}
       {(showAddVideo || editingVideo) && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0a0a0b] rounded-xl border border-white/20 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <h2 className="text-xl font-semibold">
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0, 0, 0, 0.8)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 100,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1rem'
+        }}>
+          <div style={{
+            background: '#0a0a0b',
+            borderRadius: '12px',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            maxWidth: '600px',
+            width: '100%',
+            maxHeight: '90vh',
+            overflowY: 'auto'
+          }}>
+            <div style={{
+              padding: '1.5rem',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>
                 {editingVideo ? 'Edit Video' : 'Add New Video'}
               </h2>
-              <button 
+              <button
                 onClick={() => {
                   setEditingVideo(null)
                   setShowAddVideo(false)
                 }}
-                className="text-white/60 hover:text-white text-2xl"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  fontSize: '1.5rem',
+                  cursor: 'pointer'
+                }}
               >
-                <X className="w-6 h-6" />
+                ×
               </button>
             </div>
-            
-            <div className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">Title</label>
+
+            <div style={{ padding: '1.5rem' }}>
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                  Title *
+                </label>
                 <input
                   type="text"
                   value={editingVideo ? editingVideo.title : newVideo.title}
-                  onChange={(e) => editingVideo 
-                    ? setEditingVideo({...editingVideo, title: e.target.value})
-                    : setNewVideo({...newVideo, title: e.target.value})
+                  onChange={(e) => editingVideo
+                    ? setEditingVideo({ ...editingVideo, title: e.target.value })
+                    : setNewVideo({ ...newVideo, title: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-[#9bc4b8]/50 focus:ring-2 focus:ring-[#9bc4b8]/20"
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '0.875rem'
+                  }}
                   placeholder="Enter video title"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-2">Duration</label>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                    Duration (minutes)
+                  </label>
                   <input
-                    type="text"
-                    value={editingVideo ? editingVideo.duration : newVideo.duration}
-                    onChange={(e) => editingVideo 
-                      ? setEditingVideo({...editingVideo, duration: e.target.value})
-                      : setNewVideo({...newVideo, duration: e.target.value})
+                    type="number"
+                    value={editingVideo ? editingVideo.duration || '' : newVideo.duration}
+                    onChange={(e) => editingVideo
+                      ? setEditingVideo({ ...editingVideo, duration: parseInt(e.target.value) || null })
+                      : setNewVideo({ ...newVideo, duration: e.target.value })
                     }
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-[#9bc4b8]/50 focus:ring-2 focus:ring-[#9bc4b8]/20"
-                    placeholder="25 min"
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '8px',
+                      color: '#fff',
+                      fontSize: '0.875rem'
+                    }}
+                    placeholder="25"
                   />
                 </div>
-                
+
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-2">Category</label>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                    Category *
+                  </label>
                   <select
                     value={editingVideo ? editingVideo.category : newVideo.category}
-                    onChange={(e) => editingVideo 
-                      ? setEditingVideo({...editingVideo, category: e.target.value})
-                      : setNewVideo({...newVideo, category: e.target.value})
+                    onChange={(e) => editingVideo
+                      ? setEditingVideo({ ...editingVideo, category: e.target.value })
+                      : setNewVideo({ ...newVideo, category: e.target.value })
                     }
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#9bc4b8]/50 focus:ring-2 focus:ring-[#9bc4b8]/20"
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '8px',
+                      color: '#fff',
+                      fontSize: '0.875rem'
+                    }}
                   >
                     {categories.map(cat => (
-                      <option key={cat} value={cat} className="bg-[#0a0a0b]">{cat}</option>
+                      <option key={cat} value={cat}>{cat}</option>
                     ))}
                   </select>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">YouTube URL</label>
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                  YouTube URL *
+                </label>
                 <input
                   type="url"
-                  value={editingVideo ? editingVideo.youtubeUrl : newVideo.youtubeUrl}
-                  onChange={(e) => editingVideo 
-                    ? setEditingVideo({...editingVideo, youtubeUrl: e.target.value})
-                    : setNewVideo({...newVideo, youtubeUrl: e.target.value})
+                  value={editingVideo ? editingVideo.youtubeurl : newVideo.youtubeUrl}
+                  onChange={(e) => editingVideo
+                    ? setEditingVideo({ ...editingVideo, youtubeurl: e.target.value })
+                    : setNewVideo({ ...newVideo, youtubeUrl: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-[#9bc4b8]/50 focus:ring-2 focus:ring-[#9bc4b8]/20"
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '0.875rem'
+                  }}
                   placeholder="https://www.youtube.com/watch?v=..."
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">Description</label>
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                  Description
+                </label>
                 <textarea
-                  rows={4}
                   value={editingVideo ? editingVideo.description : newVideo.description}
-                  onChange={(e) => editingVideo 
-                    ? setEditingVideo({...editingVideo, description: e.target.value})
-                    : setNewVideo({...newVideo, description: e.target.value})
+                  onChange={(e) => editingVideo
+                    ? setEditingVideo({ ...editingVideo, description: e.target.value })
+                    : setNewVideo({ ...newVideo, description: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-[#9bc4b8]/50 focus:ring-2 focus:ring-[#9bc4b8]/20 resize-none"
+                  rows={4}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '0.875rem',
+                    resize: 'vertical'
+                  }}
                   placeholder="Enter video description"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">Status</label>
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                  Status
+                </label>
                 <select
                   value={editingVideo ? editingVideo.status : newVideo.status}
-                  onChange={(e) => editingVideo 
-                    ? setEditingVideo({...editingVideo, status: e.target.value})
-                    : setNewVideo({...newVideo, status: e.target.value})
+                  onChange={(e) => editingVideo
+                    ? setEditingVideo({ ...editingVideo, status: e.target.value })
+                    : setNewVideo({ ...newVideo, status: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#9bc4b8]/50 focus:ring-2 focus:ring-[#9bc4b8]/20"
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '0.875rem'
+                  }}
                 >
-                  <option value="draft" className="bg-[#0a0a0b]">Draft</option>
-                  <option value="published" className="bg-[#0a0a0b]">Published</option>
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
                 </select>
               </div>
 
-              <div className="flex gap-3 pt-4">
+              <div style={{ display: 'flex', gap: '1rem' }}>
                 <button
                   onClick={handleSaveVideo}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-[#9bc4b8] to-[#7fb069] text-black font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    color: '#000',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontWeight: 600,
+                    cursor: 'pointer'
+                  }}
                 >
-                  <Save className="w-5 h-5" />
                   {editingVideo ? 'Update Video' : 'Add Video'}
                 </button>
-                
                 <button
                   onClick={() => {
                     setEditingVideo(null)
                     setShowAddVideo(false)
                   }}
-                  className="px-6 py-3 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors"
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer'
+                  }}
                 >
                   Cancel
                 </button>
