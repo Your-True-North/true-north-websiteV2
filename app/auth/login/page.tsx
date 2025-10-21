@@ -17,23 +17,32 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
+      console.log('[Login] Starting login request...')
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       })
 
+      console.log('[Login] Response received:', res.status)
       const data = await res.json()
+      console.log('[Login] Data:', data)
 
       if (!res.ok) {
+        console.error('[Login] Login failed:', data.error)
         setError(data.error || 'Login failed')
         setLoading(false)
         return
       }
 
+      console.log('[Login] Saving to localStorage...')
       localStorage.setItem('user', JSON.stringify(data.user))
-      router.push('/journey')
+      console.log('[Login] Redirecting to /journey...')
+
+      // Use window.location instead of router.push for Chrome compatibility
+      window.location.href = '/journey'
     } catch (err) {
+      console.error('[Login] Error:', err)
       setError('Something went wrong. Try again.')
       setLoading(false)
     }
