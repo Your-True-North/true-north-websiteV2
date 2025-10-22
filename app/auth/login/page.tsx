@@ -36,11 +36,15 @@ export default function LoginPage() {
       }
 
       console.log('[Login] Saving to localStorage...')
+      // Clear any stale data first
+      localStorage.removeItem('user')
+      // Set fresh user data
       localStorage.setItem('user', JSON.stringify(data.user))
+      console.log('[Login] User saved:', localStorage.getItem('user'))
       console.log('[Login] Redirecting to /journey...')
 
-      // Use window.location instead of router.push for Chrome compatibility
-      window.location.href = '/journey'
+      // Force hard navigation to bypass cache
+      window.location.replace('/journey')
     } catch (err) {
       console.error('[Login] Error:', err)
       setError('Something went wrong. Try again.')
