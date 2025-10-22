@@ -10,16 +10,18 @@ const mockVideos = [
     uploadDate: "3 days ago",
     category: "Foundation Work",
     description: "Essential understanding of who you really are beneath the conditioning.",
+    youtubeId: "dQw4w9WgXcQ",
     comments: 24,
     likes: 156
   },
   {
     id: 2,
-    title: "Releasing Childhood Patterns", 
+    title: "Releasing Childhood Patterns",
     duration: "32 min",
     uploadDate: "1 week ago",
     category: "Foundation Work",
     description: "How to identify and release patterns formed in childhood.",
+    youtubeId: "dQw4w9WgXcQ",
     comments: 18,
     likes: 203
   },
@@ -27,9 +29,10 @@ const mockVideos = [
     id: 3,
     title: "Conscious Connected Breathing",
     duration: "45 min",
-    uploadDate: "2 days ago", 
+    uploadDate: "2 days ago",
     category: "Breathwork Sessions",
     description: "A guided breathwork session for deep emotional release.",
+    youtubeId: "dQw4w9WgXcQ",
     comments: 31,
     likes: 187
   },
@@ -40,6 +43,7 @@ const mockVideos = [
     uploadDate: "5 days ago",
     category: "Energy Healing",
     description: "Clear stagnant energy and align with your true vibration.",
+    youtubeId: "dQw4w9WgXcQ",
     comments: 22,
     likes: 164
   },
@@ -50,6 +54,7 @@ const mockVideos = [
     uploadDate: "1 week ago",
     category: "Integration Practices",
     description: "Simple practices to integrate your insights into daily life.",
+    youtubeId: "dQw4w9WgXcQ",
     comments: 15,
     likes: 128
   }
@@ -74,6 +79,9 @@ export default function JourneyPage() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedVideo, setSelectedVideo] = useState(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [videoLikes, setVideoLikes] = useState({})
+  const [videoComments, setVideoComments] = useState({})
+  const [newComment, setNewComment] = useState('')
 
   useEffect(() => {
     const checkMobile = () => {
@@ -86,22 +94,93 @@ export default function JourneyPage() {
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser))
-      } catch (err) {
-        console.error('Failed to parse user data:', err)
-        window.location.href = '/auth/login'
+    if (!savedUser) {
+      console.log('[Journey] No user found, redirecting to login')
+      window.location.replace('/auth/login')
+      return
+    }
+
+    try {
+      const parsedUser = JSON.parse(savedUser)
+
+      // Verify user has valid session
+      if (!parsedUser.email || !parsedUser.id) {
+        console.log('[Journey] Invalid user data, redirecting to login')
+        localStorage.removeItem('user')
+        window.location.replace('/auth/login')
+        return
       }
-    } else {
-      window.location.href = '/auth/login'
+
+      console.log('[Journey] User authenticated:', parsedUser.email)
+      setUser(parsedUser)
+    } catch (err) {
+      console.error('[Journey] Failed to parse user data:', err)
+      localStorage.removeItem('user')
+      window.location.replace('/auth/login')
+      return
+    }
+
+    // Load likes and comments from localStorage
+    try {
+      const savedLikes = localStorage.getItem('videoLikes')
+      const savedComments = localStorage.getItem('videoComments')
+      if (savedLikes) setVideoLikes(JSON.parse(savedLikes))
+      if (savedComments) setVideoComments(JSON.parse(savedComments))
+    } catch (err) {
+      console.error('[Journey] Failed to load user data:', err)
     }
   }, [])
 
   const handleLogout = () => {
+    console.log('[Journey] Logging out user')
     localStorage.removeItem('user')
+    localStorage.removeItem('videoLikes')
+    localStorage.removeItem('videoComments')
     document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    window.location.href = '/'
+    window.location.replace('/')
+  }
+
+  const handleLikeVideo = (videoId) => {
+    const newLikes = { ...videoLikes }
+    if (newLikes[videoId]) {
+      delete newLikes[videoId]
+    } else {
+      newLikes[videoId] = true
+    }
+    setVideoLikes(newLikes)
+    localStorage.setItem('videoLikes', JSON.stringify(newLikes))
+  }
+
+  const handleAddComment = (videoId) => {
+    if (!newComment.trim() || !user) return
+
+    const comment = {
+      id: Date.now(),
+      text: newComment.trim(),
+      userName: user.name || user.email,
+      timestamp: new Date().toISOString()
+    }
+
+    const newComments = { ...videoComments }
+    if (!newComments[videoId]) {
+      newComments[videoId] = []
+    }
+    newComments[videoId] = [comment, ...newComments[videoId]]
+
+    setVideoComments(newComments)
+    localStorage.setItem('videoComments', JSON.stringify(newComments))
+    setNewComment('')
+  }
+
+  const getVideoLikesCount = (videoId) => {
+    const baseLikes = mockVideos.find(v => v.id === videoId)?.likes || 0
+    return baseLikes + (videoLikes[videoId] ? 1 : 0)
+  }
+
+  const getVideoCommentsCount = (videoId) => {
+    const baseComments = mockVideos.find(v => v.id === videoId)?.comments || 0
+    const userComments = videoComments[videoId]?.length || 0
+    return baseComments + userComments
   }
 
   const filteredVideos = selectedCategory === "All" 
@@ -437,25 +516,25 @@ export default function JourneyPage() {
                         </div>
                         
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                          <div style={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: '0.375rem', 
-                            color: 'rgba(255, 255, 255, 0.6)', 
-                            fontSize: '0.85rem' 
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.375rem',
+                            color: 'rgba(255, 255, 255, 0.6)',
+                            fontSize: '0.85rem'
                           }}>
                             <span>💬</span>
-                            <span>{video.comments}</span>
+                            <span>{getVideoCommentsCount(video.id)}</span>
                           </div>
-                          <div style={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: '0.375rem', 
-                            color: 'rgba(255, 255, 255, 0.6)', 
-                            fontSize: '0.85rem' 
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.375rem',
+                            color: 'rgba(255, 255, 255, 0.6)',
+                            fontSize: '0.85rem'
                           }}>
                             <span>❤️</span>
-                            <span>{video.likes}</span>
+                            <span>{getVideoLikesCount(video.id)}</span>
                           </div>
                         </div>
                       </div>
@@ -600,39 +679,37 @@ export default function JourneyPage() {
             </div>
             
             <div style={{ padding: '1.5rem' }}>
+              {/* YouTube Player */}
               <div style={{
                 width: '100%',
-                height: 'clamp(16rem, 40vw, 24rem)',
+                paddingBottom: '56.25%',
+                position: 'relative',
                 borderRadius: '8px',
-                marginBottom: '1rem',
+                overflow: 'hidden',
+                marginBottom: '1.5rem'
+              }}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}`}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    border: 'none'
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+
+              {/* Video Info */}
+              <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))'
-              }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{
-                    width: '5rem',
-                    height: '5rem',
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto 1rem',
-                    fontSize: '2rem',
-                    paddingLeft: '5px'
-                  }}>▶</div>
-                  <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>YouTube Player ({selectedVideo.duration})</p>
-                </div>
-              </div>
-              
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '1.5rem', 
-                color: 'rgba(255, 255, 255, 0.6)', 
-                fontSize: '0.85rem', 
+                gap: '1.5rem',
+                color: 'rgba(255, 255, 255, 0.6)',
+                fontSize: '0.85rem',
                 marginBottom: '1rem',
                 flexWrap: 'wrap'
               }}>
@@ -642,19 +719,145 @@ export default function JourneyPage() {
                 <span>•</span>
                 <span>{selectedVideo.category}</span>
               </div>
-              
-              <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
+
+              <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)', lineHeight: 1.6 }}>
                 {selectedVideo.description}
               </p>
-              
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span>❤️</span>
-                  <span>{selectedVideo.likes}</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+
+              {/* Like Button */}
+              <div style={{ marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                <button
+                  onClick={() => handleLikeVideo(selectedVideo.id)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.75rem 1.5rem',
+                    background: videoLikes[selectedVideo.id] ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                    border: videoLikes[selectedVideo.id] ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: videoLikes[selectedVideo.id] ? '#ef4444' : '#fff',
+                    cursor: 'pointer',
+                    fontSize: '0.95rem',
+                    fontWeight: 500,
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!videoLikes[selectedVideo.id]) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!videoLikes[selectedVideo.id]) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                    }
+                  }}
+                >
+                  <span style={{ fontSize: '1.2rem' }}>❤️</span>
+                  <span>{videoLikes[selectedVideo.id] ? 'Liked' : 'Like'}</span>
+                  <span>({getVideoLikesCount(selectedVideo.id)})</span>
+                </button>
+              </div>
+
+              {/* Comments Section */}
+              <div>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <span>💬</span>
-                  <span>{selectedVideo.comments}</span>
+                  <span>Comments ({getVideoCommentsCount(selectedVideo.id)})</span>
+                </h3>
+
+                {/* Add Comment */}
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <textarea
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    placeholder="Share your thoughts..."
+                    rows={3}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '8px',
+                      color: '#fff',
+                      fontSize: '0.95rem',
+                      fontFamily: 'inherit',
+                      resize: 'vertical',
+                      marginBottom: '0.75rem'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
+                    onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+                  />
+                  <button
+                    onClick={() => handleAddComment(selectedVideo.id)}
+                    disabled={!newComment.trim()}
+                    style={{
+                      padding: '0.75rem 1.5rem',
+                      background: newComment.trim() ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : 'rgba(255, 255, 255, 0.1)',
+                      color: newComment.trim() ? '#000' : 'rgba(255, 255, 255, 0.3)',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '0.95rem',
+                      fontWeight: 600,
+                      cursor: newComment.trim() ? 'pointer' : 'not-allowed',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    Post Comment
+                  </button>
+                </div>
+
+                {/* Comments List */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxHeight: '400px', overflowY: 'auto' }}>
+                  {videoComments[selectedVideo.id]?.map((comment) => (
+                    <div
+                      key={comment.id}
+                      style={{
+                        padding: '1rem',
+                        background: 'rgba(255, 255, 255, 0.03)',
+                        borderRadius: '8px',
+                        border: '1px solid rgba(255, 255, 255, 0.05)'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                        <div style={{
+                          width: '32px',
+                          height: '32px',
+                          borderRadius: '50%',
+                          background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          color: '#000'
+                        }}>
+                          {comment.userName.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#9bc4b8' }}>
+                            {comment.userName}
+                          </div>
+                          <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                            {new Date(comment.timestamp).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                      <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.95rem', lineHeight: 1.5 }}>
+                        {comment.text}
+                      </p>
+                    </div>
+                  ))}
+                  {!videoComments[selectedVideo.id] || videoComments[selectedVideo.id].length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '2rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                      <p>No comments yet. Be the first to share your thoughts!</p>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
