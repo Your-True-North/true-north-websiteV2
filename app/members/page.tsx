@@ -23,24 +23,40 @@ export default function MembersPage() {
   useEffect(() => {
     const userData = localStorage.getItem('user')
     if (!userData) {
-      router.push('/auth/login')
+      console.log('[Members] No user found, redirecting to login')
+      window.location.replace('/auth/login')
       return
     }
-    
+
     try {
       const parsedUser = JSON.parse(userData)
+
+      // Verify user has valid session
+      if (!parsedUser.email || !parsedUser.id) {
+        console.log('[Members] Invalid user data, redirecting to login')
+        localStorage.removeItem('user')
+        window.location.replace('/auth/login')
+        return
+      }
+
+      console.log('[Members] User authenticated:', parsedUser.email)
       setUser(parsedUser)
     } catch (err) {
-      router.push('/auth/login')
+      console.error('[Members] Failed to parse user data:', err)
+      localStorage.removeItem('user')
+      window.location.replace('/auth/login')
     } finally {
       setLoading(false)
     }
   }, [router])
 
   const handleLogout = () => {
+    console.log('[Members] Logging out user')
     localStorage.removeItem('user')
+    localStorage.removeItem('videoLikes')
+    localStorage.removeItem('videoComments')
     document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    router.push('/')
+    window.location.replace('/')
   }
 
   if (loading) {

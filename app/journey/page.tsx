@@ -94,28 +94,50 @@ export default function JourneyPage() {
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser))
-      } catch (err) {
-        console.error('Failed to parse user data:', err)
-        window.location.href = '/auth/login'
+    if (!savedUser) {
+      console.log('[Journey] No user found, redirecting to login')
+      window.location.replace('/auth/login')
+      return
+    }
+
+    try {
+      const parsedUser = JSON.parse(savedUser)
+
+      // Verify user has valid session
+      if (!parsedUser.email || !parsedUser.id) {
+        console.log('[Journey] Invalid user data, redirecting to login')
+        localStorage.removeItem('user')
+        window.location.replace('/auth/login')
+        return
       }
-    } else {
-      window.location.href = '/auth/login'
+
+      console.log('[Journey] User authenticated:', parsedUser.email)
+      setUser(parsedUser)
+    } catch (err) {
+      console.error('[Journey] Failed to parse user data:', err)
+      localStorage.removeItem('user')
+      window.location.replace('/auth/login')
+      return
     }
 
     // Load likes and comments from localStorage
-    const savedLikes = localStorage.getItem('videoLikes')
-    const savedComments = localStorage.getItem('videoComments')
-    if (savedLikes) setVideoLikes(JSON.parse(savedLikes))
-    if (savedComments) setVideoComments(JSON.parse(savedComments))
+    try {
+      const savedLikes = localStorage.getItem('videoLikes')
+      const savedComments = localStorage.getItem('videoComments')
+      if (savedLikes) setVideoLikes(JSON.parse(savedLikes))
+      if (savedComments) setVideoComments(JSON.parse(savedComments))
+    } catch (err) {
+      console.error('[Journey] Failed to load user data:', err)
+    }
   }, [])
 
   const handleLogout = () => {
+    console.log('[Journey] Logging out user')
     localStorage.removeItem('user')
+    localStorage.removeItem('videoLikes')
+    localStorage.removeItem('videoComments')
     document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    window.location.href = '/'
+    window.location.replace('/')
   }
 
   const handleLikeVideo = (videoId) => {

@@ -280,23 +280,40 @@ export default function AdminPage() {
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
-    if (savedUser) {
-      try {
-        const userData = JSON.parse(savedUser)
-        if (userData.role !== 'admin') {
-          window.location.href = '/journey'
-          return
-        }
-        setUser(userData)
-        // Initialize with mock data
-        setDashboardData(mockDashboardData)
-        setVideos(mockVideos)
-        setLoading(false)
-      } catch (err) {
-        window.location.href = '/auth/login'
+    if (!savedUser) {
+      console.log('[Admin] No user found, redirecting to login')
+      window.location.replace('/auth/login')
+      return
+    }
+
+    try {
+      const userData = JSON.parse(savedUser)
+
+      // Verify user data exists
+      if (!userData.email || !userData.id) {
+        console.log('[Admin] Invalid user data, redirecting to login')
+        localStorage.removeItem('user')
+        window.location.replace('/auth/login')
+        return
       }
-    } else {
-      window.location.href = '/auth/login'
+
+      // Check admin role
+      if (userData.role !== 'admin') {
+        console.log('[Admin] Non-admin user, redirecting to journey')
+        window.location.replace('/journey')
+        return
+      }
+
+      console.log('[Admin] Admin user authenticated:', userData.email)
+      setUser(userData)
+      // Initialize with mock data
+      setDashboardData(mockDashboardData)
+      setVideos(mockVideos)
+      setLoading(false)
+    } catch (err) {
+      console.error('[Admin] Failed to parse user data:', err)
+      localStorage.removeItem('user')
+      window.location.replace('/auth/login')
     }
   }, [])
 
