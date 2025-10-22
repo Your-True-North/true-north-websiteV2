@@ -54,6 +54,214 @@ interface Video {
 
 const categories = ["Foundation Work", "Breathwork Sessions", "Energy Healing", "Integration Practices"]
 
+// Mock data for admin dashboard
+const mockDashboardData: DashboardData = {
+  stats: {
+    totalVideos: 24,
+    totalMembers: 156,
+    totalComments: 342,
+    totalReactions: 1248,
+    videosThisMonth: 8
+  },
+  topMembers: [
+    {
+      id: '1',
+      name: 'Sarah Chen',
+      email: 'sarah.chen@email.com',
+      level: 'Explorer',
+      comment_count: '45',
+      reaction_count: '127',
+      total_engagement: '172'
+    },
+    {
+      id: '2',
+      name: 'Michael Torres',
+      email: 'michael.t@email.com',
+      level: 'Pathfinder',
+      comment_count: '38',
+      reaction_count: '104',
+      total_engagement: '142'
+    },
+    {
+      id: '3',
+      name: 'Emma Williams',
+      email: 'emma.w@email.com',
+      level: 'Seeker',
+      comment_count: '32',
+      reaction_count: '89',
+      total_engagement: '121'
+    },
+    {
+      id: '4',
+      name: 'James Rodriguez',
+      email: 'james.r@email.com',
+      level: 'Explorer',
+      comment_count: '28',
+      reaction_count: '76',
+      total_engagement: '104'
+    },
+    {
+      id: '5',
+      name: 'Olivia Martinez',
+      email: 'olivia.m@email.com',
+      level: 'Seeker',
+      comment_count: '24',
+      reaction_count: '68',
+      total_engagement: '92'
+    }
+  ],
+  recentActivity: [
+    {
+      type: 'comment',
+      title: 'commented on a video',
+      description: 'This practice really helped me connect with my inner truth',
+      createdat: new Date(Date.now() - 5 * 60000).toISOString(),
+      user_name: 'Sarah Chen',
+      user_email: 'sarah.chen@email.com',
+      video_title: 'The Foundation of True Self'
+    },
+    {
+      type: 'reaction',
+      title: 'liked a video',
+      description: null,
+      createdat: new Date(Date.now() - 12 * 60000).toISOString(),
+      user_name: 'Michael Torres',
+      user_email: 'michael.t@email.com',
+      video_title: 'Breathwork for Release'
+    },
+    {
+      type: 'comment',
+      title: 'commented on a video',
+      description: 'Powerful session, feeling more aligned',
+      createdat: new Date(Date.now() - 28 * 60000).toISOString(),
+      user_name: 'Emma Williams',
+      user_email: 'emma.w@email.com',
+      video_title: 'Energy Alignment Practice'
+    },
+    {
+      type: 'reaction',
+      title: 'liked a video',
+      description: null,
+      createdat: new Date(Date.now() - 45 * 60000).toISOString(),
+      user_name: 'James Rodriguez',
+      user_email: 'james.r@email.com',
+      video_title: 'Integration Meditation'
+    },
+    {
+      type: 'comment',
+      title: 'commented on a video',
+      description: 'Thank you for sharing this wisdom',
+      createdat: new Date(Date.now() - 75 * 60000).toISOString(),
+      user_name: 'Olivia Martinez',
+      user_email: 'olivia.m@email.com',
+      video_title: 'The Foundation of True Self'
+    },
+    {
+      type: 'reaction',
+      title: 'liked a video',
+      description: null,
+      createdat: new Date(Date.now() - 120 * 60000).toISOString(),
+      user_name: 'Sarah Chen',
+      user_email: 'sarah.chen@email.com',
+      video_title: 'Breathwork for Release'
+    }
+  ],
+  topVideos: [
+    {
+      id: '1',
+      title: 'The Foundation of True Self',
+      category: 'Foundation Work',
+      comment_count: '56',
+      reaction_count: '234',
+      total_engagement: '290'
+    },
+    {
+      id: '2',
+      title: 'Breathwork for Release',
+      category: 'Breathwork Sessions',
+      comment_count: '42',
+      reaction_count: '187',
+      total_engagement: '229'
+    },
+    {
+      id: '3',
+      title: 'Energy Alignment Practice',
+      category: 'Energy Healing',
+      comment_count: '38',
+      reaction_count: '156',
+      total_engagement: '194'
+    }
+  ]
+}
+
+const mockVideos: Video[] = [
+  {
+    id: '1',
+    title: 'The Foundation of True Self',
+    description: 'Essential understanding of who you really are beneath the conditioning.',
+    youtubeurl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    youtubeid: 'dQw4w9WgXcQ',
+    category: 'Foundation Work',
+    duration: 25,
+    status: 'published',
+    uploaddate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    comment_count: '56',
+    reaction_count: '234'
+  },
+  {
+    id: '2',
+    title: 'Breathwork for Release',
+    description: 'A powerful breathwork session to release stored trauma and emotions.',
+    youtubeurl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    youtubeid: 'dQw4w9WgXcQ',
+    category: 'Breathwork Sessions',
+    duration: 30,
+    status: 'published',
+    uploaddate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    comment_count: '42',
+    reaction_count: '187'
+  },
+  {
+    id: '3',
+    title: 'Energy Alignment Practice',
+    description: 'Aligning your energy centers for optimal flow and healing.',
+    youtubeurl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    youtubeid: 'dQw4w9WgXcQ',
+    category: 'Energy Healing',
+    duration: 20,
+    status: 'published',
+    uploaddate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    comment_count: '38',
+    reaction_count: '156'
+  },
+  {
+    id: '4',
+    title: 'Integration Meditation',
+    description: 'Integrate your insights and experiences into daily life.',
+    youtubeurl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    youtubeid: 'dQw4w9WgXcQ',
+    category: 'Integration Practices',
+    duration: 15,
+    status: 'published',
+    uploaddate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+    comment_count: '29',
+    reaction_count: '98'
+  },
+  {
+    id: '5',
+    title: 'Shadow Work Deep Dive',
+    description: 'Exploring and integrating the shadow aspects of self.',
+    youtubeurl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    youtubeid: 'dQw4w9WgXcQ',
+    category: 'Foundation Work',
+    duration: 35,
+    status: 'draft',
+    uploaddate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    comment_count: '0',
+    reaction_count: '0'
+  }
+]
+
 export default function AdminPage() {
   const [user, setUser] = useState<any>(null)
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
@@ -80,8 +288,10 @@ export default function AdminPage() {
           return
         }
         setUser(userData)
-        loadDashboardData()
-        loadVideos()
+        // Initialize with mock data
+        setDashboardData(mockDashboardData)
+        setVideos(mockVideos)
+        setLoading(false)
       } catch (err) {
         window.location.href = '/auth/login'
       }
@@ -90,73 +300,77 @@ export default function AdminPage() {
     }
   }, [])
 
-  const loadDashboardData = async () => {
-    try {
-      const res = await fetch('/api/admin/dashboard')
-      const data = await res.json()
-      setDashboardData(data)
-    } catch (error) {
-      console.error('Failed to load dashboard data:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const handleSaveVideo = () => {
+    const videoData = editingVideo || newVideo
 
-  const loadVideos = async () => {
-    try {
-      const res = await fetch('/api/admin/videos')
-      const data = await res.json()
-      setVideos(data.videos || [])
-    } catch (error) {
-      console.error('Failed to load videos:', error)
-    }
-  }
+    if (editingVideo) {
+      // Update existing video
+      setVideos(videos.map(v => v.id === editingVideo.id ? {
+        ...editingVideo,
+        title: editingVideo.title,
+        description: editingVideo.description,
+        youtubeurl: editingVideo.youtubeurl,
+        category: editingVideo.category,
+        duration: editingVideo.duration,
+        status: editingVideo.status
+      } : v))
+    } else {
+      // Add new video
+      const newId = String(videos.length + 1)
+      const newVideoData: Video = {
+        id: newId,
+        title: newVideo.title,
+        description: newVideo.description,
+        youtubeurl: newVideo.youtubeUrl,
+        youtubeid: newVideo.youtubeUrl.split('v=')[1]?.split('&')[0] || '',
+        category: newVideo.category,
+        duration: parseInt(newVideo.duration) || null,
+        status: newVideo.status,
+        uploaddate: new Date().toISOString(),
+        comment_count: '0',
+        reaction_count: '0'
+      }
+      setVideos([...videos, newVideoData])
 
-  const handleSaveVideo = async () => {
-    try {
-      const videoData = editingVideo || newVideo
-
-      const res = await fetch('/api/admin/videos', {
-        method: editingVideo ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editingVideo ? {
-          id: editingVideo.id,
-          ...videoData
-        } : videoData)
-      })
-
-      if (res.ok) {
-        await loadVideos()
-        await loadDashboardData()
-        setEditingVideo(null)
-        setShowAddVideo(false)
-        setNewVideo({
-          title: '',
-          duration: '',
-          category: 'Foundation Work',
-          youtubeUrl: '',
-          description: '',
-          status: 'published'
+      // Update dashboard stats
+      if (dashboardData) {
+        setDashboardData({
+          ...dashboardData,
+          stats: {
+            ...dashboardData.stats,
+            totalVideos: dashboardData.stats.totalVideos + 1,
+            videosThisMonth: dashboardData.stats.videosThisMonth + 1
+          }
         })
       }
-    } catch (error) {
-      console.error('Failed to save video:', error)
-      alert('Failed to save video')
     }
+
+    setEditingVideo(null)
+    setShowAddVideo(false)
+    setNewVideo({
+      title: '',
+      duration: '',
+      category: 'Foundation Work',
+      youtubeUrl: '',
+      description: '',
+      status: 'published'
+    })
   }
 
-  const handleDeleteVideo = async (id: string) => {
+  const handleDeleteVideo = (id: string) => {
     if (!window.confirm('Are you sure you want to delete this video?')) return
 
-    try {
-      const res = await fetch(`/api/admin/videos?id=${id}`, { method: 'DELETE' })
-      if (res.ok) {
-        await loadVideos()
-        await loadDashboardData()
-      }
-    } catch (error) {
-      console.error('Failed to delete video:', error)
-      alert('Failed to delete video')
+    setVideos(videos.filter(v => v.id !== id))
+
+    // Update dashboard stats
+    if (dashboardData) {
+      setDashboardData({
+        ...dashboardData,
+        stats: {
+          ...dashboardData.stats,
+          totalVideos: dashboardData.stats.totalVideos - 1
+        }
+      })
     }
   }
 
