@@ -258,7 +258,7 @@ export default function AdminPage() {
         </div>
 
         {/* Stats Grid */}
-        {dashboardData && (
+        {dashboardData?.stats && (
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -347,7 +347,7 @@ export default function AdminPage() {
               </p>
             </div>
             <div style={{ padding: '1rem', maxHeight: '400px', overflowY: 'auto' }}>
-              {dashboardData?.topMembers.map((member, index) => (
+              {dashboardData?.topMembers?.length > 0 ? dashboardData.topMembers.map((member, index) => (
                 <div key={member.id} style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -388,7 +388,7 @@ export default function AdminPage() {
                     </div>
                   </div>
                 </div>
-              ))}
+              )) : <div style={{ padding: '2rem', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>No member data yet</div>}
             </div>
           </div>
 
@@ -410,7 +410,7 @@ export default function AdminPage() {
               </p>
             </div>
             <div style={{ padding: '1rem', maxHeight: '400px', overflowY: 'auto' }}>
-              {dashboardData?.recentActivity.map((activity, index) => (
+              {dashboardData?.recentActivity?.length > 0 ? dashboardData.recentActivity.map((activity, index) => (
                 <div key={index} style={{
                   padding: '0.75rem',
                   borderLeft: '2px solid rgba(155, 196, 184, 0.3)',
@@ -435,7 +435,7 @@ export default function AdminPage() {
                     {formatTime(activity.createdat)}
                   </div>
                 </div>
-              ))}
+              )) : <div style={{ padding: '2rem', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>No activity yet</div>}
             </div>
           </div>
         </div>
@@ -478,7 +478,7 @@ export default function AdminPage() {
           </div>
 
           <div style={{ padding: '1.5rem' }}>
-            {videos.map((video) => (
+            {videos.length > 0 ? videos.map((video) => (
               <div key={video.id} style={{
                 background: 'rgba(255, 255, 255, 0.02)',
                 border: '1px solid rgba(255, 255, 255, 0.05)',
@@ -547,7 +547,7 @@ export default function AdminPage() {
                   </div>
                 </div>
               </div>
-            ))}
+            )) : <div style={{ padding: '2rem', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>No videos yet. Click "+ Add Video" to upload.</div>}
           </div>
         </div>
       </div>
