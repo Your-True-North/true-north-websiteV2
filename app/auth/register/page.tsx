@@ -1,52 +1,66 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-export default function LoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+export default function RegisterPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    // Validation
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters')
+      return
+    }
+
     setLoading(true)
 
     try {
-      console.log('[Login] Starting login request...')
-      const res = await fetch('/api/auth/login', {
+      console.log('[Register] Starting registration...')
+      const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        })
       })
 
-      console.log('[Login] Response received:', res.status)
+      console.log('[Register] Response received:', res.status)
       const data = await res.json()
-      console.log('[Login] Data:', data)
 
       if (!res.ok) {
-        console.error('[Login] Login failed:', data.error)
-        setError(data.error || 'Login failed')
+        console.error('[Register] Registration failed:', data.error)
+        setError(data.error || 'Registration failed')
         setLoading(false)
         return
       }
 
-      console.log('[Login] Saving to localStorage...')
-      // Clear any stale data first
+      console.log('[Register] Registration successful')
+      // Auto-login after successful registration
       localStorage.removeItem('user')
-      // Set fresh user data
       localStorage.setItem('user', JSON.stringify(data.user))
-      console.log('[Login] User saved:', localStorage.getItem('user'))
-      console.log('[Login] Redirecting to /journey...')
+      console.log('[Register] Redirecting to /journey...')
 
-      // Force hard navigation to bypass cache
       window.location.replace('/journey')
     } catch (err) {
-      console.error('[Login] Error:', err)
+      console.error('[Register] Error:', err)
       setError('Something went wrong. Try again.')
       setLoading(false)
     }
@@ -116,11 +130,11 @@ export default function LoginPage() {
               fontWeight: 300,
               letterSpacing: '0.05em'
             }}>
-              Member Portal
+              Join the Circle
             </p>
           </Link>
 
-          {/* Login Card */}
+          {/* Register Card */}
           <div style={{
             backdropFilter: 'blur(20px)',
             background: 'rgba(255, 255, 255, 0.03)',
@@ -136,7 +150,7 @@ export default function LoginPage() {
               marginBottom: '0.5rem',
               textAlign: 'center'
             }}>
-              Welcome Back
+              Begin Your Journey
             </h2>
             <p style={{
               color: 'rgba(255, 255, 255, 0.5)',
@@ -145,7 +159,7 @@ export default function LoginPage() {
               marginBottom: '2rem',
               fontWeight: 300
             }}>
-              Continue your transformation journey
+              Create your account to access the Circle
             </p>
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -167,6 +181,42 @@ export default function LoginPage() {
               )}
 
               <div>
+                <label htmlFor="name" style={{
+                  display: 'block',
+                  fontSize: '0.875rem',
+                  fontWeight: 300,
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  marginBottom: '0.5rem'
+                }}>
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                  disabled={loading}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    fontWeight: 300,
+                    outline: 'none',
+                    transition: 'all 0.3s ease',
+                    opacity: loading ? 0.5 : 1
+                  }}
+                  placeholder="John Doe"
+                  onFocus={(e) => e.target.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
+                  onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+                />
+              </div>
+
+              <div>
                 <label htmlFor="email" style={{
                   display: 'block',
                   fontSize: '0.875rem',
@@ -179,8 +229,8 @@ export default function LoginPage() {
                 <input
                   id="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
                   disabled={loading}
                   style={{
@@ -215,8 +265,8 @@ export default function LoginPage() {
                 <input
                   id="password"
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
                   disabled={loading}
                   style={{
@@ -232,7 +282,43 @@ export default function LoginPage() {
                     transition: 'all 0.3s ease',
                     opacity: loading ? 0.5 : 1
                   }}
-                  placeholder="Enter your password"
+                  placeholder="Minimum 8 characters"
+                  onFocus={(e) => e.target.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
+                  onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="confirmPassword" style={{
+                  display: 'block',
+                  fontSize: '0.875rem',
+                  fontWeight: 300,
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  marginBottom: '0.5rem'
+                }}>
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                  required
+                  disabled={loading}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    fontWeight: 300,
+                    outline: 'none',
+                    transition: 'all 0.3s ease',
+                    opacity: loading ? 0.5 : 1
+                  }}
+                  placeholder="Re-enter password"
                   onFocus={(e) => e.target.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
                   onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
                 />
@@ -257,28 +343,30 @@ export default function LoginPage() {
                 onMouseEnter={(e) => !loading && (e.currentTarget.style.transform = 'translateY(-2px)')}
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
-                {loading ? 'Accessing Portal...' : 'Enter Portal'}
+                {loading ? 'Creating Account...' : 'Join the Circle'}
               </button>
             </form>
 
             <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-              <Link 
-                href="/" 
-                style={{
-                  fontSize: '0.875rem',
-                  color: 'rgba(255, 255, 255, 0.5)',
-                  textDecoration: 'none',
-                  fontWeight: 300,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  transition: 'color 0.3s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
-              >
-                <span>←</span> Back to home
-              </Link>
+              <p style={{
+                fontSize: '0.875rem',
+                color: 'rgba(255, 255, 255, 0.5)',
+                fontWeight: 300
+              }}>
+                Already have an account?{' '}
+                <Link
+                  href="/auth/login"
+                  style={{
+                    color: 'rgba(155, 196, 184, 0.8)',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#9bc4b8'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(155, 196, 184, 0.8)'}
+                >
+                  Sign in
+                </Link>
+              </p>
             </div>
           </div>
 
@@ -289,17 +377,17 @@ export default function LoginPage() {
             marginTop: '2rem',
             fontWeight: 300
           }}>
-            Need access? <Link 
-              href="/circle" 
+            <Link
+              href="/"
               style={{
                 color: 'rgba(255, 255, 255, 0.5)',
                 textDecoration: 'none',
                 transition: 'color 0.3s ease'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(155, 196, 184, 0.8)'}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
               onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
             >
-              Join the Circle
+              ← Back to home
             </Link>
           </p>
         </div>
