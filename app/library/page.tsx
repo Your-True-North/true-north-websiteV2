@@ -494,7 +494,7 @@ export default function Library() {
           }}
         >
           <span style={{ fontSize: '1.2rem' }}>✨</span>
-          Ask 'True'
+          Ask True North
         </button>
       )}
 
@@ -552,7 +552,7 @@ export default function Library() {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              Ask 'True'
+              Ask True North
             </h3>
             <p style={{
               fontSize: '0.9rem',
@@ -617,7 +617,7 @@ export default function Library() {
                   }
                 }}
               >
-                {isLoadingAnswer ? 'Channelling...' : 'Ask Divine Intelligence'}
+                {isLoadingAnswer ? 'Channelling...' : 'Ask True North'}
               </button>
             </div>
           ) : (
