@@ -16,6 +16,7 @@ export default function Library() {
   const [answer, setAnswer] = useState('')
   const [isLoadingAnswer, setIsLoadingAnswer] = useState(false)
   const [hasAsked, setHasAsked] = useState(false)
+  const [questionCount, setQuestionCount] = useState(0)
 
   const handleResourceClick = (resourceName) => {
     setSelectedResource(resourceName)
@@ -26,6 +27,7 @@ export default function Library() {
     if (!question.trim()) return
 
     setIsLoadingAnswer(true)
+    setQuestionCount(prev => prev + 1)
 
     try {
       const response = await fetch('/api/ask-di', {
@@ -35,7 +37,11 @@ export default function Library() {
       })
 
       setTimeout(() => {
-        setAnswer("The path you seek is already within you. Trust the process. Where you are now does not have to be where you end up.")
+        if (questionCount >= 2) {
+          setAnswer("You've reached your 3 free questions. If you're ready to go deeper, explore working with me directly or dive into the free resources available on this page. The real transformation happens when you commit.")
+        } else {
+          setAnswer("The path you seek is already within you. Trust the process. Where you are now does not have to be where you end up.")
+        }
         setIsLoadingAnswer(false)
         setHasAsked(true)
       }, 2000)
@@ -488,7 +494,7 @@ export default function Library() {
           }}
         >
           <span style={{ fontSize: '1.2rem' }}>✨</span>
-          Ask True DI
+          Ask 'True'
         </button>
       )}
 
@@ -546,14 +552,14 @@ export default function Library() {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              Ask True DI
+              Ask 'True'
             </h3>
             <p style={{
               fontSize: '0.9rem',
               color: 'rgba(255, 255, 255, 0.7)',
               lineHeight: '1.5'
             }}>
-              Here, you can ask a question. The response flows directly from Divine Intelligence, channelled through my frequency.
+              Ask a question about personal growth or navigating a challenge. All answers come from my words, thoughts, and beliefs—channeled through years of experience and transformation.
             </p>
           </div>
 
@@ -667,35 +673,98 @@ export default function Library() {
                 </p>
               </div>
 
-              <button
-                onClick={() => {
-                  setHasAsked(false)
-                  setQuestion('')
-                  setAnswer('')
-                }}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  background: 'transparent',
-                  border: '1px solid rgba(155, 196, 184, 0.3)',
-                  borderRadius: '8px',
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  fontSize: '0.95rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.6)'
-                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
-                  e.currentTarget.style.background = 'transparent'
-                }}
-              >
-                Ask Another Question
-              </button>
+              {questionCount < 3 ? (
+                <button
+                  onClick={() => {
+                    setHasAsked(false)
+                    setQuestion('')
+                    setAnswer('')
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'transparent',
+                    border: '1px solid rgba(155, 196, 184, 0.3)',
+                    borderRadius: '8px',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontSize: '0.95rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.6)'
+                    e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+                    e.currentTarget.style.background = 'transparent'
+                  }}
+                >
+                  Ask Another Question
+                </button>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <a
+                    href="/work"
+                    style={{
+                      width: '100%',
+                      padding: '0.875rem',
+                      background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                      border: 'none',
+                      borderRadius: '8px',
+                      color: '#000',
+                      fontSize: '0.95rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      textAlign: 'center',
+                      textDecoration: 'none',
+                      display: 'block'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-2px)'
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(155, 196, 184, 0.4)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)'
+                      e.currentTarget.style.boxShadow = 'none'
+                    }}
+                  >
+                    Work With Me
+                  </a>
+                  <button
+                    onClick={() => {
+                      setShowAskDi(false)
+                      setHasAsked(false)
+                      setQuestion('')
+                      setAnswer('')
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      background: 'transparent',
+                      border: '1px solid rgba(155, 196, 184, 0.3)',
+                      borderRadius: '8px',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontSize: '0.95rem',
+                      fontWeight: '500',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.6)'
+                      e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+                      e.currentTarget.style.background = 'transparent'
+                    }}
+                  >
+                    Explore Free Resources
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
