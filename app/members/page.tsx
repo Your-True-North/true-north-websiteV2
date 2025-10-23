@@ -19,6 +19,8 @@ export default function MembersPage() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
@@ -49,6 +51,17 @@ export default function MembersPage() {
       setLoading(false)
     }
   }, [router])
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640)
+      setIsTablet(window.innerWidth < 768)
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const handleLogout = () => {
     console.log('[Members] Logging out user')
@@ -252,13 +265,13 @@ export default function MembersPage() {
           <div style={{ position: 'relative' }}>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: window.innerWidth < 1024 ? '1fr' : '1fr auto',
+              gridTemplateColumns: isTablet ? '1fr' : '1fr auto',
               alignItems: 'center',
               gap: '3rem',
               marginBottom: '2.5rem'
             }}>
               {/* Level Info */}
-              <div style={{ textAlign: window.innerWidth < 1024 ? 'center' : 'left' }}>
+              <div style={{ textAlign: isTablet ? 'center' : 'left' }}>
                 <div style={{
                   fontSize: '0.75rem',
                   letterSpacing: '0.1em',
@@ -327,7 +340,7 @@ export default function MembersPage() {
             {/* Journey Path */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: window.innerWidth < 640 ? '1fr 1fr' : 'repeat(4, 1fr)',
+              gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)',
               gap: '0.75rem'
             }}>
               {levelStages.map((stage, index) => {
@@ -402,7 +415,7 @@ export default function MembersPage() {
         {/* Content Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: window.innerWidth < 1024 ? '1fr' : 'repeat(2, 1fr)',
+          gridTemplateColumns: isTablet ? '1fr' : 'repeat(2, 1fr)',
           gap: '2rem',
           marginBottom: '2rem'
         }}>
@@ -575,7 +588,7 @@ export default function MembersPage() {
           </h3>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: window.innerWidth < 768 ? '1fr' : 'repeat(2, 1fr)',
+            gridTemplateColumns: isTablet ? '1fr' : 'repeat(2, 1fr)',
             gap: '2rem'
           }}>
             <div>

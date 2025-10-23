@@ -6,10 +6,14 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function Navigation() {
- const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
   const pathname = usePathname();
   const router = useRouter();
+
+  // Hide navigation on protected pages that have their own custom nav
+  const protectedPaths = ['/members', '/journey', '/admin'];
+  const shouldHideNav = protectedPaths.some(path => pathname?.startsWith(path));
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -24,13 +28,20 @@ export default function Navigation() {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('videoLikes');
+    localStorage.removeItem('videoComments');
     document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     setUser(null);
     setIsOpen(false);
-    router.push('/');
+    window.location.replace('/');
   };
 
- return (
+  // Don't render navigation on protected pages
+  if (shouldHideNav) {
+    return null;
+  }
+
+  return (
    <>
      <nav className="nav">
        <div className="nav-container">
