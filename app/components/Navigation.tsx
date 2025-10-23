@@ -11,7 +11,6 @@ export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Hide navigation on protected pages and auth pages that have their own custom nav
   const protectedPaths = ['/members', '/journey', '/admin', '/auth'];
   const shouldHideNav = protectedPaths.some(path => pathname?.startsWith(path));
 
@@ -36,14 +35,13 @@ export default function Navigation() {
     window.location.replace('/');
   };
 
-  // Don't render navigation on protected pages
-  if (shouldHideNav) {
-    return null;
-  }
-
   return (
    <>
-     <nav className="nav">
+     <nav className="nav" style={{
+       opacity: shouldHideNav ? 0 : 1,
+       pointerEvents: shouldHideNav ? 'none' : 'auto',
+       transition: 'opacity 0.15s ease-out'
+     }}>
        <div className="nav-container">
          <Link href="/" className="nav-logo">
            <Image

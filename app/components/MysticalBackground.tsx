@@ -78,12 +78,12 @@ export default function MysticalBackground() {
     }
   }, [shouldHideBackground])
 
-  if (shouldHideBackground) {
-    return null;
-  }
-
   return (
-    <div className="mystical-background">
+    <div className="mystical-background" style={{
+      opacity: shouldHideBackground ? 0 : 1,
+      pointerEvents: shouldHideBackground ? 'none' : 'auto',
+      transition: 'opacity 0.15s ease-out'
+    }}>
       {/* Aurora Effect */}
       <div className="aurora"></div>
       
