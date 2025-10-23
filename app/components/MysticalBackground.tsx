@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation'
 export default function MysticalBackground() {
   const pathname = usePathname();
 
-  // Hide background on protected pages that have their own custom backgrounds
-  const protectedPaths = ['/members', '/journey', '/admin'];
+  // Hide background on protected pages and auth pages that have their own custom backgrounds
+  const protectedPaths = ['/members', '/journey', '/admin', '/auth'];
   const shouldHideBackground = protectedPaths.some(path => pathname?.startsWith(path));
 
   useEffect(() => {

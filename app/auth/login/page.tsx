@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -10,6 +10,26 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [checkingAuth, setCheckingAuth] = useState(true)
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      try {
+        const user = JSON.parse(userData)
+        if (user.email && user.id) {
+          console.log('[Login] User already logged in, redirecting to journey')
+          window.location.replace('/journey')
+          return
+        }
+      } catch (e) {
+        console.error('[Login] Failed to parse user data')
+        localStorage.removeItem('user')
+      }
+    }
+    setCheckingAuth(false)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,16 +56,28 @@ export default function LoginPage() {
       }
 
       console.log('[Login] Saving to localStorage...')
+      // Clear any stale data first
+      localStorage.removeItem('user')
+      // Set fresh user data
       localStorage.setItem('user', JSON.stringify(data.user))
-      console.log('[Login] Redirecting to /journey...')
+      console.log('[Login] User saved, redirecting to /journey...')
 
-      // Use window.location instead of router.push for Chrome compatibility
-      window.location.href = '/journey'
+      // Use window.location.replace to prevent back button issues and cache problems
+      window.location.replace('/journey')
     } catch (err) {
       console.error('[Login] Error:', err)
       setError('Something went wrong. Try again.')
       setLoading(false)
     }
+  }
+
+  // Show loading state while checking authentication
+  if (checkingAuth) {
+    return (
+      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Loading...</div>
+      </div>
+    )
   }
 
   return (
