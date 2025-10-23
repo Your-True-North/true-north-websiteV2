@@ -30,24 +30,34 @@ export default function Library() {
     setQuestionCount(prev => prev + 1)
 
     try {
+      // Check if user has reached the limit
+      if (questionCount >= 2) {
+        setAnswer("You've reached your 3 free questions. If you're ready to go deeper, explore working with me directly or dive into the free resources available on this page. The real transformation happens when you commit.")
+        setIsLoadingAnswer(false)
+        setHasAsked(true)
+        return
+      }
+
       const response = await fetch('/api/ask-di', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ q: question })
       })
 
-      setTimeout(() => {
-        if (questionCount >= 2) {
-          setAnswer("You've reached your 3 free questions. If you're ready to go deeper, explore working with me directly or dive into the free resources available on this page. The real transformation happens when you commit.")
-        } else {
-          setAnswer("The path you seek is already within you. Trust the process. Where you are now does not have to be where you end up.")
-        }
-        setIsLoadingAnswer(false)
-        setHasAsked(true)
-      }, 2000)
+      if (response.ok) {
+        const data = await response.json()
+        setAnswer(data.answer)
+      } else {
+        setAnswer("The path you seek is already within you. Trust the process. Where you are now does not have to be where you end up.")
+      }
+
+      setIsLoadingAnswer(false)
+      setHasAsked(true)
     } catch (error) {
       console.error('Ask DI failed:', error)
+      setAnswer("The path you seek is already within you. Trust the process. Where you are now does not have to be where you end up.")
       setIsLoadingAnswer(false)
+      setHasAsked(true)
     }
   }
 
