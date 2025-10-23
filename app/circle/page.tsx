@@ -46,7 +46,7 @@ export default function Circle() {
     if (isPlaying && !playerRef.current && window.YT) {
       const initPlayer = () => {
         playerRef.current = new window.YT.Player('youtube-player', {
-          videoId: '-U2z-wETEm0',
+          videoId: '-k7UOEJf9wM',
           playerVars: {
             autoplay: 1,
             controls: 0,
