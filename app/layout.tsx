@@ -4,8 +4,22 @@ import Footer from './components/Footer'
 import MysticalBackground from './components/MysticalBackground'
 
 export const metadata = {
-  title: 'True North - Spiritual Transformation',
-  description: 'Where you are now does not have to be where you end up',
+  title: 'True North - Transformation Through Embodiment | Mason',
+  description: 'Deep transformational work for men. 1:1 coaching, breathwork, energy healing, and the Circle of Return community. Teaching regulation, not just mindset.',
+  keywords: 'masculine transformation, breathwork, energy healing, mens coaching, emotional regulation, somatic practices, Circle of Return',
+  authors: [{ name: 'Mason - True North' }],
+  openGraph: {
+    title: 'True North - Transformation Through Embodiment',
+    description: 'Where you are now does not have to be where you end up',
+    type: 'website',
+    locale: 'en_GB',
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
+  themeColor: '#0a0a0b',
 }
 
 export default function RootLayout({
