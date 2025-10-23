@@ -1,7 +1,20 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Hide footer on protected pages that have their own custom footer/layout
+  const protectedPaths = ['/members', '/journey', '/admin'];
+  const shouldHideFooter = protectedPaths.some(path => pathname?.startsWith(path));
+
+  if (shouldHideFooter) {
+    return null;
+  }
+
   return (
     <footer className="footer">
       <div className="footer-container">
