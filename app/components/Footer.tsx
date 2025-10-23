@@ -7,8 +7,8 @@ import { usePathname } from 'next/navigation'
 export default function Footer() {
   const pathname = usePathname();
 
-  // Hide footer on protected pages that have their own custom footer/layout
-  const protectedPaths = ['/members', '/journey', '/admin'];
+  // Hide footer on protected pages and auth pages that have their own custom footer/layout
+  const protectedPaths = ['/members', '/journey', '/admin', '/auth'];
   const shouldHideFooter = protectedPaths.some(path => pathname?.startsWith(path));
 
   if (shouldHideFooter) {

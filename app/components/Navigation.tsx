@@ -11,8 +11,8 @@ export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Hide navigation on protected pages that have their own custom nav
-  const protectedPaths = ['/members', '/journey', '/admin'];
+  // Hide navigation on protected pages and auth pages that have their own custom nav
+  const protectedPaths = ['/members', '/journey', '/admin', '/auth'];
   const shouldHideNav = protectedPaths.some(path => pathname?.startsWith(path));
 
   useEffect(() => {
