@@ -41,7 +41,7 @@ export default function Work() {
       document.body.style.overflow = 'hidden'
       const timer = setTimeout(() => {
         setShowCTA(true)
-      }, 180000)
+      }, 180000) // 3 minutes
       return () => {
         clearTimeout(timer)
         document.body.style.overflow = 'unset'
@@ -278,8 +278,7 @@ export default function Work() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: isMobile ? '0' : '2rem',
-          animation: 'mysticalFadeIn 0.8s ease-out'
+          padding: isMobile ? '0' : '2rem'
         }}>
           <button
             onClick={closeVSL}
@@ -297,8 +296,7 @@ export default function Work() {
               justifyContent: 'center',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              zIndex: 10000,
-              animation: 'float 3s ease-in-out infinite'
+              zIndex: 10000
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)'
@@ -319,36 +317,20 @@ export default function Work() {
             display: 'flex',
             flexDirection: 'column',
             gap: isMobile ? '0' : '2rem',
-            justifyContent: isMobile ? 'center' : 'flex-start',
-            animation: 'mysticalZoom 1s ease-out',
-            position: 'relative'
+            justifyContent: isMobile ? 'center' : 'flex-start'
           }}>
-            <div style={{
-              position: 'absolute',
-              top: '-50%',
-              left: '-50%',
-              width: '200%',
-              height: '200%',
-              background: 'radial-gradient(circle, rgba(155, 196, 184, 0.15) 0%, transparent 70%)',
-              animation: 'pulse 4s ease-in-out infinite',
-              pointerEvents: 'none',
-              zIndex: -1
-            }} />
-            
             {!isPlaying && !isMobile && (
               <div style={{
-                textAlign: 'center',
-                animation: 'textGlow 2s ease-in-out infinite'
+                textAlign: 'center'
               }}>
                 <h2 style={{
                   fontSize: '2rem',
                   fontWeight: '600',
                   color: '#fff',
                   marginBottom: '0.5rem',
-                  lineHeight: '1.3',
-                  textShadow: '0 0 20px rgba(155, 196, 184, 0.5), 0 0 40px rgba(155, 196, 184, 0.3)'
+                  lineHeight: '1.3'
                 }}>
-                  Wait... Before You Book Your Call
+                  Before We Talk...
                 </h2>
                 <p style={{
                   fontSize: '1.1rem',
@@ -356,7 +338,7 @@ export default function Work() {
                   maxWidth: '600px',
                   margin: '0 auto'
                 }}>
-                  Watch this first - it'll save us both time
+                  Watch this short message to see if we're aligned
                 </p>
               </div>
             )}
@@ -370,8 +352,7 @@ export default function Work() {
               borderRadius: isMobile ? '0' : '12px',
               overflow: 'hidden',
               border: isMobile ? 'none' : '2px solid rgba(155, 196, 184, 0.3)',
-              boxShadow: isMobile ? 'none' : '0 20px 60px rgba(0, 0, 0, 0.5), 0 0 80px rgba(155, 196, 184, 0.2)',
-              animation: 'videoReveal 1.2s ease-out'
+              boxShadow: isMobile ? 'none' : '0 20px 60px rgba(0, 0, 0, 0.5)'
             }}>
               {!isPlaying ? (
                 <div style={{
@@ -397,10 +378,9 @@ export default function Work() {
                       fontWeight: '600',
                       marginBottom: '1rem',
                       textAlign: 'center',
-                      padding: '0 2rem',
-                      animation: 'textGlow 2s ease-in-out infinite'
+                      padding: '0 2rem'
                     }}>
-                      Wait... Before You Book Your Call
+                      Before We Talk...
                     </p>
                   )}
                   <div style={{
@@ -412,17 +392,15 @@ export default function Work() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     transition: 'all 0.3s ease',
-                    cursor: 'pointer',
-                    animation: 'playButtonPulse 2s ease-in-out infinite',
-                    boxShadow: '0 0 30px rgba(155, 196, 184, 0.6), 0 0 60px rgba(155, 196, 184, 0.4)'
+                    cursor: 'pointer'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'scale(1.1)'
-                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.5), 0 0 80px rgba(155, 196, 184, 0.6)'
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.5)'
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'scale(1)'
-                    e.currentTarget.style.boxShadow = '0 0 30px rgba(155, 196, 184, 0.6), 0 0 60px rgba(155, 196, 184, 0.4)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                   >
                     <Play size={32} color="#000" fill="#000" style={{ marginLeft: '4px' }} />
@@ -462,8 +440,7 @@ export default function Work() {
                     background: 'rgba(0, 0, 0, 0.7)',
                     backdropFilter: 'blur(10px)',
                     borderRadius: '50px',
-                    border: '1px solid rgba(155, 196, 184, 0.3)',
-                    boxShadow: '0 0 20px rgba(155, 196, 184, 0.2)'
+                    border: '1px solid rgba(155, 196, 184, 0.3)'
                   }}>
                     <button
                       onClick={handleRewind}
@@ -503,16 +480,15 @@ export default function Work() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 0 20px rgba(155, 196, 184, 0.4)'
+                        transition: 'all 0.3s ease'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'scale(1.05)'
-                        e.currentTarget.style.boxShadow = '0 5px 20px rgba(155, 196, 184, 0.5), 0 0 30px rgba(155, 196, 184, 0.5)'
+                        e.currentTarget.style.boxShadow = '0 5px 20px rgba(155, 196, 184, 0.5)'
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.transform = 'scale(1)'
-                        e.currentTarget.style.boxShadow = '0 0 20px rgba(155, 196, 184, 0.4)'
+                        e.currentTarget.style.boxShadow = 'none'
                       }}
                     >
                       {isPlaying ? (
@@ -532,9 +508,7 @@ export default function Work() {
                 padding: isMobile ? '1.5rem' : '2rem',
                 background: 'rgba(255, 255, 255, 0.03)',
                 borderRadius: '12px',
-                border: '1px solid rgba(155, 196, 184, 0.2)',
-                boxShadow: '0 0 30px rgba(155, 196, 184, 0.1)',
-                animation: 'mysticalFadeIn 0.8s ease-out'
+                border: '1px solid rgba(155, 196, 184, 0.2)'
               }}>
                 <h3 style={{
                   fontSize: isMobile ? '1.3rem' : '1.5rem',
@@ -565,16 +539,15 @@ export default function Work() {
                     fontWeight: '600',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
-                    width: isMobile ? '100%' : 'auto',
-                    boxShadow: '0 0 20px rgba(155, 196, 184, 0.4)'
+                    width: isMobile ? '100%' : 'auto'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.4), 0 0 40px rgba(155, 196, 184, 0.3)'
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.4)'
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = '0 0 20px rgba(155, 196, 184, 0.4)'
+                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
                   Book Your Discovery Call
@@ -601,12 +574,10 @@ export default function Work() {
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
                     e.currentTarget.style.color = '#9bc4b8'
-                    e.currentTarget.style.boxShadow = '0 0 15px rgba(155, 196, 184, 0.2)'
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
                     e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'
-                    e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
                   Already know you're ready? Skip to booking →
@@ -789,7 +760,7 @@ export default function Work() {
                     e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  Book Your Discovery Call
+                  See If We're Aligned
                 </button>
               </div>
             </div>
@@ -1234,79 +1205,6 @@ export default function Work() {
           }
           50% {
             opacity: 1;
-          }
-        }
-        
-        @keyframes mysticalFadeIn {
-          from {
-            opacity: 0;
-            backdrop-filter: blur(0px);
-          }
-          to {
-            opacity: 1;
-            backdrop-filter: blur(20px);
-          }
-        }
-        
-        @keyframes mysticalZoom {
-          0% {
-            opacity: 0;
-            transform: scale(0.9);
-            filter: blur(10px);
-          }
-          50% {
-            opacity: 0.5;
-            filter: blur(5px);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
-          }
-        }
-        
-        @keyframes videoReveal {
-          0% {
-            opacity: 0;
-            transform: scale(0.95);
-            box-shadow: 0 0 0 rgba(155, 196, 184, 0);
-          }
-          50% {
-            box-shadow: 0 0 60px rgba(155, 196, 184, 0.4);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 80px rgba(155, 196, 184, 0.2);
-          }
-        }
-        
-        @keyframes playButtonPulse {
-          0%, 100% {
-            transform: scale(1);
-            box-shadow: 0 0 30px rgba(155, 196, 184, 0.6), 0 0 60px rgba(155, 196, 184, 0.4);
-          }
-          50% {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(155, 196, 184, 0.8), 0 0 80px rgba(155, 196, 184, 0.6);
-          }
-        }
-        
-        @keyframes textGlow {
-          0%, 100% {
-            text-shadow: 0 0 20px rgba(155, 196, 184, 0.5), 0 0 40px rgba(155, 196, 184, 0.3);
-          }
-          50% {
-            text-shadow: 0 0 30px rgba(155, 196, 184, 0.7), 0 0 60px rgba(155, 196, 184, 0.5);
-          }
-        }
-        
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-5px);
           }
         }
       `}</style>

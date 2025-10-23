@@ -1,0 +1,30 @@
+'use client'
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+
+export default function Navigation() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [user, setUser] = useState(null)
+  const pathname = usePathname()
+  const router = useRouter()
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData))
+      } catch (e) {
+        setUser(null)
+      }
+    }
+  }, [pathname])
+
+  const handleLogout = () => {
+    localStorage.removeItem('user')
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+    setUser(null)
+    router.push('/')
+  }
+
+  return (
