@@ -1037,7 +1037,7 @@ export default function Circle() {
         </div>
       )}
 
-      <style jsx>{`
+      <style jsx global>{`
         input::placeholder {
           color: rgba(255, 255, 255, 0.4);
         }
@@ -1056,6 +1056,19 @@ export default function Circle() {
 
         div::-webkit-scrollbar {
           display: none;
+        }
+
+        @media (max-width: 768px) {
+          #youtube-player iframe {
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            width: 100vw !important;
+            height: 56.25vw !important;
+            min-height: 100vh !important;
+            min-width: 177.78vh !important;
+            transform: translate(-50%, -50%) !important;
+          }
         }
       `}</style>
     </>

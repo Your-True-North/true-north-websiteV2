@@ -1168,7 +1168,7 @@ export default function Work() {
       </main>
       
       
-      <style jsx>{`
+      <style jsx global>{`
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -1179,7 +1179,7 @@ export default function Work() {
             transform: translateY(0);
           }
         }
-        
+
         @keyframes slideUp {
           from {
             opacity: 0;
@@ -1190,7 +1190,7 @@ export default function Work() {
             transform: translateY(0);
           }
         }
-        
+
         @keyframes breathe {
           0%, 100% {
             transform: scale(1);
@@ -1201,13 +1201,26 @@ export default function Work() {
             opacity: 1;
           }
         }
-        
+
         @keyframes pulse {
           0%, 100% {
             opacity: 0.8;
           }
           50% {
             opacity: 1;
+          }
+        }
+
+        @media (max-width: 768px) {
+          #vsl-youtube-player iframe {
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            width: 100vw !important;
+            height: 56.25vw !important;
+            min-height: 100vh !important;
+            min-width: 177.78vh !important;
+            transform: translate(-50%, -50%) !important;
           }
         }
       `}</style>
