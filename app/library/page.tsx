@@ -503,7 +503,6 @@ export default function Library() {
             e.currentTarget.style.boxShadow = '0 8px 30px rgba(155, 196, 184, 0.4)'
           }}
         >
-          <span style={{ fontSize: '1.2rem' }}>✨</span>
           Ask True North
         </button>
       )}
