@@ -289,10 +289,8 @@ export default function LoginPage() {
               </button>
 
               <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-                <a
-                  href="https://wa.me/447449052909?text=Hi%20Mason%2C%20I%20need%20help%20resetting%20my%20password%20for%20the%20Circle%20of%20Return%20member%20portal."
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/auth/reset-password"
                   style={{
                     fontSize: '0.875rem',
                     color: 'rgba(155, 196, 184, 0.8)',
@@ -303,8 +301,8 @@ export default function LoginPage() {
                   onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(155, 196, 184, 1)'}
                   onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(155, 196, 184, 0.8)'}
                 >
-                  Forgot password? Contact Mason →
-                </a>
+                  Forgot password?
+                </Link>
               </div>
             </form>
 
