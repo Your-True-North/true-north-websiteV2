@@ -1,6 +1,4 @@
 'use client'
-import Navigation from '../components/Navigation'
-import MysticalBackground from '../components/MysticalBackground'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
@@ -54,10 +52,7 @@ export default function About() {
 
   return (
     <>
-      <MysticalBackground />
-      
       <div className="page-container">
-        <Navigation />
         
         <section className="section" style={{ 
           paddingTop: isMobile ? '0' : '2rem', 

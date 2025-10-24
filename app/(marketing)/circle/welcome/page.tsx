@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import MysticalBackground from '../../components/MysticalBackground'
 
 export default function CircleWelcome() {
   const [isMobile, setIsMobile] = useState(false)
@@ -36,8 +35,6 @@ export default function CircleWelcome() {
 
   return (
     <>
-      <MysticalBackground />
-      
       <div style={{
         minHeight: '100vh',
         position: 'relative',

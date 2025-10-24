@@ -1,6 +1,4 @@
 'use client'
-import Navigation from '../components/Navigation'
-import MysticalBackground from '../components/MysticalBackground'
 import { useState, useEffect, useRef } from 'react'
 import { X, Play, Pause, RotateCcw } from 'lucide-react'
 
@@ -147,9 +145,6 @@ export default function Work() {
 
   return (
     <>
-      <Navigation />
-      <MysticalBackground />
-      
       {showPackPopup && (
         <div style={{
           position: 'fixed',

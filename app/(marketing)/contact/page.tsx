@@ -1,6 +1,4 @@
 'use client'
-import Navigation from '../components/Navigation'
-import MysticalBackground from '../components/MysticalBackground'
 import { useState, useEffect } from 'react'
 import Script from 'next/script'
 
@@ -173,10 +171,7 @@ export default function Contact() {
           }
         }
       `}</style>
-      
-      <Navigation />
-      <MysticalBackground />
-      
+
       <main className="page-container">
         <section className="section" style={{paddingTop: '4rem', paddingBottom: '4rem'}}>
           <div className="container">

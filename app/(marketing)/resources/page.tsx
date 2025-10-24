@@ -1,7 +1,4 @@
 'use client'
-import Navigation from '../components/Navigation'
-import Footer from '../components/Footer'
-import MysticalBackground from '../components/MysticalBackground'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -18,9 +15,6 @@ export default function LibraryPage() {
 
   return (
     <>
-      <Navigation />
-      <MysticalBackground />
-      
       <main className="page-container">
         <section className="section" style={{paddingTop: '4rem'}}>
           <div className="container">
@@ -228,8 +222,6 @@ export default function LibraryPage() {
           </div>
         </section>
       </main>
-      
-      <Footer />
 
       {/* Email Modal */}
       {showEmailModal && (

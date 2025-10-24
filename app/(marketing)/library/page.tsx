@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Navigation from '../components/Navigation'
-import MysticalBackground from '../components/MysticalBackground'
 
 export default function Library() {
   const [showModal, setShowModal] = useState(false)
@@ -140,9 +138,6 @@ export default function Library() {
 
   return (
     <>
-      <Navigation />
-      <MysticalBackground />
-      
       <main className="page-container">
         <section className="section" style={{paddingTop: '6rem', paddingBottom: '4rem'}}>
           <div className="container">

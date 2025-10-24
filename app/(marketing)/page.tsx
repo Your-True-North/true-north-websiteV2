@@ -1,6 +1,4 @@
 'use client'
-import Navigation from './components/Navigation'
-import MysticalBackground from './components/MysticalBackground'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
@@ -193,10 +191,7 @@ export default function Home() {
           transition: all 0.3s ease, color 15s ease-in-out, background-color 15s ease-in-out, border-color 15s ease-in-out;
         }
       `}</style>
-      
-      <Navigation />
-      <MysticalBackground />
-      
+
       <main className="page-container">
         <section className="section" style={{
           paddingTop: isMobile ? '0' : '5rem',

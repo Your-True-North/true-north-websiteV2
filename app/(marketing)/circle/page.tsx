@@ -1,6 +1,4 @@
 'use client'
-import Navigation from '../components/Navigation'
-import MysticalBackground from '../components/MysticalBackground'
 import { useState, useEffect, useRef } from 'react'
 import { Play, Pause, RotateCcw } from 'lucide-react'
 
@@ -140,9 +138,6 @@ export default function Circle() {
 
   return (
     <>
-      <Navigation />
-      <MysticalBackground />
-      
       <main style={{ position: 'relative' }}>
         <section style={{
           position: 'relative',
