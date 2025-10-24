@@ -421,10 +421,13 @@ export default function Work() {
                     id="vsl-youtube-player"
                     style={{
                       position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%'
+                      top: isMobile ? '50%' : 0,
+                      left: isMobile ? '50%' : 0,
+                      width: isMobile ? '100vw' : '100%',
+                      height: isMobile ? '56.25vw' : '100%',
+                      minHeight: isMobile ? '100vh' : undefined,
+                      minWidth: isMobile ? '177.78vh' : undefined,
+                      transform: isMobile ? 'translate(-50%, -50%)' : undefined
                     }}
                   />
                   
