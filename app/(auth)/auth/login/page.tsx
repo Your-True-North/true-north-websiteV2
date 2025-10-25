@@ -15,28 +15,21 @@ export default function LoginPage() {
 
   // Check if user is already logged in
   useEffect(() => {
-    // Add a small delay to ensure logout has completed
-    const checkAuth = () => {
-      const userData = localStorage.getItem('user')
-      if (userData) {
-        try {
-          const user = JSON.parse(userData)
-          if (user.email && user.id) {
-            logger.debug('Login', 'User already logged in, redirecting to journey')
-            window.location.replace('/journey')
-            return
-          }
-        } catch (e) {
-          console.error('[Login] Failed to parse user data')
-          localStorage.removeItem('user')
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      try {
+        const user = JSON.parse(userData)
+        if (user.email && user.id) {
+          logger.debug('Login', 'User already logged in, redirecting to journey')
+          window.location.replace('/journey')
+          return
         }
+      } catch (e) {
+        console.error('[Login] Failed to parse user data')
+        localStorage.removeItem('user')
       }
-      setCheckingAuth(false)
     }
-
-    // Small delay to allow logout to complete
-    const timer = setTimeout(checkAuth, 100)
-    return () => clearTimeout(timer)
+    setCheckingAuth(false)
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,14 +57,33 @@ export default function LoginPage() {
       }
 
       logger.debug('Login', 'Saving to localStorage...')
-      // Clear any stale data first
-      localStorage.removeItem('user')
-      // Set fresh user data
-      localStorage.setItem('user', JSON.stringify(data.user))
-      logger.debug('Login', 'User saved, redirecting to /journey...')
 
-      // Use window.location.replace to prevent back button issues and cache problems
-      window.location.replace('/journey')
+      try {
+        // Clear any stale data first
+        localStorage.removeItem('user')
+        localStorage.removeItem('videoLikes')
+        localStorage.removeItem('videoComments')
+
+        // Set fresh user data
+        const userDataString = JSON.stringify(data.user)
+        localStorage.setItem('user', userDataString)
+
+        // Verify it was saved (Chrome-specific check)
+        const savedData = localStorage.getItem('user')
+        if (!savedData) {
+          throw new Error('Failed to save user data to browser storage')
+        }
+
+        logger.debug('Login', 'User saved successfully, redirecting to /journey...')
+
+        // Use window.location.replace to prevent back button issues
+        window.location.replace('/journey')
+      } catch (storageError) {
+        console.error('[Login] Storage error:', storageError)
+        setError('Browser storage is blocked. Please enable cookies and site data in your browser settings.')
+        setLoading(false)
+        return
+      }
     } catch (err) {
       console.error('[Login] Error:', err)
       setError('Something went wrong. Try again.')
