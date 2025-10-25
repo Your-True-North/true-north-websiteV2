@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { logger } from '@/lib/logger'
 
 interface DashboardData {
   stats: {
@@ -281,7 +282,7 @@ export default function AdminPage() {
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
     if (!savedUser) {
-      console.log('[Admin] No user found, redirecting to login')
+      logger.debug('Admin', 'No user found, redirecting to login')
       setLoading(false) // Set loading false before redirect
       window.location.replace('/auth/login')
       return
@@ -292,7 +293,7 @@ export default function AdminPage() {
 
       // Verify user data exists
       if (!userData.email || !userData.id) {
-        console.log('[Admin] Invalid user data, redirecting to login')
+        logger.debug('Admin', 'Invalid user data, redirecting to login')
         localStorage.removeItem('user')
         setLoading(false) // Set loading false before redirect
         window.location.replace('/auth/login')
@@ -301,13 +302,13 @@ export default function AdminPage() {
 
       // Check admin role
       if (userData.role !== 'admin') {
-        console.log('[Admin] Non-admin user, redirecting to journey')
+        logger.debug('Admin', 'Non-admin user, redirecting to journey')
         setLoading(false) // Set loading false before redirect
         window.location.replace('/journey')
         return
       }
 
-      console.log('[Admin] Admin user authenticated:', userData.email)
+      logger.debug('Admin', 'Admin user authenticated', userData.email)
       setUser(userData)
       // Initialize with mock data
       setDashboardData(mockDashboardData)

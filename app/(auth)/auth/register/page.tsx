@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { logger } from '@/lib/logger'
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ export default function RegisterPage() {
     setLoading(true)
 
     try {
-      console.log('[Register] Starting registration...')
+      logger.debug('Register', 'Starting registration...')
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -42,7 +43,7 @@ export default function RegisterPage() {
         })
       })
 
-      console.log('[Register] Response received:', res.status)
+      logger.debug('Register', 'Response received', res.status)
       const data = await res.json()
 
       if (!res.ok) {
@@ -52,11 +53,11 @@ export default function RegisterPage() {
         return
       }
 
-      console.log('[Register] Registration successful')
+      logger.debug('Register', 'Registration successful')
       // Auto-login after successful registration
       localStorage.removeItem('user')
       localStorage.setItem('user', JSON.stringify(data.user))
-      console.log('[Register] Redirecting to /journey...')
+      logger.debug('Register', 'Redirecting to /journey...')
 
       window.location.replace('/journey')
     } catch (err) {

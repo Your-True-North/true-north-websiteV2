@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { logger } from '@/lib/logger'
 
 interface User {
   id: number
@@ -25,7 +26,7 @@ export default function MembersPage() {
   useEffect(() => {
     const userData = localStorage.getItem('user')
     if (!userData) {
-      console.log('[Members] No user found, redirecting to login')
+      logger.debug('Members', 'No user found, redirecting to login')
       setLoading(false) // Set loading false before redirect
       window.location.replace('/auth/login')
       return
@@ -36,14 +37,14 @@ export default function MembersPage() {
 
       // Verify user has valid session
       if (!parsedUser.email || !parsedUser.id) {
-        console.log('[Members] Invalid user data, redirecting to login')
+        logger.debug('Members', 'Invalid user data, redirecting to login')
         localStorage.removeItem('user')
         setLoading(false) // Set loading false before redirect
         window.location.replace('/auth/login')
         return
       }
 
-      console.log('[Members] User authenticated:', parsedUser.email)
+      logger.debug('Members', 'User authenticated', parsedUser.email)
       setUser(parsedUser)
       setLoading(false)
     } catch (err) {
@@ -66,7 +67,7 @@ export default function MembersPage() {
   }, [])
 
   const handleLogout = () => {
-    console.log('[Members] Logging out user')
+    logger.debug('Members', 'Logging out user')
 
     // Clear all auth data
     localStorage.removeItem('user')
