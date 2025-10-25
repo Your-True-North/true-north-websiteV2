@@ -26,13 +26,21 @@ export default function Navigation() {
   }, [pathname]);
 
   const handleLogout = () => {
+    // Clear all auth data
     localStorage.removeItem('user');
     localStorage.removeItem('videoLikes');
     localStorage.removeItem('videoComments');
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
+    // Clear all cookies
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
     setUser(null);
     setIsOpen(false);
-    window.location.replace('/');
+
+    // Use router.push for cleaner navigation
+    router.push('/');
   };
 
   return (

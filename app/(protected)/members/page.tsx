@@ -67,11 +67,19 @@ export default function MembersPage() {
 
   const handleLogout = () => {
     console.log('[Members] Logging out user')
+
+    // Clear all auth data
     localStorage.removeItem('user')
     localStorage.removeItem('videoLikes')
     localStorage.removeItem('videoComments')
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    window.location.replace('/')
+
+    // Clear all cookies
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    // Use router.push for cleaner navigation
+    router.push('/')
   }
 
   if (loading) {

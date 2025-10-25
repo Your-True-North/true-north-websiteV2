@@ -15,21 +15,28 @@ export default function LoginPage() {
 
   // Check if user is already logged in
   useEffect(() => {
-    const userData = localStorage.getItem('user')
-    if (userData) {
-      try {
-        const user = JSON.parse(userData)
-        if (user.email && user.id) {
-          logger.debug('Login', 'User already logged in, redirecting to journey')
-          window.location.replace('/journey')
-          return
+    // Add a small delay to ensure logout has completed
+    const checkAuth = () => {
+      const userData = localStorage.getItem('user')
+      if (userData) {
+        try {
+          const user = JSON.parse(userData)
+          if (user.email && user.id) {
+            logger.debug('Login', 'User already logged in, redirecting to journey')
+            window.location.replace('/journey')
+            return
+          }
+        } catch (e) {
+          console.error('[Login] Failed to parse user data')
+          localStorage.removeItem('user')
         }
-      } catch (e) {
-        console.error('[Login] Failed to parse user data')
-        localStorage.removeItem('user')
       }
+      setCheckingAuth(false)
     }
-    setCheckingAuth(false)
+
+    // Small delay to allow logout to complete
+    const timer = setTimeout(checkAuth, 100)
+    return () => clearTimeout(timer)
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
