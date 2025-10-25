@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { logger } from '@/lib/logger'
 
 const mockVideos = [
   {
@@ -95,7 +96,7 @@ export default function JourneyPage() {
   useEffect(() => {
     const savedUser = localStorage.getItem('user')
     if (!savedUser) {
-      console.log('[Journey] No user found, redirecting to login')
+      logger.debug('Journey', 'No user found, redirecting to login')
       window.location.replace('/auth/login')
       return
     }
@@ -105,13 +106,13 @@ export default function JourneyPage() {
 
       // Verify user has valid session
       if (!parsedUser.email || !parsedUser.id) {
-        console.log('[Journey] Invalid user data, redirecting to login')
+        logger.debug('Journey', 'Invalid user data, redirecting to login')
         localStorage.removeItem('user')
         window.location.replace('/auth/login')
         return
       }
 
-      console.log('[Journey] User authenticated:', parsedUser.email)
+      logger.debug('Journey', 'User authenticated', parsedUser.email)
       setUser(parsedUser)
     } catch (err) {
       console.error('[Journey] Failed to parse user data:', err)
@@ -132,7 +133,7 @@ export default function JourneyPage() {
   }, [])
 
   const handleLogout = () => {
-    console.log('[Journey] Logging out user')
+    logger.debug('Journey', 'Logging out user')
     localStorage.removeItem('user')
     localStorage.removeItem('videoLikes')
     localStorage.removeItem('videoComments')

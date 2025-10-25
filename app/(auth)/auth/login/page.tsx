@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { logger } from '@/lib/logger'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -19,7 +20,7 @@ export default function LoginPage() {
       try {
         const user = JSON.parse(userData)
         if (user.email && user.id) {
-          console.log('[Login] User already logged in, redirecting to journey')
+          logger.debug('Login', 'User already logged in, redirecting to journey')
           window.location.replace('/journey')
           return
         }
@@ -37,16 +38,16 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      console.log('[Login] Starting login request...')
+      logger.debug('Login', 'Starting login request...')
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       })
 
-      console.log('[Login] Response received:', res.status)
+      logger.debug('Login', 'Response received', res.status)
       const data = await res.json()
-      console.log('[Login] Data:', data)
+      logger.debug('Login', 'Data', data)
 
       if (!res.ok) {
         console.error('[Login] Login failed:', data.error)
@@ -55,12 +56,12 @@ export default function LoginPage() {
         return
       }
 
-      console.log('[Login] Saving to localStorage...')
+      logger.debug('Login', 'Saving to localStorage...')
       // Clear any stale data first
       localStorage.removeItem('user')
       // Set fresh user data
       localStorage.setItem('user', JSON.stringify(data.user))
-      console.log('[Login] User saved, redirecting to /journey...')
+      logger.debug('Login', 'User saved, redirecting to /journey...')
 
       // Use window.location.replace to prevent back button issues and cache problems
       window.location.replace('/journey')
