@@ -94,26 +94,49 @@ export default function JourneyPage() {
   }, [])
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user')
-    if (!savedUser) {
-      logger.debug('Journey', 'No user found, redirecting to login')
-      window.location.replace('/auth/login')
-      return
-    }
+    // Small delay to ensure localStorage is ready in Chrome
+    const checkAuth = () => {
+      const savedUser = localStorage.getItem('user')
+      if (!savedUser) {
+        logger.debug('Journey', 'No user found, redirecting to login')
+        window.location.replace('/auth/login')
+        return
+      }
 
-    try {
-      const parsedUser = JSON.parse(savedUser)
+      try {
+        const parsedUser = JSON.parse(savedUser)
 
-      // Verify user has valid session
-      if (!parsedUser.email || !parsedUser.id) {
-        logger.debug('Journey', 'Invalid user data, redirecting to login')
+        // Verify user has valid session
+        if (!parsedUser.email || !parsedUser.id) {
+          logger.debug('Journey', 'Invalid user data, redirecting to login')
+          localStorage.removeItem('user')
+          window.location.replace('/auth/login')
+          return
+        }
+
+        logger.debug('Journey', 'User authenticated', parsedUser.email)
+        setUser(parsedUser)
+      } catch (err) {
+        console.error('[Journey] Failed to parse user data:', err)
         localStorage.removeItem('user')
         window.location.replace('/auth/login')
         return
       }
 
-      logger.debug('Journey', 'User authenticated', parsedUser.email)
-      setUser(parsedUser)
+      // Load likes and comments from localStorage
+      try {
+        const savedLikes = localStorage.getItem('videoLikes')
+        const savedComments = localStorage.getItem('videoComments')
+        if (savedLikes) setVideoLikes(JSON.parse(savedLikes))
+        if (savedComments) setVideoComments(JSON.parse(savedComments))
+      } catch (err) {
+        console.error('[Journey] Failed to load user data:', err)
+      }
+    }
+
+    // Tiny delay ensures Chrome has committed localStorage from login page
+    setTimeout(checkAuth, 50)
+  }, [])
     } catch (err) {
       console.error('[Journey] Failed to parse user data:', err)
       localStorage.removeItem('user')
