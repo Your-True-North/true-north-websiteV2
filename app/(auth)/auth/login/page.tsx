@@ -68,6 +68,9 @@ export default function LoginPage() {
         const userDataString = JSON.stringify(data.user)
         localStorage.setItem('user', userDataString)
 
+        // Set login flag to prevent race condition in Chrome
+        localStorage.setItem('justLoggedIn', 'true')
+
         // Verify it was saved (Chrome-specific check)
         const savedData = localStorage.getItem('user')
         if (!savedData) {
@@ -76,8 +79,9 @@ export default function LoginPage() {
 
         logger.debug('Login', 'User saved successfully, redirecting to /journey...')
 
-        // Use window.location.replace to prevent back button issues
-        window.location.replace('/journey')
+        // Force Chrome to commit localStorage before redirect
+        // Use href instead of replace to ensure proper navigation
+        window.location.href = '/journey'
       } catch (storageError) {
         console.error('[Login] Storage error:', storageError)
         setError('Browser storage is blocked. Please enable cookies and site data in your browser settings.')
