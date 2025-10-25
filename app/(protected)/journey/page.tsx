@@ -137,23 +137,6 @@ export default function JourneyPage() {
     // Tiny delay ensures Chrome has committed localStorage from login page
     setTimeout(checkAuth, 50)
   }, [])
-    } catch (err) {
-      console.error('[Journey] Failed to parse user data:', err)
-      localStorage.removeItem('user')
-      window.location.replace('/auth/login')
-      return
-    }
-
-    // Load likes and comments from localStorage
-    try {
-      const savedLikes = localStorage.getItem('videoLikes')
-      const savedComments = localStorage.getItem('videoComments')
-      if (savedLikes) setVideoLikes(JSON.parse(savedLikes))
-      if (savedComments) setVideoComments(JSON.parse(savedComments))
-    } catch (err) {
-      console.error('[Journey] Failed to load user data:', err)
-    }
-  }, [])
 
   const handleLogout = () => {
     logger.debug('Journey', 'Logging out user')
