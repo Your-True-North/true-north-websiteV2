@@ -282,6 +282,7 @@ export default function AdminPage() {
     const savedUser = localStorage.getItem('user')
     if (!savedUser) {
       console.log('[Admin] No user found, redirecting to login')
+      setLoading(false) // Set loading false before redirect
       window.location.replace('/auth/login')
       return
     }
@@ -293,6 +294,7 @@ export default function AdminPage() {
       if (!userData.email || !userData.id) {
         console.log('[Admin] Invalid user data, redirecting to login')
         localStorage.removeItem('user')
+        setLoading(false) // Set loading false before redirect
         window.location.replace('/auth/login')
         return
       }
@@ -300,6 +302,7 @@ export default function AdminPage() {
       // Check admin role
       if (userData.role !== 'admin') {
         console.log('[Admin] Non-admin user, redirecting to journey')
+        setLoading(false) // Set loading false before redirect
         window.location.replace('/journey')
         return
       }
@@ -313,6 +316,7 @@ export default function AdminPage() {
     } catch (err) {
       console.error('[Admin] Failed to parse user data:', err)
       localStorage.removeItem('user')
+      setLoading(false) // Set loading false before redirect
       window.location.replace('/auth/login')
     }
   }, [])
