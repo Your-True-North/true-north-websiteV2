@@ -30,6 +30,7 @@ export default function Navigation() {
     localStorage.removeItem('user');
     localStorage.removeItem('videoLikes');
     localStorage.removeItem('videoComments');
+    localStorage.removeItem('justLoggedIn');
 
     // Clear all cookies
     document.cookie.split(";").forEach((c) => {
