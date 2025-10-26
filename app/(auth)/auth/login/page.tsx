@@ -323,11 +323,9 @@ export default function LoginPage() {
                 {loading ? 'Accessing Portal...' : 'Enter Portal'}
               </button>
 
-              <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+              <div style={{ marginTop: '1rem', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <a
-                  href="https://wa.me/447449052909?text=Hi%20Mason%2C%20I%20need%20help%20resetting%20my%20password%20for%20the%20Circle%20of%20Return%20member%20portal."
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="mailto:mason@truenorthwithin.com?subject=Password%20Reset%20Request%20-%20Circle%20of%20Return&body=Hi%20Mason%2C%0A%0AI%20need%20help%20resetting%20my%20password%20for%20the%20Circle%20of%20Return%20member%20portal.%0A%0AMy%20email%3A%20"
                   style={{
                     fontSize: '0.875rem',
                     color: 'rgba(155, 196, 184, 0.8)',
@@ -338,7 +336,23 @@ export default function LoginPage() {
                   onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(155, 196, 184, 1)'}
                   onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(155, 196, 184, 0.8)'}
                 >
-                  Forgot password? Contact Mason →
+                  Forgot password? Email Mason →
+                </a>
+                <a
+                  href="https://wa.me/447449052909?text=Hi%20Mason%2C%20I%20need%20help%20resetting%20my%20password%20for%20the%20Circle%20of%20Return%20member%20portal."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: '0.75rem',
+                    color: 'rgba(255, 255, 255, 0.4)',
+                    textDecoration: 'none',
+                    fontWeight: 300,
+                    transition: 'color 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.4)'}
+                >
+                  Or message on WhatsApp
                 </a>
               </div>
             </form>
