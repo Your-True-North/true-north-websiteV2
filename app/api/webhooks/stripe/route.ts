@@ -19,7 +19,9 @@ import Stripe from 'stripe'
 import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
+  apiVersion: '2024-11-20.acacia'
+})
 
 // Email transporter setup
 const transporter = nodemailer.createTransport({
