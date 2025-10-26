@@ -59,26 +59,29 @@ export default function LoginPage() {
       logger.debug('Login', 'Saving to localStorage...')
 
       try {
-        // Clear any stale data first - do this synchronously multiple times for Chrome
-        for (let i = 0; i < 3; i++) {
+        // MAXIMUM AGGRESSIVE Chrome fix - clear 5 times
+        for (let i = 0; i < 5; i++) {
           localStorage.removeItem('user')
           localStorage.removeItem('videoLikes')
           localStorage.removeItem('videoComments')
           localStorage.removeItem('justLoggedIn')
         }
 
-        // Small delay to let Chrome clear
-        await new Promise(resolve => setTimeout(resolve, 50))
+        // LONGER wait for Chrome to clear completely
+        await new Promise(resolve => setTimeout(resolve, 200))
 
-        // Set fresh user data with retry
+        // Set fresh user data with MORE retries and LONGER waits
         const userDataString = JSON.stringify(data.user)
         let saveSuccess = false
 
-        for (let attempt = 0; attempt < 5; attempt++) {
+        for (let attempt = 0; attempt < 10; attempt++) {
           localStorage.setItem('user', userDataString)
           localStorage.setItem('justLoggedIn', 'true')
 
-          // Immediate verification
+          // Wait LONGER for Chrome to commit
+          await new Promise(resolve => setTimeout(resolve, 100))
+
+          // Verify with exact string comparison
           const savedData = localStorage.getItem('user')
           const loginFlag = localStorage.getItem('justLoggedIn')
 
@@ -88,20 +91,24 @@ export default function LoginPage() {
             break
           }
 
-          // Wait before retry
-          if (attempt < 4) {
-            await new Promise(resolve => setTimeout(resolve, 20))
+          logger.debug('Login', `Attempt ${attempt + 1} failed, retrying...`)
+
+          // Wait longer between retries
+          if (attempt < 9) {
+            await new Promise(resolve => setTimeout(resolve, 100))
           }
         }
 
         if (!saveSuccess) {
-          throw new Error('Failed to save user data to browser storage after 5 attempts')
+          throw new Error('Failed to save user data to browser storage after 10 attempts')
         }
 
-        logger.debug('Login', 'User saved successfully, redirecting to /journey...')
+        logger.debug('Login', 'User saved successfully, waiting LONGER before redirect...')
 
-        // Additional delay before redirect for Chrome
-        await new Promise(resolve => setTimeout(resolve, 100))
+        // Wait MUCH longer before redirect for Chrome to fully commit
+        await new Promise(resolve => setTimeout(resolve, 500))
+
+        logger.debug('Login', 'NOW redirecting to /journey...')
 
         // Use replace to avoid back button issues
         window.location.replace('/journey')

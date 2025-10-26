@@ -94,7 +94,7 @@ export default function JourneyPage() {
   }, [])
 
   useEffect(() => {
-    // Aggressive multi-retry strategy for Chrome
+    // MAXIMUM AGGRESSIVE multi-retry strategy for Chrome
     const checkAuth = async () => {
       // Check if we just logged in
       const justLoggedIn = localStorage.getItem('justLoggedIn')
@@ -102,11 +102,11 @@ export default function JourneyPage() {
       if (justLoggedIn === 'true') {
         // Clear the flag immediately
         localStorage.removeItem('justLoggedIn')
-        logger.debug('Journey', 'Fresh login detected, implementing Chrome-safe loading...')
+        logger.debug('Journey', 'Fresh login detected, implementing ULTRA Chrome-safe loading...')
 
-        // Try multiple times with increasing delays for Chrome
-        for (let attempt = 0; attempt < 10; attempt++) {
-          const waitTime = 50 + (attempt * 50) // 50ms, 100ms, 150ms... up to 500ms
+        // Try MANY more times with MUCH LONGER delays for Chrome
+        for (let attempt = 0; attempt < 15; attempt++) {
+          const waitTime = 200 + (attempt * 100) // 200ms, 300ms, 400ms... up to 1600ms
           await new Promise(resolve => setTimeout(resolve, waitTime))
 
           const savedUser = localStorage.getItem('user')
@@ -116,11 +116,11 @@ export default function JourneyPage() {
             return
           }
 
-          logger.debug('Journey', `Attempt ${attempt + 1} failed, retrying...`)
+          logger.debug('Journey', `Attempt ${attempt + 1} failed, retrying in ${waitTime + 100}ms...`)
         }
 
         // After all retries failed
-        logger.debug('Journey', 'No user found after 10 attempts, redirecting to login')
+        logger.debug('Journey', 'No user found after 15 attempts over ~11 seconds, redirecting to login')
         window.location.replace('/auth/login')
         return
       }
@@ -168,8 +168,8 @@ export default function JourneyPage() {
       }
     }
 
-    // Initial delay for Chrome, then start checking
-    setTimeout(() => checkAuth(), 150)
+    // LONGER initial delay for Chrome, then start checking
+    setTimeout(() => checkAuth(), 300)
   }, [])
 
   const handleLogout = () => {
