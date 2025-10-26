@@ -94,28 +94,38 @@ export default function JourneyPage() {
   }, [])
 
   useEffect(() => {
-    // More aggressive delay for Chrome - check multiple times if needed
-    const checkAuth = () => {
+    // Aggressive multi-retry strategy for Chrome
+    const checkAuth = async () => {
       // Check if we just logged in
       const justLoggedIn = localStorage.getItem('justLoggedIn')
 
       if (justLoggedIn === 'true') {
-        // Clear the flag
+        // Clear the flag immediately
         localStorage.removeItem('justLoggedIn')
-        // Wait longer after fresh login for Chrome to settle
-        logger.debug('Journey', 'Fresh login detected, waiting for Chrome...')
-        setTimeout(() => {
+        logger.debug('Journey', 'Fresh login detected, implementing Chrome-safe loading...')
+
+        // Try multiple times with increasing delays for Chrome
+        for (let attempt = 0; attempt < 10; attempt++) {
+          const waitTime = 50 + (attempt * 50) // 50ms, 100ms, 150ms... up to 500ms
+          await new Promise(resolve => setTimeout(resolve, waitTime))
+
           const savedUser = localStorage.getItem('user')
-          if (!savedUser) {
-            logger.debug('Journey', 'Still no user after wait, redirecting to login')
-            window.location.replace('/auth/login')
+          if (savedUser) {
+            logger.debug('Journey', `User data found on attempt ${attempt + 1} after ${waitTime}ms`)
+            loadUserData(savedUser)
             return
           }
-          loadUserData(savedUser)
-        }, 150)
+
+          logger.debug('Journey', `Attempt ${attempt + 1} failed, retrying...`)
+        }
+
+        // After all retries failed
+        logger.debug('Journey', 'No user found after 10 attempts, redirecting to login')
+        window.location.replace('/auth/login')
         return
       }
 
+      // Normal flow (not fresh login)
       const savedUser = localStorage.getItem('user')
       if (!savedUser) {
         logger.debug('Journey', 'No user found, redirecting to login')
@@ -158,8 +168,8 @@ export default function JourneyPage() {
       }
     }
 
-    // Initial delay for Chrome
-    setTimeout(checkAuth, 100)
+    // Initial delay for Chrome, then start checking
+    setTimeout(() => checkAuth(), 150)
   }, [])
 
   const handleLogout = () => {
