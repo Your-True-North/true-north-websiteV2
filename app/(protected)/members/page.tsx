@@ -144,14 +144,46 @@ export default function MembersPage() {
     }
   }
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file) {
+    if (!file) return
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setProfileError('Please upload an image file')
+      return
+    }
+
+    // Validate file size (max 5MB before compression)
+    if (file.size > 5 * 1024 * 1024) {
+      setProfileError('Image must be less than 5MB')
+      return
+    }
+
+    try {
+      // Compress and resize image
+      const imageCompression = (await import('browser-image-compression')).default
+
+      const options = {
+        maxSizeMB: 0.5,              // Max 500KB after compression
+        maxWidthOrHeight: 500,        // Max 500x500px
+        useWebWorker: true,
+        fileType: 'image/jpeg'
+      }
+
+      const compressedFile = await imageCompression(file, options)
+
+      // Convert to base64
       const reader = new FileReader()
       reader.onloadend = () => {
         setProfilePhoto(reader.result as string)
+        setProfileError('')
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(compressedFile)
+
+    } catch (error) {
+      console.error('Error compressing image:', error)
+      setProfileError('Failed to process image. Please try another.')
     }
   }
 
