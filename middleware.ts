@@ -1,24 +1,44 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import jwt from 'jsonwebtoken'
+
+const JWT_SECRET = process.env.NEXTAUTH_SECRET
+
+function verifyToken(token: string) {
+  if (!JWT_SECRET) {
+    return null
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET)
+    return decoded
+  } catch (error) {
+    return null
+  }
+}
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('auth_token')?.value
   const isAuthPage = request.nextUrl.pathname.startsWith('/auth')
   const isMembersPage = request.nextUrl.pathname.startsWith('/members')
   const isJourneyPage = request.nextUrl.pathname.startsWith('/journey')
+  const isAdminPage = request.nextUrl.pathname.startsWith('/admin')
 
-  // If trying to access protected pages without token, redirect to login
-  if ((isMembersPage || isJourneyPage) && !token) {
+  // Verify token if it exists
+  const user = token ? verifyToken(token) : null
+
+  // Protected pages (members, journey, admin) require valid token
+  if ((isMembersPage || isJourneyPage || isAdminPage) && !user) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 
-  // If has token, allow access to protected pages
-  if ((isMembersPage || isJourneyPage) && token) {
-    return NextResponse.next()
+  // Admin pages require admin role
+  if (isAdminPage && user && (user as any).role !== 'admin') {
+    return NextResponse.redirect(new URL('/members', request.url))
   }
 
-  // If trying to access auth pages with token, redirect to members
-  if (isAuthPage && token) {
+  // Auth pages redirect to members if already logged in
+  if (isAuthPage && user) {
     return NextResponse.redirect(new URL('/members', request.url))
   }
 
@@ -26,5 +46,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/members/:path*', '/auth/:path*', '/journey/:path*']
+  matcher: ['/members/:path*', '/auth/:path*', '/journey/:path*', '/admin/:path*']
 }
