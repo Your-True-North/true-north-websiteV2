@@ -19,9 +19,7 @@ import Stripe from 'stripe'
 import bcrypt from 'bcrypt'
 import nodemailer from 'nodemailer'
 
-const stripe = process.env.STRIPE_SECRET_KEY
-  ? new Stripe(process.env.STRIPE_SECRET_KEY)
-  : null
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 // Email transporter setup
 const transporter = nodemailer.createTransport({
@@ -36,13 +34,9 @@ const transporter = nodemailer.createTransport({
 
 export async function POST(request) {
   try {
-    if (!stripe) {
-      return NextResponse.json({ error: 'Stripe not configured' }, { status: 503 })
-    }
-
     const body = await request.text()
     const signature = request.headers.get('stripe-signature')
-
+    
     const event = stripe.webhooks.constructEvent(
       body,
       signature,
