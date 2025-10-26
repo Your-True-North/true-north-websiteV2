@@ -63,6 +63,7 @@ export default function LoginPage() {
         localStorage.removeItem('user')
         localStorage.removeItem('videoLikes')
         localStorage.removeItem('videoComments')
+        localStorage.removeItem('justLoggedIn')
 
         // Set fresh user data
         const userDataString = JSON.stringify(data.user)
@@ -71,17 +72,27 @@ export default function LoginPage() {
         // Set login flag to prevent race condition in Chrome
         localStorage.setItem('justLoggedIn', 'true')
 
-        // Verify it was saved (Chrome-specific check)
-        const savedData = localStorage.getItem('user')
-        if (!savedData) {
-          throw new Error('Failed to save user data to browser storage')
+        // Force Chrome to commit by reading back multiple times
+        for (let i = 0; i < 3; i++) {
+          const savedData = localStorage.getItem('user')
+          const loginFlag = localStorage.getItem('justLoggedIn')
+
+          if (!savedData || loginFlag !== 'true') {
+            if (i === 2) {
+              throw new Error('Failed to save user data to browser storage')
+            }
+            // Re-attempt write
+            localStorage.setItem('user', userDataString)
+            localStorage.setItem('justLoggedIn', 'true')
+          } else {
+            break
+          }
         }
 
         logger.debug('Login', 'User saved successfully, redirecting to /journey...')
 
-        // Force Chrome to commit localStorage before redirect
-        // Use href instead of replace to ensure proper navigation
-        window.location.href = '/journey'
+        // Use replace to avoid back button issues
+        window.location.replace('/journey')
       } catch (storageError) {
         console.error('[Login] Storage error:', storageError)
         setError('Browser storage is blocked. Please enable cookies and site data in your browser settings.')

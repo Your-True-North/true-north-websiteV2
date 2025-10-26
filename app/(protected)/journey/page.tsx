@@ -94,8 +94,28 @@ export default function JourneyPage() {
   }, [])
 
   useEffect(() => {
-    // Small delay to ensure localStorage is ready in Chrome
+    // More aggressive delay for Chrome - check multiple times if needed
     const checkAuth = () => {
+      // Check if we just logged in
+      const justLoggedIn = localStorage.getItem('justLoggedIn')
+
+      if (justLoggedIn === 'true') {
+        // Clear the flag
+        localStorage.removeItem('justLoggedIn')
+        // Wait longer after fresh login for Chrome to settle
+        logger.debug('Journey', 'Fresh login detected, waiting for Chrome...')
+        setTimeout(() => {
+          const savedUser = localStorage.getItem('user')
+          if (!savedUser) {
+            logger.debug('Journey', 'Still no user after wait, redirecting to login')
+            window.location.replace('/auth/login')
+            return
+          }
+          loadUserData(savedUser)
+        }, 150)
+        return
+      }
+
       const savedUser = localStorage.getItem('user')
       if (!savedUser) {
         logger.debug('Journey', 'No user found, redirecting to login')
@@ -103,6 +123,10 @@ export default function JourneyPage() {
         return
       }
 
+      loadUserData(savedUser)
+    }
+
+    const loadUserData = (savedUser: string) => {
       try {
         const parsedUser = JSON.parse(savedUser)
 
@@ -134,8 +158,8 @@ export default function JourneyPage() {
       }
     }
 
-    // Tiny delay ensures Chrome has committed localStorage from login page
-    setTimeout(checkAuth, 50)
+    // Initial delay for Chrome
+    setTimeout(checkAuth, 100)
   }, [])
 
   const handleLogout = () => {
