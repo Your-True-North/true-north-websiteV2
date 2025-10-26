@@ -38,16 +38,17 @@ export default function ResetPasswordPage() {
     <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
       <div style={{ maxWidth: '28rem', width: '100%' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 300, color: '#fff', marginBottom: '0.5rem' }}>Reset Password</h1>
-          <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.875rem' }}>Enter your email to receive reset instructions</p>
+          <h1 style={{ fontSize: '2rem', fontWeight: 300, color: '#fff', marginBottom: '0.5rem' }}>Forgot Password?</h1>
+          <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.875rem' }}>Enter your registered email and we'll send you a new password</p>
         </div>
 
         {sent ? (
           <div style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', padding: '2rem', textAlign: 'center' }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✓</div>
-            <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: '0.5rem', fontSize: '1.25rem', fontWeight: 500 }}>Check your email</p>
+            <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: '0.5rem', fontSize: '1.25rem', fontWeight: 500 }}>New Password Sent!</p>
             <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem', marginBottom: '2rem' }}>
-              We've sent password reset instructions to<br/><strong style={{ color: '#9bc4b8' }}>{email}</strong>
+              We've sent a new temporary password to<br/><strong style={{ color: '#9bc4b8' }}>{email}</strong><br/>
+              Check your inbox and use it to log in.
             </p>
             <Link href="/auth/login" style={{ display: 'inline-block', padding: '0.75rem 1.5rem', background: 'linear-gradient(135deg, #9bc4b8, #7fb069)', color: '#000', fontWeight: 600, borderRadius: '8px', textDecoration: 'none' }}>
               Back to Login
@@ -100,7 +101,7 @@ export default function ResetPasswordPage() {
                   opacity: loading ? 0.5 : 1 
                 }}
               >
-                {loading ? 'Sending...' : 'Send Reset Link'}
+                {loading ? 'Sending...' : 'Send New Password'}
               </button>
             </form>
             
