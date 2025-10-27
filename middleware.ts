@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.NEXTAUTH_SECRET
-
 function verifyToken(token: string) {
-  if (!JWT_SECRET) {
+  const JWT_SECRET = process.env.NEXTAUTH_SECRET
+
+  if (!JWT_SECRET || !token) {
     return null
   }
 
