@@ -13,22 +13,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [checkingAuth, setCheckingAuth] = useState(true)
 
-  // Check if user is already logged in
   useEffect(() => {
-    const userData = localStorage.getItem('user')
-    if (userData) {
-      try {
-        const user = JSON.parse(userData)
-        if (user.email && user.id) {
-          logger.debug('Login', 'User already logged in, redirecting to journey')
-          window.location.replace('/journey')
-          return
-        }
-      } catch (e) {
-        console.error('[Login] Failed to parse user data')
-        localStorage.removeItem('user')
-      }
-    }
     setCheckingAuth(false)
   }, [])
 
@@ -56,68 +41,11 @@ export default function LoginPage() {
         return
       }
 
-      logger.debug('Login', 'Saving to localStorage...')
-
-      try {
-        // MAXIMUM AGGRESSIVE Chrome fix - clear 5 times
-        for (let i = 0; i < 5; i++) {
-          localStorage.removeItem('user')
-          localStorage.removeItem('videoLikes')
-          localStorage.removeItem('videoComments')
-          localStorage.removeItem('justLoggedIn')
-        }
-
-        // LONGER wait for Chrome to clear completely
-        await new Promise(resolve => setTimeout(resolve, 200))
-
-        // Set fresh user data with MORE retries and LONGER waits
-        const userDataString = JSON.stringify(data.user)
-        let saveSuccess = false
-
-        for (let attempt = 0; attempt < 10; attempt++) {
-          localStorage.setItem('user', userDataString)
-          localStorage.setItem('justLoggedIn', 'true')
-
-          // Wait LONGER for Chrome to commit
-          await new Promise(resolve => setTimeout(resolve, 100))
-
-          // Verify with exact string comparison
-          const savedData = localStorage.getItem('user')
-          const loginFlag = localStorage.getItem('justLoggedIn')
-
-          if (savedData === userDataString && loginFlag === 'true') {
-            saveSuccess = true
-            logger.debug('Login', `Data saved successfully on attempt ${attempt + 1}`)
-            break
-          }
-
-          logger.debug('Login', `Attempt ${attempt + 1} failed, retrying...`)
-
-          // Wait longer between retries
-          if (attempt < 9) {
-            await new Promise(resolve => setTimeout(resolve, 100))
-          }
-        }
-
-        if (!saveSuccess) {
-          throw new Error('Failed to save user data to browser storage after 10 attempts')
-        }
-
-        logger.debug('Login', 'User saved successfully, waiting LONGER before redirect...')
-
-        // Wait MUCH longer before redirect for Chrome to fully commit
-        await new Promise(resolve => setTimeout(resolve, 500))
-
-        logger.debug('Login', 'NOW redirecting to /journey...')
-
-        // Use replace to avoid back button issues
-        window.location.replace('/journey')
-      } catch (storageError) {
-        console.error('[Login] Storage error:', storageError)
-        setError('Browser storage is blocked. Please enable cookies and site data in your browser settings.')
-        setLoading(false)
-        return
-      }
+      logger.debug('Login', 'Login successful, redirecting...')
+      
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
+      window.location.replace('/journey')
     } catch (err) {
       console.error('[Login] Error:', err)
       setError('Something went wrong. Try again.')
@@ -125,7 +53,6 @@ export default function LoginPage() {
     }
   }
 
-  // Show loading state while checking authentication
   if (checkingAuth) {
     return (
       <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -136,7 +63,6 @@ export default function LoginPage() {
 
   return (
     <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
-      {/* Mystical Background */}
       <div style={{ position: 'fixed', inset: 0, background: '#0a0a0b' }}>
         <div style={{ position: 'absolute', inset: 0, opacity: 0.3 }}>
           <div style={{
@@ -164,7 +90,6 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Content */}
       <div style={{
         position: 'relative',
         zIndex: 10,
@@ -175,7 +100,6 @@ export default function LoginPage() {
         padding: '3rem 1rem'
       }}>
         <div style={{ width: '100%', maxWidth: '28rem' }}>
-          {/* Logo */}
           <Link href="/" style={{
             display: 'block',
             textAlign: 'center',
@@ -202,7 +126,6 @@ export default function LoginPage() {
             </p>
           </Link>
 
-          {/* Login Card */}
           <div style={{
             backdropFilter: 'blur(20px)',
             background: 'rgba(255, 255, 255, 0.03)',
