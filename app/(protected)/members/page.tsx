@@ -23,7 +23,7 @@ export default function MembersPage() {
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
   const [showProfileModal, setShowProfileModal] = useState(false)
-  const [profileForm, setProfileForm] = useState({ name: '', email: '' })
+  const [profileForm, setProfileForm] = useState({ name: '', email: '', bio: '' })
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [profileError, setProfileError] = useState('')
@@ -50,7 +50,10 @@ export default function MembersPage() {
 
       logger.debug('Members', 'User authenticated', parsedUser.email)
       setUser(parsedUser)
-      setProfileForm({ name: parsedUser.name, email: parsedUser.email })
+      setProfileForm({ name: parsedUser.name, email: parsedUser.email, bio: parsedUser.bio || '' })
+      if (parsedUser.profile_photo) {
+        setProfilePhoto(parsedUser.profile_photo)
+      }
       setLoading(false)
     } catch (err) {
       console.error('[Members] Failed to parse user data:', err)
@@ -103,7 +106,8 @@ export default function MembersPage() {
           userId: user?.id,
           name: profileForm.name,
           email: profileForm.email,
-          photo: profilePhoto
+          photo: profilePhoto,
+          bio: profileForm.bio
         })
       })
 
@@ -115,8 +119,16 @@ export default function MembersPage() {
         return
       }
 
-      // Update local storage
-      const updatedUser = { ...user, name: profileForm.name, email: profileForm.email }
+      // Update local storage with all user data from server
+      const updatedUser = {
+        ...user,
+        name: data.user.name,
+        email: data.user.email,
+        profile_photo: data.user.profile_photo,
+        bio: data.user.bio,
+        level: data.user.level,
+        progress: data.user.progress
+      }
       setUser(updatedUser)
       localStorage.setItem('user', JSON.stringify(updatedUser))
 
@@ -355,16 +367,20 @@ export default function MembersPage() {
               width: '5rem',
               height: '5rem',
               borderRadius: '50%',
-              background: `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
+              background: profilePhoto ? `url(${profilePhoto})` : `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               backdropFilter: 'blur(20px)'
             }}>
-              <svg style={{ width: '2.5rem', height: '2.5rem', color: 'rgba(255, 255, 255, 0.8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
+              {!profilePhoto && (
+                <svg style={{ width: '2.5rem', height: '2.5rem', color: 'rgba(255, 255, 255, 0.8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              )}
             </div>
           </div>
           <h1 style={{
@@ -901,6 +917,36 @@ export default function MembersPage() {
                     outline: 'none'
                   }}
                 />
+              </div>
+
+              {/* Bio */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                  Bio <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>(optional)</span>
+                </label>
+                <textarea
+                  value={profileForm.bio}
+                  onChange={(e) => setProfileForm({ ...profileForm, bio: e.target.value })}
+                  disabled={saving}
+                  placeholder="Share a bit about your journey..."
+                  maxLength={500}
+                  rows={4}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    resize: 'vertical',
+                    fontFamily: 'inherit'
+                  }}
+                />
+                <div style={{ textAlign: 'right', fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.4)', marginTop: '0.25rem' }}>
+                  {profileForm.bio.length}/500
+                </div>
               </div>
 
               {/* Buttons */}
