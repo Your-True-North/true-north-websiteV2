@@ -48,29 +48,34 @@ export async function POST(request) {
     const response = NextResponse.json({
       success: true,
       user: { 
-        id: user.id, 
-        email: user.email, 
-        name: user.name, 
+        id: user.id,
+        email: user.email,
+        name: user.name,
         role: user.role,
-        level: 'Seeker',
-        daysUntilNext: 30,
-        nextLevel: 'Explorer',
-        joinDate: user.createdat || new Date().toISOString()
+        level: user.level || 'seeker',
+        progress: user.progress || 0,
+        profilePhoto: user.profile_photo,
+        createdAt: user.created_at
       },
       token
-    }, { status: 200 })
+    })
 
     response.cookies.set('auth_token', token, {
-      httpOnly: false, // Allow client-side access for auth check
+      httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 30
+      maxAge: 60 * 60 * 24 * 30,
+      path: '/'
     })
 
     return response
 
   } catch (error) {
+    console.error('[Login] Error:', error)
     try { await client.end() } catch {}
-    return NextResponse.json({ error: 'Login failed', details: error.message }, { status: 500 })
+    return NextResponse.json({ 
+      error: 'Login failed',
+      details: error.message 
+    }, { status: 500 })
   }
 }
