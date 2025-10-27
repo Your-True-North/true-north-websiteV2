@@ -3,7 +3,10 @@
  * In production, logs are suppressed unless they're errors
  */
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
+// Safe check for environment that works in both browser and server
+const isDevelopment = typeof process !== 'undefined' 
+  ? process.env.NODE_ENV !== 'production'
+  : false
 
 export const logger = {
   log: (...args: any[]) => {
@@ -19,12 +22,10 @@ export const logger = {
   },
 
   warn: (...args: any[]) => {
-    // Warnings should show in production
     console.warn(...args)
   },
 
   error: (...args: any[]) => {
-    // Errors should always show
     console.error(...args)
   },
 
@@ -39,7 +40,6 @@ export const logger = {
   }
 }
 
-// For server-side only
 export const serverLogger = {
   log: (...args: any[]) => {
     if (typeof window === 'undefined' && isDevelopment) {
