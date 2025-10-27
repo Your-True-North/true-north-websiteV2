@@ -48,7 +48,7 @@ export default function MembersPage() {
     try {
       const res = await fetch('/api/auth/session')
       if (!res.ok) {
-        router.push('/auth/login')
+        // Auth check removed
         return
       }
       const data = await res.json()
@@ -62,7 +62,7 @@ export default function MembersPage() {
       })
     } catch (error) {
       console.error('Auth check failed:', error)
-      router.push('/auth/login')
+      // Auth check removed
     } finally {
       setLoading(false)
     }
