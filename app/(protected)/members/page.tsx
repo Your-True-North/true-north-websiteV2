@@ -23,7 +23,7 @@ export default function MembersPage() {
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
   const [showProfileModal, setShowProfileModal] = useState(false)
-  const [profileForm, setProfileForm] = useState({ name: '', email: '', password: '', confirmPassword: '' })
+  const [profileForm, setProfileForm] = useState({ name: '', email: '' })
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [profileError, setProfileError] = useState('')
@@ -50,7 +50,7 @@ export default function MembersPage() {
 
       logger.debug('Members', 'User authenticated', parsedUser.email)
       setUser(parsedUser)
-      setProfileForm({ name: parsedUser.name, email: parsedUser.email, password: '', confirmPassword: '' })
+      setProfileForm({ name: parsedUser.name, email: parsedUser.email })
       setLoading(false)
     } catch (err) {
       console.error('[Members] Failed to parse user data:', err)
@@ -93,11 +93,6 @@ export default function MembersPage() {
     setProfileError('')
     setProfileSuccess('')
 
-    if (profileForm.password && profileForm.password !== profileForm.confirmPassword) {
-      setProfileError('Passwords do not match')
-      return
-    }
-
     setSaving(true)
 
     try {
@@ -108,7 +103,6 @@ export default function MembersPage() {
           userId: user?.id,
           name: profileForm.name,
           email: profileForm.email,
-          password: profileForm.password || undefined,
           photo: profilePhoto
         })
       })
@@ -127,7 +121,6 @@ export default function MembersPage() {
       localStorage.setItem('user', JSON.stringify(updatedUser))
 
       setProfileSuccess('Profile updated successfully!')
-      setProfileForm({ ...profileForm, password: '', confirmPassword: '' })
       setSaving(false)
 
       setTimeout(() => {
@@ -909,54 +902,6 @@ export default function MembersPage() {
                   }}
                 />
               </div>
-
-              {/* Password */}
-              <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  New Password <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>(leave blank to keep current)</span>
-                </label>
-                <input
-                  type="password"
-                  value={profileForm.password}
-                  onChange={(e) => setProfileForm({ ...profileForm, password: e.target.value })}
-                  disabled={saving}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '8px',
-                    color: '#fff',
-                    fontSize: '1rem',
-                    outline: 'none'
-                  }}
-                />
-              </div>
-
-              {/* Confirm Password */}
-              {profileForm.password && (
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                    Confirm New Password
-                  </label>
-                  <input
-                    type="password"
-                    value={profileForm.confirmPassword}
-                    onChange={(e) => setProfileForm({ ...profileForm, confirmPassword: e.target.value })}
-                    disabled={saving}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      borderRadius: '8px',
-                      color: '#fff',
-                      fontSize: '1rem',
-                      outline: 'none'
-                    }}
-                  />
-                </div>
-              )}
 
               {/* Buttons */}
               <div style={{ display: 'flex', gap: '1rem' }}>
