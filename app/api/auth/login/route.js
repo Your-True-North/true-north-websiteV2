@@ -49,6 +49,9 @@ export async function POST(request) {
 
     if (!user) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    console.log("DEBUG - Password from form:", password)
+    console.log("DEBUG - Hash from DB:", user.password)
+    console.log("DEBUG - Hash starts with $2a or $2b:", user.password?.substring(0, 4))
     }
 
     // Verify password
