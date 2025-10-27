@@ -90,17 +90,35 @@ export default function Navigation() {
            </ul>
          </div>
 
-         <button 
+         <button
            className="mobile-nav-toggle"
            onClick={() => setIsOpen(!isOpen)}
+           style={{
+             position: 'relative',
+             width: '40px',
+             height: '40px'
+           }}
          >
-           <div className={`compass-toggle ${isOpen ? 'open' : ''}`}>
-             <div className="compass-center"></div>
-             <div className="compass-needle top"></div>
-             <div className="compass-needle right"></div>
-             <div className="compass-needle bottom"></div>
-             <div className="compass-needle left"></div>
-           </div>
+           <div style={{
+             position: 'absolute',
+             top: '50%',
+             left: '50%',
+             transform: 'translate(-50%, -50%) rotate(45deg)',
+             width: '20px',
+             height: '2px',
+             background: 'rgba(255, 255, 255, 0.9)',
+             transition: 'all 0.3s ease'
+           }}></div>
+           <div style={{
+             position: 'absolute',
+             top: '50%',
+             left: '50%',
+             transform: 'translate(-50%, -50%) rotate(-45deg)',
+             width: '20px',
+             height: '2px',
+             background: 'rgba(255, 255, 255, 0.9)',
+             transition: 'all 0.3s ease'
+           }}></div>
          </button>
        </div>
      </nav>

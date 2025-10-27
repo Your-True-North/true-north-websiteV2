@@ -1,81 +1,105 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import pkg from 'pg'
-const { Client } = pkg
+import { query } from '@/lib/db'
+import { createToken, rateLimit } from '@/lib/auth'
+import { validateEmail, validatePassword } from '@/lib/validation'
 
 export async function POST(request) {
-  const client = new Client({
-    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-    connectionTimeoutMillis: 5000
-  })
-
   try {
-    await client.connect()
-    
+    // Get client IP for rate limiting
+    const forwarded = request.headers.get('x-forwarded-for')
+    const ip = forwarded ? forwarded.split(',')[0] : request.headers.get('x-real-ip') || 'unknown'
+
+    // Rate limit: 5 login attempts per minute
+    const rateLimitResult = rateLimit(`login:${ip}`, 5, 60000)
+    if (rateLimitResult.limited) {
+      return NextResponse.json(
+        { error: 'Too many login attempts. Please try again later.' },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': rateLimitResult.resetAt.toString()
+          }
+        }
+      )
+    }
+
     const body = await request.json()
     const { email, password } = body
 
-    if (!email || !password) {
-      await client.end()
-      return NextResponse.json({ error: 'Email and password required' }, { status: 400 })
+    // Validate email
+    const emailValidation = validateEmail(email)
+    if (!emailValidation.valid) {
+      return NextResponse.json({ error: emailValidation.error }, { status: 400 })
     }
 
-    const result = await client.query('SELECT * FROM users WHERE email = $1', [email])
-    const user = result.rows[0]
-    
-    if (!user) {
-      await client.end()
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    // Validate password
+    const passwordValidation = validatePassword(password)
+    if (!passwordValidation.valid) {
+      return NextResponse.json({ error: passwordValidation.error }, { status: 400 })
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password)
-    
-    if (!isValidPassword) {
-      await client.end()
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
-    }
-
-    const token = jwt.sign(
-      { userId: user.id, email: user.email, role: user.role },
-      process.env.NEXTAUTH_SECRET,
-      { expiresIn: '30d' }
+    // Query user
+    const result = await query(
+      'SELECT * FROM users WHERE email = $1',
+      [emailValidation.email]
     )
+    const user = result.rows[0]
 
-    await client.end()
+    if (!user) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
 
+    // Verify password
+    const isValidPassword = await bcrypt.compare(password, user.password)
+
+    if (!isValidPassword) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    // Create JWT token
+    const token = createToken({
+      userId: user.id,
+      email: user.email,
+      role: user.role
+    })
+
+    // Prepare response
     const response = NextResponse.json({
       success: true,
-      user: { 
+      user: {
         id: user.id,
         email: user.email,
         name: user.name,
         role: user.role,
-        level: user.level || 'seeker',
-        progress: user.progress || 0,
-        profilePhoto: user.profile_photo,
-        createdAt: user.created_at
-      },
-      token
+        level: 'Seeker',
+        daysUntilNext: 30,
+        nextLevel: 'Explorer',
+        joinDate: user.createdat || new Date().toISOString()
+      }
+    }, {
+      status: 200,
+      headers: {
+        'X-RateLimit-Remaining': rateLimitResult.remaining.toString()
+      }
     })
 
+    // Set httpOnly cookie
     response.cookies.set('auth_token', token, {
-      httpOnly: false,
+      httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 30,
+      maxAge: 60 * 60 * 24 * 30, // 30 days
       path: '/'
     })
 
     return response
 
   } catch (error) {
-    console.error('[Login] Error:', error)
-    try { await client.end() } catch {}
-    return NextResponse.json({ 
-      error: 'Login failed',
-      details: error.message 
-    }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Login failed', details: process.env.NODE_ENV === 'development' ? error.message : undefined },
+      { status: 500 }
+    )
   }
 }

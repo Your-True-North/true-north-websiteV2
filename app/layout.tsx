@@ -1,7 +1,4 @@
 import './globals.css'
-import Navigation from './components/Navigation'
-import Footer from './components/Footer'
-import MysticalBackground from './components/MysticalBackground'
 
 export const metadata = {
   title: 'True North - Transformation Through Embodiment | Mason',
@@ -39,12 +36,7 @@ export default function RootLayout({
         `}} />
       </head>
       <body>
-        <MysticalBackground />
-        <Navigation />
-        <main>
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   )

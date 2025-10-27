@@ -155,14 +155,16 @@ export default function Circle() {
             width: '100%',
             height: '100%'
           }}>
-            <div 
+            <div
               id="youtube-player"
               style={{
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
-                width: '100%',
-                height: '100%',
+                width: isMobile ? '177.78vh' : '100%',
+                height: isMobile ? '100vh' : '100%',
+                minWidth: '100%',
+                minHeight: '100%',
                 transform: 'translate(-50%, -50%)',
                 pointerEvents: showOverlay ? 'none' : 'auto',
                 opacity: showOverlay ? 0 : 1,

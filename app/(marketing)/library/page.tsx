@@ -483,7 +483,7 @@ export default function Library() {
             fontWeight: '600',
             cursor: 'pointer',
             zIndex: 999,
-            boxShadow: '0 8px 30px rgba(155, 196, 184, 0.4)',
+            boxShadow: 'none',
             transition: 'all 0.3s ease',
             display: 'flex',
             alignItems: 'center',
@@ -491,14 +491,11 @@ export default function Library() {
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-3px)'
-            e.currentTarget.style.boxShadow = '0 12px 40px rgba(155, 196, 184, 0.6)'
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'translateY(0)'
-            e.currentTarget.style.boxShadow = '0 8px 30px rgba(155, 196, 184, 0.4)'
           }}
         >
-          <span style={{ fontSize: '1.2rem' }}>✨</span>
           Ask True North
         </button>
       )}

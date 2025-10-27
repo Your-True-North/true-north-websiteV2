@@ -98,15 +98,10 @@ export default function About() {
               paddingBottom: isMobile ? '2rem' : '3rem'
             }}>
               <div style={{
-                display: 'inline-block', 
-                background: 'rgba(56, 72, 93, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)', 
-                padding: '0.4rem 0.8rem',
-                borderRadius: '20px', 
-                fontSize: '0.75rem', 
+                display: 'inline-block',
+                fontSize: '0.75rem',
                 color: 'rgba(255, 255, 255, 0.7)',
-                marginBottom: '1.5rem', 
-                backdropFilter: 'blur(10px)'
+                marginBottom: '1.5rem'
               }}>
                 My Story
               </div>
