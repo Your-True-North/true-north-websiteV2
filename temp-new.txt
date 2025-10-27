@@ -1,0 +1,11 @@
+    const isValidPassword = await bcrypt.compare(password, user.password)
+
+    if (!isValidPassword) {
+      return NextResponse.json({ 
+        error: 'Invalid credentials', 
+        debug: {
+          passwordLength: password.length,
+          hashPrefix: user.password?.substring(0, 7),
+          comparisonResult: isValidPassword
+        }
+      }, { status: 401 })

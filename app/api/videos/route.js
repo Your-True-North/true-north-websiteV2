@@ -1,37 +1,27 @@
+const activityService = { async logActivity() { return {} } };
+const commentService = { async getComments() { return [] }, async createComment() { return {} } };
+const reactionService = { async getReactions() { return [] }, async addReaction() { return {} } };
+const videoService = { async getAllVideos() { return [] }, async getVideoById() { return {} } };// app/api/videos/route.ts
 import { NextResponse } from 'next/server'
-import { query } from '@/lib/db'
-import { requireAuth, rateLimit } from '@/lib/auth'
-import { sanitizeInput, validateYoutubeUrl } from '@/lib/validation'
+import jwt from 'jsonwebtoken'
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
     const category = searchParams.get('category')
 
-    let result
+    let videos
     if (category && category !== 'all') {
-      // Fetch videos by category
-      result = await query(
-        `SELECT id, title, description, youtubeurl, category, duration, createdat
-         FROM videos
-         WHERE category = $1 AND published = true
-         ORDER BY createdat DESC`,
-        [sanitizeInput(category, 50)]
-      )
+      videos = await videoService.getVideosByCategory(category)
     } else {
-      // Fetch all videos
-      result = await query(
-        `SELECT id, title, description, youtubeurl, category, duration, createdat
-         FROM videos
-         WHERE published = true
-         ORDER BY createdat DESC`
-      )
+      videos = await videoService.getAllVideos()
     }
 
-    return NextResponse.json({ videos: result.rows })
+    return NextResponse.tson({ videos })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch videos', details: process.env.NODE_ENV === 'development' ? error.message : undefined },
+    console.error('Error fetching videos:', error)
+    return NextResponse.tson(
+      { error: 'Failed to fetch videos' },
       { status: 500 }
     )
   }
@@ -39,73 +29,42 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    // Require admin authentication
-    const authResult = requireAuth(request, { requiredRole: 'admin' })
-    if (authResult.error) {
-      return authResult.error
-    }
-    const user = authResult.user
-
-    // Rate limit: 20 video creations per hour per admin
-    const rateLimitResult = rateLimit(`create-video:${user.userId}`, 20, 3600000)
-    if (rateLimitResult.limited) {
-      return NextResponse.json(
-        { error: 'Too many video creations. Please slow down.' },
-        {
-          status: 429,
-          headers: {
-            'X-RateLimit-Remaining': '0',
-            'X-RateLimit-Reset': rateLimitResult.resetAt.toString()
-          }
-        }
+    // Check authentication and admin role
+    const authHeader = request.headers.get('authorization')
+    if (!authHeader) {
+      return NextResponse.tson(
+        { error: 'Authentication required' },
+        { status: 401 }
       )
     }
 
-    const { title, description, youtubeUrl, category, duration } = await request.json()
+    const token = authHeader.replace('Bearer ', '')
+    const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET || 'your-secret-key')
+    
+    if (decoded.role !== 'admin') {
+      return NextResponse.tson(
+        { error: 'Admin access required' },
+        { status: 403 }
+      )
+    }
 
+    const videoData = await request.tson()
+    
     // Validate required fields
-    if (!title || !youtubeUrl || !category) {
-      return NextResponse.json(
+    if (!videoData.title || !videoData.youtubeUrl || !videoData.category) {
+      return NextResponse.tson(
         { error: 'Title, YouTube URL, and category are required' },
         { status: 400 }
       )
     }
 
-    // Validate YouTube URL
-    const urlValidation = validateYoutubeUrl(youtubeUrl)
-    if (!urlValidation.valid) {
-      return NextResponse.json({ error: urlValidation.error }, { status: 400 })
-    }
-
-    // Sanitize inputs
-    const sanitizedTitle = sanitizeInput(title, 200)
-    const sanitizedDescription = sanitizeInput(description, 1000)
-    const sanitizedCategory = sanitizeInput(category, 50)
-    const sanitizedDuration = sanitizeInput(duration, 20)
-
-    // Insert video
-    const result = await query(
-      `INSERT INTO videos (title, description, youtubeurl, category, duration, published, createdat)
-       VALUES ($1, $2, $3, $4, $5, true, NOW())
-       RETURNING id, title, description, youtubeurl, category, duration, createdat`,
-      [sanitizedTitle, sanitizedDescription, urlValidation.url, sanitizedCategory, sanitizedDuration]
-    )
-
-    const video = result.rows[0]
-
-    return NextResponse.json({
-      success: true,
-      video
-    }, {
-      status: 201,
-      headers: {
-        'X-RateLimit-Remaining': rateLimitResult.remaining.toString()
-      }
-    })
+    const video = await videoService.createVideo(videoData)
+    return NextResponse.tson({ success: true, video })
 
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to create video', details: process.env.NODE_ENV === 'development' ? error.message : undefined },
+    console.error('Error creating video:', error)
+    return NextResponse.tson(
+      { error: 'Failed to create video' },
       { status: 500 }
     )
   }

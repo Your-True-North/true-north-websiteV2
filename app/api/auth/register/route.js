@@ -1,57 +1,45 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { query } from '@/lib/db'
-import { rateLimit } from '@/lib/auth'
-import { validateEmail, validatePassword, validateName } from '@/lib/validation'
+import pkg from 'pg'
+const { Client } = pkg
 
 export async function POST(request) {
-  try {
-    // Get client IP for rate limiting
-    const forwarded = request.headers.get('x-forwarded-for')
-    const ip = forwarded ? forwarded.split(',')[0] : request.headers.get('x-real-ip') || 'unknown'
+  const client = new Client({
+    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
+    connectionTimeoutMillis: 5000
+  })
 
-    // Rate limit: 3 registration attempts per hour
-    const rateLimitResult = rateLimit(`register:${ip}`, 3, 3600000)
-    if (rateLimitResult.limited) {
-      return NextResponse.json(
-        { error: 'Too many registration attempts. Please try again later.' },
-        {
-          status: 429,
-          headers: {
-            'X-RateLimit-Remaining': '0',
-            'X-RateLimit-Reset': rateLimitResult.resetAt.toString()
-          }
-        }
-      )
-    }
+  try {
+    await client.connect()
 
     const { name, email, password } = await request.json()
 
-    // Validate name
-    const nameValidation = validateName(name)
-    if (!nameValidation.valid) {
-      return NextResponse.json({ error: nameValidation.error }, { status: 400 })
+    // Validation
+    if (!name || !email || !password) {
+      await client.end()
+      return NextResponse.json(
+        { error: 'All fields are required' },
+        { status: 400 }
+      )
     }
 
-    // Validate email
-    const emailValidation = validateEmail(email)
-    if (!emailValidation.valid) {
-      return NextResponse.json({ error: emailValidation.error }, { status: 400 })
-    }
-
-    // Validate password
-    const passwordValidation = validatePassword(password)
-    if (!passwordValidation.valid) {
-      return NextResponse.json({ error: passwordValidation.error }, { status: 400 })
+    if (password.length < 8) {
+      await client.end()
+      return NextResponse.json(
+        { error: 'Password must be at least 8 characters' },
+        { status: 400 }
+      )
     }
 
     // Check if user already exists
-    const existingUser = await query(
+    const existingUser = await client.query(
       'SELECT id FROM users WHERE email = $1',
-      [emailValidation.email]
+      [email.toLowerCase()]
     )
 
     if (existingUser.rows.length > 0) {
+      await client.end()
       return NextResponse.json(
         { error: 'Email already registered' },
         { status: 400 }
@@ -62,12 +50,14 @@ export async function POST(request) {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     // Insert new user
-    const result = await query(
+    const result = await client.query(
       `INSERT INTO users (name, email, password, role, createdat)
        VALUES ($1, $2, $3, $4, NOW())
        RETURNING id, name, email, role, createdat`,
-      [nameValidation.name, emailValidation.email, hashedPassword, 'member']
+      [name, email.toLowerCase(), hashedPassword, 'member']
     )
+
+    await client.end()
 
     const user = result.rows[0]
 
@@ -83,16 +73,13 @@ export async function POST(request) {
         nextLevel: 'Explorer',
         joinDate: user.createdat
       }
-    }, {
-      status: 201,
-      headers: {
-        'X-RateLimit-Remaining': rateLimitResult.remaining.toString()
-      }
-    })
+    }, { status: 201 })
 
   } catch (error) {
+    console.error('Registration error:', error)
+    try { await client.end() } catch {}
     return NextResponse.json(
-      { error: 'Registration failed. Please try again.', details: process.env.NODE_ENV === 'development' ? error.message : undefined },
+      { error: 'Registration failed. Please try again.' },
       { status: 500 }
     )
   }
