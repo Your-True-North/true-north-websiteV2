@@ -48,16 +48,17 @@ export async function POST(request) {
     }
 
     console.log('[LOGIN] User found, comparing passwords...')
-    console.log('[LOGIN] Password from form length:', password.length)
-    console.log('[LOGIN] Hash from DB starts with:', user.password?.substring(0, 7))
-    
     const isValidPassword = await bcrypt.compare(password, user.password)
-    
-    console.log('[LOGIN] Password comparison result:', isValidPassword)
 
     if (!isValidPassword) {
-      return NextResponse.json({ error: 'Invalid credentials - password mismatch' }, { status: 401 })
-    }
+      return NextResponse.json({ 
+        error: 'Invalid credentials', 
+        debug: {
+          passwordLength: password.length,
+          hashPrefix: user.password?.substring(0, 7),
+          comparisonResult: isValidPassword
+        }
+      }, { status: 401 })
 
     const token = createToken({
       userId: user.id,
