@@ -33,7 +33,6 @@ export default function MembersPage() {
     const userData = localStorage.getItem('user')
     if (!userData) {
       logger.debug('Members', 'No user found, redirecting to login')
-      setLoading(false) // Set loading false before redirect
       window.location.replace('/auth/login')
       return
     }
@@ -45,7 +44,6 @@ export default function MembersPage() {
       if (!parsedUser.email || !parsedUser.id) {
         logger.debug('Members', 'Invalid user data, redirecting to login')
         localStorage.removeItem('user')
-        setLoading(false) // Set loading false before redirect
         window.location.replace('/auth/login')
         return
       }
@@ -57,7 +55,6 @@ export default function MembersPage() {
     } catch (err) {
       console.error('[Members] Failed to parse user data:', err)
       localStorage.removeItem('user')
-      setLoading(false) // Set loading false before redirect
       window.location.replace('/auth/login')
     }
   }, [router])
