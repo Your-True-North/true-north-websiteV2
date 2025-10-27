@@ -36,29 +36,20 @@ export async function POST(request) {
       return NextResponse.json({ error: passwordValidation.error }, { status: 400 })
     }
 
-    const result = await query(
-      'SELECT * FROM users WHERE email = $1',
-      [emailValidation.email]
-    )
+    const result = await query('SELECT * FROM users WHERE email = $1', [emailValidation.email])
     const user = result.rows[0]
 
     if (!user) {
-      console.log('[LOGIN] User not found for email:', emailValidation.email)
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    console.log('[LOGIN] User found, comparing passwords...')
     const isValidPassword = await bcrypt.compare(password, user.password)
 
     if (!isValidPassword) {
       return NextResponse.json({ 
-        error: 'Invalid credentials', 
-        debug: {
-          passwordLength: password.length,
-          hashPrefix: user.password?.substring(0, 7),
-          comparisonResult: isValidPassword
-        }
+        error: `Debug: ${password.length} chars, hash: ${user.password?.substring(0, 10)}`
       }, { status: 401 })
+    }
 
     const token = createToken({
       userId: user.id,
@@ -96,10 +87,6 @@ export async function POST(request) {
     return response
 
   } catch (error) {
-    console.error('[LOGIN] Error:', error.message, error.stack)
-    return NextResponse.json(
-      { error: 'Login failed', details: process.env.NODE_ENV === 'development' ? error.message : undefined },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Login failed: ' + error.message }, { status: 500 })
   }
 }
