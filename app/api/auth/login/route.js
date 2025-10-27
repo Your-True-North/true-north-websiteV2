@@ -6,11 +6,9 @@ import { validateEmail, validatePassword } from '@/lib/validation'
 
 export async function POST(request) {
   try {
-    // Get client IP for rate limiting
     const forwarded = request.headers.get('x-forwarded-for')
     const ip = forwarded ? forwarded.split(',')[0] : request.headers.get('x-real-ip') || 'unknown'
 
-    // Rate limit: 5 login attempts per minute
     const rateLimitResult = rateLimit(`login:${ip}`, 5, 60000)
     if (rateLimitResult.limited) {
       return NextResponse.json(
@@ -28,19 +26,16 @@ export async function POST(request) {
     const body = await request.json()
     const { email, password } = body
 
-    // Validate email
     const emailValidation = validateEmail(email)
     if (!emailValidation.valid) {
       return NextResponse.json({ error: emailValidation.error }, { status: 400 })
     }
 
-    // Validate password
     const passwordValidation = validatePassword(password)
     if (!passwordValidation.valid) {
       return NextResponse.json({ error: passwordValidation.error }, { status: 400 })
     }
 
-    // Query user
     const result = await query(
       'SELECT * FROM users WHERE email = $1',
       [emailValidation.email]
@@ -48,27 +43,28 @@ export async function POST(request) {
     const user = result.rows[0]
 
     if (!user) {
+      console.log('[LOGIN] User not found for email:', emailValidation.email)
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
-    console.log("DEBUG - Password from form:", password)
-    console.log("DEBUG - Hash from DB:", user.password)
-    console.log("DEBUG - Hash starts with $2a or $2b:", user.password?.substring(0, 4))
     }
 
-    // Verify password
+    console.log('[LOGIN] User found, comparing passwords...')
+    console.log('[LOGIN] Password from form length:', password.length)
+    console.log('[LOGIN] Hash from DB starts with:', user.password?.substring(0, 7))
+    
     const isValidPassword = await bcrypt.compare(password, user.password)
+    
+    console.log('[LOGIN] Password comparison result:', isValidPassword)
 
     if (!isValidPassword) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+      return NextResponse.json({ error: 'Invalid credentials - password mismatch' }, { status: 401 })
     }
 
-    // Create JWT token
     const token = createToken({
       userId: user.id,
       email: user.email,
       role: user.role
     })
 
-    // Prepare response
     const response = NextResponse.json({
       success: true,
       user: {
@@ -88,18 +84,18 @@ export async function POST(request) {
       }
     })
 
-    // Set httpOnly cookie
     response.cookies.set('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 30, // 30 days
+      maxAge: 60 * 60 * 24 * 30,
       path: '/'
     })
 
     return response
 
   } catch (error) {
+    console.error('[LOGIN] Error:', error.message, error.stack)
     return NextResponse.json(
       { error: 'Login failed', details: process.env.NODE_ENV === 'development' ? error.message : undefined },
       { status: 500 }
