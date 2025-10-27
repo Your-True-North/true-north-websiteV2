@@ -41,7 +41,11 @@ export default function LoginPage() {
         return
       }
 
-      logger.debug('Login', 'Login successful, redirecting...')
+      logger.debug('Login', 'Login successful, saving user data...')
+      
+      // Save user data to localStorage
+      localStorage.setItem('user', JSON.stringify(data.user))
+      localStorage.setItem('justLoggedIn', 'true')
       
       await new Promise(resolve => setTimeout(resolve, 100))
       
