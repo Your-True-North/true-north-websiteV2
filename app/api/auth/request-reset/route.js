@@ -4,7 +4,6 @@ import { sendEmail } from '@/lib/sendgrid'
 import pkg from 'pg'
 const { Client } = pkg
 
-// Generate random password
 function generatePassword(length = 10) {
   const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%'
   let password = ''
@@ -32,24 +31,19 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
 
-    // Check if user exists
     const result = await client.query('SELECT * FROM users WHERE email = $1', [email])
     const user = result.rows[0]
 
     if (!user) {
       await client.end()
-      // Return success even if user doesn't exist (security best practice)
       return NextResponse.json({ success: true, message: 'If an account with that email exists, a new password has been sent.' }, { status: 200 })
     }
 
-    // Generate new temporary password
     const newPassword = generatePassword(10)
     const hashedPassword = await bcrypt.hash(newPassword, 10)
 
-    // Update user's password in database
     await client.query('UPDATE users SET password = $1 WHERE email = $2', [hashedPassword, email])
 
-    // Send email with new password using SendGrid
     await sendEmail({
       to: email,
       subject: 'Your New Password - Circle of Return',
@@ -123,3 +117,4 @@ If you didn't request this reset, please contact support immediately.
       details: error.message
     }, { status: 500 })
   }
+}
