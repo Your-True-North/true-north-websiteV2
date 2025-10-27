@@ -12,16 +12,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 
-  // If has token, allow access to protected pages
-  if ((isMembersPage || isJourneyPage) && token) {
-    return NextResponse.next()
-  }
-
-  // If trying to access auth pages with token, redirect to members
-  if (isAuthPage && token) {
-    return NextResponse.redirect(new URL('/members', request.url))
-  }
-
+  // Allow all other requests (including auth pages regardless of token)
   return NextResponse.next()
 }
 
