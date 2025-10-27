@@ -1,80 +1,125 @@
 import { NextResponse } from 'next/server'
-import bcrypt from 'bcryptjs'
-import pkg from 'pg'
-const { Client } = pkg
+import { query } from '@/lib/db'
+import { requireAuth } from '@/lib/auth'
 
 export async function POST(request) {
-  const client = new Client({
-    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-    connectionTimeoutMillis: 5000
-  })
-
   try {
-    await client.connect()
+    const authResult = requireAuth(request)
+    if (authResult.error) {
+      return authResult.error
+    }
+    const user = authResult.user
 
-    const body = await request.json()
-    const { userId, name, email, password, photo } = body
+    const { userId, name, email, photo, bio } = await request.json()
 
-    if (!userId || !name || !email) {
-      await client.end()
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    // Verify user can only update their own profile
+    if (user.userId !== userId) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 403 }
+      )
+    }
+
+    // Validate inputs
+    if (!name || name.trim().length === 0) {
+      return NextResponse.json(
+        { error: 'Name is required' },
+        { status: 400 }
+      )
+    }
+
+    if (name.length > 100) {
+      return NextResponse.json(
+        { error: 'Name is too long' },
+        { status: 400 }
+      )
+    }
+
+    if (bio && bio.length > 500) {
+      return NextResponse.json(
+        { error: 'Bio is too long (max 500 characters)' },
+        { status: 400 }
+      )
     }
 
     // Check if email is already taken by another user
-    const emailCheck = await client.query(
-      'SELECT id FROM users WHERE email = $1 AND id != $2',
-      [email, userId]
-    )
+    if (email) {
+      const emailCheck = await query(
+        'SELECT id FROM users WHERE email = $1 AND id != $2',
+        [email.trim().toLowerCase(), userId]
+      )
 
-    if (emailCheck.rows.length > 0) {
-      await client.end()
-      return NextResponse.json({ error: 'Email already in use' }, { status: 400 })
+      if (emailCheck.rows.length > 0) {
+        return NextResponse.json({ error: 'Email already in use' }, { status: 400 })
+      }
     }
 
-    // Build update query
-    let updateQuery = 'UPDATE users SET name = $1, email = $2'
-    let params = [name, email]
-    let paramIndex = 3
+    // Build update query dynamically
+    const updates = []
+    const values = []
+    let paramCount = 1
 
-    // Add password if provided
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10)
-      updateQuery += `, password = $${paramIndex}`
-      params.push(hashedPassword)
-      paramIndex++
+    updates.push(`name = $${paramCount}`)
+    values.push(name.trim())
+    paramCount++
+
+    if (email) {
+      updates.push(`email = $${paramCount}`)
+      values.push(email.trim().toLowerCase())
+      paramCount++
     }
 
-    // Add photo if provided
     if (photo) {
-      updateQuery += `, photo = $${paramIndex}`
-      params.push(photo)
-      paramIndex++
+      updates.push(`profile_photo = $${paramCount}`)
+      values.push(photo)
+      paramCount++
     }
 
-    updateQuery += ` WHERE id = $${paramIndex} RETURNING id, name, email, role`
-    params.push(userId)
+    if (bio !== undefined) {
+      updates.push(`bio = $${paramCount}`)
+      values.push(bio ? bio.trim() : null)
+      paramCount++
+    }
 
-    const result = await client.query(updateQuery, params)
+    values.push(userId)
+
+    const updateQuery = `
+      UPDATE users
+      SET ${updates.join(', ')}, updatedat = NOW()
+      WHERE id = $${paramCount}
+      RETURNING id, name, email, profile_photo, bio, level, progress, role, createdat
+    `
+
+    const result = await query(updateQuery, values)
+
+    if (result.rows.length === 0) {
+      return NextResponse.json(
+        { error: 'User not found' },
+        { status: 404 }
+      )
+    }
+
     const updatedUser = result.rows[0]
-
-    await client.end()
-
-    if (!updatedUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
-    }
 
     return NextResponse.json({
       success: true,
-      user: updatedUser
-    }, { status: 200 })
-
+      user: {
+        id: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        profile_photo: updatedUser.profile_photo,
+        bio: updatedUser.bio,
+        level: updatedUser.level,
+        progress: updatedUser.progress,
+        role: updatedUser.role,
+        joinDate: updatedUser.createdat
+      }
+    })
   } catch (error) {
     console.error('[Update Profile] Error:', error)
-    try { await client.end() } catch {}
-    return NextResponse.json({
-      error: 'Failed to update profile',
-      details: error.message
-    }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to update profile' },
+      { status: 500 }
+    )
   }
 }

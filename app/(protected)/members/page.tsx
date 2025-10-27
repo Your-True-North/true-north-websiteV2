@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { logger } from '@/lib/logger'
 
 interface User {
   id: number
@@ -21,11 +22,17 @@ export default function MembersPage() {
   const [loading, setLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
+  const [showProfileModal, setShowProfileModal] = useState(false)
+  const [profileForm, setProfileForm] = useState({ name: '', email: '', bio: '' })
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [profileError, setProfileError] = useState('')
+  const [profileSuccess, setProfileSuccess] = useState('')
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
     if (!userData) {
-      console.log('[Members] No user found, redirecting to login')
+      logger.debug('Members', 'No user found, redirecting to login')
       window.location.replace('/auth/login')
       return
     }
@@ -35,20 +42,23 @@ export default function MembersPage() {
 
       // Verify user has valid session
       if (!parsedUser.email || !parsedUser.id) {
-        console.log('[Members] Invalid user data, redirecting to login')
+        logger.debug('Members', 'Invalid user data, redirecting to login')
         localStorage.removeItem('user')
         window.location.replace('/auth/login')
         return
       }
 
-      console.log('[Members] User authenticated:', parsedUser.email)
+      logger.debug('Members', 'User authenticated', parsedUser.email)
       setUser(parsedUser)
+      setProfileForm({ name: parsedUser.name, email: parsedUser.email, bio: parsedUser.bio || '' })
+      if (parsedUser.profile_photo) {
+        setProfilePhoto(parsedUser.profile_photo)
+      }
+      setLoading(false)
     } catch (err) {
       console.error('[Members] Failed to parse user data:', err)
       localStorage.removeItem('user')
       window.location.replace('/auth/login')
-    } finally {
-      setLoading(false)
     }
   }, [router])
 
@@ -64,12 +74,119 @@ export default function MembersPage() {
   }, [])
 
   const handleLogout = () => {
-    console.log('[Members] Logging out user')
+    logger.debug('Members', 'Logging out user')
+
+    // Clear all auth data
     localStorage.removeItem('user')
     localStorage.removeItem('videoLikes')
     localStorage.removeItem('videoComments')
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    window.location.replace('/')
+    localStorage.removeItem('justLoggedIn')
+
+    // Clear all cookies
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+
+    // Use router.push for cleaner navigation
+    router.push('/')
+  }
+
+  const handleProfileUpdate = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setProfileError('')
+    setProfileSuccess('')
+
+    setSaving(true)
+
+    try {
+      const res = await fetch('/api/user/update-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user?.id,
+          name: profileForm.name,
+          email: profileForm.email,
+          photo: profilePhoto,
+          bio: profileForm.bio
+        })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        setProfileError(data.error || 'Failed to update profile')
+        setSaving(false)
+        return
+      }
+
+      // Update local storage with all user data from server
+      const updatedUser = {
+        ...user,
+        name: data.user.name,
+        email: data.user.email,
+        profile_photo: data.user.profile_photo,
+        bio: data.user.bio,
+        level: data.user.level,
+        progress: data.user.progress
+      }
+      setUser(updatedUser)
+      localStorage.setItem('user', JSON.stringify(updatedUser))
+
+      setProfileSuccess('Profile updated successfully!')
+      setSaving(false)
+
+      setTimeout(() => {
+        setShowProfileModal(false)
+        setProfileSuccess('')
+      }, 2000)
+    } catch (err) {
+      console.error('[Profile Update] Error:', err)
+      setProfileError('Something went wrong. Try again.')
+      setSaving(false)
+    }
+  }
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setProfileError('Please upload an image file')
+      return
+    }
+
+    // Validate file size (max 5MB before compression)
+    if (file.size > 5 * 1024 * 1024) {
+      setProfileError('Image must be less than 5MB')
+      return
+    }
+
+    try {
+      // Compress and resize image
+      const imageCompression = (await import('browser-image-compression')).default
+
+      const options = {
+        maxSizeMB: 0.5,              // Max 500KB after compression
+        maxWidthOrHeight: 500,        // Max 500x500px
+        useWebWorker: true,
+        fileType: 'image/jpeg'
+      }
+
+      const compressedFile = await imageCompression(file, options)
+
+      // Convert to base64
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setProfilePhoto(reader.result as string)
+        setProfileError('')
+      }
+      reader.readAsDataURL(compressedFile)
+
+    } catch (error) {
+      console.error('Error compressing image:', error)
+      setProfileError('Failed to process image. Please try another.')
+    }
   }
 
   if (loading) {
@@ -106,8 +223,8 @@ export default function MembersPage() {
           position: 'absolute',
           top: '25%',
           left: '-12rem',
-          width: '24rem',
-          height: '24rem',
+          width: isMobile ? '18rem' : '24rem',
+          height: isMobile ? '18rem' : '24rem',
           background: 'radial-gradient(circle, rgba(155, 196, 184, 0.1) 0%, transparent 70%)',
           borderRadius: '50%',
           filter: 'blur(100px)',
@@ -117,8 +234,8 @@ export default function MembersPage() {
           position: 'absolute',
           bottom: '25%',
           right: '-12rem',
-          width: '24rem',
-          height: '24rem',
+          width: isMobile ? '18rem' : '24rem',
+          height: isMobile ? '18rem' : '24rem',
           background: 'radial-gradient(circle, rgba(127, 176, 105, 0.1) 0%, transparent 70%)',
           borderRadius: '50%',
           filter: 'blur(100px)',
@@ -129,8 +246,8 @@ export default function MembersPage() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '600px',
-          height: '600px',
+          width: isMobile ? '80vw' : '600px',
+          height: isMobile ? '80vw' : '600px',
           background: 'radial-gradient(circle, rgba(106, 153, 78, 0.05) 0%, transparent 70%)',
           borderRadius: '50%',
           filter: 'blur(120px)',
@@ -169,7 +286,7 @@ export default function MembersPage() {
             TRUE NORTH
           </Link>
           
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
             <Link href="/journey" style={{
               padding: '0.5rem 1rem',
               fontSize: '0.875rem',
@@ -190,6 +307,30 @@ export default function MembersPage() {
             }}>
               My Journey
             </Link>
+            <button
+              onClick={() => setShowProfileModal(true)}
+              style={{
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                fontWeight: 300,
+                border: '1px solid rgba(155, 196, 184, 0.3)',
+                borderRadius: '8px',
+                background: 'transparent',
+                color: '#9bc4b8',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
+                e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+              }}
+            >
+              Profile Settings
+            </button>
             <button
               onClick={handleLogout}
               style={{
@@ -226,16 +367,20 @@ export default function MembersPage() {
               width: '5rem',
               height: '5rem',
               borderRadius: '50%',
-              background: `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
+              background: profilePhoto ? `url(${profilePhoto})` : `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               backdropFilter: 'blur(20px)'
             }}>
-              <svg style={{ width: '2.5rem', height: '2.5rem', color: 'rgba(255, 255, 255, 0.8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
+              {!profilePhoto && (
+                <svg style={{ width: '2.5rem', height: '2.5rem', color: 'rgba(255, 255, 255, 0.8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              )}
             </div>
           </div>
           <h1 style={{
@@ -515,9 +660,9 @@ export default function MembersPage() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[
-                { title: 'Book a Session', desc: 'Schedule your breakthrough', href: '/work', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
-                { title: 'Resource Library', desc: 'Transformation tools', href: '/library', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
-                { title: 'Get Support', desc: 'Reach out for guidance', href: '/contact', icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' }
+                { title: 'The Journey', desc: 'Video library & practices', href: '/library', icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+                { title: 'Live Calls', desc: 'Join the community', href: '/calls', icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z' },
+                { title: 'Community', desc: 'Connect with brothers', href: '/community', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' }
               ].map((action, i) => (
                 <Link
                   key={i}
@@ -612,6 +757,240 @@ export default function MembersPage() {
           </div>
         </div>
       </div>
+
+      {/* Profile Settings Modal */}
+      {showProfileModal && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.8)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 50,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem'
+          }}
+          onClick={() => setShowProfileModal(false)}
+        >
+          <div
+            style={{
+              background: '#0a0a0b',
+              borderRadius: '12px',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              maxWidth: '32rem',
+              width: '100%',
+              maxHeight: '90vh',
+              overflow: 'auto'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '1.5rem',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+            }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 300, color: '#fff' }}>Profile Settings</h2>
+              <button
+                onClick={() => setShowProfileModal(false)}
+                style={{
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  fontSize: '1.5rem',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  lineHeight: 1
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            <form onSubmit={handleProfileUpdate} style={{ padding: '1.5rem' }}>
+              {/* Profile Photo */}
+              <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                <div style={{
+                  width: '6rem',
+                  height: '6rem',
+                  borderRadius: '50%',
+                  background: profilePhoto ? `url(${profilePhoto})` : 'linear-gradient(135deg, rgba(155, 196, 184, 0.2), rgba(127, 176, 105, 0.1))',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  border: '2px solid rgba(155, 196, 184, 0.3)',
+                  margin: '0 auto 1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  {!profilePhoto && (
+                    <svg style={{ width: '2.5rem', height: '2.5rem', color: 'rgba(255, 255, 255, 0.5)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  )}
+                </div>
+                <label style={{
+                  display: 'inline-block',
+                  padding: '0.5rem 1rem',
+                  background: 'rgba(155, 196, 184, 0.1)',
+                  border: '1px solid rgba(155, 196, 184, 0.3)',
+                  borderRadius: '8px',
+                  color: '#9bc4b8',
+                  fontSize: '0.875rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}>
+                  Upload Photo
+                  <input type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
+                </label>
+              </div>
+
+              {profileError && (
+                <div style={{
+                  padding: '1rem',
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  border: '1px solid rgba(239, 68, 68, 0.2)',
+                  borderRadius: '8px',
+                  marginBottom: '1.5rem'
+                }}>
+                  <p style={{ color: '#ef4444', fontSize: '0.875rem' }}>{profileError}</p>
+                </div>
+              )}
+
+              {profileSuccess && (
+                <div style={{
+                  padding: '1rem',
+                  background: 'rgba(127, 176, 105, 0.1)',
+                  border: '1px solid rgba(127, 176, 105, 0.2)',
+                  borderRadius: '8px',
+                  marginBottom: '1.5rem'
+                }}>
+                  <p style={{ color: '#7fb069', fontSize: '0.875rem' }}>{profileSuccess}</p>
+                </div>
+              )}
+
+              {/* Name */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                  Name
+                </label>
+                <input
+                  type="text"
+                  value={profileForm.name}
+                  onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
+                  required
+                  disabled={saving}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              {/* Email */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={profileForm.email}
+                  onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
+                  required
+                  disabled={saving}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              {/* Bio */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                  Bio <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>(optional)</span>
+                </label>
+                <textarea
+                  value={profileForm.bio}
+                  onChange={(e) => setProfileForm({ ...profileForm, bio: e.target.value })}
+                  disabled={saving}
+                  placeholder="Share a bit about your journey..."
+                  maxLength={500}
+                  rows={4}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    resize: 'vertical',
+                    fontFamily: 'inherit'
+                  }}
+                />
+                <div style={{ textAlign: 'right', fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.4)', marginTop: '0.25rem' }}>
+                  {profileForm.bio.length}/500
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  style={{
+                    flex: 1,
+                    padding: '0.875rem',
+                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    color: '#000',
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: saving ? 'not-allowed' : 'pointer',
+                    opacity: saving ? 0.5 : 1
+                  }}
+                >
+                  {saving ? 'Saving...' : 'Save Changes'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowProfileModal(false)}
+                  disabled={saving}
+                  style={{
+                    padding: '0.875rem 1.5rem',
+                    background: 'transparent',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    fontWeight: 500,
+                    fontSize: '1rem',
+                    borderRadius: '8px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes pulse {
