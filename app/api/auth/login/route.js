@@ -61,7 +61,7 @@ export async function POST(request) {
     }, { status: 200 })
 
     response.cookies.set('auth_token', token, {
-      httpOnly: true,
+      httpOnly: false, // Allow client-side access for auth check
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 30
