@@ -96,32 +96,11 @@ async function sendWelcomeEmail(email, name, password) {
           <div class="content">
             <p>${firstName},</p>
 
-            <p>Your transformation begins now.</p>
+            <p>Welcome to Circle of Return.</p>
 
-            <div class="credentials">
-              <p><strong>Login Details:</strong></p>
-              <p>
-                Email: ${email}<br>
-                Password: <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">${password}</code>
-              </p>
-            </div>
+            <p><strong>Stay tuned.</strong> In the next 24 hours, you'll receive your login details and next steps.</p>
 
-            <p>Access your portal:</p>
-            <a href="https://yourtruenorth.me/auth/login" class="button">Login to Your Portal</a>
-
-            <p style="margin-top: 30px;">You're one of the first 30. This is your time.</p>
-
-            <p>What's waiting for you:</p>
-            <ul>
-              <li>Full video library of breathwork, energy healing, and integration practices</li>
-              <li>Live coaching calls with Mason and guest experts</li>
-              <li>Community support from men on the same journey</li>
-              <li>Lifetime access at £25/month (you locked in the founding price)</li>
-            </ul>
-
-            <p style="margin-top: 30px; color: #666; font-size: 14px;">
-              <em>Tip: Change your password after your first login in your account settings.</em>
-            </p>
+            <p>Your transformation is about to begin.</p>
 
             <p style="margin-top: 30px;">- True North</p>
           </div>
