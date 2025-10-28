@@ -10,26 +10,38 @@ const { Client } = pkg
 // Stripe webhook signature verification
 function verifyStripeSignature(payload, signature, secret) {
   if (!secret) {
-    throw new Error('STRIPE_WEBHOOK_SECRET not configured')
+    return false // Skip verification if no secret configured
   }
 
-  const signedPayload = `${payload}`
-  const expectedSignature = crypto
-    .createHmac('sha256', secret)
-    .update(signedPayload, 'utf8')
-    .digest('hex')
+  try {
+    // Parse signature header: t=timestamp,v1=signature
+    const elements = signature.split(',')
+    const timestamp = elements.find(e => e.startsWith('t='))?.split('=')[1]
+    const signatures = elements.filter(e => e.startsWith('v1='))
 
-  // Stripe sends signature as: t=timestamp,v1=signature
-  const signatures = signature.split(',').reduce((acc, pair) => {
-    const [key, value] = pair.split('=')
-    if (key === 'v1') acc.push(value)
-    return acc
-  }, [])
+    if (!timestamp || signatures.length === 0) {
+      return false
+    }
 
-  return signatures.some(sig => crypto.timingSafeEqual(
-    Buffer.from(sig),
-    Buffer.from(expectedSignature)
-  ))
+    // Create signed payload: timestamp.payload
+    const signedPayload = `${timestamp}.${payload}`
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(signedPayload, 'utf8')
+      .digest('hex')
+
+    // Compare signatures
+    return signatures.some(sig => {
+      const sigValue = sig.split('=')[1]
+      return crypto.timingSafeEqual(
+        Buffer.from(sigValue),
+        Buffer.from(expectedSignature)
+      )
+    })
+  } catch (err) {
+    console.error('[Webhook] Signature verification error:', err)
+    return false
+  }
 }
 
 // Generate secure random password
@@ -159,16 +171,18 @@ export async function POST(request) {
 
     // Verify webhook signature
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
-    if (webhookSecret) {
-      try {
-        verifyStripeSignature(body, signature, webhookSecret)
-      } catch (err) {
-        console.error('[Webhook] Signature verification failed:', err)
+    if (webhookSecret && signature) {
+      const isValid = verifyStripeSignature(body, signature, webhookSecret)
+      if (!isValid) {
+        console.error('[Webhook] Signature verification failed')
         return NextResponse.json(
           { error: 'Invalid signature' },
           { status: 401 }
         )
       }
+      console.log('[Webhook] Signature verified successfully')
+    } else {
+      console.warn('[Webhook] Skipping signature verification (no secret configured)')
     }
 
     const event = JSON.parse(body)
