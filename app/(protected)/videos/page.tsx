@@ -344,7 +344,7 @@ export default function LibraryPage() {
             {videos.map(video => (
               <Link
                 key={video.id}
-                href={`/library/${video.id}`}
+                href={`/videos/${video.id}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div style={{
