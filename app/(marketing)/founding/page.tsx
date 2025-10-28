@@ -79,7 +79,7 @@ export default function FoundingMembersPage() {
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        padding: '2rem 1.5rem'
+        padding: isMobile ? '100px 20px' : '200px 40px'
       }}>
         {/* Animated Background */}
         <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
@@ -87,8 +87,8 @@ export default function FoundingMembersPage() {
             position: 'absolute',
             top: '20%',
             left: '-10%',
-            width: isMobile ? '20rem' : '30rem',
-            height: isMobile ? '20rem' : '30rem',
+            width: isMobile ? '300px' : '500px',
+            height: isMobile ? '300px' : '500px',
             background: 'radial-gradient(circle, rgba(155, 196, 184, 0.15) 0%, transparent 70%)',
             borderRadius: '50%',
             filter: 'blur(100px)'
@@ -97,8 +97,8 @@ export default function FoundingMembersPage() {
             position: 'absolute',
             bottom: '20%',
             right: '-10%',
-            width: isMobile ? '20rem' : '30rem',
-            height: isMobile ? '20rem' : '30rem',
+            width: isMobile ? '300px' : '500px',
+            height: isMobile ? '300px' : '500px',
             background: 'radial-gradient(circle, rgba(127, 176, 105, 0.15) 0%, transparent 70%)',
             borderRadius: '50%',
             filter: 'blur(100px)'
@@ -108,61 +108,69 @@ export default function FoundingMembersPage() {
         <div style={{
           position: 'relative',
           zIndex: 10,
-          maxWidth: '70rem',
-          textAlign: 'center'
+          maxWidth: '1400px',
+          textAlign: 'center',
+          margin: '0 auto'
         }}>
           <h1 style={{
-            fontSize: isMobile ? '48px' : '72px',
-            fontWeight: 700,
-            marginBottom: '24px',
-            lineHeight: 1.1,
-            letterSpacing: '-0.02em',
-            color: '#ffffff'
+            fontSize: isMobile ? '48px' : '80px',
+            fontWeight: 800,
+            lineHeight: 0.95,
+            letterSpacing: '-2px',
+            background: 'linear-gradient(135deg, #ffffff 0%, #9bc4b8 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            marginBottom: '32px'
           }}>
             Join the First <span style={{
-              background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+              background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
               WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontWeight: 700
+              WebkitTextFillColor: 'transparent'
             }}>30</span> in Circle of Return
           </h1>
 
           <p style={{
-            fontSize: '20px',
-            lineHeight: 1.7,
-            color: 'rgba(255, 255, 255, 0.8)',
-            marginBottom: '16px',
-            maxWidth: '700px',
-            margin: '0 auto 16px'
-          }}>
-            Lock in <strong style={{ color: '#9bc4b8' }}>£25/month for life</strong>
-          </p>
-
-          <p style={{
-            fontSize: '20px',
-            lineHeight: 1.7,
-            color: 'rgba(255, 255, 255, 0.8)',
-            marginBottom: '48px',
+            fontSize: isMobile ? '20px' : '28px',
+            fontWeight: 400,
+            color: 'rgba(255,255,255,0.7)',
+            lineHeight: 1.4,
             maxWidth: '700px',
             margin: '0 auto 48px'
           }}>
-            Regular price from next month: £50/month
+            Lock in <strong style={{ color: '#9bc4b8' }}>£25/month FIXED</strong>. Never increases.
           </p>
 
           {/* Spots Counter */}
           {spotsRemaining !== null && !isSoldOut && (
             <div style={{
-              display: 'inline-block',
-              padding: '1rem 2rem',
-              background: 'rgba(155, 196, 184, 0.1)',
-              border: '1px solid rgba(155, 196, 184, 0.3)',
-              borderRadius: '6px',
-              marginBottom: '3rem',
-              fontSize: isMobile ? '1rem' : '1.25rem'
+              background: 'rgba(127,176,105,0.1)',
+              border: '2px solid rgba(127,176,105,0.3)',
+              borderRadius: '16px',
+              padding: '40px',
+              textAlign: 'center',
+              maxWidth: '500px',
+              margin: '0 auto 40px'
             }}>
-              <strong style={{ color: '#9bc4b8', fontSize: isMobile ? '1.5rem' : '2rem' }}>
+              <div style={{
+                fontSize: isMobile ? '56px' : '72px',
+                fontWeight: 800,
+                background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                marginBottom: '8px',
+                lineHeight: 1
+              }}>
                 {spotsRemaining}
-              </strong> of 30 spots remaining
+              </div>
+              <div style={{
+                fontSize: '20px',
+                color: 'rgba(255,255,255,0.6)',
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                fontWeight: 600
+              }}>
+                of 30 spots remaining
+              </div>
             </div>
           )}
 
@@ -170,14 +178,16 @@ export default function FoundingMembersPage() {
           {isSoldOut ? (
             <div>
               <div style={{
-                padding: '1.5rem 3rem',
+                padding: '24px 48px',
                 background: 'rgba(239, 68, 68, 0.2)',
-                border: '1px solid rgba(239, 68, 68, 0.4)',
-                borderRadius: '6px',
-                fontSize: isMobile ? '1.25rem' : '1.5rem',
-                fontWeight: 600,
-                marginBottom: '2rem',
-                color: '#ef4444'
+                border: '2px solid rgba(239, 68, 68, 0.4)',
+                borderRadius: '12px',
+                fontSize: isMobile ? '20px' : '24px',
+                fontWeight: 700,
+                marginBottom: '32px',
+                color: '#ef4444',
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
               }}>
                 SOLD OUT - First 30 Filled
               </div>
@@ -185,17 +195,17 @@ export default function FoundingMembersPage() {
               {/* Waitlist Form */}
               {!waitlistSubmitted ? (
                 <form onSubmit={handleWaitlistSubmit} style={{
-                  maxWidth: '500px',
+                  maxWidth: '600px',
                   margin: '0 auto'
                 }}>
                   <p style={{
-                    fontSize: '1.125rem',
-                    marginBottom: '1.5rem',
+                    fontSize: '18px',
+                    marginBottom: '24px',
                     color: 'rgba(255, 255, 255, 0.7)'
                   }}>
                     Join the waitlist for the next cohort
                   </p>
-                  <div style={{ display: 'flex', gap: '1rem', flexDirection: isMobile ? 'column' : 'row' }}>
+                  <div style={{ display: 'flex', gap: '16px', flexDirection: isMobile ? 'column' : 'row' }}>
                     <input
                       type="email"
                       value={waitlistEmail}
@@ -204,27 +214,29 @@ export default function FoundingMembersPage() {
                       required
                       style={{
                         flex: 1,
-                        padding: '1rem 1.5rem',
+                        padding: '16px 24px',
                         background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                        borderRadius: '6px',
+                        border: '2px solid rgba(255, 255, 255, 0.1)',
+                        borderRadius: '12px',
                         color: '#fff',
-                        fontSize: '1rem',
+                        fontSize: '16px',
                         outline: 'none'
                       }}
                     />
                     <button
                       type="submit"
                       style={{
-                        padding: '1rem 2rem',
-                        background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                        border: 'none',
-                        borderRadius: '6px',
-                        color: '#000',
-                        fontSize: '1rem',
-                        fontWeight: 600,
+                        padding: '16px 32px',
+                        background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+                        border: '2px solid rgba(255,255,255,0.1)',
+                        borderRadius: '12px',
+                        color: '#0a0a0a',
+                        fontSize: '16px',
+                        fontWeight: 700,
                         cursor: 'pointer',
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px'
                       }}
                     >
                       Join Waitlist
@@ -233,12 +245,13 @@ export default function FoundingMembersPage() {
                 </form>
               ) : (
                 <div style={{
-                  padding: '1.5rem',
+                  padding: '24px',
                   background: 'rgba(127, 176, 105, 0.2)',
-                  border: '1px solid rgba(127, 176, 105, 0.4)',
-                  borderRadius: '6px',
+                  border: '2px solid rgba(127, 176, 105, 0.4)',
+                  borderRadius: '12px',
                   color: '#7fb069',
-                  fontSize: '1.125rem'
+                  fontSize: '18px',
+                  fontWeight: 600
                 }}>
                   ✓ You're on the waitlist. We'll notify you when spots open.
                 </div>
@@ -250,23 +263,27 @@ export default function FoundingMembersPage() {
               onClick={handleStripeClick}
               style={{
                 display: 'inline-block',
-                padding: '20px 40px',
-                background: '#7fb069',
-                border: 'none',
-                borderRadius: '6px',
-                color: '#ffffff',
+                padding: '24px 48px',
+                background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+                color: '#0a0a0a',
                 fontSize: '18px',
-                fontWeight: 600,
-                textDecoration: 'none',
+                fontWeight: 700,
+                borderRadius: '12px',
+                border: '2px solid rgba(255,255,255,0.1)',
                 cursor: 'pointer',
-                transition: 'opacity 0.3s ease',
-                boxShadow: 'none'
+                transition: 'all 0.3s ease',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                boxShadow: '0 4px 12px rgba(127,176,105,0.15)',
+                textDecoration: 'none'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = '0.9'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(127,176,105,0.25)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = '1'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(127,176,105,0.15)'
               }}
             >
               Secure Your Spot - £25/Month
@@ -277,41 +294,45 @@ export default function FoundingMembersPage() {
 
       {/* Story Section */}
       <section style={{
-        padding: isMobile ? '80px 20px' : '120px 20px',
-        background: 'rgba(0, 0, 0, 0.3)'
+        background: 'linear-gradient(180deg, transparent 0%, rgba(127,176,105,0.03) 100%)',
+        padding: isMobile ? '100px 20px' : '120px 40px',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid rgba(255,255,255,0.05)'
       }}>
-        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: isMobile ? '32px' : '48px',
-            fontWeight: 600,
-            marginBottom: '40px',
-            textAlign: 'center'
+            fontSize: isMobile ? '36px' : '56px',
+            fontWeight: 700,
+            marginBottom: '48px',
+            textAlign: 'center',
+            color: '#ffffff'
           }}>
             A Glimpse Into My Journey
           </h2>
 
           <div style={{
-            fontSize: '20px',
-            lineHeight: 1.7,
-            color: 'rgba(255, 255, 255, 0.8)'
+            fontSize: '19px',
+            lineHeight: 1.8,
+            color: 'rgba(255,255,255,0.8)',
+            fontWeight: 400
           }}>
-            <p style={{ marginBottom: '24px' }}>
+            <p style={{ marginBottom: '28px' }}>
               Most people spend their lives responding to what happens around them, rather than creating the life they want.
             </p>
 
-            <p style={{ marginBottom: '24px' }}>
+            <p style={{ marginBottom: '28px' }}>
               I was the same. For years, I lived in survival mode - addiction and destructive reactions became my norm. My conditioning ran so deep I didn't even realize I was protecting myself from threats that no longer existed.
             </p>
 
-            <p style={{ marginBottom: '24px' }}>
+            <p style={{ marginBottom: '28px' }}>
               This left me stuck - playing it safe when I should have moved forward, taking reckless risks when I needed stability. The result? Deep unhappiness.
             </p>
 
-            <p style={{ marginBottom: '24px' }}>
+            <p style={{ marginBottom: '28px' }}>
               Living in constant defense against invisible threats is no way to exist. The real threat was me - avoiding the parts of myself I didn't want to face.
             </p>
 
-            <p style={{ marginBottom: '24px', fontWeight: 600, color: '#9bc4b8' }}>
+            <p style={{ marginBottom: '28px', fontWeight: 600, color: '#9bc4b8', fontSize: '21px' }}>
               True growth requires knowing your whole self - the good and the uncomfortable.
             </p>
 
@@ -324,67 +345,83 @@ export default function FoundingMembersPage() {
 
       {/* Testimonials */}
       <section style={{
-        padding: isMobile ? '80px 20px' : '120px 20px'
+        padding: isMobile ? '100px 20px' : '120px 40px',
+        maxWidth: '1400px',
+        margin: '0 auto'
       }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: isMobile ? '32px' : '48px',
-            fontWeight: 600,
-            marginBottom: '40px',
-            textAlign: 'center'
-          }}>
-            Real Transformations
-          </h2>
+        <h2 style={{
+          fontSize: isMobile ? '36px' : '56px',
+          fontWeight: 700,
+          textAlign: 'center',
+          marginBottom: '24px',
+          color: '#ffffff'
+        }}>
+          Real Transformations
+        </h2>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-            gap: '16px'
-          }}>
-            {[
-              'n8_muJ84AbU',
-              '7Y1upKm8bZk',
-              'ubCK70jYQDI',
-              'UfbMIxlCzgM'
-            ].map((videoId, i) => (
-              <div key={i} style={{
-                position: 'relative',
-                paddingTop: '56.25%',
-                background: '#000',
-                borderRadius: '6px',
-                overflow: 'hidden'
-              }}>
-                <iframe
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    border: 'none'
-                  }}
-                  src={`https://www.youtube.com/embed/${videoId}`}
-                  title={`Testimonial ${i + 1}`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ))}
-          </div>
+        <p style={{
+          fontSize: '20px',
+          textAlign: 'center',
+          color: 'rgba(255,255,255,0.6)',
+          marginBottom: '80px',
+          maxWidth: '700px',
+          margin: '0 auto 80px'
+        }}>
+          See how men just like you broke free from old patterns
+        </p>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+          gap: '32px',
+          maxWidth: '1200px',
+          margin: '0 auto'
+        }}>
+          {[
+            'n8_muJ84AbU',
+            '7Y1upKm8bZk',
+            'ubCK70jYQDI',
+            'UfbMIxlCzgM'
+          ].map((videoId, i) => (
+            <div key={i} style={{
+              position: 'relative',
+              paddingBottom: '56.25%',
+              height: 0,
+              overflow: 'hidden',
+              borderRadius: '12px',
+              border: '1px solid rgba(255,255,255,0.1)'
+            }}>
+              <iframe
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  border: 'none'
+                }}
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title={`Testimonial ${i + 1}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ))}
         </div>
       </section>
 
       {/* What's Inside */}
       <section style={{
-        padding: isMobile ? '80px 20px' : '120px 20px',
+        padding: isMobile ? '100px 20px' : '160px 40px',
         background: 'rgba(0, 0, 0, 0.3)'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: isMobile ? '32px' : '48px',
-            fontWeight: 600,
-            marginBottom: '40px',
-            textAlign: 'center'
+            fontSize: isMobile ? '36px' : '56px',
+            fontWeight: 700,
+            marginBottom: '80px',
+            textAlign: 'center',
+            color: '#ffffff'
           }}>
             What's Inside the Circle
           </h2>
@@ -392,7 +429,7 @@ export default function FoundingMembersPage() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-            gap: '24px'
+            gap: '32px'
           }}>
             {[
               { icon: '📚', title: 'Video Library', desc: 'Breathwork sessions, energy healing practices, and integration guidance' },
@@ -403,23 +440,23 @@ export default function FoundingMembersPage() {
               { icon: '🔄', title: 'Healthy Habits', desc: 'Build new patterns and ways to view yourself' }
             ].map((item, i) => (
               <div key={i} style={{
-                padding: '32px',
-                background: 'rgba(255, 255, 255, 0.02)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '6px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                padding: '40px',
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '12px',
+                transition: 'all 0.3s ease'
               }}>
-                <div style={{ fontSize: '48px', marginBottom: '16px' }}>{item.icon}</div>
+                <div style={{ fontSize: '56px', marginBottom: '20px' }}>{item.icon}</div>
                 <h3 style={{
-                  fontSize: '24px',
-                  fontWeight: 600,
-                  marginBottom: '12px',
+                  fontSize: '28px',
+                  fontWeight: 700,
+                  marginBottom: '16px',
                   color: '#9bc4b8'
                 }}>
                   {item.title}
                 </h3>
                 <p style={{
-                  fontSize: '16px',
+                  fontSize: '18px',
                   color: 'rgba(255, 255, 255, 0.7)',
                   lineHeight: 1.7
                 }}>
@@ -433,32 +470,34 @@ export default function FoundingMembersPage() {
 
       {/* Why This Exists */}
       <section style={{
-        padding: isMobile ? '80px 20px' : '120px 20px'
+        padding: isMobile ? '100px 20px' : '160px 40px'
       }}>
-        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: isMobile ? '32px' : '48px',
-            fontWeight: 600,
-            marginBottom: '40px',
-            textAlign: 'center'
+            fontSize: isMobile ? '36px' : '56px',
+            fontWeight: 700,
+            marginBottom: '48px',
+            textAlign: 'center',
+            color: '#ffffff'
           }}>
             Why This Exists
           </h2>
 
           <div style={{
-            fontSize: '20px',
-            lineHeight: 1.7,
-            color: 'rgba(255, 255, 255, 0.8)'
+            fontSize: '19px',
+            lineHeight: 1.8,
+            color: 'rgba(255,255,255,0.8)',
+            fontWeight: 400
           }}>
-            <p style={{ marginBottom: '24px' }}>
+            <p style={{ marginBottom: '28px' }}>
               Since 2020, I've wanted to create The CoR. I didn't know what it would be, I just knew it had to give its members what this work has given me.
             </p>
 
-            <p style={{ marginBottom: '24px' }}>
+            <p style={{ marginBottom: '28px' }}>
               Life is a search for truth - you just don't know it. The truth can hurt, which is why most avoid it. But confronting it is the only way to feel at peace with who you are and where you're going.
             </p>
 
-            <p style={{ marginBottom: '24px', fontWeight: 600, color: '#ef4444' }}>
+            <p style={{ marginBottom: '28px', fontWeight: 700, color: '#ef4444', fontSize: '21px' }}>
               Note: You cannot run away from yourself.
             </p>
 
@@ -471,103 +510,124 @@ export default function FoundingMembersPage() {
 
       {/* Final CTA */}
       <section style={{
-        padding: isMobile ? '80px 20px' : '120px 20px',
-        background: 'rgba(155, 196, 184, 0.05)',
-        textAlign: 'center'
+        padding: isMobile ? '100px 20px' : '120px 40px',
+        background: 'radial-gradient(circle at center, rgba(127,176,105,0.1) 0%, transparent 70%)'
       }}>
-        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: isMobile ? '32px' : '48px',
-            fontWeight: 600,
-            marginBottom: '32px'
-          }}>
-            Founding Member Offer
-          </h2>
-
-          <p style={{
+        <div style={{
+          maxWidth: '600px',
+          margin: '0 auto',
+          background: 'rgba(255,255,255,0.02)',
+          border: '2px solid rgba(127,176,105,0.2)',
+          borderRadius: '24px',
+          padding: isMobile ? '48px 32px' : '64px 48px',
+          textAlign: 'center'
+        }}>
+          <div style={{
             fontSize: '20px',
-            lineHeight: 1.7,
-            marginBottom: '16px',
-            color: 'rgba(255, 255, 255, 0.8)'
-          }}>
-            For the first 30 members:
-          </p>
-
-          <p style={{
-            fontSize: isMobile ? '48px' : '72px',
-            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '3px',
             color: '#9bc4b8',
             marginBottom: '16px',
-            lineHeight: 1.1
+            fontWeight: 700
           }}>
-            £25/month for life
-          </p>
+            Founding Member Pricing
+          </div>
 
-          <p style={{
-            fontSize: '20px',
-            lineHeight: 1.7,
-            color: 'rgba(255, 255, 255, 0.8)',
-            marginBottom: '48px'
+          <div style={{
+            fontSize: isMobile ? '64px' : '80px',
+            fontWeight: 800,
+            background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            marginBottom: '8px',
+            lineHeight: 1
           }}>
-            Lock in this price forever. Regular price from next month: £50/month
-          </p>
+            £25
+            <span style={{
+              fontSize: isMobile ? '32px' : '40px',
+              color: 'rgba(255,255,255,0.5)'
+            }}>/month</span>
+          </div>
+
+          <div style={{
+            fontSize: '18px',
+            color: 'rgba(255,255,255,0.6)',
+            marginBottom: '32px',
+            fontWeight: 600
+          }}>
+            Lock in £25/month FIXED. Never increases.
+          </div>
+
+          <div style={{
+            fontSize: '16px',
+            color: 'rgba(255,255,255,0.4)',
+            textDecoration: 'line-through',
+            marginBottom: '40px'
+          }}>
+            Regular price: £50/month from next month
+          </div>
 
           {!isSoldOut ? (
             <>
               {spotsRemaining !== null && (
                 <div style={{
-                  display: 'inline-block',
-                  padding: '1rem 2rem',
-                  background: 'rgba(155, 196, 184, 0.15)',
-                  border: '1px solid rgba(155, 196, 184, 0.3)',
-                  borderRadius: '6px',
-                  marginBottom: '2rem',
-                  fontSize: isMobile ? '1.125rem' : '1.5rem'
+                  fontSize: '18px',
+                  color: 'rgba(255,255,255,0.6)',
+                  marginBottom: '32px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px',
+                  fontWeight: 600
                 }}>
-                  <strong style={{ color: '#9bc4b8', fontSize: isMobile ? '2rem' : '2.5rem' }}>
-                    {spotsRemaining}
-                  </strong> spots remaining
+                  <span style={{
+                    fontSize: '32px',
+                    color: '#9bc4b8',
+                    fontWeight: 800
+                  }}>{spotsRemaining}</span> spots remaining
                 </div>
               )}
 
-              <div>
-                <a
-                  href="https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j"
-                  onClick={handleStripeClick}
-                  style={{
-                    display: 'inline-block',
-                    padding: '20px 40px',
-                    background: '#7fb069',
-                    border: 'none',
-                    borderRadius: '6px',
-                    color: '#ffffff',
-                    fontSize: '18px',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    cursor: 'pointer',
-                    transition: 'opacity 0.3s ease',
-                    boxShadow: 'none'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = '0.9'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.opacity = '1'
-                  }}
-                >
-                  Secure Your Spot - £25/Month
-                </a>
-              </div>
+              <a
+                href="https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j"
+                onClick={handleStripeClick}
+                style={{
+                  display: 'inline-block',
+                  padding: '24px 48px',
+                  background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+                  color: '#0a0a0a',
+                  fontSize: '18px',
+                  fontWeight: 700,
+                  borderRadius: '12px',
+                  border: '2px solid rgba(255,255,255,0.1)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  boxShadow: '0 4px 12px rgba(127,176,105,0.15)',
+                  textDecoration: 'none'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(127,176,105,0.25)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(127,176,105,0.15)'
+                }}
+              >
+                Secure Your Spot - £25/Month
+              </a>
             </>
           ) : (
             <div style={{
-              padding: '1.5rem 3rem',
+              padding: '24px 48px',
               background: 'rgba(239, 68, 68, 0.2)',
-              border: '1px solid rgba(239, 68, 68, 0.4)',
-              borderRadius: '6px',
-              fontSize: isMobile ? '1.25rem' : '1.5rem',
-              fontWeight: 600,
-              color: '#ef4444'
+              border: '2px solid rgba(239, 68, 68, 0.4)',
+              borderRadius: '12px',
+              fontSize: isMobile ? '20px' : '24px',
+              fontWeight: 700,
+              color: '#ef4444',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
             }}>
               All 30 Founding Spots Filled
             </div>
@@ -577,11 +637,11 @@ export default function FoundingMembersPage() {
 
       {/* Footer */}
       <footer style={{
-        padding: '2rem 1.5rem',
+        padding: '40px 20px',
         textAlign: 'center',
         borderTop: '1px solid rgba(255, 255, 255, 0.05)',
         color: 'rgba(255, 255, 255, 0.4)',
-        fontSize: '0.875rem'
+        fontSize: '14px'
       }}>
         <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
           True North
