@@ -112,34 +112,39 @@ export default function FoundingMembersPage() {
           textAlign: 'center'
         }}>
           <h1 style={{
-            fontSize: isMobile ? '2.5rem' : '4.5rem',
-            fontWeight: 300,
-            marginBottom: '1.5rem',
+            fontSize: isMobile ? '48px' : '72px',
+            fontWeight: 700,
+            marginBottom: '24px',
             lineHeight: 1.1,
-            letterSpacing: '-0.02em'
+            letterSpacing: '-0.02em',
+            color: '#ffffff'
           }}>
             Join the First <span style={{
               background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              fontWeight: 400
+              fontWeight: 700
             }}>30</span> in Circle of Return
           </h1>
 
           <p style={{
-            fontSize: isMobile ? '1.25rem' : '1.75rem',
-            color: 'rgba(255, 255, 255, 0.7)',
-            marginBottom: '1rem',
-            fontWeight: 300
+            fontSize: '20px',
+            lineHeight: 1.7,
+            color: 'rgba(255, 255, 255, 0.8)',
+            marginBottom: '16px',
+            maxWidth: '700px',
+            margin: '0 auto 16px'
           }}>
             Lock in <strong style={{ color: '#9bc4b8' }}>£25/month for life</strong>
           </p>
 
           <p style={{
-            fontSize: isMobile ? '1rem' : '1.25rem',
-            color: 'rgba(255, 255, 255, 0.5)',
-            marginBottom: '3rem',
-            fontWeight: 300
+            fontSize: '20px',
+            lineHeight: 1.7,
+            color: 'rgba(255, 255, 255, 0.8)',
+            marginBottom: '48px',
+            maxWidth: '700px',
+            margin: '0 auto 48px'
           }}>
             Regular price from next month: £50/month
           </p>
@@ -245,25 +250,23 @@ export default function FoundingMembersPage() {
               onClick={handleStripeClick}
               style={{
                 display: 'inline-block',
-                padding: isMobile ? '1.25rem 2.5rem' : '1.5rem 4rem',
-                background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                padding: '20px 40px',
+                background: '#7fb069',
                 border: 'none',
                 borderRadius: '6px',
-                color: '#000',
-                fontSize: isMobile ? '1.25rem' : '1.5rem',
+                color: '#ffffff',
+                fontSize: '18px',
                 fontWeight: 600,
                 textDecoration: 'none',
                 cursor: 'pointer',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                boxShadow: '0 4px 20px rgba(155, 196, 184, 0.3)'
+                transition: 'opacity 0.3s ease',
+                boxShadow: 'none'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 6px 30px rgba(155, 196, 184, 0.5)'
+                e.currentTarget.style.opacity = '0.9'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(155, 196, 184, 0.3)'
+                e.currentTarget.style.opacity = '1'
               }}
             >
               Secure Your Spot - £25/Month
@@ -272,49 +275,48 @@ export default function FoundingMembersPage() {
         </div>
       </section>
 
-      {/* Mason's Story */}
+      {/* Story Section */}
       <section style={{
-        padding: isMobile ? '4rem 1.5rem' : '6rem 1.5rem',
+        padding: isMobile ? '80px 20px' : '120px 20px',
         background: 'rgba(0, 0, 0, 0.3)'
       }}>
-        <div style={{ maxWidth: '50rem', margin: '0 auto' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: isMobile ? '2rem' : '3rem',
-            fontWeight: 300,
-            marginBottom: '2rem',
+            fontSize: isMobile ? '32px' : '48px',
+            fontWeight: 600,
+            marginBottom: '40px',
             textAlign: 'center'
           }}>
-            Mason's Story
+            A Glimpse Into My Journey
           </h2>
 
           <div style={{
-            fontSize: isMobile ? '1.125rem' : '1.25rem',
-            lineHeight: 1.8,
-            color: 'rgba(255, 255, 255, 0.8)',
-            fontWeight: 300
+            fontSize: '20px',
+            lineHeight: 1.7,
+            color: 'rgba(255, 255, 255, 0.8)'
           }}>
-            <p style={{ marginBottom: '1.5rem' }}>
-              You, like most, are probably reacting to life instead of building it…
+            <p style={{ marginBottom: '24px' }}>
+              Most people spend their lives responding to what happens around them, rather than creating the life they want.
             </p>
 
-            <p style={{ marginBottom: '1.5rem' }}>
-              Much of my life was spent reacting. My reactions came in the form of addiction and destructive patterns. My conditioning ran so deep that I was unaware my whole way of being was because I was living in survival. I constantly had a guard up, protecting me from threats that no longer existed.
+            <p style={{ marginBottom: '24px' }}>
+              I was the same. For years, I lived in survival mode - addiction and destructive reactions became my norm. My conditioning ran so deep I didn't even realize I was protecting myself from threats that no longer existed.
             </p>
 
-            <p style={{ marginBottom: '1.5rem' }}>
-              This made me hesitant, unsure, either playing things too safe or taking too much of a risk. This is what led to my unhappiness.
+            <p style={{ marginBottom: '24px' }}>
+              This left me stuck - playing it safe when I should have moved forward, taking reckless risks when I needed stability. The result? Deep unhappiness.
             </p>
 
-            <p style={{ marginBottom: '1.5rem' }}>
-              How could I ever truly be happy living from invisible threats? The only real threat being myself - I was scared to really look at myself and accept the parts I disliked.
+            <p style={{ marginBottom: '24px' }}>
+              Living in constant defense against invisible threats is no way to exist. The real threat was me - avoiding the parts of myself I didn't want to face.
             </p>
 
-            <p style={{ marginBottom: '1.5rem', fontWeight: 400, color: '#9bc4b8' }}>
-              To be your best self, you have to know your whole self.
+            <p style={{ marginBottom: '24px', fontWeight: 600, color: '#9bc4b8' }}>
+              True growth requires knowing your whole self - the good and the uncomfortable.
             </p>
 
             <p>
-              Now, ten years into this work - having coached hundreds - I realise how common this is.
+              After a decade of this work and guiding hundreds through their own transformations, I see how universal this struggle is.
             </p>
           </div>
         </div>
@@ -322,49 +324,50 @@ export default function FoundingMembersPage() {
 
       {/* Testimonials */}
       <section style={{
-        padding: isMobile ? '4rem 1.5rem' : '6rem 1.5rem'
+        padding: isMobile ? '80px 20px' : '120px 20px'
       }}>
-        <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: isMobile ? '2rem' : '3rem',
-            fontWeight: 300,
-            marginBottom: '3rem',
+            fontSize: isMobile ? '32px' : '48px',
+            fontWeight: 600,
+            marginBottom: '40px',
             textAlign: 'center'
           }}>
-            Transformation Stories
+            Real Transformations
           </h2>
 
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-            gap: '2rem'
+            gap: '16px'
           }}>
-            {[1, 2, 3, 4].map((i) => (
+            {[
+              'n8_muJ84AbU',
+              '7Y1upKm8bZk',
+              'ubCK70jYQDI',
+              'UfbMIxlCzgM'
+            ].map((videoId, i) => (
               <div key={i} style={{
                 position: 'relative',
                 paddingTop: '56.25%',
                 background: '#000',
                 borderRadius: '6px',
-                overflow: 'hidden',
-                border: '1px solid rgba(255, 255, 255, 0.1)'
+                overflow: 'hidden'
               }}>
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  background: 'rgba(155, 196, 184, 0.1)',
-                  color: 'rgba(255, 255, 255, 0.3)',
-                  fontSize: '0.875rem'
-                }}>
-                  Testimonial Video {i}
-                  <br />
-                  (YouTube embed placeholder)
-                </div>
+                <iframe
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    border: 'none'
+                  }}
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  title={`Testimonial ${i + 1}`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
               </div>
             ))}
           </div>
@@ -373,14 +376,14 @@ export default function FoundingMembersPage() {
 
       {/* What's Inside */}
       <section style={{
-        padding: isMobile ? '4rem 1.5rem' : '6rem 1.5rem',
+        padding: isMobile ? '80px 20px' : '120px 20px',
         background: 'rgba(0, 0, 0, 0.3)'
       }}>
-        <div style={{ maxWidth: '60rem', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: isMobile ? '2rem' : '3rem',
-            fontWeight: 300,
-            marginBottom: '3rem',
+            fontSize: isMobile ? '32px' : '48px',
+            fontWeight: 600,
+            marginBottom: '40px',
             textAlign: 'center'
           }}>
             What's Inside the Circle
@@ -389,7 +392,7 @@ export default function FoundingMembersPage() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-            gap: '2rem'
+            gap: '24px'
           }}>
             {[
               { icon: '📚', title: 'Video Library', desc: 'Breathwork sessions, energy healing practices, and integration guidance' },
@@ -400,24 +403,25 @@ export default function FoundingMembersPage() {
               { icon: '🔄', title: 'Healthy Habits', desc: 'Build new patterns and ways to view yourself' }
             ].map((item, i) => (
               <div key={i} style={{
-                padding: '2rem',
-                background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.05), rgba(127, 176, 105, 0.02))',
-                border: '1px solid rgba(155, 196, 184, 0.2)',
-                borderRadius: '6px'
+                padding: '32px',
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '6px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
               }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{item.icon}</div>
+                <div style={{ fontSize: '48px', marginBottom: '16px' }}>{item.icon}</div>
                 <h3 style={{
-                  fontSize: '1.5rem',
-                  fontWeight: 400,
-                  marginBottom: '0.75rem',
+                  fontSize: '24px',
+                  fontWeight: 600,
+                  marginBottom: '12px',
                   color: '#9bc4b8'
                 }}>
                   {item.title}
                 </h3>
                 <p style={{
-                  fontSize: '1rem',
+                  fontSize: '16px',
                   color: 'rgba(255, 255, 255, 0.7)',
-                  lineHeight: 1.6
+                  lineHeight: 1.7
                 }}>
                   {item.desc}
                 </p>
@@ -429,33 +433,32 @@ export default function FoundingMembersPage() {
 
       {/* Why This Exists */}
       <section style={{
-        padding: isMobile ? '4rem 1.5rem' : '6rem 1.5rem'
+        padding: isMobile ? '80px 20px' : '120px 20px'
       }}>
-        <div style={{ maxWidth: '50rem', margin: '0 auto' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: isMobile ? '2rem' : '3rem',
-            fontWeight: 300,
-            marginBottom: '2rem',
+            fontSize: isMobile ? '32px' : '48px',
+            fontWeight: 600,
+            marginBottom: '40px',
             textAlign: 'center'
           }}>
             Why This Exists
           </h2>
 
           <div style={{
-            fontSize: isMobile ? '1.125rem' : '1.25rem',
-            lineHeight: 1.8,
-            color: 'rgba(255, 255, 255, 0.8)',
-            fontWeight: 300
+            fontSize: '20px',
+            lineHeight: 1.7,
+            color: 'rgba(255, 255, 255, 0.8)'
           }}>
-            <p style={{ marginBottom: '1.5rem' }}>
+            <p style={{ marginBottom: '24px' }}>
               Since 2020, I've wanted to create The CoR. I didn't know what it would be, I just knew it had to give its members what this work has given me.
             </p>
 
-            <p style={{ marginBottom: '1.5rem' }}>
+            <p style={{ marginBottom: '24px' }}>
               Life is a search for truth - you just don't know it. The truth can hurt, which is why most avoid it. But confronting it is the only way to feel at peace with who you are and where you're going.
             </p>
 
-            <p style={{ marginBottom: '1.5rem', fontWeight: 400, color: '#ef4444' }}>
+            <p style={{ marginBottom: '24px', fontWeight: 600, color: '#ef4444' }}>
               Note: You cannot run away from yourself.
             </p>
 
@@ -468,40 +471,43 @@ export default function FoundingMembersPage() {
 
       {/* Final CTA */}
       <section style={{
-        padding: isMobile ? '4rem 1.5rem' : '6rem 1.5rem',
-        background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.05))',
+        padding: isMobile ? '80px 20px' : '120px 20px',
+        background: 'rgba(155, 196, 184, 0.05)',
         textAlign: 'center'
       }}>
-        <div style={{ maxWidth: '50rem', margin: '0 auto' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: isMobile ? '2rem' : '3rem',
-            fontWeight: 300,
-            marginBottom: '2rem'
+            fontSize: isMobile ? '32px' : '48px',
+            fontWeight: 600,
+            marginBottom: '32px'
           }}>
             Founding Member Offer
           </h2>
 
           <p style={{
-            fontSize: isMobile ? '1.25rem' : '1.5rem',
-            marginBottom: '1rem',
-            color: 'rgba(255, 255, 255, 0.9)'
+            fontSize: '20px',
+            lineHeight: 1.7,
+            marginBottom: '16px',
+            color: 'rgba(255, 255, 255, 0.8)'
           }}>
             For the first 30 members:
           </p>
 
           <p style={{
-            fontSize: isMobile ? '2rem' : '3rem',
-            fontWeight: 400,
+            fontSize: isMobile ? '48px' : '72px',
+            fontWeight: 700,
             color: '#9bc4b8',
-            marginBottom: '1rem'
+            marginBottom: '16px',
+            lineHeight: 1.1
           }}>
             £25/month for life
           </p>
 
           <p style={{
-            fontSize: isMobile ? '1rem' : '1.25rem',
-            color: 'rgba(255, 255, 255, 0.6)',
-            marginBottom: '3rem'
+            fontSize: '20px',
+            lineHeight: 1.7,
+            color: 'rgba(255, 255, 255, 0.8)',
+            marginBottom: '48px'
           }}>
             Lock in this price forever. Regular price from next month: £50/month
           </p>
@@ -530,25 +536,23 @@ export default function FoundingMembersPage() {
                   onClick={handleStripeClick}
                   style={{
                     display: 'inline-block',
-                    padding: isMobile ? '1.25rem 2.5rem' : '1.5rem 4rem',
-                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    padding: '20px 40px',
+                    background: '#7fb069',
                     border: 'none',
                     borderRadius: '6px',
-                    color: '#000',
-                    fontSize: isMobile ? '1.25rem' : '1.5rem',
+                    color: '#ffffff',
+                    fontSize: '18px',
                     fontWeight: 600,
                     textDecoration: 'none',
                     cursor: 'pointer',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    boxShadow: '0 4px 20px rgba(155, 196, 184, 0.3)'
+                    transition: 'opacity 0.3s ease',
+                    boxShadow: 'none'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = '0 6px 30px rgba(155, 196, 184, 0.5)'
+                    e.currentTarget.style.opacity = '0.9'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(155, 196, 184, 0.3)'
+                    e.currentTarget.style.opacity = '1'
                   }}
                 >
                   Secure Your Spot - £25/Month
