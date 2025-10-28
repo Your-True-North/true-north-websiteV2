@@ -367,7 +367,7 @@ export default function FoundingMembersPage() {
           maxWidth: '700px',
           margin: '0 auto 80px'
         }}>
-          See how men just like you broke free from old patterns
+          See how others just like you broke free from old patterns
         </p>
 
         <div style={{
@@ -432,12 +432,12 @@ export default function FoundingMembersPage() {
             gap: '32px'
           }}>
             {[
-              { icon: '📚', title: 'Video Library', desc: 'Breathwork sessions, energy healing practices, and integration guidance' },
-              { icon: '🎙️', title: 'Live Coaching Calls', desc: 'Monthly sessions with Mason + guest experts in their niches' },
-              { icon: '🧘', title: 'Somatic Sessions', desc: 'Body-based practices to release stored trauma and tension' },
-              { icon: '👥', title: 'Community Support', desc: 'Connect with men who understand when friends/family don\'t' },
-              { icon: '💪', title: 'Confidence Building', desc: 'Goal setting, accountability, and real transformation' },
-              { icon: '🔄', title: 'Healthy Habits', desc: 'Build new patterns and ways to view yourself' }
+              { title: 'Video Library', desc: 'Breathwork sessions, energy healing practices, and integration guidance' },
+              { title: 'Live Coaching Calls', desc: 'Monthly sessions with Mason + guest experts in their niches' },
+              { title: 'Somatic Sessions', desc: 'Body-based practices to release stored trauma and tension' },
+              { title: 'Community Support', desc: 'Connect with others who understand when friends/family don\'t' },
+              { title: 'Confidence Building', desc: 'Goal setting, accountability, and real transformation' },
+              { title: 'Healthy Habits', desc: 'Build new patterns and ways to view yourself' }
             ].map((item, i) => (
               <div key={i} style={{
                 padding: '40px',
@@ -446,7 +446,6 @@ export default function FoundingMembersPage() {
                 borderRadius: '12px',
                 transition: 'all 0.3s ease'
               }}>
-                <div style={{ fontSize: '56px', marginBottom: '20px' }}>{item.icon}</div>
                 <h3 style={{
                   fontSize: '28px',
                   fontWeight: 700,
@@ -561,7 +560,7 @@ export default function FoundingMembersPage() {
           <div style={{
             fontSize: '16px',
             color: 'rgba(255,255,255,0.4)',
-            textDecoration: 'line-through',
+            textDecoration: 'none',
             marginBottom: '40px'
           }}>
             Regular price: £50/month from next month
