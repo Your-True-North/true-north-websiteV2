@@ -196,7 +196,7 @@ export default function VideoPlayerPage() {
     return (
       <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Video not found</div>
-        <Link href="/library" style={{
+        <Link href="/videos" style={{
           padding: '0.75rem 1.5rem',
           background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
           color: '#000',
@@ -230,7 +230,7 @@ export default function VideoPlayerPage() {
           alignItems: 'center',
           justifyContent: 'space-between'
         }}>
-          <Link href="/library" style={{
+          <Link href="/videos" style={{
             fontSize: isMobile ? '1rem' : '1.5rem',
             fontWeight: 300,
             letterSpacing: '0.2em',
@@ -239,7 +239,7 @@ export default function VideoPlayerPage() {
           }}>
             TRUE NORTH
           </Link>
-          <Link href="/library" style={{
+          <Link href="/videos" style={{
             padding: '0.5rem 1rem',
             fontSize: '0.875rem',
             fontWeight: 300,
@@ -565,7 +565,7 @@ export default function VideoPlayerPage() {
                     return (
                       <Link
                         key={related.id}
-                        href={`/library/${related.id}`}
+                        href={`/videos/${related.id}`}
                         style={{ textDecoration: 'none', color: 'inherit' }}
                       >
                         <div style={{
