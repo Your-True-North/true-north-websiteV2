@@ -95,7 +95,11 @@ export default function FoundingMembersPage() {
       <style jsx global>{`
         nav,
         header,
-        [role="navigation"] {
+        footer,
+        [role="navigation"],
+        [role="contentinfo"],
+        [class*="footer"],
+        [class*="Footer"] {
           display: none !important;
         }
       `}</style>
@@ -462,12 +466,14 @@ export default function FoundingMembersPage() {
             gap: '32px'
           }}>
             {[
-              { title: 'Video Library', desc: 'Breathwork sessions, energy healing practices, and integration guidance' },
-              { title: 'Live Coaching Calls', desc: 'Monthly sessions with Mason + guest experts in their niches' },
-              { title: 'Somatic Sessions', desc: 'Body-based practices to release stored trauma and tension' },
-              { title: 'Community Support', desc: 'Connect with others who understand when friends/family don\'t' },
-              { title: 'Confidence Building', desc: 'Goal setting, accountability, and real transformation' },
-              { title: 'Healthy Habits', desc: 'Build new patterns and ways to view yourself' }
+              { title: 'Video Library', desc: 'Breathwork sessions, energy healing practices, somatic exercises, and integration guidance. New content added monthly. Everything you need to work through what\'s stored in your body and release what\'s been weighing you down.' },
+              { title: 'Live Coaching Calls', desc: 'Bi-weekly sessions with Mason plus guest experts in their fields. Bring your questions, your struggles, your breakthroughs. Get real-time guidance and watch others navigate their own journeys. All recorded for members who can\'t attend live.' },
+              { title: 'Somatic Sessions', desc: 'Body-based practices to release stored trauma and tension that talk therapy can\'t reach. Learn to feel what you\'ve been avoiding and let it move through you instead of staying stuck. Your body holds memories your mind has forgotten.' },
+              { title: 'Community Support', desc: 'Connect with others who understand when friends and family don\'t. No posturing, no fake growth talk. Just real people doing real work on themselves. The support system you didn\'t know you needed.' },
+              { title: 'Confidence Building', desc: 'Goal setting, accountability, and real transformation. Learn to trust yourself again. Build the life you actually want instead of the one you think you should want. Deep work that creates lasting change.' },
+              { title: 'Healthy Habits', desc: 'Build new patterns and ways to view yourself that actually stick. Break the cycles that keep you stuck. Replace self-destruction with self-respect. Small shifts that compound into massive life changes over time.' },
+              { title: 'Grounded Spirituality', desc: 'Monthly teachings on connecting to your higher self and working with energy without the woo-woo bullshit. God/Allah/Jah/Universe - it\'s all the same. Learn to feel what\'s beyond your five senses while keeping your feet firmly on the ground.' },
+              { title: 'Live Masterclasses', desc: 'Deep dives on shadow work, somatic release, anger transformation, and living in alignment. Interactive explorations where we go beneath the surface together. Not lectures - real work. All recorded for members.' }
             ].map((item, i) => (
               <div key={i} style={{
                 padding: '40px',
