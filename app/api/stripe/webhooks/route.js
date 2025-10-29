@@ -121,6 +121,8 @@ async function sendWelcomeEmail(email, name, password) {
 
             <p>You'll also see the forum. Introduce yourself when you're ready. No pressure, but the others want to know who just walked through the door.</p>
 
+            <p>Next live call is Thursday 7am GMT. Mark your calendar. Show up. Ask whatever you need to ask.</p>
+
             <p>This isn't a course. There's no step one, step two. You take what you need when you need it.</p>
 
             <p>The only rule: do the work. Actually do it.</p>
@@ -287,7 +289,7 @@ export async function POST(request) {
 
       // Tag as founding member in ConvertKit to trigger onboarding sequence
       const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
-      const FOUNDING_TAG_ID = process.env.CONVERTKIT_FOUNDING_TAG_ID
+      const FOUNDING_TAG_ID = process.env.FOUNDING_TAG_ID
 
       if (CONVERTKIT_API_KEY && FOUNDING_TAG_ID) {
         try {
