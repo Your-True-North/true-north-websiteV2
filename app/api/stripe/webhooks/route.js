@@ -121,6 +121,8 @@ async function sendWelcomeEmail(email, name, password) {
 
             <p>You'll also see the forum. Introduce yourself when you're ready. No pressure, but the others want to know who just walked through the door.</p>
 
+            <p>Next live call is Thursday 7am GMT. Mark your calendar. Show up. Ask whatever you need to ask.</p>
+
             <p>This isn't a course. There's no step one, step two. You take what you need when you need it.</p>
 
             <p>The only rule: do the work. Actually do it.</p>
