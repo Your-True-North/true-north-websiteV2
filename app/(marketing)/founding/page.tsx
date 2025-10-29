@@ -40,6 +40,20 @@ export default function FoundingMembersPage() {
     }
   }, [])
 
+  useEffect(() => {
+    // Hide footer on this page only
+    const hideFooter = () => {
+      const footers = document.querySelectorAll('footer, [role="contentinfo"], [class*="footer"], [class*="Footer"]');
+      footers.forEach(footer => {
+        (footer as HTMLElement).style.display = 'none';
+      });
+    };
+
+    hideFooter();
+    // Run again after a brief delay to catch any delayed renders
+    setTimeout(hideFooter, 100);
+  }, [])
+
   const handleStripeClick = () => {
     // Track GA4 event
     trackEvent('begin_checkout', {
