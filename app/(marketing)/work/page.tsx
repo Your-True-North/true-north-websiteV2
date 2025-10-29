@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { X, Play, Pause, RotateCcw } from 'lucide-react'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function Work() {
   const [isMobile, setIsMobile] = useState(false)
@@ -25,6 +26,9 @@ export default function Work() {
       if (!hasSeenPopup) {
         setShowPackPopup(true)
         sessionStorage.setItem('hasSeenPackPopup', 'true')
+        trackEvent('view_session_pack', {
+          value: 850
+        })
       }
     }, 3000)
     
@@ -118,10 +122,16 @@ export default function Work() {
   }
 
   const handleBookCall = () => {
+    trackEvent('book_discovery_call', {
+      value: 5
+    })
     window.open('https://calendly.com/callwithmason/introduction', '_blank')
   }
 
   const handleSkipToBooking = () => {
+    trackEvent('book_discovery_call', {
+      value: 5
+    })
     window.open('https://calendly.com/callwithmason/introduction', '_blank')
   }
 
@@ -931,10 +941,14 @@ export default function Work() {
                   </div>
 
                   <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                    <a 
+                    <a
                       href="https://buy.stripe.com/28E9AU9D1c2Fck01bh9IQ0f"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackEvent('initiate_checkout', {
+                        service: 'breathwork',
+                        value: 200
+                      })}
                       style={{
                         display: 'block',
                         padding: '1rem',
@@ -1039,10 +1053,14 @@ export default function Work() {
                   </div>
 
                   <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                    <a 
+                    <a
                       href="https://buy.stripe.com/cNi4gA9D17Mp0BibPV9IQ0g"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackEvent('initiate_checkout', {
+                        service: 'energy_healing',
+                        value: 120
+                      })}
                       style={{
                         display: 'block',
                         padding: '1rem',
