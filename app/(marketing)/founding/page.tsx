@@ -77,8 +77,17 @@ export default function FoundingMembersPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff' }}>
-      {/* Hero Section */}
+    <>
+      <style jsx global>{`
+        nav,
+        header,
+        [role="navigation"] {
+          display: none !important;
+        }
+      `}</style>
+
+      <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff' }}>
+        {/* Hero Section */}
       <section style={{
         position: 'relative',
         minHeight: '100vh',
@@ -658,5 +667,6 @@ export default function FoundingMembersPage() {
         {new Date().getFullYear()}
       </footer>
     </div>
+    </>
   )
 }
