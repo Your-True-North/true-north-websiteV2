@@ -81,7 +81,11 @@ export default function FoundingMembersPage() {
       <style jsx global>{`
         nav,
         header,
-        [role="navigation"] {
+        footer,
+        [role="navigation"],
+        [role="contentinfo"],
+        [class*="footer"],
+        [class*="Footer"] {
           display: none !important;
         }
       `}</style>
