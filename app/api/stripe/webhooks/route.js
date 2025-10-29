@@ -79,34 +79,55 @@ async function sendWelcomeEmail(email, name, password) {
         <style>
           body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
           .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-          .header { background: linear-gradient(135deg, #9bc4b8, #7fb069); padding: 30px; text-align: center; border-radius: 6px 6px 0 0; }
-          .header h1 { color: #000; margin: 0; font-size: 28px; font-weight: 300; }
-          .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 6px 6px; }
+          .content { background: #f9f9f9; padding: 30px; border-radius: 6px; }
           .credentials { background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 6px; margin: 20px 0; }
-          .credentials strong { color: #9bc4b8; }
           .button { display: inline-block; padding: 15px 30px; background: linear-gradient(135deg, #9bc4b8, #7fb069); color: #000; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
-          .footer { text-align: center; padding: 20px; color: #666; font-size: 14px; }
         </style>
       </head>
       <body>
         <div class="container">
-          <div class="header">
-            <h1>Welcome to Circle of Return</h1>
-          </div>
           <div class="content">
-            <p>${firstName},</p>
+            <p>You just made a decision most people avoid their whole lives.</p>
 
-            <p>Welcome to Circle of Return.</p>
+            <p>To stop pretending.</p>
 
-            <p><strong>Stay tuned.</strong> In the next 24 hours, you'll receive your login details and next steps.</p>
+            <p>To look at what hurts.</p>
 
-            <p>Your transformation is about to begin.</p>
+            <p>To find the truth underneath the conditioning.</p>
 
-            <p style="margin-top: 30px;">- True North</p>
-          </div>
-          <div class="footer">
-            <p>Circle of Return · True North<br>
-            <a href="https://yourtruenorth.me" style="color: #9bc4b8;">yourtruenorth.me</a></p>
+            <p><strong>Welcome to Circle of Return.</strong></p>
+
+            <p>You're one of the first thirty founding members. This means you're not just joining something that already exists - you're helping build it with me.</p>
+
+            <p>There will be teething issues. Things won't be perfect. Some features are still being added. That's the reality of being a founder.</p>
+
+            <p>But here's what makes this valuable.</p>
+
+            <p>Your input shapes what this becomes. If something isn't working, tell me. If you want to see something that's missing, share it. This is being built for you, with you.</p>
+
+            <p><strong>Your login details are below. Access the members area now.</strong></p>
+
+            <div class="credentials">
+              <p><strong>LOGIN:</strong> <a href="${process.env.NEXT_PUBLIC_SITE_URL}/login" class="button">Access Members Area</a></p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Temporary Password:</strong> ${password}</p>
+            </div>
+
+            <p><strong>Here's what to do first.</strong></p>
+
+            <p>Watch the welcome video in your dashboard. Five minutes. I explain what this space is and what it isn't.</p>
+
+            <p>Then go to the video library and start with the breathwork session called "First Release." This is where most people begin. It'll show you what's possible when you let your body speak.</p>
+
+            <p>You'll also see the forum. Introduce yourself when you're ready. No pressure, but the others want to know who just walked through the door.</p>
+
+            <p>This isn't a course. There's no step one, step two. You take what you need when you need it.</p>
+
+            <p>The only rule: do the work. Actually do it.</p>
+
+            <p>And tell me what's working and what isn't. You're a founding member. Your voice matters here.</p>
+
+            <p style="margin-top: 30px;">- Mason</p>
           </div>
         </div>
       </body>
@@ -263,6 +284,33 @@ export async function POST(request) {
 
       // Send welcome email
       await sendWelcomeEmail(customerEmail, customerName, plainPassword)
+
+      // Tag as founding member in ConvertKit to trigger onboarding sequence
+      const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
+      const FOUNDING_TAG_ID = process.env.CONVERTKIT_FOUNDING_TAG_ID
+
+      if (CONVERTKIT_API_KEY && FOUNDING_TAG_ID) {
+        try {
+          const response = await fetch(`https://api.convertkit.com/v3/tags/${FOUNDING_TAG_ID}/subscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              api_key: CONVERTKIT_API_KEY,
+              email: customerEmail,
+              first_name: customerName.split(' ')[0] || ''
+            })
+          })
+
+          if (response.ok) {
+            console.log('[Webhook] ConvertKit tagged:', customerEmail)
+          } else {
+            console.error('[Webhook] ConvertKit tag failed:', await response.text())
+          }
+        } catch (error) {
+          console.error('[Webhook] ConvertKit API error:', error)
+          // Don't fail webhook if ConvertKit errors
+        }
+      }
 
       // Track Facebook Purchase event (server-side)
       if (process.env.FACEBOOK_PIXEL_ID) {
