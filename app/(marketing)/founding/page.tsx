@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function FoundingMembersPage() {
   const [spotsRemaining, setSpotsRemaining] = useState<number | null>(null)
@@ -40,7 +41,13 @@ export default function FoundingMembersPage() {
   }, [])
 
   const handleStripeClick = () => {
-    // Track InitiateCheckout event
+    // Track GA4 event
+    trackEvent('begin_checkout', {
+      service: 'circle_founding',
+      value: 25
+    })
+
+    // Track Facebook Pixel event
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'InitiateCheckout', {
         content_name: 'Founding Membership',
@@ -70,8 +77,17 @@ export default function FoundingMembersPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff' }}>
-      {/* Hero Section */}
+    <>
+      <style jsx global>{`
+        nav,
+        header,
+        [role="navigation"] {
+          display: none !important;
+        }
+      `}</style>
+
+      <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff' }}>
+        {/* Hero Section */}
       <section style={{
         position: 'relative',
         minHeight: '100vh',
@@ -651,5 +667,6 @@ export default function FoundingMembersPage() {
         {new Date().getFullYear()}
       </footer>
     </div>
+    </>
   )
 }
