@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Script from 'next/script'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function Contact() {
   const [shimmerPhase, setShimmerPhase] = useState(0)
@@ -28,6 +29,10 @@ export default function Contact() {
   }
 
   const handleCalendlyClick = () => {
+    trackEvent('book_discovery_call', {
+      value: 5
+    })
+
     if (typeof window !== 'undefined' && window.Calendly) {
       window.Calendly.initPopupWidget({
         url: 'https://calendly.com/callwithmason/introduction',

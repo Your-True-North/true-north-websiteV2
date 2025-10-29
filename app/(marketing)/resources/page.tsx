@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState } from 'react'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function LibraryPage() {
   const [showEmailModal, setShowEmailModal] = useState(false)
@@ -11,6 +12,14 @@ export default function LibraryPage() {
 
   const handleCloseModal = () => {
     setShowEmailModal(false)
+  }
+
+  const handleEmailSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    trackEvent('library_signup', {
+      value: 1
+    })
+    // Form submission would happen here
   }
 
   return (
@@ -268,7 +277,7 @@ export default function LibraryPage() {
             </p>
             
             {/* Email Form */}
-            <form style={{maxWidth: '400px', margin: '0 auto 2rem'}}>
+            <form onSubmit={handleEmailSubmit} style={{maxWidth: '400px', margin: '0 auto 2rem'}}>
               <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
                 <input
                   type="email"

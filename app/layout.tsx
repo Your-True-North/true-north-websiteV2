@@ -1,4 +1,5 @@
 import './globals.css'
+import GoogleAnalytics from './components/GoogleAnalytics'
 
 export const metadata = {
   title: 'True North - Transformation Through Embodiment | Mason',
@@ -55,6 +56,7 @@ export default function RootLayout({
         </noscript>
       </head>
       <body>
+        <GoogleAnalytics />
         {children}
       </body>
     </html>

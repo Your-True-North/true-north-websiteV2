@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { Play, Pause, RotateCcw } from 'lucide-react'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function Circle() {
   const [isMobile, setIsMobile] = useState(false)
@@ -121,10 +122,15 @@ export default function Circle() {
       const data = await response.json()
 
       if (response.ok) {
-        const stripeUrl = pricingPlan === 'monthly' 
+        trackEvent('join_waitlist', {
+          list: 'circle_of_return',
+          value: 1
+        })
+
+        const stripeUrl = pricingPlan === 'monthly'
           ? 'https://buy.stripe.com/9B66oIcPd1o1do42fl9IQ0h'
           : 'https://buy.stripe.com/6oU14og1p2s52Jq9HN9IQ0i'
-        
+
         window.location.href = stripeUrl
       } else {
         setMessage(data.error || 'Something went wrong. Please try again.')
