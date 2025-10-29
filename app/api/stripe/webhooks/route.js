@@ -289,7 +289,7 @@ export async function POST(request) {
 
       // Tag as founding member in ConvertKit to trigger onboarding sequence
       const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
-      const FOUNDING_TAG_ID = process.env.CONVERTKIT_FOUNDING_TAG_ID
+      const FOUNDING_TAG_ID = process.env.FOUNDING_TAG_ID
 
       if (CONVERTKIT_API_KEY && FOUNDING_TAG_ID) {
         try {
