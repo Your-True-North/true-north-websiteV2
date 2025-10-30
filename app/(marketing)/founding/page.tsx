@@ -187,15 +187,16 @@ export default function FoundingMembersPage() {
             }}>
           {/* YouTube Video */}
           <div style={{
-            maxWidth: '800px',
-            margin: '0 auto 48px',
-            borderRadius: '12px',
+            maxWidth: isMobile ? '100vw' : '900px',
+            margin: isMobile ? '0 -20px 48px -20px' : '0 auto 48px',
+            borderRadius: isMobile ? '0' : '12px',
             overflow: 'hidden',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+            boxShadow: isMobile ? 'none' : '0 20px 60px rgba(0,0,0,0.3)',
+            border: isMobile ? 'none' : '2px solid rgba(155, 196, 184, 0.2)'
           }}>
-            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, background: '#0a0a0a' }}>
               <iframe
-                src="https://www.youtube.com/embed/n-ThA-45Yck"
+                src="https://www.youtube.com/embed/n-ThA-45Yck?modestbranding=1&rel=0&showinfo=0&controls=1&color=white"
                 style={{
                   position: 'absolute',
                   top: 0,
