@@ -185,6 +185,30 @@ export default function FoundingMembersPage() {
               maxWidth: '500px',
               margin: '0 auto 40px'
             }}>
+          {/* YouTube Video */}
+          <div style={{
+            maxWidth: '800px',
+            margin: '0 auto 48px',
+            borderRadius: '12px',
+            overflow: 'hidden',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+          }}>
+            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+              <iframe
+                src="https://www.youtube.com/embed/n-ThA-45Yck"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  border: 'none'
+                }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
               <div style={{
                 fontSize: isMobile ? '56px' : '72px',
                 fontWeight: 800,
