@@ -177,19 +177,10 @@ export default function FoundingMembersPage() {
           {/* Spots Counter */}
           {spotsRemaining !== null && !isSoldOut && (
             <div style={{
-              background: 'rgba(127,176,105,0.1)',
-              border: '2px solid rgba(127,176,105,0.3)',
-              borderRadius: '16px',
-              padding: '40px',
               textAlign: 'center',
-              maxWidth: '500px',
-              margin: '0 auto 40px'
-            }}>
-          {/* YouTube Video */}
-          <div style={{
-            width: isMobile ? '100vw' : '100%',
-            maxWidth: '900px',
-            margin: isMobile ? '0 0 48px 0' : '0 auto 48px',
+              margin: '0 auto 40px',
+              maxWidth: '500px'
+            }}>            margin: isMobile ? '0 0 48px 0' : '0 auto 48px',
             position: isMobile ? 'relative' : 'static',
             left: isMobile ? '50%' : 'auto',
             transform: isMobile ? 'translateX(-50%)' : 'none'
