@@ -341,7 +341,7 @@ export default function FoundingMembersPage() {
             textAlign: 'center',
             color: '#ffffff'
           }}>
-            A Glimpse Into My Journey
+            A Glimpse Into The Path
           </h2>
 
           <div style={{
