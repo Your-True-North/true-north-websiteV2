@@ -192,13 +192,29 @@ export default function LibraryPage() {
       <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '2rem 1.5rem' }}>
         {/* Header */}
         <div style={{ marginBottom: '2rem' }}>
+          <Link
+            href="/members"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              color: '#9bc4b8',
+              textDecoration: 'none',
+              fontSize: '0.875rem',
+              marginBottom: '1rem',
+              transition: 'color 0.3s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.color = '#7fb069'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#9bc4b8'}
+          >
+            ← Back to Dashboard
+          </Link>
           <h1 style={{
             fontSize: isMobile ? '2rem' : '3rem',
             fontWeight: 300,
             marginBottom: '0.5rem',
             letterSpacing: '-0.02em'
           }}>
-            The Journey
+            The Path
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '1.125rem', fontWeight: 300 }}>
             Your path to transformation
