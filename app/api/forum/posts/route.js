@@ -8,25 +8,25 @@ export async function GET(request) {
 
     let sql = `
       SELECT
-        cp.*,
+        fp.*,
         u.name as user_name,
         u.profile_photo as user_photo,
-        COUNT(DISTINCT pr.id) as reply_count,
-        COUNT(DISTINCT pl.id) as like_count
-      FROM community_posts cp
-      LEFT JOIN users u ON cp.user_id = u.id
-      LEFT JOIN post_replies pr ON cp.id = pr.post_id
-      LEFT JOIN post_likes pl ON cp.id = pl.post_id
+        COUNT(DISTINCT fr.id) as reply_count,
+        COUNT(DISTINCT fl.id) as like_count
+      FROM forum_posts fp
+      LEFT JOIN users u ON fp.user_id = u.id
+      LEFT JOIN forum_replies fr ON fp.id = fr.post_id
+      LEFT JOIN forum_likes fl ON fp.id = fl.post_id
     `
 
     const params = []
 
     if (category && category !== 'All Posts') {
-      sql += ' WHERE cp.category = $1'
+      sql += ' WHERE fp.category = $1'
       params.push(category)
     }
 
-    sql += ' GROUP BY cp.id, u.name, u.profile_photo ORDER BY cp.created_at DESC'
+    sql += ' GROUP BY fp.id, u.name, u.profile_photo ORDER BY fp.createdat DESC'
 
     const result = await query(sql, params)
 
@@ -86,7 +86,7 @@ export async function POST(request) {
     // Insert post
     console.log('[Forum Post CREATE] Creating post for userId:', userId)
     const result = await query(
-      `INSERT INTO community_posts (user_id, category, title, content)
+      `INSERT INTO forum_posts (user_id, category, title, content)
        VALUES ($1, $2, $3, $4)
        RETURNING *`,
       [userId, category || null, title || null, content]
