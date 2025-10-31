@@ -177,9 +177,9 @@ export default function FoundingMembersPage() {
           {/* Spots Counter */}
           {spotsRemaining !== null && !isSoldOut && (
             <div style={{
-              background: 'rgba(127,176,105,0.1)',
-              border: '2px solid rgba(127,176,105,0.3)',
-              borderRadius: '16px',
+              background: 'transparent',
+              border: 'none',
+              borderRadius: '0',
               padding: '40px',
               textAlign: 'center',
               maxWidth: '500px',
