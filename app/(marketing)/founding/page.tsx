@@ -180,29 +180,33 @@ export default function FoundingMembersPage() {
               textAlign: 'center',
               margin: '0 auto 40px',
               maxWidth: '500px'
-            }}>
+            }}>            margin: isMobile ? '0 0 48px 0' : '0 auto 48px',
+            position: isMobile ? 'relative' : 'static',
+            left: isMobile ? '50%' : 'auto',
+            transform: isMobile ? 'translateX(-50%)' : 'none'
+          }}>
+            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+              <iframe
+                src="https://www.youtube.com/embed/n-ThA-45Yck?modestbranding=1&rel=0"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  border: 'none'
+                }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
               <div style={{
                 fontSize: isMobile ? '56px' : '72px',
                 fontWeight: 800,
                 background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                marginBottom: '8px',
-                lineHeight: 1
-              }}>
-                {spotsRemaining}
-              </div>
-              <div style={{
-                fontSize: '20px',
-                color: 'rgba(255,255,255,0.6)',
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-                fontWeight: 600
-              }}>
-                of 30 spots remaining
-              </div>
-            </div>
-          )}
                 marginBottom: '8px',
                 lineHeight: 1
               }}>
