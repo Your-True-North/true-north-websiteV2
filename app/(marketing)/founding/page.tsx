@@ -203,22 +203,6 @@ export default function FoundingMembersPage() {
               </div>
             </div>
           )}
-                marginBottom: '8px',
-                lineHeight: 1
-              }}>
-                {spotsRemaining}
-              </div>
-              <div style={{
-                fontSize: '20px',
-                color: 'rgba(255,255,255,0.6)',
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-                fontWeight: 600
-              }}>
-                of 30 spots remaining
-              </div>
-            </div>
-          )}
 
           {/* CTA Button or Sold Out */}
           {isSoldOut ? (
