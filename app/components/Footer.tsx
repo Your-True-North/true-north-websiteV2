@@ -62,10 +62,11 @@ export default function Footer() {
             <div className="footer-column">
               <h4 className="footer-heading">Connect</h4>
               <ul className="footer-links">
-                <li><a href="mailto:hello@truenorth.com">hello@truenorth.com</a></li>
-                <li><a href="tel:+1234567890">Book a Call</a></li>
-                <li><a href="#instagram">Instagram</a></li>
-                <li><a href="#linkedin">LinkedIn</a></li>
+                <li><a href="mailto:hello@truenorth.com">Email</a></li>
+                <li><a href="https://wa.me/447449052909" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                <li><a href="https://instagram.com/your_truenorth_" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href="https://linkedin.com/in/yourtruenorth" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://youtube.com/@yourtruenorth" target="_blank" rel="noopener noreferrer">YouTube</a></li>
               </ul>
             </div>
           </div>

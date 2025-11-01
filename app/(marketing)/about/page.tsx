@@ -172,9 +172,9 @@ export default function About() {
                 I studied everything from somatic therapy to NLP, coaching to energy work. Not to escape myself, but to <em>meet</em> myself.
               </p>
               
-              <p style={{ 
-                fontSize: '1.5rem', 
-                fontFamily: 'Playfair Display, serif', 
+              <p style={{
+                fontSize: '1.5rem',
+                fontFamily: 'Gambarino, serif',
                 textAlign: 'center',
                 color: currentTheme.primary,
                 marginBottom: '2rem'

@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap");
-h1, h2, h3, h4, h5, h6 { font-family: "Playfair Display", serif !important; font-weight: 500 !important; }
+
+@font-face {
+  font-family: 'Gambarino';
+  src: url('/fonts/Gambarino-Regular.woff2') format('woff2'),
+       url('/fonts/Gambarino-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Gambarino', serif !important; font-weight: 500 !important; }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -80,7 +90,7 @@ body {
 
 /* Typography - ORIGINAL BOLD HEADERS */
 .h1, .h2, .h3, .h4, h1, h2, h3, h4 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Gambarino', serif;
   font-weight: 700; /* ORIGINAL BOLD WEIGHT */
   line-height: 1.2;
   color: var(--text-primary);
@@ -340,7 +350,7 @@ body {
   color: var(--text-primary);
   text-decoration: none;
   font-size: 1.5rem;
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Gambarino', serif !important;
   font-weight: 400;
   transition: all 0.3s ease;
   opacity: 0;
@@ -462,7 +472,7 @@ body {
   font-weight: 600;
   color: var(--primary);
   margin-bottom: 1rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Gambarino', serif;
 }
 
 .footer-description {
@@ -514,7 +524,7 @@ body {
 }
 
 .footer-quote blockquote p {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Gambarino', serif;
   font-size: 1.5rem;
   font-style: italic;
   color: var(--primary);
@@ -849,7 +859,7 @@ body, p, div, span, input, button, a {
 
 /* Keep serif fonts for headings */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Gambarino', serif !important;
 }
 
 /* Remove Geist font references */
@@ -878,7 +888,7 @@ body, p, div, span, a, button, input, textarea, .body, .body-large, .body-small,
 
 /* Serif ONLY for headings */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: 'Playfair Display', serif !important;
+  font-family: 'Gambarino', serif !important;
 }
 
 /* CoR Shimmer Animation */
@@ -1212,7 +1222,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Gambarino', serif;
 }
 
 .portal-description {
@@ -1247,7 +1257,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .portal-state-title {
   font-size: 2rem;
   font-weight: 100;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Gambarino', serif;
 }
 
 .portal-complete-text {
