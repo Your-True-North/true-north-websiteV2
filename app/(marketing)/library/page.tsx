@@ -466,7 +466,10 @@ export default function Library() {
         </div>
       )}
 
-      {/* Floating Ask DI Button */}
+      {/* Floating Ask DI Button - TEMPORARILY DISABLED
+          Feature requires OpenAI integration and knowledge base configuration.
+          Will be re-enabled once AI integration is properly set up.
+
       {!showAskDi && (
         <button
           onClick={() => setShowAskDi(true)}
@@ -499,6 +502,7 @@ export default function Library() {
           Ask True North
         </button>
       )}
+      */}
 
       {/* Ask DI Modal */}
       {showAskDi && (
