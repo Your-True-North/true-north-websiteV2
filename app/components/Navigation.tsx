@@ -77,7 +77,7 @@ export default function Navigation() {
                    cursor: 'pointer'
                  }}>Logout</button>
                ) : (
-                 <Link href="/auth/login" className="breathing-button" style={{
+                 <Link href="/auth/login" onClick={() => { localStorage.clear(); sessionStorage.clear(); }} className="breathing-button" style={{
                    padding: '0.5rem 1.25rem',
                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                    color: '#000',
@@ -219,7 +219,7 @@ export default function Navigation() {
              cursor: 'pointer'
            }}>Logout</button>
          ) : (
-           <Link href="/auth/login" onClick={() => setIsOpen(false)} className="breathing-button" style={{
+           <Link href="/auth/login" onClick={() => { localStorage.clear(); sessionStorage.clear(); setIsOpen(false); }} className="breathing-button" style={{
              marginTop: '1rem',
              padding: '0.75rem 1.5rem',
              background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
