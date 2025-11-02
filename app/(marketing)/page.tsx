@@ -224,7 +224,7 @@ export default function Home() {
           </div>
 
           <div className="container" style={{
-            position: 'relative', 
+            position: "relative", paddingTop: isMobile ? "8rem" : "12rem", 
             zIndex: 2,
             textAlign: isMobile ? 'center' : 'left',
             width: isMobile ? '90%' : 'auto'
