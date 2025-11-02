@@ -32,7 +32,7 @@ export default function Navigation() {
     document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     setUser(null);
     setIsOpen(false);
-    window.location.replace('/');
+    window.location.href = '/auth/login';
   };
 
   return (
