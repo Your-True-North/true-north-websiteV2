@@ -37,6 +37,14 @@ export default function MembersPage() {
       return
     }
 
+    // Check if coming from logout
+    const params = new URLSearchParams(window.location.search)
+    if (params.get("logout") === "true") {
+      localStorage.clear()
+      sessionStorage.clear()
+      window.location.replace("/auth/login")
+      return
+    }
     try {
       const parsedUser = JSON.parse(userData)
 

@@ -37,8 +37,10 @@ export default function Navigation() {
     // Set logout flag BEFORE clearing sessionStorage
     sessionStorage.setItem('justLoggedOut', 'true');
 
-    // Delete auth_token cookie
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    // Delete all cookies (combining both approaches)
+    document.cookie.split(';').forEach(c => {
+      document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+    });
 
     console.log('[NAV LOGOUT] Storage cleared, logout flag set');
 
@@ -94,7 +96,7 @@ export default function Navigation() {
                    cursor: 'pointer'
                  }}>Logout</button>
                ) : (
-                 <Link href="/auth/login" className="breathing-button" style={{
+                 <Link href="/auth/login" onClick={(e) => { e.preventDefault(); localStorage.clear(); sessionStorage.clear(); window.location.replace("/auth/login"); }} className="breathing-button" style={{
                    padding: '0.5rem 1.25rem',
                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                    color: '#000',
@@ -236,7 +238,7 @@ export default function Navigation() {
              cursor: 'pointer'
            }}>Logout</button>
          ) : (
-           <Link href="/auth/login" onClick={() => setIsOpen(false)} className="breathing-button" style={{
+           <Link href="/auth/login" onClick={(e) => { e.preventDefault(); localStorage.clear(); sessionStorage.clear(); window.location.replace("/auth/login"); }} className="breathing-button" style={{
              marginTop: '1rem',
              padding: '0.75rem 1.5rem',
              background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
