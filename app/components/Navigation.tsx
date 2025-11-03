@@ -26,13 +26,32 @@ export default function Navigation() {
   }, [pathname]);
 
   const handleLogout = () => {
+    console.log('[NAV LOGOUT] Starting logout...');
+
+    // Clear localStorage
     localStorage.removeItem('user');
     localStorage.removeItem('videoLikes');
     localStorage.removeItem('videoComments');
-    document.cookie.split(';').forEach(c => { document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/'; });
+    localStorage.clear();
+
+    // Set logout flag BEFORE clearing sessionStorage
+    sessionStorage.setItem('justLoggedOut', 'true');
+
+    // Delete all cookies (combining both approaches)
+    document.cookie.split(';').forEach(c => {
+      document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+    });
+
+    console.log('[NAV LOGOUT] Storage cleared, logout flag set');
+
     setUser(null);
     setIsOpen(false);
-    window.location.replace("/auth/login");
+
+    // Redirect to homepage
+    setTimeout(() => {
+      console.log('[NAV LOGOUT] Redirecting to homepage');
+      window.location.replace('/');
+    }, 50);
   };
 
   return (

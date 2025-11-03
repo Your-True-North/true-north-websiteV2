@@ -83,20 +83,28 @@ export default function MembersPage() {
 
   const handleLogout = () => {
     logger.debug('Members', 'Logging out user')
+    console.log('[MEMBERS LOGOUT] Starting logout...')
 
     // Clear all auth data
     localStorage.removeItem('user')
     localStorage.removeItem('videoLikes')
     localStorage.removeItem('videoComments')
     localStorage.removeItem('justLoggedIn')
+    localStorage.clear()
 
-    // Clear all cookies
-    document.cookie.split(";").forEach((c) => {
-      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-    });
+    // Set logout flag BEFORE clearing sessionStorage
+    sessionStorage.setItem('justLoggedOut', 'true')
 
-    // Use router.push for cleaner navigation
-    router.push('/')
+    // Delete auth_token cookie
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+
+    console.log('[MEMBERS LOGOUT] Storage cleared, logout flag set')
+
+    // Redirect to homepage
+    setTimeout(() => {
+      console.log('[MEMBERS LOGOUT] Redirecting to homepage')
+      router.push('/')
+    }, 50)
   }
 
   const handleProfileUpdate = async (e: React.FormEvent) => {

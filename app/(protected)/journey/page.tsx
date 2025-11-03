@@ -174,12 +174,28 @@ export default function JourneyPage() {
 
   const handleLogout = () => {
     logger.debug('Journey', 'Logging out user')
+    console.log('[JOURNEY LOGOUT] Starting logout...')
+
+    // Clear all auth data
     localStorage.removeItem('user')
     localStorage.removeItem('videoLikes')
     localStorage.removeItem('videoComments')
     localStorage.removeItem('justLoggedIn')
+    localStorage.clear()
+
+    // Set logout flag BEFORE clearing sessionStorage
+    sessionStorage.setItem('justLoggedOut', 'true')
+
+    // Delete auth_token cookie
     document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    window.location.replace('/')
+
+    console.log('[JOURNEY LOGOUT] Storage cleared, logout flag set')
+
+    // Redirect to homepage
+    setTimeout(() => {
+      console.log('[JOURNEY LOGOUT] Redirecting to homepage')
+      window.location.replace('/')
+    }, 50)
   }
 
   const handleLikeVideo = (videoId) => {

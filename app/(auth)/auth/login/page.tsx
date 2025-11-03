@@ -14,6 +14,29 @@ export default function LoginPage() {
   const [checkingAuth, setCheckingAuth] = useState(true)
 
   useEffect(() => {
+    // Check if user is already logged in (but not if they just logged out)
+    const userData = localStorage.getItem('user')
+    const justLoggedOut = sessionStorage.getItem('justLoggedOut')
+
+    if (userData && !justLoggedOut) {
+      try {
+        const user = JSON.parse(userData)
+        if (user && user.email) {
+          console.log('[LOGIN] User already logged in, redirecting to journey...')
+          window.location.replace('/journey')
+          return
+        }
+      } catch (e) {
+        // Invalid user data, clear it
+        localStorage.removeItem('user')
+      }
+    }
+
+    // Clear the logout flag if it exists
+    if (justLoggedOut) {
+      sessionStorage.removeItem('justLoggedOut')
+    }
+
     setCheckingAuth(false)
   }, [])
 
