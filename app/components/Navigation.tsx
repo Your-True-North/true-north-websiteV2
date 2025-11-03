@@ -29,7 +29,7 @@ export default function Navigation() {
     localStorage.removeItem('user');
     localStorage.removeItem('videoLikes');
     localStorage.removeItem('videoComments');
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie.split(';').forEach(c => { document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/'; });
     setUser(null);
     setIsOpen(false);
     window.location.replace("/auth/login");
