@@ -58,7 +58,7 @@ export default function Work() {
     if (isPlaying && !playerRef.current && window.YT) {
       const initPlayer = () => {
         playerRef.current = new window.YT.Player('vsl-youtube-player', {
-          videoId: '-k7UOEJf9wM',
+          videoId: 'RAutFUW-erc',
           playerVars: {
             autoplay: 1,
             controls: 0,
