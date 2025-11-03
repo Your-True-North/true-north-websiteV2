@@ -161,7 +161,17 @@ export default function Circle() {
             width: '100%',
             height: '100%'
           }}>
-            <div
+            {/* Fade overlay at sides */}
+            <div style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              background: "linear-gradient(90deg, rgba(10,10,11,0.8) 0%, transparent 15%, transparent 85%, rgba(10,10,11,0.8) 100%)",
+              pointerEvents: "none",
+              zIndex: 2
+            }} />            <div
               id="youtube-player"
               style={{
                 position: 'absolute',
