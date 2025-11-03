@@ -147,7 +147,7 @@ export default function FoundingMembersPage() {
           margin: '0 auto'
         }}>
           <h1 style={{
-            fontSize: isMobile ? '48px' : '80px',
+            fontSize: isMobile ? "clamp(2rem, 10vw, 3rem)" : "clamp(3.5rem, 8vw, 5rem)",
             fontWeight: 800,
             lineHeight: 0.95,
             letterSpacing: '-2px',
