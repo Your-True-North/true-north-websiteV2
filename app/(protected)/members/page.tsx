@@ -83,15 +83,16 @@ export default function MembersPage() {
     localStorage.removeItem('videoComments')
     localStorage.removeItem('justLoggedIn')
     localStorage.clear()
-    sessionStorage.clear()
 
-    // Delete auth_token cookie (now works because httpOnly is false)
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax'
+    // Set logout flag BEFORE clearing sessionStorage
+    sessionStorage.setItem('justLoggedOut', 'true')
 
-    console.log('[MEMBERS LOGOUT] Storage cleared, cookie deleted')
-    console.log('[MEMBERS LOGOUT] Cookies after delete:', document.cookie)
+    // Delete auth_token cookie
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
 
-    // Small delay to ensure everything is cleared
+    console.log('[MEMBERS LOGOUT] Storage cleared, logout flag set')
+
+    // Redirect to homepage
     setTimeout(() => {
       console.log('[MEMBERS LOGOUT] Redirecting to homepage')
       router.push('/')

@@ -182,15 +182,16 @@ export default function JourneyPage() {
     localStorage.removeItem('videoComments')
     localStorage.removeItem('justLoggedIn')
     localStorage.clear()
-    sessionStorage.clear()
 
-    // Delete auth_token cookie (now works because httpOnly is false)
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax'
+    // Set logout flag BEFORE clearing sessionStorage
+    sessionStorage.setItem('justLoggedOut', 'true')
 
-    console.log('[JOURNEY LOGOUT] Storage cleared, cookie deleted')
-    console.log('[JOURNEY LOGOUT] Cookies after delete:', document.cookie)
+    // Delete auth_token cookie
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
 
-    // Small delay to ensure everything is cleared
+    console.log('[JOURNEY LOGOUT] Storage cleared, logout flag set')
+
+    // Redirect to homepage
     setTimeout(() => {
       console.log('[JOURNEY LOGOUT] Redirecting to homepage')
       window.location.replace('/')
