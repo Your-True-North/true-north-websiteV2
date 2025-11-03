@@ -196,7 +196,7 @@ export default function FoundingMembersPage() {
           }}>
             <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
               <iframe
-                src="https://www.youtube.com/embed/n-ThA-45Yck?modestbranding=1&rel=0&controls=0&showinfo=0&iv_load_policy=3"
+                src="https://www.youtube.com/embed/RAutFUW-erc?modestbranding=1&rel=0&controls=0&showinfo=0&iv_load_policy=3"
                 style={{
                   position: 'absolute',
                   top: 0,
