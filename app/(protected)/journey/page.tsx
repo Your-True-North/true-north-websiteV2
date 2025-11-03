@@ -174,12 +174,27 @@ export default function JourneyPage() {
 
   const handleLogout = () => {
     logger.debug('Journey', 'Logging out user')
+    console.log('[JOURNEY LOGOUT] Starting logout...')
+
+    // Clear all auth data
     localStorage.removeItem('user')
     localStorage.removeItem('videoLikes')
     localStorage.removeItem('videoComments')
     localStorage.removeItem('justLoggedIn')
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    window.location.replace('/')
+    localStorage.clear()
+    sessionStorage.clear()
+
+    // Delete auth_token cookie (now works because httpOnly is false)
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax'
+
+    console.log('[JOURNEY LOGOUT] Storage cleared, cookie deleted')
+    console.log('[JOURNEY LOGOUT] Cookies after delete:', document.cookie)
+
+    // Small delay to ensure everything is cleared
+    setTimeout(() => {
+      console.log('[JOURNEY LOGOUT] Redirecting to homepage')
+      window.location.replace('/')
+    }, 50)
   }
 
   const handleLikeVideo = (videoId) => {

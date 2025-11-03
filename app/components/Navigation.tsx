@@ -26,13 +26,29 @@ export default function Navigation() {
   }, [pathname]);
 
   const handleLogout = () => {
+    console.log('[NAV LOGOUT] Starting logout...');
+
+    // Clear localStorage
     localStorage.removeItem('user');
     localStorage.removeItem('videoLikes');
     localStorage.removeItem('videoComments');
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Delete auth_token cookie (now works because httpOnly is false)
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax';
+
+    console.log('[NAV LOGOUT] Storage cleared, cookie deleted');
+    console.log('[NAV LOGOUT] Cookies after delete:', document.cookie);
+
     setUser(null);
     setIsOpen(false);
-    window.location.replace('/');
+
+    // Small delay to ensure everything is cleared
+    setTimeout(() => {
+      console.log('[NAV LOGOUT] Redirecting to homepage');
+      window.location.replace('/');
+    }, 50);
   };
 
   return (
