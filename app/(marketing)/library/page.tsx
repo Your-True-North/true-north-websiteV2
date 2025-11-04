@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Library() {
   const [showModal, setShowModal] = useState(false)
@@ -15,6 +15,14 @@ export default function Library() {
   const [isLoadingAnswer, setIsLoadingAnswer] = useState(false)
   const [hasAsked, setHasAsked] = useState(false)
   const [questionCount, setQuestionCount] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const handleResourceClick = (resourceName) => {
     setSelectedResource(resourceName)
@@ -143,7 +151,7 @@ export default function Library() {
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '4rem'}}>
               <h1 style={{
-                fontSize: '2.5rem',
+                fontSize: isMobile ? 'clamp(1.8rem, 8vw, 2.5rem)' : '2.5rem',
                 marginBottom: '1.5rem',
                 color: '#ffffff',
                 fontWeight: '700'
@@ -151,7 +159,7 @@ export default function Library() {
                 Free Resource Library
               </h1>
               <p style={{
-                fontSize: '1.1rem', 
+                fontSize: isMobile ? '1rem' : '1.1rem', 
                 maxWidth: '600px', 
                 margin: '0 auto',
                 color: 'rgba(255, 255, 255, 0.85)',
@@ -454,8 +462,8 @@ export default function Library() {
                   Check your email for your resource and welcome sequence.
                 </p>
                 <div style={{
-                  color: '#4ade80', 
-                  fontSize: '2.5rem',
+                  color: '#4ade80',
+                  fontSize: isMobile ? '2rem' : '2.5rem',
                   marginBottom: '1rem'
                 }}>
                   ✓
