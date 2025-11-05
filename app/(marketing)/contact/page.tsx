@@ -5,6 +5,7 @@ import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function Contact() {
   const [shimmerPhase, setShimmerPhase] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,11 +14,18 @@ export default function Contact() {
   })
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
     const interval = setInterval(() => {
       setShimmerPhase(prev => (prev + 1) % 4)
     }, 180000) // 3 minutes between transitions
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('resize', checkMobile)
+    }
   }, [])
 
   const handleInputChange = (e) => {
@@ -182,7 +190,7 @@ export default function Contact() {
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '4rem'}}>
               <h1 style={{
-                fontSize: '2.5rem',
+                fontSize: isMobile ? 'clamp(1.8rem, 8vw, 2.5rem)' : '2.5rem',
                 marginBottom: '1.5rem',
                 color: '#ffffff',
                 fontWeight: '700',
@@ -192,7 +200,7 @@ export default function Contact() {
                 Let's Talk
               </h1>
               <p style={{
-                fontSize: '1.2rem',
+                fontSize: isMobile ? '1rem' : '1.2rem',
                 color: 'rgba(255, 255, 255, 0.8)',
                 maxWidth: '600px',
                 margin: '0 auto'
@@ -210,7 +218,7 @@ export default function Contact() {
                 borderRadius: '6px'
               }}>
                 <h2 style={{
-                  fontSize: '1.8rem',
+                  fontSize: isMobile ? 'clamp(1.3rem, 6vw, 1.8rem)' : '1.8rem',
                   marginBottom: '1rem',
                   color: '#ffffff',
                   fontWeight: '600',
