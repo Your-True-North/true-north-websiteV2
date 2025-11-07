@@ -19,6 +19,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
     }
 
+    if (!CONVERTKIT_FORM_ID) {
+      console.error('[ConvertKit Waitlist] Missing THE_ECO_SYSTEM_ID environment variable')
+      return NextResponse.json({ error: 'Server configuration error - missing form ID' }, { status: 500 })
+    }
+
+    console.log('[ConvertKit Waitlist] Environment check:', {
+      hasApiKey: !!CONVERTKIT_API_KEY,
+      hasFormId: !!CONVERTKIT_FORM_ID,
+      hasTagId: !!WAITLIST_TAG_ID,
+      formId: CONVERTKIT_FORM_ID,
+      tagId: WAITLIST_TAG_ID
+    })
+
     // Add subscriber to ConvertKit
     const subscriberData = {
       api_key: CONVERTKIT_API_KEY,
@@ -39,11 +52,19 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('[ConvertKit Waitlist] Subscribe failed:', errorText)
-      throw new Error('Failed to add subscriber to ConvertKit')
+      console.error('[ConvertKit Waitlist] Subscribe failed:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      })
+      return NextResponse.json(
+        { error: 'Failed to subscribe to waitlist. Please contact support.' },
+        { status: 500 }
+      )
     }
 
     const result = await response.json()
+    console.log('[ConvertKit Waitlist] Subscription successful:', { subscriberId: result.subscription?.subscriber?.id })
 
     // Tag subscriber with Circle of Return waitlist tag
     if (result.subscription?.subscriber?.id && WAITLIST_TAG_ID) {
