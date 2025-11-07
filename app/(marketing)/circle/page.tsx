@@ -148,7 +148,7 @@ export default function Circle() {
         <section style={{
           position: 'relative',
           width: '100%',
-          height: '100vh',
+          height: isMobile ? '100vh' : '110vh',
           overflow: 'hidden',
           display: 'flex',
           alignItems: 'center',
