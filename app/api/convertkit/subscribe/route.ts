@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY;
-const LIBRARY_TAG_ID = process.env.LIBRARY_TAG_ID || '7654321';
+const THE_LIBRARY_TAG_ID = process.env.THE_LIBRARY_TAG_ID || '7654321';
 
 export async function POST(request: Request) {
   try {
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     }
 
     const response = await fetch(
-      `https://api.convertkit.com/v3/tags/${LIBRARY_TAG_ID}/subscribe`,
+      `https://api.convertkit.com/v3/tags/${THE_LIBRARY_TAG_ID}/subscribe`,
       {
         method: 'POST',
         headers: {
