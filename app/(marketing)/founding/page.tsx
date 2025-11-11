@@ -214,6 +214,17 @@ export default function FoundingMembersPage() {
                 fontSize: isMobile ? '56px' : '72px',
                 fontWeight: 800,
                 background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+              {/* Fade overlay at sides */}
+              <div style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                background: "linear-gradient(90deg, rgba(10,10,11,0.8) 0%, transparent 15%, transparent 85%, rgba(10,10,11,0.8) 100%)",
+                pointerEvents: "none",
+                zIndex: 2
+              }} />
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 marginBottom: '8px',
