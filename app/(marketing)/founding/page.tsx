@@ -208,12 +208,6 @@ export default function FoundingMembersPage() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
-            </div>
-          </div>
-              <div style={{
-                fontSize: isMobile ? '56px' : '72px',
-                fontWeight: 800,
-                background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
               {/* Fade overlay at sides */}
               <div style={{
                 position: "absolute",
@@ -224,6 +218,13 @@ export default function FoundingMembersPage() {
                 background: "linear-gradient(90deg, rgba(10,10,11,0.8) 0%, transparent 15%, transparent 85%, rgba(10,10,11,0.8) 100%)",
                 pointerEvents: "none",
                 zIndex: 2
+              }} />
+            </div>
+          </div>
+              <div style={{
+                fontSize: isMobile ? '56px' : '72px',
+                fontWeight: 800,
+                background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
               }} />
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
