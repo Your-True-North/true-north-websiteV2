@@ -26,7 +26,7 @@ export default function FoundingMembersPage() {
       .then(res => res.json())
       .then(data => {
         const count = data.count || 0
-        setSpotsRemaining(30 - count)
+        setSpotsRemaining(20)
         setIsSoldOut(count >= 30)
       })
       .catch(() => setSpotsRemaining(30))
