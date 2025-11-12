@@ -578,7 +578,8 @@ export default function MembersPage() {
           display: 'grid',
           gridTemplateColumns: isTablet ? '1fr' : 'repeat(2, 1fr)',
           gap: '2rem',
-          marginBottom: '2rem'
+          marginBottom: '2rem',
+          alignItems: 'stretch'
         }}>
           {/* Circle Content */}
           <div style={{
@@ -587,7 +588,10 @@ export default function MembersPage() {
             border: '1px solid rgba(255, 255, 255, 0.1)',
             borderRadius: '12px',
             padding: '2rem',
-            transition: 'border 0.3s ease'
+            transition: 'border 0.3s ease',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
           }}
           onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
           onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
@@ -654,7 +658,10 @@ export default function MembersPage() {
             border: '1px solid rgba(255, 255, 255, 0.1)',
             borderRadius: '12px',
             padding: '2rem',
-            transition: 'border 0.3s ease'
+            transition: 'border 0.3s ease',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column'
           }}
           onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
           onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>

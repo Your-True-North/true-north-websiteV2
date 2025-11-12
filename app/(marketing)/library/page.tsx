@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export default function Library() {
   const [showModal, setShowModal] = useState(false)
@@ -9,62 +9,10 @@ export default function Library() {
   const [firstName, setFirstName] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [showAskDi, setShowAskDi] = useState(false)
-  const [question, setQuestion] = useState('')
-  const [answer, setAnswer] = useState('')
-  const [isLoadingAnswer, setIsLoadingAnswer] = useState(false)
-  const [hasAsked, setHasAsked] = useState(false)
-  const [questionCount, setQuestionCount] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
 
   const handleResourceClick = (resourceName) => {
     setSelectedResource(resourceName)
     setShowModal(true)
-  }
-
-  const handleAsk = async () => {
-    if (!question.trim()) return
-
-    setIsLoadingAnswer(true)
-    setQuestionCount(prev => prev + 1)
-
-    try {
-      // Check if user has reached the limit
-      if (questionCount >= 2) {
-        setAnswer("You've reached your 3 free questions. If you're ready to go deeper, explore working with me directly or dive into the free resources available on this page. The real transformation happens when you commit.")
-        setIsLoadingAnswer(false)
-        setHasAsked(true)
-        return
-      }
-
-      const response = await fetch('/api/ask-di', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ q: question })
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        setAnswer(data.answer)
-      } else {
-        setAnswer("The path you seek is already within you. Trust the process. Where you are now does not have to be where you end up.")
-      }
-
-      setIsLoadingAnswer(false)
-      setHasAsked(true)
-    } catch (error) {
-      console.error('Ask DI failed:', error)
-      setAnswer("The path you seek is already within you. Trust the process. Where you are now does not have to be where you end up.")
-      setIsLoadingAnswer(false)
-      setHasAsked(true)
-    }
   }
 
   const handleSubmit = async (e) => {
@@ -151,7 +99,7 @@ export default function Library() {
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '4rem'}}>
               <h1 style={{
-                fontSize: isMobile ? 'clamp(1.8rem, 8vw, 2.5rem)' : '2.5rem',
+                fontSize: '2.5rem',
                 marginBottom: '1.5rem',
                 color: '#ffffff',
                 fontWeight: '700'
@@ -159,7 +107,7 @@ export default function Library() {
                 Free Resource Library
               </h1>
               <p style={{
-                fontSize: isMobile ? '1rem' : '1.1rem', 
+                fontSize: '1.1rem', 
                 maxWidth: '600px', 
                 margin: '0 auto',
                 color: 'rgba(255, 255, 255, 0.85)',
@@ -462,8 +410,8 @@ export default function Library() {
                   Check your email for your resource and welcome sequence.
                 </p>
                 <div style={{
-                  color: '#4ade80',
-                  fontSize: isMobile ? '2rem' : '2.5rem',
+                  color: '#4ade80', 
+                  fontSize: '2.5rem',
                   marginBottom: '1rem'
                 }}>
                   ✓
@@ -471,312 +419,6 @@ export default function Library() {
               </div>
             )}
           </div>
-        </div>
-      )}
-
-      {/* Floating Ask DI Button */}
-      {!showAskDi && (
-        <button
-          onClick={() => setShowAskDi(true)}
-          style={{
-            position: 'fixed',
-            bottom: '2rem',
-            right: '2rem',
-            padding: '1rem 1.5rem',
-            background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-            color: '#000',
-            border: 'none',
-            borderRadius: '50px',
-            fontSize: '1rem',
-            fontWeight: '600',
-            cursor: 'pointer',
-            zIndex: 999,
-            boxShadow: 'none',
-            transition: 'all 0.3s ease',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-3px)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)'
-          }}
-        >
-          Ask True North
-        </button>
-      )}
-
-      {/* Ask DI Modal */}
-      {showAskDi && (
-        <div style={{
-          position: 'fixed',
-          bottom: '2rem',
-          right: '2rem',
-          width: '90vw',
-          maxWidth: '500px',
-          background: 'rgba(10, 10, 11, 0.98)',
-          border: '1px solid rgba(155, 196, 184, 0.3)',
-          borderRadius: '12px',
-          padding: '2rem',
-          zIndex: 1000,
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur(20px)'
-        }}>
-          {/* Close Button */}
-          <button
-            onClick={() => {
-              setShowAskDi(false)
-              setHasAsked(false)
-              setQuestion('')
-              setAnswer('')
-            }}
-            style={{
-              position: 'absolute',
-              top: '1rem',
-              right: '1rem',
-              background: 'transparent',
-              border: 'none',
-              color: 'rgba(255, 255, 255, 0.6)',
-              fontSize: '1.5rem',
-              cursor: 'pointer',
-              padding: '0.25rem',
-              transition: 'color 0.3s ease',
-              lineHeight: 1
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-            onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
-          >
-            ×
-          </button>
-
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h3 style={{
-              fontSize: '1.5rem',
-              fontWeight: '600',
-              color: '#fff',
-              marginBottom: '0.5rem',
-              background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}>
-              Ask True North
-            </h3>
-            <p style={{
-              fontSize: '0.9rem',
-              color: 'rgba(255, 255, 255, 0.7)',
-              lineHeight: '1.5'
-            }}>
-              Ask a question about personal growth or navigating a challenge. All answers come from my words, thoughts, and beliefs—channeled through years of experience and transformation.
-            </p>
-          </div>
-
-          {!hasAsked ? (
-            <div>
-              <textarea
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                placeholder="What truth are you ready to hear?"
-                rows={4}
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  marginBottom: '1rem',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(155, 196, 184, 0.3)',
-                  borderRadius: '8px',
-                  color: '#fff',
-                  fontSize: '1rem',
-                  resize: 'none',
-                  outline: 'none',
-                  fontFamily: 'inherit'
-                }}
-                onFocus={(e) => e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.6)'}
-                onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
-              />
-
-              <button
-                onClick={handleAsk}
-                disabled={isLoadingAnswer || !question.trim()}
-                style={{
-                  width: '100%',
-                  padding: '0.875rem',
-                  background: isLoadingAnswer || !question.trim()
-                    ? 'rgba(155, 196, 184, 0.3)'
-                    : 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                  color: isLoadingAnswer || !question.trim() ? 'rgba(255, 255, 255, 0.5)' : '#000',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  cursor: isLoadingAnswer || !question.trim() ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  if (!isLoadingAnswer && question.trim()) {
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(155, 196, 184, 0.4)'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isLoadingAnswer && question.trim()) {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = 'none'
-                  }
-                }}
-              >
-                {isLoadingAnswer ? 'Channelling...' : 'Ask True North'}
-              </button>
-            </div>
-          ) : (
-            <div>
-              <div style={{
-                padding: '1rem',
-                marginBottom: '1rem',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '8px'
-              }}>
-                <p style={{
-                  fontSize: '0.75rem',
-                  color: 'rgba(255, 255, 255, 0.5)',
-                  marginBottom: '0.5rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em'
-                }}>
-                  Your Question:
-                </p>
-                <p style={{
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  fontSize: '0.95rem',
-                  lineHeight: '1.5'
-                }}>
-                  {question}
-                </p>
-              </div>
-
-              <div style={{
-                padding: '1.25rem',
-                background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))',
-                border: '1px solid rgba(155, 196, 184, 0.3)',
-                borderRadius: '8px',
-                marginBottom: '1rem'
-              }}>
-                <p style={{
-                  fontSize: '0.75rem',
-                  color: 'rgba(155, 196, 184, 0.8)',
-                  marginBottom: '0.5rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em'
-                }}>
-                  Divine Intelligence Responds:
-                </p>
-                <p style={{
-                  color: '#fff',
-                  fontSize: '1rem',
-                  lineHeight: '1.6',
-                  fontWeight: '300'
-                }}>
-                  {answer}
-                </p>
-              </div>
-
-              {questionCount < 3 ? (
-                <button
-                  onClick={() => {
-                    setHasAsked(false)
-                    setQuestion('')
-                    setAnswer('')
-                  }}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    background: 'transparent',
-                    border: '1px solid rgba(155, 196, 184, 0.3)',
-                    borderRadius: '8px',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    fontSize: '0.95rem',
-                    fontWeight: '500',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.6)'
-                    e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
-                    e.currentTarget.style.background = 'transparent'
-                  }}
-                >
-                  Ask Another Question
-                </button>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  <a
-                    href="/work"
-                    style={{
-                      width: '100%',
-                      padding: '0.875rem',
-                      background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                      border: 'none',
-                      borderRadius: '8px',
-                      color: '#000',
-                      fontSize: '0.95rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      textAlign: 'center',
-                      textDecoration: 'none',
-                      display: 'block'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)'
-                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(155, 196, 184, 0.4)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)'
-                      e.currentTarget.style.boxShadow = 'none'
-                    }}
-                  >
-                    Work With Me
-                  </a>
-                  <button
-                    onClick={() => {
-                      setShowAskDi(false)
-                      setHasAsked(false)
-                      setQuestion('')
-                      setAnswer('')
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      background: 'transparent',
-                      border: '1px solid rgba(155, 196, 184, 0.3)',
-                      borderRadius: '8px',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      fontSize: '0.95rem',
-                      fontWeight: '500',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.6)'
-                      e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
-                      e.currentTarget.style.background = 'transparent'
-                    }}
-                  >
-                    Explore Free Resources
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
         </div>
       )}
     </>
