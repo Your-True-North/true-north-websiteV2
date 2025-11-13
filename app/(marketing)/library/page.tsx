@@ -9,16 +9,51 @@ export default function Library() {
   const [firstName, setFirstName] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const getSuccessMessage = (resourceName) => {
+    // IMMEDIATE DELIVERY resources
+    const immediateResources = [
+      "Realistic Anger Management",
+      "Integration Journal",
+      "A Mans Guide to Knowing Himself"
+    ]
+
+    // 2-WEEK VIDEO COURSES
+    const videoCourses = [
+      "The Space Method",
+      "Take Back Control"
+    ]
+
+    // NOT READY YET
+    const notReadyResources = [
+      "Awaken The Truth"
+    ]
+
+    if (immediateResources.includes(resourceName)) {
+      return "Check your email - your resource is on its way and should arrive within the next few minutes."
+    } else if (videoCourses.includes(resourceName)) {
+      return `Check your email to start your 14-day ${resourceName}. You'll receive a new video each day.`
+    } else if (notReadyResources.includes(resourceName)) {
+      return "This resource is still being crafted. We'll email you as soon as it's ready."
+    } else {
+      return "Check your email for your resource and welcome sequence."
+    }
+  }
 
   const handleResourceClick = (resourceName) => {
     setSelectedResource(resourceName)
     setShowModal(true)
+    setErrorMessage('')
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+    setErrorMessage('')
+
+    console.log('[Library Form] Submitting:', { email, firstName, resource: selectedResource })
+
     try {
       const response = await fetch('/api/convertkit/subscribe', {
         method: 'POST',
@@ -32,8 +67,12 @@ export default function Library() {
           resource: selectedResource
         }),
       })
-      
+
+      const data = await response.json()
+      console.log('[Library Form] Response:', { ok: response.ok, status: response.status, data })
+
       if (response.ok) {
+        console.log('[Library Form] Success! Showing success message')
         setSubmitted(true)
         setTimeout(() => {
           setShowModal(false)
@@ -41,14 +80,16 @@ export default function Library() {
           setEmail('')
           setFirstName('')
           setSelectedResource('')
-        }, 3000)
+        }, 5000)
       } else {
-        console.error('Subscription failed')
+        console.error('[Library Form] Subscription failed:', data)
+        setErrorMessage(data.error || 'Failed to subscribe. Please try again.')
       }
     } catch (error) {
-      console.error('Subscription failed:', error)
+      console.error('[Library Form] Network error:', error)
+      setErrorMessage('Connection error. Please check your internet and try again.')
     }
-    
+
     setIsSubmitting(false)
   }
 
@@ -336,6 +377,21 @@ export default function Library() {
                     }}
                   />
                   
+                  {errorMessage && (
+                    <div style={{
+                      padding: '0.8rem',
+                      marginBottom: '1rem',
+                      backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      borderRadius: '6px',
+                      color: '#ef4444',
+                      fontSize: '0.9rem',
+                      lineHeight: '1.4'
+                    }}>
+                      {errorMessage}
+                    </div>
+                  )}
+
                   <div style={{display: 'flex', gap: '1rem', justifyContent: 'space-between'}}>
                     <button
                       type="button"
@@ -396,21 +452,21 @@ export default function Library() {
             ) : (
               <div style={{textAlign: 'center'}}>
                 <h3 style={{
-                  color: '#ffffff', 
+                  color: '#ffffff',
                   marginBottom: '1rem',
                   fontSize: '1.5rem'
                 }}>
                   Welcome to the Journey
                 </h3>
                 <p style={{
-                  color: 'rgba(255, 255, 255, 0.8)', 
+                  color: 'rgba(255, 255, 255, 0.8)',
                   marginBottom: '1.5rem',
                   lineHeight: '1.6'
                 }}>
-                  Check your email for your resource and welcome sequence.
+                  {getSuccessMessage(selectedResource)}
                 </p>
                 <div style={{
-                  color: '#4ade80', 
+                  color: '#4ade80',
                   fontSize: '2.5rem',
                   marginBottom: '1rem'
                 }}>
