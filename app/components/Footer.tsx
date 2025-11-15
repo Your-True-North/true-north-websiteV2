@@ -65,8 +65,8 @@ export default function Footer() {
                 <li><a href="mailto:hello@truenorth.com">Email</a></li>
                 <li><a href="https://wa.me/447449052909" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
                 <li><a href="https://instagram.com/your_truenorth_" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                <li><a href="https://linkedin.com/in/yourtruenorth" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-                <li><a href="https://youtube.com/@yourtruenorth" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                <li><a href="http://linkedin.com/in/true-north-0b55a533/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://www.youtube.com/@Your_TrueNorth" target="_blank" rel="noopener noreferrer">YouTube</a></li>
               </ul>
             </div>
           </div>
