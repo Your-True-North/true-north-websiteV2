@@ -481,7 +481,7 @@ export default function Circle() {
                   fontWeight: '300',
                   padding: isMobile ? '1.5rem' : '2rem',
                   background: 'rgba(255, 255, 255, 0.02)',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   border: '1px solid rgba(255, 255, 255, 0.05)',
                   transition: 'all 0.3s ease'
                 }}>
@@ -494,7 +494,7 @@ export default function Circle() {
               marginTop: '3rem',
               padding: isMobile ? '2rem 1.5rem' : '2.5rem 2rem',
               background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.08), rgba(255, 255, 255, 0.03))',
-              borderRadius: '6px',
+              borderRadius: '3px',
               border: '1px solid rgba(123, 166, 155, 0.2)'
             }}>
               <p style={{
@@ -660,7 +660,7 @@ export default function Circle() {
                   scrollSnapAlign: isMobile ? 'start' : 'none',
                   padding: isMobile ? '2rem 1.5rem' : '2.5rem 2rem',
                   background: 'rgba(255, 255, 255, 0.02)',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   border: '1px solid rgba(255, 255, 255, 0.08)',
                   transition: 'all 0.3s ease'
                 }}>
@@ -928,7 +928,7 @@ export default function Circle() {
             style={{
               background: 'linear-gradient(135deg, rgba(10, 10, 11, 0.95), rgba(20, 20, 22, 0.95))',
               padding: isMobile ? '2.5rem 2rem' : '3rem 2.5rem',
-              borderRadius: '6px',
+              borderRadius: '3px',
               border: '1px solid rgba(255, 255, 255, 0.15)',
               maxWidth: '480px',
               width: '100%',

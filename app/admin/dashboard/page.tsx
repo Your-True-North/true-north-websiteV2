@@ -91,7 +91,7 @@ export default function AdminDashboard() {
             padding: '10px 20px',
             background: 'rgba(255, 255, 255, 0.05)',
             border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '6px',
+            borderRadius: '3px',
             color: '#fff',
             fontSize: '14px',
             cursor: 'pointer'
@@ -117,7 +117,7 @@ export default function AdminDashboard() {
                 padding: '32px',
                 background: 'rgba(255, 255, 255, 0.02)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 textDecoration: 'none',
                 transition: 'all 0.3s ease'
               }}
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
           padding: '32px',
           background: 'rgba(255, 255, 255, 0.02)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '6px'
+          borderRadius: '3px'
         }}>
           <h2 style={{
             fontSize: '20px',
@@ -174,7 +174,7 @@ export default function AdminDashboard() {
               style={{
                 padding: '12px 24px',
                 background: '#7fb069',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 color: '#fff',
                 textDecoration: 'none',
                 fontSize: '14px',
@@ -189,7 +189,7 @@ export default function AdminDashboard() {
                 padding: '12px 24px',
                 background: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 color: '#fff',
                 textDecoration: 'none',
                 fontSize: '14px',

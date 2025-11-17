@@ -79,9 +79,9 @@ async function sendWelcomeEmail(email, name, password) {
         <style>
           body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
           .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-          .content { background: #f9f9f9; padding: 30px; border-radius: 6px; }
-          .credentials { background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 6px; margin: 20px 0; }
-          .button { display: inline-block; padding: 15px 30px; background: linear-gradient(135deg, #9bc4b8, #7fb069); color: #000; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+          .content { background: #f9f9f9; padding: 30px; border-radius: 3px; }
+          .credentials { background: #fff; padding: 20px; border: 1px solid #ddd; border-radius: 3px; margin: 20px 0; }
+          .button { display: inline-block; padding: 15px 30px; background: linear-gradient(135deg, #9bc4b8, #7fb069); color: #000; text-decoration: none; border-radius: 3px; font-weight: 600; margin: 20px 0; }
         </style>
       </head>
       <body>

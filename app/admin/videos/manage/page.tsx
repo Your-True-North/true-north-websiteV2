@@ -151,7 +151,7 @@ export default function ManageVideos() {
           style={{
             padding: '10px 20px',
             background: '#7fb069',
-            borderRadius: '6px',
+            borderRadius: '3px',
             color: '#fff',
             textDecoration: 'none',
             fontSize: '14px',
@@ -169,7 +169,7 @@ export default function ManageVideos() {
             padding: '12px',
             background: 'rgba(239, 68, 68, 0.1)',
             border: '1px solid rgba(239, 68, 68, 0.3)',
-            borderRadius: '6px',
+            borderRadius: '3px',
             color: '#ef4444',
             fontSize: '14px',
             marginBottom: '24px'
@@ -181,7 +181,7 @@ export default function ManageVideos() {
         <div style={{
           background: 'rgba(255, 255, 255, 0.02)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '6px',
+          borderRadius: '3px',
           overflow: 'hidden'
         }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -276,7 +276,7 @@ export default function ManageVideos() {
                           padding: '6px 12px',
                           background: 'rgba(255, 255, 255, 0.05)',
                           border: '1px solid rgba(255, 255, 255, 0.1)',
-                          borderRadius: '6px',
+                          borderRadius: '3px',
                           color: '#fff',
                           fontSize: '12px',
                           cursor: 'pointer'
@@ -290,7 +290,7 @@ export default function ManageVideos() {
                           padding: '6px 12px',
                           background: 'rgba(239, 68, 68, 0.1)',
                           border: '1px solid rgba(239, 68, 68, 0.3)',
-                          borderRadius: '6px',
+                          borderRadius: '3px',
                           color: '#ef4444',
                           fontSize: '12px',
                           cursor: 'pointer'
@@ -319,7 +319,7 @@ export default function ManageVideos() {
                 display: 'inline-block',
                 padding: '12px 24px',
                 background: '#7fb069',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 color: '#fff',
                 textDecoration: 'none',
                 fontSize: '14px',

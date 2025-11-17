@@ -171,7 +171,7 @@ export default function Library() {
                     padding: '2rem',
                     background: 'rgba(255, 255, 255, 0.03)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
                   }}
@@ -213,7 +213,7 @@ export default function Library() {
                     {resource.description}
                   </p>
                   <div style={{
-                    borderRadius: '6px', 
+                    borderRadius: '3px', 
                     padding: '0.6rem 1.2rem', 
                     fontSize: '0.9rem', 
                     display: 'inline-block',
@@ -233,7 +233,7 @@ export default function Library() {
                     padding: '2rem',
                     background: 'rgba(255, 255, 255, 0.01)',
                     border: '1px dashed rgba(255, 255, 255, 0.2)',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     opacity: 0.6,
                     cursor: 'default'
                   }}
@@ -264,7 +264,7 @@ export default function Library() {
                     {resource.description}
                   </p>
                   <div style={{
-                    borderRadius: '6px', 
+                    borderRadius: '3px', 
                     padding: '0.6rem 1.2rem', 
                     fontSize: '0.9rem', 
                     display: 'inline-block',
@@ -299,7 +299,7 @@ export default function Library() {
           <div style={{
             backgroundColor: 'rgba(26, 26, 26, 0.95)',
             padding: '2.5rem',
-            borderRadius: '6px',
+            borderRadius: '3px',
             maxWidth: '500px',
             width: '100%',
             border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -336,7 +336,7 @@ export default function Library() {
                       marginBottom: '1rem',
                       backgroundColor: 'rgba(255, 255, 255, 0.05)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '6px',
+                      borderRadius: '3px',
                       color: '#ffffff',
                       fontSize: '1rem',
                       outline: 'none'
@@ -362,7 +362,7 @@ export default function Library() {
                       marginBottom: '1.5rem',
                       backgroundColor: 'rgba(255, 255, 255, 0.05)',
                       border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '6px',
+                      borderRadius: '3px',
                       color: '#ffffff',
                       fontSize: '1rem',
                       outline: 'none'
@@ -383,7 +383,7 @@ export default function Library() {
                       marginBottom: '1rem',
                       backgroundColor: 'rgba(239, 68, 68, 0.1)',
                       border: '1px solid rgba(239, 68, 68, 0.3)',
-                      borderRadius: '6px',
+                      borderRadius: '3px',
                       color: '#ef4444',
                       fontSize: '0.9rem',
                       lineHeight: '1.4'
@@ -400,7 +400,7 @@ export default function Library() {
                         padding: '0.8rem 1.5rem',
                         backgroundColor: 'transparent',
                         border: '1px solid rgba(255, 255, 255, 0.3)',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         color: 'rgba(255, 255, 255, 0.8)',
                         cursor: 'pointer',
                         fontSize: '0.95rem',
@@ -424,7 +424,7 @@ export default function Library() {
                         padding: '0.8rem 1.5rem',
                         backgroundColor: isSubmitting ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.9)',
                         border: 'none',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         color: '#000000',
                         cursor: isSubmitting ? 'not-allowed' : 'pointer',
                         fontSize: '0.95rem',

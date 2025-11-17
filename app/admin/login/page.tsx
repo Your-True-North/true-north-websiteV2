@@ -83,7 +83,7 @@ export default function AdminLogin() {
         width: '100%',
         background: 'rgba(255, 255, 255, 0.02)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
-        borderRadius: '6px',
+        borderRadius: '3px',
         padding: '48px 32px'
       }}>
         <h1 style={{
@@ -124,7 +124,7 @@ export default function AdminLogin() {
                 padding: '12px 16px',
                 background: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 color: '#fff',
                 fontSize: '16px',
                 outline: 'none'
@@ -151,7 +151,7 @@ export default function AdminLogin() {
                 padding: '12px 16px',
                 background: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 color: '#fff',
                 fontSize: '16px',
                 outline: 'none'
@@ -164,7 +164,7 @@ export default function AdminLogin() {
               padding: '12px',
               background: 'rgba(239, 68, 68, 0.1)',
               border: '1px solid rgba(239, 68, 68, 0.3)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               color: '#ef4444',
               fontSize: '14px',
               marginBottom: '24px'
@@ -181,7 +181,7 @@ export default function AdminLogin() {
               padding: '14px',
               background: loading ? 'rgba(127, 176, 105, 0.5)' : '#7fb069',
               border: 'none',
-              borderRadius: '6px',
+              borderRadius: '3px',
               color: '#fff',
               fontSize: '16px',
               fontWeight: 600,

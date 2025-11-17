@@ -255,14 +255,14 @@ export default function Home() {
                 justifyContent: isMobile ? 'center' : 'flex-start', marginBottom: '4rem'
               }}>
                 <Link href="/work" className="btn-primary" style={{
-                  borderRadius: '6px', 
+                  borderRadius: '3px', 
                   padding: '1rem 2rem', 
                   fontSize: '1rem'
                 }}>
                   Start Your Journey <span>→</span>
                 </Link>
                 <Link href="/about" className="btn-secondary" style={{
-                  borderRadius: '6px', 
+                  borderRadius: '3px', 
                   padding: '1rem 2rem', 
                   fontSize: '1rem'
                 }}>
@@ -476,14 +476,14 @@ export default function Home() {
                     flexWrap: 'wrap'
                   }}>
                     <Link href={recommendations[recommendation].link} className="btn-primary" style={{
-                      borderRadius: '6px', 
+                      borderRadius: '3px', 
                       padding: '1rem 2rem', 
                       fontSize: '1rem'
                     }}>
                       {recommendations[recommendation].cta} <span>→</span>
                     </Link>
                     <button onClick={resetQuiz} className="btn-secondary" style={{
-                      borderRadius: '6px', 
+                      borderRadius: '3px', 
                       padding: '1rem 2rem', 
                       fontSize: '1rem'
                     }}>
@@ -564,14 +564,14 @@ export default function Home() {
                 flexWrap: 'wrap'
               }}>
                 <Link href="/contact" className="btn-primary" style={{
-                  borderRadius: '6px', 
+                  borderRadius: '3px', 
                   padding: '1rem 2rem', 
                   fontSize: '1rem'
                 }}>
                   Book Discovery Call <span>→</span>
                 </Link>
                 <Link href="/library" className="btn-secondary" style={{
-                  borderRadius: '6px', 
+                  borderRadius: '3px', 
                   padding: '1rem 2rem', 
                   fontSize: '1rem'
                 }}>

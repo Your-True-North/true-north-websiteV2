@@ -173,7 +173,7 @@ export default function Work() {
           <div style={{
             background: 'linear-gradient(135deg, rgba(20, 20, 20, 0.98) 0%, rgba(10, 10, 10, 0.98) 100%)',
             padding: isMobile ? '2rem' : '3rem',
-            borderRadius: '6px',
+            borderRadius: '3px',
             maxWidth: '600px',
             width: '100%',
             border: '2px solid rgba(255, 255, 255, 0.2)',
@@ -214,7 +214,7 @@ export default function Work() {
               <div style={{
                 background: 'rgba(255, 255, 255, 0.05)',
                 padding: '1.5rem',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 marginBottom: '2rem'
               }}>
@@ -241,7 +241,7 @@ export default function Work() {
                   color: '#000',
                   textDecoration: 'none',
                   fontWeight: '700',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   fontSize: '1rem',
                   transition: 'all 0.3s ease',
                   marginBottom: '1rem'
@@ -565,7 +565,7 @@ export default function Work() {
                     background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                     color: '#000',
                     border: 'none',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     fontSize: isMobile ? '1rem' : '1.1rem',
                     fontWeight: '600',
                     cursor: 'pointer',
@@ -598,7 +598,7 @@ export default function Work() {
                     border: '1px solid rgba(255, 255, 255, 0.3)',
                     color: 'rgba(255, 255, 255, 0.7)',
                     padding: '0.8rem 1.5rem',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     fontSize: '0.9rem',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
@@ -690,7 +690,7 @@ export default function Work() {
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
               backdropFilter: 'blur(20px)',
               border: '2px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               position: 'relative',
               transition: 'all 0.4s ease',
               animation: 'slideUp 0.8s ease-out 0.2s both'
@@ -704,7 +704,7 @@ export default function Work() {
                 padding: '0.3rem 1rem',
                 fontSize: '0.8rem',
                 fontWeight: '700',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 animation: 'pulse 2s ease-in-out infinite'
               }}>
                 DEEP WORK
@@ -742,7 +742,7 @@ export default function Work() {
                     padding: '1.5rem',
                     background: 'rgba(0, 0, 0, 0.3)',
                     borderLeft: '3px solid rgba(255, 255, 255, 0.6)',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     transition: 'all 0.3s ease'
                   }}>
                     <h4 style={{color: 'rgba(255, 255, 255, 0.9)', marginBottom: '0.5rem', fontSize: '1.1rem'}}>{phase.title}</h4>
@@ -762,7 +762,7 @@ export default function Work() {
                 padding: '1rem',
                 borderLeft: 'none',
                 background: 'rgba(255, 255, 255, 0.05)',
-                borderRadius: '6px'
+                borderRadius: '3px'
               }}>
                 "This is high-level, high-impact intestive work for those who are serious about change."
               </blockquote>
@@ -777,7 +777,7 @@ export default function Work() {
                     color: '#000000',
                     textDecoration: 'none',
                     fontWeight: '700',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     fontSize: isMobile ? '1rem' : '1.1rem',
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px',
@@ -805,7 +805,7 @@ export default function Work() {
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
               backdropFilter: 'blur(20px)',
               border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               transition: 'all 0.4s ease',
               animation: 'slideUp 0.8s ease-out 0.6s both'
             }}>
@@ -843,7 +843,7 @@ export default function Work() {
                   color: 'rgba(255, 255, 255, 0.9)',
                   textDecoration: 'none',
                   fontWeight: '700',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   fontSize: isMobile ? '1rem' : '1.1rem',
                   textTransform: 'uppercase',
                   letterSpacing: '0.5px',
@@ -890,7 +890,7 @@ export default function Work() {
                   padding: '2.5rem',
                   background: 'rgba(255, 255, 255, 0.03)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   position: 'relative',
                   transition: 'all 0.4s ease'
                 }}>
@@ -903,7 +903,7 @@ export default function Work() {
                     padding: '0.2rem 0.8rem',
                     fontSize: '0.7rem',
                     fontWeight: '600',
-                    borderRadius: '6px'
+                    borderRadius: '3px'
                   }}>
                     BREATHWORK
                   </div>
@@ -956,7 +956,7 @@ export default function Work() {
                         color: '#000',
                         textDecoration: 'none',
                         fontWeight: '700',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         textAlign: 'center',
                         fontSize: '0.95rem',
                         transition: 'all 0.3s ease'
@@ -977,7 +977,7 @@ export default function Work() {
                         color: '#ffffff',
                         textDecoration: 'none',
                         fontWeight: '600',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         textAlign: 'center',
                         fontSize: '0.95rem',
                         transition: 'all 0.3s ease'
@@ -1002,7 +1002,7 @@ export default function Work() {
                   padding: '2.5rem',
                   background: 'rgba(255, 255, 255, 0.03)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   position: 'relative',
                   transition: 'all 0.4s ease'
                 }}>
@@ -1015,7 +1015,7 @@ export default function Work() {
                     padding: '0.2rem 0.8rem',
                     fontSize: '0.7rem',
                     fontWeight: '600',
-                    borderRadius: '6px'
+                    borderRadius: '3px'
                   }}>
                     ENERGY HEALING
                   </div>
@@ -1068,7 +1068,7 @@ export default function Work() {
                         color: '#000',
                         textDecoration: 'none',
                         fontWeight: '700',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         textAlign: 'center',
                         fontSize: '0.95rem',
                         transition: 'all 0.3s ease'
@@ -1089,7 +1089,7 @@ export default function Work() {
                         color: '#ffffff',
                         textDecoration: 'none',
                         fontWeight: '600',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         textAlign: 'center',
                         fontSize: '0.95rem',
                         transition: 'all 0.3s ease'
@@ -1115,7 +1115,7 @@ export default function Work() {
                 textAlign: 'center',
                 padding: '2rem',
                 background: 'rgba(255, 255, 255, 0.05)',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 maxWidth: '700px',
                 margin: '3rem auto 0'
@@ -1136,7 +1136,7 @@ export default function Work() {
               textAlign: 'center',
               padding: isMobile ? '2rem 1rem' : '3rem 2rem',
               background: 'rgba(255, 255, 255, 0.03)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               border: '1px solid rgba(255, 255, 255, 0.08)',
               animation: 'slideUp 0.8s ease-out 1.2s both'
             }}>
@@ -1173,7 +1173,7 @@ export default function Work() {
                   border: '1px solid rgba(255, 255, 255, 0.3)',
                   color: 'white',
                   textDecoration: 'none',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   fontSize: '1rem',
                   fontWeight: '500',
                   transition: 'all 0.3s ease',
@@ -1192,7 +1192,7 @@ export default function Work() {
                     color: '#000000',
                     textDecoration: 'none',
                     fontWeight: '600',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     fontSize: '1rem',
                     transition: 'all 0.3s ease',
                     width: isMobile ? '100%' : 'auto'

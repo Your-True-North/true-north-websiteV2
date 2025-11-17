@@ -69,7 +69,7 @@ export default function CallsPage() {
           padding: '32px',
           background: 'rgba(255, 255, 255, 0.02)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '6px',
+          borderRadius: '3px',
           marginBottom: '40px'
         }}>
           <h2 style={{
@@ -84,7 +84,7 @@ export default function CallsPage() {
           {/* Calendly Embed */}
           <div style={{
             background: '#fff',
-            borderRadius: '6px',
+            borderRadius: '3px',
             overflow: 'hidden'
           }}>
             <iframe
@@ -92,7 +92,7 @@ export default function CallsPage() {
               width="100%"
               height="700"
               frameBorder="0"
-              style={{ border: 'none', borderRadius: '6px' }}
+              style={{ border: 'none', borderRadius: '3px' }}
             />
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function CallsPage() {
               padding: '32px',
               background: 'rgba(255, 255, 255, 0.02)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               textAlign: 'center'
             }}>
               <div style={{

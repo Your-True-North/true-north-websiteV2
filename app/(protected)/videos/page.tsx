@@ -180,7 +180,7 @@ export default function LibraryPage() {
             fontSize: '0.875rem',
             fontWeight: 300,
             border: '1px solid rgba(155, 196, 184, 0.3)',
-            borderRadius: '6px',
+            borderRadius: '3px',
             color: '#9bc4b8',
             textDecoration: 'none'
           }}>
@@ -232,7 +232,7 @@ export default function LibraryPage() {
             padding: '1.5rem',
             background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.05))',
             border: '1px solid rgba(155, 196, 184, 0.2)',
-            borderRadius: '6px'
+            borderRadius: '3px'
           }}>
             <div style={{ fontSize: '2rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.25rem' }}>
               {stats.completedVideos}
@@ -245,7 +245,7 @@ export default function LibraryPage() {
             padding: '1.5rem',
             background: 'linear-gradient(135deg, rgba(127, 176, 105, 0.1), rgba(155, 196, 184, 0.05))',
             border: '1px solid rgba(127, 176, 105, 0.2)',
-            borderRadius: '6px'
+            borderRadius: '3px'
           }}>
             <div style={{ fontSize: '2rem', fontWeight: 300, color: '#7fb069', marginBottom: '0.25rem' }}>
               {stats.videosWatched}
@@ -258,7 +258,7 @@ export default function LibraryPage() {
             padding: '1.5rem',
             background: 'linear-gradient(135deg, rgba(106, 153, 78, 0.1), rgba(155, 196, 184, 0.05))',
             border: '1px solid rgba(106, 153, 78, 0.2)',
-            borderRadius: '6px'
+            borderRadius: '3px'
           }}>
             <div style={{ fontSize: '2rem', fontWeight: 300, color: '#6a994e', marginBottom: '0.25rem' }}>
               {Math.floor(stats.totalWatchTime / 60)}h
@@ -286,7 +286,7 @@ export default function LibraryPage() {
               padding: '0.875rem 1rem',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               color: '#fff',
               fontSize: '1rem',
               outline: 'none'
@@ -299,7 +299,7 @@ export default function LibraryPage() {
               padding: '0.875rem 1rem',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               color: '#fff',
               fontSize: '1rem',
               outline: 'none',
@@ -328,7 +328,7 @@ export default function LibraryPage() {
                 padding: '0.75rem 1.5rem',
                 background: selectedCategory === key ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : 'rgba(255, 255, 255, 0.05)',
                 border: selectedCategory === key ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '6px',
+                borderRadius: '3px',
                 color: selectedCategory === key ? '#000' : 'rgba(255, 255, 255, 0.7)',
                 fontSize: '0.875rem',
                 fontWeight: selectedCategory === key ? 600 : 300,
@@ -366,7 +366,7 @@ export default function LibraryPage() {
                 <div style={{
                   background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   overflow: 'hidden',
                   transition: 'all 0.3s ease',
                   cursor: 'pointer',
