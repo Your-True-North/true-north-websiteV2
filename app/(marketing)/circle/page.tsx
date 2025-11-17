@@ -963,7 +963,7 @@ export default function Circle() {
               fontWeight: '400',
               letterSpacing: '-0.01em'
             }}>
-              Founding Member Access
+              Early Member Access
             </h3>
 
             <p style={{
@@ -973,7 +973,7 @@ export default function Circle() {
               lineHeight: '1.5',
               fontWeight: '300'
             }}>
-              Secure your place at founding member pricing before we open to the public
+              Secure your place at early access pricing before we open to the public
             </p>
 
             <form onSubmit={handleSubmit} style={{
