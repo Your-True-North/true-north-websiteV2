@@ -319,7 +319,7 @@ export default function FoundingMembersPage() {
             </div>
           ) : (
             <>
-              <CircleCalendarTeaser />
+              
               <a
                 href="https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j"
               onClick={handleStripeClick}
@@ -650,7 +650,7 @@ export default function FoundingMembersPage() {
                 </div>
               )}
 
-              <CircleCalendarTeaser />
+              
 
               <a
                 href="https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j"
