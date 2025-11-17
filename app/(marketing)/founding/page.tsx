@@ -1,7 +1,6 @@
 'use client'
-'use client'nnimport CircleCalendarTeaser from '../circle/components/CircleCalendarTeaser'n'use client'nnimport CircleCalendarTeaser from '../circle/components/CircleCalendarTeaser'n
-import CircleCalendarTeaser from '../circle/components/CircleCalendarTeaser'
 
+import CircleCalendarTeaser from '../circle/components/CircleCalendarTeaser'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
