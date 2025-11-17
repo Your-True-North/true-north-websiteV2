@@ -7,6 +7,7 @@ interface Session {
   date: string;
   time?: string;
   description?: string;
+  isoDate?: string;
 }
 
 export default function NextSessionCard() {
@@ -52,9 +53,9 @@ export default function NextSessionCard() {
       if (diff > 0) {
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        setCountdown(`${days} days, ${hours} hours`);
+        setCountdown(`${days}d ${hours}h`);
       } else {
-        setCountdown('Session starting soon!');
+        setCountdown('Starting soon');
       }
     };
 
@@ -124,9 +125,15 @@ END:VCALENDAR`;
 
   if (loading) {
     return (
-      <div className="max-w-2xl mx-auto p-4">
-        <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-md p-8 text-center">
-          <div className="text-gray-400">Loading sessions...</div>
+      <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem' }}>
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.02)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '3px',
+          padding: '2rem',
+          textAlign: 'center'
+        }}>
+          <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.9rem', fontWeight: 300 }}>Loading sessions...</div>
         </div>
       </div>
     );
@@ -134,9 +141,15 @@ END:VCALENDAR`;
 
   if (sessions.length === 0) {
     return (
-      <div className="max-w-2xl mx-auto p-4">
-        <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-md p-8 text-center">
-          <div className="text-gray-400">No upcoming sessions scheduled</div>
+      <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem' }}>
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.02)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '3px',
+          padding: '2rem',
+          textAlign: 'center'
+        }}>
+          <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.9rem', fontWeight: 300 }}>No upcoming sessions</div>
         </div>
       </div>
     );
@@ -146,134 +159,266 @@ END:VCALENDAR`;
   const upcomingSessions = sessions.slice(1, 4);
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6 p-4">
-      <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-md p-8 shadow-2xl">
-        <div className="text-sm text-gray-400 uppercase tracking-wider mb-4">
-          Next Circle Session
+    <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem', marginBottom: '3rem' }}>
+      <div style={{
+        background: 'rgba(255, 255, 255, 0.02)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRadius: '3px',
+        padding: '2rem',
+        position: 'relative'
+      }}>
+        <div style={{
+          fontSize: '0.75rem',
+          color: 'rgba(255, 255, 255, 0.4)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          marginBottom: '1rem',
+          fontWeight: 300
+        }}>
+          Next Session
         </div>
         
-        <h2 className="text-3xl font-bold text-white mb-4">
+        <h3 style={{
+          fontSize: '1.5rem',
+          color: '#ffffff',
+          fontWeight: 300,
+          marginBottom: '1rem',
+          letterSpacing: '-0.01em'
+        }}>
           {nextSession.title}
-        </h2>
+        </h3>
         
-        <div className="flex items-center gap-2 text-xl text-gray-300 mb-2">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          {nextSession.date} • {nextSession.time}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
+          marginBottom: '1rem',
+          flexWrap: 'wrap'
+        }}>
+          <div style={{
+            color: '#ff6b35',
+            fontSize: '0.95rem',
+            fontWeight: 400
+          }}>
+            {nextSession.date}
+          </div>
+          <div style={{
+            color: 'rgba(255, 255, 255, 0.6)',
+            fontSize: '0.95rem',
+            fontWeight: 300
+          }}>
+            {nextSession.time}
+          </div>
+          <div style={{
+            background: 'rgba(255, 107, 53, 0.1)',
+            border: '1px solid rgba(255, 107, 53, 0.2)',
+            borderRadius: '3px',
+            padding: '0.25rem 0.75rem',
+            fontSize: '0.8rem',
+            color: '#ff6b35',
+            fontWeight: 400
+          }}>
+            {countdown}
+          </div>
         </div>
         
         {nextSession.description && (
-          <p className="text-gray-400 mb-6">
+          <p style={{
+            color: 'rgba(255, 255, 255, 0.5)',
+            fontSize: '0.9rem',
+            lineHeight: '1.6',
+            marginBottom: '1.5rem',
+            fontWeight: 300
+          }}>
             {nextSession.description}
           </p>
         )}
         
-        <div className="bg-black/40 border border-gray-700 rounded-md px-4 py-3 mb-6 inline-block">
-          <div className="text-sm text-gray-400">Starting in</div>
-          <div className="text-2xl font-bold text-white">{countdown}</div>
-        </div>
-        
-        <div className="relative">
+        <div style={{ position: 'relative' }}>
           <button
             onClick={() => setShowCalendarOptions(!showCalendarOptions)}
-            className="w-full bg-white text-black font-semibold py-4 px-6 rounded-md hover:bg-gray-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+            style={{
+              padding: '0.75rem 1.5rem',
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '3px',
+              color: '#ffffff',
+              fontSize: '0.9rem',
+              fontWeight: 300,
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
             Add to Calendar
           </button>
           
           {showCalendarOptions && (
-            <div className="absolute top-full mt-2 w-full bg-gray-900 border border-gray-700 rounded-md shadow-xl z-10 overflow-hidden">
-              <button
-                onClick={() => handleAddToCalendar('google', nextSession)}
-                className="w-full text-left px-4 py-3 text-white hover:bg-gray-800 transition-colors flex items-center gap-3"
-              >
-                <span className="text-xl">📅</span>
-                Google Calendar
-              </button>
-              <button
-                onClick={() => handleAddToCalendar('apple', nextSession)}
-                className="w-full text-left px-4 py-3 text-white hover:bg-gray-800 transition-colors flex items-center gap-3"
-              >
-                <span className="text-xl">🍎</span>
-                Apple Calendar
-              </button>
-              <button
-                onClick={() => handleAddToCalendar('outlook', nextSession)}
-                className="w-full text-left px-4 py-3 text-white hover:bg-gray-800 transition-colors flex items-center gap-3"
-              >
-                <span className="text-xl">📧</span>
-                Outlook
-              </button>
-              <button
-                onClick={() => handleAddToCalendar('ical', nextSession)}
-                className="w-full text-left px-4 py-3 text-white hover:bg-gray-800 transition-colors flex items-center gap-3"
-              >
-                <span className="text-xl">📥</span>
-                Download .ics
-              </button>
+            <div style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              marginTop: '0.5rem',
+              background: '#0a0a0b',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '3px',
+              overflow: 'hidden',
+              zIndex: 10,
+              minWidth: '200px'
+            }}>
+              {['google', 'apple', 'outlook', 'ical'].map((provider) => (
+                <button
+                  key={provider}
+                  onClick={() => handleAddToCalendar(provider, nextSession)}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem 1rem',
+                    background: 'transparent',
+                    border: 'none',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontSize: '0.85rem',
+                    fontWeight: 300,
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                    e.currentTarget.style.color = '#ffffff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
+                  }}
+                >
+                  {provider === 'google' ? 'Google Calendar' :
+                   provider === 'apple' ? 'Apple Calendar' :
+                   provider === 'outlook' ? 'Outlook' : 'Download .ics'}
+                </button>
+              ))}
             </div>
           )}
         </div>
       </div>
 
       {upcomingSessions.length > 0 && (
-        <div className="bg-gray-800/50 border border-gray-800 rounded-md p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Upcoming Sessions</h3>
-          <div className="space-y-3">
+        <div style={{
+          marginTop: '1.5rem',
+          background: 'rgba(255, 255, 255, 0.02)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '3px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            fontSize: '0.85rem',
+            color: 'rgba(255, 255, 255, 0.6)',
+            marginBottom: '1rem',
+            fontWeight: 300
+          }}>
+            Upcoming
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {upcomingSessions.map((session, index) => (
-              <div 
+              <div
                 key={index}
-                className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-3 border-b border-gray-700 last:border-0 gap-2"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0.75rem 0',
+                  borderBottom: index < upcomingSessions.length - 1 ? '1px solid rgba(255, 255, 255, 0.05)' : 'none'
+                }}
               >
                 <div>
-                  <div className="text-white font-medium">{session.title}</div>
-                  <div className="text-sm text-gray-400">{session.date} • {session.time}</div>
+                  <div style={{ color: '#ffffff', fontSize: '0.9rem', fontWeight: 300, marginBottom: '0.25rem' }}>
+                    {session.title}
+                  </div>
+                  <div style={{ color: '#ff6b35', fontSize: '0.8rem', fontWeight: 400 }}>
+                    {session.date} • {session.time}
+                  </div>
                 </div>
-                <div className="relative">
-                  <button 
-                    onClick={() => setShowUpcomingOptions(showUpcomingOptions === index ? null : index)}
-                    className="text-gray-400 hover:text-white transition-colors text-sm whitespace-nowrap"
-                  >
-                    Add →
-                  </button>
-                  
+                <button
+                  onClick={() => setShowUpcomingOptions(showUpcomingOptions === index ? null : index)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    background: 'transparent',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '3px',
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    fontSize: '0.8rem',
+                    fontWeight: 300,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    position: 'relative'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    e.currentTarget.style.color = '#ffffff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                  }}
+                >
+                  Add
                   {showUpcomingOptions === index && (
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-gray-900 border border-gray-700 rounded-md shadow-xl z-10 overflow-hidden">
-                      <button
-                        onClick={() => handleAddToCalendar('google', session)}
-                        className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
-                      >
-                        <span>📅</span>
-                        Google
-                      </button>
-                      <button
-                        onClick={() => handleAddToCalendar('apple', session)}
-                        className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
-                      >
-                        <span>🍎</span>
-                        Apple
-                      </button>
-                      <button
-                        onClick={() => handleAddToCalendar('outlook', session)}
-                        className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
-                      >
-                        <span>📧</span>
-                        Outlook
-                      </button>
-                      <button
-                        onClick={() => handleAddToCalendar('ical', session)}
-                        className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
-                      >
-                        <span>📥</span>
-                        .ics
-                      </button>
+                    <div style={{
+                      position: 'absolute',
+                      top: '100%',
+                      right: 0,
+                      marginTop: '0.5rem',
+                      background: '#0a0a0b',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '3px',
+                      overflow: 'hidden',
+                      zIndex: 10,
+                      minWidth: '180px'
+                    }}>
+                      {['google', 'apple', 'outlook', 'ical'].map((provider) => (
+                        <button
+                          key={provider}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCalendar(provider, session);
+                          }}
+                          style={{
+                            width: '100%',
+                            padding: '0.75rem 1rem',
+                            background: 'transparent',
+                            border: 'none',
+                            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                            color: 'rgba(255, 255, 255, 0.8)',
+                            fontSize: '0.8rem',
+                            fontWeight: 300,
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                            transition: 'all 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                            e.currentTarget.style.color = '#ffffff';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'transparent';
+                            e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
+                          }}
+                        >
+                          {provider === 'google' ? 'Google' :
+                           provider === 'apple' ? 'Apple' :
+                           provider === 'outlook' ? 'Outlook' : '.ics'}
+                        </button>
+                      ))}
                     </div>
                   )}
-                </div>
+                </button>
               </div>
             ))}
           </div>
