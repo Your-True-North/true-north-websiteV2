@@ -319,8 +319,10 @@ export default function FoundingMembersPage() {
               )}
             </div>
           ) : (
-            <a
-              href="https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j"
+            <>
+              <CircleCalendarTeaser />
+              <a
+                href="https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j"
               onClick={handleStripeClick}
               style={{
                 display: 'inline-block',
@@ -349,6 +351,7 @@ export default function FoundingMembersPage() {
             >
               Secure Your Spot - £25/Month
             </a>
+            </>
           )}
         </div>
       </section>
