@@ -4,46 +4,153 @@ import Link from 'next/link';
 
 export default function CircleCalendarTeaser() {
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-md p-8 shadow-2xl relative overflow-hidden">
-        <div className="absolute inset-0 backdrop-blur-[2px] bg-black/20 z-10 pointer-events-none" />
+    <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem', marginBottom: '3rem' }}>
+      <div style={{
+        background: 'rgba(255, 255, 255, 0.02)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRadius: '3px',
+        padding: '2rem',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* Blur overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backdropFilter: 'blur(4px)',
+          background: 'rgba(10, 10, 11, 0.6)',
+          zIndex: 1
+        }} />
         
-        <div className="relative z-0">
-          <div className="text-sm text-gray-400 uppercase tracking-wider mb-4">
-            Next Circle Session
+        {/* Blurred content */}
+        <div style={{ position: 'relative', filter: 'blur(3px)', pointerEvents: 'none' }}>
+          <div style={{
+            fontSize: '0.75rem',
+            color: 'rgba(255, 255, 255, 0.4)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            marginBottom: '1rem',
+            fontWeight: 300
+          }}>
+            Next Session
           </div>
           
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h3 style={{
+            fontSize: '1.5rem',
+            color: '#ffffff',
+            fontWeight: 300,
+            marginBottom: '1rem',
+            letterSpacing: '-0.01em'
+          }}>
             Sacred Masculinity Deep Dive
-          </h2>
+          </h3>
           
-          <div className="flex items-center gap-2 text-xl text-gray-300 mb-2">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            Wednesday, Nov 20 • 7:00 PM GMT
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginBottom: '1rem',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{
+              color: '#ff6b35',
+              fontSize: '0.95rem',
+              fontWeight: 400
+            }}>
+              Wednesday, Nov 20
+            </div>
+            <div style={{
+              color: 'rgba(255, 255, 255, 0.6)',
+              fontSize: '0.95rem',
+              fontWeight: 300
+            }}>
+              7:00 PM GMT
+            </div>
+            <div style={{
+              background: 'rgba(255, 107, 53, 0.1)',
+              border: '1px solid rgba(255, 107, 53, 0.2)',
+              borderRadius: '3px',
+              padding: '0.25rem 0.75rem',
+              fontSize: '0.8rem',
+              color: '#ff6b35',
+              fontWeight: 400
+            }}>
+              5d 12h
+            </div>
           </div>
           
-          <p className="text-gray-400 mb-6">
+          <p style={{
+            color: 'rgba(255, 255, 255, 0.5)',
+            fontSize: '0.9rem',
+            lineHeight: '1.6',
+            marginBottom: '1.5rem',
+            fontWeight: 300
+          }}>
             Monthly gathering for men returning to their truth
           </p>
           
-          <div className="bg-black/40 border border-gray-700 rounded-md px-4 py-3 mb-6 inline-block">
-            <div className="text-sm text-gray-400">Starting in</div>
-            <div className="text-2xl font-bold text-white">5 days, 3 hours</div>
+          <div style={{
+            padding: '0.75rem 1.5rem',
+            background: 'rgba(255, 255, 255, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '3px',
+            color: '#ffffff',
+            fontSize: '0.9rem',
+            fontWeight: 300,
+            display: 'inline-block'
+          }}>
+            Add to Calendar
           </div>
         </div>
-        
-        <div className="relative z-20 mt-8 text-center">
-          <Link 
-            href="/auth/register"
-            className="inline-block bg-white text-black font-semibold py-4 px-8 rounded-md hover:bg-gray-100 transition-all transform hover:scale-105"
-          >
-            Join Circle to Access Full Schedule →
-          </Link>
-          <p className="text-gray-400 text-sm mt-4">
-            Members get full calendar access + add to your personal calendar
+
+        {/* Overlay content */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 2,
+          padding: '2rem',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            fontSize: '1.25rem',
+            color: '#ffffff',
+            fontWeight: 300,
+            marginBottom: '1rem',
+            letterSpacing: '-0.01em'
+          }}>
+            Members Only
+          </div>
+          <p style={{
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontSize: '0.9rem',
+            marginBottom: '1.5rem',
+            maxWidth: '400px',
+            fontWeight: 300,
+            lineHeight: '1.5'
+          }}>
+            Access the full Circle calendar and add sessions directly to your calendar
           </p>
+          <Link
+            href="/auth/register"
+            style={{
+              padding: '0.75rem 1.5rem',
+              background: 'rgba(255, 255, 255, 0.95)',
+              color: '#000',
+              border: 'none',
+              borderRadius: '3px',
+              fontSize: '0.9rem',
+              fontWeight: 400,
+              textDecoration: 'none',
+              transition: 'all 0.2s ease',
+              display: 'inline-block'
+            }}
+          >
+            Join Circle →
+          </Link>
         </div>
       </div>
     </div>
