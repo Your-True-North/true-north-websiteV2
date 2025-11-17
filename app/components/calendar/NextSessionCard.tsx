@@ -5,32 +5,47 @@ import { useState, useEffect } from 'react';
 interface Session {
   title: string;
   date: string;
-  time: string;
+  time?: string;
   description?: string;
 }
 
 export default function NextSessionCard() {
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showCalendarOptions, setShowCalendarOptions] = useState(false);
   const [showUpcomingOptions, setShowUpcomingOptions] = useState<number | null>(null);
   const [countdown, setCountdown] = useState('');
 
-  const nextSession: Session = {
-    title: "Sacred Masculinity Deep Dive",
-    date: "Wednesday, Nov 20",
-    time: "7:00 PM GMT",
-    description: "Monthly gathering for men returning to their truth"
-  };
-
-  const upcomingSessions: Session[] = [
-    { title: "Breathwork Journey", date: "Nov 27", time: "7:00 PM GMT" },
-    { title: "Integration Circle", date: "Dec 4", time: "7:00 PM GMT" },
-    { title: "Q&A with True North", date: "Dec 11", time: "7:00 PM GMT" }
-  ];
+  useEffect(() => {
+    fetch('/api/calendar/events')
+      .then(res => res.json())
+      .then(data => {
+        if (data.events) {
+          const formatted = data.events.map((e: any) => {
+            const eventDate = new Date(e.date);
+            return {
+              title: e.title,
+              date: eventDate.toLocaleDateString('en-GB', { weekday: 'long', month: 'short', day: 'numeric' }),
+              time: eventDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }),
+              description: e.description,
+              isoDate: e.date
+            };
+          });
+          setSessions(formatted);
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to load sessions:', err);
+        setLoading(false);
+      });
+  }, []);
 
   useEffect(() => {
-    const targetDate = new Date('2024-11-20T19:00:00Z');
+    if (sessions.length === 0) return;
     
     const updateCountdown = () => {
+      const targetDate = new Date(sessions[0].isoDate);
       const now = new Date();
       const diff = targetDate.getTime() - now.getTime();
       
@@ -45,17 +60,23 @@ export default function NextSessionCard() {
 
     updateCountdown();
     const interval = setInterval(updateCountdown, 60000);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [sessions]);
 
-  const generateICS = (session: Session) => {
+  const generateICS = (session: any) => {
+    const eventDate = new Date(session.isoDate);
+    const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
+    
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    };
+
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//True North//Circle of Return//EN
 BEGIN:VEVENT
-DTSTART:20241120T190000Z
-DTEND:20241120T210000Z
+DTSTART:${formatDate(eventDate)}
+DTEND:${formatDate(endDate)}
 SUMMARY:${session.title}
 DESCRIPTION:${session.description || 'Circle of Return Session'}
 LOCATION:Online
@@ -71,28 +92,58 @@ END:VCALENDAR`;
     URL.revokeObjectURL(url);
   };
 
-  const handleAddToCalendar = (provider: string, session: Session) => {
+  const handleAddToCalendar = (provider: string, session: any) => {
+    const eventDate = new Date(session.isoDate);
+    const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
+    
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    };
+
     const title = encodeURIComponent(session.title);
     const description = encodeURIComponent(session.description || 'Circle of Return Session');
-    const startDate = '20241120T190000Z';
-    const endDate = '20241120T210000Z';
+    const startDate = formatDate(eventDate);
+    const endDate2 = formatDate(endDate);
 
     switch(provider) {
       case 'google':
-        window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${description}&dates=${startDate}/${endDate}`, '_blank');
+        window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${description}&dates=${startDate}/${endDate2}`, '_blank');
         break;
       case 'apple':
       case 'ical':
         generateICS(session);
         break;
       case 'outlook':
-        window.open(`https://outlook.live.com/calendar/0/deeplink/compose?subject=${title}&body=${description}&startdt=${startDate}&enddt=${endDate}`, '_blank');
+        window.open(`https://outlook.live.com/calendar/0/deeplink/compose?subject=${title}&body=${description}&startdt=${startDate}&enddt=${endDate2}`, '_blank');
         break;
     }
     
     setShowCalendarOptions(false);
     setShowUpcomingOptions(null);
   };
+
+  if (loading) {
+    return (
+      <div className="max-w-2xl mx-auto p-4">
+        <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-md p-8 text-center">
+          <div className="text-gray-400">Loading sessions...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (sessions.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto p-4">
+        <div className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-md p-8 text-center">
+          <div className="text-gray-400">No upcoming sessions scheduled</div>
+        </div>
+      </div>
+    );
+  }
+
+  const nextSession = sessions[0];
+  const upcomingSessions = sessions.slice(1, 4);
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 p-4">
@@ -169,63 +220,65 @@ END:VCALENDAR`;
         </div>
       </div>
 
-      <div className="bg-gray-800/50 border border-gray-800 rounded-md p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Upcoming Sessions</h3>
-        <div className="space-y-3">
-          {upcomingSessions.map((session, index) => (
-            <div 
-              key={index}
-              className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-3 border-b border-gray-700 last:border-0 gap-2"
-            >
-              <div>
-                <div className="text-white font-medium">{session.title}</div>
-                <div className="text-sm text-gray-400">{session.date} • {session.time}</div>
+      {upcomingSessions.length > 0 && (
+        <div className="bg-gray-800/50 border border-gray-800 rounded-md p-6">
+          <h3 className="text-lg font-semibold text-white mb-4">Upcoming Sessions</h3>
+          <div className="space-y-3">
+            {upcomingSessions.map((session, index) => (
+              <div 
+                key={index}
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-3 border-b border-gray-700 last:border-0 gap-2"
+              >
+                <div>
+                  <div className="text-white font-medium">{session.title}</div>
+                  <div className="text-sm text-gray-400">{session.date} • {session.time}</div>
+                </div>
+                <div className="relative">
+                  <button 
+                    onClick={() => setShowUpcomingOptions(showUpcomingOptions === index ? null : index)}
+                    className="text-gray-400 hover:text-white transition-colors text-sm whitespace-nowrap"
+                  >
+                    Add →
+                  </button>
+                  
+                  {showUpcomingOptions === index && (
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-gray-900 border border-gray-700 rounded-md shadow-xl z-10 overflow-hidden">
+                      <button
+                        onClick={() => handleAddToCalendar('google', session)}
+                        className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
+                      >
+                        <span>📅</span>
+                        Google
+                      </button>
+                      <button
+                        onClick={() => handleAddToCalendar('apple', session)}
+                        className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
+                      >
+                        <span>🍎</span>
+                        Apple
+                      </button>
+                      <button
+                        onClick={() => handleAddToCalendar('outlook', session)}
+                        className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
+                      >
+                        <span>📧</span>
+                        Outlook
+                      </button>
+                      <button
+                        onClick={() => handleAddToCalendar('ical', session)}
+                        className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
+                      >
+                        <span>📥</span>
+                        .ics
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="relative">
-                <button 
-                  onClick={() => setShowUpcomingOptions(showUpcomingOptions === index ? null : index)}
-                  className="text-gray-400 hover:text-white transition-colors text-sm whitespace-nowrap"
-                >
-                  Add →
-                </button>
-                
-                {showUpcomingOptions === index && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-gray-900 border border-gray-700 rounded-md shadow-xl z-10 overflow-hidden">
-                    <button
-                      onClick={() => handleAddToCalendar('google', session)}
-                      className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
-                    >
-                      <span>📅</span>
-                      Google
-                    </button>
-                    <button
-                      onClick={() => handleAddToCalendar('apple', session)}
-                      className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
-                    >
-                      <span>🍎</span>
-                      Apple
-                    </button>
-                    <button
-                      onClick={() => handleAddToCalendar('outlook', session)}
-                      className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
-                    >
-                      <span>📧</span>
-                      Outlook
-                    </button>
-                    <button
-                      onClick={() => handleAddToCalendar('ical', session)}
-                      className="w-full text-left px-4 py-2 text-white hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm"
-                    >
-                      <span>📥</span>
-                      .ics
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
