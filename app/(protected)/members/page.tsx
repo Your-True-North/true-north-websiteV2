@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { logger } from '@/lib/logger'
-import NextSessionCard from '../../components/calendar/NextSessionCard'
 
 interface User {
   id: number
@@ -740,9 +739,6 @@ export default function MembersPage() {
             </div>
           </div>
         </div>
-
-        {/* Calendar Section */}
-        <NextSessionCard />
 
         {/* Account Info */}
         <div style={{

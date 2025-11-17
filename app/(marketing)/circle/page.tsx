@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { Play, Pause, RotateCcw } from 'lucide-react'
-import CircleCalendarTeaser from './components/CircleCalendarTeaser'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function Circle() {
@@ -428,8 +427,6 @@ export default function Circle() {
               </p>
             </div>
           </section>
-
-          <CircleCalendarTeaser />
 
           <div style={{
             height: '1px',
