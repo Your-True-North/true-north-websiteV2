@@ -429,6 +429,8 @@ export default function Circle() {
             </div>
           </section>
 
+          <CircleCalendarTeaser />
+
           <div style={{
             height: '1px',
             background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
