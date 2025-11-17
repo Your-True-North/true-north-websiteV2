@@ -158,7 +158,7 @@ export default function FoundingMembersPage() {
             marginBottom: '32px'
           }}>
             Join the First <span style={{
-              background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+              background: '#ffffff',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>30</span> in Circle of Return
@@ -214,7 +214,7 @@ export default function FoundingMembersPage() {
               <div style={{
                 fontSize: isMobile ? '56px' : '72px',
                 fontWeight: 800,
-                background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+                background: '#ffffff',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 marginBottom: '8px',
@@ -287,10 +287,10 @@ export default function FoundingMembersPage() {
                       type="submit"
                       style={{
                         padding: '16px 32px',
-                        background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+                        background: '#ffffff',
                         border: '2px solid rgba(255,255,255,0.1)',
                         borderRadius: '3px',
-                        color: '#0a0a0a',
+                        color: '#000000',
                         fontSize: '16px',
                         fontWeight: 700,
                         cursor: 'pointer',
@@ -326,8 +326,8 @@ export default function FoundingMembersPage() {
               style={{
                 display: 'inline-block',
                 padding: '24px 48px',
-                background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
-                color: '#0a0a0a',
+                background: '#ffffff',
+                color: '#000000',
                 fontSize: '18px',
                 fontWeight: 700,
                 borderRadius: '3px',
@@ -600,7 +600,7 @@ export default function FoundingMembersPage() {
           <div style={{
             fontSize: isMobile ? '64px' : '80px',
             fontWeight: 800,
-            background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
+            background: '#ffffff',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             marginBottom: '8px',
@@ -658,8 +658,8 @@ export default function FoundingMembersPage() {
                 style={{
                   display: 'inline-block',
                   padding: '24px 48px',
-                  background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
-                  color: '#0a0a0a',
+                  background: '#ffffff',
+                  color: '#000000',
                   fontSize: '18px',
                   fontWeight: 700,
                   borderRadius: '3px',
