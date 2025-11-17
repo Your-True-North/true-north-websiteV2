@@ -705,6 +705,8 @@ export default function Circle() {
             padding: isMobile ? '3rem 0 4rem' : '5rem 0 6rem',
             textAlign: 'center'
           }}>
+          <CircleCalendarTeaser />
+
             <h2 style={{
               fontSize: isMobile ? '1.8rem' : '2.5rem',
               color: '#ffffff',
@@ -714,8 +716,6 @@ export default function Circle() {
             }}>
               Join The Circle of Return
             </h2>
-
-          <CircleCalendarTeaser />
 
             
             <p style={{
