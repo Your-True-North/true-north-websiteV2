@@ -186,7 +186,7 @@ export default function PostDetailPage() {
           padding: '32px',
           background: 'rgba(255, 255, 255, 0.02)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '6px',
+          borderRadius: '3px',
           marginBottom: '32px'
         }}>
           {/* Post Header */}
@@ -246,7 +246,7 @@ export default function PostDetailPage() {
               padding: '10px 20px',
               background: liked ? '#7fb069' : 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               color: '#fff',
               fontSize: '14px',
               cursor: 'pointer',
@@ -264,7 +264,7 @@ export default function PostDetailPage() {
           padding: '24px',
           background: 'rgba(255, 255, 255, 0.02)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '6px',
+          borderRadius: '3px',
           marginBottom: '32px'
         }}>
           <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '16px' }}>
@@ -283,7 +283,7 @@ export default function PostDetailPage() {
               padding: '12px 16px',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               color: '#fff',
               fontSize: '16px',
               outline: 'none',
@@ -298,7 +298,7 @@ export default function PostDetailPage() {
               padding: '12px 24px',
               background: posting ? 'rgba(127, 176, 105, 0.5)' : '#7fb069',
               border: 'none',
-              borderRadius: '6px',
+              borderRadius: '3px',
               color: '#fff',
               fontSize: '14px',
               fontWeight: 600,
@@ -322,7 +322,7 @@ export default function PostDetailPage() {
                   padding: '20px',
                   background: 'rgba(255, 255, 255, 0.02)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px'
+                  borderRadius: '3px'
                 }}
               >
                 {/* Reply Header */}

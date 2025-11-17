@@ -759,7 +759,7 @@ export default function AdminPage() {
                         background: 'rgba(155, 196, 184, 0.1)',
                         color: '#9bc4b8',
                         border: '1px solid rgba(155, 196, 184, 0.3)',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         cursor: 'pointer',
                         fontSize: '0.75rem'
                       }}
@@ -773,7 +773,7 @@ export default function AdminPage() {
                         background: 'rgba(239, 68, 68, 0.1)',
                         color: '#ef4444',
                         border: '1px solid rgba(239, 68, 68, 0.3)',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         cursor: 'pointer',
                         fontSize: '0.75rem'
                       }}

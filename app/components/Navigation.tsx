@@ -89,7 +89,7 @@ export default function Navigation() {
                    padding: '0.5rem 1.25rem',
                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                    color: '#000',
-                   borderRadius: '6px',
+                   borderRadius: '3px',
                    fontWeight: '600',
                    transition: 'all 0.3s ease',
                    border: 'none',
@@ -100,7 +100,7 @@ export default function Navigation() {
                    padding: '0.5rem 1.25rem',
                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                    color: '#000',
-                   borderRadius: '6px',
+                   borderRadius: '3px',
                    fontWeight: '600',
                    transition: 'all 0.3s ease'
                  }}>Login</Link>
@@ -229,7 +229,7 @@ export default function Navigation() {
              padding: '0.75rem 1.5rem',
              background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
              color: '#000',
-             borderRadius: '6px',
+             borderRadius: '3px',
              fontWeight: '600',
              textAlign: 'center',
              display: 'block',
@@ -243,7 +243,7 @@ export default function Navigation() {
              padding: '0.75rem 1.5rem',
              background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
              color: '#000',
-             borderRadius: '6px',
+             borderRadius: '3px',
              fontWeight: '600',
              textAlign: 'center',
              display: 'block', opacity: '1'

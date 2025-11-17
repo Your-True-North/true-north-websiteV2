@@ -137,7 +137,7 @@ export default function AdminFoundingPage() {
             padding: '0.75rem 1.5rem',
             background: 'rgba(255, 255, 255, 0.1)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: '6px',
+            borderRadius: '3px',
             color: '#fff',
             textDecoration: 'none',
             fontSize: '0.875rem'
@@ -157,7 +157,7 @@ export default function AdminFoundingPage() {
             padding: '1.5rem',
             background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.15), rgba(127, 176, 105, 0.1))',
             border: '1px solid rgba(155, 196, 184, 0.3)',
-            borderRadius: '6px'
+            borderRadius: '3px'
           }}>
             <div style={{ fontSize: '3rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.5rem' }}>
               {members.length}
@@ -175,7 +175,7 @@ export default function AdminFoundingPage() {
             border: members.length >= 30
               ? '1px solid rgba(239, 68, 68, 0.4)'
               : '1px solid rgba(127, 176, 105, 0.3)',
-            borderRadius: '6px'
+            borderRadius: '3px'
           }}>
             <div style={{
               fontSize: '3rem',
@@ -194,7 +194,7 @@ export default function AdminFoundingPage() {
             padding: '1.5rem',
             background: 'linear-gradient(135deg, rgba(106, 153, 78, 0.15), rgba(155, 196, 184, 0.1))',
             border: '1px solid rgba(106, 153, 78, 0.3)',
-            borderRadius: '6px'
+            borderRadius: '3px'
           }}>
             <div style={{ fontSize: '3rem', fontWeight: 300, color: '#6a994e', marginBottom: '0.5rem' }}>
               {members.filter(m => m.subscription_status === 'active').length}
@@ -224,7 +224,7 @@ export default function AdminFoundingPage() {
               padding: '0.75rem 1.5rem',
               background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
               border: 'none',
-              borderRadius: '6px',
+              borderRadius: '3px',
               color: '#000',
               fontSize: '0.875rem',
               fontWeight: 600,
@@ -239,7 +239,7 @@ export default function AdminFoundingPage() {
         <div style={{
           background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))',
           border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '6px',
+          borderRadius: '3px',
           overflow: 'hidden'
         }}>
           <div style={{ overflowX: 'auto' }}>

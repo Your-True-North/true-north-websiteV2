@@ -100,7 +100,7 @@ export default function WelcomePage() {
         <div style={{
           background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))',
           border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '6px',
+          borderRadius: '3px',
           padding: '2rem',
           marginBottom: '3rem',
           textAlign: 'left'
@@ -157,7 +157,7 @@ export default function WelcomePage() {
             padding: '1rem 3rem',
             background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
             border: 'none',
-            borderRadius: '6px',
+            borderRadius: '3px',
             color: '#000',
             fontSize: '1.125rem',
             fontWeight: 600,

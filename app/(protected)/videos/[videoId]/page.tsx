@@ -200,7 +200,7 @@ export default function VideoPlayerPage() {
           padding: '0.75rem 1.5rem',
           background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
           color: '#000',
-          borderRadius: '6px',
+          borderRadius: '3px',
           textDecoration: 'none',
           fontWeight: 600
         }}>
@@ -244,7 +244,7 @@ export default function VideoPlayerPage() {
             fontSize: '0.875rem',
             fontWeight: 300,
             border: '1px solid rgba(155, 196, 184, 0.3)',
-            borderRadius: '6px',
+            borderRadius: '3px',
             color: '#9bc4b8',
             textDecoration: 'none'
           }}>
@@ -270,7 +270,7 @@ export default function VideoPlayerPage() {
               position: 'relative',
               paddingTop: '56.25%',
               background: '#000',
-              borderRadius: '6px',
+              borderRadius: '3px',
               overflow: 'hidden',
               marginBottom: '1.5rem'
             }}>
@@ -296,7 +296,7 @@ export default function VideoPlayerPage() {
             <div style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               padding: '1.5rem',
               marginBottom: '1.5rem'
             }}>
@@ -344,7 +344,7 @@ export default function VideoPlayerPage() {
                     padding: '0.875rem 1.5rem',
                     background: video.completed ? 'rgba(127, 176, 105, 0.2)' : 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                     border: video.completed ? '1px solid #7fb069' : 'none',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     color: video.completed ? '#7fb069' : '#000',
                     fontSize: '1rem',
                     fontWeight: 600,
@@ -382,7 +382,7 @@ export default function VideoPlayerPage() {
                     padding: '0.5rem 1rem',
                     background: video.hasReacted ? 'rgba(239, 68, 68, 0.1)' : 'transparent',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     color: video.hasReacted ? '#ef4444' : 'rgba(255, 255, 255, 0.7)',
                     fontSize: '0.875rem',
                     cursor: 'pointer',
@@ -411,7 +411,7 @@ export default function VideoPlayerPage() {
             <div style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               padding: '1.5rem'
             }}>
               <h2 style={{
@@ -435,7 +435,7 @@ export default function VideoPlayerPage() {
                     padding: '1rem',
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     color: '#fff',
                     fontSize: '1rem',
                     resize: 'vertical',
@@ -451,7 +451,7 @@ export default function VideoPlayerPage() {
                     padding: '0.75rem 1.5rem',
                     background: (!newComment.trim() || submittingComment) ? 'rgba(155, 196, 184, 0.3)' : 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                     border: 'none',
-                    borderRadius: '6px',
+                    borderRadius: '3px',
                     color: '#000',
                     fontSize: '1rem',
                     fontWeight: 600,
@@ -536,7 +536,7 @@ export default function VideoPlayerPage() {
             <div style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               padding: '1.5rem',
               position: isMobile ? 'static' : 'sticky',
               top: '2rem'
@@ -572,7 +572,7 @@ export default function VideoPlayerPage() {
                           display: 'flex',
                           gap: '0.75rem',
                           padding: '0.75rem',
-                          borderRadius: '6px',
+                          borderRadius: '3px',
                           border: '1px solid rgba(255, 255, 255, 0.05)',
                           cursor: 'pointer',
                           transition: 'all 0.3s ease'

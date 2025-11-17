@@ -215,7 +215,7 @@ export default function Contact() {
                 padding: '2.5rem',
                 background: 'rgba(255, 255, 255, 0.03)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '6px'
+                borderRadius: '3px'
               }}>
                 <h2 style={{
                   fontSize: isMobile ? 'clamp(1.3rem, 6vw, 1.8rem)' : '1.8rem',
@@ -255,7 +255,7 @@ export default function Contact() {
                       style={{
                         width: '100%',
                         padding: '0.75rem',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
                         background: 'rgba(255, 255, 255, 0.05)',
                         color: '#ffffff',
@@ -291,7 +291,7 @@ export default function Contact() {
                       style={{
                         width: '100%',
                         padding: '0.75rem',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
                         background: 'rgba(255, 255, 255, 0.05)',
                         color: '#ffffff',
@@ -327,7 +327,7 @@ export default function Contact() {
                       style={{
                         width: '100%',
                         padding: '0.75rem',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
                         background: 'rgba(255, 255, 255, 0.05)',
                         color: '#ffffff',
@@ -364,7 +364,7 @@ export default function Contact() {
                       style={{
                         width: '100%',
                         padding: '0.75rem',
-                        borderRadius: '6px',
+                        borderRadius: '3px',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
                         background: 'rgba(255, 255, 255, 0.05)',
                         color: '#ffffff',
@@ -397,7 +397,7 @@ export default function Contact() {
                       padding: '1rem',
                       background: 'rgba(255, 255, 255, 0.9)',
                       border: 'none',
-                      borderRadius: '6px',
+                      borderRadius: '3px',
                       color: '#000000',
                       fontSize: '1rem',
                       fontWeight: '600',
@@ -439,7 +439,7 @@ export default function Contact() {
                   padding: '2rem',
                   background: 'rgba(255, 255, 255, 0.03)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   marginBottom: '2rem'
                 }}>
                   <h3 style={{
@@ -470,7 +470,7 @@ export default function Contact() {
                   padding: '2rem',
                   background: 'rgba(255, 255, 255, 0.03)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                   marginBottom: '2rem'
                 }}>
                   <h3 style={{
@@ -507,7 +507,7 @@ export default function Contact() {
                   padding: '2rem',
                   background: 'rgba(255, 255, 255, 0.03)',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '6px'
+                  borderRadius: '3px'
                 }}>
                   <h3 style={{
                     fontSize: '1.4rem',
@@ -534,7 +534,7 @@ export default function Contact() {
                       padding: '0.8rem 1.5rem',
                       background: 'transparent',
                       border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '6px',
+                      borderRadius: '3px',
                       color: 'rgba(255, 255, 255, 0.9)',
                       textDecoration: 'none',
                       fontSize: '0.95rem',
@@ -560,7 +560,7 @@ export default function Contact() {
               padding: '2.5rem',
               background: 'rgba(255, 255, 255, 0.03)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '6px',
+              borderRadius: '3px',
               marginTop: '4rem',
               textAlign: 'center'
             }}>
@@ -603,7 +603,7 @@ export default function Contact() {
                       padding: '0.6rem 1.2rem',
                       background: 'transparent',
                       border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '6px',
+                      borderRadius: '3px',
                       color: 'rgba(255, 255, 255, 0.9)',
                       textDecoration: 'none',
                       transition: 'all 0.3s ease'
@@ -644,7 +644,7 @@ export default function Contact() {
                       padding: '0.6rem 1.2rem',
                       background: 'transparent',
                       border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '6px',
+                      borderRadius: '3px',
                       color: 'rgba(255, 255, 255, 0.9)',
                       textDecoration: 'none',
                       transition: 'all 0.3s ease'
