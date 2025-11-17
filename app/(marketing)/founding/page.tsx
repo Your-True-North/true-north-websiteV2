@@ -241,7 +241,7 @@ export default function FoundingMembersPage() {
                 padding: '24px 48px',
                 background: 'rgba(239, 68, 68, 0.2)',
                 border: '2px solid rgba(239, 68, 68, 0.4)',
-                borderRadius: '12px',
+                borderRadius: '3px',
                 fontSize: isMobile ? '20px' : '24px',
                 fontWeight: 700,
                 marginBottom: '32px',
@@ -277,7 +277,7 @@ export default function FoundingMembersPage() {
                         padding: '16px 24px',
                         background: 'rgba(255, 255, 255, 0.05)',
                         border: '2px solid rgba(255, 255, 255, 0.1)',
-                        borderRadius: '12px',
+                        borderRadius: '3px',
                         color: '#fff',
                         fontSize: '16px',
                         outline: 'none'
@@ -289,7 +289,7 @@ export default function FoundingMembersPage() {
                         padding: '16px 32px',
                         background: 'linear-gradient(135deg, #7fb069 0%, #9bc4b8 100%)',
                         border: '2px solid rgba(255,255,255,0.1)',
-                        borderRadius: '12px',
+                        borderRadius: '3px',
                         color: '#0a0a0a',
                         fontSize: '16px',
                         fontWeight: 700,
@@ -308,7 +308,7 @@ export default function FoundingMembersPage() {
                   padding: '24px',
                   background: 'rgba(127, 176, 105, 0.2)',
                   border: '2px solid rgba(127, 176, 105, 0.4)',
-                  borderRadius: '12px',
+                  borderRadius: '3px',
                   color: '#7fb069',
                   fontSize: '18px',
                   fontWeight: 600
@@ -330,7 +330,7 @@ export default function FoundingMembersPage() {
                 color: '#0a0a0a',
                 fontSize: '18px',
                 fontWeight: 700,
-                borderRadius: '12px',
+                borderRadius: '3px',
                 border: '2px solid rgba(255,255,255,0.1)',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
@@ -451,7 +451,7 @@ export default function FoundingMembersPage() {
               paddingBottom: '56.25%',
               height: 0,
               overflow: 'hidden',
-              borderRadius: '12px',
+              borderRadius: '3px',
               border: '1px solid rgba(255,255,255,0.1)'
             }}>
               <iframe
@@ -508,7 +508,7 @@ export default function FoundingMembersPage() {
                 padding: '40px',
                 background: 'rgba(255,255,255,0.03)',
                 border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '12px',
+                borderRadius: '3px',
                 transition: 'all 0.3s ease'
               }}>
                 <h3 style={{
@@ -650,6 +650,8 @@ export default function FoundingMembersPage() {
                 </div>
               )}
 
+              <CircleCalendarTeaser />
+
               <a
                 href="https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j"
                 onClick={handleStripeClick}
@@ -660,7 +662,7 @@ export default function FoundingMembersPage() {
                   color: '#0a0a0a',
                   fontSize: '18px',
                   fontWeight: 700,
-                  borderRadius: '12px',
+                  borderRadius: '3px',
                   border: '2px solid rgba(255,255,255,0.1)',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
@@ -686,7 +688,7 @@ export default function FoundingMembersPage() {
               padding: '24px 48px',
               background: 'rgba(239, 68, 68, 0.2)',
               border: '2px solid rgba(239, 68, 68, 0.4)',
-              borderRadius: '12px',
+              borderRadius: '3px',
               fontSize: isMobile ? '20px' : '24px',
               fontWeight: 700,
               color: '#ef4444',
