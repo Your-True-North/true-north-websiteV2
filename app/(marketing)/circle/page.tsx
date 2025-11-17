@@ -430,8 +430,6 @@ export default function Circle() {
             </div>
           </section>
 
-          <CircleCalendarTeaser />
-
           <div style={{
             height: '1px',
             background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
@@ -716,6 +714,9 @@ export default function Circle() {
             }}>
               Join The Circle of Return
             </h2>
+
+          <CircleCalendarTeaser />
+
             
             <p style={{
               fontSize: isMobile ? '1.05rem' : '1.15rem',
