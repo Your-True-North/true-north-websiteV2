@@ -13,33 +13,38 @@ export async function POST(request: NextRequest) {
     }
 
     if (!CONVERTKIT_API_KEY) {
-      console.error('[ConvertKit Waitlist] Missing CONVERTKIT_API_KEY')
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
     }
 
-    // Tag subscriber with Circle waitlist tag only
-    const response = await fetch(`${CONVERTKIT_API_URL}/tags/${WAITLIST_TAG_ID}/subscribe`, {
+    // First, add as subscriber (creates them if they don't exist)
+    const subscriberResponse = await fetch(`${CONVERTKIT_API_URL}/subscribers`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_secret: CONVERTKIT_API_KEY,
+        email: email
+      })
+    })
+
+    if (!subscriberResponse.ok) {
+      const errorText = await subscriberResponse.text()
+      console.error('[Waitlist] Subscriber creation failed:', errorText)
+      return NextResponse.json({ error: 'Failed to subscribe' }, { status: 500 })
+    }
+
+    // Then tag with waitlist
+    const tagResponse = await fetch(`${CONVERTKIT_API_URL}/tags/${WAITLIST_TAG_ID}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         api_key: CONVERTKIT_API_KEY,
         email: email
       })
     })
 
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('[ConvertKit Waitlist] Failed:', errorText)
-      return NextResponse.json(
-        { error: 'Failed to join waitlist' },
-        { status: 500 }
-      )
+    if (!tagResponse.ok) {
+      console.error('[Waitlist] Tagging failed')
     }
-
-    const result = await response.json()
-    console.log('[ConvertKit Waitlist] Success:', result)
 
     return NextResponse.json({
       success: true,
@@ -48,9 +53,6 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('[ConvertKit Waitlist] Error:', error)
-    return NextResponse.json(
-      { error: 'Failed to join waitlist' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to join waitlist' }, { status: 500 })
   }
 }
