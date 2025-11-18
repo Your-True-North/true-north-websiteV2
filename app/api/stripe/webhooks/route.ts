@@ -3,12 +3,21 @@ import Stripe from 'stripe'
 import sgMail from '@sendgrid/mail'
 import bcrypt from 'bcryptjs'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-11-20.acacia' })
+// Initialize Stripe lazily to avoid build-time errors
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
+    apiVersion: '2024-11-20.acacia'
+  })
+}
+
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
 const CIRCLE_TAG_ID = '8362450'
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!)
+// Initialize SendGrid if API key exists
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+}
 
 const CIRCLE_PRICE_IDS = [
   'price_1SN63oIEGgnmE0KKEM0Ihkvt', // £25/month
@@ -26,6 +35,7 @@ export async function POST(request: NextRequest) {
     const signature = request.headers.get('stripe-signature')!
 
     let event: Stripe.Event
+    const stripe = getStripe()
 
     try {
       event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET)
