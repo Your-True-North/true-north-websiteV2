@@ -11,10 +11,20 @@ interface Admin {
   role: string
 }
 
+interface DashboardStats {
+  totalVideos: number
+  totalMembers: number
+  totalComments: number
+  totalReactions: number
+  videosThisMonth: number
+}
+
 export default function AdminDashboard() {
   const router = useRouter()
   const [admin, setAdmin] = useState<Admin | null>(null)
+  const [stats, setStats] = useState<DashboardStats | null>(null)
   const [loading, setLoading] = useState(true)
+  const [statsLoading, setStatsLoading] = useState(true)
 
   useEffect(() => {
     const adminData = localStorage.getItem('admin')
@@ -36,6 +46,29 @@ export default function AdminDashboard() {
       router.push('/admin/login')
     }
   }, [router])
+
+  useEffect(() => {
+    if (admin) {
+      fetchStats()
+    }
+  }, [admin])
+
+  const fetchStats = async () => {
+    try {
+      const res = await fetch('/api/admin/dashboard')
+      const data = await res.json()
+
+      if (res.ok && data.stats) {
+        setStats(data.stats)
+      } else {
+        console.error('Failed to fetch stats:', data.error)
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error)
+    } finally {
+      setStatsLoading(false)
+    }
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('admin')
@@ -152,9 +185,113 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        {/* Quick Stats */}
+        {/* Platform Stats */}
         <div style={{
           marginTop: '60px',
+          padding: '32px',
+          background: 'rgba(255, 255, 255, 0.02)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '3px'
+        }}>
+          <h2 style={{
+            fontSize: '20px',
+            fontWeight: 600,
+            marginBottom: '24px',
+            color: '#9bc4b8'
+          }}>
+            Platform Statistics
+          </h2>
+
+          {statsLoading ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255, 255, 255, 0.5)' }}>
+              Loading stats...
+            </div>
+          ) : stats ? (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '20px'
+            }}>
+              <div style={{
+                padding: '24px',
+                background: 'rgba(127, 176, 105, 0.1)',
+                border: '1px solid rgba(127, 176, 105, 0.2)',
+                borderRadius: '3px'
+              }}>
+                <div style={{ fontSize: '32px', fontWeight: 600, color: '#7fb069', marginBottom: '8px' }}>
+                  {stats.totalVideos}
+                </div>
+                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Total Videos
+                </div>
+              </div>
+
+              <div style={{
+                padding: '24px',
+                background: 'rgba(155, 196, 184, 0.1)',
+                border: '1px solid rgba(155, 196, 184, 0.2)',
+                borderRadius: '3px'
+              }}>
+                <div style={{ fontSize: '32px', fontWeight: 600, color: '#9bc4b8', marginBottom: '8px' }}>
+                  {stats.totalMembers}
+                </div>
+                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Total Members
+                </div>
+              </div>
+
+              <div style={{
+                padding: '24px',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '3px'
+              }}>
+                <div style={{ fontSize: '32px', fontWeight: 600, color: '#fff', marginBottom: '8px' }}>
+                  {stats.totalComments}
+                </div>
+                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Total Comments
+                </div>
+              </div>
+
+              <div style={{
+                padding: '24px',
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '3px'
+              }}>
+                <div style={{ fontSize: '32px', fontWeight: 600, color: '#fff', marginBottom: '8px' }}>
+                  {stats.totalReactions}
+                </div>
+                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Total Reactions
+                </div>
+              </div>
+
+              <div style={{
+                padding: '24px',
+                background: 'rgba(127, 176, 105, 0.05)',
+                border: '1px solid rgba(127, 176, 105, 0.15)',
+                borderRadius: '3px'
+              }}>
+                <div style={{ fontSize: '32px', fontWeight: 600, color: '#7fb069', marginBottom: '8px' }}>
+                  {stats.videosThisMonth}
+                </div>
+                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Videos This Month
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255, 255, 255, 0.5)' }}>
+              Failed to load stats
+            </div>
+          )}
+        </div>
+
+        {/* Quick Actions */}
+        <div style={{
+          marginTop: '40px',
           padding: '32px',
           background: 'rgba(255, 255, 255, 0.02)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
