@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
     }
 
-    // First, add as subscriber (creates them if they don't exist)
     const subscriberResponse = await fetch(`${CONVERTKIT_API_URL}/subscribers`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -32,7 +31,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to subscribe' }, { status: 500 })
     }
 
-    // Then tag with waitlist
     const tagResponse = await fetch(`${CONVERTKIT_API_URL}/tags/${WAITLIST_TAG_ID}/subscribe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
