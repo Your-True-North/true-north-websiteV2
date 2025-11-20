@@ -11,7 +11,7 @@ export async function POST(request, { params }) {
     const user = authResult.user
 
     const videoId = params.id
-    const { completed } = await request.json()
+    const { completed, watchTime } = await request.json()
 
     // Check if progress record exists
     const existing = await query(`
@@ -26,16 +26,17 @@ export async function POST(request, { params }) {
         UPDATE user_video_progress
         SET
           completed = $1,
+          watch_time = COALESCE($2, watch_time),
           last_watched = NOW(),
           completion_date = CASE WHEN $1 = true THEN NOW() ELSE completion_date END
-        WHERE user_id = $2 AND video_id = $3
-      `, [completed, user.userId, videoId])
+        WHERE user_id = $3 AND video_id = $4
+      `, [completed, watchTime, user.userId, videoId])
     } else {
       // Insert new progress
       await query(`
-        INSERT INTO user_video_progress (user_id, video_id, completed, last_watched, completion_date)
-        VALUES ($1, $2, $3, NOW(), CASE WHEN $3 = true THEN NOW() ELSE NULL END)
-      `, [user.userId, videoId, completed])
+        INSERT INTO user_video_progress (user_id, video_id, completed, watch_time, last_watched, completion_date)
+        VALUES ($1, $2, $3, $4, NOW(), CASE WHEN $3 = true THEN NOW() ELSE NULL END)
+      `, [user.userId, videoId, completed, watchTime || 0])
     }
 
     // If video was just completed, create notification
