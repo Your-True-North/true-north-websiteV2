@@ -152,7 +152,8 @@ export default function LibraryPage() {
 
       {/* Navigation */}
       <nav style={{
-        position: 'relative',
+        position: 'sticky',
+        top: 0,
         zIndex: 20,
         borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         backdropFilter: 'blur(20px)',
@@ -189,7 +190,8 @@ export default function LibraryPage() {
         </div>
       </nav>
 
-      <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '1rem 1.5rem' }}>
+      <div style={{ position: 'sticky',
+        top: 0, zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '1rem 1.5rem' }}>
         {/* Header */}
         <div style={{ marginBottom: '2rem' }}>
           <Link

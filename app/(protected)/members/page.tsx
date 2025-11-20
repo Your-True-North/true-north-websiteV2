@@ -275,7 +275,8 @@ export default function MembersPage() {
 
       {/* Navigation */}
       <nav style={{
-        position: 'relative',
+        position: 'sticky',
+        top: 0,
         zIndex: 20,
         borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         backdropFilter: 'blur(20px)',
@@ -377,7 +378,8 @@ export default function MembersPage() {
         </div>
       </nav>
 
-      <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '10rem 1.5rem 2rem' }}>
+      <div style={{ position: 'sticky',
+        top: 0, zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '10rem 1.5rem 2rem' }}>
         {/* Hero Section */}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <div style={{ display: 'inline-block', marginBottom: '1.5rem' }}>
@@ -422,7 +424,8 @@ export default function MembersPage() {
           border: '1px solid rgba(255, 255, 255, 0.1)',
           borderRadius: '12px',
           padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-          position: 'relative',
+          position: 'sticky',
+        top: 0,
           overflow: 'hidden'
         }}>
           <div style={{ position: 'relative' }}>
@@ -457,7 +460,8 @@ export default function MembersPage() {
               </div>
 
               {/* Circular Progress */}
-              <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+              <div style={{ position: 'sticky',
+        top: 0, display: 'flex', justifyContent: 'center' }}>
                 <svg style={{ width: '12rem', height: '12rem', transform: 'rotate(-90deg)' }}>
                   <circle
                     cx="96"
@@ -514,7 +518,8 @@ export default function MembersPage() {
                   <div
                     key={stage}
                     style={{
-                      position: 'relative',
+                      position: 'sticky',
+        top: 0,
                       padding: '1.5rem',
                       borderRadius: '8px',
                       transition: 'all 0.5s ease',

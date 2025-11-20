@@ -216,7 +216,8 @@ export default function VideoPlayerPage() {
     <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
       {/* Navigation */}
       <nav style={{
-        position: 'relative',
+        position: 'sticky',
+        top: 0,
         zIndex: 20,
         borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         backdropFilter: 'blur(20px)',
@@ -267,7 +268,8 @@ export default function VideoPlayerPage() {
           <div>
             {/* Video Player */}
             <div style={{
-              position: 'relative',
+              position: 'sticky',
+        top: 0,
               paddingTop: '56.25%',
               background: '#000',
               borderRadius: '3px',
@@ -593,7 +595,8 @@ export default function VideoPlayerPage() {
                             borderRadius: '4px',
                             background: '#000',
                             flexShrink: 0,
-                            position: 'relative',
+                            position: 'sticky',
+        top: 0,
                             overflow: 'hidden'
                           }}>
                             {relatedYoutubeId && (

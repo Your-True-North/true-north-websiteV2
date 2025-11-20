@@ -260,7 +260,8 @@ export default function JourneyPage() {
     <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
-        position: 'relative',
+        position: 'sticky',
+        top: 0,
         zIndex: 20,
         borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         backdropFilter: 'blur(20px)',
@@ -741,7 +742,8 @@ export default function JourneyPage() {
               <div style={{
                 width: '100%',
                 paddingBottom: '56.25%',
-                position: 'relative',
+                position: 'sticky',
+        top: 0,
                 borderRadius: '8px',
                 overflow: 'hidden',
                 marginBottom: '1.5rem'
