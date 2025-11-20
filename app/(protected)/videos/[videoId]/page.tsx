@@ -237,7 +237,7 @@ export default function VideoPlayerPage() {
             color: 'rgba(255, 255, 255, 0.9)',
             textDecoration: 'none'
           }}>
-            TRUE NORTH
+            CIRCLE OF RETURN
           </Link>
           <Link href="/videos" style={{
             padding: '0.5rem 1rem',
@@ -256,7 +256,7 @@ export default function VideoPlayerPage() {
       <div style={{
         maxWidth: '90rem',
         margin: '0 auto',
-        padding: '2rem 1.5rem'
+        padding: '1rem 1.5rem'
       }}>
         <div style={{
           display: 'grid',

@@ -455,7 +455,7 @@ export default function AdminPage() {
             color: '#fff',
             textDecoration: 'none'
           }}>
-            TRUE NORTH
+            CIRCLE OF RETURN
           </Link>
 
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>

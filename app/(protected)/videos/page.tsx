@@ -173,7 +173,7 @@ export default function LibraryPage() {
             color: 'rgba(255, 255, 255, 0.9)',
             textDecoration: 'none'
           }}>
-            TRUE NORTH
+            CIRCLE OF RETURN
           </Link>
           <Link href="/members" style={{
             padding: '0.5rem 1rem',
@@ -189,7 +189,7 @@ export default function LibraryPage() {
         </div>
       </nav>
 
-      <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '2rem 1.5rem' }}>
+      <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '1rem 1.5rem' }}>
         {/* Header */}
         <div style={{ marginBottom: '2rem' }}>
           <Link

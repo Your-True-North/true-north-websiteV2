@@ -286,7 +286,7 @@ export default function JourneyPage() {
           }}
           onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
           onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
-            TRUE NORTH
+            CIRCLE OF RETURN
           </Link>
           
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
