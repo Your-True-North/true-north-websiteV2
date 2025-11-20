@@ -124,23 +124,74 @@ export async function POST(request: NextRequest) {
             from: 'callwithmason@gmail.com',
             subject: 'Welcome to Circle of Return',
             html: `
-              <div style="background: #000; color: #fff; padding: 60px 20px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-                <h1 style="font-size: 48px; font-weight: 300; margin-bottom: 40px; letter-spacing: -1px;">The CoR</h1>
-                
-                <h2 style="font-size: 20px; font-weight: 300; margin-bottom: 60px; opacity: 0.7;">Welcome to Circle of Return</h2>
-                
-                <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 3px; padding: 40px; max-width: 500px; margin: 0 auto;">
-                  <p style="font-size: 16px; margin-bottom: 30px; opacity: 0.8;">Your login credentials:</p>
+              <div style="background: #0a0a0b; color: #fff; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+                <div style="max-width: 600px; margin: 0 auto;">
                   
-                  <div style="text-align: left; margin: 0 auto; max-width: 300px;">
-                    <p style="margin: 15px 0;"><strong>Email:</strong><br/>${email}</p>
-                    <p style="margin: 15px 0;"><strong>Password:</strong><br/>${password}</p>
+                  <div style="text-align: center; margin-bottom: 50px;">
+                    <h1 style="font-size: 42px; font-weight: 300; margin-bottom: 20px; letter-spacing: -0.5px; line-height: 1.2;">Welcome to<br/>Circle of Return</h1>
+                    <p style="font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.6); margin: 0;">You're not here by accident.</p>
+                  </div>
+
+                  <div style="margin-bottom: 40px;">
+                    <p style="font-size: 16px; line-height: 1.8; margin-bottom: 25px; color: rgba(255,255,255,0.85);">
+                      You've just joined something rare - you are a founding member of a community built for those who are done with surface-level living and ready to return to who they really are beneath the noise and conditioning.
+                    </p>
+                    
+                    <p style="font-size: 16px; line-height: 1.8; margin-bottom: 25px; color: rgba(255,255,255,0.85);">
+                      As a founder, you're not just joining something, but you're helping create it. Your questions, your challenges, your breakthroughs will shape the content, the live sessions, and the direction of this entire circle.
+                    </p>
+                    
+                    <p style="font-size: 16px; line-height: 1.8; margin-bottom: 25px; color: rgba(255,255,255,0.85);">
+                      This means you'll get more live interaction with me than anyone who joins after you. You'll have direct input on where this goes. This is your transformation, our transformation and for those that step inside next.
+                    </p>
+                  </div>
+
+                  <div style="background: rgba(155, 196, 184, 0.05); border: 1px solid rgba(155, 196, 184, 0.2); border-radius: 6px; padding: 35px; margin: 40px 0;">
+                    <p style="font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; color: rgba(255,255,255,0.5); text-align: center;">Your Login Credentials</p>
+                    
+                    <div style="margin: 0 0 30px 0;">
+                      <p style="margin: 0 0 8px 0; font-size: 13px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px;">Email</p>
+                      <p style="margin: 0; font-size: 16px; color: rgba(255,255,255,0.9); font-family: 'Courier New', monospace;">\${email}</p>
+                    </div>
+                    
+                    <div style="margin: 0 0 30px 0;">
+                      <p style="margin: 0 0 8px 0; font-size: 13px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px;">Temporary Password</p>
+                      <p style="margin: 0; font-size: 16px; color: rgba(255,255,255,0.9); font-family: 'Courier New', monospace;">\${password}</p>
+                    </div>
+                    
+                    <p style="font-size: 13px; color: rgba(255,255,255,0.4); margin: 0 0 25px 0; line-height: 1.6;">You can change this password in your profile settings once you're inside.</p>
+                    
+                    <div style="text-align: center;">
+                      <a href="\${process.env.NEXT_PUBLIC_SITE_URL}/auth/login" style="display: inline-block; padding: 16px 45px; background: linear-gradient(135deg, #9bc4b8, #7fb069); color: #000; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">Enter the Circle</a>
+                    </div>
+                  </div>
+
+                  <div style="background: rgba(127, 176, 105, 0.05); border-left: 3px solid #7fb069; padding: 25px; margin: 40px 0;">
+                    <p style="font-size: 15px; font-weight: 600; margin: 0 0 15px 0; color: #7fb069;">What's Next?</p>
+                    <ul style="margin: 0; padding: 0 0 0 20px; list-style: none;">
+                      <li style="margin-bottom: 12px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.8); position: relative; padding-left: 15px;">
+                        <span style="position: absolute; left: 0; color: #7fb069;">→</span>
+                        Log in and complete your profile
+                      </li>
+                      <li style="margin-bottom: 0; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.8); position: relative; padding-left: 15px;">
+                        <span style="position: absolute; left: 0; color: #7fb069;">→</span>
+                        Check the calendar in your members area for upcoming Onboarding (this is your first step) and you'll be guided from there.
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                    <p style="font-size: 15px; line-height: 1.7; margin-bottom: 20px; color: rgba(255,255,255,0.7); font-style: italic;">
+                      "Where you are now does not have to be where you end up."
+                    </p>
+                    
+                    <p style="font-size: 14px; color: rgba(255,255,255,0.5); margin: 0;">
+                      See you inside,<br/>
+                      <span style="font-weight: 500; color: rgba(255,255,255,0.7);">True North</span>
+                    </p>
                   </div>
                   
-                  <a href="${process.env.NEXT_PUBLIC_SITE_URL}/auth/login" style="display: inline-block; margin-top: 40px; padding: 15px 40px; background: #fff; color: #000; text-decoration: none; border-radius: 3px; font-weight: 500;">Access Members Area</a>
                 </div>
-                
-                <p style="margin-top: 60px; font-size: 14px; opacity: 0.5;">See you inside,<br/>True North</p>
               </div>
             `
           }
