@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
         try {
           const msg = {
             to: email,
-            from: 'mason@yourtruenorth.me',
+            from: 'callwithmason@gmail.com',
             subject: 'Welcome to Circle of Return',
             html: `
               <div style="background: #000; color: #fff; padding: 60px 20px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
 
           const msg = {
             to: email,
-            from: 'mason@yourtruenorth.me',
+            from: 'callwithmason@gmail.com',
             subject: 'Payment Failed - Update Your Card',
             html: `
               <div style="background: #000; color: #fff; padding: 60px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
