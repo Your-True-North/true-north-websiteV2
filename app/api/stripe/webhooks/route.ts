@@ -151,18 +151,18 @@ export async function POST(request: NextRequest) {
                     
                     <div style="margin: 0 0 30px 0;">
                       <p style="margin: 0 0 8px 0; font-size: 13px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px;">Email</p>
-                      <p style="margin: 0; font-size: 16px; color: rgba(255,255,255,0.9); font-family: 'Courier New', monospace;">\${email}</p>
+                      <p style="margin: 0; font-size: 16px; color: rgba(255,255,255,0.9); font-family: 'Courier New', monospace;">${email}</p>
                     </div>
                     
                     <div style="margin: 0 0 30px 0;">
                       <p style="margin: 0 0 8px 0; font-size: 13px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px;">Temporary Password</p>
-                      <p style="margin: 0; font-size: 16px; color: rgba(255,255,255,0.9); font-family: 'Courier New', monospace;">\${password}</p>
+                      <p style="margin: 0; font-size: 16px; color: rgba(255,255,255,0.9); font-family: 'Courier New', monospace;">${password}</p>
                     </div>
                     
                     <p style="font-size: 13px; color: rgba(255,255,255,0.4); margin: 0 0 25px 0; line-height: 1.6;">You can change this password in your profile settings once you're inside.</p>
                     
                     <div style="text-align: center;">
-                      <a href="\${process.env.NEXT_PUBLIC_SITE_URL}/auth/login" style="display: inline-block; padding: 16px 45px; background: linear-gradient(135deg, #9bc4b8, #7fb069); color: #000; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">Enter the Circle</a>
+                      <a href="${process.env.NEXT_PUBLIC_SITE_URL}/auth/login" style="display: inline-block; padding: 16px 45px; background: linear-gradient(135deg, #9bc4b8, #7fb069); color: #000; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">Enter the Circle</a>
                     </div>
                   </div>
 
