@@ -11,7 +11,7 @@ export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const protectedPaths = ['/members', '/journey', '/admin', '/auth'];
+  const protectedPaths = ['/members', '/videos', '/forum', '/calls', '/journey', '/admin', '/auth'];
   const shouldHideNav = protectedPaths.some(path => pathname?.startsWith(path));
 
   useEffect(() => {
