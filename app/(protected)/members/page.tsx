@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { logger } from '@/lib/logger'
 import NextSessionCard from '../../components/calendar/NextSessionCard'
-import MembersFooter from '../../components/MembersFooter'
 
 interface User {
   id: number
@@ -790,7 +789,6 @@ export default function MembersPage() {
         </div>
       </div>
 
-      <MembersFooter />
 
       {/* Profile Settings Modal */}
       {showProfileModal && (
