@@ -31,6 +31,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
         <style dangerouslySetInnerHTML={{__html: `
+          html { scroll-behavior: smooth; }
           * { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
           h1, h2, h3, h4, h5, h6 { font-family: "Gambarino", serif !important; }
           @media (min-width: 769px) {
