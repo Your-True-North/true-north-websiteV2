@@ -295,6 +295,36 @@ export default function ForumPage() {
                   <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.5)' }}>
                     {getTimeAgo(post.created_at)}
                     {post.category && ` · ${post.category}`}
+                  
+                  {user?.email === 'navigate@yourtruenorth.me' && (
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleDelete(post.id, 'post')
+                      }}
+                      style={{
+                        marginLeft: 'auto',
+                        padding: '0.25rem 0.5rem',
+                        fontSize: '0.75rem',
+                        background: 'rgba(239, 68, 68, 0.1)',
+                        border: '1px solid rgba(239, 68, 68, 0.3)',
+                        borderRadius: '4px',
+                        color: '#ef4444',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(239, 68, 68, 0.2)'
+                        e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.5)'
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'
+                        e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)'
+                      }}
+                    >
+                      Delete
+                    </button>
+                  )}
                   </div>
                 </div>
               </div>
