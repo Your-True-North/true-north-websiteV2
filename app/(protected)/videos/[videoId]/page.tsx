@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import Breadcrumb from '../../../components/Breadcrumb'
 
 interface Video {
   id: number
@@ -258,6 +259,17 @@ export default function VideoPlayerPage() {
         margin: '0 auto',
         padding: '2rem 1.5rem'
       }}>
+        {/* Breadcrumb */}
+        {video && (
+          <Breadcrumb
+            items={[
+              { label: 'Dashboard', href: '/members' },
+              { label: 'Library', href: '/videos' },
+              { label: video.title }
+            ]}
+          />
+        )}
+
         <div style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : '1fr 350px',

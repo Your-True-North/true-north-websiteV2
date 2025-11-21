@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Breadcrumb from '../../components/Breadcrumb'
 
 interface User {
   id: number
@@ -148,18 +149,12 @@ export default function ForumPage() {
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 20px' }}>
         {/* Header */}
         <div style={{ marginBottom: '40px' }}>
-          <Link
-            href="/members"
-            style={{
-              color: '#9bc4b8',
-              textDecoration: 'none',
-              fontSize: '14px',
-              marginBottom: '12px',
-              display: 'inline-block'
-            }}
-          >
-            ← Back to Dashboard
-          </Link>
+          <Breadcrumb
+            items={[
+              { label: 'Dashboard', href: '/members' },
+              { label: 'Forum' }
+            ]}
+          />
           <h1 style={{
             fontSize: '32px',
             fontWeight: 600,

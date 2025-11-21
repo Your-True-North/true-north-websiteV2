@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import Breadcrumb from '../../../components/Breadcrumb'
 
 interface User {
   id: number
@@ -167,19 +168,16 @@ export default function PostDetailPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
-        {/* Back Link */}
-        <Link
-          href="/forum"
-          style={{
-            color: '#9bc4b8',
-            textDecoration: 'none',
-            fontSize: '14px',
-            marginBottom: '24px',
-            display: 'inline-block'
-          }}
-        >
-          ← Back to Forum
-        </Link>
+        {/* Breadcrumb */}
+        {post && (
+          <Breadcrumb
+            items={[
+              { label: 'Dashboard', href: '/members' },
+              { label: 'Forum', href: '/forum' },
+              { label: post.title || 'Post' }
+            ]}
+          />
+        )}
 
         {/* Original Post */}
         <div style={{

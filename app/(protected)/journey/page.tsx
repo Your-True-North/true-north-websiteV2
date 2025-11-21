@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { logger } from '@/lib/logger'
+import Breadcrumb from '../../components/Breadcrumb'
 
 const mockVideos = [
   {
@@ -337,8 +338,17 @@ export default function JourneyPage() {
           </div>
         </div>
       </nav>
-      
+
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '10rem 1rem 2rem' }}>
+        {/* Breadcrumb */}
+        <div style={{ marginBottom: '2rem' }}>
+          <Breadcrumb
+            items={[
+              { label: 'Dashboard', href: '/members' },
+              { label: 'Journey' }
+            ]}
+          />
+        </div>
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: isMobile ? '1fr' : '280px 1fr',
