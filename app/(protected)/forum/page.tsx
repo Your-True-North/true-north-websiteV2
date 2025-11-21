@@ -28,6 +28,27 @@ export default function ForumPage() {
   const [user, setUser] = useState<User | null>(null)
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
+
+  const handleDelete = async (id, type) => {
+    if (!confirm('Delete this ' + type + '? This cannot be undone.')) return
+    
+    try {
+      const res = await fetch('/api/forum/delete', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, type, userEmail: user?.email })
+      })
+      
+      if (res.ok) {
+        window.location.reload()
+      } else {
+        alert('Failed to delete')
+      }
+    } catch (err) {
+      alert('Error deleting')
+    }
+  }
+
   const [selectedCategory, setSelectedCategory] = useState('All Posts')
   const [showNewPostModal, setShowNewPostModal] = useState(false)
   const [newPost, setNewPost] = useState({
