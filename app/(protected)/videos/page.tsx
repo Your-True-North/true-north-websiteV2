@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { logger } from '@/lib/logger'
-
+import Breadcrumb from '../../components/Breadcrumb'
 interface Video {
   id: number
   title: string

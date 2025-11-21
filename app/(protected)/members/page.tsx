@@ -29,6 +29,7 @@ export default function MembersPage() {
   const [saving, setSaving] = useState(false)
   const [profileError, setProfileError] = useState('')
   const [profileSuccess, setProfileSuccess] = useState('')
+  const [stats, setStats] = useState({ videosWatched: 0, totalWatchTime: 0, completionRate: 0 })
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
@@ -64,6 +65,18 @@ export default function MembersPage() {
         setProfilePhoto(parsedUser.profile_photo)
       }
       setLoading(false)
+      
+      // Fetch stats
+      fetch('/api/user/stats', {
+        headers: { 'x-user-id': parsedUser.id.toString() }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.stats) {
+            setStats(data.stats)
+          }
+        })
+        .catch(err => console.error('Failed to fetch stats:', err))
     } catch (err) {
       console.error('[Members] Failed to parse user data:', err)
       localStorage.removeItem('user')
@@ -747,6 +760,84 @@ export default function MembersPage() {
         </div>
 
         <NextSessionCard />
+        {/* Progress Stats */}
+        <div style={{
+          marginBottom: '2rem',
+          backdropFilter: 'blur(20px)',
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '12px',
+          padding: '2rem',
+          transition: 'border 0.3s ease'
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
+        onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+          <h3 style={{ 
+            fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', 
+            fontWeight: 300, 
+            marginBottom: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem'
+          }}>
+            <svg style={{ width: '1.25rem', height: '1.25rem', color: 'rgba(255, 255, 255, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            Your Progress
+          </h3>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isTablet ? '1fr' : 'repeat(3, 1fr)',
+            gap: '1.5rem'
+          }}>
+            <div style={{
+              padding: '1.5rem',
+              background: 'rgba(155, 196, 184, 0.05)',
+              border: '1px solid rgba(155, 196, 184, 0.2)',
+              borderRadius: '8px',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.5rem' }}>
+                {stats.videosWatched || 0}
+              </div>
+              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>
+                Videos Watched
+              </div>
+            </div>
+            
+            <div style={{
+              padding: '1.5rem',
+              background: 'rgba(127, 176, 105, 0.05)',
+              border: '1px solid rgba(127, 176, 105, 0.2)',
+              borderRadius: '8px',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#7fb069', marginBottom: '0.5rem' }}>
+                {Math.round((stats.totalWatchTime || 0) / 60)}m
+              </div>
+              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>
+                Watch Time
+              </div>
+            </div>
+            
+            <div style={{
+              padding: '1.5rem',
+              background: 'rgba(106, 153, 78, 0.05)',
+              border: '1px solid rgba(106, 153, 78, 0.2)',
+              borderRadius: '8px',
+              transition: 'all 0.3s ease'
+            }}>
+              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#6a994e', marginBottom: '0.5rem' }}>
+                {stats.completionRate || 0}%
+              </div>
+              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>
+                Completion Rate
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         {/* Account Info */}
         <div style={{
