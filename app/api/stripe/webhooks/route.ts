@@ -323,7 +323,7 @@ export async function POST(request: NextRequest) {
           await client.end()
         } catch (err) {
           console.error('Subscription webhook error:', err)
-
+    return NextResponse.json({ received: true })
   } catch (error) {
           await client.end()
         }
