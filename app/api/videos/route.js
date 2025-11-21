@@ -28,6 +28,11 @@ export async function GET(request) {
         v.createdat as upload_date,
         uvp.completed,
         uvp.last_watched,
+        uvp.watch_time,
+        CASE
+          WHEN v.duration > 0 AND uvp.watch_time > 0 THEN ROUND((uvp.watch_time::float / v.duration::float) * 100)
+          ELSE 0
+        END as progress_percentage,
         CASE
           WHEN uvp.completed = true THEN 'completed'
           WHEN uvp.last_watched IS NOT NULL THEN 'in_progress'

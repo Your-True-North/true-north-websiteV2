@@ -18,6 +18,13 @@ interface User {
   joinDate: string
 }
 
+interface ProgressStats {
+  videosWatched: number
+  totalWatchTime: number
+  completionRate: number
+  totalVideosStarted: number
+}
+
 export default function MembersPage() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
@@ -30,6 +37,8 @@ export default function MembersPage() {
   const [saving, setSaving] = useState(false)
   const [profileError, setProfileError] = useState('')
   const [profileSuccess, setProfileSuccess] = useState('')
+  const [progressStats, setProgressStats] = useState<ProgressStats | null>(null)
+  const [statsLoading, setStatsLoading] = useState(true)
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
@@ -82,6 +91,26 @@ export default function MembersPage() {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  useEffect(() => {
+    const fetchProgressStats = async () => {
+      try {
+        const response = await fetch('/api/user/stats')
+        const data = await response.json()
+        if (response.ok && data.success) {
+          setProgressStats(data.stats)
+        }
+      } catch (error) {
+        console.error('[Members] Failed to fetch progress stats:', error)
+      } finally {
+        setStatsLoading(false)
+      }
+    }
+
+    if (user) {
+      fetchProgressStats()
+    }
+  }, [user])
 
   const handleLogout = () => {
     logger.debug('Members', 'Logging out user')
@@ -574,6 +603,177 @@ export default function MembersPage() {
             </div>
           </div>
         </div>
+
+        {/* Your Progress Stats */}
+        {!statsLoading && progressStats && (
+          <div style={{
+            marginBottom: '2rem',
+            backdropFilter: 'blur(20px)',
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '12px',
+            padding: '2rem',
+            transition: 'border 0.3s ease'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
+          onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+            <h3 style={{
+              fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
+              fontWeight: 300,
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem'
+            }}>
+              <div style={{
+                width: '2.5rem',
+                height: '2.5rem',
+                borderRadius: '50%',
+                background: 'rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              Your Progress
+            </h3>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isTablet ? '1fr' : 'repeat(3, 1fr)',
+              gap: '1.5rem'
+            }}>
+              {/* Videos Watched */}
+              <div style={{
+                padding: '1.5rem',
+                background: 'rgba(155, 196, 184, 0.05)',
+                border: '1px solid rgba(155, 196, 184, 0.2)',
+                borderRadius: '8px',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
+                e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.4)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(155, 196, 184, 0.05)'
+                e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.2)'
+              }}>
+                <div style={{
+                  fontSize: '0.75rem',
+                  color: '#9bc4b8',
+                  marginBottom: '0.5rem',
+                  fontWeight: 300,
+                  letterSpacing: '0.05em'
+                }}>
+                  VIDEOS WATCHED
+                </div>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  fontWeight: 300,
+                  color: '#9bc4b8',
+                  marginBottom: '0.25rem'
+                }}>
+                  {progressStats.videosWatched}
+                </div>
+                <div style={{
+                  fontSize: '0.875rem',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  fontWeight: 300
+                }}>
+                  {progressStats.totalVideosStarted} started
+                </div>
+              </div>
+
+              {/* Watch Time */}
+              <div style={{
+                padding: '1.5rem',
+                background: 'rgba(127, 176, 105, 0.05)',
+                border: '1px solid rgba(127, 176, 105, 0.2)',
+                borderRadius: '8px',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(127, 176, 105, 0.1)'
+                e.currentTarget.style.borderColor = 'rgba(127, 176, 105, 0.4)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(127, 176, 105, 0.05)'
+                e.currentTarget.style.borderColor = 'rgba(127, 176, 105, 0.2)'
+              }}>
+                <div style={{
+                  fontSize: '0.75rem',
+                  color: '#7fb069',
+                  marginBottom: '0.5rem',
+                  fontWeight: 300,
+                  letterSpacing: '0.05em'
+                }}>
+                  WATCH TIME
+                </div>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  fontWeight: 300,
+                  color: '#7fb069',
+                  marginBottom: '0.25rem'
+                }}>
+                  {Math.floor(progressStats.totalWatchTime / 60)}
+                </div>
+                <div style={{
+                  fontSize: '0.875rem',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  fontWeight: 300
+                }}>
+                  minutes
+                </div>
+              </div>
+
+              {/* Completion Rate */}
+              <div style={{
+                padding: '1.5rem',
+                background: 'rgba(106, 153, 78, 0.05)',
+                border: '1px solid rgba(106, 153, 78, 0.2)',
+                borderRadius: '8px',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(106, 153, 78, 0.1)'
+                e.currentTarget.style.borderColor = 'rgba(106, 153, 78, 0.4)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(106, 153, 78, 0.05)'
+                e.currentTarget.style.borderColor = 'rgba(106, 153, 78, 0.2)'
+              }}>
+                <div style={{
+                  fontSize: '0.75rem',
+                  color: '#6a994e',
+                  marginBottom: '0.5rem',
+                  fontWeight: 300,
+                  letterSpacing: '0.05em'
+                }}>
+                  COMPLETION RATE
+                </div>
+                <div style={{
+                  fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+                  fontWeight: 300,
+                  color: '#6a994e',
+                  marginBottom: '0.25rem'
+                }}>
+                  {progressStats.completionRate}%
+                </div>
+                <div style={{
+                  fontSize: '0.875rem',
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  fontWeight: 300
+                }}>
+                  of library
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Content Grid */}
         <div style={{

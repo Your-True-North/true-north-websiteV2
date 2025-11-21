@@ -15,6 +15,8 @@ interface Video {
   upload_date: string
   completed: boolean
   last_watched: string | null
+  watch_time: number | null
+  progress_percentage: number
   status: 'new' | 'in_progress' | 'completed'
 }
 
@@ -29,11 +31,25 @@ interface Stats {
   totalWatchTime: number
 }
 
+interface ContinueWatchingVideo {
+  id: number
+  title: string
+  description: string
+  youtube_url: string
+  category: string
+  duration: number
+  upload_date: string
+  watch_time: number
+  last_watched: string
+  percentage: number
+}
+
 export default function LibraryPage() {
   const router = useRouter()
   const [videos, setVideos] = useState<Video[]>([])
   const [categories, setCategories] = useState<Categories>({ all: 0 })
   const [stats, setStats] = useState<Stats>({ completedVideos: 0, videosWatched: 0, totalWatchTime: 0 })
+  const [continueWatching, setContinueWatching] = useState<ContinueWatchingVideo[]>([])
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState('newest')
@@ -58,6 +74,7 @@ export default function LibraryPage() {
     }
 
     fetchVideos()
+    fetchContinueWatching()
   }, [selectedCategory, searchQuery, sortBy])
 
   const fetchVideos = async () => {
@@ -83,6 +100,19 @@ export default function LibraryPage() {
       console.error('[Library] Error fetching videos:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchContinueWatching = async () => {
+    try {
+      const res = await fetch('/api/user/stats')
+      const data = await res.json()
+
+      if (res.ok && data.success) {
+        setContinueWatching(data.continueWatching || [])
+      }
+    } catch (error) {
+      console.error('[Library] Error fetching continue watching:', error)
     }
   }
 
@@ -269,6 +299,174 @@ export default function LibraryPage() {
           </div>
         </div>
 
+        {/* Continue Watching */}
+        {continueWatching.length > 0 && (
+          <div style={{ marginBottom: '2rem' }}>
+            <h2 style={{
+              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+              fontWeight: 300,
+              marginBottom: '1.5rem',
+              letterSpacing: '-0.02em'
+            }}>
+              Continue Watching
+            </h2>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
+              gap: '1.5rem'
+            }}>
+              {continueWatching.map(video => (
+                <Link
+                  key={video.id}
+                  href={`/videos/${video.id}`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.05), rgba(127, 176, 105, 0.03))',
+                    border: '1px solid rgba(155, 196, 184, 0.2)',
+                    borderRadius: '3px',
+                    overflow: 'hidden',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.4)'
+                    e.currentTarget.style.transform = 'translateY(-4px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.2)'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
+                  >
+                    {/* Thumbnail */}
+                    <div style={{
+                      width: '100%',
+                      paddingTop: '56.25%',
+                      background: 'rgba(0, 0, 0, 0.5)',
+                      position: 'relative'
+                    }}>
+                      <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '48px',
+                        height: '48px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        <svg style={{ width: '24px', height: '24px', color: '#000' }} fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                        </svg>
+                      </div>
+                      {/* Progress Badge */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '0.75rem',
+                        right: '0.75rem',
+                        padding: '0.25rem 0.75rem',
+                        background: '#9bc4b8',
+                        borderRadius: '20px',
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        color: '#000'
+                      }}>
+                        {video.percentage}% watched
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <div style={{
+                        fontSize: '0.75rem',
+                        color: '#9bc4b8',
+                        marginBottom: '0.5rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em'
+                      }}>
+                        {video.category}
+                      </div>
+                      <h3 style={{
+                        fontSize: '1.125rem',
+                        fontWeight: 400,
+                        marginBottom: '0.5rem',
+                        lineHeight: 1.4
+                      }}>
+                        {video.title}
+                      </h3>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        lineHeight: 1.6,
+                        marginBottom: '1rem',
+                        flex: 1
+                      }}>
+                        {video.description?.substring(0, 100)}{video.description?.length > 100 ? '...' : ''}
+                      </p>
+
+                      {/* Progress Bar */}
+                      <div style={{ marginBottom: '1rem' }}>
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          marginBottom: '0.5rem'
+                        }}>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#9bc4b8',
+                            fontWeight: 300
+                          }}>
+                            In Progress
+                          </span>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: 'rgba(255, 255, 255, 0.4)',
+                            fontWeight: 300
+                          }}>
+                            {Math.floor(video.watch_time / 60)}m watched
+                          </span>
+                        </div>
+                        <div style={{
+                          width: '100%',
+                          height: '4px',
+                          background: 'rgba(255, 255, 255, 0.1)',
+                          borderRadius: '2px',
+                          overflow: 'hidden'
+                        }}>
+                          <div style={{
+                            width: `${Math.min(video.percentage, 100)}%`,
+                            height: '100%',
+                            background: 'linear-gradient(90deg, #9bc4b8, #7fb069)',
+                            transition: 'width 0.3s ease'
+                          }}></div>
+                        </div>
+                      </div>
+
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        fontSize: '0.875rem',
+                        color: 'rgba(255, 255, 255, 0.4)'
+                      }}>
+                        <span>{Math.floor(video.duration / 60)} min</span>
+                        <span>Last: {new Date(video.last_watched).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Search and Sort */}
         <div style={{
           display: 'flex',
@@ -451,6 +649,50 @@ export default function LibraryPage() {
                     }}>
                       {video.description?.substring(0, 100)}{video.description?.length > 100 ? '...' : ''}
                     </p>
+
+                    {/* Progress Bar */}
+                    {video.status !== 'new' && video.progress_percentage > 0 && (
+                      <div style={{ marginBottom: '1rem' }}>
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          marginBottom: '0.5rem'
+                        }}>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: getStatusColor(video.status),
+                            fontWeight: 300
+                          }}>
+                            {video.status === 'completed' ? 'Completed' : `${video.progress_percentage}% watched`}
+                          </span>
+                          {video.watch_time && (
+                            <span style={{
+                              fontSize: '0.75rem',
+                              color: 'rgba(255, 255, 255, 0.4)',
+                              fontWeight: 300
+                            }}>
+                              {Math.floor(video.watch_time / 60)}m
+                            </span>
+                          )}
+                        </div>
+                        <div style={{
+                          width: '100%',
+                          height: '4px',
+                          background: 'rgba(255, 255, 255, 0.1)',
+                          borderRadius: '2px',
+                          overflow: 'hidden'
+                        }}>
+                          <div style={{
+                            width: `${Math.min(video.progress_percentage, 100)}%`,
+                            height: '100%',
+                            background: `linear-gradient(90deg, ${getStatusColor(video.status)}, ${video.status === 'completed' ? '#6a994e' : '#7fb069'})`,
+                            transition: 'width 0.3s ease'
+                          }}></div>
+                        </div>
+                      </div>
+                    )}
+
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
