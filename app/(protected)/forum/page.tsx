@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-import Breadcrumb from '../../components/Breadcrumb'interface User {
+import Breadcrumb from '../../components/Breadcrumb'
+
+interface User {
   id: number
   name: string
 }

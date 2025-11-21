@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-import Breadcrumb from '../../components/Breadcrumb'export default function CallsPage() {
+import Breadcrumb from '../../components/Breadcrumb'
+
+export default function CallsPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
 
