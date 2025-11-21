@@ -294,23 +294,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Webhook failed' }, { status: 500 })
   }
 }
-
-    if (event.type === 'customer.subscription.created') {
-      const subscription = event.data.object as Stripe.Subscription
-      const priceId = subscription.items.data[0]?.price?.id
-      const isCirclePayment = CIRCLE_PRICE_IDS.includes(priceId || '')
-      if (isCirclePayment) {
-        const customerId = subscription.customer as string
-        const customer = await stripe.customers.retrieve(customerId) as Stripe.Customer
-        const email = customer.email
-        if (email) {
-          const password = generatePassword()
-          const hashedPassword = await bcrypt.hash(password, 10)
-          const client = new Client({ connectionString: process.env.DATABASE_URL })
-          await client.connect()
-          await client.query('INSERT INTO users (id, email, name, password, role, "stripeCustomerId", "stripeSubscriptionId", "isActive", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW()) ON CONFLICT (email) DO UPDATE SET "stripeCustomerId" = $6, "stripeSubscriptionId" = $7, "isActive" = $8', [customerId, email, email.split('@')[0], hashedPassword, 'founding_member', customerId, subscription.id, true])
-          if (process.env.SENDGRID_API_KEY) { await sgMail.send({ to: email, from: 'navigate@yourtruenorth.me', subject: 'Welcome', html: 'Login: ' + email + ' Password: ' + password }) }
-          await client.end()
-        }
-      }
-    }
