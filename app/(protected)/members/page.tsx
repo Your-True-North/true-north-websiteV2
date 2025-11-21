@@ -520,7 +520,7 @@ export default function MembersPage() {
             <div style={{
               display: 'grid',
               gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)',
-              gap: '0.75rem'
+              gap: '0'
             }}>
               {levelStages.map((stage, index) => {
                 const isActive = index <= currentStageIndex
@@ -614,7 +614,7 @@ export default function MembersPage() {
           }}
           onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
           onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '1.5rem' }}>
               <div style={{
                 width: '2.5rem',
                 height: '2.5rem',
@@ -633,7 +633,7 @@ export default function MembersPage() {
             <p style={{ color: 'rgba(255, 255, 255, 0.5)', marginBottom: '2rem', fontWeight: 300, lineHeight: 1.6 }}>
               Exclusive transformational content and teachings
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {['Weekly Teaching Videos', 'Live Session Replays', 'Community Discussions'].map((item, i) => (
                 <div
                   key={i}
@@ -684,7 +684,7 @@ export default function MembersPage() {
           }}
           onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
           onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '1.5rem' }}>
               <div style={{
                 width: '2.5rem',
                 height: '2.5rem',
@@ -700,7 +700,7 @@ export default function MembersPage() {
               </div>
               <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300 }}>Quick Access</h3>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {[
                 { title: 'My Journey', desc: 'Video library & practices', href: '/videos', icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
                 { title: 'Live Calls', desc: 'Join the community', href: '/calls', icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z' },
@@ -778,12 +778,9 @@ export default function MembersPage() {
             marginBottom: '1.5rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.75rem'
+            gap: '0'
           }}>
-            <svg style={{ width: '1.25rem', height: '1.25rem', color: 'rgba(255, 255, 255, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-            </svg>
-            Your Progress
+Your Progress
           </h3>
           
           <div style={{
@@ -847,7 +844,7 @@ export default function MembersPage() {
           borderRadius: '12px',
           padding: '2rem'
         }}>
-          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0' }}>
             <svg style={{ width: '1.25rem', height: '1.25rem', color: 'rgba(255, 255, 255, 0.6)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
