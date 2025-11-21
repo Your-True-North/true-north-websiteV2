@@ -11,7 +11,7 @@ const mockVideos = [
     uploadDate: "3 days ago",
     category: "Foundation Work",
     description: "Essential understanding of who you really are beneath the conditioning.",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "JJ5LBDIl3Tg",
     comments: 24,
     likes: 156
   },
@@ -22,7 +22,7 @@ const mockVideos = [
     uploadDate: "1 week ago",
     category: "Foundation Work",
     description: "How to identify and release patterns formed in childhood.",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "JJ5LBDIl3Tg",
     comments: 18,
     likes: 203
   },
@@ -33,7 +33,7 @@ const mockVideos = [
     uploadDate: "2 days ago",
     category: "Breathwork Sessions",
     description: "A guided breathwork session for deep emotional release.",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "JJ5LBDIl3Tg",
     comments: 31,
     likes: 187
   },
@@ -44,7 +44,7 @@ const mockVideos = [
     uploadDate: "5 days ago",
     category: "Energy Healing",
     description: "Clear stagnant energy and align with your true vibration.",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "JJ5LBDIl3Tg",
     comments: 22,
     likes: 164
   },
@@ -55,7 +55,7 @@ const mockVideos = [
     uploadDate: "1 week ago",
     category: "Integration Practices",
     description: "Simple practices to integrate your insights into daily life.",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "JJ5LBDIl3Tg",
     comments: 15,
     likes: 128
   }
