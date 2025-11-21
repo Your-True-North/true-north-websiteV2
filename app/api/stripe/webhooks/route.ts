@@ -309,7 +309,7 @@ export async function POST(request: NextRequest) {
           const client = new Client({ connectionString: process.env.DATABASE_URL })
           await client.connect()
           await client.query('INSERT INTO users (id, email, name, password, role, "stripeCustomerId", "stripeSubscriptionId", "isActive", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW()) ON CONFLICT (email) DO UPDATE SET "stripeCustomerId" = $6, "stripeSubscriptionId" = $7, "isActive" = $8', [customerId, email, email.split('@')[0], hashedPassword, 'founding_member', customerId, subscription.id, true])
-          if (process.env.SENDGRID_API_KEY) { await sgMail.send({ to: email, from: 'cor@yourtruenorth.me', subject: 'Welcome', html: 'Login: ' + email + ' Password: ' + password }) }
+          if (process.env.SENDGRID_API_KEY) { await sgMail.send({ to: email, from: 'navigate@yourtruenorth.me', subject: 'Welcome', html: 'Login: ' + email + ' Password: ' + password }) }
           await client.end()
         }
       }
