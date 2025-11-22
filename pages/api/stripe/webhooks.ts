@@ -3,7 +3,7 @@ import Stripe from 'stripe'
 import { Client } from 'pg'
 import bcrypt from 'bcryptjs'
 import sgMail from '@sendgrid/mail'
-import { buffer } from 'micro'
+import getRawBody from 'raw-body'
 
 export const config = {
   api: {
@@ -32,13 +32,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).end()
   }
 
-  const buf = await buffer(req)
+  const rawBody = await getRawBody(req)
   const sig = req.headers['stripe-signature'] as string
 
   let event: Stripe.Event
 
   try {
-    event = stripe.webhooks.constructEvent(buf, sig, WEBHOOK_SECRET)
+    event = stripe.webhooks.constructEvent(rawBody, sig, WEBHOOK_SECRET)
   } catch (err: any) {
     console.error('Signature failed:', err.message)
     return res.status(400).json({ error: 'Invalid signature' })
