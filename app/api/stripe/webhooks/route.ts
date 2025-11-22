@@ -30,17 +30,23 @@ function generatePassword() {
 }
 
 export async function POST(request: NextRequest) {
+  console.log('[Stripe Webhook] ===== WEBHOOK CALLED =====')
+
   try {
     const body = await request.text()
     const signature = request.headers.get('stripe-signature')!
+
+    console.log('[Stripe Webhook] Body length:', body.length)
+    console.log('[Stripe Webhook] Has signature:', !!signature)
 
     let event: Stripe.Event
     const stripe = getStripe()
 
     try {
       event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET)
+      console.log('[Stripe Webhook] ✓ Signature verified, event type:', event.type)
     } catch (err: any) {
-      console.error(`Webhook signature verification failed: ${err.message}`)
+      console.error(`[Stripe Webhook] Signature verification failed: ${err.message}`)
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
     }
 
@@ -241,10 +247,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    console.log('[Stripe Webhook] ===== WEBHOOK COMPLETED SUCCESSFULLY =====')
     return NextResponse.json({ received: true })
 
-  } catch (error) {
+  } catch (error: any) {
+    console.error('[Stripe Webhook] ===== FATAL ERROR =====')
     console.error('[Stripe Webhook] Error:', error)
+    console.error('[Stripe Webhook] Error message:', error.message)
+    console.error('[Stripe Webhook] Error stack:', error.stack)
     return NextResponse.json({ error: 'Webhook failed' }, { status: 500 })
   }
 }
