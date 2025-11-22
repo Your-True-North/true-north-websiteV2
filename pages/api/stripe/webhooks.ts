@@ -67,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (email && customerId) {
           const password = Math.random().toString(36).slice(-12) + 'A1!'
           const hashedPassword = await bcrypt.hash(password, 10)
-          const client = new Client({ connectionString: process.env.DATABASE_URL })
+          console.log("DB URL:", process.env.DATABASE_URL); const client = new Client({ connectionString: process.env.DATABASE_URL })
           await client.connect()
           
           await client.query(
@@ -100,7 +100,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (email) {
           const password = Math.random().toString(36).slice(-12) + 'A1!'
           const hashedPassword = await bcrypt.hash(password, 10)
-          const client = new Client({ connectionString: process.env.DATABASE_URL })
+          console.log("DB URL:", process.env.DATABASE_URL); const client = new Client({ connectionString: process.env.DATABASE_URL })
           await client.connect()
           
           await client.query(
