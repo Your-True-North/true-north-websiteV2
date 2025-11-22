@@ -10,6 +10,9 @@ function getStripe() {
   })
 }
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
 const CIRCLE_TAG_ID = '8362450'
