@@ -46,9 +46,9 @@ export async function POST(request: NextRequest) {
 
     try {
       event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET)
-      console.log('[Stripe Webhook] ✅ Signature verified:', event.type)
+      console.log('[Stripe Webhook] Signature verified:', event.type)
     } catch (err: any) {
-      console.error('[Stripe Webhook] ❌ Signature verification failed:', err.message)
+      console.error('[Stripe Webhook] Signature verification failed:', err.message)
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
     }
 
@@ -69,19 +69,16 @@ export async function POST(request: NextRequest) {
         if (email && customerId) {
           const password = Math.random().toString(36).slice(-12) + 'A1!'
           const hashedPassword = await bcrypt.hash(password, 10)
-          
           const client = new Client({ connectionString: process.env.DATABASE_URL })
           await client.connect()
           
           await client.query(
-            \`INSERT INTO users (id, email, name, password, role, "stripeCustomerId", "isActive", "createdAt", "updatedAt")
-             VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
-             ON CONFLICT (email) DO UPDATE SET "stripeCustomerId" = $6, "isActive" = $7, "updatedAt" = NOW()\`,
+            'INSERT INTO users (id, email, name, password, role, "stripeCustomerId", "isActive", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW()) ON CONFLICT (email) DO UPDATE SET "stripeCustomerId" = $6, "isActive" = $7, "updatedAt" = NOW()',
             [customerId, email, email.split('@')[0], hashedPassword, 'founding_member', customerId, true]
           )
           
           if (CONVERTKIT_API_KEY) {
-            await fetch(\`https://api.convertkit.com/v3/tags/\${CIRCLE_TAG_ID}/subscribe\`, {
+            await fetch('https://api.convertkit.com/v3/tags/' + CIRCLE_TAG_ID + '/subscribe', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ api_key: CONVERTKIT_API_KEY, email })
@@ -93,7 +90,7 @@ export async function POST(request: NextRequest) {
               to: email,
               from: 'cor@yourtruenorth.me',
               subject: 'Welcome to Circle of Return',
-              html: \`<h2>Welcome</h2><p>Email: \${email}</p><p>Password: \${password}</p><a href="https://yourtruenorth.me/members">Login</a>\`
+              html: '<h2>Welcome</h2><p>Email: ' + email + '</p><p>Password: ' + password + '</p><a href="https://yourtruenorth.me/members">Login</a>'
             })
           }
           
@@ -113,19 +110,16 @@ export async function POST(request: NextRequest) {
         if (email) {
           const password = Math.random().toString(36).slice(-12) + 'A1!'
           const hashedPassword = await bcrypt.hash(password, 10)
-          
           const client = new Client({ connectionString: process.env.DATABASE_URL })
           await client.connect()
           
           await client.query(
-            \`INSERT INTO users (id, email, name, password, role, "stripeCustomerId", "stripeSubscriptionId", "isActive", "createdAt", "updatedAt")
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
-             ON CONFLICT (email) DO UPDATE SET "stripeCustomerId" = $6, "stripeSubscriptionId" = $7, "isActive" = $8, "updatedAt" = NOW()\`,
+            'INSERT INTO users (id, email, name, password, role, "stripeCustomerId", "stripeSubscriptionId", "isActive", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW()) ON CONFLICT (email) DO UPDATE SET "stripeCustomerId" = $6, "stripeSubscriptionId" = $7, "isActive" = $8, "updatedAt" = NOW()',
             [subscription.customer, email, email.split('@')[0], hashedPassword, 'founding_member', subscription.customer, subscription.id, true]
           )
           
           if (CONVERTKIT_API_KEY) {
-            await fetch(\`https://api.convertkit.com/v3/tags/\${CIRCLE_TAG_ID}/subscribe\`, {
+            await fetch('https://api.convertkit.com/v3/tags/' + CIRCLE_TAG_ID + '/subscribe', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ api_key: CONVERTKIT_API_KEY, email })
@@ -137,7 +131,7 @@ export async function POST(request: NextRequest) {
               to: email,
               from: 'cor@yourtruenorth.me',
               subject: 'Welcome to Circle of Return',
-              html: \`<h2>Welcome</h2><p>Email: \${email}</p><p>Password: \${password}</p><a href="https://yourtruenorth.me/members">Login</a>\`
+              html: '<h2>Welcome</h2><p>Email: ' + email + '</p><p>Password: ' + password + '</p><a href="https://yourtruenorth.me/members">Login</a>'
             })
           }
           
@@ -150,7 +144,7 @@ export async function POST(request: NextRequest) {
       const subscription = event.data.object as Stripe.Subscription
       const client = new Client({ connectionString: process.env.DATABASE_URL })
       await client.connect()
-      await client.query(\`UPDATE users SET "isActive" = false, "updatedAt" = NOW() WHERE "stripeSubscriptionId" = $1\`, [subscription.id])
+      await client.query('UPDATE users SET "isActive" = false, "updatedAt" = NOW() WHERE "stripeSubscriptionId" = $1', [subscription.id])
       await client.end()
     }
 
