@@ -33,7 +33,9 @@ function generatePassword() {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.text()
+    const body = await const buf = await request.arrayBuffer()
+const rawBody = Buffer.from(buf)
+const body = rawBody.toString('utf8')
     const signature = request.headers.get('stripe-signature')!
 
     let event: Stripe.Event
