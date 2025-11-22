@@ -3,12 +3,19 @@ import Stripe from 'stripe'
 import { Client } from 'pg'
 import bcrypt from 'bcryptjs'
 import sgMail from '@sendgrid/mail'
-import getRawBody from 'raw-body'
 
 export const config = {
   api: {
     bodyParser: false,
   },
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2024-11-20.acacia',
+})
+
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 }
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!
@@ -19,12 +26,13 @@ const CIRCLE_PRICE_IDS = [
   'price_1SPysOIEGgnmE0KKgOZTTLf8',
 ]
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-08-27' as any,
-})
-
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+async function getRawBody(req: NextApiRequest): Promise<Buffer> {
+  const chunks: Buffer[] = []
+  return new Promise((resolve, reject) => {
+    req.on('data', (chunk: Buffer) => chunks.push(chunk))
+    req.on('end', () => resolve(Buffer.concat(chunks)))
+    req.on('error', reject)
+  })
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -32,21 +40,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).end()
   }
 
-  const rawBody = await getRawBody(req)
-  const sig = req.headers['stripe-signature'] as string
-
-  let event: Stripe.Event
-
   try {
-    event = stripe.webhooks.constructEvent(rawBody, sig, WEBHOOK_SECRET)
-  } catch (err: any) {
-    console.error('Signature failed:', err.message)
-    return res.status(400).json({ error: 'Invalid signature' })
-  }
+    const buf = await getRawBody(req)
+    const sig = req.headers['stripe-signature'] as string
 
-  console.log('Event:', event.type)
+    let event: Stripe.Event
 
-  try {
+    try {
+      event = stripe.webhooks.constructEvent(buf, sig, WEBHOOK_SECRET)
+    } catch (err: any) {
+      console.error('Signature failed:', err.message)
+      return res.status(400).json({ error: 'Invalid signature' })
+    }
+
+    console.log('Event:', event.type)
+
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session
       const lineItems = await stripe.checkout.sessions.listLineItems(session.id)
@@ -114,9 +122,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     }
 
-    res.json({ received: true })
-  } catch (error) {
-    console.error('Error:', error)
-    res.status(500).json({ error: 'Webhook failed' })
+    return res.json({ received: true })
+  } catch (error: any) {
+    console.error('Webhook error:', error)
+    return res.status(500).json({ error: error.message })
   }
 }
