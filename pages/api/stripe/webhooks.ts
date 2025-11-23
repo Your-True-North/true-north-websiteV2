@@ -27,6 +27,8 @@ const CIRCLE_PRICE_IDS = [
 ]
 
 const DATABASE_URL = 'postgresql://postgres:HzWkEmYnKjZtevzZTGrHZMbvNcEpFNVV@yamabiko.proxy.rlwy.net:39135/railway'
+const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY!
+const FOUNDING_MEMBER_TAG_ID = process.env.FOUNDING_MEMBER_TAG_ID!
 
 async function getRawBody(req: NextApiRequest): Promise<Buffer> {
   const chunks: Buffer[] = []
@@ -35,6 +37,22 @@ async function getRawBody(req: NextApiRequest): Promise<Buffer> {
     req.on('end', () => resolve(Buffer.concat(chunks)))
     req.on('error', reject)
   })
+}
+
+async function tagConvertKit(email: string, tagId: string) {
+  try {
+    await fetch('https://api.convertkit.com/v3/tags/' + tagId + '/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_key: CONVERTKIT_API_KEY,
+        email: email
+      })
+    })
+    console.log('[ConvertKit] Tagged:', email, 'with tag:', tagId)
+  } catch (error) {
+    console.error('[ConvertKit] Tag failed:', error)
+  }
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -80,6 +98,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             [subscription.customer, email, email.split('@')[0], hashedPassword, 'founding_member', subscription.customer, subscription.id, true]
           )
           
+          await client.end()
+          
+          // Tag in ConvertKit
+          await tagConvertKit(email, FOUNDING_MEMBER_TAG_ID)
+          
+          // Send welcome email
           if (process.env.SENDGRID_API_KEY) {
             await sgMail.send({
               to: email,
@@ -160,8 +184,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               }
             })
           }
-          
-          await client.end()
         }
       }
     }
