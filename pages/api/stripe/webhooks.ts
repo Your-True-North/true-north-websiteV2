@@ -81,7 +81,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               to: email,
               from: 'cor@yourtruenorth.me',
               subject: 'Welcome to Circle of Return',
-              text: 'Email: ' + email + ' Password: ' + password + ' Login: https://yourtruenorth.me/members'
+              html: `<div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+                <h2 style="color: #111; margin-bottom: 24px;">Welcome to Circle of Return</h2>
+                <p style="color: #333; line-height: 1.6; margin-bottom: 16px;">Your account has been created. Where you are now does not have to be where you end up.</p>
+                <div style="background: #f5f5f5; padding: 24px; border-radius: 6px; margin: 24px 0;">
+                  <p style="margin: 0 0 12px 0; color: #666; font-size: 14px;">Your Login Credentials:</p>
+                  <p style="margin: 0;"><strong>Email:</strong> ${email}</p>
+                  <p style="margin: 8px 0 0 0;"><strong>Password:</strong> ${password}</p>
+                </div>
+                <a href="https://yourtruenorth.me/members" style="display: inline-block; background: #111; color: #fff; padding: 12px 32px; text-decoration: none; border-radius: 6px; margin: 24px 0;">Access Circle of Return</a>
+                <p style="color: #666; font-size: 14px; margin-top: 32px;">Change your password after first login.</p>
+              </div>`
             })
           }
           
@@ -114,7 +124,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               to: email,
               from: 'cor@yourtruenorth.me',
               subject: 'Welcome to Circle of Return',
-              text: 'Email: ' + email + ' Password: ' + password + ' Login: https://yourtruenorth.me/members'
+              html: `<div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+                <h2 style="color: #111; margin-bottom: 24px;">Welcome to Circle of Return</h2>
+                <p style="color: #333; line-height: 1.6; margin-bottom: 16px;">Your account has been created. Where you are now does not have to be where you end up.</p>
+                <div style="background: #f5f5f5; padding: 24px; border-radius: 6px; margin: 24px 0;">
+                  <p style="margin: 0 0 12px 0; color: #666; font-size: 14px;">Your Login Credentials:</p>
+                  <p style="margin: 0;"><strong>Email:</strong> ${email}</p>
+                  <p style="margin: 8px 0 0 0;"><strong>Password:</strong> ${password}</p>
+                </div>
+                <a href="https://yourtruenorth.me/members" style="display: inline-block; background: #111; color: #fff; padding: 12px 32px; text-decoration: none; border-radius: 6px; margin: 24px 0;">Access Circle of Return</a>
+                <p style="color: #666; font-size: 14px; margin-top: 32px;">Change your password after first login.</p>
+              </div>`
             })
           }
           
