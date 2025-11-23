@@ -179,7 +179,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 </body>
 </html>`,
               trackingSettings: {
-                clickTracking: { enable: true },
+                clickTracking: { enable: false },
                 openTracking: { enable: true }
               }
             })
