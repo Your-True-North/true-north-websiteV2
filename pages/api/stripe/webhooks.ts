@@ -26,6 +26,8 @@ const CIRCLE_PRICE_IDS = [
   'price_1SPysOIEGgnmE0KKgOZTTLf8',
 ]
 
+const DATABASE_URL = 'postgresql://postgres:HzWkEmYnKjZtevzZTGrHZMbvNcEpFNVV@yamabiko.proxy.rlwy.net:39135/railway'
+
 async function getRawBody(req: NextApiRequest): Promise<Buffer> {
   const chunks: Buffer[] = []
   return new Promise((resolve, reject) => {
@@ -48,12 +50,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
       event = stripe.webhooks.constructEvent(buf, sig, WEBHOOK_SECRET)
+      console.log('[Stripe Webhook] Event type:', event.type)
     } catch (err: any) {
-      console.error('Signature failed:', err.message)
+      console.error('[Stripe Webhook] Signature failed:', err.message)
       return res.status(400).json({ error: 'Invalid signature' })
     }
-
-    console.log('Event:', event.type)
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session
@@ -67,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (email && customerId) {
           const password = Math.random().toString(36).slice(-12) + 'A1!'
           const hashedPassword = await bcrypt.hash(password, 10)
-          console.log("DB URL:", process.env.DATABASE_URL); const client = new Client({ connectionString: process.env.DATABASE_URL })
+          const client = new Client({ connectionString: DATABASE_URL })
           await client.connect()
           
           await client.query(
@@ -100,7 +101,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (email) {
           const password = Math.random().toString(36).slice(-12) + 'A1!'
           const hashedPassword = await bcrypt.hash(password, 10)
-          console.log("DB URL:", process.env.DATABASE_URL); const client = new Client({ connectionString: process.env.DATABASE_URL })
+          const client = new Client({ connectionString: DATABASE_URL })
           await client.connect()
           
           await client.query(
@@ -124,7 +125,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.json({ received: true })
   } catch (error: any) {
-    console.error('Webhook error:', error)
+    console.error('[Stripe Webhook] Error:', error)
     return res.status(500).json({ error: error.message })
   }
 }
