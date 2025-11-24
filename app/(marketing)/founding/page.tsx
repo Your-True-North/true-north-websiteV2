@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function FoundingMembersPage() {
-  const [spotsRemaining, setSpotsRemaining] = useState<number | null>(null)
+  const [spotsRemaining, setSpotsRemaining] = useState<number | null>(10)
   const [isMobile, setIsMobile] = useState(false)
   const [isSoldOut, setIsSoldOut] = useState(false)
   const [waitlistEmail, setWaitlistEmail] = useState('')
