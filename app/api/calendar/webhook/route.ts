@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
-const CONVERTKIT_TAG_ID = '8362450'
+const CONVERTKIT_TAG_ID = '12657376'
 const CONVERTKIT_TEMPLATE_ID = '4278176'
 
 export async function POST(request: NextRequest) {
@@ -21,6 +21,8 @@ export async function POST(request: NextRequest) {
 
     const nextEvent = calendarData.events[0]
     const eventDate = new Date(nextEvent.start || nextEvent.date)
+    
+    console.log('[Calendar] Creating broadcast for:', nextEvent.title || nextEvent.summary)
     
     const createResponse = await fetch(`https://api.convertkit.com/v3/broadcasts`, {
       method: 'POST',
@@ -49,12 +51,17 @@ export async function POST(request: NextRequest) {
     })
 
     const createResult = await createResponse.json()
+    console.log('[Calendar] Broadcast created:', createResult)
+    
     const broadcastId = createResult.broadcast?.id
     
     if (!broadcastId) {
+      console.error('[Calendar] No broadcast ID returned')
       throw new Error('Failed to create broadcast')
     }
 
+    console.log('[Calendar] Sending broadcast:', broadcastId)
+    
     const sendResponse = await fetch(`https://api.convertkit.com/v3/broadcasts/${broadcastId}/send`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -64,11 +71,16 @@ export async function POST(request: NextRequest) {
     })
 
     const sendResult = await sendResponse.json()
+    console.log('[Calendar] Send result:', sendResult)
+    
+    if (!sendResponse.ok) {
+      console.error('[Calendar] Send failed:', sendResult)
+    }
     
     return NextResponse.json({ 
       success: true, 
       broadcastId,
-      sent: sendResult 
+      sendResponse: sendResult 
     })
 
   } catch (error) {
