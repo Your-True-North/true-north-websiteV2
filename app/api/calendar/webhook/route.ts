@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
 
     const nextEvent = calendarData.events[0]
     
-    // Create broadcast
     const createResponse = await fetch(`https://api.convertkit.com/v3/broadcasts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -41,7 +40,6 @@ export async function POST(request: NextRequest) {
       throw new Error('Failed to create broadcast')
     }
 
-    // Send broadcast immediately
     const sendResponse = await fetch(`https://api.convertkit.com/v3/broadcasts/${broadcastId}/send`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
