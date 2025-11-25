@@ -22,9 +22,18 @@ export async function POST(request: NextRequest) {
     const nextEvent = calendarData.events[0]
     const eventDate = new Date(nextEvent.start || nextEvent.date)
     
-    console.log('[Calendar] Creating broadcast for:', nextEvent.title || nextEvent.summary)
+    // Get all subscribers with the Google Calendar tag
+    const subscribersResponse = await fetch(`https://api.convertkit.com/v3/tags/${CONVERTKIT_TAG_ID}/subscriptions?api_secret=${CONVERTKIT_API_KEY}`)
+    const subscribersData = await subscribersResponse.json()
     
-    // Create and immediately schedule broadcast for "now"
+    if (!subscribersData.subscriptions || subscribersData.subscriptions.length === 0) {
+      console.log('[Calendar] No subscribers with tag', CONVERTKIT_TAG_ID)
+      return NextResponse.json({ received: true, message: 'No tagged subscribers' })
+    }
+
+    // Create broadcast to specific subscribers only
+    const subscriberIds = subscribersData.subscriptions.map((s: any) => s.subscriber.id)
+    
     const createResponse = await fetch(`https://api.convertkit.com/v3/broadcasts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -32,12 +41,11 @@ export async function POST(request: NextRequest) {
         api_secret: CONVERTKIT_API_KEY,
         subject: `New Circle Session: ${nextEvent.title || nextEvent.summary}`,
         email_template_id: CONVERTKIT_TEMPLATE_ID,
-        public: true,
         published_at: new Date().toISOString(),
         send_at: new Date().toISOString(),
-        subscriber_filter: { tag_ids: [CONVERTKIT_TAG_ID] },
+        recipient_ids: subscriberIds,
         content: {
-          event_title: nextEvent.title || nextEvent.summary,
+          event_title: nextEvent.title || nextEvent.summary || '',
           event_date: eventDate.toLocaleDateString('en-GB', { 
             weekday: 'long', 
             year: 'numeric', 
@@ -46,7 +54,8 @@ export async function POST(request: NextRequest) {
           }),
           event_time: eventDate.toLocaleTimeString('en-GB', { 
             hour: '2-digit', 
-            minute: '2-digit' 
+            minute: '2-digit',
+            hour12: false
           }),
           event_description: nextEvent.description || 'Join us for this Circle session'
         }
@@ -54,11 +63,12 @@ export async function POST(request: NextRequest) {
     })
 
     const createResult = await createResponse.json()
-    console.log('[Calendar] Broadcast result:', createResult)
+    console.log('[Calendar] Broadcast sent to', subscriberIds.length, 'subscribers')
     
     return NextResponse.json({ 
       success: true, 
-      broadcast: createResult.broadcast
+      broadcast: createResult.broadcast,
+      recipientCount: subscriberIds.length
     })
 
   } catch (error) {
