@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
-const CONVERTKIT_TAG_ID = '12657376'
+const CONVERTKIT_TAG_ID = '12865278'
 const CONVERTKIT_TEMPLATE_ID = '4278176'
 const ZOOM_LINK = 'https://us02web.zoom.us/j/87536119646?pwd=hQplce2Qb3icHt82ZTBNnQaKa1ib98.1'
 
