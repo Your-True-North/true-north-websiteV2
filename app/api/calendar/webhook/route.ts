@@ -20,10 +20,9 @@ export async function POST(request: NextRequest) {
     }
 
     const nextEvent = calendarData.events[0]
-    const eventDate = new Date(nextEvent.date)
     
-    // Send broadcast using ConvertKit template
-    const response = await fetch(`https://api.convertkit.com/v3/broadcasts`, {
+    // Create broadcast
+    const createResponse = await fetch(`https://api.convertkit.com/v3/broadcasts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -35,8 +34,29 @@ export async function POST(request: NextRequest) {
       })
     })
 
-    const result = await response.json()
-    return NextResponse.json({ success: true, broadcastId: result.broadcast?.id })
+    const createResult = await createResponse.json()
+    const broadcastId = createResult.broadcast?.id
+    
+    if (!broadcastId) {
+      throw new Error('Failed to create broadcast')
+    }
+
+    // Send broadcast immediately
+    const sendResponse = await fetch(`https://api.convertkit.com/v3/broadcasts/${broadcastId}/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_secret: CONVERTKIT_API_KEY
+      })
+    })
+
+    const sendResult = await sendResponse.json()
+    
+    return NextResponse.json({ 
+      success: true, 
+      broadcastId,
+      sent: sendResult 
+    })
 
   } catch (error) {
     console.error('[Calendar Webhook] Error:', error)
