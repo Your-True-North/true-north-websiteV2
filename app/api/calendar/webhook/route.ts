@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
     
     console.log('[Calendar] Creating broadcast for:', nextEvent.title || nextEvent.summary)
     
+    // Create and immediately schedule broadcast for "now"
     const createResponse = await fetch(`https://api.convertkit.com/v3/broadcasts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -31,7 +32,9 @@ export async function POST(request: NextRequest) {
         api_secret: CONVERTKIT_API_KEY,
         subject: `New Circle Session: ${nextEvent.title || nextEvent.summary}`,
         email_template_id: CONVERTKIT_TEMPLATE_ID,
-        public: false,
+        public: true,
+        published_at: new Date().toISOString(),
+        send_at: new Date().toISOString(),
         subscriber_filter: { tag_ids: [CONVERTKIT_TAG_ID] },
         content: {
           event_title: nextEvent.title || nextEvent.summary,
@@ -51,36 +54,11 @@ export async function POST(request: NextRequest) {
     })
 
     const createResult = await createResponse.json()
-    console.log('[Calendar] Broadcast created:', createResult)
-    
-    const broadcastId = createResult.broadcast?.id
-    
-    if (!broadcastId) {
-      console.error('[Calendar] No broadcast ID returned')
-      throw new Error('Failed to create broadcast')
-    }
-
-    console.log('[Calendar] Sending broadcast:', broadcastId)
-    
-    const sendResponse = await fetch(`https://api.convertkit.com/v3/broadcasts/${broadcastId}/send`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        api_secret: CONVERTKIT_API_KEY
-      })
-    })
-
-    const sendResult = await sendResponse.json()
-    console.log('[Calendar] Send result:', sendResult)
-    
-    if (!sendResponse.ok) {
-      console.error('[Calendar] Send failed:', sendResult)
-    }
+    console.log('[Calendar] Broadcast result:', createResult)
     
     return NextResponse.json({ 
       success: true, 
-      broadcastId,
-      sendResponse: sendResult 
+      broadcast: createResult.broadcast
     })
 
   } catch (error) {
