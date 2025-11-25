@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
 const CONVERTKIT_TAG_ID = '12657376'
 const CONVERTKIT_TEMPLATE_ID = '4278176'
+const ZOOM_LINK = 'https://us02web.zoom.us/j/87536119646?pwd=hQplce2Qb3icHt82ZTBNnQaKa1ib98.1'
 
 export async function POST(request: NextRequest) {
   try {
@@ -53,7 +54,8 @@ export async function POST(request: NextRequest) {
           minute: '2-digit',
           hour12: false
         }),
-        event_description: nextEvent.description || 'Join us for this Circle session'
+        event_description: nextEvent.description || 'Join us for this Circle session',
+        event_link: ZOOM_LINK
       })
     })
 
