@@ -20,16 +20,31 @@ export async function POST(request: NextRequest) {
     }
 
     const nextEvent = calendarData.events[0]
+    const eventDate = new Date(nextEvent.start || nextEvent.date)
     
     const createResponse = await fetch(`https://api.convertkit.com/v3/broadcasts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         api_secret: CONVERTKIT_API_KEY,
-        subject: `New Circle Session: ${nextEvent.title}`,
+        subject: `New Circle Session: ${nextEvent.title || nextEvent.summary}`,
         email_template_id: CONVERTKIT_TEMPLATE_ID,
         public: false,
-        subscriber_filter: { tag_ids: [CONVERTKIT_TAG_ID] }
+        subscriber_filter: { tag_ids: [CONVERTKIT_TAG_ID] },
+        content: {
+          event_title: nextEvent.title || nextEvent.summary,
+          event_date: eventDate.toLocaleDateString('en-GB', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          }),
+          event_time: eventDate.toLocaleTimeString('en-GB', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          }),
+          event_description: nextEvent.description || 'Join us for this Circle session'
+        }
       })
     })
 
