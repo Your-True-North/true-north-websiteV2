@@ -62,10 +62,10 @@ const mockVideos = [
 ]
 
 const mockCategories = [
-  { name: "Foundation Work", icon: "🎯", count: 12, color: "#9bc4b8" },
-  { name: "Breathwork Sessions", icon: "🌊", count: 8, color: "#7fb069" },
-  { name: "Energy Healing", icon: "⚡", count: 15, color: "#6a994e" },
-  { name: "Integration Practices", icon: "🔥", count: 6, color: "#8db4a8" }
+  { name: "Foundation Work", icon: "🎯", count: 1, color: "#9bc4b8" },
+  { name: "Breathwork Sessions", icon: "🌊", count: 0, color: "#7fb069" },
+  { name: "Energy Healing", icon: "⚡", count: 0, color: "#6a994e" },
+  { name: "Integration Practices", icon: "🔥", count: 0, color: "#8db4a8" }
 ]
 
 const mockActivity = [
