@@ -72,7 +72,7 @@ export default function LibraryPage() {
         params.append('search', searchQuery)
       }
 
-      const res = await fetch(`/api/videos?${params}`)
+      const res = await fetch(`/api/videos?${params})
       const data = await res.json()
 
       if (res.ok) {
