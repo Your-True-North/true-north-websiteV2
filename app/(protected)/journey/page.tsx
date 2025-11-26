@@ -6,7 +6,7 @@ import { logger } from '@/lib/logger'
 const mockVideos = [
   {
     id: 1,
-    title: "The Foundation of True Self",
+    title: "The Beginning",
     duration: "25 min",
     uploadDate: "3 days ago",
     category: "Foundation Work",
@@ -69,7 +69,7 @@ const mockCategories = [
 ]
 
 const mockActivity = [
-  { user: "Marcus R.", action: "commented on \"The Foundation of True Self\"", time: "2 hours ago" },
+  { user: "Marcus R.", action: "commented on \"The Beginning\"", time: "2 hours ago" },
   { user: "Sarah K.", action: "started discussion: \"Integration challenges\"", time: "4 hours ago" },
   { user: "David L.", action: "leveled up to \"Seeker\"", time: "1 day ago" },
   { user: "Emma W.", action: "shared breakthrough in \"Energy Healing\"", time: "2 days ago" }
