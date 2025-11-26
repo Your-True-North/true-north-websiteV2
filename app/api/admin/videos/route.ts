@@ -15,11 +15,14 @@ export async function POST(request: NextRequest) {
     const client = new Client({ connectionString: DATABASE_URL })
     await client.connect()
 
+    const id = `video-${Date.now()}`
+    const youtubeUrl = `https://www.youtube.com/watch?v=${youtubeId}`
+
     const result = await client.query(
-      `INSERT INTO videos (title, description, youtubeid, category, duration, thumbnailurl, created_at)
-       VALUES ($1, $2, $3, $4, $5, $6, NOW())
+      `INSERT INTO videos (id, title, description, "youtubeUrl", "youtubeId", category, duration, "thumbnailUrl", status, "uploadDate", "createdAt", "updatedAt")
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW(), NOW())
        RETURNING *`,
-      [title, description || '', youtubeId, category, duration || null, thumbnailUrl || null]
+      [id, title, description || '', youtubeUrl, youtubeId, category, duration ? parseInt(duration) : null, thumbnailUrl || null, 'active']
     )
 
     await client.end()
@@ -36,7 +39,7 @@ export async function GET() {
     const client = new Client({ connectionString: DATABASE_URL })
     await client.connect()
 
-    const result = await client.query('SELECT * FROM videos ORDER BY created_at DESC')
+    const result = await client.query('SELECT * FROM videos ORDER BY "createdAt" DESC')
 
     await client.end()
 
