@@ -66,24 +66,38 @@ export async function POST(request: NextRequest) {
     let updated = 0
     
     for (const subscription of subscribersData.subscriptions) {
+      const subscriberId = subscription.subscriber.id
       const email = subscription.subscriber.email_address
       
-      const updateResponse = await fetch(
+      // 1. Update custom fields on subscriber
+      const updateFieldsResponse = await fetch(
+        `https://api.convertkit.com/v3/subscribers/${subscriberId}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            api_secret: CONVERTKIT_API_KEY,
+            fields: eventFields
+          })
+        }
+      )
+      
+      // 2. Add the SESSION_NOTIFY tag
+      const tagResponse = await fetch(
         `https://api.convertkit.com/v3/tags/${SESSION_NOTIFY_TAG}/subscribe`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             api_secret: CONVERTKIT_API_KEY,
-            email: email,
-            fields: eventFields
+            email: email
           })
         }
       )
       
-      if (updateResponse.ok) {
+      if (updateFieldsResponse.ok && tagResponse.ok) {
         updated++
-        console.log(`[Calendar Webhook] Updated and tagged: ${email}`)
+        console.log(`[Calendar Webhook] Updated fields and tagged: ${email}`)
       } else {
         console.error(`[Calendar Webhook] Failed for ${email}`)
       }
