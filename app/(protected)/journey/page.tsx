@@ -27,16 +27,17 @@ const mockVideos = [
     likes: 203
   },
   {
+  {
     id: 3,
-    title: "Conscious Connected Breathing",
+    title: "Breathwork Session 01 - Body Connection",
     duration: "45 min",
     uploadDate: "2 days ago",
     category: "Breathwork Sessions",
-    description: "A guided breathwork session for deep emotional release.",
-    youtubeId: "L7Pk4xNO63U",
+    description: "A Deep Release Breathwork Journey. Tap into what the mind cannot see. Connect with the inner-wisdom of the body.",
+    youtubeId: "byjnHJK9tk8",
     comments: 31,
     likes: 187
-  },
+  },  },
   {
     id: 4,
     title: "Energy Clearing Meditation",
