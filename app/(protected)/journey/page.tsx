@@ -26,8 +26,7 @@ const mockVideos = [
     comments: 18,
     likes: 203
   },
-  {
-  {
+
     id: 3,
     title: "Breathwork Session 01 - Body Connection",
     duration: "45 min",
