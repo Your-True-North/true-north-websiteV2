@@ -36,7 +36,7 @@ const mockVideos = [
     youtubeId: "byjnHJK9tk8",
     comments: 31,
     likes: 187
-  },  },
+  },
   {
     id: 4,
     title: "Energy Clearing Meditation",
