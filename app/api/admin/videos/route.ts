@@ -49,3 +49,26 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+
+    if (!id) {
+      return NextResponse.json({ error: 'Missing video id' }, { status: 400 })
+    }
+
+    const client = new Client({ connectionString: DATABASE_URL })
+    await client.connect()
+
+    await client.query('DELETE FROM videos WHERE id = $1', [id])
+
+    await client.end()
+
+    return NextResponse.json({ success: true })
+  } catch (error: any) {
+    console.error('[Admin Videos] Delete Error:', error)
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+}
