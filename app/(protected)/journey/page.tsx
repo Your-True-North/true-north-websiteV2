@@ -731,7 +731,7 @@ export default function JourneyPage() {
               }}>
                 {isPlaying ? (
                   <iframe
-                    src={``https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1&rel=0`}
+                    src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1&rel=0`}
                     style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
