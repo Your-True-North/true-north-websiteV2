@@ -61,7 +61,7 @@ export default function JourneyPage() {
   const [videoLikes, setVideoLikes] = useState({})
   const [videoComments, setVideoComments] = useState({})
   const [newComment, setNewComment] = useState('')
-
+  const [isPlaying, setIsPlaying] = useState(false)
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
@@ -70,6 +70,9 @@ export default function JourneyPage() {
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+
+  useEffect(() => { setIsPlaying(false) }, [selectedVideo])
 
   useEffect(() => {
     // MAXIMUM AGGRESSIVE multi-retry strategy for Chrome
@@ -726,20 +729,20 @@ export default function JourneyPage() {
                 overflow: 'hidden',
                 marginBottom: '1.5rem'
               }}>
-                <iframe
-                  src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?modestbranding=1&controls=0&showinfo=0&rel=0&color=white`}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    border: 'none'
-                  }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+                {isPlaying ? (
+                  <iframe
+                    src={``https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1&rel=0`}
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <div onClick={() => setIsPlaying(true)} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", cursor: "pointer", backgroundImage: `url(https://img.youtube.com/vi/${selectedVideo.youtubeId}/maxresdefault.jpg)`, backgroundSize: "cover", backgroundPosition: "center", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: "80px", height: "80px", borderRadius: "50%", backgroundColor: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div style={{ width: 0, height: 0, borderTop: "15px solid transparent", borderBottom: "15px solid transparent", borderLeft: "25px solid white", marginLeft: "5px" }} />
+                    </div>
+                  </div>
+                )}              </div>
 
               {/* Video Info */}
               <div style={{
