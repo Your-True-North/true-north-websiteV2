@@ -37,34 +37,12 @@ const mockVideos = [
     comments: 31,
     likes: 187
   },
-  {
-    id: 4,
-    title: "Energy Clearing Meditation",
-    duration: "28 min",
-    uploadDate: "5 days ago",
-    category: "Energy Healing",
-    description: "Clear stagnant energy and align with your true vibration.",
-    youtubeId: "L7Pk4xNO63U",
-    comments: 22,
-    likes: 164
-  },
-  {
-    id: 5,
-    title: "Daily Integration Practices",
-    duration: "18 min",
-    uploadDate: "1 week ago",
-    category: "Integration Practices",
-    description: "Simple practices to integrate your insights into daily life.",
-    youtubeId: "L7Pk4xNO63U",
-    comments: 15,
-    likes: 128
-  }
 ]
 
 const mockCategories = [
-  { name: "Foundation Work", icon: "🎯", count: 1, color: "#9bc4b8" },
-  { name: "Breathwork Sessions", icon: "🌊", count: 0, color: "#7fb069" },
-  { name: "Energy Healing", icon: "⚡", count: 0, color: "#6a994e" },
+  { name: "Foundation Work", icon: "🎯", count: 2, color: "#9bc4b8" },
+  { name: "Breathwork Sessions", icon: "🌊", count: 1, color: "#7fb069" },
+  { name: "Masterminds", icon: "⚡", count: 0, color: "#6a994e" },
   { name: "Integration Practices", icon: "🔥", count: 0, color: "#8db4a8" }
 ]
 
