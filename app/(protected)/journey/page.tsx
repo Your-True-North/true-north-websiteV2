@@ -3,41 +3,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { logger } from '@/lib/logger'
 
-const mockVideos = [
-  {
-    id: 1,
-    title: "The Beginning",
-    duration: "25 min",
-    uploadDate: "3 days ago",
-    category: "Foundation Work",
-    description: "Onboarding - a short walk-through of the three foundations of this work.",
-    youtubeId: "L7Pk4xNO63U",
-    comments: 24,
-    likes: 156
-  },
-  {
-    id: 2,
-    title: "Releasing Childhood Patterns",
-    duration: "32 min",
-    uploadDate: "1 week ago",
-    category: "Foundation Work",
-    description: "How to identify and release patterns formed in childhood.",
-    youtubeId: "L7Pk4xNO63U",
-    comments: 18,
-    likes: 203
-  },
-  {
-    id: 3,
-    title: "Breathwork Session 01 - Body Connection",
-    duration: "45 min",
-    uploadDate: "2 days ago",
-    category: "Breathwork Sessions",
-    description: "A Deep Release Breathwork Journey. Tap into what the mind cannot see. Connect with the inner-wisdom of the body.",
-    youtubeId: "byjnHJK9tk8",
-    comments: 31,
-    likes: 187
-  },
-]
 
 const mockCategories = [
   { name: "Foundation Work", icon: "🎯", count: 2, color: "#9bc4b8" },
@@ -62,6 +27,8 @@ export default function JourneyPage() {
   const [videoComments, setVideoComments] = useState({})
   const [newComment, setNewComment] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
+  const [videos, setVideos] = useState<any[]>([])
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
@@ -73,6 +40,28 @@ export default function JourneyPage() {
 
 
   useEffect(() => { setIsPlaying(false) }, [selectedVideo])
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const res = await fetch("/api/admin/videos")
+        const data = await res.json()
+        if (data.videos) {
+          const formatted = data.videos.map((v: any) => ({
+            ...v,
+            duration: v.duration ? `${v.duration} min` : "N/A",
+            uploadDate: new Date(v.uploadDate).toLocaleDateString(),
+            comments: 0,
+            likes: 0
+          }))
+          setVideos(formatted)
+        }
+      } catch (err) {
+        console.error("Failed to fetch videos:", err)
+      }
+    }
+    fetchVideos()
+  }, [])
 
   useEffect(() => {
     // MAXIMUM AGGRESSIVE multi-retry strategy for Chrome
@@ -212,19 +201,19 @@ export default function JourneyPage() {
   }
 
   const getVideoLikesCount = (videoId) => {
-    const baseLikes = mockVideos.find(v => v.id === videoId)?.likes || 0
+    const baseLikes = videos.find(v => v.id === videoId)?.likes || 0
     return baseLikes + (videoLikes[videoId] ? 1 : 0)
   }
 
   const getVideoCommentsCount = (videoId) => {
-    const baseComments = mockVideos.find(v => v.id === videoId)?.comments || 0
+    const baseComments = videos.find(v => v.id === videoId)?.comments || 0
     const userComments = videoComments[videoId]?.length || 0
     return baseComments + userComments
   }
 
   const filteredVideos = selectedCategory === "All" 
-    ? mockVideos 
-    : mockVideos.filter(video => video.category === selectedCategory)
+    ? videos 
+    : videos.filter(video => video.category === selectedCategory)
 
   const currentLevel = { name: "Seeker", color: "#9bc4b8" }
   const nextLevelDays = 45
@@ -384,7 +373,7 @@ export default function JourneyPage() {
                       padding: '2px 8px', 
                       borderRadius: '12px', 
                       fontSize: '0.75rem' 
-                    }}>{mockVideos.length}</span>
+                    }}>{videos.length}</span>
                   </button>
                   
                   {mockCategories.map((category) => (
