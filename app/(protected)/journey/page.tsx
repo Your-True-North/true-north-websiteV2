@@ -727,7 +727,7 @@ export default function JourneyPage() {
                 marginBottom: '1.5rem'
               }}>
                 <iframe
-                  src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}`}
+                  src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?modestbranding=1&controls=0&showinfo=0&rel=0&color=white`}
                   style={{
                     position: 'absolute',
                     top: 0,
