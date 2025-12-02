@@ -310,7 +310,7 @@ export default function LibraryPage() {
             marginBottom: '0.5rem',
             letterSpacing: '-0.02em'
           }}>
-            The Path
+            My Journey
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '1.125rem', fontWeight: 300 }}>
             Your path to transformation
