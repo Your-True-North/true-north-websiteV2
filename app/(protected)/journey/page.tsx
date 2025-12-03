@@ -470,7 +470,7 @@ export default function JourneyPage() {
                     ? "Your complete transformation journey" 
                     : `${filteredVideos.length} videos in this category`}
                 </p>
-                {selectedCategory === "Breathwork Sessions" && (<a href="/Breathwork Session Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
+                {selectedCategory === "Breathwork Sessions" && (<a href="/Breathwork Session Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}              </div>
 
               <div style={{ padding: '1.5rem' }}>
                 <div style={{ 
@@ -753,7 +753,6 @@ export default function JourneyPage() {
               <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)', lineHeight: 1.6 }}>
                 {selectedVideo.description}
               </p>
-                {selectedCategory === "Breathwork Sessions" && (<a href="/Breathwork Session Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
 
               {/* Like Button */}
               <div style={{ marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
@@ -882,13 +881,11 @@ export default function JourneyPage() {
                       <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.95rem', lineHeight: 1.5 }}>
                         {comment.text}
                       </p>
-                {selectedCategory === "Breathwork Sessions" && (<a href="/Breathwork Session Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
                     </div>
                   ))}
                   {!videoComments[selectedVideo.id] || videoComments[selectedVideo.id].length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '2rem', color: 'rgba(255, 255, 255, 0.5)' }}>
                       <p>No comments yet. Be the first to share your thoughts!</p>
-                {selectedCategory === "Breathwork Sessions" && (<a href="/Breathwork Session Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
                     </div>
                   ) : null}
                 </div>
