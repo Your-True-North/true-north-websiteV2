@@ -91,6 +91,8 @@ export async function POST(request: NextRequest) {
           body: JSON.stringify({ api_secret: CONVERTKIT_API_KEY })
         }
       )
+      // Wait for fields to propagate
+      await new Promise(resolve => setTimeout(resolve, 2000))
       // 2. Add the SESSION_NOTIFY tag
       const tagResponse = await fetch(
         `https://api.convertkit.com/v3/tags/${SESSION_NOTIFY_TAG}/subscribe`,
