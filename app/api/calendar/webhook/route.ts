@@ -82,6 +82,15 @@ export async function POST(request: NextRequest) {
         }
       )
       
+      // First remove SESSION_NOTIFY tag so automation can re-trigger
+      await fetch(
+        `https://api.convertkit.com/v3/subscribers/${subscriberId}/tags/${SESSION_NOTIFY_TAG}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ api_secret: CONVERTKIT_API_KEY })
+        }
+      )
       // 2. Add the SESSION_NOTIFY tag
       const tagResponse = await fetch(
         `https://api.convertkit.com/v3/tags/${SESSION_NOTIFY_TAG}/subscribe`,
