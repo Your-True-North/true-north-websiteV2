@@ -470,7 +470,8 @@ export default function JourneyPage() {
                     ? "Your complete transformation journey" 
                     : `${filteredVideos.length} videos in this category`}
                 </p>
-                {selectedCategory === "Breathwork Sessions" && (<a href="https://yourtruenorth.me/Breathwork_Session_Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}              </div>
+                {selectedCategory === "Breathwork Sessions" && (<a href="https://yourtruenorth.me/Breathwork_Session_Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
+                {selectedCategory === "Integration Practices" && (<a href="https://yourtruenorth.me/Integration_Journal.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download The Integration Journal</a>)}              </div>
 
               <div style={{ padding: '1.5rem' }}>
                 <div style={{ 
