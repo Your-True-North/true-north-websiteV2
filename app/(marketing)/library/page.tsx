@@ -74,6 +74,24 @@ export default function Library() {
       if (response.ok) {
         console.log('[Library Form] Success! Showing success message')
         setSubmitted(true)
+        
+        // Auto-download PDF if available for this resource
+        const pdfMap = {
+          "Realistic Anger Management": "/Realistic_Anger_Management.pdf",
+          "Integration Journal": "/Integration_Journal.pdf",
+          "A Mans Guide to Knowing Himself": "/A_Mans_Guide_to_Knowing_Himself.pdf"
+        };
+        
+        if (pdfMap[selectedResource]) {
+          const link = document.createElement('a');
+          link.href = pdfMap[selectedResource];
+          link.download = pdfMap[selectedResource].split('/').pop();
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          console.log('[Library Form] Auto-download triggered for:', selectedResource);
+        }
+        
         setTimeout(() => {
           setShowModal(false)
           setSubmitted(false)
