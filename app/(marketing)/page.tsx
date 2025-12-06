@@ -14,14 +14,14 @@ export default function Home() {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
-    
+
     checkIsMobile()
     window.addEventListener('resize', checkIsMobile)
-    
+
     const interval = setInterval(() => {
       setShimmerPhase(prev => (prev + 1) % 4)
     }, 180000)
-    
+
     return () => {
       clearInterval(interval)
       window.removeEventListener('resize', checkIsMobile)
@@ -33,7 +33,7 @@ export default function Home() {
       id: 1,
       question: "How would you describe where you are in your personal growth journey?",
       options: [
-        { text: "Just starting to recognize I need change", value: "beginning" },
+        { text: "Just starting to recognise I need change", value: "beginning" },
         { text: "I've tried some approaches but need deeper work", value: "intermediate" },
         { text: "I'm ready for intensive, transformational work", value: "ready" },
         { text: "I need ongoing support to maintain my progress", value: "maintenance" }
@@ -53,7 +53,7 @@ export default function Home() {
       id: 3,
       question: "How do you prefer to do your deepest personal work?",
       options: [
-        { text: "One-on-one where I can go deep without distraction", value: "individual" },
+        { text: "One on one where I can go deep without distraction", value: "individual" },
         { text: "In a group where I can learn from others' experiences", value: "group" },
         { text: "I'm open to both, depending on what works best", value: "flexible" },
         { text: "I prefer to start with resources I can explore on my own", value: "self_directed" }
@@ -74,12 +74,12 @@ export default function Home() {
   const recommendations = {
     coaching: {
       title: "1:1 Transformational Coaching",
-      description: "You're ready for deep, personalized work. Let's journey together through intensive transformation.",
+      description: "You're ready for deep, personalised work. Let's journey together through intensive transformation.",
       cta: "Explore Coaching",
       link: "/work"
     },
     circle: {
-      title: "Circle of Return Membership", 
+      title: "Circle of Return Membership",
       description: "You'd benefit from ongoing support and community. Join others on the path of authentic living.",
       cta: "Join the Circle",
       link: "/circle"
@@ -87,7 +87,7 @@ export default function Home() {
     library: {
       title: "Free Resource Library",
       description: "Start with foundational tools and practices. Build your understanding before diving deeper.",
-      cta: "Explore Resources", 
+      cta: "Explore Resources",
       link: "/library"
     }
   }
@@ -103,8 +103,8 @@ export default function Home() {
       const changeCommitment = newAnswers[1]
       const workPreference = newAnswers[2]
       const comfortLevel = newAnswers[3]
-      
-      if ((readinessLevel === 'ready' || changeCommitment === 'committed' || changeCommitment === 'urgent') && 
+
+      if ((readinessLevel === 'ready' || changeCommitment === 'committed' || changeCommitment === 'urgent') &&
           (workPreference === 'individual' || workPreference === 'flexible') &&
           (comfortLevel === 'comfortable' || comfortLevel === 'willing')) {
         setRecommendation('coaching')
@@ -116,7 +116,7 @@ export default function Home() {
       else {
         setRecommendation('library')
       }
-      
+
       setShowResult(true)
     }
   }
@@ -144,7 +144,7 @@ export default function Home() {
           --accent: ${currentTheme.accent};
           --shimmer-color: ${currentTheme.shimmer};
         }
-        
+
         .page-container::before {
           content: '';
           position: fixed;
@@ -158,12 +158,12 @@ export default function Home() {
           opacity: 0.6;
           transition: background 15s ease-in-out, opacity 15s ease-in-out;
         }
-        
+
         .shimmer-accent {
           position: relative;
           overflow: hidden;
         }
-        
+
         .shimmer-accent::after {
           content: '';
           position: absolute;
@@ -174,7 +174,7 @@ export default function Home() {
           background: linear-gradient(90deg, transparent 0%, var(--shimmer-color) 50%, transparent 100%);
           animation: shimmer 8s ease-in-out infinite;
         }
-        
+
         @keyframes shimmer {
           0% { left: -100%; opacity: 0; }
           25% { opacity: 0.3; }
@@ -182,88 +182,89 @@ export default function Home() {
           75% { opacity: 0.3; }
           100% { left: 100%; opacity: 0; }
         }
-        
+
         .accent-text {
           transition: color 15s ease-in-out;
         }
-        
+
         .btn-primary, .btn-secondary {
           transition: all 0.3s ease, color 15s ease-in-out, background-color 15s ease-in-out, border-color 15s ease-in-out;
         }
       `}</style>
 
       <main className="page-container">
+        {/* SECTION 1: HERO */}
         <section className="section" style={{
           paddingTop: isMobile ? '0' : '5rem',
           height: isMobile ? '100vh' : 'auto',
-          position: 'relative', 
+          position: 'relative',
           overflow: 'hidden',
           display: isMobile ? 'flex' : 'block',
           alignItems: isMobile ? 'flex-end' : 'normal', paddingBottom: isMobile ? '4rem' : '0'
         }}>
           <div style={{
-            position: 'absolute', 
-            top: 0, 
-            right: 0, 
-            bottom: 0, 
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
             left: isMobile ? 0 : 'auto',
             width: isMobile ? '100%' : '60%',
-            backgroundImage: 'url(/serious.jpg)', 
+            backgroundImage: 'url(/serious.jpg)',
             backgroundSize: 'cover',
-            backgroundPosition: isMobile ? 'center center' : 'center top', 
+            backgroundPosition: isMobile ? 'center center' : 'center top',
             zIndex: 1
           }}>
             {/* Darker overlay */}
             <div style={{
-              position: 'absolute', 
+              position: 'absolute',
               inset: 0,
-              background: isMobile 
+              background: isMobile
                 ? 'linear-gradient(to bottom, rgba(10, 10, 11, 0.75) 0%, rgba(10, 10, 11, 0.6) 50%, rgba(10, 10, 11, 0.85) 100%)'
                 : 'linear-gradient(90deg, #0a0a0b 0%, rgba(10, 10, 11, 0.95) 15%, rgba(10, 10, 11, 0.85) 30%, rgba(10, 10, 11, 0.6) 50%, transparent 70%)'
             }}></div>
           </div>
 
           <div className="container" style={{
-            position: "relative", paddingTop: isMobile ? "0" : "12rem", 
+            position: "relative", paddingTop: isMobile ? "0" : "12rem",
             zIndex: 2,
             textAlign: isMobile ? 'center' : 'left',
             width: isMobile ? '90%' : 'auto'
           }}>
             <div style={{maxWidth: isMobile ? '100%' : '800px'}}>
-              
+
               <h1 className="h1 shimmer-accent" style={{
-                fontSize: isMobile ? 'clamp(2.2rem, 9vw, 3.5rem)' : 'clamp(3rem, 7vw, 5rem)', 
+                fontSize: isMobile ? 'clamp(2.2rem, 9vw, 3.5rem)' : 'clamp(3rem, 7vw, 5rem)',
                 marginBottom: '1.5rem',
                 lineHeight: '1.1'
               }}>
-                How you're thinking, feeling and acting isn't <span className="accent-text">random</span>
+                Your patterns aren't the problem. They're the <span className="accent-text">signal</span>.
               </h1>
-              
+
               <p className="body-large" style={{
-                marginBottom: '3rem', 
-                maxWidth: isMobile ? '100%' : '650px', 
+                marginBottom: '3rem',
+                maxWidth: isMobile ? '100%' : '650px',
                 fontSize: isMobile ? '1.05rem' : '1.2rem',
                 lineHeight: '1.7'
               }}>
-                It's protection. It's your truth showing itself in your behaviour, your emotions, your patterns — because it's never had the chance to be heard.
+                The anger. The numbness. The cycles you can't seem to break. They're not flaws. They're your nervous system telling you something needs to shift. This work gets you to the root.
               </p>
-              
+
               <div style={{
-                display: 'flex', 
-                gap: '1rem', 
+                display: 'flex',
+                gap: '1rem',
                 flexWrap: 'wrap',
                 justifyContent: isMobile ? 'center' : 'flex-start', marginBottom: '4rem'
               }}>
                 <Link href="/work" className="btn-primary" style={{
-                  borderRadius: '3px', 
-                  padding: '1rem 2rem', 
+                  borderRadius: '3px',
+                  padding: '1rem 2rem',
                   fontSize: '1rem'
                 }}>
-                  Start Your Journey <span>→</span>
+                  Work With Me <span>→</span>
                 </Link>
                 <Link href="/about" className="btn-secondary" style={{
-                  borderRadius: '3px', 
-                  padding: '1rem 2rem', 
+                  borderRadius: '3px',
+                  padding: '1rem 2rem',
                   fontSize: '1rem'
                 }}>
                   My Story
@@ -273,52 +274,53 @@ export default function Home() {
           </div>
         </section>
 
+        {/* SECTION 2: CORE MESSAGE */}
         <section className="section section-alt">
           <div className="container">
             <div style={{
-              display: 'grid', 
-              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', 
-              gap: '4rem', 
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: '4rem',
               alignItems: 'center'
             }}>
               <div>
                 <h2 className="h2 shimmer-accent" style={{
-                  color: 'var(--text-primary-inverse)', 
+                  color: 'var(--text-primary-inverse)',
                   fontSize: isMobile ? '2rem' : '2.5rem'
                 }}>
-                  This work isn't about trying to become someone new
+                  This isn't about becoming someone new.
                 </h2>
                 <p className="body-large" style={{
-                  marginBottom: '2rem', 
-                  color: 'rgba(246, 246, 246, 0.9)', 
+                  marginBottom: '2rem',
+                  color: 'rgba(246, 246, 246, 0.9)',
                   fontSize: isMobile ? '1rem' : '1.1rem'
                 }}>
-                  It's about returning to who you are before the world told you to be something else.
+                  You don't need fixing. You need access to what's been buried.
                 </p>
                 <p className="body" style={{
-                  color: 'rgba(246, 246, 246, 0.8)', 
+                  color: 'rgba(246, 246, 246, 0.8)',
                   fontSize: isMobile ? '0.9rem' : '1rem',
                   marginBottom: '1.5rem'
                 }}>
-                  You weren't born to carry this weight forever. You're here to shift. To elevate. To meet what's in the way and move through it.
+                  The version of you before the armour went on. Before you learnt to shut down, push through, or disappear. That man is still in there.
                 </p>
                 <p className="body" style={{
-                  color: 'rgba(246, 246, 246, 0.8)', 
+                  color: 'rgba(246, 246, 246, 0.8)',
                   fontSize: isMobile ? '0.9rem' : '1rem'
                 }}>
-                  Struggle isn't weakness. It's survival. It's guidance. It's your body letting you know it's time to change the pattern.
+                  This work clears what's in the way so you can feel him again. Think from him. Move from him. Live from him.
                 </p>
               </div>
-              
+
               <div className="card">
                 <blockquote style={{borderLeft: '3px solid var(--primary)', paddingLeft: '2rem'}}>
                   <p style={{
-                    fontSize: isMobile ? '1.1rem' : '1.25rem', 
-                    fontStyle: 'italic', 
-                    color: 'var(--primary)', 
+                    fontSize: isMobile ? '1.1rem' : '1.25rem',
+                    fontStyle: 'italic',
+                    color: 'var(--primary)',
                     marginBottom: '1rem'
                   }}>
-                    "Your anger, your reactions, your escapes are not random. They're patterns. And once you reconnect to your truth, new choices become possible. Keep going and it will all make sense from the inside."
+                    "You already have the answers. You just lost access to them. This work clears the way back."
                   </p>
                   <footer className="body-small" style={{fontWeight: 'bold'}}>— Core Principle</footer>
                 </blockquote>
@@ -327,51 +329,56 @@ export default function Home() {
           </div>
         </section>
 
+        {/* SECTION 3: CREDENTIALS STRIP */}
+        <section className="section section-alt" style={{
+          paddingTop: isMobile ? '2rem' : '3rem',
+          paddingBottom: isMobile ? '2rem' : '3rem'
+        }}>
+          <div className="container">
+            <p style={{
+              textAlign: 'center',
+              color: 'rgba(246, 246, 246, 0.7)',
+              fontSize: isMobile ? '0.85rem' : '0.95rem',
+              letterSpacing: '0.5px',
+              lineHeight: '1.8'
+            }}>
+              ICF Certified Transformational Coach · Somatic Therapy Practitioner (Gabor Maté trained) · Reiki Master · Breathwork Facilitator · 10+ years in men's transformation work
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 4: MODALITIES */}
         <section className="section">
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '4rem'}}>
-              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>My Modalities</h2>
-              <p className="body-large" style={{fontSize: isMobile ? '1rem' : '1.1rem'}}>Proven methods for real transformation.</p>
+              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>How the work moves.</h2>
             </div>
-            
+
             <div style={{
-              display: 'grid', 
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', 
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
               gap: '2rem'
             }}>
               {[
-                { 
-                  title: 'Somatic Therapy', 
-                  subtitle: 'Body-based healing', 
-                  description: 'Your body remembers what your mind learned to forget. Together, we work with physical sensation, breath, and stored emotion to release trauma, restore safety, and rebuild trust with your nervous system.' 
+                {
+                  title: 'Somatic Therapy',
+                  description: 'Your body holds what your mind forgot. We work with sensation, breath, and stored emotion to release trauma and restore safety in your nervous system. This isn't talk therapy. This is body first.'
                 },
-                { 
-                  title: 'Breathwork', 
-                  subtitle: 'Ancient wisdom, modern application', 
-                  description: 'Your breath is one of the most powerful tools you have. These guided sessions clear stuck energy, regulate emotion, and create the conditions for clarity, breakthrough, and deep emotional release.' 
+                {
+                  title: 'Breathwork',
+                  description: 'Your breath regulates everything. These sessions clear stuck energy, move emotion, and create space for clarity and release. Simple. Powerful. Ancient.'
                 },
-                { 
-                  title: 'Energy Work', 
-                  subtitle: 'Energetic recalibration and emotional clearing', 
-                  description: 'Your energetic field holds more than just emotion - it holds patterns, imprints, and memory. This work helps release what no longer belongs, clear inherited blocks, and restore your natural state of clarity, flow, and grounded presence.' 
+                {
+                  title: 'Energy Work',
+                  description: 'Your field carries more than feeling. It holds patterns, imprints, and memory. This work clears what no longer belongs and restores your natural state of presence.'
                 },
-                { 
-                  title: 'Integrative Coaching', 
-                  subtitle: 'Depth work that moves the whole system', 
-                  description: 'This is where everything comes together - nervous system, psychology, emotion, and direction. We don\'t just talk about change. We build it. Rooted in somatic practice and real accountability, this is coaching that honours your story and leads you forward with purpose.' 
+                {
+                  title: 'Integrative Coaching',
+                  description: 'Where it all comes together. Nervous system, psychology, emotion, direction. We don\'t just talk about change. We build it. Grounded in somatic practice. Held by real accountability.'
                 }
               ].map((item, i) => (
                 <div key={i} className="card">
-                  <h3 className="h3 shimmer-accent" style={{fontSize: isMobile ? '1.2rem' : '1.4rem', fontWeight: 'bold'}}>{item.title}</h3>
-                  <p className="body-small accent-text" style={{
-                    marginBottom: '1rem', 
-                    textTransform: 'uppercase', 
-                    letterSpacing: '1px', 
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold'
-                  }}>
-                    {item.subtitle}
-                  </p>
+                  <h3 className="h3 shimmer-accent" style={{fontSize: isMobile ? '1.2rem' : '1.4rem', fontWeight: 'bold', marginBottom: '1rem'}}>{item.title}</h3>
                   <p className="body" style={{fontSize: isMobile ? '0.9rem' : '0.95rem'}}>{item.description}</p>
                 </div>
               ))}
@@ -379,18 +386,102 @@ export default function Home() {
           </div>
         </section>
 
+        {/* SECTION 5: TESTIMONIALS */}
+        <section className="section">
+          <div className="container">
+            <div style={{textAlign: 'center', marginBottom: '4rem'}}>
+              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>Men who made the return.</h2>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '2rem',
+              maxWidth: '1000px',
+              margin: '0 auto'
+            }}>
+              {[
+                { title: "From Chaos to Clarity", name: "Real Client Story", embedId: "7Y1upKm8bZk" },
+                { title: "Breaking the Cycle", name: "Authentic Transformation", embedId: "ubCK70jYQDI" },
+                { title: "Finding My Power", name: "Client Journey", embedId: "UfbMIxlCzgM" },
+                { title: "The Return Journey", name: "Deep Work Results", embedId: "n8_muJ84AbU" }
+              ].map((video, i) => (
+                <div key={i} className="card" style={{padding: '0', overflow: 'hidden'}}>
+                  <div style={{
+                    aspectRatio: '9/16',
+                    background: '#000',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${video.embedId}`}
+                      title={video.title}
+                      frameBorder="0"
+                      allowFullScreen
+                      style={{border: 'none'}}
+                    />
+                  </div>
+                  <div style={{padding: '1.5rem'}}>
+                    <h4 style={{
+                      color: 'var(--text-primary)',
+                      marginBottom: '0.5rem',
+                      fontSize: isMobile ? '0.9rem' : '1rem'
+                    }}>{video.title}</h4>
+                    <p className="body-small" style={{fontSize: '0.85rem'}}>{video.name}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 6: DIFFERENTIATOR */}
+        <section className="section">
+          <div className="container">
+            <div style={{textAlign: 'center', maxWidth: '700px', margin: '0 auto'}}>
+              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem', marginBottom: '2rem'}}>This isn't coaching. It's excavation.</h2>
+              <p className="body-large" style={{
+                marginBottom: '1.5rem',
+                fontSize: isMobile ? '1rem' : '1.1rem',
+                lineHeight: '1.7'
+              }}>
+                Most programmes teach you to manage your symptoms. Cope better. Think different.
+              </p>
+              <p className="body" style={{
+                marginBottom: '1.5rem',
+                fontSize: isMobile ? '0.9rem' : '1rem',
+                lineHeight: '1.7',
+                color: 'var(--text-secondary)'
+              }}>
+                This work goes underneath. Into the body. Into the patterns running your life without your permission. Into the parts of you that shut down years ago and never came back online.
+              </p>
+              <p className="body" style={{
+                fontSize: isMobile ? '0.9rem' : '1rem',
+                lineHeight: '1.7',
+                color: 'var(--text-secondary)'
+              }}>
+                You won't just understand yourself better. You'll feel different. Move different. Choose different.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 7: CHECK-IN */}
         <section className="section section-alt">
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '3rem'}}>
               <h2 className="h2 shimmer-accent" style={{
-                color: 'var(--text-primary-inverse)', 
+                color: 'var(--text-primary-inverse)',
                 fontSize: isMobile ? '2rem' : '2.5rem'
-              }}>Where You Are Now</h2>
+              }}>Where are you right now?</h2>
               <p className="body-large" style={{
-                color: 'rgba(246, 246, 246, 0.9)', 
+                color: 'rgba(246, 246, 246, 0.9)',
                 fontSize: isMobile ? '1rem' : '1.1rem'
               }}>
-                A simple four question check-in to help you see what's really going on, and where to go from here.
+                Four questions. No fluff. A clear read on where you're at and what might be next.
               </p>
             </div>
 
@@ -399,24 +490,24 @@ export default function Home() {
                 <div>
                   <div style={{marginBottom: '2rem'}}>
                     <div style={{
-                      display: 'flex', 
-                      justifyContent: 'space-between', 
-                      color: 'var(--text-muted)', 
-                      fontSize: '0.85rem', 
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      color: 'var(--text-muted)',
+                      fontSize: '0.85rem',
                       marginBottom: '0.5rem'
                     }}>
                       <span>Question {currentQuestion + 1} of {questions.length}</span>
                       <span>{Math.round((currentQuestion / questions.length) * 100)}%</span>
                     </div>
                     <div style={{
-                      width: '100%', 
-                      background: 'var(--bg-tertiary)', 
-                      borderRadius: '10px', 
+                      width: '100%',
+                      background: 'var(--bg-tertiary)',
+                      borderRadius: '10px',
                       height: '6px'
                     }}>
                       <div style={{
                         background: 'linear-gradient(90deg, var(--primary), var(--accent))',
-                        height: '6px', 
+                        height: '6px',
                         borderRadius: '10px',
                         width: `${((currentQuestion) / questions.length) * 100}%`,
                         transition: 'width 0.5s ease'
@@ -425,9 +516,9 @@ export default function Home() {
                   </div>
 
                   <h3 style={{
-                    fontSize: isMobile ? '1.3rem' : '1.5rem', 
-                    color: 'var(--text-primary)', 
-                    marginBottom: '2rem', 
+                    fontSize: isMobile ? '1.3rem' : '1.5rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '2rem',
                     lineHeight: '1.4'
                   }}>
                     {questions[currentQuestion].question}
@@ -436,13 +527,13 @@ export default function Home() {
                   <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
                     {questions[currentQuestion].options.map((option, index) => (
                       <button key={index} onClick={() => handleAnswer(option.value)} style={{
-                        textAlign: 'left', 
-                        padding: '1.5rem', 
+                        textAlign: 'left',
+                        padding: '1.5rem',
                         background: 'var(--bg-tertiary)',
-                        border: '1px solid var(--border-primary)', 
+                        border: '1px solid var(--border-primary)',
                         borderRadius: '0.5rem',
-                        color: 'var(--text-primary)', 
-                        fontSize: isMobile ? '0.9rem' : '1rem', 
+                        color: 'var(--text-primary)',
+                        fontSize: isMobile ? '0.9rem' : '1rem',
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}>
@@ -455,36 +546,36 @@ export default function Home() {
                 <div style={{textAlign: 'center'}}>
                   <div style={{fontSize: '3rem', marginBottom: '2rem'}}>🪞</div>
                   <h3 style={{
-                    fontSize: isMobile ? '1.5rem' : '1.8rem', 
-                    color: 'var(--text-primary)', 
+                    fontSize: isMobile ? '1.5rem' : '1.8rem',
+                    color: 'var(--text-primary)',
                     marginBottom: '1rem'
                   }}>
                     {recommendations[recommendation].title}
                   </h3>
                   <p style={{
-                    fontSize: isMobile ? '1rem' : '1.1rem', 
-                    color: 'var(--text-secondary)', 
-                    marginBottom: '2rem', 
+                    fontSize: isMobile ? '1rem' : '1.1rem',
+                    color: 'var(--text-secondary)',
+                    marginBottom: '2rem',
                     lineHeight: '1.6'
                   }}>
                     {recommendations[recommendation].description}
                   </p>
                   <div style={{
-                    display: 'flex', 
-                    gap: '1rem', 
-                    justifyContent: 'center', 
+                    display: 'flex',
+                    gap: '1rem',
+                    justifyContent: 'center',
                     flexWrap: 'wrap'
                   }}>
                     <Link href={recommendations[recommendation].link} className="btn-primary" style={{
-                      borderRadius: '3px', 
-                      padding: '1rem 2rem', 
+                      borderRadius: '3px',
+                      padding: '1rem 2rem',
                       fontSize: '1rem'
                     }}>
                       {recommendations[recommendation].cta} <span>→</span>
                     </Link>
                     <button onClick={resetQuiz} className="btn-secondary" style={{
-                      borderRadius: '3px', 
-                      padding: '1rem 2rem', 
+                      borderRadius: '3px',
+                      padding: '1rem 2rem',
                       fontSize: '1rem'
                     }}>
                       Take Again
@@ -496,93 +587,36 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section">
-          <div className="container">
-            <div style={{textAlign: 'center', marginBottom: '4rem'}}>
-              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>Those Who've Made the Return to Truth</h2>
-            </div>
-            
-            <div style={{
-              display: 'grid', 
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))', 
-              gap: '2rem', 
-              maxWidth: '1000px', 
-              margin: '0 auto'
-            }}>
-              {[
-                { title: "From Chaos to Clarity", name: "Real Client Story", embedId: "7Y1upKm8bZk" },
-                { title: "Breaking the Cycle", name: "Authentic Transformation", embedId: "ubCK70jYQDI" },
-                { title: "Finding My Power", name: "Client Journey", embedId: "UfbMIxlCzgM" },
-                { title: "The Return Journey", name: "Deep Work Results", embedId: "n8_muJ84AbU" }
-              ].map((video, i) => (
-                <div key={i} className="card" style={{padding: '0', overflow: 'hidden'}}>
-                  <div style={{
-                    aspectRatio: '9/16', 
-                    background: '#000', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center'
-                  }}>
-                    <iframe 
-                      width="100%" 
-                      height="100%" 
-                      src={`https://www.youtube.com/embed/${video.embedId}`}
-                      title={video.title} 
-                      frameBorder="0" 
-                      allowFullScreen 
-                      style={{border: 'none'}} 
-                    />
-                  </div>
-                  <div style={{padding: '1.5rem'}}>
-                    <h4 style={{
-                      color: 'var(--text-primary)', 
-                      marginBottom: '0.5rem', 
-                      fontSize: isMobile ? '0.9rem' : '1rem'
-                    }}>{video.title}</h4>
-                    <p className="body-small" style={{fontSize: '0.85rem'}}>{video.name}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
+        {/* SECTION 8: FINAL CTA */}
         <section className="section">
           <div className="container">
             <div style={{textAlign: 'center', maxWidth: '600px', margin: '0 auto'}}>
-              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>Ready to Begin Your Return?</h2>
+              <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>Ready to stop circling and start moving?</h2>
               <p className="body-large" style={{
-                marginBottom: '3rem', 
+                marginBottom: '3rem',
                 fontSize: isMobile ? '1rem' : '1.1rem'
               }}>
-                The path isn't easy. But neither is staying where you are.
+                The path isn't comfortable. But neither is staying where you are.
               </p>
               <div style={{
-                display: 'flex', 
-                gap: '1rem', 
-                justifyContent: 'center', 
+                display: 'flex',
+                gap: '1rem',
+                justifyContent: 'center',
                 flexWrap: 'wrap'
               }}>
                 <Link href="/contact" className="btn-primary" style={{
-                  borderRadius: '3px', 
-                  padding: '1rem 2rem', 
+                  borderRadius: '3px',
+                  padding: '1rem 2rem',
                   fontSize: '1rem'
                 }}>
-                  Book Discovery Call <span>→</span>
-                </Link>
-                <Link href="/library" className="btn-secondary" style={{
-                  borderRadius: '3px', 
-                  padding: '1rem 2rem', 
-                  fontSize: '1rem'
-                }}>
-                  Free Resources
+                  Book a Discovery Call <span>→</span>
                 </Link>
               </div>
             </div>
           </div>
         </section>
       </main>
-      
+
     </>
   )
 }
