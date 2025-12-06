@@ -230,7 +230,7 @@ END:VCALENDAR`;
             marginBottom: '1.5rem',
             fontWeight: 300
           }}>
-            {nextSession.description}
+            {nextSession.description?.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()}
           </p>
         )}
         
