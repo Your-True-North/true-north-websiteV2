@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         minute: '2-digit',
         hour12: false
       }),
-      event_description: (nextEvent.description || 'Join us for this Circle session').replace(/<[^>]*>/g, ''),
+      event_description: (nextEvent.description || 'Join us for this Circle session').replace(/<\/p>|<br\s*\/?>/gi, '\n').replace(/<\/li>/gi, '\n• ').replace(/<[^>]*>/g, '').trim(),
       event_link: ZOOM_LINK
     }
 
