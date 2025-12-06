@@ -362,7 +362,7 @@ export default function Home() {
               {[
                 {
                   title: 'Somatic Therapy',
-                  description: 'Your body holds what your mind forgot. We work with sensation, breath, and stored emotion to release trauma and restore safety in your nervous system. This isn't talk therapy. This is body first.'
+                  description: 'Your body holds what your mind forgot. We work with sensation, breath, and stored emotion to release trauma and restore safety in your nervous system. This is not talk therapy. This is body first.'
                 },
                 {
                   title: 'Breathwork',
