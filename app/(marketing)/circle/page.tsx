@@ -55,7 +55,8 @@ export default function Circle() {
             rel: 0,
             showinfo: 0,
             fs: 1,
-            playsinline: 1
+            playsinline: 1,
+            vq: 'highres'
           },
           events: {
             onReady: () => {
