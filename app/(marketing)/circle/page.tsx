@@ -16,15 +16,15 @@ export default function Circle() {
   const [playerReady, setPlayerReady] = useState(false)
   const [showOverlay, setShowOverlay] = useState(true)
   const playerRef = useRef(null)
-  
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
-    
+
     checkMobile()
     window.addEventListener('resize', checkMobile)
-    
+
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
@@ -147,6 +147,7 @@ export default function Circle() {
   return (
     <>
       <main style={{ position: 'relative' }}>
+        {/* HERO SECTION */}
         <section style={{
           position: 'relative',
           width: '100%',
@@ -173,7 +174,8 @@ export default function Circle() {
               background: "linear-gradient(90deg, rgba(10,10,11,0.8) 0%, transparent 15%, transparent 85%, rgba(10,10,11,0.8) 100%)",
               pointerEvents: "none",
               zIndex: 2
-            }} />            <div
+            }} />
+            <div
               id="youtube-player"
               style={{
                 position: 'absolute',
@@ -214,25 +216,28 @@ export default function Circle() {
             >
               <div style={{
                 textAlign: 'center',
-                maxWidth: '600px'
+                maxWidth: '700px'
               }}>
                 <h2 className="breathing-title" style={{
-                  fontSize: isMobile ? '1.8rem' : '2.5rem',
-                  fontWeight: '600',
-                  color: '#fff',
+                  fontSize: isMobile ? '1.2rem' : '1.4rem',
+                  fontWeight: '400',
+                  color: 'rgba(255, 255, 255, 0.7)',
                   marginBottom: '1rem',
                   lineHeight: '1.2',
-                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase'
                 }}>
                   Circle of Return
                 </h2>
                 <p style={{
-                  fontSize: isMobile ? '1rem' : '1.2rem',
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  lineHeight: '1.6',
-                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                  fontSize: isMobile ? '1.8rem' : '2.5rem',
+                  color: '#ffffff',
+                  lineHeight: '1.3',
+                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                  fontWeight: '300'
                 }}>
-                  A space to remember who you are
+                  The work you keep putting off. Done together.
                 </p>
               </div>
 
@@ -352,6 +357,7 @@ export default function Circle() {
           padding: isMobile ? '0 1.5rem' : '0 2rem'
         }}>
 
+          {/* WHO THIS IS FOR SECTION */}
           <section style={{
             padding: isMobile ? '4rem 0' : '6rem 0'
           }}>
@@ -360,72 +366,62 @@ export default function Circle() {
               color: '#ffffff',
               fontWeight: '300',
               marginBottom: '3rem',
-              textAlign: 'center',
               letterSpacing: '-0.01em'
             }}>
-              Who This Is For
+              Who this is for.
             </h2>
 
             <div style={{
-              textAlign: 'center',
-              marginBottom: '3rem'
+              maxWidth: '800px'
             }}>
               <p style={{
-                fontSize: isMobile ? '1.2rem' : '1.4rem',
-                color: 'rgba(255, 255, 255, 0.9)',
-                lineHeight: '1.7',
-                marginBottom: '2.5rem',
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.8',
+                marginBottom: '2rem',
                 fontWeight: '300'
               }}>
-                This is for the person who knows deep down that there is more:
+                You've done the surface work. Read the books. Tried the apps. Maybe therapy. Maybe courses. Maybe nothing because you didn't know where to start.
               </p>
 
-              <div style={{
-                display: 'grid',
-                gap: '1.5rem',
-                maxWidth: '600px',
-                margin: '0 auto 3rem'
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: '#ffffff',
+                lineHeight: '1.8',
+                marginBottom: '2rem',
+                fontWeight: '400'
               }}>
-                {[
-                  { main: 'More purpose', sub: 'Stop wondering what you are here for' },
-                  { main: 'More clarity', sub: 'Know what you want without second-guessing' },
-                  { main: 'More money', sub: 'Build the life you keep putting off' },
-                  { main: 'More peace', sub: 'Sleep without your mind racing' },
-                  { main: 'More of everything you feel you lack', sub: 'Access the power you know is there' }
-                ].map((item, i) => (
-                  <div key={i} style={{
-                    padding: '1.5rem 0',
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
-                  }}>
-                    <div style={{
-                      fontSize: isMobile ? '1.15rem' : '1.25rem',
-                      color: '#ffffff',
-                      marginBottom: '0.5rem',
-                      fontWeight: '400'
-                    }}>
-                      {item.main}
-                    </div>
-                    <div style={{
-                      fontSize: isMobile ? '0.95rem' : '1rem',
-                      color: 'rgba(255, 255, 255, 0.6)',
-                      fontWeight: '300',
-                      lineHeight: '1.5'
-                    }}>
-                      {item.sub}
-                    </div>
-                  </div>
-                ))}
-              </div>
+                But the patterns keep running.
+              </p>
 
               <p style={{
-                fontSize: isMobile ? '1.15rem' : '1.3rem',
-                color: 'rgba(255, 255, 255, 0.95)',
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.8',
+                marginBottom: '2rem',
+                fontWeight: '300'
+              }}>
+                The anger still flares. The anxiety still hums. The disconnection still sits there, underneath everything.
+              </p>
+
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.8',
+                marginBottom: '2rem',
+                fontWeight: '300'
+              }}>
+                You know something deeper needs to shift. You just haven't had the space, the structure, or the support to do it.
+              </p>
+
+              <p style={{
+                fontSize: isMobile ? '1.3rem' : '1.5rem',
+                color: '#ffffff',
                 lineHeight: '1.6',
                 fontWeight: '400',
-                maxWidth: '700px',
-                margin: '0 auto'
+                marginTop: '3rem'
               }}>
-                You are done circling the edge of your healing and ready to walk into the centre of it.
+                This is that space.
               </p>
             </div>
           </section>
@@ -436,86 +432,7 @@ export default function Circle() {
             margin: isMobile ? '3rem 0' : '4rem 0'
           }} />
 
-          <section style={{
-            padding: isMobile ? '3rem 0' : '5rem 0',
-            textAlign: 'center'
-          }}>
-            <p style={{
-              fontSize: isMobile ? '1.4rem' : '1.8rem',
-              color: '#ffffff',
-              fontWeight: '300',
-              lineHeight: '1.5',
-              marginBottom: '2rem',
-              maxWidth: '800px',
-              margin: '0 auto 2rem'
-            }}>
-              If you join, you are entering a portal—a space to return to yourself.
-            </p>
-
-            <p style={{
-              fontSize: isMobile ? '1.2rem' : '1.5rem',
-              background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.9), rgba(255, 255, 255, 0.7))',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              fontWeight: '400',
-              marginBottom: '3rem'
-            }}>
-              Return to your truth.
-            </p>
-
-            <div style={{
-              display: 'grid',
-              gap: isMobile ? '1.5rem' : '2rem',
-              marginTop: '3rem'
-            }}>
-              {[
-                "You have built your current identity around survival, pressure, and who you should be in a world full of expectations.",
-                "But something deeper has been calling and you have felt it for a while.",
-                "You are seeking connection with the self you know is there. The version of you that is more fearless, more grounded, more powerful but still stuck beneath the pain from your wounds."
-              ].map((text, i) => (
-                <p key={i} style={{
-                  fontSize: isMobile ? '1.05rem' : '1.15rem',
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  lineHeight: '1.7',
-                  fontWeight: '300',
-                  padding: isMobile ? '1.5rem' : '2rem',
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderRadius: '3px',
-                  border: '1px solid rgba(255, 255, 255, 0.05)',
-                  transition: 'all 0.3s ease'
-                }}>
-                  {text}
-                </p>
-              ))}
-            </div>
-
-            <div style={{
-              marginTop: '3rem',
-              padding: isMobile ? '2rem 1.5rem' : '2.5rem 2rem',
-              background: 'linear-gradient(135deg, rgba(123, 166, 155, 0.08), rgba(255, 255, 255, 0.03))',
-              borderRadius: '3px',
-              border: '1px solid rgba(123, 166, 155, 0.2)'
-            }}>
-              <p style={{
-                fontSize: isMobile ? '1.2rem' : '1.4rem',
-                color: '#ffffff',
-                fontWeight: '400',
-                lineHeight: '1.4',
-                margin: 0
-              }}>
-                Know this: there is wisdom in your wounds.<br />
-                There is purpose in your pain.
-              </p>
-            </div>
-          </section>
-
-          <div style={{
-            height: '1px',
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-            margin: isMobile ? '3rem 0' : '4rem 0'
-          }} />
-
+          {/* WHAT YOU GET SECTION */}
           <section style={{
             padding: isMobile ? '3rem 0' : '5rem 0'
           }}>
@@ -526,9 +443,9 @@ export default function Circle() {
               marginBottom: '1.5rem',
               letterSpacing: '-0.01em'
             }}>
-              What Is Inside
+              What's inside.
             </h2>
-            
+
             <p style={{
               fontSize: isMobile ? '1.1rem' : '1.2rem',
               color: 'rgba(255, 255, 255, 0.7)',
@@ -536,7 +453,7 @@ export default function Circle() {
               lineHeight: '1.6',
               fontWeight: '300'
             }}>
-              This is not content you will forget in 48 hours. This is nervous system work, soul work, and real change from the inside out.
+              This isn't content you'll forget in 48 hours. This is nervous system work. Body work. Real change from the inside out.
             </p>
 
             <div style={{
@@ -545,27 +462,27 @@ export default function Circle() {
             }}>
               {[
                 {
-                  title: 'Weekly coaching prompts + self-reflection practices',
-                  desc: 'To keep you anchored in truth even when life tries to pull you out of it.'
+                  title: 'Weekly coaching prompts and self-reflection practices',
+                  desc: 'To keep you anchored in truth even when life pulls you off centre.'
                 },
                 {
-                  title: 'Live calls, workshops + real-time guidance',
-                  desc: 'For when the emotions hit, the questions rise, and you need somewhere solid to land.'
+                  title: 'Live calls, workshops, and real-time guidance',
+                  desc: 'For when emotions hit, questions rise, and you need somewhere solid to land.'
                 },
                 {
-                  title: 'Tools for emotional regulation + pattern rewiring',
-                  desc: 'Not theory. Practice. So you stop spiralling and start moving from centre—clean, clear, steady.'
+                  title: 'Tools for emotional regulation and pattern rewiring',
+                  desc: 'Not theory. Practice. So you stop spiralling and start moving from centre. Clean. Clear. Steady.'
                 },
                 {
-                  title: 'Monthly themes that build rhythm + depth',
-                  desc: 'No more random content or scattered self-help. Each month has a focus, a structure, and a direction.'
+                  title: 'Monthly themes that build rhythm and depth',
+                  desc: 'No scattered content. Each month has a focus, a structure, and a direction.'
                 },
                 {
                   title: 'A space to be witnessed, challenged, and held',
-                  desc: 'You are not doing this alone. This is where people show up for each other, without judgement or performance.'
+                  desc: 'You're not doing this alone. This is where people show up for each other without performance or pretence.'
                 },
                 {
-                  title: 'Guest sessions from experts who go deep, not wide',
+                  title: 'Guest sessions from experts who go deep',
                   desc: 'To stretch your perspective, deepen your capacity, and support your return.'
                 }
               ].map((item, i) => (
@@ -601,6 +518,61 @@ export default function Circle() {
             margin: isMobile ? '3rem 0' : '4rem 0'
           }} />
 
+          {/* DIFFERENTIATOR SECTION */}
+          <section style={{
+            padding: isMobile ? '3rem 0' : '5rem 0'
+          }}>
+            <h2 style={{
+              fontSize: isMobile ? '1.8rem' : '2.5rem',
+              color: '#ffffff',
+              fontWeight: '300',
+              marginBottom: '2rem',
+              letterSpacing: '-0.01em'
+            }}>
+              This isn't another membership.
+            </h2>
+
+            <div style={{
+              maxWidth: '800px'
+            }}>
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.8',
+                marginBottom: '2rem',
+                fontWeight: '300'
+              }}>
+                Most communities give you content and leave you to figure it out alone.
+              </p>
+
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.8',
+                marginBottom: '2rem',
+                fontWeight: '300'
+              }}>
+                This one meets you where you are. Holds you accountable. Moves with you as you shift.
+              </p>
+
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: '#ffffff',
+                lineHeight: '1.8',
+                fontWeight: '400'
+              }}>
+                You won't just learn about change. You'll live it. Week by week. Layer by layer.
+              </p>
+            </div>
+          </section>
+
+          <div style={{
+            height: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+            margin: isMobile ? '3rem 0' : '4rem 0'
+          }} />
+
+          {/* CORE PRINCIPLES SECTION */}
           <section style={{
             padding: isMobile ? '3rem 0' : '5rem 0'
           }}>
@@ -611,7 +583,7 @@ export default function Circle() {
               marginBottom: '3rem',
               letterSpacing: '-0.01em'
             }}>
-              Core Principles
+              How we work.
             </h2>
 
             <div style={{
@@ -627,32 +599,32 @@ export default function Circle() {
                 {
                   num: '01',
                   title: 'No performance',
-                  desc: 'You will not find small talk here. Just people doing the real work—quietly, consistently, and without needing to prove anything.'
+                  desc: 'No small talk. No proving yourself. Just people doing the real work, quietly and consistently.'
                 },
                 {
                   num: '02',
                   title: 'Return, not reinvention',
-                  desc: 'This is not about becoming someone new. It is about coming back to who you are underneath the survival, the pain, and the patterns.'
+                  desc: 'This isn't about becoming someone new. It's about coming back to who you are underneath the survival, the pain, and the patterns.'
                 },
                 {
                   num: '03',
                   title: 'No pressure to perform healing',
-                  desc: 'You do not need to explain, impress, or have it all figured out. You just need to show up—messy, honest, and ready.'
+                  desc: 'You don't need to explain, impress, or have it figured out. You just need to show up. Messy. Honest. Ready.'
                 },
                 {
                   num: '04',
-                  title: 'We meet what is real',
-                  desc: 'There is no bypassing here. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity.'
+                  title: 'We meet what's real',
+                  desc: 'No bypassing. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity.'
                 },
                 {
                   num: '05',
-                  title: 'Body-first, truth-led work',
-                  desc: 'The shifts happen in the nervous system. In your breath. In your relationships.'
+                  title: 'Body first',
+                  desc: 'The shifts happen in your nervous system. In your breath. In your relationships. Not just in your head.'
                 },
                 {
                   num: '06',
-                  title: 'You are not here to be fixed',
-                  desc: 'You are here to return to what has always been underneath, waiting to be remembered.'
+                  title: 'You're not here to be fixed',
+                  desc: 'You're here to return to what's always been underneath. Waiting to be remembered.'
                 }
               ].map((principle, i) => (
                 <div key={i} style={{
@@ -701,11 +673,97 @@ export default function Circle() {
             margin: isMobile ? '3rem 0' : '4rem 0'
           }} />
 
+          {/* SOCIAL PROOF SECTION */}
+          <section style={{
+            padding: isMobile ? '3rem 0' : '5rem 0'
+          }}>
+            <h2 style={{
+              fontSize: isMobile ? '1.8rem' : '2.5rem',
+              color: '#ffffff',
+              fontWeight: '300',
+              marginBottom: '3rem',
+              letterSpacing: '-0.01em'
+            }}>
+              What members say.
+            </h2>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+              gap: '2rem'
+            }}>
+              {[
+                {
+                  quote: "I've tried therapy, courses, everything. This is the first time something actually shifted in my body, not just my head.",
+                  name: "James",
+                  result: "Found clarity after years of confusion"
+                },
+                {
+                  quote: "The accountability and the space to be honest without judgement changed everything for me.",
+                  name: "David",
+                  result: "Broke a 15-year pattern"
+                },
+                {
+                  quote: "I didn't know what I was looking for. Now I do. And I know how to get there.",
+                  name: "Michael",
+                  result: "Reconnected with purpose"
+                },
+                {
+                  quote: "This isn't like other memberships. People actually show up. The work actually lands.",
+                  name: "Chris",
+                  result: "Transformed his relationships"
+                }
+              ].map((testimonial, i) => (
+                <div key={i} style={{
+                  padding: isMobile ? '2rem 1.5rem' : '2.5rem 2rem',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  borderRadius: '3px',
+                  border: '1px solid rgba(255, 255, 255, 0.08)'
+                }}>
+                  <p style={{
+                    fontSize: isMobile ? '1rem' : '1.1rem',
+                    color: 'rgba(255, 255, 255, 0.85)',
+                    lineHeight: '1.7',
+                    marginBottom: '1.5rem',
+                    fontWeight: '300',
+                    fontStyle: 'italic'
+                  }}>
+                    "{testimonial.quote}"
+                  </p>
+                  <div>
+                    <p style={{
+                      fontSize: '1rem',
+                      color: '#ffffff',
+                      fontWeight: '500',
+                      marginBottom: '0.25rem'
+                    }}>
+                      {testimonial.name}
+                    </p>
+                    <p style={{
+                      fontSize: '0.9rem',
+                      color: 'rgba(155, 196, 184, 0.9)',
+                      fontWeight: '400'
+                    }}>
+                      {testimonial.result}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <div style={{
+            height: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+            margin: isMobile ? '3rem 0' : '4rem 0'
+          }} />
+
+          {/* PRICING SECTION */}
           <section style={{
             padding: isMobile ? '3rem 0 4rem' : '5rem 0 6rem',
             textAlign: 'center'
           }}>
-          <CircleCalendarTeaser />
+            <CircleCalendarTeaser />
 
             <h2 style={{
               fontSize: isMobile ? '1.8rem' : '2.5rem',
@@ -714,10 +772,9 @@ export default function Circle() {
               marginBottom: '1rem',
               letterSpacing: '-0.01em'
             }}>
-              Join The Circle of Return
+              Join the Circle of Return.
             </h2>
 
-            
             <p style={{
               fontSize: isMobile ? '1.05rem' : '1.15rem',
               color: 'rgba(255, 255, 255, 0.7)',
@@ -727,7 +784,7 @@ export default function Circle() {
               maxWidth: '600px',
               margin: '0 auto 3rem'
             }}>
-              You have tried other things. Maybe therapy. Maybe courses. Maybe content and maybe nothing at all... but the pattern keeps repeating.
+              You've tried other things. The pattern kept repeating. This is where it stops.
             </p>
 
             <div style={{
@@ -843,7 +900,7 @@ export default function Circle() {
                     fontWeight: '500',
                     marginBottom: '0.3rem'
                   }}>
-                    Save £150 per year
+                    Save £150
                   </p>
                   <p style={{
                     fontSize: '0.9rem',
@@ -880,7 +937,7 @@ export default function Circle() {
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
-              Request Early Access
+              Join Now
             </button>
 
             <p style={{
@@ -889,24 +946,75 @@ export default function Circle() {
               fontWeight: '300',
               marginBottom: '2rem'
             }}>
-              No contracts • Cancel anytime
+              No contracts. Cancel anytime. You're in control.
             </p>
+          </section>
+
+          <div style={{
+            height: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+            margin: isMobile ? '3rem 0' : '4rem 0'
+          }} />
+
+          {/* FINAL CTA SECTION */}
+          <section style={{
+            padding: isMobile ? '3rem 0 5rem' : '5rem 0 7rem',
+            textAlign: 'center'
+          }}>
+            <h2 style={{
+              fontSize: isMobile ? '1.8rem' : '2.5rem',
+              color: '#ffffff',
+              fontWeight: '300',
+              marginBottom: '1.5rem',
+              letterSpacing: '-0.01em'
+            }}>
+              You already know if this is for you.
+            </h2>
 
             <p style={{
               fontSize: isMobile ? '1.1rem' : '1.2rem',
-              color: 'rgba(255, 255, 255, 0.8)',
+              color: 'rgba(255, 255, 255, 0.7)',
+              marginBottom: '2.5rem',
+              lineHeight: '1.6',
               fontWeight: '300',
-              fontStyle: 'italic'
+              maxWidth: '600px',
+              margin: '0 auto 2.5rem'
             }}>
-              Breaking the pattern starts now.
+              The question isn't whether you need this. It's whether you're ready to stop circling and step in.
             </p>
+
+            <button
+              onClick={() => setShowWaitlistPopup(true)}
+              style={{
+                padding: isMobile ? '1.2rem 2.5rem' : '1.3rem 3rem',
+                background: '#ffffff',
+                color: '#000',
+                border: 'none',
+                borderRadius: '3px',
+                fontSize: isMobile ? '1rem' : '1.1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                letterSpacing: '0.02em'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-1px)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.2)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}
+            >
+              Join the Circle
+            </button>
           </section>
 
         </div>
       </main>
 
       {showWaitlistPopup && (
-        <div 
+        <div
           onClick={() => setShowWaitlistPopup(false)}
           style={{
             position: 'fixed',
@@ -923,7 +1031,7 @@ export default function Circle() {
             backdropFilter: 'blur(4px)'
           }}
         >
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             style={{
               background: 'linear-gradient(135deg, rgba(10, 10, 11, 0.95), rgba(20, 20, 22, 0.95))',
@@ -963,7 +1071,7 @@ export default function Circle() {
               fontWeight: '400',
               letterSpacing: '-0.01em'
             }}>
-              Early Member Access
+              Join the Circle
             </h3>
 
             <p style={{
@@ -973,7 +1081,7 @@ export default function Circle() {
               lineHeight: '1.5',
               fontWeight: '300'
             }}>
-              Secure your place at early access pricing before we open to the public
+              Enter your email to continue to checkout
             </p>
 
             <form onSubmit={handleSubmit} style={{
@@ -1007,7 +1115,7 @@ export default function Circle() {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
                 }}
               />
-              
+
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -1034,7 +1142,7 @@ export default function Circle() {
                   }
                 }}
               >
-                {isSubmitting ? 'Processing...' : 'Reserve My Place'}
+                {isSubmitting ? 'Processing...' : 'Continue to Checkout'}
               </button>
 
               {message && (
