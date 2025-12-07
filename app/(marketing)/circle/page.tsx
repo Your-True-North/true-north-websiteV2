@@ -479,7 +479,7 @@ export default function Circle() {
                 },
                 {
                   title: 'A space to be witnessed, challenged, and held',
-                  desc: 'You're not doing this alone. This is where people show up for each other without performance or pretence.'
+                  desc: "You're not doing this alone. This is where people show up for each other without performance or pretence."
                 },
                 {
                   title: 'Guest sessions from experts who go deep',
@@ -604,16 +604,16 @@ export default function Circle() {
                 {
                   num: '02',
                   title: 'Return, not reinvention',
-                  desc: 'This isn't about becoming someone new. It's about coming back to who you are underneath the survival, the pain, and the patterns.'
+                  desc: "This is not about becoming someone new. It is about coming back to who you are underneath the survival, the pain, and the patterns."
                 },
                 {
                   num: '03',
                   title: 'No pressure to perform healing',
-                  desc: 'You don't need to explain, impress, or have it figured out. You just need to show up. Messy. Honest. Ready.'
+                  desc: "You do not need to explain, impress, or have it figured out. You just need to show up. Messy. Honest. Ready."
                 },
                 {
                   num: '04',
-                  title: 'We meet what's real',
+                  title: "We meet what is real",
                   desc: 'No bypassing. We face the hard stuff, feel it fully, and move through it together with space, breath, and clarity.'
                 },
                 {
@@ -623,8 +623,8 @@ export default function Circle() {
                 },
                 {
                   num: '06',
-                  title: 'You're not here to be fixed',
-                  desc: 'You're here to return to what's always been underneath. Waiting to be remembered.'
+                  title: "You are not here to be fixed",
+                  desc: "You are here to return to what has always been underneath. Waiting to be remembered."
                 }
               ].map((principle, i) => (
                 <div key={i} style={{
