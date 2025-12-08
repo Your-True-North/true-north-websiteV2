@@ -225,19 +225,18 @@ export default function Circle() {
                   marginBottom: '1rem',
                   lineHeight: '1.2',
                   textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase'
+                  letterSpacing: '0.1em'
                 }}>
-                  Circle of Return
+                  The Circle of Return.
                 </h2>
                 <p style={{
-                  fontSize: isMobile ? '1.8rem' : '2.5rem',
+                  fontSize: isMobile ? '1.4rem' : '1.8rem',
                   color: '#ffffff',
-                  lineHeight: '1.3',
+                  lineHeight: '1.4',
                   textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
                   fontWeight: '300'
                 }}>
-                  The work you keep putting off. Done together.
+                  The work you keep putting off.<br />Done together.
                 </p>
               </div>
 

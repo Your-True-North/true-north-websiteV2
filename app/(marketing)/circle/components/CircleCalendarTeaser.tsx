@@ -10,6 +10,18 @@ interface Session {
   isoDate?: string;
 }
 
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export default function CircleCalendarTeaser() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
@@ -134,7 +146,7 @@ export default function CircleCalendarTeaser() {
             marginBottom: '1.5rem',
             fontWeight: 300
           }}>
-            {nextSession.description}
+            {stripHtml(nextSession.description).substring(0, 200)}{stripHtml(nextSession.description).length > 200 ? '...' : ''}
           </p>
         )}
         
