@@ -14,6 +14,10 @@ export default function Navigation() {
   const protectedPaths = ['/members', '/videos', '/forum', '/calls', '/journey', '/admin', '/auth'];
   const shouldHideNav = protectedPaths.some(path => pathname?.startsWith(path));
 
+  // Check if user is in members area (for contextual Dashboard/Logout display)
+  const membersAreaPaths = ['/members', '/videos', '/forum', '/calls', '/journey'];
+  const isInMembersArea = membersAreaPaths.some(path => pathname?.startsWith(path));
+
   useEffect(() => {
     const userData = localStorage.getItem('user');
     if (userData) {
@@ -83,30 +87,22 @@ export default function Navigation() {
              </li>
              <li><Link href="/library">Library</Link></li>
              <li><Link href="/contact">Contact</Link></li>
-             {user && (
-               <li><Link href="/members">Dashboard</Link></li>
-             )}
              <li>
                {user ? (
-                 <button onClick={handleLogout} className="breathing-button" style={{
-                   padding: '0.5rem 1.25rem',
-                   background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                   color: '#000',
-                   borderRadius: '3px',
-                   fontWeight: '600',
-                   transition: 'all 0.3s ease',
-                   border: 'none',
-                   cursor: 'pointer'
-                 }}>Logout</button>
+                 isInMembersArea ? (
+                   <button onClick={handleLogout} style={{
+                     background: 'none',
+                     border: 'none',
+                     color: 'inherit',
+                     font: 'inherit',
+                     cursor: 'pointer',
+                     padding: 0
+                   }}>Logout</button>
+                 ) : (
+                   <Link href="/members">Dashboard</Link>
+                 )
                ) : (
-                 <Link href="/auth/login" onClick={(e) => { e.preventDefault(); localStorage.clear(); sessionStorage.clear(); window.location.replace("/auth/login"); }} className="breathing-button" style={{
-                   padding: '0.5rem 1.25rem',
-                   background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                   color: '#000',
-                   borderRadius: '3px',
-                   fontWeight: '600',
-                   transition: 'all 0.3s ease'
-                 }}>Login</Link>
+                 <Link href="/auth/login" onClick={(e) => { e.preventDefault(); localStorage.clear(); sessionStorage.clear(); window.location.replace("/auth/login"); }}>Login</Link>
                )}
              </li>
            </ul>
@@ -226,34 +222,22 @@ export default function Navigation() {
          <Link href="/circle" onClick={() => setIsOpen(false)}>The CoR</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
-         {user && (
-           <Link href="/members" onClick={() => setIsOpen(false)}>Dashboard</Link>
-         )}
          {user ? (
-           <button onClick={handleLogout} className="breathing-button" style={{
-             marginTop: '1rem',
-             padding: '0.75rem 1.5rem',
-             background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-             color: '#000',
-             borderRadius: '3px',
-             fontWeight: '600',
-             textAlign: 'center',
-             display: 'block',
-             width: '100%',
-             border: 'none',
-             cursor: 'pointer'
-           }}>Logout</button>
+           isInMembersArea ? (
+             <button onClick={handleLogout} style={{
+               background: 'none',
+               border: 'none',
+               color: 'inherit',
+               font: 'inherit',
+               cursor: 'pointer',
+               padding: 0,
+               textAlign: 'left'
+             }}>Logout</button>
+           ) : (
+             <Link href="/members" onClick={() => setIsOpen(false)}>Dashboard</Link>
+           )
          ) : (
-           <Link href="/auth/login" onClick={(e) => { e.preventDefault(); localStorage.clear(); sessionStorage.clear(); window.location.replace("/auth/login"); }} className="breathing-button" style={{
-             marginTop: '1rem',
-             padding: '0.75rem 1.5rem',
-             background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-             color: '#000',
-             borderRadius: '3px',
-             fontWeight: '600',
-             textAlign: 'center',
-             display: 'block', opacity: '1'
-           }}>Login</Link>
+           <Link href="/auth/login" onClick={(e) => { e.preventDefault(); setIsOpen(false); localStorage.clear(); sessionStorage.clear(); window.location.replace("/auth/login"); }}>Login</Link>
          )}
        </div>
      </div>
