@@ -53,6 +53,13 @@ export default function Contact() {
           }
         }
       })
+    } else {
+      // Fallback: open Calendly in new tab if popup script not loaded
+      const baseUrl = 'https://calendly.com/callwithmason/introduction'
+      const params = new URLSearchParams()
+      if (formData.name) params.append('name', formData.name)
+      if (formData.email) params.append('email', formData.email)
+      window.open(`${baseUrl}?${params.toString()}`, '_blank')
     }
   }
 
@@ -85,7 +92,11 @@ export default function Contact() {
     <>
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
+      />
+      <link
+        href="https://assets.calendly.com/assets/external/widget.css"
+        rel="stylesheet"
       />
       
       <style jsx global>{`
