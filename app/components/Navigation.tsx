@@ -99,7 +99,11 @@ export default function Navigation() {
                      padding: 0
                    }}>Logout</button>
                  ) : (
-                   <Link href="/members">Dashboard</Link>
+                   <Link href="/members" style={{
+                     border: '1px solid #9bc4b8',
+                     padding: '8px 16px',
+                     borderRadius: '6px'
+                   }}>Dashboard</Link>
                  )
                ) : (
                  <Link href="/auth/login" onClick={(e) => { e.preventDefault(); localStorage.clear(); sessionStorage.clear(); window.location.replace("/auth/login"); }}>Login</Link>
@@ -234,7 +238,11 @@ export default function Navigation() {
                textAlign: 'left'
              }}>Logout</button>
            ) : (
-             <Link href="/members" onClick={() => setIsOpen(false)}>Dashboard</Link>
+             <Link href="/members" onClick={() => setIsOpen(false)} style={{
+               border: '1px solid #9bc4b8',
+               padding: '8px 16px',
+               borderRadius: '6px'
+             }}>Dashboard</Link>
            )
          ) : (
            <Link href="/auth/login" onClick={(e) => { e.preventDefault(); setIsOpen(false); localStorage.clear(); sessionStorage.clear(); window.location.replace("/auth/login"); }}>Login</Link>
