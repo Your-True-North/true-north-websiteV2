@@ -83,6 +83,9 @@ export default function Navigation() {
              </li>
              <li><Link href="/library">Library</Link></li>
              <li><Link href="/contact">Contact</Link></li>
+             {user && (
+               <li><Link href="/members">Dashboard</Link></li>
+             )}
              <li>
                {user ? (
                  <button onClick={handleLogout} className="breathing-button" style={{
@@ -223,6 +226,9 @@ export default function Navigation() {
          <Link href="/circle" onClick={() => setIsOpen(false)}>The CoR</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+         {user && (
+           <Link href="/members" onClick={() => setIsOpen(false)}>Dashboard</Link>
+         )}
          {user ? (
            <button onClick={handleLogout} className="breathing-button" style={{
              marginTop: '1rem',
