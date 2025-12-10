@@ -7,7 +7,7 @@ import { logger } from '@/lib/logger'
 const mockCategories = [
   { name: "Foundation Work", icon: "🎯", count: 2, color: "#9bc4b8" },
   { name: "Breathwork Sessions", icon: "🌊", count: 1, color: "#7fb069" },
-  { name: "Masterminds", icon: "⚡", count: 0, color: "#6a994e" },
+  { name: "Live Teachings", icon: "⚡", count: 0, color: "#6a994e" },
   { name: "Integration Practices", icon: "🔥", count: 0, color: "#8db4a8" }
 ]
 
