@@ -49,8 +49,9 @@ export default function JourneyPage() {
         if (data.videos) {
           const formatted = data.videos.map((v: any) => ({
             ...v,
+            youtubeId: v.youtubeid,
             duration: v.duration ? `${v.duration} min` : "N/A",
-            uploadDate: new Date(v.uploadDate).toLocaleDateString(),
+            uploadDate: new Date(v.uploadDate || v.uploaddate).toLocaleDateString(),
             comments: 0,
             likes: 0
           }))
