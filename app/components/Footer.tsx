@@ -44,7 +44,7 @@ export default function Footer() {
               <ul className="footer-links">
                 <li><Link href="/work">1:1 Transformation</Link></li>
                 <li><Link href="/circle">The Sacred Circle</Link></li>
-                <li><Link href="/resources">Library</Link></li>
+                <li><Link href="/library">Library</Link></li>
                 <li><Link href="/contact">Discovery Call</Link></li>
               </ul>
             </div>
@@ -53,9 +53,9 @@ export default function Footer() {
               <h4 className="footer-heading">Learn</h4>
               <ul className="footer-links">
                 <li><Link href="/about">My Story</Link></li>
-                <li><Link href="/resources">Free Library</Link></li>
-                <li><a href="#blog">Weekly Wisdom</a></li>
-                <li><a href="#testimonials">Client Stories</a></li>
+                <li><Link href="/library">Free Library</Link></li>
+                <li><Link href="/library">Weekly Wisdom</Link></li>
+                <li><Link href="/about">Client Stories</Link></li>
               </ul>
             </div>
 
