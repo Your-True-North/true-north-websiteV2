@@ -77,6 +77,25 @@ export default function MembersPage() {
           }
         })
         .catch(err => console.error('Failed to fetch stats:', err))
+
+      // Fetch real progress and level
+      fetch('/api/progress/calculate', {
+        headers: { 'Authorization': `Bearer ${document.cookie.match(/auth_token=([^;]+)/)?.[1]}` }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.level) {
+            const updatedUser = {
+              ...parsedUser,
+              level: data.level,
+              nextLevel: data.nextLevel,
+              daysUntilNext: data.daysUntilNext
+            }
+            setUser(updatedUser)
+            localStorage.setItem('user', JSON.stringify(updatedUser))
+          }
+        })
+        .catch(err => console.error('Failed to fetch progress:', err))
     } catch (err) {
       console.error('[Members] Failed to parse user data:', err)
       localStorage.removeItem('user')
