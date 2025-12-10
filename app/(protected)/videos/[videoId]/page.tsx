@@ -9,6 +9,7 @@ interface Video {
   title: string
   description: string
   youtube_url: string
+  youtubeid?: string
   category: string
   duration: string
   upload_date: string
@@ -90,7 +91,8 @@ export default function VideoPlayerPage() {
               id: foundVideo.id,
               title: foundVideo.title,
               description: foundVideo.description || '',
-              youtube_url: foundVideo.youtubeurl,
+              youtube_url: foundVideo.youtubeurl || '',
+              youtubeid: foundVideo.youtubeid,
               category: foundVideo.category,
               duration: foundVideo.duration ? `${foundVideo.duration} min` : 'N/A',
               upload_date: foundVideo.uploaddate,
@@ -246,7 +248,8 @@ export default function VideoPlayerPage() {
     )
   }
 
-  const youtubeId = extractYouTubeId(video.youtube_url)
+  // Use youtubeid directly if available, otherwise extract from URL
+  const youtubeId = video.youtubeid || extractYouTubeId(video.youtube_url)
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
