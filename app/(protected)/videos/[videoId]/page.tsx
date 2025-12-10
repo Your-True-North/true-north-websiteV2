@@ -75,9 +75,45 @@ export default function VideoPlayerPage() {
       const videoRes = await fetch(`/api/videos/${videoId}`)
       const videoData = await videoRes.json()
 
-      if (videoRes.ok) {
+      if (videoRes.ok && videoData.video) {
         setVideo(videoData.video)
-        setRelatedVideos(videoData.relatedVideos)
+        setRelatedVideos(videoData.relatedVideos || [])
+      } else {
+        // Fallback: fetch from admin videos API and find by ID
+        const adminRes = await fetch('/api/admin/videos')
+        const adminData = await adminRes.json()
+        if (adminData.videos) {
+          const foundVideo = adminData.videos.find((v: any) => v.id === parseInt(videoId))
+          if (foundVideo) {
+            // Map database fields to expected interface
+            setVideo({
+              id: foundVideo.id,
+              title: foundVideo.title,
+              description: foundVideo.description || '',
+              youtube_url: foundVideo.youtubeurl,
+              category: foundVideo.category,
+              duration: foundVideo.duration ? `${foundVideo.duration} min` : 'N/A',
+              upload_date: foundVideo.uploaddate,
+              completed: false,
+              commentsCount: parseInt(foundVideo.comment_count) || 0,
+              reactionsCount: parseInt(foundVideo.reaction_count) || 0,
+              hasReacted: false,
+              status: 'new'
+            })
+            // Get related videos from same category
+            const related = adminData.videos
+              .filter((v: any) => v.category === foundVideo.category && v.id !== foundVideo.id)
+              .slice(0, 3)
+              .map((v: any) => ({
+                id: v.id,
+                title: v.title,
+                category: v.category,
+                duration: v.duration ? `${v.duration} min` : 'N/A',
+                youtube_url: v.youtubeurl
+              }))
+            setRelatedVideos(related)
+          }
+        }
       }
 
       // Fetch comments
