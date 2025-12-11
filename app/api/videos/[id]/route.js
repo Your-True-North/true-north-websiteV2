@@ -19,6 +19,7 @@ export async function GET(request, { params }) {
         v.title,
         v.description,
         v.youtubeurl as youtube_url,
+        v.youtubeid,
         v.category,
         v.duration,
         v.createdat as upload_date,
@@ -29,10 +30,10 @@ export async function GET(request, { params }) {
           WHEN uvp.completed = true THEN 'completed'
           WHEN uvp.last_watched IS NOT NULL THEN 'in_progress'
           ELSE 'new'
-        END as status
+        END as progress_status
       FROM videos v
       LEFT JOIN user_video_progress uvp ON v.id = uvp.video_id AND uvp.user_id = $1
-      WHERE v.id = $2 AND v.published = true
+      WHERE v.id = $2
     `, [user.userId, videoId])
 
     if (videoResult.rows.length === 0) {
@@ -47,32 +48,32 @@ export async function GET(request, { params }) {
     // Get comments count
     const commentsResult = await query(`
       SELECT COUNT(*) as count
-      FROM video_comments
-      WHERE video_id = $1
+      FROM comments
+      WHERE videoid = $1
     `, [videoId])
     const commentsCount = parseInt(commentsResult.rows[0]?.count || 0)
 
     // Get reactions count
     const reactionsResult = await query(`
       SELECT COUNT(*) as count
-      FROM video_reactions
-      WHERE video_id = $1
+      FROM reactions
+      WHERE videoid = $1
     `, [videoId])
     const reactionsCount = parseInt(reactionsResult.rows[0]?.count || 0)
 
     // Check if user has reacted
     const userReactionResult = await query(`
       SELECT id
-      FROM video_reactions
-      WHERE video_id = $1 AND user_id = $2
+      FROM reactions
+      WHERE videoid = $1 AND userid = $2
     `, [videoId, user.userId])
     const hasReacted = userReactionResult.rows.length > 0
 
     // Get related videos (same category, limit 3)
     const relatedResult = await query(`
-      SELECT id, title, category, duration, youtubeurl as youtube_url
+      SELECT id, title, category, duration, youtubeurl as youtube_url, youtubeid
       FROM videos
-      WHERE category = $1 AND id != $2 AND published = true
+      WHERE category = $1 AND id != $2
       ORDER BY createdat DESC
       LIMIT 3
     `, [video.category, videoId])

@@ -22,21 +22,38 @@ export default function AdminFoundingPage() {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
 
   useEffect(() => {
-    // Check if user is admin
+    // Check if user is admin - check both 'admin' and 'user' storage
+    const adminData = localStorage.getItem('admin')
     const userData = localStorage.getItem('user')
-    if (!userData) {
-      window.location.replace('/auth/login')
-      return
+
+    let isAdmin = false
+
+    // Check admin storage first (from /admin/login)
+    if (adminData) {
+      try {
+        const admin = JSON.parse(adminData)
+        if (admin.role === 'admin') {
+          isAdmin = true
+        }
+      } catch (error) {
+        // ignore
+      }
     }
 
-    try {
-      const user = JSON.parse(userData)
-      if (user.role !== 'admin') {
-        router.push('/members')
-        return
+    // Also check user storage (from regular login)
+    if (!isAdmin && userData) {
+      try {
+        const user = JSON.parse(userData)
+        if (user.role === 'admin') {
+          isAdmin = true
+        }
+      } catch (error) {
+        // ignore
       }
-    } catch (error) {
-      window.location.replace('/auth/login')
+    }
+
+    if (!isAdmin) {
+      router.push('/admin/login')
       return
     }
 

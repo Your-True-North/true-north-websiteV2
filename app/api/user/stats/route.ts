@@ -2,48 +2,64 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Client } from 'pg'
 
 export async function GET(request: NextRequest) {
+  const client = new Client({
+    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  })
+
   try {
     const userId = request.headers.get('x-user-id')
-    
+
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-    
-    const client = new Client({
-      connectionString: process.env.DATABASE_URL
-    })
-    
+
     await client.connect()
-    
-    const result = await client.query(
-      'SELECT video_progress FROM users WHERE id = $1',
+
+    // Get completed videos count from user_video_progress table
+    const completedResult = await client.query(
+      'SELECT COUNT(*) as count FROM user_video_progress WHERE user_id = $1 AND completed = true',
       [userId]
     )
-    
+    const videosWatched = parseInt(completedResult.rows[0]?.count || '0')
+
+    // Get total videos count
+    const totalResult = await client.query('SELECT COUNT(*) as count FROM videos')
+    const totalVideos = parseInt(totalResult.rows[0]?.count || '0')
+
+    // Get total watch time
+    const watchTimeResult = await client.query(
+      'SELECT COALESCE(SUM(watch_time), 0) as total FROM user_video_progress WHERE user_id = $1',
+      [userId]
+    )
+    const totalWatchTime = parseInt(watchTimeResult.rows[0]?.total || '0')
+
+    // Get in-progress videos for continue watching
+    const continueResult = await client.query(`
+      SELECT uvp.video_id as id, v.title, uvp.last_watched
+      FROM user_video_progress uvp
+      JOIN videos v ON v.id = uvp.video_id
+      WHERE uvp.user_id = $1 AND uvp.completed = false AND uvp.last_watched IS NOT NULL
+      ORDER BY uvp.last_watched DESC
+      LIMIT 3
+    `, [userId])
+
     await client.end()
-    
-    const videoProgress = result.rows[0]?.video_progress || {}
-    const videos = Object.values(videoProgress)
-    
+
     const stats = {
-      videosWatched: videos.filter((v: any) => v.completed).length,
-      totalWatchTime: videos.reduce((sum: number, v: any) => sum + (v.watched_seconds || 0), 0),
-      completionRate: videos.length > 0 
-        ? Math.round((videos.filter((v: any) => v.completed).length / videos.length) * 100)
+      videosWatched,
+      totalWatchTime,
+      completionRate: totalVideos > 0
+        ? Math.round((videosWatched / totalVideos) * 100)
         : 0,
-      continueWatching: Object.entries(videoProgress)
-        .filter(([_, v]: [string, any]) => v.percentage >= 10 && v.percentage < 90)
-        .sort(([_, a]: [string, any], [__, b]: [string, any]) => 
-          new Date(b.last_watched).getTime() - new Date(a.last_watched).getTime()
-        )
-        .slice(0, 3)
-        .map(([id, v]) => ({ id, ...v }))
+      continueWatching: continueResult.rows
     }
-    
+
     return NextResponse.json({ stats })
-    
+
   } catch (error) {
     console.error('[Stats] Error:', error)
+    try { await client.end() } catch {}
     return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 })
   }
 }
