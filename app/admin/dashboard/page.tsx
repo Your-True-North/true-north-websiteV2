@@ -19,12 +19,47 @@ interface DashboardStats {
   videosThisMonth: number
 }
 
+interface Member {
+  id: number
+  name: string
+  email: string
+  level: string
+  joindate: string
+  comment_count: string
+  reaction_count: string
+  total_engagement: string
+}
+
+interface Activity {
+  type: string
+  title: string
+  description: string
+  createdat: string
+  user_name: string
+  user_email: string
+  video_title: string
+}
+
+interface TopVideo {
+  id: number
+  title: string
+  category: string
+  uploaddate: string
+  comment_count: string
+  reaction_count: string
+  total_engagement: string
+}
+
 export default function AdminDashboard() {
   const router = useRouter()
   const [admin, setAdmin] = useState<Admin | null>(null)
   const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [topMembers, setTopMembers] = useState<Member[]>([])
+  const [recentActivity, setRecentActivity] = useState<Activity[]>([])
+  const [topVideos, setTopVideos] = useState<TopVideo[]>([])
   const [loading, setLoading] = useState(true)
   const [statsLoading, setStatsLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<'overview' | 'members' | 'videos' | 'activity'>('overview')
 
   useEffect(() => {
     const adminData = localStorage.getItem('admin')
@@ -60,6 +95,9 @@ export default function AdminDashboard() {
 
       if (res.ok && data.stats) {
         setStats(data.stats)
+        setTopMembers(data.topMembers || [])
+        setRecentActivity(data.recentActivity || [])
+        setTopVideos(data.topVideos || [])
       } else {
         console.error('Failed to fetch stats:', data.error)
       }
@@ -68,6 +106,25 @@ export default function AdminDashboard() {
     } finally {
       setStatsLoading(false)
     }
+  }
+
+  const formatDate = (dateStr: string) => {
+    if (!dateStr) return 'N/A'
+    return new Date(dateStr).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    })
+  }
+
+  const formatDateTime = (dateStr: string) => {
+    if (!dateStr) return 'N/A'
+    return new Date(dateStr).toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
   }
 
   const handleLogout = () => {
@@ -135,57 +192,305 @@ export default function AdminDashboard() {
       </div>
 
       {/* Main Content */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 40px' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '40px' }}>
+        {/* Tab Navigation */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '24px'
+          display: 'flex',
+          gap: '8px',
+          marginBottom: '32px',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          paddingBottom: '16px'
         }}>
-          {menuItems.map((item, i) => (
-            <Link
-              key={i}
-              href={item.href}
+          {[
+            { id: 'overview', label: 'Overview', icon: '📊' },
+            { id: 'members', label: 'Members', icon: '👥' },
+            { id: 'videos', label: 'Videos', icon: '🎬' },
+            { id: 'activity', label: 'Activity', icon: '📋' }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
               style={{
-                display: 'block',
-                padding: '32px',
-                background: 'rgba(255, 255, 255, 0.02)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                padding: '12px 24px',
+                background: activeTab === tab.id ? 'rgba(127, 176, 105, 0.2)' : 'transparent',
+                border: activeTab === tab.id ? '1px solid rgba(127, 176, 105, 0.4)' : '1px solid transparent',
                 borderRadius: '3px',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(127, 176, 105, 0.1)'
-                e.currentTarget.style.borderColor = 'rgba(127, 176, 105, 0.3)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                color: activeTab === tab.id ? '#9bc4b8' : 'rgba(255, 255, 255, 0.6)',
+                fontSize: '14px',
+                fontWeight: 500,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
               }}
             >
-              <div style={{ fontSize: '40px', marginBottom: '16px' }}>
-                {item.icon}
-              </div>
-              <h3 style={{
-                fontSize: '20px',
-                fontWeight: 600,
-                marginBottom: '8px',
-                color: '#9bc4b8'
-              }}>
-                {item.title}
-              </h3>
-              <p style={{
-                fontSize: '14px',
-                color: 'rgba(255, 255, 255, 0.6)',
-                lineHeight: 1.6
-              }}>
-                {item.desc}
-              </p>
-            </Link>
+              <span>{tab.icon}</span>
+              {tab.label}
+            </button>
           ))}
         </div>
 
-        {/* Platform Stats */}
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <>
+            {/* Quick Menu */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: '20px',
+              marginBottom: '40px'
+            }}>
+              {menuItems.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  style={{
+                    display: 'block',
+                    padding: '24px',
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '3px',
+                    textDecoration: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(127, 176, 105, 0.1)'
+                    e.currentTarget.style.borderColor = 'rgba(127, 176, 105, 0.3)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  }}
+                >
+                  <div style={{ fontSize: '32px', marginBottom: '12px' }}>{item.icon}</div>
+                  <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '4px', color: '#9bc4b8' }}>
+                    {item.title}
+                  </h3>
+                  <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>{item.desc}</p>
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Members Tab */}
+        {activeTab === 'members' && (
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '3px',
+            overflow: 'hidden'
+          }}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#9bc4b8' }}>
+                Top Engaged Members ({topMembers.length})
+              </h2>
+            </div>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ background: 'rgba(255, 255, 255, 0.03)' }}>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Member</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Level</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Joined</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Comments</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Reactions</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Engagement</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topMembers.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} style={{ padding: '40px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>
+                        No members found
+                      </td>
+                    </tr>
+                  ) : (
+                    topMembers.map((member, i) => (
+                      <tr key={member.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                        <td style={{ padding: '16px 20px' }}>
+                          <div style={{ fontWeight: 500 }}>{member.name || 'Unknown'}</div>
+                          <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>{member.email}</div>
+                        </td>
+                        <td style={{ padding: '16px 20px' }}>
+                          <span style={{
+                            padding: '4px 12px',
+                            background: 'rgba(155, 196, 184, 0.15)',
+                            borderRadius: '12px',
+                            fontSize: '13px',
+                            color: '#9bc4b8'
+                          }}>
+                            {member.level || 'Seeker'}
+                          </span>
+                        </td>
+                        <td style={{ padding: '16px 20px', color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px' }}>
+                          {formatDate(member.joindate)}
+                        </td>
+                        <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                          {member.comment_count}
+                        </td>
+                        <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                          {member.reaction_count}
+                        </td>
+                        <td style={{ padding: '16px 20px', textAlign: 'center' }}>
+                          <span style={{
+                            padding: '4px 12px',
+                            background: parseInt(member.total_engagement) > 5 ? 'rgba(127, 176, 105, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                            borderRadius: '12px',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            color: parseInt(member.total_engagement) > 5 ? '#7fb069' : 'rgba(255, 255, 255, 0.7)'
+                          }}>
+                            {member.total_engagement}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Videos Tab */}
+        {activeTab === 'videos' && (
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '3px',
+            overflow: 'hidden'
+          }}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#9bc4b8' }}>
+                Top Engaged Videos
+              </h2>
+              <Link href="/admin/videos/manage" style={{
+                padding: '8px 16px',
+                background: '#7fb069',
+                borderRadius: '3px',
+                color: '#fff',
+                textDecoration: 'none',
+                fontSize: '13px',
+                fontWeight: 600
+              }}>
+                Manage All Videos
+              </Link>
+            </div>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ background: 'rgba(255, 255, 255, 0.03)' }}>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Video</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Category</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Uploaded</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Comments</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Reactions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topVideos.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>
+                        No videos found
+                      </td>
+                    </tr>
+                  ) : (
+                    topVideos.map((video) => (
+                      <tr key={video.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                        <td style={{ padding: '16px 20px' }}>
+                          <div style={{ fontWeight: 500 }}>{video.title}</div>
+                        </td>
+                        <td style={{ padding: '16px 20px' }}>
+                          <span style={{
+                            padding: '4px 12px',
+                            background: 'rgba(127, 176, 105, 0.15)',
+                            borderRadius: '12px',
+                            fontSize: '13px',
+                            color: '#7fb069'
+                          }}>
+                            {video.category}
+                          </span>
+                        </td>
+                        <td style={{ padding: '16px 20px', color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px' }}>
+                          {formatDate(video.uploaddate)}
+                        </td>
+                        <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                          {video.comment_count}
+                        </td>
+                        <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                          {video.reaction_count}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Activity Tab */}
+        {activeTab === 'activity' && (
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '3px',
+            overflow: 'hidden'
+          }}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#9bc4b8' }}>
+                Recent Activity
+              </h2>
+            </div>
+            <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+              {recentActivity.length === 0 ? (
+                <div style={{ padding: '40px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>
+                  No recent activity
+                </div>
+              ) : (
+                recentActivity.map((activity, i) => (
+                  <div key={i} style={{
+                    padding: '16px 24px',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                    display: 'flex',
+                    gap: '16px',
+                    alignItems: 'flex-start'
+                  }}>
+                    <div style={{
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: 'rgba(155, 196, 184, 0.2)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      fontSize: '14px'
+                    }}>
+                      {activity.type === 'comment' ? '💬' : activity.type === 'signup' ? '👤' : activity.type === 'video_watched' ? '▶️' : '📌'}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 500, marginBottom: '4px' }}>
+                        {activity.title}
+                      </div>
+                      <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '4px' }}>
+                        {activity.description}
+                        {activity.user_name && <span> by <strong style={{ color: '#9bc4b8' }}>{activity.user_name}</strong></span>}
+                        {activity.video_title && <span> on "{activity.video_title}"</span>}
+                      </div>
+                      <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.4)' }}>
+                        {formatDateTime(activity.createdat)}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Platform Stats (shown on all tabs) */}
         <div style={{
           marginTop: '60px',
           padding: '32px',

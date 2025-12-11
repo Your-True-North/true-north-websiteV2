@@ -18,6 +18,10 @@ export default function Navigation() {
   const membersAreaPaths = ['/members', '/videos', '/forum', '/calls', '/journey'];
   const isInMembersArea = membersAreaPaths.some(path => pathname?.startsWith(path));
 
+  // Check if user is admin (cor@yourtruenorth.me)
+  const ADMIN_EMAIL = 'cor@yourtruenorth.me';
+  const isAdmin = user && (user as any).email?.toLowerCase() === ADMIN_EMAIL;
+
   useEffect(() => {
     const userData = localStorage.getItem('user');
     if (userData) {
@@ -87,6 +91,14 @@ export default function Navigation() {
              </li>
              <li><Link href="/library">Library</Link></li>
              <li><Link href="/contact">Contact</Link></li>
+             {isAdmin && (
+               <li>
+                 <Link href="/admin/dashboard" style={{
+                   color: '#7fb069',
+                   fontWeight: 500
+                 }}>Admin</Link>
+               </li>
+             )}
              <li>
                {user ? (
                  isInMembersArea ? (
@@ -226,6 +238,12 @@ export default function Navigation() {
          <Link href="/circle" onClick={() => setIsOpen(false)}>The CoR</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+         {isAdmin && (
+           <Link href="/admin/dashboard" onClick={() => setIsOpen(false)} style={{
+             color: '#7fb069',
+             fontWeight: 500
+           }}>Admin</Link>
+         )}
          {user ? (
            isInMembersArea ? (
              <button onClick={handleLogout} style={{
