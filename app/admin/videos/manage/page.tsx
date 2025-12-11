@@ -7,6 +7,7 @@ import Link from 'next/link'
 interface Video {
   id: number
   title: string
+  description?: string
   category: string
   duration: number
   uploaddate: string
@@ -14,7 +15,16 @@ interface Video {
   featured: boolean
   published: boolean
   youtubeid: string
+  youtubeurl?: string
 }
+
+const categories = [
+  'Foundation Work',
+  'Breathwork Sessions',
+  'Energy Healing',
+  'Integration Practices',
+  'Live Teachings'
+]
 
 export default function ManageVideos() {
   const router = useRouter()
@@ -285,6 +295,20 @@ export default function ManageVideos() {
                         View
                       </button>
                       <button
+                        onClick={() => setEditingVideo(video)}
+                        style={{
+                          padding: '6px 12px',
+                          background: 'rgba(155, 196, 184, 0.1)',
+                          border: '1px solid rgba(155, 196, 184, 0.3)',
+                          borderRadius: '3px',
+                          color: '#9bc4b8',
+                          fontSize: '12px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
                         onClick={() => handleDelete(video.id, video.title)}
                         style={{
                           padding: '6px 12px',
@@ -331,6 +355,176 @@ export default function ManageVideos() {
           </div>
         )}
       </div>
+
+      {/* Edit Modal */}
+      {editingVideo && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0, 0, 0, 0.8)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '20px'
+        }}>
+          <div style={{
+            background: '#1a1a1a',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '8px',
+            maxWidth: '600px',
+            width: '100%',
+            maxHeight: '90vh',
+            overflow: 'auto'
+          }}>
+            <div style={{
+              padding: '24px',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+            }}>
+              <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#9bc4b8' }}>
+                Edit Video
+              </h2>
+            </div>
+            <div style={{ padding: '24px' }}>
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Title *
+                </label>
+                <input
+                  type="text"
+                  value={editingVideo.title}
+                  onChange={(e) => setEditingVideo({ ...editingVideo, title: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '3px',
+                    color: '#fff',
+                    fontSize: '14px'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Description
+                </label>
+                <textarea
+                  value={editingVideo.description || ''}
+                  onChange={(e) => setEditingVideo({ ...editingVideo, description: e.target.value })}
+                  rows={3}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '3px',
+                    color: '#fff',
+                    fontSize: '14px',
+                    resize: 'vertical'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Category *
+                </label>
+                <select
+                  value={editingVideo.category}
+                  onChange={(e) => setEditingVideo({ ...editingVideo, category: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '3px',
+                    color: '#fff',
+                    fontSize: '14px'
+                  }}
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat} style={{ background: '#1a1a1a' }}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  YouTube ID
+                </label>
+                <input
+                  type="text"
+                  value={editingVideo.youtubeid}
+                  onChange={(e) => setEditingVideo({ ...editingVideo, youtubeid: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '3px',
+                    color: '#fff',
+                    fontSize: '14px'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Duration (minutes)
+                </label>
+                <input
+                  type="number"
+                  value={editingVideo.duration || ''}
+                  onChange={(e) => setEditingVideo({ ...editingVideo, duration: parseInt(e.target.value) || 0 })}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '3px',
+                    color: '#fff',
+                    fontSize: '14px'
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+                <button
+                  onClick={() => setEditingVideo(null)}
+                  style={{
+                    padding: '12px 24px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '3px',
+                    color: '#fff',
+                    fontSize: '14px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleUpdate(editingVideo)}
+                  style={{
+                    padding: '12px 24px',
+                    background: '#7fb069',
+                    border: 'none',
+                    borderRadius: '3px',
+                    color: '#fff',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    cursor: 'pointer'
+                  }}
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

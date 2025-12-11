@@ -54,24 +54,36 @@ export async function POST(request) {
     await client.connect()
 
     const body = await request.json()
-    const { title, description, youtubeUrl, category, duration, status } = body
+    const { title, description, youtubeUrl, youtubeId, category, duration, status } = body
 
-    if (!title || !youtubeUrl || !category) {
+    if (!title || !category) {
       await client.end()
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    const youtubeId = extractYouTubeId(youtubeUrl)
-    if (!youtubeId) {
+    // Accept either youtubeUrl (full URL) or youtubeId (just the ID)
+    let finalYoutubeId = youtubeId
+    let finalYoutubeUrl = youtubeUrl
+
+    if (youtubeUrl && !youtubeId) {
+      // Extract ID from URL
+      finalYoutubeId = extractYouTubeId(youtubeUrl)
+    } else if (youtubeId && !youtubeUrl) {
+      // Build URL from ID
+      finalYoutubeUrl = `https://www.youtube.com/watch?v=${youtubeId}`
+      finalYoutubeId = youtubeId
+    }
+
+    if (!finalYoutubeId) {
       await client.end()
-      return NextResponse.json({ error: 'Invalid YouTube URL' }, { status: 400 })
+      return NextResponse.json({ error: 'Invalid YouTube URL or ID' }, { status: 400 })
     }
 
     const result = await client.query(`
       INSERT INTO videos (title, description, youtubeurl, youtubeid, category, duration, status, uploaddate, createdat, updatedat)
       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW(), NOW())
       RETURNING *
-    `, [title, description || '', youtubeUrl, youtubeId, category, duration || null, status || 'published'])
+    `, [title, description || '', finalYoutubeUrl, finalYoutubeId, category, duration || null, status || 'published'])
 
     // Log activity
     await client.query(`
