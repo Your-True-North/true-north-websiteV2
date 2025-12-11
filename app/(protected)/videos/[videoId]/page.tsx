@@ -75,16 +75,23 @@ export default function VideoPlayerPage() {
       // Fetch video details
       const videoRes = await fetch(`/api/videos/${videoId}`)
       const videoData = await videoRes.json()
+      console.log('[DEBUG] Primary API response:', { ok: videoRes.ok, status: videoRes.status, data: videoData })
 
       if (videoRes.ok && videoData.video) {
+        console.log('[DEBUG] Primary API succeeded, video:', videoData.video)
         setVideo(videoData.video)
         setRelatedVideos(videoData.relatedVideos || [])
       } else {
         // Fallback: fetch from admin videos API and find by ID
+        console.log('[DEBUG] Primary API failed, trying fallback to admin API...')
         const adminRes = await fetch('/api/admin/videos')
         const adminData = await adminRes.json()
+        console.log('[DEBUG] Admin API response:', { ok: adminRes.ok, videoCount: adminData.videos?.length, firstVideo: adminData.videos?.[0] })
         if (adminData.videos) {
           const foundVideo = adminData.videos.find((v: any) => v.id === parseInt(videoId))
+          console.log('[DEBUG] Looking for videoId:', videoId, 'parseInt:', parseInt(videoId))
+          console.log('[DEBUG] Found video:', foundVideo)
+          console.log('[DEBUG] Video youtubeid field:', foundVideo?.youtubeid, 'youtubeurl field:', foundVideo?.youtubeurl)
           if (foundVideo) {
             // Map database fields to expected interface
             setVideo({
