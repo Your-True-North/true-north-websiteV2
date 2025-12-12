@@ -21,9 +21,8 @@ interface Video {
 const categories = [
   'Foundation Work',
   'Breathwork Sessions',
-  'Energy Healing',
-  'Integration Practices',
-  'Live Teachings'
+  'Live Teachings',
+  'Integration Practices'
 ]
 
 export default function ManageVideos() {
