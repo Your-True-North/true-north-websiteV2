@@ -68,10 +68,10 @@ export async function POST(request) {
     }
 
     const result = await client.query(`
-      INSERT INTO videos (title, description, youtubeurl, youtubeid, category, duration, status, uploaddate, createdat, updatedat)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW(), NOW())
+      INSERT INTO videos (title, description, youtube_id, category, duration, upload_date, created_at, updated_at)
+      VALUES ($1, $2, $3, $4, $5, NOW(), NOW(), NOW())
       RETURNING *
-    `, [title, description || '', youtubeUrl, youtubeId, category, duration || null, status || 'published'])
+    `, [title, description || '', youtubeId, category, duration || null])
 
     // Log activity
     await client.query(`
