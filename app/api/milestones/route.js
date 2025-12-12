@@ -19,7 +19,7 @@ const MILESTONES = {
   Pathfinder: [
     { id: 'pathfinder_1', title: 'Complete 25 Videos', description: 'Master the foundation work' },
     { id: 'pathfinder_2', title: 'Attend 5 Live Calls', description: 'Become a regular participant' },
-    { id: 'pathfinder_3', title: 'Energy Healing Practice', description: 'Clear stagnant energy' },
+    { id: 'pathfinder_3', title: 'Live Teachings Practice', description: 'Clear stagnant energy' },
     { id: 'pathfinder_4', title: '30-Day Practice Streak', description: 'Embody daily practice' }
   ],
   Guide: [

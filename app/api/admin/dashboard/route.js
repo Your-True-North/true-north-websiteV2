@@ -42,7 +42,7 @@ export async function GET(request) {
       FROM users u
       LEFT JOIN comments c ON u.id = c.userid
       LEFT JOIN reactions r ON u.id = r.userid
-      WHERE u.role = 'member'
+      WHERE u.role IS NULL OR u.role != 'admin'
       GROUP BY u.id, u.name, u.email, u.level, u.joindate
       ORDER BY total_engagement DESC
       LIMIT 10

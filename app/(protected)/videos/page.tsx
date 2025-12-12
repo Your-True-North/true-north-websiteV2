@@ -126,7 +126,7 @@ export default function LibraryPage() {
     all: 'All Videos',
     'Foundation Work': 'Foundation Work',
     'Breathwork Sessions': 'Breathwork',
-    'Energy Healing': 'Energy Healing',
+    'Live Teachings': 'Live Teachings',
     'Integration Practices': 'Integration'
   }
 

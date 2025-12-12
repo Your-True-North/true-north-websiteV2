@@ -54,7 +54,7 @@ export async function POST(request) {
     await client.connect()
 
     const body = await request.json()
-    const { title, description, youtubeUrl, youtubeId, category, duration, status } = body
+    const { title, description, youtubeUrl, youtubeId, category, duration, status, thumbnailUrl } = body
 
     if (!title || !category) {
       await client.end()
@@ -79,11 +79,21 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Invalid YouTube URL or ID' }, { status: 400 })
     }
 
+    // Validate thumbnail URL - only accept http(s):// URLs, or null
+    let validThumbnailUrl = null
+    if (thumbnailUrl && typeof thumbnailUrl === 'string' && thumbnailUrl.trim()) {
+      const url = thumbnailUrl.trim()
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        validThumbnailUrl = url
+      }
+      // Silently ignore invalid URLs (file://, local paths, etc.)
+    }
+
     const result = await client.query(`
-      INSERT INTO videos (title, description, youtubeurl, youtubeid, category, duration, status, uploaddate, createdat, updatedat)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW(), NOW())
+      INSERT INTO videos (title, description, youtubeurl, youtubeid, category, duration, status, thumbnailurl, uploaddate, createdat, updatedat)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW(), NOW())
       RETURNING *
-    `, [title, description || '', finalYoutubeUrl, finalYoutubeId, category, duration || null, status || 'published'])
+    `, [title, description || '', finalYoutubeUrl, finalYoutubeId, category, duration || null, status || 'published', validThumbnailUrl])
 
     // Log activity
     await client.query(`

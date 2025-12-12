@@ -53,7 +53,7 @@ interface Video {
   reaction_count: string
 }
 
-const categories = ["Foundation Work", "Breathwork Sessions", "Energy Healing", "Integration Practices"]
+const categories = ["Foundation Work", "Breathwork Sessions", "Live Teachings", "Integration Practices"]
 
 // Mock data for admin dashboard
 const mockDashboardData: DashboardData = {
@@ -187,7 +187,7 @@ const mockDashboardData: DashboardData = {
     {
       id: '3',
       title: 'Energy Alignment Practice',
-      category: 'Energy Healing',
+      category: 'Live Teachings',
       comment_count: '38',
       reaction_count: '156',
       total_engagement: '194'
@@ -228,7 +228,7 @@ const mockVideos: Video[] = [
     description: 'Aligning your energy centers for optimal flow and healing.',
     youtubeurl: 'https://www.youtube.com/watch?v=JJ5LBDIl3Tg',
     youtubeid: 'JJ5LBDIl3Tg',
-    category: 'Energy Healing',
+    category: 'Live Teachings',
     duration: 20,
     status: 'published',
     uploaddate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
