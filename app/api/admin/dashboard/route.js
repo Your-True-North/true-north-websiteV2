@@ -15,7 +15,7 @@ export async function GET(request) {
     // Get total counts
     const stats = await client.query(`
       SELECT
-        (SELECT COUNT(*) FROM videos WHERE status = 'published') as total_videos,
+        (SELECT COUNT(*) FROM videos WHERE published = true) as total_videos,
         (SELECT COUNT(*) FROM users WHERE role = 'member') as total_members,
         (SELECT COUNT(*) FROM comments) as total_comments,
         (SELECT COUNT(*) FROM reactions) as total_reactions
@@ -25,7 +25,7 @@ export async function GET(request) {
     const thisMonth = await client.query(`
       SELECT COUNT(*) as videos_this_month
       FROM videos
-      WHERE uploaddate >= DATE_TRUNC('month', CURRENT_DATE)
+      WHERE createdat >= DATE_TRUNC('month', CURRENT_DATE)
     `)
 
     // Get top engaged members (most comments + reactions)
@@ -71,15 +71,15 @@ export async function GET(request) {
         v.id,
         v.title,
         v.category,
-        v.uploaddate,
+        v.createdat,
         COUNT(DISTINCT c.id) as comment_count,
         COUNT(DISTINCT r.id) as reaction_count,
         (COUNT(DISTINCT c.id) + COUNT(DISTINCT r.id)) as total_engagement
       FROM videos v
       LEFT JOIN comments c ON v.id = c.videoid
       LEFT JOIN reactions r ON v.id = r.videoid
-      WHERE v.status = 'published'
-      GROUP BY v.id, v.title, v.category, v.uploaddate
+      WHERE v.published = true
+      GROUP BY v.id, v.title, v.category, v.createdat
       ORDER BY total_engagement DESC
       LIMIT 5
     `)
