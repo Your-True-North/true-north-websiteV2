@@ -34,7 +34,7 @@ interface Activity {
   type: string
   title: string
   description: string
-  createdat: string
+  createdAt: string
   user_name: string
   user_email: string
   video_title: string
@@ -44,7 +44,7 @@ interface TopVideo {
   id: number
   title: string
   category: string
-  createdat: string
+  createdAt: string
   comment_count: string
   reaction_count: string
   total_engagement: string
@@ -413,7 +413,7 @@ export default function AdminDashboard() {
                           </span>
                         </td>
                         <td style={{ padding: '16px 20px', color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px' }}>
-                          {formatDate(video.createdat)}
+                          {formatDate(video.createdAt)}
                         </td>
                         <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
                           {video.comment_count}
@@ -480,7 +480,7 @@ export default function AdminDashboard() {
                         {activity.video_title && <span> on "{activity.video_title}"</span>}
                       </div>
                       <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.4)' }}>
-                        {formatDateTime(activity.createdat)}
+                        {formatDateTime(activity.createdAt)}
                       </div>
                     </div>
                   </div>

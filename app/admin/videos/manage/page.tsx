@@ -10,9 +10,9 @@ interface Video {
   description?: string
   category: string
   duration: number
-  createdat: string
-  youtubeurl: string
-  published: boolean
+  createdAt: string
+  youtubeUrl: string
+  status: string
   comment_count?: string
   reaction_count?: string
 }
@@ -99,7 +99,7 @@ export default function ManageVideos() {
           id: video.id,
           title: video.title,
           description: video.description,
-          youtubeUrl: video.youtubeurl,
+          youtubeUrl: video.youtubeUrl,
           category: video.category,
           duration: video.duration
         })
@@ -279,14 +279,14 @@ export default function ManageVideos() {
                     padding: '16px',
                     fontSize: '14px',
                     color: 'rgba(255, 255, 255, 0.7)'
-                  }}>{video.createdat ? new Date(video.createdat).toLocaleDateString() : '-'}</td>
+                  }}>{video.createdAt ? new Date(video.createdAt).toLocaleDateString() : '-'}</td>
                   <td style={{
                     padding: '16px',
                     textAlign: 'right'
                   }}>
                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                       <button
-                        onClick={() => window.open(video.youtubeurl, '_blank')}
+                        onClick={() => window.open(video.youtubeUrl, '_blank')}
                         style={{
                           padding: '6px 12px',
                           background: 'rgba(255, 255, 255, 0.05)',
@@ -461,8 +461,8 @@ export default function ManageVideos() {
                 </label>
                 <input
                   type="text"
-                  value={editingVideo.youtubeurl || ''}
-                  onChange={(e) => setEditingVideo({ ...editingVideo, youtubeurl: e.target.value })}
+                  value={editingVideo.youtubeUrl || ''}
+                  onChange={(e) => setEditingVideo({ ...editingVideo, youtubeUrl: e.target.value })}
                   style={{
                     width: '100%',
                     padding: '12px',

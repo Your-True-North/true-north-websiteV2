@@ -26,18 +26,18 @@ export async function GET(request) {
       LEFT JOIN video_comments c ON v.id = c.video_id
       LEFT JOIN video_reactions r ON v.id = r.video_id
       GROUP BY v.id
-      ORDER BY v.createdat DESC
+      ORDER BY v."createdAt" DESC
     `)
 
     // Clean any malformed YouTube URLs and fix in database
     const videos = result.rows.map(video => {
-      const cleanedUrl = cleanYoutubeUrl(video.youtubeurl)
-      if (cleanedUrl !== video.youtubeurl) {
+      const cleanedUrl = cleanYoutubeUrl(video.youtubeUrl)
+      if (cleanedUrl !== video.youtubeUrl) {
         // Fix the URL in database asynchronously (fire and forget)
-        query('UPDATE videos SET youtubeurl = $1 WHERE id = $2', [cleanedUrl, video.id])
+        query('UPDATE videos SET "youtubeUrl" = $1 WHERE id = $2', [cleanedUrl, video.id])
           .catch(err => console.error('[Admin Videos] Failed to fix malformed URL:', err))
       }
-      return { ...video, youtubeurl: cleanedUrl }
+      return { ...video, youtubeUrl: cleanedUrl }
     })
 
     return NextResponse.json({ videos })
@@ -60,10 +60,15 @@ export async function POST(request) {
 
     // Accept either youtubeUrl (full URL) or youtubeId (just the ID)
     let finalYoutubeUrl = youtubeUrl
+    let finalYoutubeId = youtubeId
 
     if (youtubeId && !youtubeUrl) {
       // Build URL from ID
       finalYoutubeUrl = `https://www.youtube.com/watch?v=${youtubeId}`
+    } else if (youtubeUrl && !youtubeId) {
+      // Extract ID from URL
+      const match = youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
+      finalYoutubeId = match ? match[1] : ''
     }
 
     if (!finalYoutubeUrl) {
@@ -71,15 +76,15 @@ export async function POST(request) {
     }
 
     const result = await query(`
-      INSERT INTO videos (title, description, youtubeurl, category, duration, published, createdat, updatedat)
-      VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
+      INSERT INTO videos (title, description, "youtubeUrl", "youtubeId", category, duration, status, "createdAt", "updatedAt")
+      VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
       RETURNING *
-    `, [title, description || '', finalYoutubeUrl, category, duration || null, true])
+    `, [title, description || '', finalYoutubeUrl, finalYoutubeId || '', category, duration || null, 'active'])
 
     // Log activity
     try {
       await query(`
-        INSERT INTO activities (type, title, description, videoid, createdat)
+        INSERT INTO activities (type, title, description, "videoId", "createdAt")
         VALUES ($1, $2, $3, $4, NOW())
       `, ['video_uploaded', 'New Video Uploaded', title, result.rows[0].id])
     } catch (activityError) {
@@ -105,19 +110,27 @@ export async function PUT(request) {
       return NextResponse.json({ error: 'Video ID required' }, { status: 400 })
     }
 
+    // Extract youtubeId from URL if provided
+    let youtubeId = null
+    if (youtubeUrl) {
+      const match = youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
+      youtubeId = match ? match[1] : null
+    }
+
     const result = await query(`
       UPDATE videos
       SET
         title = COALESCE($1, title),
         description = COALESCE($2, description),
-        youtubeurl = COALESCE($3, youtubeurl),
-        category = COALESCE($4, category),
-        duration = COALESCE($5, duration),
-        published = COALESCE($6, published),
-        updatedat = NOW()
-      WHERE id = $7
+        "youtubeUrl" = COALESCE($3, "youtubeUrl"),
+        "youtubeId" = COALESCE($4, "youtubeId"),
+        category = COALESCE($5, category),
+        duration = COALESCE($6, duration),
+        status = COALESCE($7, status),
+        "updatedAt" = NOW()
+      WHERE id = $8
       RETURNING *
-    `, [title, description, youtubeUrl, category, duration, status === 'published' ? true : (status === 'draft' ? false : null), id])
+    `, [title, description, youtubeUrl, youtubeId, category, duration, status, id])
 
     if (result.rows.length === 0) {
       return NextResponse.json({ error: 'Video not found' }, { status: 404 })
