@@ -17,8 +17,8 @@ export async function GET(request) {
       SELECT
         (SELECT COUNT(*) FROM videos WHERE published = true) as total_videos,
         (SELECT COUNT(*) FROM users WHERE role = 'member') as total_members,
-        (SELECT COUNT(*) FROM comments) as total_comments,
-        (SELECT COUNT(*) FROM reactions) as total_reactions
+        (SELECT COUNT(*) FROM video_comments) as total_comments,
+        (SELECT COUNT(*) FROM video_reactions) as total_reactions
     `)
 
     // Get videos uploaded this month
@@ -40,8 +40,8 @@ export async function GET(request) {
         COUNT(DISTINCT r.id) as reaction_count,
         (COUNT(DISTINCT c.id) + COUNT(DISTINCT r.id)) as total_engagement
       FROM users u
-      LEFT JOIN comments c ON u.id = c.userid
-      LEFT JOIN reactions r ON u.id = r.userid
+      LEFT JOIN video_comments c ON u.id = c.user_id
+      LEFT JOIN video_reactions r ON u.id = r.user_id
       WHERE u.role IS NULL OR u.role != 'admin'
       GROUP BY u.id, u.name, u.email, u.level, u.joindate
       ORDER BY total_engagement DESC
@@ -76,8 +76,8 @@ export async function GET(request) {
         COUNT(DISTINCT r.id) as reaction_count,
         (COUNT(DISTINCT c.id) + COUNT(DISTINCT r.id)) as total_engagement
       FROM videos v
-      LEFT JOIN comments c ON v.id = c.videoid
-      LEFT JOIN reactions r ON v.id = r.videoid
+      LEFT JOIN video_comments c ON v.id = c.video_id
+      LEFT JOIN video_reactions r ON v.id = r.video_id
       WHERE v.published = true
       GROUP BY v.id, v.title, v.category, v.createdat
       ORDER BY total_engagement DESC
