@@ -10,12 +10,11 @@ interface Video {
   description?: string
   category: string
   duration: number
-  uploaddate: string
-  viewcount: number
-  featured: boolean
+  createdat: string
+  youtubeurl: string
   published: boolean
-  youtubeid: string
-  youtubeurl?: string
+  comment_count?: string
+  reaction_count?: string
 }
 
 const categories = [
@@ -96,7 +95,14 @@ export default function ManageVideos() {
       const res = await fetch('/api/admin/videos', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(video)
+        body: JSON.stringify({
+          id: video.id,
+          title: video.title,
+          description: video.description,
+          youtubeUrl: video.youtubeurl,
+          category: video.category,
+          duration: video.duration
+        })
       })
 
       if (res.ok) {
@@ -227,7 +233,7 @@ export default function ManageVideos() {
                   fontWeight: 600,
                   color: '#9bc4b8',
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-                }}>Views</th>
+                }}>Engagement</th>
                 <th style={{
                   padding: '16px',
                   textAlign: 'left',
@@ -268,19 +274,19 @@ export default function ManageVideos() {
                     padding: '16px',
                     fontSize: '14px',
                     color: 'rgba(255, 255, 255, 0.7)'
-                  }}>{video.viewcount || 0}</td>
+                  }}>{video.comment_count || 0} / {video.reaction_count || 0}</td>
                   <td style={{
                     padding: '16px',
                     fontSize: '14px',
                     color: 'rgba(255, 255, 255, 0.7)'
-                  }}>{new Date(video.uploaddate).toLocaleDateString()}</td>
+                  }}>{video.createdat ? new Date(video.createdat).toLocaleDateString() : '-'}</td>
                   <td style={{
                     padding: '16px',
                     textAlign: 'right'
                   }}>
                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                       <button
-                        onClick={() => window.open(`https://youtube.com/watch?v=${video.youtubeid}`, '_blank')}
+                        onClick={() => window.open(video.youtubeurl, '_blank')}
                         style={{
                           padding: '6px 12px',
                           background: 'rgba(255, 255, 255, 0.05)',
@@ -451,12 +457,12 @@ export default function ManageVideos() {
 
               <div style={{ marginBottom: '20px' }}>
                 <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
-                  YouTube ID
+                  YouTube URL
                 </label>
                 <input
                   type="text"
-                  value={editingVideo.youtubeid}
-                  onChange={(e) => setEditingVideo({ ...editingVideo, youtubeid: e.target.value })}
+                  value={editingVideo.youtubeurl || ''}
+                  onChange={(e) => setEditingVideo({ ...editingVideo, youtubeurl: e.target.value })}
                   style={{
                     width: '100%',
                     padding: '12px',
