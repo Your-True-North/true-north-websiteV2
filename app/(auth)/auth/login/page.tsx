@@ -22,8 +22,10 @@ export default function LoginPage() {
       try {
         const user = JSON.parse(userData)
         if (user && user.email) {
-          console.log('[LOGIN] User already logged in, redirecting to journey...')
-          window.location.replace('/journey')
+          // Redirect admin to admin dashboard, others to journey
+          const redirectUrl = user.role === 'admin' ? '/admin/dashboard' : '/journey'
+          console.log('[LOGIN] User already logged in, redirecting to', redirectUrl)
+          window.location.replace(redirectUrl)
           return
         }
       } catch (e) {
@@ -69,10 +71,12 @@ export default function LoginPage() {
       // Save user data to localStorage
       localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem('justLoggedIn', 'true')
-      
+
       await new Promise(resolve => setTimeout(resolve, 100))
-      
-      window.location.replace('/journey')
+
+      // Redirect admin to admin dashboard, others to journey
+      const redirectUrl = data.user.role === 'admin' ? '/admin/dashboard' : '/journey'
+      window.location.replace(redirectUrl)
     } catch (err) {
       console.error('[Login] Error:', err)
       setError('Something went wrong. Try again.')
