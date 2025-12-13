@@ -69,8 +69,8 @@ export async function POST(request, { params }) {
 
     // Add reaction
     await query(`
-      INSERT INTO reactions ("videoId", "userId", reaction_type, created_at)
-      VALUES ($1, $2, 'like', NOW())
+      INSERT INTO reactions (id, "videoId", "userId", type, "createdAt")
+      VALUES (gen_random_uuid(), $1, $2, 'like', NOW())
     `, [videoId, user.userId])
 
     // Get updated count

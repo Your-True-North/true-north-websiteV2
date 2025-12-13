@@ -51,9 +51,9 @@ export async function POST(request) {
 
     // Insert new user
     const result = await client.query(
-      `INSERT INTO users (name, email, password, role, createdat)
+      `INSERT INTO users (name, email, password, role, "createdAt")
        VALUES ($1, $2, $3, $4, NOW())
-       RETURNING id, name, email, role, createdat`,
+       RETURNING id, name, email, role, "createdAt"`,
       [name, email.toLowerCase(), hashedPassword, 'member']
     )
 
@@ -71,7 +71,7 @@ export async function POST(request) {
         level: 'Seeker',
         daysUntilNext: 30,
         nextLevel: 'Explorer',
-        joinDate: user.createdat
+        joinDate: user.createdAt
       }
     }, { status: 201 })
 

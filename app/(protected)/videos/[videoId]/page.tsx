@@ -8,8 +8,8 @@ interface Video {
   id: number
   title: string
   description: string
-  youtube_url: string
-  youtubeid?: string
+  youtubeUrl: string
+  youtubeId?: string
   category: string
   duration: string
   upload_date: string
@@ -34,7 +34,7 @@ interface RelatedVideo {
   title: string
   category: string
   duration: string
-  youtube_url: string
+  youtubeUrl: string
 }
 
 export default function VideoPlayerPage() {
@@ -91,15 +91,15 @@ export default function VideoPlayerPage() {
           const foundVideo = adminData.videos.find((v: any) => v.id === parseInt(videoId))
           console.log('[DEBUG] Looking for videoId:', videoId, 'parseInt:', parseInt(videoId))
           console.log('[DEBUG] Found video:', foundVideo)
-          console.log('[DEBUG] Video youtubeid field:', foundVideo?.youtubeid, 'youtubeurl field:', foundVideo?.youtubeurl)
+          console.log('[DEBUG] Video youtubeId field:', foundVideo?.youtubeId, 'youtubeUrl field:', foundVideo?.youtubeUrl)
           if (foundVideo) {
             // Map database fields to expected interface
             setVideo({
               id: foundVideo.id,
               title: foundVideo.title,
               description: foundVideo.description || '',
-              youtube_url: foundVideo.youtubeurl || '',
-              youtubeid: foundVideo.youtubeid,
+              youtubeUrl: foundVideo.youtubeUrl || '',
+              youtubeId: foundVideo.youtubeId,
               category: foundVideo.category,
               duration: foundVideo.duration ? `${foundVideo.duration} min` : 'N/A',
               upload_date: foundVideo.uploaddate,
@@ -118,7 +118,7 @@ export default function VideoPlayerPage() {
                 title: v.title,
                 category: v.category,
                 duration: v.duration ? `${v.duration} min` : 'N/A',
-                youtube_url: v.youtubeurl
+                youtubeUrl: v.youtubeUrl
               }))
             setRelatedVideos(related)
           }
@@ -255,8 +255,8 @@ export default function VideoPlayerPage() {
     )
   }
 
-  // Use youtubeid directly if available, otherwise extract from URL
-  const youtubeId = video.youtubeid || extractYouTubeId(video.youtube_url)
+  // Use youtubeId directly if available, otherwise extract from URL
+  const youtubeId = video.youtubeId || extractYouTubeId(video.youtubeUrl)
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
@@ -609,7 +609,7 @@ export default function VideoPlayerPage() {
                   </div>
                 ) : (
                   relatedVideos.map(related => {
-                    const relatedYoutubeId = extractYouTubeId(related.youtube_url)
+                    const relatedYoutubeId = extractYouTubeId(related.youtubeUrl)
                     return (
                       <Link
                         key={related.id}

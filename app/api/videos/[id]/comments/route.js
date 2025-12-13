@@ -73,8 +73,8 @@ export async function POST(request, { params }) {
     const sanitizedContent = sanitizeInput(content, 5000)
 
     const result = await query(`
-      INSERT INTO comments ("videoId", "userId", content, "createdAt", "updatedAt")
-      VALUES ($1, $2, $3, NOW(), NOW())
+      INSERT INTO comments (id, "videoId", "userId", content, "createdAt", "updatedAt")
+      VALUES (gen_random_uuid(), $1, $2, $3, NOW(), NOW())
       RETURNING id, content, "createdAt" as created_at
     `, [videoId, user.userId, sanitizedContent])
 

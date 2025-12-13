@@ -32,10 +32,10 @@ export async function GET(request) {
           WHEN uvp.completed = true THEN 'completed'
           WHEN uvp.last_watched IS NOT NULL THEN 'in_progress'
           ELSE 'new'
-        END as status
+        END as progress_status
       FROM videos v
-      LEFT JOIN user_video_progress uvp ON v.id = uvp."videoId" AND uvp."userId" = $1
-      WHERE v.published = true
+      LEFT JOIN user_video_progress uvp ON v.id = uvp.video_id AND uvp.user_id = $1
+      WHERE v.status = 'active'
     `
     const queryParams = [user.userId]
     let paramCount = 2
@@ -162,8 +162,8 @@ export async function POST(request) {
 
     // Insert video
     const result = await query(
-      `INSERT INTO videos (title, description, "youtubeUrl", category, duration, published, "createdAt")
-       VALUES ($1, $2, $3, $4, $5, true, NOW())
+      `INSERT INTO videos (title, description, "youtubeUrl", category, duration, status, "createdAt")
+       VALUES ($1, $2, $3, $4, $5, 'active', NOW())
        RETURNING id, title, description, "youtubeUrl", category, duration, "createdAt"`,
       [sanitizedTitle, sanitizedDescription, urlValidation.url, sanitizedCategory, sanitizedDuration]
     )
