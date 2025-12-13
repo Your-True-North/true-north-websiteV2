@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
+import { randomUUID } from 'crypto'
 
 // Clean malformed YouTube URLs like "https://www.youtube.com/watch?v=https://youtu.be/ABC123"
 function cleanYoutubeUrl(url) {
@@ -75,18 +76,20 @@ export async function POST(request) {
       return NextResponse.json({ error: 'YouTube URL or ID required' }, { status: 400 })
     }
 
+    const videoId = randomUUID()
     const result = await query(`
-      INSERT INTO videos (title, description, "youtubeUrl", "youtubeId", category, duration, status, "createdAt", "updatedAt")
-      VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
+      INSERT INTO videos (id, title, description, "youtubeUrl", "youtubeId", category, duration, status, "createdAt", "updatedAt")
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
       RETURNING *
-    `, [title, description || '', finalYoutubeUrl, finalYoutubeId || '', category, duration || null, 'active'])
+    `, [videoId, title, description || '', finalYoutubeUrl, finalYoutubeId || '', category, duration || null, 'active'])
 
     // Log activity
     try {
+      const activityId = randomUUID()
       await query(`
-        INSERT INTO activities (type, title, description, "videoId", "createdAt")
-        VALUES ($1, $2, $3, $4, NOW())
-      `, ['video_uploaded', 'New Video Uploaded', title, result.rows[0].id])
+        INSERT INTO activities (id, type, title, description, "videoId", "createdAt")
+        VALUES ($1, $2, $3, $4, $5, NOW())
+      `, [activityId, 'video_uploaded', 'New Video Uploaded', title, result.rows[0].id])
     } catch (activityError) {
       // Don't fail the whole request if activity logging fails
       console.error('[Admin Videos POST] Activity log error:', activityError)
