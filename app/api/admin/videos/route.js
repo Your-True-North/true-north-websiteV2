@@ -1,6 +1,19 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 
+// Clean malformed YouTube URLs like "https://www.youtube.com/watch?v=https://youtu.be/ABC123"
+function cleanYoutubeUrl(url) {
+  if (!url) return url
+
+  // Check for double URL pattern
+  const match = url.match(/youtube\.com\/watch\?v=(https?:\/\/youtu\.be\/([^&\s]+))/)
+  if (match) {
+    return `https://www.youtube.com/watch?v=${match[2]}`
+  }
+
+  return url
+}
+
 // GET all videos
 export async function GET(request) {
   try {
@@ -16,7 +29,18 @@ export async function GET(request) {
       ORDER BY v.createdat DESC
     `)
 
-    return NextResponse.json({ videos: result.rows })
+    // Clean any malformed YouTube URLs and fix in database
+    const videos = result.rows.map(video => {
+      const cleanedUrl = cleanYoutubeUrl(video.youtubeurl)
+      if (cleanedUrl !== video.youtubeurl) {
+        // Fix the URL in database asynchronously (fire and forget)
+        query('UPDATE videos SET youtubeurl = $1 WHERE id = $2', [cleanedUrl, video.id])
+          .catch(err => console.error('[Admin Videos] Failed to fix malformed URL:', err))
+      }
+      return { ...video, youtubeurl: cleanedUrl }
+    })
+
+    return NextResponse.json({ videos })
 
   } catch (error) {
     console.error('[Admin Videos GET] Error:', error)
