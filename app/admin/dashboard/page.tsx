@@ -44,7 +44,7 @@ interface TopVideo {
   id: number
   title: string
   category: string
-  uploaddate: string
+  createdat: string
   comment_count: string
   reaction_count: string
   total_engagement: string
@@ -413,7 +413,7 @@ export default function AdminDashboard() {
                           </span>
                         </td>
                         <td style={{ padding: '16px 20px', color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px' }}>
-                          {formatDate(video.uploaddate)}
+                          {formatDate(video.createdat)}
                         </td>
                         <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
                           {video.comment_count}
