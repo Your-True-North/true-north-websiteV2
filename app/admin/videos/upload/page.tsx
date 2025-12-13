@@ -39,6 +39,20 @@ export default function UploadVideo() {
     e.preventDefault()
     setError('')
     setSuccess('')
+
+    // Validate thumbnail URL - reject local file paths
+    if (formData.thumbnailUrl && formData.thumbnailUrl.trim()) {
+      const url = formData.thumbnailUrl.trim()
+      if (url.startsWith('file://') || url.startsWith('/') || url.match(/^[A-Za-z]:\\/)) {
+        setError('Thumbnail URL must be a web URL (https://...), not a local file path')
+        return
+      }
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        setError('Thumbnail URL must start with http:// or https://')
+        return
+      }
+    }
+
     setLoading(true)
 
     try {
@@ -80,7 +94,7 @@ export default function UploadVideo() {
   const categories = [
     'Foundation Work',
     'Breathwork Sessions',
-    'Energy Healing',
+    'Live Teachings',
     'Integration Practices'
   ]
 

@@ -28,7 +28,7 @@ export async function GET(request) {
       LEFT JOIN comments c ON v.id = c.videoid
       LEFT JOIN reactions r ON v.id = r.videoid
       GROUP BY v.id
-      ORDER BY v.uploaddate DESC
+      ORDER BY v.createdat DESC
     `)
 
     await client.end()
@@ -54,7 +54,7 @@ export async function POST(request) {
     await client.connect()
 
     const body = await request.json()
-    const { title, description, youtubeUrl, youtubeId, category, duration, status } = body
+    const { title, description, youtubeUrl, youtubeId, category, duration } = body
 
     if (!title || !category) {
       await client.end()
@@ -62,28 +62,23 @@ export async function POST(request) {
     }
 
     // Accept either youtubeUrl (full URL) or youtubeId (just the ID)
-    let finalYoutubeId = youtubeId
     let finalYoutubeUrl = youtubeUrl
 
-    if (youtubeUrl && !youtubeId) {
-      // Extract ID from URL
-      finalYoutubeId = extractYouTubeId(youtubeUrl)
-    } else if (youtubeId && !youtubeUrl) {
+    if (youtubeId && !youtubeUrl) {
       // Build URL from ID
       finalYoutubeUrl = `https://www.youtube.com/watch?v=${youtubeId}`
-      finalYoutubeId = youtubeId
     }
 
-    if (!finalYoutubeId) {
+    if (!finalYoutubeUrl) {
       await client.end()
-      return NextResponse.json({ error: 'Invalid YouTube URL or ID' }, { status: 400 })
+      return NextResponse.json({ error: 'YouTube URL or ID required' }, { status: 400 })
     }
 
     const result = await client.query(`
-      INSERT INTO videos (title, description, youtubeurl, youtubeid, category, duration, status, uploaddate, createdat, updatedat)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW(), NOW())
+      INSERT INTO videos (title, description, youtubeurl, category, duration, published, createdat, updatedat)
+      VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())
       RETURNING *
-    `, [title, description || '', finalYoutubeUrl, finalYoutubeId, category, duration || null, status || 'published'])
+    `, [title, description || '', finalYoutubeUrl, category, duration || null, true])
 
     // Log activity
     await client.query(`
@@ -129,14 +124,13 @@ export async function PUT(request) {
         title = COALESCE($1, title),
         description = COALESCE($2, description),
         youtubeurl = COALESCE($3, youtubeurl),
-        youtubeid = COALESCE($4, youtubeid),
-        category = COALESCE($5, category),
-        duration = COALESCE($6, duration),
-        status = COALESCE($7, status),
+        category = COALESCE($4, category),
+        duration = COALESCE($5, duration),
+        published = COALESCE($6, published),
         updatedat = NOW()
-      WHERE id = $8
+      WHERE id = $7
       RETURNING *
-    `, [title, description, youtubeUrl, youtubeId, category, duration, status, id])
+    `, [title, description, youtubeUrl, category, duration, status === 'published' ? true : (status === 'draft' ? false : null), id])
 
     if (result.rows.length === 0) {
       await client.end()
