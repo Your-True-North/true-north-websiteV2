@@ -23,7 +23,7 @@ export default function LoginPage() {
         const user = JSON.parse(userData)
         if (user && user.email) {
           // Redirect admin to admin dashboard, others to journey
-          const redirectUrl = user.role === 'admin' ? '/admin/dashboard' : '/journey'
+          const redirectUrl = user.email === 'cor@yourtruenorth.me' ? '/admin/dashboard' : '/journey'
           console.log('[LOGIN] User already logged in, redirecting to', redirectUrl)
           window.location.replace(redirectUrl)
           return
@@ -75,7 +75,7 @@ export default function LoginPage() {
       await new Promise(resolve => setTimeout(resolve, 100))
 
       // Redirect admin to admin dashboard, others to journey
-      const redirectUrl = data.user.role === 'admin' ? '/admin/dashboard' : '/journey'
+      const redirectUrl = data.user.email === 'cor@yourtruenorth.me' ? '/admin/dashboard' : '/journey'
       window.location.replace(redirectUrl)
     } catch (err) {
       console.error('[Login] Error:', err)
