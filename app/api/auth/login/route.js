@@ -55,7 +55,7 @@ export async function POST(request) {
         level: 'Seeker',
         daysUntilNext: 30,
         nextLevel: 'Explorer',
-        joinDate: user.createdat || new Date().toISOString()
+        joinDate: user.createdAt || new Date().toISOString()
       },
       token
     }, { status: 200 })

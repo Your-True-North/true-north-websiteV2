@@ -18,11 +18,11 @@ export async function GET(request, { params }) {
         v.id,
         v.title,
         v.description,
-        v.youtubeurl as youtube_url,
-        v.youtubeid,
+        v."youtubeUrl" as youtube_url,
+        v."youtubeId",
         v.category,
         v.duration,
-        v.createdat as upload_date,
+        v."createdAt" as upload_date,
         uvp.completed,
         uvp.last_watched,
         uvp.watch_time,
@@ -49,7 +49,7 @@ export async function GET(request, { params }) {
     const commentsResult = await query(`
       SELECT COUNT(*) as count
       FROM comments
-      WHERE videoid = $1
+      WHERE "videoId" = $1
     `, [videoId])
     const commentsCount = parseInt(commentsResult.rows[0]?.count || 0)
 
@@ -57,7 +57,7 @@ export async function GET(request, { params }) {
     const reactionsResult = await query(`
       SELECT COUNT(*) as count
       FROM reactions
-      WHERE videoid = $1
+      WHERE "videoId" = $1
     `, [videoId])
     const reactionsCount = parseInt(reactionsResult.rows[0]?.count || 0)
 
@@ -65,16 +65,16 @@ export async function GET(request, { params }) {
     const userReactionResult = await query(`
       SELECT id
       FROM reactions
-      WHERE videoid = $1 AND userid = $2
+      WHERE "videoId" = $1 AND "userId" = $2
     `, [videoId, user.userId])
     const hasReacted = userReactionResult.rows.length > 0
 
     // Get related videos (same category, limit 3)
     const relatedResult = await query(`
-      SELECT id, title, category, duration, youtubeurl as youtube_url, youtubeid
+      SELECT id, title, category, duration, "youtubeUrl", "youtubeId"
       FROM videos
       WHERE category = $1 AND id != $2
-      ORDER BY createdat DESC
+      ORDER BY "createdAt" DESC
       LIMIT 3
     `, [video.category, videoId])
 

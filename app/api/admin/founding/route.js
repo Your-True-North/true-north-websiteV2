@@ -35,17 +35,17 @@ export async function GET(request) {
       console.log('[Admin Founding] JOIN query failed, trying fallback:', joinError.message)
       result = await client.query(`
         SELECT
-          ROW_NUMBER() OVER (ORDER BY createdat ASC) as signup_number,
-          createdat as signup_date,
-          stripecustomerid as stripe_customer_id,
+          ROW_NUMBER() OVER (ORDER BY "createdAt" ASC) as signup_number,
+          "createdAt" as signup_date,
+          "stripeCustomerId" as stripe_customer_id,
           NULL as stripe_subscription_id,
           name,
           email,
           subscription_status,
-          lastlogin as last_login
+          "lastLogin" as last_login
         FROM users
         WHERE is_founding = true OR role = 'founding'
-        ORDER BY createdat ASC
+        ORDER BY "createdAt" ASC
       `)
     }
 

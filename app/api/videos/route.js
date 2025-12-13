@@ -22,20 +22,20 @@ export async function GET(request) {
         v.id,
         v.title,
         v.description,
-        v.youtubeurl as youtube_url,
+        v."youtubeUrl" as youtube_url,
         v.category,
         v.duration,
-        v.createdat as upload_date,
+        v."createdAt" as upload_date,
         uvp.completed,
         uvp.last_watched,
         CASE
           WHEN uvp.completed = true THEN 'completed'
           WHEN uvp.last_watched IS NOT NULL THEN 'in_progress'
           ELSE 'new'
-        END as status
+        END as progress_status
       FROM videos v
       LEFT JOIN user_video_progress uvp ON v.id = uvp.video_id AND uvp.user_id = $1
-      WHERE v.published = true
+      WHERE v.status = 'active'
     `
     const queryParams = [user.userId]
     let paramCount = 2
@@ -57,16 +57,16 @@ export async function GET(request) {
     // Sorting
     switch (sort) {
       case 'newest':
-        videoQuery += ' ORDER BY v.createdat DESC'
+        videoQuery += ' ORDER BY v."createdAt" DESC'
         break
       case 'oldest':
-        videoQuery += ' ORDER BY v.createdat ASC'
+        videoQuery += ' ORDER BY v."createdAt" ASC'
         break
       case 'title':
         videoQuery += ' ORDER BY v.title ASC'
         break
       default:
-        videoQuery += ' ORDER BY v.createdat DESC'
+        videoQuery += ' ORDER BY v."createdAt" DESC'
     }
 
     const result = await query(videoQuery, queryParams)
@@ -162,9 +162,9 @@ export async function POST(request) {
 
     // Insert video
     const result = await query(
-      `INSERT INTO videos (title, description, youtubeurl, category, duration, published, createdat)
-       VALUES ($1, $2, $3, $4, $5, true, NOW())
-       RETURNING id, title, description, youtubeurl, category, duration, createdat`,
+      `INSERT INTO videos (title, description, "youtubeUrl", category, duration, status, "createdAt")
+       VALUES ($1, $2, $3, $4, $5, 'active', NOW())
+       RETURNING id, title, description, "youtubeUrl", category, duration, "createdAt"`,
       [sanitizedTitle, sanitizedDescription, urlValidation.url, sanitizedCategory, sanitizedDuration]
     )
 

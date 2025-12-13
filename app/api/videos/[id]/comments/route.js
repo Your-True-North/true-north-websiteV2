@@ -15,16 +15,16 @@ export async function GET(request, { params }) {
     // Get comments with user info
     const result = await query(`
       SELECT
-        vc.id,
-        vc.content,
-        vc.created_at,
+        c.id,
+        c.content,
+        c."createdAt" as created_at,
         u.id as user_id,
         u.name as user_name,
         u.profile_photo
-      FROM video_comments vc
-      JOIN users u ON vc.user_id = u.id
-      WHERE vc.video_id = $1
-      ORDER BY vc.created_at DESC
+      FROM comments c
+      JOIN users u ON c."userId" = u.id
+      WHERE c."videoId" = $1
+      ORDER BY c."createdAt" DESC
     `, [videoId])
 
     return NextResponse.json({
@@ -78,9 +78,9 @@ export async function POST(request, { params }) {
 
     // Insert comment
     const result = await query(`
-      INSERT INTO video_comments (video_id, user_id, content, created_at)
-      VALUES ($1, $2, $3, NOW())
-      RETURNING id, content, created_at
+      INSERT INTO comments (id, "videoId", "userId", content, "createdAt", "updatedAt")
+      VALUES (gen_random_uuid(), $1, $2, $3, NOW(), NOW())
+      RETURNING id, content, "createdAt" as created_at
     `, [videoId, user.userId, sanitizedContent])
 
     const comment = result.rows[0]
