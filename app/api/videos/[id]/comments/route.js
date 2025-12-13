@@ -9,22 +9,20 @@ export async function GET(request, { params }) {
     if (authResult.error) {
       return authResult.error
     }
-
     const videoId = params.id
 
-    // Get comments with user info
     const result = await query(`
       SELECT
-        vc.id,
-        vc.content,
-        vc.created_at,
-        u.id as "userId",
+        c.id,
+        c.content,
+        c."createdAt" as created_at,
+        u.id as user_id,
         u.name as user_name,
         u.profile_photo
-      FROM comments vc
-      JOIN users u ON vc."userId" = u.id
-      WHERE vc."videoId" = $1
-      ORDER BY vc.created_at DESC
+      FROM comments c
+      JOIN users u ON c."userId" = u.id
+      WHERE c."videoId" = $1
+      ORDER BY c."createdAt" DESC
     `, [videoId])
 
     return NextResponse.json({
@@ -47,7 +45,6 @@ export async function POST(request, { params }) {
     }
     const user = authResult.user
 
-    // Rate limit: 10 comments per hour
     const rateLimitResult = rateLimit(`comment:${user.userId}`, 10, 3600000)
     if (rateLimitResult.limited) {
       return NextResponse.json(
@@ -59,7 +56,6 @@ export async function POST(request, { params }) {
     const videoId = params.id
     const { content } = await request.json()
 
-    // Validate content
     if (!content || content.trim().length === 0) {
       return NextResponse.json(
         { error: 'Comment cannot be empty' },
@@ -76,16 +72,14 @@ export async function POST(request, { params }) {
 
     const sanitizedContent = sanitizeInput(content, 5000)
 
-    // Insert comment
     const result = await query(`
-      INSERT INTO comments ("videoId", "userId", content, created_at)
-      VALUES ($1, $2, $3, NOW())
-      RETURNING id, content, created_at
+      INSERT INTO comments ("videoId", "userId", content, "createdAt", "updatedAt")
+      VALUES ($1, $2, $3, NOW(), NOW())
+      RETURNING id, content, "createdAt" as created_at
     `, [videoId, user.userId, sanitizedContent])
 
     const comment = result.rows[0]
 
-    // Get user info
     const userResult = await query(`
       SELECT name, profile_photo
       FROM users
@@ -98,7 +92,7 @@ export async function POST(request, { params }) {
       success: true,
       comment: {
         ...comment,
-        "userId": user.userId,
+        user_id: user.userId,
         user_name: userInfo.name,
         profile_photo: userInfo.profile_photo
       }
