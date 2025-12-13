@@ -15,7 +15,7 @@ export async function GET(request) {
     // Get total counts
     const stats = await client.query(`
       SELECT
-        (SELECT COUNT(*) FROM videos WHERE published = true) as total_videos,
+        (SELECT COUNT(*) FROM videos WHERE status = 'active') as total_videos,
         (SELECT COUNT(*) FROM users WHERE role = 'member') as total_members,
         (SELECT COUNT(*) FROM video_comments) as total_comments,
         (SELECT COUNT(*) FROM video_reactions) as total_reactions
@@ -25,7 +25,7 @@ export async function GET(request) {
     const thisMonth = await client.query(`
       SELECT COUNT(*) as videos_this_month
       FROM videos
-      WHERE createdat >= DATE_TRUNC('month', CURRENT_DATE)
+      WHERE "createdAt" >= DATE_TRUNC('month', CURRENT_DATE)
     `)
 
     // Get top engaged members (most comments + reactions)
@@ -35,7 +35,7 @@ export async function GET(request) {
         u.name,
         u.email,
         u.level,
-        u.joindate,
+        u."createdAt" as joindate,
         COUNT(DISTINCT c.id) as comment_count,
         COUNT(DISTINCT r.id) as reaction_count,
         (COUNT(DISTINCT c.id) + COUNT(DISTINCT r.id)) as total_engagement
@@ -43,7 +43,7 @@ export async function GET(request) {
       LEFT JOIN video_comments c ON u.id = c.user_id
       LEFT JOIN video_reactions r ON u.id = r.user_id
       WHERE u.role IS NULL OR u.role != 'admin'
-      GROUP BY u.id, u.name, u.email, u.level, u.joindate
+      GROUP BY u.id, u.name, u.email, u.level, u."createdAt"
       ORDER BY total_engagement DESC
       LIMIT 10
     `)
@@ -54,14 +54,14 @@ export async function GET(request) {
         a.type,
         a.title,
         a.description,
-        a.createdat,
+        a."createdAt",
         u.name as user_name,
         u.email as user_email,
         v.title as video_title
       FROM activities a
-      LEFT JOIN users u ON a.userid = u.id
-      LEFT JOIN videos v ON a.videoid = v.id
-      ORDER BY a.createdat DESC
+      LEFT JOIN users u ON a."userId" = u.id
+      LEFT JOIN videos v ON a."videoId" = v.id
+      ORDER BY a."createdAt" DESC
       LIMIT 20
     `)
 
@@ -71,15 +71,15 @@ export async function GET(request) {
         v.id,
         v.title,
         v.category,
-        v.createdat,
+        v."createdAt",
         COUNT(DISTINCT c.id) as comment_count,
         COUNT(DISTINCT r.id) as reaction_count,
         (COUNT(DISTINCT c.id) + COUNT(DISTINCT r.id)) as total_engagement
       FROM videos v
       LEFT JOIN video_comments c ON v.id = c.video_id
       LEFT JOIN video_reactions r ON v.id = r.video_id
-      WHERE v.published = true
-      GROUP BY v.id, v.title, v.category, v.createdat
+      WHERE v.status = 'active'
+      GROUP BY v.id, v.title, v.category, v."createdAt"
       ORDER BY total_engagement DESC
       LIMIT 5
     `)
