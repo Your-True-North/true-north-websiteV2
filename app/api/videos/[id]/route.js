@@ -71,10 +71,10 @@ export async function GET(request, { params }) {
 
     // Get related videos (same category, limit 3)
     const relatedResult = await query(`
-      SELECT id, title, category, duration, youtubeurl as youtube_url, youtubeid
+      SELECT id, title, category, duration, "youtubeUrl" as youtube_url, "youtubeId"
       FROM videos
       WHERE category = $1 AND id != $2
-      ORDER BY createdat DESC
+      ORDER BY "createdAt" DESC
       LIMIT 3
     `, [video.category, videoId])
 

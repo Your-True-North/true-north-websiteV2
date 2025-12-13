@@ -162,9 +162,9 @@ export async function POST(request) {
 
     // Insert video
     const result = await query(
-      `INSERT INTO videos (title, description, youtubeurl, category, duration, published, createdat)
+      `INSERT INTO videos (title, description, "youtubeUrl", category, duration, published, "createdAt")
        VALUES ($1, $2, $3, $4, $5, true, NOW())
-       RETURNING id, title, description, youtubeurl, category, duration, createdat`,
+       RETURNING id, title, description, "youtubeUrl", category, duration, "createdAt"`,
       [sanitizedTitle, sanitizedDescription, urlValidation.url, sanitizedCategory, sanitizedDuration]
     )
 
