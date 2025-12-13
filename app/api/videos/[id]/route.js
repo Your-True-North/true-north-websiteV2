@@ -32,7 +32,7 @@ export async function GET(request, { params }) {
           ELSE 'new'
         END as progress_status
       FROM videos v
-      LEFT JOIN user_video_progress uvp ON v.id = uvp."videoId" AND uvp."userId" = $1
+      LEFT JOIN user_video_progress uvp ON v.id = uvp.video_id AND uvp.user_id = $1
       WHERE v.id = $2
     `, [user.userId, videoId])
 
