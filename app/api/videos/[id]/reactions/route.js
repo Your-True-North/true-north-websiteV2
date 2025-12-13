@@ -15,7 +15,7 @@ export async function GET(request, { params }) {
     // Get reactions count
     const countResult = await query(`
       SELECT COUNT(*) as count
-      FROM video_reactions
+      FROM reactions
       WHERE video_id = $1
     `, [videoId])
 
@@ -24,7 +24,7 @@ export async function GET(request, { params }) {
     // Check if user has reacted
     const userReactionResult = await query(`
       SELECT id
-      FROM video_reactions
+      FROM reactions
       WHERE video_id = $1 AND user_id = $2
     `, [videoId, user.userId])
 
@@ -56,7 +56,7 @@ export async function POST(request, { params }) {
     // Check if already reacted
     const existing = await query(`
       SELECT id
-      FROM video_reactions
+      FROM reactions
       WHERE video_id = $1 AND user_id = $2
     `, [videoId, user.userId])
 
@@ -69,14 +69,14 @@ export async function POST(request, { params }) {
 
     // Add reaction
     await query(`
-      INSERT INTO video_reactions (video_id, user_id, reaction_type, created_at)
+      INSERT INTO reactions (video_id, user_id, reaction_type, created_at)
       VALUES ($1, $2, 'like', NOW())
     `, [videoId, user.userId])
 
     // Get updated count
     const countResult = await query(`
       SELECT COUNT(*) as count
-      FROM video_reactions
+      FROM reactions
       WHERE video_id = $1
     `, [videoId])
 
@@ -108,14 +108,14 @@ export async function DELETE(request, { params }) {
 
     // Delete reaction
     await query(`
-      DELETE FROM video_reactions
+      DELETE FROM reactions
       WHERE video_id = $1 AND user_id = $2
     `, [videoId, user.userId])
 
     // Get updated count
     const countResult = await query(`
       SELECT COUNT(*) as count
-      FROM video_reactions
+      FROM reactions
       WHERE video_id = $1
     `, [videoId])
 

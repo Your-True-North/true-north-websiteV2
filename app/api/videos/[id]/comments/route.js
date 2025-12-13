@@ -21,7 +21,7 @@ export async function GET(request, { params }) {
         u.id as user_id,
         u.name as user_name,
         u.profile_photo
-      FROM video_comments vc
+      FROM comments vc
       JOIN users u ON vc.user_id = u.id
       WHERE vc.video_id = $1
       ORDER BY vc.created_at DESC
@@ -78,7 +78,7 @@ export async function POST(request, { params }) {
 
     // Insert comment
     const result = await query(`
-      INSERT INTO video_comments (video_id, user_id, content, created_at)
+      INSERT INTO comments (video_id, user_id, content, created_at)
       VALUES ($1, $2, $3, NOW())
       RETURNING id, content, created_at
     `, [videoId, user.userId, sanitizedContent])
