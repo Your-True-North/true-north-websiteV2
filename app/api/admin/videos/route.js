@@ -24,8 +24,8 @@ export async function GET(request) {
         COUNT(DISTINCT c.id) as comment_count,
         COUNT(DISTINCT r.id) as reaction_count
       FROM videos v
-      LEFT JOIN video_comments c ON v.id = c.video_id
-      LEFT JOIN video_reactions r ON v.id = r.video_id
+      LEFT JOIN comments c ON v.id = c."videoId"
+      LEFT JOIN reactions r ON v.id = r."videoId"
       GROUP BY v.id
       ORDER BY v."createdAt" DESC
     `)
