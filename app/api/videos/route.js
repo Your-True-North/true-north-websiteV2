@@ -75,7 +75,7 @@ export async function GET(request) {
     const categoryCounts = await query(`
       SELECT category, COUNT(*) as count
       FROM videos
-      WHERE published = true
+      WHERE status = 'active'
       GROUP BY category
     `)
 
