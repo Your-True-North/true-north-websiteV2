@@ -17,7 +17,7 @@ export async function POST(request, { params }) {
     const existing = await query(`
       SELECT id, completed
       FROM user_video_progress
-      WHERE user_id = $1 AND video_id = $2
+      WHERE "userId" = $1 AND "videoId" = $2
     `, [user.userId, videoId])
 
     if (existing.rows.length > 0) {
@@ -28,12 +28,12 @@ export async function POST(request, { params }) {
           completed = $1,
           last_watched = NOW(),
           completion_date = CASE WHEN $1 = true THEN NOW() ELSE completion_date END
-        WHERE user_id = $2 AND video_id = $3
+        WHERE "userId" = $2 AND "videoId" = $3
       `, [completed, user.userId, videoId])
     } else {
       // Insert new progress
       await query(`
-        INSERT INTO user_video_progress (user_id, video_id, completed, last_watched, completion_date)
+        INSERT INTO user_video_progress ("userId", "videoId", completed, last_watched, completion_date)
         VALUES ($1, $2, $3, NOW(), CASE WHEN $3 = true THEN NOW() ELSE NULL END)
       `, [user.userId, videoId, completed])
     }
@@ -50,7 +50,7 @@ export async function POST(request, { params }) {
       const videoTitle = videoResult.rows[0]?.title || 'Video'
 
       await query(`
-        INSERT INTO notifications (user_id, type, title, message, link, created_at)
+        INSERT INTO notifications ("userId", type, title, message, link, created_at)
         VALUES ($1, $2, $3, $4, $5, NOW())
       `, [
         user.userId,
@@ -64,7 +64,7 @@ export async function POST(request, { params }) {
       const completedVideosResult = await query(`
         SELECT COUNT(*) as count
         FROM user_video_progress
-        WHERE user_id = $1 AND completed = true
+        WHERE "userId" = $1 AND completed = true
       `, [user.userId])
 
       const completedCount = parseInt(completedVideosResult.rows[0]?.count || 0)
@@ -87,15 +87,15 @@ export async function POST(request, { params }) {
       if (milestoneId) {
         // Mark milestone as complete
         await query(`
-          INSERT INTO user_milestones (user_id, milestone_id, milestone_title, completed, completed_at)
+          INSERT INTO user_milestones ("userId", milestone_id, milestone_title, completed, completed_at)
           VALUES ($1, $2, $3, true, NOW())
-          ON CONFLICT (user_id, milestone_id) DO UPDATE
+          ON CONFLICT ("userId", milestone_id) DO UPDATE
           SET completed = true, completed_at = NOW()
         `, [user.userId, milestoneId, milestoneTitle])
 
         // Create milestone notification
         await query(`
-          INSERT INTO notifications (user_id, type, title, message, link, created_at)
+          INSERT INTO notifications ("userId", type, title, message, link, created_at)
           VALUES ($1, $2, $3, $4, $5, NOW())
         `, [
           user.userId,

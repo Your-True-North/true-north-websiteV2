@@ -18,11 +18,11 @@ export async function GET(request, { params }) {
         v.id,
         v.title,
         v.description,
-        v.youtubeurl as youtube_url,
-        v.youtubeid,
+        v."youtubeUrl" as youtube_url,
+        v."youtubeId",
         v.category,
         v.duration,
-        v.createdat as upload_date,
+        v."createdAt" as upload_date,
         uvp.completed,
         uvp.last_watched,
         uvp.watch_time,
@@ -32,7 +32,7 @@ export async function GET(request, { params }) {
           ELSE 'new'
         END as progress_status
       FROM videos v
-      LEFT JOIN user_video_progress uvp ON v.id = uvp.video_id AND uvp.user_id = $1
+      LEFT JOIN user_video_progress uvp ON v.id = uvp."videoId" AND uvp."userId" = $1
       WHERE v.id = $2
     `, [user.userId, videoId])
 

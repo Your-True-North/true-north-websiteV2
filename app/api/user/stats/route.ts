@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
     // Get completed videos count from user_video_progress table
     const completedResult = await client.query(
-      'SELECT COUNT(*) as count FROM user_video_progress WHERE user_id = $1 AND completed = true',
+      'SELECT COUNT(*) as count FROM user_video_progress WHERE "userId" = $1 AND completed = true',
       [userId]
     )
     const videosWatched = parseInt(completedResult.rows[0]?.count || '0')
@@ -29,17 +29,17 @@ export async function GET(request: NextRequest) {
 
     // Get total watch time
     const watchTimeResult = await client.query(
-      'SELECT COALESCE(SUM(watch_time), 0) as total FROM user_video_progress WHERE user_id = $1',
+      'SELECT COALESCE(SUM(watch_time), 0) as total FROM user_video_progress WHERE "userId" = $1',
       [userId]
     )
     const totalWatchTime = parseInt(watchTimeResult.rows[0]?.total || '0')
 
     // Get in-progress videos for continue watching
     const continueResult = await client.query(`
-      SELECT uvp.video_id as id, v.title, uvp.last_watched
+      SELECT uvp."videoId" as id, v.title, uvp.last_watched
       FROM user_video_progress uvp
-      JOIN videos v ON v.id = uvp.video_id
-      WHERE uvp.user_id = $1 AND uvp.completed = false AND uvp.last_watched IS NOT NULL
+      JOIN videos v ON v.id = uvp."videoId"
+      WHERE uvp."userId" = $1 AND uvp.completed = false AND uvp.last_watched IS NOT NULL
       ORDER BY uvp.last_watched DESC
       LIMIT 3
     `, [userId])

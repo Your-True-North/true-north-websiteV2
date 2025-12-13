@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
         u.profile_photo as user_photo,
         COUNT(DISTINCT pl.id) as like_count
        FROM community_posts cp
-       LEFT JOIN users u ON cp.user_id = u.id
+       LEFT JOIN users u ON cp."userId" = u.id
        LEFT JOIN post_likes pl ON cp.id = pl.post_id
        WHERE cp.id = $1
        GROUP BY cp.id, u.name, u.profile_photo`,
@@ -35,7 +35,7 @@ export async function GET(request, { params }) {
         u.profile_photo as user_photo,
         COUNT(DISTINCT rl.id) as like_count
        FROM post_replies pr
-       LEFT JOIN users u ON pr.user_id = u.id
+       LEFT JOIN users u ON pr."userId" = u.id
        LEFT JOIN reply_likes rl ON pr.id = rl.reply_id
        WHERE pr.post_id = $1
        GROUP BY pr.id, u.name, u.profile_photo

@@ -16,7 +16,7 @@ export async function GET(request, { params }) {
     const countResult = await query(`
       SELECT COUNT(*) as count
       FROM reactions
-      WHERE video_id = $1
+      WHERE "videoId" = $1
     `, [videoId])
 
     const count = parseInt(countResult.rows[0]?.count || 0)
@@ -25,7 +25,7 @@ export async function GET(request, { params }) {
     const userReactionResult = await query(`
       SELECT id
       FROM reactions
-      WHERE video_id = $1 AND user_id = $2
+      WHERE "videoId" = $1 AND "userId" = $2
     `, [videoId, user.userId])
 
     const hasReacted = userReactionResult.rows.length > 0
@@ -57,7 +57,7 @@ export async function POST(request, { params }) {
     const existing = await query(`
       SELECT id
       FROM reactions
-      WHERE video_id = $1 AND user_id = $2
+      WHERE "videoId" = $1 AND "userId" = $2
     `, [videoId, user.userId])
 
     if (existing.rows.length > 0) {
@@ -69,7 +69,7 @@ export async function POST(request, { params }) {
 
     // Add reaction
     await query(`
-      INSERT INTO reactions (video_id, user_id, reaction_type, created_at)
+      INSERT INTO reactions ("videoId", "userId", reaction_type, created_at)
       VALUES ($1, $2, 'like', NOW())
     `, [videoId, user.userId])
 
@@ -77,7 +77,7 @@ export async function POST(request, { params }) {
     const countResult = await query(`
       SELECT COUNT(*) as count
       FROM reactions
-      WHERE video_id = $1
+      WHERE "videoId" = $1
     `, [videoId])
 
     const count = parseInt(countResult.rows[0]?.count || 0)
@@ -109,14 +109,14 @@ export async function DELETE(request, { params }) {
     // Delete reaction
     await query(`
       DELETE FROM reactions
-      WHERE video_id = $1 AND user_id = $2
+      WHERE "videoId" = $1 AND "userId" = $2
     `, [videoId, user.userId])
 
     // Get updated count
     const countResult = await query(`
       SELECT COUNT(*) as count
       FROM reactions
-      WHERE video_id = $1
+      WHERE "videoId" = $1
     `, [videoId])
 
     const count = parseInt(countResult.rows[0]?.count || 0)

@@ -22,10 +22,10 @@ export async function GET(request) {
         v.id,
         v.title,
         v.description,
-        v.youtubeurl as youtube_url,
+        v."youtubeUrl" as youtube_url,
         v.category,
         v.duration,
-        v.createdat as upload_date,
+        v."createdAt" as upload_date,
         uvp.completed,
         uvp.last_watched,
         CASE
@@ -34,7 +34,7 @@ export async function GET(request) {
           ELSE 'new'
         END as status
       FROM videos v
-      LEFT JOIN user_video_progress uvp ON v.id = uvp.video_id AND uvp.user_id = $1
+      LEFT JOIN user_video_progress uvp ON v.id = uvp."videoId" AND uvp."userId" = $1
       WHERE v.published = true
     `
     const queryParams = [user.userId]
@@ -57,16 +57,16 @@ export async function GET(request) {
     // Sorting
     switch (sort) {
       case 'newest':
-        videoQuery += ' ORDER BY v.createdat DESC'
+        videoQuery += ' ORDER BY v."createdAt" DESC'
         break
       case 'oldest':
-        videoQuery += ' ORDER BY v.createdat ASC'
+        videoQuery += ' ORDER BY v."createdAt" ASC'
         break
       case 'title':
         videoQuery += ' ORDER BY v.title ASC'
         break
       default:
-        videoQuery += ' ORDER BY v.createdat DESC'
+        videoQuery += ' ORDER BY v."createdAt" DESC'
     }
 
     const result = await query(videoQuery, queryParams)
@@ -91,7 +91,7 @@ export async function GET(request) {
         COUNT(*) as watched_count,
         SUM(COALESCE(watch_time, 0)) as total_watch_time
       FROM user_video_progress
-      WHERE user_id = $1
+      WHERE "userId" = $1
     `, [user.userId])
 
     const stats = statsResult.rows[0] || { completed_count: 0, watched_count: 0, total_watch_time: 0 }

@@ -47,7 +47,7 @@ export async function GET(request) {
 
     // Get user's completed milestones
     const completedResult = await query(
-      'SELECT milestone_id FROM user_milestones WHERE user_id = $1 AND completed = true',
+      'SELECT milestone_id FROM user_milestones WHERE "userId" = $1 AND completed = true',
       [user.userId]
     )
     const completedIds = completedResult.rows.map(row => row.milestone_id)
@@ -92,20 +92,20 @@ export async function POST(request) {
 
     // Check if milestone already completed
     const existing = await query(
-      'SELECT * FROM user_milestones WHERE user_id = $1 AND milestone_id = $2',
+      'SELECT * FROM user_milestones WHERE "userId" = $1 AND milestone_id = $2',
       [user.userId, milestoneId]
     )
 
     if (existing.rows.length > 0) {
       // Update to completed
       await query(
-        'UPDATE user_milestones SET completed = true, completed_at = NOW() WHERE user_id = $1 AND milestone_id = $2',
+        'UPDATE user_milestones SET completed = true, completed_at = NOW() WHERE "userId" = $1 AND milestone_id = $2',
         [user.userId, milestoneId]
       )
     } else {
       // Insert new milestone
       await query(
-        'INSERT INTO user_milestones (user_id, milestone_id, completed, completed_at) VALUES ($1, $2, true, NOW())',
+        'INSERT INTO user_milestones ("userId", milestone_id, completed, completed_at) VALUES ($1, $2, true, NOW())',
         [user.userId, milestoneId]
       )
     }
@@ -116,7 +116,7 @@ export async function POST(request) {
       .find(m => m.id === milestoneId)?.title || 'Milestone'
 
     await query(
-      `INSERT INTO notifications (user_id, type, title, message, link, created_at)
+      `INSERT INTO notifications ("userId", type, title, message, link, created_at)
        VALUES ($1, $2, $3, $4, $5, NOW())`,
       [
         user.userId,

@@ -18,12 +18,12 @@ export async function GET(request, { params }) {
         vc.id,
         vc.content,
         vc.created_at,
-        u.id as user_id,
+        u.id as "userId",
         u.name as user_name,
         u.profile_photo
       FROM comments vc
-      JOIN users u ON vc.user_id = u.id
-      WHERE vc.video_id = $1
+      JOIN users u ON vc."userId" = u.id
+      WHERE vc."videoId" = $1
       ORDER BY vc.created_at DESC
     `, [videoId])
 
@@ -78,7 +78,7 @@ export async function POST(request, { params }) {
 
     // Insert comment
     const result = await query(`
-      INSERT INTO comments (video_id, user_id, content, created_at)
+      INSERT INTO comments ("videoId", "userId", content, created_at)
       VALUES ($1, $2, $3, NOW())
       RETURNING id, content, created_at
     `, [videoId, user.userId, sanitizedContent])
@@ -98,7 +98,7 @@ export async function POST(request, { params }) {
       success: true,
       comment: {
         ...comment,
-        user_id: user.userId,
+        "userId": user.userId,
         user_name: userInfo.name,
         profile_photo: userInfo.profile_photo
       }

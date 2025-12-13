@@ -21,26 +21,26 @@ export async function GET(request) {
       CREATE TABLE IF NOT EXISTS post_likes (
         id SERIAL PRIMARY KEY,
         post_id INTEGER REFERENCES community_posts(id) ON DELETE CASCADE,
-        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        "userId" INTEGER REFERENCES users(id) ON DELETE CASCADE,
         created_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(post_id, user_id)
+        UNIQUE(post_id, "userId")
       );
 
       CREATE TABLE IF NOT EXISTS reply_likes (
         id SERIAL PRIMARY KEY,
         reply_id INTEGER REFERENCES post_replies(id) ON DELETE CASCADE,
-        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        "userId" INTEGER REFERENCES users(id) ON DELETE CASCADE,
         created_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(reply_id, user_id)
+        UNIQUE(reply_id, "userId")
       );
 
       ALTER TABLE videos ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT FALSE;
       ALTER TABLE videos ADD COLUMN IF NOT EXISTS published BOOLEAN DEFAULT TRUE;
 
       CREATE INDEX IF NOT EXISTS idx_post_likes_post ON post_likes(post_id);
-      CREATE INDEX IF NOT EXISTS idx_post_likes_user ON post_likes(user_id);
+      CREATE INDEX IF NOT EXISTS idx_post_likes_user ON post_likes("userId");
       CREATE INDEX IF NOT EXISTS idx_reply_likes_reply ON reply_likes(reply_id);
-      CREATE INDEX IF NOT EXISTS idx_reply_likes_user ON reply_likes(user_id);
+      CREATE INDEX IF NOT EXISTS idx_reply_likes_user ON reply_likes("userId");
     `;
 
     await client.query(migration);

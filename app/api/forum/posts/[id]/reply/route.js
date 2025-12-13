@@ -23,7 +23,7 @@ export async function POST(request, { params }) {
 
     // Insert reply
     const result = await query(
-      `INSERT INTO post_replies (post_id, user_id, content)
+      `INSERT INTO post_replies (post_id, "userId", content)
        VALUES ($1, $2, $3)
        RETURNING *`,
       [postId, userId, content]

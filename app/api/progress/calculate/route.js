@@ -16,7 +16,7 @@ export async function GET(request) {
 
     // Get completed videos for user
     const videosCompleted = await query(
-      'SELECT COUNT(*) as completed FROM user_video_progress WHERE user_id = $1 AND completed = true',
+      'SELECT COUNT(*) as completed FROM user_video_progress WHERE "userId" = $1 AND completed = true',
       [user.userId]
     )
     const completedVideos = parseInt(videosCompleted.rows[0]?.completed || 0)
@@ -27,7 +27,7 @@ export async function GET(request) {
 
     // Get attended calls for user
     const callsAttended = await query(
-      'SELECT COUNT(*) as attended FROM call_attendance WHERE user_id = $1 AND attended = true',
+      'SELECT COUNT(*) as attended FROM call_attendance WHERE "userId" = $1 AND attended = true',
       [user.userId]
     )
     const attendedCalls = parseInt(callsAttended.rows[0]?.attended || 0)
@@ -37,7 +37,7 @@ export async function GET(request) {
 
     // Get completed milestones for user
     const milestonesCompleted = await query(
-      'SELECT COUNT(*) as completed FROM user_milestones WHERE user_id = $1 AND completed = true',
+      'SELECT COUNT(*) as completed FROM user_milestones WHERE "userId" = $1 AND completed = true',
       [user.userId]
     )
     const completedMilestones = parseInt(milestonesCompleted.rows[0]?.completed || 0)

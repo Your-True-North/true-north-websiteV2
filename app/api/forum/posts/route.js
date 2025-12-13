@@ -14,7 +14,7 @@ export async function GET(request) {
         COUNT(DISTINCT pr.id) as reply_count,
         COUNT(DISTINCT pl.id) as like_count
       FROM community_posts cp
-      LEFT JOIN users u ON cp.user_id = u.id
+      LEFT JOIN users u ON cp."userId" = u.id
       LEFT JOIN post_replies pr ON cp.id = pr.post_id
       LEFT JOIN post_likes pl ON cp.id = pl.post_id
     `
@@ -86,7 +86,7 @@ export async function POST(request) {
     // Insert post
     console.log('[Forum Post CREATE] Creating post for userId:', userId)
     const result = await query(
-      `INSERT INTO community_posts (user_id, category, title, content)
+      `INSERT INTO community_posts ("userId", category, title, content)
        VALUES ($1, $2, $3, $4)
        RETURNING *`,
       [userId, category || null, title || null, content]

@@ -40,8 +40,8 @@ export async function GET(request) {
         COUNT(DISTINCT r.id) as reaction_count,
         (COUNT(DISTINCT c.id) + COUNT(DISTINCT r.id)) as total_engagement
       FROM users u
-      LEFT JOIN comments c ON u.id = c.user_id
-      LEFT JOIN reactions r ON u.id = r.user_id
+      LEFT JOIN comments c ON u.id = c."userId"
+      LEFT JOIN reactions r ON u.id = r."userId"
       WHERE u.role IS NULL OR u.role != 'admin'
       GROUP BY u.id, u.name, u.email, u.level, u."createdAt"
       ORDER BY total_engagement DESC
@@ -76,8 +76,8 @@ export async function GET(request) {
         COUNT(DISTINCT r.id) as reaction_count,
         (COUNT(DISTINCT c.id) + COUNT(DISTINCT r.id)) as total_engagement
       FROM videos v
-      LEFT JOIN comments c ON v.id = c.video_id
-      LEFT JOIN reactions r ON v.id = r.video_id
+      LEFT JOIN comments c ON v.id = c."videoId"
+      LEFT JOIN reactions r ON v.id = r."videoId"
       WHERE v.status = 'active'
       GROUP BY v.id, v.title, v.category, v."createdAt"
       ORDER BY total_engagement DESC

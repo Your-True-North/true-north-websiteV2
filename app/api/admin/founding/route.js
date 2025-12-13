@@ -27,7 +27,7 @@ export async function GET(request) {
           u.subscription_status,
           u.last_login
         FROM founding_members fm
-        JOIN users u ON fm.user_id = u.id
+        JOIN users u ON fm."userId" = u.id
         ORDER BY fm.signup_number ASC
       `)
     } catch (joinError) {
