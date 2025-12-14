@@ -411,7 +411,7 @@ export default function JourneyPage() {
                         padding: '2px 8px', 
                         borderRadius: '12px', 
                         fontSize: '0.75rem' 
-                      }}>{category.count}</span>
+                      }}>{videos.filter(v => v.category === category.name).length}</span>
                     </button>
                   ))}
                 </div>
