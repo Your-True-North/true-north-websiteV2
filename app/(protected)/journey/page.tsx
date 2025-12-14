@@ -517,7 +517,10 @@ export default function JourneyPage() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))'
+                        backgroundImage: `url(https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg)`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.3)'
                       }}>
                         <div style={{
                           width: '3rem',
