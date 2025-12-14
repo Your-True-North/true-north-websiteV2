@@ -91,7 +91,7 @@ export async function GET(request) {
         COUNT(*) as watched_count,
         SUM(COALESCE(watch_time, 0)) as total_watch_time
       FROM user_video_progress
-      WHERE "userId" = $1
+      WHERE user_id = $1
     `, [user.userId])
 
     const stats = statsResult.rows[0] || { completed_count: 0, watched_count: 0, total_watch_time: 0 }
