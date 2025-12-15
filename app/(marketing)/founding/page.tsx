@@ -27,10 +27,10 @@ export default function FoundingMembersPage() {
       .then(res => res.json())
       .then(data => {
         const count = data.count || 0
-        setSpotsRemaining(20)
+        setSpotsRemaining(10)
         setIsSoldOut(count >= 30)
       })
-      .catch(() => setSpotsRemaining(30))
+      .catch(() => setSpotsRemaining(10))
 
     // Track ViewContent event
     if (typeof window !== 'undefined' && (window as any).fbq) {
