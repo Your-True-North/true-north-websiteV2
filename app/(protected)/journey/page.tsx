@@ -56,6 +56,14 @@ export default function JourneyPage() {
             likes: 0
           }))
           setVideos(formatted)
+
+          // Check URL for video ID and open modal
+          const urlParams = new URLSearchParams(window.location.search)
+          const videoId = urlParams.get('v')
+          if (videoId) {
+            const video = formatted.find((v: any) => v.id === videoId)
+            if (video) setSelectedVideo(video)
+          }
         }
       } catch (err) {
         console.error("Failed to fetch videos:", err)
@@ -481,9 +489,12 @@ export default function JourneyPage() {
                   gap: '1.5rem' 
                 }}>
                   {filteredVideos.map((video) => (
-                    <div 
+                    <div
                       key={video.id}
-                      onClick={() => setSelectedVideo(video)}
+                      onClick={() => {
+                        setSelectedVideo(video)
+                        window.history.pushState({}, '', `/journey?v=${video.id}`)
+                      }}
                       style={{
                         background: 'rgba(255, 255, 255, 0.03)',
                         borderRadius: '12px',
@@ -506,7 +517,10 @@ export default function JourneyPage() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.1))'
+                        backgroundImage: `url(https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg)`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.3)'
                       }}>
                         <div style={{
                           width: '3rem',
@@ -668,10 +682,13 @@ export default function JourneyPage() {
             zIndex: 50, 
             display: 'flex', 
             alignItems: 'center', 
-            justifyContent: 'center', 
-            padding: '1rem' 
+            justifyContent: 'center',
+            padding: '1rem'
           }}
-          onClick={() => setSelectedVideo(null)}
+          onClick={() => {
+            setSelectedVideo(null)
+            window.history.pushState({}, '', '/journey')
+          }}
         >
           <div 
             style={{ 
@@ -693,13 +710,16 @@ export default function JourneyPage() {
               borderBottom: '1px solid rgba(255, 255, 255, 0.1)' 
             }}>
               <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 600, paddingRight: '1rem' }}>{selectedVideo.title}</h2>
-              <button 
-                onClick={() => setSelectedVideo(null)}
-                style={{ 
-                  color: 'rgba(255, 255, 255, 0.6)', 
-                  fontSize: '1.5rem', 
-                  background: 'none', 
-                  border: 'none', 
+              <button
+                onClick={() => {
+                  setSelectedVideo(null)
+                  window.history.pushState({}, '', '/journey')
+                }}
+                style={{
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  fontSize: '1.5rem',
+                  background: 'none',
+                  border: 'none',
                   cursor: 'pointer',
                   lineHeight: 1,
                   flexShrink: 0
