@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
 import { Client } from 'pg'
 import bcrypt from 'bcryptjs'
-import sgMail from '@sendgrid/mail'
+import { Resend } from 'resend'
 
 export const config = {
   api: {
@@ -14,9 +14,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-11-20.acacia',
 })
 
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-}
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!
 const CIRCLE_PRICE_IDS = [
@@ -104,10 +102,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           await tagConvertKit(email, FOUNDING_MEMBER_TAG_ID)
           
           // Send welcome email
-          if (process.env.SENDGRID_API_KEY) {
-            await sgMail.send({
+          if (process.env.RESEND_API_KEY) {
+            await resend.emails.send({
+              from: process.env.EMAIL_FROM || 'cor@yourtruenorth.me',
               to: email,
-              from: 'cor@yourtruenorth.me',
               subject: 'Welcome to Circle of Return',
               html: `<!DOCTYPE html>
 <html>
@@ -177,11 +175,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     </tr>
   </table>
 </body>
-</html>`,
-              trackingSettings: {
-                clickTracking: { enable: false },
-                openTracking: { enable: true }
-              }
+</html>`
             })
           }
         }

@@ -1,7 +1,7 @@
-import sgMail from '@sendgrid/mail';
+import { Resend } from 'resend';
 
-// Initialize SendGrid with API key
-sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
+// Initialize Resend with API key
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface SendEmailOptions {
   to: string;
@@ -12,19 +12,18 @@ interface SendEmailOptions {
 
 export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
   try {
-    const msg = {
-      to,
+    const result = await resend.emails.send({
       from: process.env.EMAIL_FROM || 'cor@yourtruenorth.me',
+      to,
       subject,
       html,
       text: text || html.replace(/<[^>]*>/g, ''), // Strip HTML for text version
-    };
+    });
 
-    await sgMail.send(msg);
     console.log(`Email sent successfully to ${to}`);
-    return { success: true };
+    return { success: true, data: result };
   } catch (error: any) {
-    console.error('SendGrid Error:', error.response?.body || error);
+    console.error('Resend Error:', error);
     throw new Error('Failed to send email');
   }
 }
