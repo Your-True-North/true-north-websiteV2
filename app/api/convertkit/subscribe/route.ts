@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY;
-const LIBRARY_TAG_ID = process.env.THE_LIBRARY_TAG_ID || '7654321';
+const LIBRARY_TAG_ID = process.env.THE_LIBRARY_TAG_ID || '10466971';
 
 export async function POST(request: Request) {
   try {
