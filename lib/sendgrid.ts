@@ -12,6 +12,12 @@ interface SendEmailOptions {
 
 export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
   try {
+    console.log('[Resend] Preparing to send email...');
+    console.log('[Resend] From:', process.env.EMAIL_FROM || 'cor@yourtruenorth.me');
+    console.log('[Resend] To:', to);
+    console.log('[Resend] Subject:', subject);
+    console.log('[Resend] API Key present:', !!process.env.RESEND_API_KEY);
+
     const result = await resend.emails.send({
       from: process.env.EMAIL_FROM || 'cor@yourtruenorth.me',
       to,
@@ -20,10 +26,16 @@ export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
       text: text || html.replace(/<[^>]*>/g, ''), // Strip HTML for text version
     });
 
-    console.log(`Email sent successfully to ${to}`);
+    console.log('[Resend] Email sent successfully to', to);
+    console.log('[Resend] Result:', JSON.stringify(result));
     return { success: true, data: result };
   } catch (error: any) {
-    console.error('Resend Error:', error);
-    throw new Error('Failed to send email');
+    console.error('[Resend] Error details:', {
+      message: error.message,
+      statusCode: error.statusCode,
+      name: error.name,
+      error: error
+    });
+    throw new Error(`Failed to send email: ${error.message}`);
   }
 }
