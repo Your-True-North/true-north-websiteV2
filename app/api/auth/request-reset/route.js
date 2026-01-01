@@ -44,6 +44,10 @@ export async function POST(request) {
 
     await client.query('UPDATE users SET password = $1 WHERE email = $2', [hashedPassword, email])
 
+    console.log('[Password Reset] Attempting to send email to:', email)
+    console.log('[Password Reset] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY)
+    console.log('[Password Reset] EMAIL_FROM:', process.env.EMAIL_FROM)
+
     await sendEmail({
       to: email,
       subject: 'Your New Password - Circle of Return',
@@ -101,6 +105,8 @@ Then change it to something memorable in your account settings.
 If you didn't request this reset, please contact support immediately.
       `
     })
+
+    console.log('[Password Reset] Email sent successfully via Resend to:', email)
 
     await client.end()
 

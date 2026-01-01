@@ -103,8 +103,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           
           // Send welcome email
           if (process.env.RESEND_API_KEY) {
+            const fromAddress = process.env.EMAIL_FROM || 'cor@yourtruenorth.me';
+            const fromFormatted = fromAddress.includes('<') ? fromAddress : `Circle of Return <${fromAddress}>`;
+
             await resend.emails.send({
-              from: process.env.EMAIL_FROM || 'cor@yourtruenorth.me',
+              from: fromFormatted,
               to: email,
               subject: 'Welcome to Circle of Return',
               html: `<!DOCTYPE html>
