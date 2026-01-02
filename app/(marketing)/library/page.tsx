@@ -63,8 +63,7 @@ export default function Library() {
         body: JSON.stringify({
           email,
           firstName,
-          tag: 'library-download',
-          resource: selectedResource
+          resource: selectedResource // API will map this to resource-specific tag
         }),
       })
 
