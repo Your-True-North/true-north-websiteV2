@@ -9,6 +9,7 @@ import Breadcrumb from '../../components/Breadcrumb'
 interface User {
   id: number
   name: string
+  email: string
 }
 
 interface Post {
@@ -212,7 +213,7 @@ export default function ForumPage() {
               onClick={() => setSelectedCategory(cat)}
               style={{
                 padding: '10px 20px',
-                background: selectedCategory === cat ? '#7fb069' : 'rgba(255, 255, 255, 0.05)',
+                background: selectedCategory === cat ? '#7ba69b' : 'rgba(255, 255, 255, 0.05)',
                 border: selectedCategory === cat ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '3px',
                 color: '#fff',
@@ -233,10 +234,10 @@ export default function ForumPage() {
           style={{
             width: '100%',
             padding: '16px',
-            background: 'rgba(127, 176, 105, 0.1)',
-            border: '2px dashed rgba(127, 176, 105, 0.3)',
+            background: 'rgba(123, 166, 155, 0.1)',
+            border: '2px dashed rgba(123, 166, 155, 0.3)',
             borderRadius: '3px',
-            color: '#7fb069',
+            color: '#7ba69b',
             fontSize: '16px',
             fontWeight: 600,
             cursor: 'pointer',
@@ -262,8 +263,8 @@ export default function ForumPage() {
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(127, 176, 105, 0.05)'
-                e.currentTarget.style.borderColor = 'rgba(127, 176, 105, 0.2)'
+                e.currentTarget.style.background = 'rgba(123, 166, 155, 0.05)'
+                e.currentTarget.style.borderColor = 'rgba(123, 166, 155, 0.2)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
@@ -276,7 +277,7 @@ export default function ForumPage() {
                   width: '40px',
                   height: '40px',
                   borderRadius: '50%',
-                  background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                  background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #9bc4b8, #7ba69b)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   display: 'flex',
@@ -369,7 +370,7 @@ export default function ForumPage() {
               onClick={() => setShowNewPostModal(true)}
               style={{
                 padding: '12px 24px',
-                background: '#7fb069',
+                background: '#7ba69b',
                 border: 'none',
                 borderRadius: '3px',
                 color: '#fff',
@@ -517,7 +518,7 @@ export default function ForumPage() {
                   style={{
                     flex: 1,
                     padding: '14px',
-                    background: posting ? 'rgba(127, 176, 105, 0.5)' : '#7fb069',
+                    background: posting ? 'rgba(123, 166, 155, 0.5)' : '#7ba69b',
                     border: 'none',
                     borderRadius: '3px',
                     color: '#fff',
