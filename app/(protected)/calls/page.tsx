@@ -431,4 +431,87 @@ export default function CallsPage() {
                     e.currentTarget.style.transform = 'translateY(0)'
                   }}
                   >
-                    {/* Video
+                    <div style={{
+                      width: '100%',
+                      paddingTop: '56.25%',
+                      background: video.youtubeId
+                        ? `url(https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg)`
+                        : 'rgba(0, 0, 0, 0.5)',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      position: 'relative'
+                    }}>
+                      <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '64px',
+                        height: '64px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                      }}>
+                        <svg style={{ width: '32px', height: '32px', color: '#000', marginLeft: '4px' }} fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                        </svg>
+                      </div>
+
+                      {video.duration && (
+                        <div style={{
+                          position: 'absolute',
+                          bottom: '8px',
+                          right: '8px',
+                          padding: '4px 8px',
+                          background: 'rgba(0, 0, 0, 0.8)',
+                          borderRadius: '3px',
+                          fontSize: '12px',
+                          fontWeight: 600
+                        }}>
+                          {video.duration}
+                        </div>
+                      )}
+                    </div>
+
+                    <div style={{ padding: '20px' }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: 500,
+                        marginBottom: '8px',
+                        color: '#fff',
+                        lineHeight: 1.4
+                      }}>
+                        {video.title}
+                      </h3>
+                      <p style={{
+                        fontSize: '14px',
+                        color: 'rgba(255, 255, 255, 0.6)',
+                        lineHeight: 1.6,
+                        marginBottom: '12px'
+                      }}>
+                        {video.description?.substring(0, 120)}{video.description?.length > 120 ? '...' : ''}
+                      </p>
+                      <div style={{
+                        fontSize: '12px',
+                        color: 'rgba(255, 255, 255, 0.4)'
+                      }}>
+                        {new Date(video.upload_date).toLocaleDateString('en-US', {
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
