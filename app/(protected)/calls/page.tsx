@@ -15,13 +15,19 @@ interface Video {
   upload_date: string
 }
 
+interface CalendarEvent {
+  id: string
+  title: string
+  description: string
+  start: string
+  end: string
+  location?: string
+}
+
 interface CalendarDay {
   date: Date
   hasCall: boolean
-  callDetails?: {
-    time: string
-    title: string
-  }
+  callDetails?: CalendarEvent
 }
 
 export default function CallsPage() {
@@ -30,6 +36,7 @@ export default function CallsPage() {
   const [replays, setReplays] = useState<Video[]>([])
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [calendarDays, setCalendarDays] = useState<CalendarDay[]>([])
+  const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([])
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -47,14 +54,27 @@ export default function CallsPage() {
       router.push('/auth/login')
       return
     }
+    fetchCalendarEvents()
     fetchReplays()
-    generateCalendar()
     setLoading(false)
   }, [router])
 
   useEffect(() => {
     generateCalendar()
-  }, [currentMonth])
+  }, [currentMonth, calendarEvents])
+
+  const fetchCalendarEvents = async () => {
+    try {
+      const res = await fetch('/api/calendar/events')
+      const data = await res.json()
+      
+      if (res.ok && data.events) {
+        setCalendarEvents(data.events)
+      }
+    } catch (error) {
+      console.error('Error fetching calendar events:', error)
+    }
+  }
 
   const fetchReplays = async () => {
     try {
@@ -73,14 +93,10 @@ export default function CallsPage() {
     const year = currentMonth.getFullYear()
     const month = currentMonth.getMonth()
 
-    // Get first day of month
     const firstDay = new Date(year, month, 1)
     const lastDay = new Date(year, month + 1, 0)
-
-    // Get day of week for first day (0 = Sunday)
     const startDayOfWeek = firstDay.getDay()
 
-    // Create array of calendar days
     const days: CalendarDay[] = []
 
     // Add empty days for previous month
@@ -89,22 +105,41 @@ export default function CallsPage() {
       days.push({ date, hasCall: false })
     }
 
-    // Add days of current month
+    // Add days of current month with real events
     for (let i = 1; i <= lastDay.getDate(); i++) {
       const date = new Date(year, month, i)
-      // Mock: Calls on first Tuesday of each month at 7pm GMT
-      const isFirstTuesday = date.getDay() === 2 && i <= 7
+      
+      // Check if any calendar event falls on this date
+      const eventOnThisDay = calendarEvents.find(event => {
+        const eventDate = new Date(event.start)
+        return eventDate.getDate() === date.getDate() &&
+               eventDate.getMonth() === date.getMonth() &&
+               eventDate.getFullYear() === date.getFullYear()
+      })
+
       days.push({
         date,
-        hasCall: isFirstTuesday,
-        callDetails: isFirstTuesday ? {
-          time: '7:00 PM GMT',
-          title: 'Monthly Live Call'
-        } : undefined
+        hasCall: !!eventOnThisDay,
+        callDetails: eventOnThisDay
       })
     }
 
     setCalendarDays(days)
+  }
+
+  const createGoogleCalendarLink = (event: CalendarEvent) => {
+    const startDate = new Date(event.start).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+    const endDate = new Date(event.end).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
+    
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: event.title,
+      details: event.description || '',
+      dates: `${startDate}/${endDate}`,
+      location: event.location || ''
+    })
+
+    return `https://calendar.google.com/calendar/render?${params.toString()}`
   }
 
   const goToPreviousMonth = () => {
@@ -159,7 +194,7 @@ export default function CallsPage() {
             fontWeight: 600,
             marginBottom: '12px'
           }}>
-            Live Calls
+            Live Calls Calendar
           </h1>
           <p style={{
             fontSize: '16px',
@@ -274,8 +309,8 @@ export default function CallsPage() {
                     justifyContent: 'flex-start'
                   }}
                   onClick={() => {
-                    if (day.hasCall) {
-                      window.open('https://calendly.com/callwithmason/circle-live-call', '_blank')
+                    if (day.hasCall && day.callDetails) {
+                      window.open(createGoogleCalendarLink(day.callDetails), '_blank')
                     }
                   }}
                 >
@@ -287,13 +322,17 @@ export default function CallsPage() {
                   }}>
                     {day.date.getDate()}
                   </div>
-                  {day.hasCall && !isMobile && (
+                  {day.hasCall && day.callDetails && !isMobile && (
                     <div style={{
                       fontSize: '10px',
                       color: '#7fb069',
                       fontWeight: 500
                     }}>
-                      {day.callDetails?.time}
+                      {new Date(day.callDetails.start).toLocaleTimeString('en-US', { 
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        timeZoneName: 'short'
+                      })}
                     </div>
                   )}
                   {day.hasCall && (
@@ -323,13 +362,13 @@ export default function CallsPage() {
               margin: 0,
               lineHeight: 1.5
             }}>
-              <strong style={{ color: '#9bc4b8' }}>Live calls are scheduled monthly.</strong> Click on a date with a call to book your spot via Calendly.
+              <strong style={{ color: '#9bc4b8' }}>Click on any scheduled call</strong> to add it to your personal calendar.
             </p>
           </div>
         </div>
 
         {/* Call Replays Section */}
-        <div>
+        <div id="replays">
           <h2 style={{
             fontSize: isMobile ? '20px' : '24px',
             fontWeight: 600,
@@ -392,91 +431,4 @@ export default function CallsPage() {
                     e.currentTarget.style.transform = 'translateY(0)'
                   }}
                   >
-                    {/* Video Thumbnail */}
-                    <div style={{
-                      width: '100%',
-                      paddingTop: '56.25%',
-                      background: video.youtubeId
-                        ? `url(https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg)`
-                        : 'rgba(0, 0, 0, 0.5)',
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      position: 'relative'
-                    }}>
-                      {/* Play Button Overlay */}
-                      <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '64px',
-                        height: '64px',
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
-                      }}>
-                        <svg style={{ width: '32px', height: '32px', color: '#000', marginLeft: '4px' }} fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                        </svg>
-                      </div>
-
-                      {/* Duration Badge */}
-                      {video.duration && (
-                        <div style={{
-                          position: 'absolute',
-                          bottom: '8px',
-                          right: '8px',
-                          padding: '4px 8px',
-                          background: 'rgba(0, 0, 0, 0.8)',
-                          borderRadius: '3px',
-                          fontSize: '12px',
-                          fontWeight: 600
-                        }}>
-                          {video.duration}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Video Info */}
-                    <div style={{ padding: '20px' }}>
-                      <h3 style={{
-                        fontSize: '18px',
-                        fontWeight: 500,
-                        marginBottom: '8px',
-                        color: '#fff',
-                        lineHeight: 1.4
-                      }}>
-                        {video.title}
-                      </h3>
-                      <p style={{
-                        fontSize: '14px',
-                        color: 'rgba(255, 255, 255, 0.6)',
-                        lineHeight: 1.6,
-                        marginBottom: '12px'
-                      }}>
-                        {video.description?.substring(0, 120)}{video.description?.length > 120 ? '...' : ''}
-                      </p>
-                      <div style={{
-                        fontSize: '12px',
-                        color: 'rgba(255, 255, 255, 0.4)'
-                      }}>
-                        {new Date(video.upload_date).toLocaleDateString('en-US', {
-                          month: 'long',
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
+                    {/* Video
