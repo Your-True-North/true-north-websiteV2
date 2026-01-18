@@ -227,6 +227,196 @@ export default function CallsPage() {
           </p>
         </div>
 
+        {/* Upcoming Events List */}
+        <div style={{ marginBottom: '40px' }}>
+          <h2 style={{
+            fontSize: isMobile ? '20px' : '24px',
+            fontWeight: 600,
+            marginBottom: '20px',
+            color: '#9bc4b8'
+          }}>
+            Upcoming Sessions
+          </h2>
+
+          {calendarEvents.length === 0 ? (
+            <div style={{
+              padding: '32px',
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '3px',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                fontSize: '48px',
+                marginBottom: '16px'
+              }}>
+                📅
+              </div>
+              <p style={{
+                fontSize: '16px',
+                color: 'rgba(255, 255, 255, 0.6)'
+              }}>
+                No upcoming sessions scheduled yet. Check back soon!
+              </p>
+            </div>
+          ) : (
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px'
+            }}>
+              {calendarEvents.slice(0, 5).map((event, idx) => {
+                const eventDate = new Date(event.date)
+                const isUpcoming = eventDate >= new Date()
+
+                if (!isUpcoming) return null
+
+                const dayOfWeek = eventDate.toLocaleDateString('en-US', { weekday: 'short' })
+                const month = eventDate.toLocaleDateString('en-US', { month: 'short' })
+                const day = eventDate.getDate()
+                const year = eventDate.getFullYear()
+                const time = eventDate.toLocaleTimeString('en-US', {
+                  hour: 'numeric',
+                  minute: '2-digit',
+                  hour12: true
+                })
+
+                return (
+                  <div
+                    key={idx}
+                    style={{
+                      display: 'flex',
+                      flexDirection: isMobile ? 'column' : 'row',
+                      gap: isMobile ? '16px' : '24px',
+                      padding: isMobile ? '20px' : '24px',
+                      background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.08), rgba(127, 176, 105, 0.08))',
+                      border: '1px solid rgba(155, 196, 184, 0.2)',
+                      borderRadius: '3px',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => {
+                      window.open(generateGoogleCalendarUrl(event), '_blank')
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(155, 196, 184, 0.15), rgba(127, 176, 105, 0.15))'
+                      e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.4)'
+                      e.currentTarget.style.transform = 'translateX(4px)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(155, 196, 184, 0.08), rgba(127, 176, 105, 0.08))'
+                      e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.2)'
+                      e.currentTarget.style.transform = 'translateX(0)'
+                    }}
+                  >
+                    {/* Date Badge */}
+                    <div style={{
+                      flexShrink: 0,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: isMobile ? '100%' : '100px',
+                      padding: '16px',
+                      background: 'rgba(155, 196, 184, 0.15)',
+                      border: '1px solid rgba(155, 196, 184, 0.3)',
+                      borderRadius: '3px'
+                    }}>
+                      <div style={{
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        color: '#7fb069',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                        marginBottom: '4px'
+                      }}>
+                        {month}
+                      </div>
+                      <div style={{
+                        fontSize: '32px',
+                        fontWeight: 700,
+                        color: '#9bc4b8',
+                        lineHeight: 1
+                      }}>
+                        {day}
+                      </div>
+                      <div style={{
+                        fontSize: '12px',
+                        color: 'rgba(255, 255, 255, 0.6)',
+                        marginTop: '4px'
+                      }}>
+                        {year}
+                      </div>
+                    </div>
+
+                    {/* Event Details */}
+                    <div style={{
+                      flex: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        flexWrap: 'wrap'
+                      }}>
+                        <h3 style={{
+                          fontSize: isMobile ? '18px' : '20px',
+                          fontWeight: 600,
+                          color: '#fff',
+                          margin: 0
+                        }}>
+                          {event.title}
+                        </h3>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '4px 12px',
+                          background: 'rgba(127, 176, 105, 0.2)',
+                          borderRadius: '3px',
+                          fontSize: '13px',
+                          fontWeight: 500,
+                          color: '#7fb069'
+                        }}>
+                          <span>🕒</span>
+                          <span>{time}</span>
+                        </div>
+                      </div>
+
+                      {event.description && (
+                        <p style={{
+                          fontSize: '14px',
+                          color: 'rgba(255, 255, 255, 0.7)',
+                          lineHeight: 1.6,
+                          margin: 0
+                        }}>
+                          {event.description}
+                        </p>
+                      )}
+
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginTop: '4px',
+                        fontSize: '13px',
+                        color: 'rgba(255, 255, 255, 0.5)'
+                      }}>
+                        <span>{dayOfWeek}</span>
+                        <span>•</span>
+                        <span>Click to add to your calendar</span>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+
         {/* Monthly Calendar */}
         <div style={{
           padding: isMobile ? '24px' : '32px',
