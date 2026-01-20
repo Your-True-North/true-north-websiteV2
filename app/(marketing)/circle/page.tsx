@@ -13,9 +13,8 @@ export default function Circle() {
   const [pricingPlan, setPricingPlan] = useState('yearly')
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [playerReady, setPlayerReady] = useState(false)
   const [showOverlay, setShowOverlay] = useState(true)
-  const playerRef = useRef(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -28,84 +27,31 @@ export default function Circle() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  useEffect(() => {
-    if (!window.YT) {
-      const tag = document.createElement('script')
-      tag.src = 'https://www.youtube.com/iframe_api'
-      const firstScriptTag = document.getElementsByTagName('script')[0]
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
-    }
 
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.destroy()
-      }
+  const handleInitialPlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play()
+      setIsPlaying(true)
+      setShowOverlay(false)
     }
-  }, [])
-
-  useEffect(() => {
-    if (isPlaying && !playerRef.current && window.YT) {
-      const initPlayer = () => {
-        playerRef.current = new window.YT.Player('youtube-player', {
-          videoId: 'GbpTduHxQ9s',
-          playerVars: {
-            autoplay: 1,
-            controls: 0,
-            modestbranding: 1,
-            rel: 0,
-            showinfo: 0,
-            fs: 1,
-            playsinline: 1,
-            vq: 'highres'
-          },
-          events: {
-            onReady: () => {
-              setPlayerReady(true)
-              setShowOverlay(false)
-            },
-            onStateChange: (event) => {
-              if (event.data === window.YT.PlayerState.PLAYING) {
-                setIsPlaying(true)
-                setShowOverlay(false)
-              } else if (event.data === window.YT.PlayerState.PAUSED) {
-                setIsPlaying(false)
-              } else if (event.data === window.YT.PlayerState.ENDED) {
-                setIsPlaying(false)
-                setShowOverlay(true)
-              }
-            }
-          }
-        })
-      }
-
-      if (window.YT.Player) {
-        initPlayer()
-      } else {
-        window.onYouTubeIframeAPIReady = initPlayer
-      }
-    }
-  }, [isPlaying])
+  }
 
   const handlePlayPause = () => {
-    if (playerRef.current && playerReady) {
+    if (videoRef.current) {
       if (isPlaying) {
-        playerRef.current.pauseVideo()
+        videoRef.current.pause()
+        setIsPlaying(false)
       } else {
-        playerRef.current.playVideo()
+        videoRef.current.play()
+        setIsPlaying(true)
       }
     }
   }
 
   const handleRewind = () => {
-    if (playerRef.current && playerReady) {
-      const currentTime = playerRef.current.getCurrentTime()
-      playerRef.current.seekTo(Math.max(0, currentTime - 10), true)
+    if (videoRef.current) {
+      videoRef.current.currentTime = Math.max(0, videoRef.current.currentTime - 10)
     }
-  }
-
-  const handleInitialPlay = () => {
-    setIsPlaying(true)
-    setShowOverlay(false)
   }
 
   const handleSubmit = async (e) => {
@@ -176,8 +122,8 @@ export default function Circle() {
               pointerEvents: "none",
               zIndex: 2
             }} />
-            <div
-              id="youtube-player"
+            <video
+              ref={videoRef}
               style={{
                 position: 'absolute',
                 top: '50%',
@@ -187,11 +133,20 @@ export default function Circle() {
                 minWidth: '100%',
                 minHeight: '100%',
                 transform: 'translate(-50%, -50%)',
+                objectFit: 'cover',
                 pointerEvents: showOverlay ? 'none' : 'auto',
                 opacity: showOverlay ? 0 : 1,
                 transition: 'opacity 0.3s ease'
               }}
-            />
+              playsInline
+              onEnded={() => {
+                setIsPlaying(false)
+                setShowOverlay(true)
+              }}
+            >
+              <source src="https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%20Page1.mov" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           {showOverlay && (
@@ -276,7 +231,7 @@ export default function Circle() {
             </div>
           )}
 
-          {isPlaying && playerReady && (
+          {isPlaying && !showOverlay && (
             <div style={{
               position: 'absolute',
               bottom: isMobile ? '2rem' : '1.5rem',
