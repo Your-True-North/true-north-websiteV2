@@ -160,8 +160,7 @@ export default function Circle() {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.15), rgba(127, 176, 105, 0.15))',
-              backdropFilter: 'blur(10px)',
+              background: 'transparent',
               zIndex: 10,
               cursor: 'pointer',
               transition: 'all 0.3s ease',
@@ -200,24 +199,28 @@ export default function Circle() {
                 width: isMobile ? '70px' : '90px',
                 height: isMobile ? '70px' : '90px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                background: 'rgba(155, 196, 184, 0.3)',
+                backdropFilter: 'blur(10px)',
+                border: '2px solid rgba(255, 255, 255, 0.3)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 transition: 'all 0.3s ease',
                 cursor: 'pointer',
-                boxShadow: '0 10px 30px rgba(155, 196, 184, 0.3)'
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'scale(1.1)'
-                e.currentTarget.style.boxShadow = '0 15px 40px rgba(155, 196, 184, 0.5)'
+                e.currentTarget.style.background = 'rgba(155, 196, 184, 0.5)'
+                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.5)'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'scale(1)'
-                e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.3)'
+                e.currentTarget.style.background = 'rgba(155, 196, 184, 0.3)'
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)'
               }}
               >
-                <Play size={isMobile ? 28 : 36} color="#000" fill="#000" style={{ marginLeft: '4px' }} />
+                <Play size={isMobile ? 28 : 36} color="#fff" fill="#fff" style={{ marginLeft: '4px' }} />
               </div>
 
               <p style={{
