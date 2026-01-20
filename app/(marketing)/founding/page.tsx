@@ -1,9 +1,10 @@
 'use client'
 
 import CircleCalendarTeaser from '../circle/components/CircleCalendarTeaser'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
+import { Play, Pause } from 'lucide-react'
 
 export default function FoundingMembersPage() {
   const [spotsRemaining, setSpotsRemaining] = useState<number | null>(10)
@@ -11,6 +12,9 @@ export default function FoundingMembersPage() {
   const [isSoldOut, setIsSoldOut] = useState(false)
   const [waitlistEmail, setWaitlistEmail] = useState('')
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [showOverlay, setShowOverlay] = useState(true)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const handleResize = () => {
@@ -88,6 +92,26 @@ export default function FoundingMembersPage() {
       }
     } catch (error) {
       console.error('Waitlist error:', error)
+    }
+  }
+
+  const handleInitialPlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play()
+      setIsPlaying(true)
+      setShowOverlay(false)
+    }
+  }
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause()
+        setIsPlaying(false)
+      } else {
+        videoRef.current.play()
+        setIsPlaying(true)
+      }
     }
   }
 
@@ -186,7 +210,7 @@ export default function FoundingMembersPage() {
               maxWidth: '500px',
               margin: '0 auto 40px'
             }}>
-          {/* YouTube Video */}
+          {/* Video Player */}
           <div style={{
             width: isMobile ? '100vw' : '100%',
             maxWidth: '900px',
@@ -195,20 +219,119 @@ export default function FoundingMembersPage() {
             left: isMobile ? '50%' : 'auto',
             transform: isMobile ? 'translateX(-50%)' : 'none'
           }}>
-            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-              <iframe
-                src="https://www.youtube.com/embed/GbpTduHxQ9s?modestbranding=1&rel=0&controls=0&showinfo=0&iv_load_policy=3"
+            <div style={{
+              position: 'relative',
+              paddingBottom: '56.25%',
+              height: 0,
+              background: '#000',
+              borderRadius: '8px',
+              overflow: 'hidden'
+            }}>
+              <video
+                ref={videoRef}
                 style={{
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   width: '100%',
                   height: '100%',
-                  border: 'none'
+                  objectFit: 'cover'
                 }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+                playsInline
+                onEnded={() => {
+                  setIsPlaying(false)
+                  setShowOverlay(true)
+                }}
+              >
+                <source src="https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%20Page1.mov" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              {/* Play Overlay */}
+              {showOverlay && (
+                <div
+                  onClick={handleInitialPlay}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(0, 0, 0, 0.6)',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  <div style={{
+                    width: isMobile ? '70px' : '90px',
+                    height: isMobile ? '70px' : '90px',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    boxShadow: '0 10px 30px rgba(155, 196, 184, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.1)'
+                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(155, 196, 184, 0.5)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)'
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(155, 196, 184, 0.3)'
+                  }}
+                  >
+                    <Play size={isMobile ? 28 : 36} color="#000" fill="#000" style={{ marginLeft: '4px' }} />
+                  </div>
+                </div>
+              )}
+
+              {/* Play/Pause Controls */}
+              {!showOverlay && (
+                <div style={{
+                  position: 'absolute',
+                  bottom: isMobile ? '1.5rem' : '2rem',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  zIndex: 100
+                }}>
+                  <button
+                    onClick={handlePlayPause}
+                    style={{
+                      width: '52px',
+                      height: '52px',
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                      border: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)'
+                      e.currentTarget.style.boxShadow = '0 5px 20px rgba(155, 196, 184, 0.5)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)'
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)'
+                    }}
+                  >
+                    {isPlaying ? (
+                      <Pause size={24} color="#000" fill="#000" />
+                    ) : (
+                      <Play size={24} color="#000" fill="#000" style={{ marginLeft: '2px' }} />
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
               <div style={{
