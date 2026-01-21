@@ -256,8 +256,9 @@ export default function Circle() {
                   width: '44px',
                   height: '44px',
                   borderRadius: '50%',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  background: 'rgba(155, 196, 184, 0.2)',
+                  backdropFilter: 'blur(10px)',
+                  border: '2px solid rgba(255, 255, 255, 0.3)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -265,12 +266,12 @@ export default function Circle() {
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.3)'
-                  e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
+                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.4)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.2)'
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
                 }}
               >
                 <RotateCcw size={20} color="#fff" />
@@ -282,8 +283,9 @@ export default function Circle() {
                   width: '52px',
                   height: '52px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                  border: 'none',
+                  background: 'rgba(155, 196, 184, 0.3)',
+                  backdropFilter: 'blur(10px)',
+                  border: '2px solid rgba(255, 255, 255, 0.3)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -292,17 +294,19 @@ export default function Circle() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'scale(1.05)'
+                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.5)'
                   e.currentTarget.style.boxShadow = '0 5px 20px rgba(155, 196, 184, 0.5)'
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'scale(1)'
+                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.3)'
                   e.currentTarget.style.boxShadow = 'none'
                 }}
               >
                 {isPlaying ? (
-                  <Pause size={24} color="#000" fill="#000" />
+                  <Pause size={24} color="#fff" fill="#fff" />
                 ) : (
-                  <Play size={24} color="#000" fill="#000" style={{ marginLeft: '2px' }} />
+                  <Play size={24} color="#fff" fill="#fff" style={{ marginLeft: '2px' }} />
                 )}
               </button>
             </div>
