@@ -6,21 +6,6 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 const members = [
   {
-    email: 'masondysonroberts@gmail.com',
-    name: 'Mason (Preview)',
-    password: 'eTMjpf2QQUvu'
-  },
-  {
-    email: 'alexantoniou29@gmail.com',
-    name: 'Alex Antoniou',
-    password: 'eTMjpf2QQUvu'
-  },
-  {
-    email: 'leadbyexample76@outlook.com',
-    name: 'Theodoros',
-    password: 'RM3dkuzBnZjr'
-  },
-  {
     email: 'freddienorwich@gmail.com',
     name: 'Freddie Norwich',
     password: '24qtWQ3Vj8LL'
