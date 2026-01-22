@@ -19,6 +19,11 @@ const members = [
     email: 'leadbyexample76@outlook.com',
     name: 'Theodoros',
     password: 'RM3dkuzBnZjr'
+  },
+  {
+    email: 'freddienorwich@gmail.com',
+    name: 'Freddie Norwich',
+    password: '24qtWQ3Vj8LL'
   }
 ]
 
