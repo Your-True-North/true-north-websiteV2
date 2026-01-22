@@ -39,15 +39,23 @@ async function sendWelcomeEmail() {
   `
 
   try {
-    const result = await resend.emails.send({
+    console.log('Sending email to:', email)
+    console.log('Using API key:', process.env.RESEND_API_KEY ? 'Present' : 'Missing')
+
+    const { data, error } = await resend.emails.send({
       from: 'thecor@yourtruenorth.me',
       to: email,
       subject: 'Welcome to Circle of Return - Your Account is Ready',
       html: emailContent
     })
 
-    console.log('Welcome email sent successfully!')
-    console.log('Email ID:', result.id)
+    if (error) {
+      console.error('Error sending email:', error)
+      return
+    }
+
+    console.log('✓ Welcome email sent successfully!')
+    console.log('Email ID:', data.id)
     console.log('To:', email)
     console.log('Password included:', password)
   } catch (error) {
