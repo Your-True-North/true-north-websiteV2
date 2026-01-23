@@ -115,7 +115,7 @@ export default function JourneyPage() {
       loadUserData(savedUser)
     }
 
-    const loadUserData = (savedUser: string) => {
+    const loadUserData = async (savedUser: string) => {
       try {
         const parsedUser = JSON.parse(savedUser)
 
