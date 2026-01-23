@@ -136,11 +136,21 @@ export default function JourneyPage() {
         return
       }
 
-      // Load likes and comments from localStorage
+      // Load likes from database and comments from localStorage
       try {
-        const savedLikes = localStorage.getItem('videoLikes')
+        // Fetch likes from database
+        const likesRes = await fetch(`/api/reactions?userId=${parsedUser.id}`)
+        if (likesRes.ok) {
+          const likesData = await likesRes.json()
+          if (likesData.success && likesData.likes) {
+            setVideoLikes(likesData.likes)
+            // Also save to localStorage as backup
+            localStorage.setItem('videoLikes', JSON.stringify(likesData.likes))
+          }
+        }
+
+        // Load comments from localStorage (comments will be migrated later)
         const savedComments = localStorage.getItem('videoComments')
-        if (savedLikes) setVideoLikes(JSON.parse(savedLikes))
         if (savedComments) setVideoComments(JSON.parse(savedComments))
       } catch (err) {
         console.error('[Journey] Failed to load user data:', err)
@@ -177,7 +187,10 @@ export default function JourneyPage() {
     }, 50)
   }
 
-  const handleLikeVideo = (videoId) => {
+  const handleLikeVideo = async (videoId) => {
+    if (!user || !user.id) return
+
+    // Optimistically update UI
     const newLikes = { ...videoLikes }
     if (newLikes[videoId]) {
       delete newLikes[videoId]
@@ -186,6 +199,30 @@ export default function JourneyPage() {
     }
     setVideoLikes(newLikes)
     localStorage.setItem('videoLikes', JSON.stringify(newLikes))
+
+    // Save to database
+    try {
+      const res = await fetch('/api/reactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ videoId, userId: user.id })
+      })
+
+      if (!res.ok) {
+        console.error('Failed to save like to database')
+        // Revert on error
+        const revertedLikes = { ...videoLikes }
+        if (revertedLikes[videoId]) {
+          delete revertedLikes[videoId]
+        } else {
+          revertedLikes[videoId] = true
+        }
+        setVideoLikes(revertedLikes)
+        localStorage.setItem('videoLikes', JSON.stringify(revertedLikes))
+      }
+    } catch (err) {
+      console.error('Error saving like:', err)
+    }
   }
 
   const handleAddComment = (videoId) => {
