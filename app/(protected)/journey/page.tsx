@@ -23,7 +23,8 @@ export default function JourneyPage() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedVideo, setSelectedVideo] = useState(null)
   const [isMobile, setIsMobile] = useState(false)
-  const [videoLikes, setVideoLikes] = useState({})
+  const [videoLikes, setVideoLikes] = useState<string[]>([])
+  const [authToken, setAuthToken] = useState<string | null>(null)
   const [videoComments, setVideoComments] = useState({})
   const [newComment, setNewComment] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
@@ -74,7 +75,24 @@ export default function JourneyPage() {
 
   useEffect(() => {
     // MAXIMUM AGGRESSIVE multi-retry strategy for Chrome
-    const checkAuth = async () => {
+    
+  const loadLikesFromDatabase = async (token: string) => {
+    try {
+      const res = await fetch('/api/reactions', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.success && data.likes) {
+          setVideoLikes(data.likes)
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load likes from database:', error)
+    }
+  }
+
+  const checkAuth = async () => {
       // Check if we just logged in
       const justLoggedIn = localStorage.getItem('justLoggedIn')
 
@@ -129,6 +147,16 @@ export default function JourneyPage() {
 
         logger.debug('Journey', 'User authenticated', parsedUser.email)
         setUser(parsedUser)
+
+        const token = localStorage.getItem('auth_token') || document.cookie
+          .split('; ')
+          .find(row => row.startsWith('auth_token='))
+          ?.split('=')[1]
+
+        if (token) {
+          setAuthToken(token)
+          await loadLikesFromDatabase(token)
+        }
       } catch (err) {
         console.error('[Journey] Failed to parse user data:', err)
         localStorage.removeItem('user')
@@ -236,7 +264,7 @@ export default function JourneyPage() {
 
   const getVideoLikesCount = (videoId) => {
     const baseLikes = videos.find(v => v.id === videoId)?.likes || 0
-    return baseLikes + (videoLikes[videoId] ? 1 : 0)
+    return baseLikes + (videoLikes.includes(videoId) ? 1 : 0)
   }
 
   const getVideoCommentsCount = (videoId) => {
@@ -810,28 +838,28 @@ export default function JourneyPage() {
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.75rem 1.5rem',
-                    background: videoLikes[selectedVideo.id] ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-                    border: videoLikes[selectedVideo.id] ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
+                    background: videoLikes.includes(selectedVideo.id) ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                    border: videoLikes.includes(selectedVideo.id) ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: videoLikes[selectedVideo.id] ? '#ef4444' : '#fff',
+                    color: videoLikes.includes(selectedVideo.id) ? '#ef4444' : '#fff',
                     cursor: 'pointer',
                     fontSize: '0.95rem',
                     fontWeight: 500,
                     transition: 'all 0.2s ease'
                   }}
                   onMouseEnter={(e) => {
-                    if (!videoLikes[selectedVideo.id]) {
+                    if (!videoLikes.includes(selectedVideo.id)) {
                       e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
                     }
                   }}
                   onMouseLeave={(e) => {
-                    if (!videoLikes[selectedVideo.id]) {
+                    if (!videoLikes.includes(selectedVideo.id)) {
                       e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
                     }
                   }}
                 >
                   <span style={{ fontSize: '1.2rem' }}>❤️</span>
-                  <span>{videoLikes[selectedVideo.id] ? 'Liked' : 'Like'}</span>
+                  <span>{videoLikes.includes(selectedVideo.id) ? 'Liked' : 'Like'}</span>
                   <span>({getVideoLikesCount(selectedVideo.id)})</span>
                 </button>
               </div>
