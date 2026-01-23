@@ -136,24 +136,12 @@ export default function JourneyPage() {
         return
       }
 
-      // Load likes from database and comments from localStorage
+      // Load comments from localStorage
       try {
-        // Fetch likes from database
-        const likesRes = await fetch(`/api/reactions?userId=${parsedUser.id}`)
-        if (likesRes.ok) {
-          const likesData = await likesRes.json()
-          if (likesData.success && likesData.likes) {
-            setVideoLikes(likesData.likes)
-            // Also save to localStorage as backup
-            localStorage.setItem('videoLikes', JSON.stringify(likesData.likes))
-          }
-        }
-
-        // Load comments from localStorage (comments will be migrated later)
         const savedComments = localStorage.getItem('videoComments')
         if (savedComments) setVideoComments(JSON.parse(savedComments))
       } catch (err) {
-        console.error('[Journey] Failed to load user data:', err)
+        console.error('[Journey] Failed to load comments:', err)
       }
     }
 
