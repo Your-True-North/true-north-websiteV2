@@ -155,7 +155,7 @@ export default function JourneyPage() {
 
         if (token) {
           setAuthToken(token)
-          await loadLikesFromDatabase(token)
+          loadLikesFromDatabase(token)
         }
       } catch (err) {
         console.error('[Journey] Failed to parse user data:', err)
