@@ -36,6 +36,7 @@ export async function GET(request: NextRequest) {
 
     const result = await client.query(query, params)
 
+    // Get categories count
     const catResult = await client.query(`
       SELECT category, COUNT(*) as count 
       FROM videos 
@@ -50,6 +51,7 @@ export async function GET(request: NextRequest) {
 
     await client.end()
 
+    // Transform to match frontend interface
     const videos = result.rows.map(v => ({
       id: v.id,
       title: v.title,
