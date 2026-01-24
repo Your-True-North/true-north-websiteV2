@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     await client.connect()
 
     let query = 'SELECT * FROM videos WHERE status = $1'
-    const params: any[] = ['published']
+    const params: any[] = ['active']
 
     if (category !== 'all') {
       query += ' AND category = $2'
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     const catResult = await client.query(`
       SELECT category, COUNT(*) as count 
       FROM videos 
-      WHERE status = 'published' 
+      WHERE status = 'active' 
       GROUP BY category
     `)
 
