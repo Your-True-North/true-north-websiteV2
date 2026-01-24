@@ -50,53 +50,89 @@ export async function GET(request) {
     await client.query(migration004);
     steps.push('✅ Migration 004 completed');
 
-    // Migration 005 (fix community_posts userId column)
-    steps.push('Running migration 005: Fix community_posts userId column...');
+    // Migration 005 (fix userId columns in community tables)
+    steps.push('Running migration 005: Fix userId columns in community_posts and post_replies...');
 
-    // Check if userId already exists
-    const checkUserId = await client.query(`
+    // Fix community_posts table
+    const checkPostsUserId = await client.query(`
       SELECT column_name
       FROM information_schema.columns
       WHERE table_name = 'community_posts'
       AND column_name = 'userId'
     `);
 
-    if (checkUserId.rows.length > 0) {
-      steps.push('✅ Column "userId" already exists - skipping migration 005');
+    if (checkPostsUserId.rows.length > 0) {
+      steps.push('✅ community_posts."userId" already exists');
     } else {
-      // Check if user_id exists (snake_case)
-      const checkUserIdSnake = await client.query(`
+      const checkPostsSnake = await client.query(`
         SELECT column_name
         FROM information_schema.columns
         WHERE table_name = 'community_posts'
         AND column_name = 'user_id'
       `);
 
-      if (checkUserIdSnake.rows.length > 0) {
-        steps.push('Found user_id column, renaming to "userId"...');
-
-        // Rename user_id to "userId" (case-preserved with quotes)
+      if (checkPostsSnake.rows.length > 0) {
+        steps.push('Renaming community_posts.user_id to "userId"...');
         await client.query(`
           ALTER TABLE community_posts
           RENAME COLUMN user_id TO "userId"
         `);
-
-        steps.push('✅ Successfully renamed user_id to "userId"');
-      } else {
-        steps.push('⚠️ Neither userId nor user_id found - column may need manual creation');
+        steps.push('✅ Successfully renamed community_posts.user_id to "userId"');
       }
     }
 
-    // Verify the fix
-    const verify = await client.query(`
+    // Fix post_replies table
+    const checkRepliesUserId = await client.query(`
+      SELECT column_name
+      FROM information_schema.columns
+      WHERE table_name = 'post_replies'
+      AND column_name = 'userId'
+    `);
+
+    if (checkRepliesUserId.rows.length > 0) {
+      steps.push('✅ post_replies."userId" already exists');
+    } else {
+      const checkRepliesSnake = await client.query(`
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name = 'post_replies'
+        AND column_name = 'user_id'
+      `);
+
+      if (checkRepliesSnake.rows.length > 0) {
+        steps.push('Renaming post_replies.user_id to "userId"...');
+        await client.query(`
+          ALTER TABLE post_replies
+          RENAME COLUMN user_id TO "userId"
+        `);
+        steps.push('✅ Successfully renamed post_replies.user_id to "userId"');
+      }
+    }
+
+    // Verify both fixes
+    const verifyPosts = await client.query(`
       SELECT column_name
       FROM information_schema.columns
       WHERE table_name = 'community_posts'
       AND column_name = 'userId'
     `);
 
-    if (verify.rows.length > 0) {
-      steps.push('✅ Verification successful: "userId" column exists in community_posts');
+    const verifyReplies = await client.query(`
+      SELECT column_name
+      FROM information_schema.columns
+      WHERE table_name = 'post_replies'
+      AND column_name = 'userId'
+    `);
+
+    if (verifyPosts.rows.length > 0 && verifyReplies.rows.length > 0) {
+      steps.push('✅ Verification successful: Both tables have "userId" column');
+    } else {
+      if (verifyPosts.rows.length === 0) {
+        steps.push('⚠️ WARNING: community_posts."userId" not found after migration');
+      }
+      if (verifyReplies.rows.length === 0) {
+        steps.push('⚠️ WARNING: post_replies."userId" not found after migration');
+      }
     }
 
     return Response.json({
