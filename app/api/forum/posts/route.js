@@ -26,7 +26,7 @@ export async function GET(request) {
       params.push(category)
     }
 
-    sql += ' GROUP BY cp.id, u.name, u.profile_photo ORDER BY cp."createdAt" DESC'
+    sql += ' GROUP BY cp.id, u.name, u.profile_photo ORDER BY cp.created_at DESC'
 
     const result = await query(sql, params)
 
