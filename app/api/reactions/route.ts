@@ -49,26 +49,27 @@ export async function POST(request: NextRequest) {
 
     await client.connect()
 
-    // Check if already liked
+    // Check if already liked - use correct Prisma column names
     const existing = await client.query(
-      `SELECT video_id FROM reactions WHERE video_id = $1 AND "userId" = $2 AND reaction_type = $3`,
-      [videoId, userId, reactionType]
+      `SELECT id FROM reactions WHERE "videoId" = $1 AND "userId" = $2 AND type = $3`,
+      [videoId, String(userId), reactionType]
     )
 
     if (existing.rows.length > 0) {
       // Unlike - remove the reaction
       await client.query(
-        `DELETE FROM reactions WHERE video_id = $1 AND "userId" = $2 AND reaction_type = $3`,
-        [videoId, userId, reactionType]
+        `DELETE FROM reactions WHERE "videoId" = $1 AND "userId" = $2 AND type = $3`,
+        [videoId, String(userId), reactionType]
       )
       await client.end()
       return NextResponse.json({ success: true, liked: false })
     } else {
-      // Like - add the reaction
+      // Like - add the reaction (generate cuid-like id)
+      const id = 'clr' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
       await client.query(
-        `INSERT INTO reactions (video_id, "userId", reaction_type)
-         VALUES ($1, $2, $3)`,
-        [videoId, userId, reactionType]
+        `INSERT INTO reactions (id, "videoId", "userId", type, "createdAt")
+         VALUES ($1, $2, $3, $4, NOW())`,
+        [id, videoId, String(userId), reactionType]
       )
       await client.end()
       return NextResponse.json({ success: true, liked: true })
@@ -96,8 +97,8 @@ export async function DELETE(request: NextRequest) {
     await client.connect()
 
     await client.query(
-      `DELETE FROM reactions WHERE video_id = $1 AND "userId" = $2 AND reaction_type = $3`,
-      [videoId, userId, reactionType]
+      `DELETE FROM reactions WHERE "videoId" = $1 AND "userId" = $2 AND type = $3`,
+      [videoId, String(userId), reactionType]
     )
 
     await client.end()
@@ -128,25 +129,25 @@ export async function GET(request: NextRequest) {
     if (videoId) {
       // Get reactions for specific video
       const result = await client.query(
-        `SELECT reaction_type FROM reactions WHERE video_id = $1 AND "userId" = $2`,
-        [videoId, userId]
+        `SELECT type FROM reactions WHERE "videoId" = $1 AND "userId" = $2`,
+        [videoId, String(userId)]
       )
       await client.end()
-      return NextResponse.json({ reactions: result.rows.map((r: any) => r.reaction_type) })
+      return NextResponse.json({ reactions: result.rows.map((r: any) => r.type) })
     }
 
     // Get all user's likes
     const result = await client.query(
-      `SELECT video_id FROM reactions WHERE "userId" = $1`,
-      [userId]
+      `SELECT "videoId" FROM reactions WHERE "userId" = $1`,
+      [String(userId)]
     )
 
     await client.end()
 
     // Return as object with video IDs as keys (for easy lookup)
-    const likes: Record<number, boolean> = {}
+    const likes: Record<string, boolean> = {}
     result.rows.forEach((row: any) => {
-      likes[row.video_id] = true
+      likes[row.videoId] = true
     })
 
     return NextResponse.json({ success: true, likes })
