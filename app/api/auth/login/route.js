@@ -4,9 +4,11 @@ import jwt from 'jsonwebtoken'
 import pkg from 'pg'
 const { Client } = pkg
 
+const FALLBACK_DATABASE_URL = 'postgresql://postgres:HzWkEmYnKjZtevzZTGrHZMbvNcEpFNVV@yamabiko.proxy.rlwy.net:39135/railway'
+
 export async function POST(request) {
   const client = new Client({
-    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || FALLBACK_DATABASE_URL,
     ssl: { rejectUnauthorized: false },
     connectionTimeoutMillis: 5000
   })

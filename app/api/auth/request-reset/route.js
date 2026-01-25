@@ -4,6 +4,8 @@ import { sendEmail } from '@/lib/sendgrid'
 import pkg from 'pg'
 const { Client } = pkg
 
+const FALLBACK_DATABASE_URL = 'postgresql://postgres:HzWkEmYnKjZtevzZTGrHZMbvNcEpFNVV@yamabiko.proxy.rlwy.net:39135/railway'
+
 function generatePassword(length = 10) {
   const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%'
   let password = ''
@@ -27,7 +29,7 @@ export async function POST(request) {
   console.log('[Password Reset]   - NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL || 'NOT SET')
 
   const client = new Client({
-    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || FALLBACK_DATABASE_URL,
     ssl: { rejectUnauthorized: false },
     connectionTimeoutMillis: 5000
   })

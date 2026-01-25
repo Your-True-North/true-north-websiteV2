@@ -1,17 +1,19 @@
 import { NextResponse } from 'next/server'
 import { Client } from 'pg'
 
+const FALLBACK_DATABASE_URL = 'postgresql://postgres:HzWkEmYnKjZtevzZTGrHZMbvNcEpFNVV@yamabiko.proxy.rlwy.net:39135/railway'
+
 export async function DELETE(request) {
   try {
     const { id, type, userEmail } = await request.json()
-    
+
     // Admin check
     if (userEmail !== 'navigate@yourtruenorth.me') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
-    
+
     const client = new Client({
-      connectionString: process.env.DATABASE_URL
+      connectionString: process.env.DATABASE_URL || FALLBACK_DATABASE_URL
     })
     
     await client.connect()
