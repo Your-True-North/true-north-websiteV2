@@ -21,7 +21,7 @@ export async function GET(request) {
       params.push(category)
     }
 
-    sql += ' ORDER BY created_at DESC'
+    sql += ' ORDER BY createdat DESC'
 
     const postsResult = await client.query(sql, params)
 
@@ -32,7 +32,7 @@ export async function GET(request) {
       category: post.category,
       title: post.title,
       content: post.content,
-      created_at: post.created_at || post.createdat,
+      created_at: post.createdat,
       user_name: 'Member',
       user_photo: null,
       reply_count: 0,
@@ -68,19 +68,19 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Content required (min 10 chars)' }, { status: 400 })
     }
 
-    // Try both column name styles
+    // Try both column name styles - don't set createdat, let DB default handle it
     let result
     try {
       result = await client.query(
-        `INSERT INTO community_posts ("userId", category, title, content, created_at)
-         VALUES ($1, $2, $3, $4, NOW())
+        `INSERT INTO community_posts ("userId", category, title, content)
+         VALUES ($1, $2, $3, $4)
          RETURNING *`,
         [userId, category || null, title || null, content]
       )
     } catch (e) {
       result = await client.query(
-        `INSERT INTO community_posts (user_id, category, title, content, created_at)
-         VALUES ($1, $2, $3, $4, NOW())
+        `INSERT INTO community_posts (user_id, category, title, content)
+         VALUES ($1, $2, $3, $4)
          RETURNING *`,
         [userId, category || null, title || null, content]
       )
