@@ -39,7 +39,7 @@ export async function GET(request, { params }) {
        LEFT JOIN reply_likes rl ON pr.id = rl.reply_id
        WHERE pr.post_id = $1
        GROUP BY pr.id, u.name, u.profile_photo
-       ORDER BY pr.created_at ASC`,
+       ORDER BY pr.createdat ASC`,
       [postId]
     )
 
