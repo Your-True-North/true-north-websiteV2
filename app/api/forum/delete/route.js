@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Client } from 'pg'
 
-const FALLBACK_DATABASE_URL = 'postgresql://postgres:HzWkEmYnKjZtevzZTGrHZMbvNcEpFNVV@yamabiko.proxy.rlwy.net:39135/railway'
+const FALLBACK_DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
 
 export async function DELETE(request) {
   try {
