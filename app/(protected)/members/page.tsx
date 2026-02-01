@@ -240,7 +240,7 @@ export default function MembersPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Entering portal...</div>
       </div>
     )
@@ -258,14 +258,14 @@ export default function MembersPage() {
   const levelStages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
   const currentStageIndex = levelStages.indexOf(user.level)
   const levelColors: { [key: string]: string } = {
-    'Seeker': '#9bc4b8',
+    'Seeker': '#e67e22',
     'Explorer': '#7fb069',
     'Pathfinder': '#6a994e',
     'Guide': '#8db4a8'
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#fff', paddingTop: '6rem' }}>
       {/* Animated Background */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
@@ -343,7 +343,7 @@ export default function MembersPage() {
               fontWeight: 300,
               border: '1px solid rgba(155, 196, 184, 0.3)',
               borderRadius: '8px',
-              color: '#9bc4b8',
+              color: '#e67e22',
               textDecoration: 'none',
               transition: 'all 0.3s ease'
             }}
@@ -366,7 +366,7 @@ export default function MembersPage() {
                 border: '1px solid rgba(155, 196, 184, 0.3)',
                 borderRadius: '8px',
                 background: 'transparent',
-                color: '#9bc4b8',
+                color: '#e67e22',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}
@@ -739,7 +739,7 @@ Your Progress
               borderRadius: '8px',
               transition: 'all 0.3s ease'
             }}>
-              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#e67e22', marginBottom: '0.5rem' }}>
                 {stats.videosWatched || 0}
               </div>
               <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>
@@ -840,7 +840,7 @@ Your Progress
         >
           <div
             style={{
-              background: '#0a0a0b',
+              background: '#ffffff',
               borderRadius: '12px',
               border: '1px solid rgba(255, 255, 255, 0.2)',
               maxWidth: '32rem',
@@ -901,7 +901,7 @@ Your Progress
                   background: 'rgba(155, 196, 184, 0.1)',
                   border: '1px solid rgba(155, 196, 184, 0.3)',
                   borderRadius: '8px',
-                  color: '#9bc4b8',
+                  color: '#e67e22',
                   fontSize: '0.875rem',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
@@ -1021,7 +1021,7 @@ Your Progress
                   style={{
                     flex: 1,
                     padding: '0.875rem',
-                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    background: 'linear-gradient(135deg, #e67e22, #7fb069)',
                     color: '#000',
                     fontWeight: 600,
                     fontSize: '1rem',

@@ -5,7 +5,7 @@ import { logger } from '@/lib/logger'
 
 
 const mockCategories = [
-  { name: "Foundation Work", icon: "🎯", count: 2, color: "#e67e22" },
+  { name: "Foundation Work", icon: "🎯", count: 2, color: "#9bc4b8" },
   { name: "Breathwork Sessions", icon: "🌊", count: 1, color: "#7fb069" },
   { name: "Live Teachings", icon: "⚡", count: 0, color: "#6a994e" },
   { name: "Integration Practices", icon: "🔥", count: 0, color: "#8db4a8" }
@@ -277,19 +277,19 @@ export default function JourneyPage() {
     ? videos 
     : videos.filter(video => video.category === selectedCategory)
 
-  const currentLevel = { name: "Seeker", color: "#e67e22" }
+  const currentLevel = { name: "Seeker", color: "#9bc4b8" }
   const nextLevelDays = 45
 
   if (!user) {
     return (
-      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Loading your journey...</div>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
         position: 'sticky',
@@ -329,7 +329,7 @@ export default function JourneyPage() {
               fontWeight: 300,
               border: '1px solid rgba(155, 196, 184, 0.3)',
               borderRadius: '8px',
-              color: '#e67e22',
+              color: '#9bc4b8',
               textDecoration: 'none',
               transition: 'all 0.3s ease'
             }}
@@ -412,7 +412,7 @@ export default function JourneyPage() {
                       borderRadius: '8px',
                       background: selectedCategory === "All" ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
                       border: selectedCategory === "All" ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
-                      color: selectedCategory === "All" ? '#e67e22' : '#fff',
+                      color: selectedCategory === "All" ? '#9bc4b8' : '#fff',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease'
                     }}
@@ -420,7 +420,7 @@ export default function JourneyPage() {
                     <div style={{ 
                       width: '20px', 
                       height: '20px', 
-                      background: 'linear-gradient(45deg, #e67e22, #7fb069)', 
+                      background: 'linear-gradient(45deg, #9bc4b8, #7fb069)', 
                       borderRadius: '4px',
                       display: 'flex',
                       alignItems: 'center',
@@ -451,7 +451,7 @@ export default function JourneyPage() {
                         borderRadius: '8px',
                         background: selectedCategory === category.name ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
                         border: selectedCategory === category.name ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
-                        color: selectedCategory === category.name ? '#e67e22' : '#fff',
+                        color: selectedCategory === category.name ? '#9bc4b8' : '#fff',
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}
@@ -532,8 +532,8 @@ export default function JourneyPage() {
                     ? "Your complete transformation journey" 
                     : `${filteredVideos.length} videos in this category`}
                 </p>
-                {selectedCategory === "Breathwork Sessions" && (<a href="https://yourtruenorth.me/Breathwork_Session_Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #e67e22, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
-                {selectedCategory === "Integration Practices" && (<a href="https://yourtruenorth.me/Integration_Journal.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #e67e22, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download The Integration Journal</a>)}              </div>
+                {selectedCategory === "Breathwork Sessions" && (<a href="https://yourtruenorth.me/Breathwork_Session_Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
+                {selectedCategory === "Integration Practices" && (<a href="https://yourtruenorth.me/Integration_Journal.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download The Integration Journal</a>)}              </div>
 
               <div style={{ padding: '1.5rem' }}>
                 <div style={{ 
@@ -665,7 +665,7 @@ export default function JourneyPage() {
                         borderLeft: '2px solid rgba(155, 196, 184, 0.4)' 
                       }}
                     >
-                      <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                      <div style={{ color: '#9bc4b8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                         {activity.user}
                       </div>
                       <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
@@ -706,7 +706,7 @@ export default function JourneyPage() {
                         borderLeft: '2px solid rgba(155, 196, 184, 0.4)' 
                       }}
                     >
-                      <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                      <div style={{ color: '#9bc4b8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                         {activity.user}
                       </div>
                       <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
@@ -745,7 +745,7 @@ export default function JourneyPage() {
         >
           <div 
             style={{ 
-              background: '#ffffff', 
+              background: '#0a0a0b', 
               borderRadius: '12px', 
               border: '1px solid rgba(255, 255, 255, 0.2)', 
               maxWidth: '56rem', 
@@ -898,7 +898,7 @@ export default function JourneyPage() {
                     disabled={!newComment.trim()}
                     style={{
                       padding: '0.75rem 1.5rem',
-                      background: newComment.trim() ? 'linear-gradient(135deg, #e67e22, #7fb069)' : 'rgba(255, 255, 255, 0.1)',
+                      background: newComment.trim() ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : 'rgba(255, 255, 255, 0.1)',
                       color: newComment.trim() ? '#000' : 'rgba(255, 255, 255, 0.3)',
                       border: 'none',
                       borderRadius: '8px',
@@ -929,7 +929,7 @@ export default function JourneyPage() {
                           width: '32px',
                           height: '32px',
                           borderRadius: '50%',
-                          background: 'linear-gradient(135deg, #e67e22, #7fb069)',
+                          background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -940,7 +940,7 @@ export default function JourneyPage() {
                           {comment.userName.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#e67e22' }}>
+                          <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#9bc4b8' }}>
                             {comment.userName}
                           </div>
                           <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
