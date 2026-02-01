@@ -207,11 +207,11 @@ export default function JourneyPage() {
     if (!user || !user.id) return
 
     // Optimistically update UI
-    const newLikes = { ...videoLikes }
-    if (newLikes[videoId]) {
-      delete newLikes[videoId]
-    } else {
-      newLikes[videoId] = true
+    const newLikes = videoLikes.includes(videoId)
+    ? videoLikes.filter(id => id !== videoId)  // remove like
+      : [...videoLikes, videoId]  // add like
+    
+      
     }
     setVideoLikes(newLikes)
     localStorage.setItem('videoLikes', JSON.stringify(newLikes))
