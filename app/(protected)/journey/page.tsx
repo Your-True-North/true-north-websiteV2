@@ -203,16 +203,6 @@ export default function JourneyPage() {
     }, 50)
   }
 
-  const handleLikeVideo = async (videoId) => {
-    if (!user || !user.id) return
-
-    // Optimistically update UI
-    const newLikes = videoLikes.includes(videoId)
-    ? videoLikes.filter(id => id !== videoId)  // remove like
-      : [...videoLikes, videoId]  // add like
-    
-      
-    }
     setVideoLikes(newLikes)
     localStorage.setItem('videoLikes', JSON.stringify(newLikes))
 
