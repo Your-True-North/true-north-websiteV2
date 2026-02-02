@@ -98,7 +98,7 @@ export default function ReplaysPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 16px' : '40px 20px' }}>
         {/* Header */}
         <div style={{ marginBottom: '40px' }}>
@@ -149,7 +149,7 @@ export default function ReplaysPage() {
                 background: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '14px',
                 outline: 'none'
               }}
@@ -167,7 +167,7 @@ export default function ReplaysPage() {
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '3px',
-              color: '#fff',
+              color: '#1a1a1a',
               fontSize: '14px',
               outline: 'none',
               cursor: 'pointer'
@@ -316,7 +316,7 @@ export default function ReplaysPage() {
                       fontSize: '18px',
                       fontWeight: 500,
                       marginBottom: '8px',
-                      color: '#fff',
+                      color: '#1a1a1a',
                       lineHeight: 1.4
                     }}>
                       {video.title}

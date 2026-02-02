@@ -168,7 +168,7 @@ export default function ForumPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#1a1a1a', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 20px' }}>
         {/* Header */}
         <div style={{ marginBottom: '40px' }}>
@@ -216,7 +216,7 @@ export default function ForumPage() {
                 background: selectedCategory === cat ? '#7ba69b' : 'rgba(255, 255, 255, 0.05)',
                 border: selectedCategory === cat ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '14px',
                 fontWeight: 600,
                 cursor: 'pointer',
@@ -290,7 +290,7 @@ export default function ForumPage() {
                   {!post.user_photo && post.user_name?.charAt(0).toUpperCase()}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '14px', fontWeight: 600, color: '#fff' }}>
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a1a' }}>
                     {post.user_name}
                   </div>
                   <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.5)' }}>
@@ -373,7 +373,7 @@ export default function ForumPage() {
                 background: '#7ba69b',
                 border: 'none',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '14px',
                 fontWeight: 600,
                 cursor: 'pointer'
@@ -433,7 +433,7 @@ export default function ForumPage() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '16px',
                     outline: 'none'
                   }}
@@ -465,7 +465,7 @@ export default function ForumPage() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '16px',
                     outline: 'none'
                   }}
@@ -495,7 +495,7 @@ export default function ForumPage() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '16px',
                     outline: 'none',
                     resize: 'vertical'
@@ -521,7 +521,7 @@ export default function ForumPage() {
                     background: posting ? 'rgba(123, 166, 155, 0.5)' : '#7ba69b',
                     border: 'none',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '16px',
                     fontWeight: 600,
                     cursor: posting ? 'not-allowed' : 'pointer'
@@ -537,7 +537,7 @@ export default function ForumPage() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '16px',
                     fontWeight: 600,
                     cursor: 'pointer'

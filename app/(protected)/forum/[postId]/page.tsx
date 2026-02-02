@@ -165,7 +165,7 @@ export default function PostDetailPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#1a1a1a', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
         {/* Back Link */}
         <Link
@@ -208,7 +208,7 @@ export default function PostDetailPage() {
               {!post.user_photo && post.user_name?.charAt(0).toUpperCase()}
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '16px', fontWeight: 600, color: '#fff' }}>
+              <div style={{ fontSize: '16px', fontWeight: 600, color: '#1a1a1a' }}>
                 {post.user_name}
               </div>
               <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
@@ -247,7 +247,7 @@ export default function PostDetailPage() {
               background: liked ? '#7fb069' : 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '3px',
-              color: '#fff',
+              color: '#1a1a1a',
               fontSize: '14px',
               cursor: 'pointer',
               display: 'flex',
@@ -284,7 +284,7 @@ export default function PostDetailPage() {
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '3px',
-              color: '#fff',
+              color: '#1a1a1a',
               fontSize: '16px',
               outline: 'none',
               resize: 'vertical',
@@ -299,7 +299,7 @@ export default function PostDetailPage() {
               background: posting ? 'rgba(127, 176, 105, 0.5)' : '#7fb069',
               border: 'none',
               borderRadius: '3px',
-              color: '#fff',
+              color: '#1a1a1a',
               fontSize: '14px',
               fontWeight: 600,
               cursor: posting ? 'not-allowed' : 'pointer'
@@ -344,7 +344,7 @@ export default function PostDetailPage() {
                     {!reply.user_photo && reply.user_name?.charAt(0).toUpperCase()}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#fff' }}>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a1a' }}>
                       {reply.user_name}
                     </div>
                     <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.5)' }}>

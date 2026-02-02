@@ -245,7 +245,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#1a1a1a', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
         position: 'fixed',
@@ -269,7 +269,7 @@ export default function AdminPage() {
             fontSize: '1.5rem',
             fontWeight: 300,
             letterSpacing: '0.2em',
-            color: '#fff',
+            color: '#1a1a1a',
             textDecoration: 'none'
           }}>
             CIRCLE OF RETURN
@@ -672,7 +672,7 @@ export default function AdminPage() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '0.875rem'
                   }}
                   placeholder="Enter video title"
@@ -697,7 +697,7 @@ export default function AdminPage() {
                       background: 'rgba(255, 255, 255, 0.05)',
                       border: '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '8px',
-                      color: '#fff',
+                      color: '#1a1a1a',
                       fontSize: '0.875rem'
                     }}
                     placeholder="25"
@@ -720,7 +720,7 @@ export default function AdminPage() {
                       background: 'rgba(255, 255, 255, 0.05)',
                       border: '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '8px',
-                      color: '#fff',
+                      color: '#1a1a1a',
                       fontSize: '0.875rem'
                     }}
                   >
@@ -748,7 +748,7 @@ export default function AdminPage() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '0.875rem'
                   }}
                   placeholder="https://www.youtube.com/watch?v=..."
@@ -772,7 +772,7 @@ export default function AdminPage() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '0.875rem',
                     resize: 'vertical'
                   }}
@@ -796,7 +796,7 @@ export default function AdminPage() {
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '0.875rem'
                   }}
                 >
@@ -829,7 +829,7 @@ export default function AdminPage() {
                   style={{
                     padding: '0.75rem 1.5rem',
                     background: 'rgba(255, 255, 255, 0.1)',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     border: 'none',
                     borderRadius: '8px',
                     cursor: 'pointer'

@@ -139,7 +139,7 @@ export default function LibraryPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#fff' }}>
+    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#1a1a1a' }}>
       {/* Animated Background */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
@@ -254,7 +254,7 @@ export default function LibraryPage() {
                     borderRadius: '8px',
                     padding: '1.5rem',
                     textDecoration: 'none',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     transition: 'all 0.3s ease',
                     overflow: 'hidden'
                   }}
@@ -383,7 +383,7 @@ export default function LibraryPage() {
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '3px',
-              color: '#fff',
+              color: '#1a1a1a',
               fontSize: '1rem',
               outline: 'none'
             }}
@@ -396,7 +396,7 @@ export default function LibraryPage() {
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '3px',
-              color: '#fff',
+              color: '#1a1a1a',
               fontSize: '1rem',
               outline: 'none',
               cursor: 'pointer'
