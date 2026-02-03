@@ -200,7 +200,7 @@ export default function CallsPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: '#999'
       }}>
         Loading...
       </div>
@@ -208,7 +208,7 @@ export default function CallsPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 16px' : '40px 20px' }}>
         {/* Header */}
         <div style={{ marginBottom: '40px' }}>
@@ -233,7 +233,7 @@ export default function CallsPage() {
           </h1>
           <p style={{
             fontSize: '16px',
-            color: 'rgba(255, 255, 255, 0.6)'
+            color: '#666'
           }}>
             Join monthly live sessions with True and guest experts
           </p>
@@ -307,7 +307,7 @@ export default function CallsPage() {
               </div>
               <p style={{
                 fontSize: '16px',
-                color: 'rgba(255, 255, 255, 0.6)'
+                color: '#666'
               }}>
                 No upcoming sessions scheduled yet. Check back soon!
               </p>
@@ -377,7 +377,7 @@ export default function CallsPage() {
                           </div>
                           <div style={{
                             fontSize: '12px',
-                            color: 'rgba(255, 255, 255, 0.5)'
+                            color: '#999'
                           }}>
                             {time}
                           </div>
@@ -388,13 +388,13 @@ export default function CallsPage() {
                           flex: 1,
                           fontSize: '15px',
                           fontWeight: 500,
-                          color: '#fff'
+                          color: '#1a1a1a'
                         }}>
                           {event.title}
                         </div>
 
                         {/* Arrow */}
-                        <svg style={{ width: '16px', height: '16px', color: 'rgba(255, 255, 255, 0.3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg style={{ width: '16px', height: '16px', color: '#aaa' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
@@ -487,7 +487,7 @@ export default function CallsPage() {
                           </div>
                           <div style={{
                             fontSize: '12px',
-                            color: 'rgba(255, 255, 255, 0.6)',
+                            color: '#666',
                             marginTop: '4px'
                           }}>
                             {year}
@@ -510,7 +510,7 @@ export default function CallsPage() {
                             <h3 style={{
                               fontSize: isMobile ? '18px' : '20px',
                               fontWeight: 600,
-                              color: '#fff',
+                              color: '#1a1a1a',
                               margin: 0
                             }}>
                               {event.title}
@@ -534,7 +534,7 @@ export default function CallsPage() {
                           {event.description && (
                             <p style={{
                               fontSize: '14px',
-                              color: 'rgba(255, 255, 255, 0.7)',
+                              color: '#666',
                               lineHeight: 1.6,
                               margin: 0
                             }}>
@@ -548,7 +548,7 @@ export default function CallsPage() {
                             gap: '8px',
                             marginTop: '4px',
                             fontSize: '13px',
-                            color: 'rgba(255, 255, 255, 0.5)'
+                            color: '#999'
                           }}>
                             <span>{dayOfWeek}</span>
                             <span>•</span>
@@ -631,7 +631,7 @@ export default function CallsPage() {
                 textAlign: 'center',
                 fontSize: isMobile ? '12px' : '14px',
                 fontWeight: 600,
-                color: 'rgba(255, 255, 255, 0.5)',
+                color: '#999',
                 borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
               }}>
                 {isMobile ? day.charAt(0) : day}
@@ -690,7 +690,7 @@ export default function CallsPage() {
                   <div style={{
                     fontSize: isMobile ? '14px' : '16px',
                     fontWeight: isToday ? 600 : 400,
-                    color: day.hasCall ? '#e67e22' : 'rgba(255, 255, 255, 0.7)',
+                    color: day.hasCall ? '#e67e22' : '#666',
                     marginBottom: isMobile ? '2px' : '4px'
                   }}>
                     {day.date.getDate()}
@@ -707,7 +707,7 @@ export default function CallsPage() {
                   {day.hasCall && (
                     <div style={{
                       fontSize: isMobile ? '8px' : '11px',
-                      color: 'rgba(255, 255, 255, 0.6)',
+                      color: '#666',
                       marginTop: '2px'
                     }}>
                       📞
@@ -727,7 +727,7 @@ export default function CallsPage() {
           }}>
             <p style={{
               fontSize: '14px',
-              color: 'rgba(255, 255, 255, 0.7)',
+              color: '#666',
               margin: 0,
               lineHeight: 1.5
             }}>
@@ -763,7 +763,7 @@ export default function CallsPage() {
               </div>
               <p style={{
                 fontSize: '16px',
-                color: 'rgba(255, 255, 255, 0.6)'
+                color: '#666'
               }}>
                 No replays available yet. Join your first live call and replays will appear here.
               </p>
@@ -854,14 +854,14 @@ export default function CallsPage() {
                         fontSize: '18px',
                         fontWeight: 500,
                         marginBottom: '8px',
-                        color: '#fff',
+                        color: '#1a1a1a',
                         lineHeight: 1.4
                       }}>
                         {video.title}
                       </h3>
                       <p style={{
                         fontSize: '14px',
-                        color: 'rgba(255, 255, 255, 0.6)',
+                        color: '#666',
                         lineHeight: 1.6,
                         marginBottom: '12px'
                       }}>
@@ -869,7 +869,7 @@ export default function CallsPage() {
                       </p>
                       <div style={{
                         fontSize: '12px',
-                        color: 'rgba(255, 255, 255, 0.4)'
+                        color: '#999'
                       }}>
                         {new Date(video.upload_date).toLocaleDateString('en-US', {
                           month: 'long',

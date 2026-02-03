@@ -283,13 +283,13 @@ export default function JourneyPage() {
   if (!user) {
     return (
       <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Loading your journey...</div>
+        <div style={{ color: '#999' }}>Loading your journey...</div>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
         position: 'sticky',
@@ -313,12 +313,12 @@ export default function JourneyPage() {
             fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
             fontWeight: 300,
             letterSpacing: '0.2em',
-            color: 'rgba(255, 255, 255, 0.9)',
+            color: '#1a1a1a',
             textDecoration: 'none',
             transition: 'color 0.3s ease'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-          onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
+          onMouseEnter={(e) => e.currentTarget.style.color = '#000'}
+          onMouseLeave={(e) => e.currentTarget.style.color = '#1a1a1a'}>
             CIRCLE OF RETURN
           </Link>
           
@@ -352,7 +352,7 @@ export default function JourneyPage() {
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '8px',
                 background: 'transparent',
-                color: '#fff',
+                color: '#1a1a1a',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}
@@ -394,7 +394,7 @@ export default function JourneyPage() {
                 <h3 style={{ 
                   fontSize: '0.75rem', 
                   fontWeight: 600, 
-                  color: 'rgba(255, 255, 255, 0.6)', 
+                  color: '#666', 
                   textTransform: 'uppercase', 
                   letterSpacing: '0.1em', 
                   marginBottom: '1rem' 
@@ -412,7 +412,7 @@ export default function JourneyPage() {
                       borderRadius: '8px',
                       background: selectedCategory === "All" ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
                       border: selectedCategory === "All" ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
-                      color: selectedCategory === "All" ? '#e67e22' : '#fff',
+                      color: selectedCategory === "All" ? '#e67e22' : '#1a1a1a',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease'
                     }}
@@ -451,7 +451,7 @@ export default function JourneyPage() {
                         borderRadius: '8px',
                         background: selectedCategory === category.name ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
                         border: selectedCategory === category.name ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
-                        color: selectedCategory === category.name ? '#e67e22' : '#fff',
+                        color: selectedCategory === category.name ? '#e67e22' : '#1a1a1a',
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}
@@ -482,7 +482,7 @@ export default function JourneyPage() {
                 <h3 style={{ 
                   fontSize: '0.75rem', 
                   fontWeight: 600, 
-                  color: 'rgba(255, 255, 255, 0.6)', 
+                  color: '#666', 
                   textTransform: 'uppercase', 
                   letterSpacing: '0.1em', 
                   marginBottom: '1rem' 
@@ -505,7 +505,7 @@ export default function JourneyPage() {
                   }}>
                     Level 2 - {currentLevel.name}
                   </div>
-                  <div style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                  <div style={{ fontSize: '0.85rem', color: '#333' }}>
                     Next level: {nextLevelDays} days
                   </div>
                 </div>
@@ -527,7 +527,7 @@ export default function JourneyPage() {
                 <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', fontWeight: 600, marginBottom: '0.5rem' }}>
                   {selectedCategory === "All" ? "All Videos" : selectedCategory}
                 </h1>
-                <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem' }}>
+                <p style={{ color: '#666', fontSize: '0.95rem' }}>
                   {selectedCategory === "All" 
                     ? "Your complete transformation journey" 
                     : `${filteredVideos.length} videos in this category`}
@@ -603,7 +603,7 @@ export default function JourneyPage() {
                           display: 'flex', 
                           alignItems: 'center', 
                           gap: '1rem', 
-                          color: 'rgba(255, 255, 255, 0.6)', 
+                          color: '#666', 
                           fontSize: '0.85rem', 
                           marginBottom: '0.75rem',
                           flexWrap: 'wrap'
@@ -618,7 +618,7 @@ export default function JourneyPage() {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '0.375rem',
-                            color: 'rgba(255, 255, 255, 0.6)',
+                            color: '#666',
                             fontSize: '0.85rem'
                           }}>
                             <span>💬</span>
@@ -628,7 +628,7 @@ export default function JourneyPage() {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '0.375rem',
-                            color: 'rgba(255, 255, 255, 0.6)',
+                            color: '#666',
                             fontSize: '0.85rem'
                           }}>
                             <span>❤️</span>
@@ -668,10 +668,10 @@ export default function JourneyPage() {
                       <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                         {activity.user}
                       </div>
-                      <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                      <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#999', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -709,10 +709,10 @@ export default function JourneyPage() {
                       <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                         {activity.user}
                       </div>
-                      <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                      <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#999', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -769,7 +769,7 @@ export default function JourneyPage() {
                   window.history.pushState({}, '', '/journey')
                 }}
                 style={{
-                  color: 'rgba(255, 255, 255, 0.6)',
+                  color: '#666',
                   fontSize: '1.5rem',
                   background: 'none',
                   border: 'none',
@@ -813,7 +813,7 @@ export default function JourneyPage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '1.5rem',
-                color: 'rgba(255, 255, 255, 0.6)',
+                color: '#666',
                 fontSize: '0.85rem',
                 marginBottom: '1rem',
                 flexWrap: 'wrap'
@@ -825,7 +825,7 @@ export default function JourneyPage() {
                 <span>{selectedVideo.category}</span>
               </div>
 
-              <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)', lineHeight: 1.6 }}>
+              <p style={{ color: '#333', marginBottom: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)', lineHeight: 1.6 }}>
                 {selectedVideo.description}
               </p>
 
@@ -841,7 +841,7 @@ export default function JourneyPage() {
                     background: videoLikes.includes(selectedVideo.id) ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 255, 255, 0.05)',
                     border: videoLikes.includes(selectedVideo.id) ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: videoLikes.includes(selectedVideo.id) ? '#ef4444' : '#fff',
+                    color: videoLikes.includes(selectedVideo.id) ? '#ef4444' : '#1a1a1a',
                     cursor: 'pointer',
                     fontSize: '0.95rem',
                     fontWeight: 500,
@@ -884,7 +884,7 @@ export default function JourneyPage() {
                       background: 'rgba(255, 255, 255, 0.05)',
                       border: '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '8px',
-                      color: '#fff',
+                      color: '#1a1a1a',
                       fontSize: '0.95rem',
                       fontFamily: 'inherit',
                       resize: 'vertical',
@@ -899,7 +899,7 @@ export default function JourneyPage() {
                     style={{
                       padding: '0.75rem 1.5rem',
                       background: newComment.trim() ? 'linear-gradient(135deg, #e67e22, #7fb069)' : 'rgba(255, 255, 255, 0.1)',
-                      color: newComment.trim() ? '#000' : 'rgba(255, 255, 255, 0.3)',
+                      color: newComment.trim() ? '#000' : '#ccc',
                       border: 'none',
                       borderRadius: '8px',
                       fontSize: '0.95rem',
@@ -943,7 +943,7 @@ export default function JourneyPage() {
                           <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#e67e22' }}>
                             {comment.userName}
                           </div>
-                          <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                          <div style={{ fontSize: '0.75rem', color: '#999' }}>
                             {new Date(comment.timestamp).toLocaleDateString('en-US', {
                               month: 'short',
                               day: 'numeric',
@@ -953,13 +953,13 @@ export default function JourneyPage() {
                           </div>
                         </div>
                       </div>
-                      <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.95rem', lineHeight: 1.5 }}>
+                      <p style={{ color: '#333', fontSize: '0.95rem', lineHeight: 1.5 }}>
                         {comment.text}
                       </p>
                     </div>
                   ))}
                   {!videoComments[selectedVideo.id] || videoComments[selectedVideo.id].length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '2rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                    <div style={{ textAlign: 'center', padding: '2rem', color: '#999' }}>
                       <p>No comments yet. Be the first to share your thoughts!</p>
                     </div>
                   ) : null}
