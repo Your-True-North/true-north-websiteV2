@@ -289,7 +289,7 @@ export default function JourneyPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#fff', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
         position: 'sticky',
@@ -352,7 +352,7 @@ export default function JourneyPage() {
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '8px',
                 background: 'transparent',
-                color: '#1a1a1a',
+                color: '#fff',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}
@@ -884,7 +884,7 @@ export default function JourneyPage() {
                       background: 'rgba(255, 255, 255, 0.05)',
                       border: '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '8px',
-                      color: '#1a1a1a',
+                      color: '#fff',
                       fontSize: '0.95rem',
                       fontFamily: 'inherit',
                       resize: 'vertical',
