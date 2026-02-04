@@ -142,7 +142,7 @@ export default function PostDetailPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: '#999'
       }}>
         Loading...
       </div>
@@ -157,7 +157,7 @@ export default function PostDetailPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: '#999'
       }}>
         Post not found
       </div>
@@ -211,7 +211,7 @@ export default function PostDetailPage() {
               <div style={{ fontSize: '16px', fontWeight: 600, color: '#1a1a1a' }}>
                 {post.user_name}
               </div>
-              <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
+              <div style={{ fontSize: '13px', color: '#999' }}>
                 {getTimeAgo(post.created_at)}
                 {post.category && ` · ${post.category}`}
               </div>
@@ -231,7 +231,7 @@ export default function PostDetailPage() {
           )}
           <p style={{
             fontSize: '16px',
-            color: 'rgba(255, 255, 255, 0.9)',
+            color: '#1a1a1a',
             lineHeight: 1.7,
             marginBottom: '20px',
             whiteSpace: 'pre-wrap'
@@ -347,7 +347,7 @@ export default function PostDetailPage() {
                     <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a1a' }}>
                       {reply.user_name}
                     </div>
-                    <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.5)' }}>
+                    <div style={{ fontSize: '12px', color: '#999' }}>
                       {getTimeAgo(reply.created_at)}
                     </div>
                   </div>
@@ -356,7 +356,7 @@ export default function PostDetailPage() {
                 {/* Reply Content */}
                 <p style={{
                   fontSize: '15px',
-                  color: 'rgba(255, 255, 255, 0.8)',
+                  color: '#333',
                   lineHeight: 1.6,
                   whiteSpace: 'pre-wrap'
                 }}>
@@ -370,7 +370,7 @@ export default function PostDetailPage() {
             <div style={{
               textAlign: 'center',
               padding: '40px 20px',
-              color: 'rgba(255, 255, 255, 0.5)'
+              color: '#999'
             }}>
               No replies yet. Be the first to reply!
             </div>

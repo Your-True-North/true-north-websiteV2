@@ -160,7 +160,7 @@ export default function ForumPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: '#999'
       }}>
         Loading...
       </div>
@@ -193,7 +193,7 @@ export default function ForumPage() {
           </h1>
           <p style={{
             fontSize: '16px',
-            color: 'rgba(255, 255, 255, 0.6)'
+            color: '#666'
           }}>
             Connect, share, and grow together
           </p>
@@ -293,7 +293,7 @@ export default function ForumPage() {
                   <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a1a' }}>
                     {post.user_name}
                   </div>
-                  <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.5)' }}>
+                  <div style={{ fontSize: '12px', color: '#999' }}>
                     {getTimeAgo(post.created_at)}
                     {post.category && ` · ${post.category}`}
                   
@@ -343,7 +343,7 @@ export default function ForumPage() {
               )}
               <p style={{
                 fontSize: '14px',
-                color: 'rgba(255, 255, 255, 0.8)',
+                color: '#333',
                 lineHeight: 1.6,
                 marginBottom: '12px'
               }}>
@@ -351,7 +351,7 @@ export default function ForumPage() {
               </p>
 
               {/* Post Stats */}
-              <div style={{ display: 'flex', gap: '16px', fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
+              <div style={{ display: 'flex', gap: '16px', fontSize: '13px', color: '#999' }}>
                 <span>{post.reply_count} {post.reply_count === 1 ? 'reply' : 'replies'}</span>
                 <span>{post.like_count} {post.like_count === 1 ? 'like' : 'likes'}</span>
               </div>
@@ -363,7 +363,7 @@ export default function ForumPage() {
           <div style={{
             textAlign: 'center',
             padding: '60px 20px',
-            color: 'rgba(255, 255, 255, 0.5)'
+            color: '#999'
           }}>
             <p style={{ marginBottom: '20px' }}>No posts yet in this category</p>
             <button
@@ -420,7 +420,7 @@ export default function ForumPage() {
                   display: 'block',
                   fontSize: '14px',
                   marginBottom: '8px',
-                  color: 'rgba(255, 255, 255, 0.7)'
+                  color: '#666'
                 }}>
                   Category
                 </label>
@@ -451,7 +451,7 @@ export default function ForumPage() {
                   display: 'block',
                   fontSize: '14px',
                   marginBottom: '8px',
-                  color: 'rgba(255, 255, 255, 0.7)'
+                  color: '#666'
                 }}>
                   Title (optional)
                 </label>
@@ -478,7 +478,7 @@ export default function ForumPage() {
                   display: 'block',
                   fontSize: '14px',
                   marginBottom: '8px',
-                  color: 'rgba(255, 255, 255, 0.7)'
+                  color: '#666'
                 }}>
                   Content *
                 </label>
@@ -504,7 +504,7 @@ export default function ForumPage() {
                 />
                 <div style={{
                   fontSize: '12px',
-                  color: 'rgba(255, 255, 255, 0.5)',
+                  color: '#999',
                   marginTop: '4px'
                 }}>
                   {newPost.content.length}/10000 characters

@@ -90,7 +90,7 @@ export default function ReplaysPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: '#999'
       }}>
         Loading...
       </div>
@@ -123,7 +123,7 @@ export default function ReplaysPage() {
           </h1>
           <p style={{
             fontSize: '16px',
-            color: 'rgba(255, 255, 255, 0.6)'
+            color: '#666'
           }}>
             Catch up on past live teaching sessions and community calls
           </p>
@@ -182,7 +182,7 @@ export default function ReplaysPage() {
         <div style={{
           marginBottom: '24px',
           fontSize: '14px',
-          color: 'rgba(255, 255, 255, 0.5)'
+          color: '#999'
         }}>
           {filteredReplays.length} {filteredReplays.length === 1 ? 'replay' : 'replays'} found
         </div>
@@ -204,7 +204,7 @@ export default function ReplaysPage() {
             </div>
             <p style={{
               fontSize: '16px',
-              color: 'rgba(255, 255, 255, 0.6)',
+              color: '#666',
               marginBottom: '8px'
             }}>
               {searchQuery ? 'No replays match your search' : 'No replays available yet'}
@@ -323,7 +323,7 @@ export default function ReplaysPage() {
                     </h3>
                     <p style={{
                       fontSize: '14px',
-                      color: 'rgba(255, 255, 255, 0.6)',
+                      color: '#666',
                       lineHeight: 1.6,
                       marginBottom: '12px',
                       flex: 1

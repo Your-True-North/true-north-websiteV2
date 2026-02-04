@@ -239,7 +239,7 @@ export default function AdminPage() {
   if (loading || !user) {
     return (
       <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Loading dashboard...</div>
+        <div style={{ color: '#999' }}>Loading dashboard...</div>
       </div>
     )
   }
@@ -305,7 +305,7 @@ export default function AdminPage() {
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1rem' }}>
         <div style={{ marginBottom: '2rem' }}>
           <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: '0.5rem' }}>Admin Dashboard</h1>
-          <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.95rem' }}>
+          <p style={{ color: '#666', fontSize: '0.95rem' }}>
             Manage your community, videos, and track engagement
           </p>
         </div>
@@ -324,13 +324,13 @@ export default function AdminPage() {
               borderRadius: '12px',
               padding: '1.5rem'
             }}>
-              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.5rem' }}>
                 Total Videos
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 600, color: '#9bc4b8' }}>
                 {dashboardData.stats.totalVideos}
               </div>
-              <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', marginTop: '0.5rem' }}>
+              <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '0.5rem' }}>
                 {dashboardData.stats.videosThisMonth} this month
               </div>
             </div>
@@ -341,7 +341,7 @@ export default function AdminPage() {
               borderRadius: '12px',
               padding: '1.5rem'
             }}>
-              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.5rem' }}>
                 Members
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 600, color: '#7fb069' }}>
@@ -355,7 +355,7 @@ export default function AdminPage() {
               borderRadius: '12px',
               padding: '1.5rem'
             }}>
-              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.5rem' }}>
                 Comments
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 600, color: '#6a994e' }}>
@@ -369,7 +369,7 @@ export default function AdminPage() {
               borderRadius: '12px',
               padding: '1.5rem'
             }}>
-              <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.5rem' }}>
                 Reactions
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 600, color: '#8db4a8' }}>
@@ -395,7 +395,7 @@ export default function AdminPage() {
               background: 'rgba(155, 196, 184, 0.05)'
             }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>🌟 Top Engaged Members</h2>
-              <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginTop: '0.25rem' }}>
+              <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
                 Members to personally reach out to
               </p>
             </div>
@@ -427,7 +427,7 @@ export default function AdminPage() {
                     </div>
                     <div>
                       <div style={{ fontWeight: 500 }}>{member.name}</div>
-                      <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                      <div style={{ fontSize: '0.75rem', color: '#999' }}>
                         {member.email}
                       </div>
                     </div>
@@ -436,12 +436,12 @@ export default function AdminPage() {
                     <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#9bc4b8' }}>
                       {member.total_engagement} actions
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#999' }}>
                       {member.comment_count} comments · {member.reaction_count} likes
                     </div>
                   </div>
                 </div>
-              )) : <div style={{ padding: '2rem', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>No member data yet</div>}
+              )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#999' }}>No member data yet</div>}
             </div>
           </div>
 
@@ -458,7 +458,7 @@ export default function AdminPage() {
               background: 'rgba(127, 176, 105, 0.05)'
             }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>📊 Recent Activity</h2>
-              <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginTop: '0.25rem' }}>
+              <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
                 Live community engagement feed
               </p>
             </div>
@@ -475,12 +475,12 @@ export default function AdminPage() {
                       {activity.user_name || 'Unknown'}
                     </span>
                     {' '}
-                    <span style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                    <span style={{ color: '#333' }}>
                       {activity.title}
                     </span>
                   </div>
                   {activity.video_title && (
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '0.25rem' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#666', marginBottom: '0.25rem' }}>
                       on "{activity.video_title}"
                     </div>
                   )}
@@ -488,7 +488,7 @@ export default function AdminPage() {
                     {formatTime(activity.createdat)}
                   </div>
                 </div>
-              )) : <div style={{ padding: '2rem', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>No activity yet</div>}
+              )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#999' }}>No activity yet</div>}
             </div>
           </div>
         </div>
@@ -509,7 +509,7 @@ export default function AdminPage() {
           }}>
             <div>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>🎥 Video Management</h2>
-              <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)', marginTop: '0.25rem' }}>
+              <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
                 Upload and manage community videos
               </p>
             </div>
@@ -548,7 +548,7 @@ export default function AdminPage() {
                       display: 'flex',
                       gap: '1rem',
                       fontSize: '0.75rem',
-                      color: 'rgba(255, 255, 255, 0.6)',
+                      color: '#666',
                       marginBottom: '0.5rem'
                     }}>
                       <span>{video.category}</span>
@@ -564,7 +564,7 @@ export default function AdminPage() {
                         {video.status}
                       </span>
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#999' }}>
                       💬 {video.comment_count} comments · ❤️ {video.reaction_count} reactions
                     </div>
                   </div>
@@ -600,7 +600,7 @@ export default function AdminPage() {
                   </div>
                 </div>
               </div>
-            )) : <div style={{ padding: '2rem', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>No videos yet. Click "+ Add Video" to upload.</div>}
+            )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#999' }}>No videos yet. Click "+ Add Video" to upload.</div>}
           </div>
         </div>
       </div>
@@ -645,7 +645,7 @@ export default function AdminPage() {
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: 'rgba(255, 255, 255, 0.6)',
+                  color: '#666',
                   fontSize: '1.5rem',
                   cursor: 'pointer'
                 }}
@@ -656,7 +656,7 @@ export default function AdminPage() {
 
             <div style={{ padding: '1.5rem' }}>
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
                   Title *
                 </label>
                 <input
@@ -681,7 +681,7 @@ export default function AdminPage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
                     Duration (minutes)
                   </label>
                   <input
@@ -705,7 +705,7 @@ export default function AdminPage() {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
                     Category *
                   </label>
                   <select
@@ -732,7 +732,7 @@ export default function AdminPage() {
               </div>
 
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
                   YouTube URL *
                 </label>
                 <input
@@ -756,7 +756,7 @@ export default function AdminPage() {
               </div>
 
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
                   Description
                 </label>
                 <textarea
@@ -781,7 +781,7 @@ export default function AdminPage() {
               </div>
 
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
                   Status
                 </label>
                 <select

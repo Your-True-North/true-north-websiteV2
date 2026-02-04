@@ -232,7 +232,7 @@ export default function VideoPlayerPage() {
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Loading video...</div>
+        <div style={{ color: '#999', fontWeight: 300 }}>Loading video...</div>
       </div>
     )
   }
@@ -240,7 +240,7 @@ export default function VideoPlayerPage() {
   if (!video) {
     return (
       <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Video not found</div>
+        <div style={{ color: '#999', fontWeight: 300 }}>Video not found</div>
         <Link href="/videos" style={{
           padding: '0.75rem 1.5rem',
           background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
@@ -281,7 +281,7 @@ export default function VideoPlayerPage() {
             fontSize: isMobile ? '1rem' : '1.5rem',
             fontWeight: 300,
             letterSpacing: '0.2em',
-            color: 'rgba(255, 255, 255, 0.9)',
+            color: '#1a1a1a',
             textDecoration: 'none'
           }}>
             CIRCLE OF RETURN
@@ -378,7 +378,7 @@ export default function VideoPlayerPage() {
                     alignItems: 'center',
                     gap: '1rem',
                     fontSize: '0.875rem',
-                    color: 'rgba(255, 255, 255, 0.5)'
+                    color: '#999'
                   }}>
                     <span>{video.duration}</span>
                     <span>•</span>
@@ -407,7 +407,7 @@ export default function VideoPlayerPage() {
               <p style={{
                 fontSize: '1rem',
                 lineHeight: 1.7,
-                color: 'rgba(255, 255, 255, 0.7)',
+                color: '#666',
                 marginBottom: '1.5rem'
               }}>
                 {video.description}
@@ -445,7 +445,7 @@ export default function VideoPlayerPage() {
                   alignItems: 'center',
                   gap: '0.5rem',
                   fontSize: '0.875rem',
-                  color: 'rgba(255, 255, 255, 0.6)'
+                  color: '#666'
                 }}>
                   <svg style={{ width: '18px', height: '18px' }} fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
@@ -516,7 +516,7 @@ export default function VideoPlayerPage() {
                   <div style={{
                     padding: '2rem',
                     textAlign: 'center',
-                    color: 'rgba(255, 255, 255, 0.5)'
+                    color: '#999'
                   }}>
                     No comments yet. Be the first to share your thoughts!
                   </div>
@@ -542,7 +542,7 @@ export default function VideoPlayerPage() {
                         justifyContent: 'center'
                       }}>
                         {!comment.profile_photo && (
-                          <svg style={{ width: '20px', height: '20px', color: 'rgba(255, 255, 255, 0.5)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg style={{ width: '20px', height: '20px', color: '#999' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                           </svg>
                         )}
@@ -565,7 +565,7 @@ export default function VideoPlayerPage() {
                           </span>
                         </div>
                         <p style={{
-                          color: 'rgba(255, 255, 255, 0.8)',
+                          color: '#333',
                           lineHeight: 1.6,
                           fontSize: '0.9375rem'
                         }}>
@@ -602,7 +602,7 @@ export default function VideoPlayerPage() {
                   <div style={{
                     padding: '1rem',
                     textAlign: 'center',
-                    color: 'rgba(255, 255, 255, 0.5)',
+                    color: '#999',
                     fontSize: '0.875rem'
                   }}>
                     No related videos
@@ -675,7 +675,7 @@ export default function VideoPlayerPage() {
                             </h3>
                             <div style={{
                               fontSize: '0.75rem',
-                              color: 'rgba(255, 255, 255, 0.5)'
+                              color: '#999'
                             }}>
                               {related.duration}
                             </div>

@@ -133,7 +133,7 @@ export default function LibraryPage() {
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Loading library...</div>
+        <div style={{ color: '#999', fontWeight: 300 }}>Loading library...</div>
       </div>
     )
   }
@@ -185,7 +185,7 @@ export default function LibraryPage() {
             fontSize: isMobile ? '1rem' : '1.5rem',
             fontWeight: 300,
             letterSpacing: '0.2em',
-            color: 'rgba(255, 255, 255, 0.9)',
+            color: '#1a1a1a',
             textDecoration: 'none'
           }}>
             CIRCLE OF RETURN
@@ -312,7 +312,7 @@ export default function LibraryPage() {
           }}>
             My Journey
           </h1>
-          <p style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '1.125rem', fontWeight: 300 }}>
+          <p style={{ color: '#999', fontSize: '1.125rem', fontWeight: 300 }}>
             Your path to transformation
           </p>
         </div>
@@ -333,7 +333,7 @@ export default function LibraryPage() {
             <div style={{ fontSize: '2rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.25rem' }}>
               {stats.completedVideos}
             </div>
-            <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+            <div style={{ fontSize: '0.875rem', color: '#666' }}>
               Videos Completed
             </div>
           </div>
@@ -346,7 +346,7 @@ export default function LibraryPage() {
             <div style={{ fontSize: '2rem', fontWeight: 300, color: '#7fb069', marginBottom: '0.25rem' }}>
               {stats.videosWatched}
             </div>
-            <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+            <div style={{ fontSize: '0.875rem', color: '#666' }}>
               Videos Watched
             </div>
           </div>
@@ -359,7 +359,7 @@ export default function LibraryPage() {
             <div style={{ fontSize: '2rem', fontWeight: 300, color: '#6a994e', marginBottom: '0.25rem' }}>
               {Math.floor(stats.totalWatchTime / 60)}h
             </div>
-            <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+            <div style={{ fontSize: '0.875rem', color: '#666' }}>
               Hours of Practice
             </div>
           </div>
@@ -443,7 +443,7 @@ export default function LibraryPage() {
           <div style={{
             padding: '4rem 2rem',
             textAlign: 'center',
-            color: 'rgba(255, 255, 255, 0.5)'
+            color: '#999'
           }}>
             No videos found{searchQuery ? ' for your search' : ''}
           </div>
@@ -540,7 +540,7 @@ export default function LibraryPage() {
                     </h3>
                     <p style={{
                       fontSize: '0.875rem',
-                      color: 'rgba(255, 255, 255, 0.5)',
+                      color: '#999',
                       lineHeight: 1.6,
                       marginBottom: '1rem',
                       flex: 1
