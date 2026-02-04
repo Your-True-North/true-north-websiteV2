@@ -156,11 +156,11 @@ export default function ForumPage() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0a0a0a',
+        background: '#fafafa',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: '#999'
       }}>
         Loading...
       </div>
@@ -168,14 +168,14 @@ export default function ForumPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 20px' }}>
         {/* Header */}
         <div style={{ marginBottom: '40px' }}>
           <Link
             href="/members"
             style={{
-              color: '#9bc4b8',
+              color: '#e67e22',
               textDecoration: 'none',
               fontSize: '14px',
               marginBottom: '12px',
@@ -193,7 +193,7 @@ export default function ForumPage() {
           </h1>
           <p style={{
             fontSize: '16px',
-            color: 'rgba(255, 255, 255, 0.6)'
+            color: '#666'
           }}>
             Connect, share, and grow together
           </p>
@@ -213,10 +213,10 @@ export default function ForumPage() {
               onClick={() => setSelectedCategory(cat)}
               style={{
                 padding: '10px 20px',
-                background: selectedCategory === cat ? '#7ba69b' : 'rgba(255, 255, 255, 0.05)',
-                border: selectedCategory === cat ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '3px',
-                color: '#1a1a1a',
+                background: selectedCategory === cat ? '#e67e22' : '#ffffff',
+                border: selectedCategory === cat ? '2px solid #e67e22' : '2px solid #e5e5e5',
+                borderRadius: '4px',
+                color: selectedCategory === cat ? '#ffffff' : '#1a1a1a',
                 fontSize: '14px',
                 fontWeight: 600,
                 cursor: 'pointer',
@@ -234,10 +234,10 @@ export default function ForumPage() {
           style={{
             width: '100%',
             padding: '16px',
-            background: 'rgba(123, 166, 155, 0.1)',
-            border: '2px dashed rgba(123, 166, 155, 0.3)',
-            borderRadius: '3px',
-            color: '#7ba69b',
+            background: 'rgba(230, 126, 34, 0.1)',
+            border: '2px dashed #e67e22',
+            borderRadius: '6px',
+            color: '#e67e22',
             fontSize: '16px',
             fontWeight: 600,
             cursor: 'pointer',
@@ -256,19 +256,19 @@ export default function ForumPage() {
               style={{
                 display: 'block',
                 padding: '20px',
-                background: 'rgba(255, 255, 255, 0.02)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '3px',
+                background: '#ffffff',
+                border: '2px solid #e5e5e5',
+                borderRadius: '6px',
                 textDecoration: 'none',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(123, 166, 155, 0.05)'
-                e.currentTarget.style.borderColor = 'rgba(123, 166, 155, 0.2)'
+                e.currentTarget.style.background = '#ffffff'
+                e.currentTarget.style.borderColor = '#e67e22'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.background = '#ffffff'
+                e.currentTarget.style.borderColor = '#e5e5e5'
               }}
             >
               {/* Post Header */}
@@ -277,13 +277,13 @@ export default function ForumPage() {
                   width: '40px',
                   height: '40px',
                   borderRadius: '50%',
-                  background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #9bc4b8, #7ba69b)',
+                  background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#0a0a0a',
+                  color: '#ffffff',
                   fontSize: '16px',
                   fontWeight: 600
                 }}>
@@ -293,7 +293,7 @@ export default function ForumPage() {
                   <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a1a' }}>
                     {post.user_name}
                   </div>
-                  <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.5)' }}>
+                  <div style={{ fontSize: '12px', color: '#999' }}>
                     {getTimeAgo(post.created_at)}
                     {post.category && ` · ${post.category}`}
                   
@@ -336,14 +336,14 @@ export default function ForumPage() {
                   fontSize: '18px',
                   fontWeight: 600,
                   marginBottom: '8px',
-                  color: '#9bc4b8'
+                  color: '#e67e22'
                 }}>
                   {post.title}
                 </h3>
               )}
               <p style={{
                 fontSize: '14px',
-                color: 'rgba(255, 255, 255, 0.8)',
+                color: '#333',
                 lineHeight: 1.6,
                 marginBottom: '12px'
               }}>
@@ -351,7 +351,7 @@ export default function ForumPage() {
               </p>
 
               {/* Post Stats */}
-              <div style={{ display: 'flex', gap: '16px', fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>
+              <div style={{ display: 'flex', gap: '16px', fontSize: '13px', color: '#999' }}>
                 <span>{post.reply_count} {post.reply_count === 1 ? 'reply' : 'replies'}</span>
                 <span>{post.like_count} {post.like_count === 1 ? 'like' : 'likes'}</span>
               </div>
@@ -363,17 +363,17 @@ export default function ForumPage() {
           <div style={{
             textAlign: 'center',
             padding: '60px 20px',
-            color: 'rgba(255, 255, 255, 0.5)'
+            color: '#999'
           }}>
             <p style={{ marginBottom: '20px' }}>No posts yet in this category</p>
             <button
               onClick={() => setShowNewPostModal(true)}
               style={{
                 padding: '12px 24px',
-                background: '#7ba69b',
+                background: '#e67e22',
                 border: 'none',
-                borderRadius: '3px',
-                color: '#1a1a1a',
+                borderRadius: '4px',
+                color: '#ffffff',
                 fontSize: '14px',
                 fontWeight: 600,
                 cursor: 'pointer'
@@ -390,7 +390,7 @@ export default function ForumPage() {
         <div style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(0, 0, 0, 0.8)',
+          background: 'rgba(0, 0, 0, 0.5)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -403,14 +403,14 @@ export default function ForumPage() {
             style={{
               maxWidth: '600px',
               width: '100%',
-              background: '#0a0a0a',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '3px',
+              background: '#ffffff',
+              border: '2px solid #e5e5e5',
+              borderRadius: '6px',
               padding: '32px'
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 style={{ fontSize: '24px', fontWeight: 600, marginBottom: '24px' }}>
+            <h2 style={{ fontSize: '24px', fontWeight: 600, marginBottom: '24px', color: '#1a1a1a' }}>
               New Post
             </h2>
 
@@ -420,7 +420,7 @@ export default function ForumPage() {
                   display: 'block',
                   fontSize: '14px',
                   marginBottom: '8px',
-                  color: 'rgba(255, 255, 255, 0.7)'
+                  color: '#666'
                 }}>
                   Category
                 </label>
@@ -430,16 +430,16 @@ export default function ForumPage() {
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '3px',
+                    background: '#fafafa',
+                    border: '2px solid #e5e5e5',
+                    borderRadius: '4px',
                     color: '#1a1a1a',
                     fontSize: '16px',
                     outline: 'none'
                   }}
                 >
                   {categories.filter(c => c !== 'All Posts').map((cat) => (
-                    <option key={cat} value={cat} style={{ background: '#0a0a0a' }}>
+                    <option key={cat} value={cat} style={{ background: '#ffffff' }}>
                       {cat}
                     </option>
                   ))}
@@ -451,7 +451,7 @@ export default function ForumPage() {
                   display: 'block',
                   fontSize: '14px',
                   marginBottom: '8px',
-                  color: 'rgba(255, 255, 255, 0.7)'
+                  color: '#666'
                 }}>
                   Title (optional)
                 </label>
@@ -462,9 +462,9 @@ export default function ForumPage() {
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '3px',
+                    background: '#fafafa',
+                    border: '2px solid #e5e5e5',
+                    borderRadius: '4px',
                     color: '#1a1a1a',
                     fontSize: '16px',
                     outline: 'none'
@@ -478,7 +478,7 @@ export default function ForumPage() {
                   display: 'block',
                   fontSize: '14px',
                   marginBottom: '8px',
-                  color: 'rgba(255, 255, 255, 0.7)'
+                  color: '#666'
                 }}>
                   Content *
                 </label>
@@ -492,9 +492,9 @@ export default function ForumPage() {
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '3px',
+                    background: '#fafafa',
+                    border: '2px solid #e5e5e5',
+                    borderRadius: '4px',
                     color: '#1a1a1a',
                     fontSize: '16px',
                     outline: 'none',
@@ -504,7 +504,7 @@ export default function ForumPage() {
                 />
                 <div style={{
                   fontSize: '12px',
-                  color: 'rgba(255, 255, 255, 0.5)',
+                  color: '#999',
                   marginTop: '4px'
                 }}>
                   {newPost.content.length}/10000 characters
@@ -518,10 +518,10 @@ export default function ForumPage() {
                   style={{
                     flex: 1,
                     padding: '14px',
-                    background: posting ? 'rgba(123, 166, 155, 0.5)' : '#7ba69b',
+                    background: posting ? 'rgba(230, 126, 34, 0.5)' : '#e67e22',
                     border: 'none',
-                    borderRadius: '3px',
-                    color: '#1a1a1a',
+                    borderRadius: '4px',
+                    color: '#ffffff',
                     fontSize: '16px',
                     fontWeight: 600,
                     cursor: posting ? 'not-allowed' : 'pointer'
@@ -534,9 +534,9 @@ export default function ForumPage() {
                   onClick={() => setShowNewPostModal(false)}
                   style={{
                     padding: '14px 24px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '3px',
+                    background: '#fafafa',
+                    border: '2px solid #e5e5e5',
+                    borderRadius: '4px',
                     color: '#1a1a1a',
                     fontSize: '16px',
                     fontWeight: 600,
