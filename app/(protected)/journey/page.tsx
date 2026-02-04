@@ -206,13 +206,11 @@ export default function JourneyPage() {
   const handleLikeVideo = async (videoId) => {
     if (!user || !user.id) return
 
-    // Optimistically update UI
-    const newLikes = { ...videoLikes }
-    if (newLikes[videoId]) {
-      delete newLikes[videoId]
-    } else {
-      newLikes[videoId] = true
-    }
+    // Optimistically update UI - use array operations
+    const isLiked = videoLikes.includes(videoId)
+    const newLikes = isLiked
+      ? videoLikes.filter(id => id !== videoId)
+      : [...videoLikes, videoId]
     setVideoLikes(newLikes)
     localStorage.setItem('videoLikes', JSON.stringify(newLikes))
 
@@ -227,14 +225,8 @@ export default function JourneyPage() {
       if (!res.ok) {
         console.error('Failed to save like to database')
         // Revert on error
-        const revertedLikes = { ...videoLikes }
-        if (revertedLikes[videoId]) {
-          delete revertedLikes[videoId]
-        } else {
-          revertedLikes[videoId] = true
-        }
-        setVideoLikes(revertedLikes)
-        localStorage.setItem('videoLikes', JSON.stringify(revertedLikes))
+        setVideoLikes(videoLikes)
+        localStorage.setItem('videoLikes', JSON.stringify(videoLikes))
       }
     } catch (err) {
       console.error('Error saving like:', err)
@@ -283,7 +275,7 @@ export default function JourneyPage() {
   if (!user) {
     return (
       <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)' }}>Loading your journey...</div>
+        <div style={{ color: '#999' }}>Loading your journey...</div>
       </div>
     )
   }
@@ -313,7 +305,7 @@ export default function JourneyPage() {
             fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
             fontWeight: 300,
             letterSpacing: '0.2em',
-            color: 'rgba(255, 255, 255, 0.9)',
+            color: '#1a1a1a',
             textDecoration: 'none',
             transition: 'color 0.3s ease'
           }}
@@ -394,7 +386,7 @@ export default function JourneyPage() {
                 <h3 style={{ 
                   fontSize: '0.75rem', 
                   fontWeight: 600, 
-                  color: 'rgba(255, 255, 255, 0.6)', 
+                  color: '#666', 
                   textTransform: 'uppercase', 
                   letterSpacing: '0.1em', 
                   marginBottom: '1rem' 
@@ -482,7 +474,7 @@ export default function JourneyPage() {
                 <h3 style={{ 
                   fontSize: '0.75rem', 
                   fontWeight: 600, 
-                  color: 'rgba(255, 255, 255, 0.6)', 
+                  color: '#666', 
                   textTransform: 'uppercase', 
                   letterSpacing: '0.1em', 
                   marginBottom: '1rem' 
@@ -505,7 +497,7 @@ export default function JourneyPage() {
                   }}>
                     Level 2 - {currentLevel.name}
                   </div>
-                  <div style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.8)' }}>
+                  <div style={{ fontSize: '0.85rem', color: '#333' }}>
                     Next level: {nextLevelDays} days
                   </div>
                 </div>
@@ -527,7 +519,7 @@ export default function JourneyPage() {
                 <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', fontWeight: 600, marginBottom: '0.5rem' }}>
                   {selectedCategory === "All" ? "All Videos" : selectedCategory}
                 </h1>
-                <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem' }}>
+                <p style={{ color: '#666', fontSize: '0.95rem' }}>
                   {selectedCategory === "All" 
                     ? "Your complete transformation journey" 
                     : `${filteredVideos.length} videos in this category`}
@@ -603,7 +595,7 @@ export default function JourneyPage() {
                           display: 'flex', 
                           alignItems: 'center', 
                           gap: '1rem', 
-                          color: 'rgba(255, 255, 255, 0.6)', 
+                          color: '#666', 
                           fontSize: '0.85rem', 
                           marginBottom: '0.75rem',
                           flexWrap: 'wrap'
@@ -618,7 +610,7 @@ export default function JourneyPage() {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '0.375rem',
-                            color: 'rgba(255, 255, 255, 0.6)',
+                            color: '#666',
                             fontSize: '0.85rem'
                           }}>
                             <span>💬</span>
@@ -628,7 +620,7 @@ export default function JourneyPage() {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '0.375rem',
-                            color: 'rgba(255, 255, 255, 0.6)',
+                            color: '#666',
                             fontSize: '0.85rem'
                           }}>
                             <span>❤️</span>
@@ -668,10 +660,10 @@ export default function JourneyPage() {
                       <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                         {activity.user}
                       </div>
-                      <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                      <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#999', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -709,10 +701,10 @@ export default function JourneyPage() {
                       <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                         {activity.user}
                       </div>
-                      <div style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                      <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#999', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -769,7 +761,7 @@ export default function JourneyPage() {
                   window.history.pushState({}, '', '/journey')
                 }}
                 style={{
-                  color: 'rgba(255, 255, 255, 0.6)',
+                  color: '#666',
                   fontSize: '1.5rem',
                   background: 'none',
                   border: 'none',
@@ -813,7 +805,7 @@ export default function JourneyPage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '1.5rem',
-                color: 'rgba(255, 255, 255, 0.6)',
+                color: '#666',
                 fontSize: '0.85rem',
                 marginBottom: '1rem',
                 flexWrap: 'wrap'
@@ -825,7 +817,7 @@ export default function JourneyPage() {
                 <span>{selectedVideo.category}</span>
               </div>
 
-              <p style={{ color: 'rgba(255, 255, 255, 0.8)', marginBottom: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)', lineHeight: 1.6 }}>
+              <p style={{ color: '#333', marginBottom: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)', lineHeight: 1.6 }}>
                 {selectedVideo.description}
               </p>
 
@@ -943,7 +935,7 @@ export default function JourneyPage() {
                           <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#e67e22' }}>
                             {comment.userName}
                           </div>
-                          <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                          <div style={{ fontSize: '0.75rem', color: '#999' }}>
                             {new Date(comment.timestamp).toLocaleDateString('en-US', {
                               month: 'short',
                               day: 'numeric',
@@ -953,13 +945,13 @@ export default function JourneyPage() {
                           </div>
                         </div>
                       </div>
-                      <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.95rem', lineHeight: 1.5 }}>
+                      <p style={{ color: '#333', fontSize: '0.95rem', lineHeight: 1.5 }}>
                         {comment.text}
                       </p>
                     </div>
                   ))}
                   {!videoComments[selectedVideo.id] || videoComments[selectedVideo.id].length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '2rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+                    <div style={{ textAlign: 'center', padding: '2rem', color: '#999' }}>
                       <p>No comments yet. Be the first to share your thoughts!</p>
                     </div>
                   ) : null}

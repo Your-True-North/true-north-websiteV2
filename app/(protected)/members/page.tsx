@@ -31,7 +31,7 @@ export default function MaintenancePage() {
         </h1>
         <p style={{
           fontSize: '1.125rem',
-          color: 'rgba(255, 255, 255, 0.7)',
+          color: '#666',
           lineHeight: 1.6,
           marginBottom: '2rem'
         }}>
@@ -41,7 +41,7 @@ export default function MaintenancePage() {
         </p>
         <p style={{
           fontSize: '0.875rem',
-          color: 'rgba(255, 255, 255, 0.5)'
+          color: '#999'
         }}>
           Expected time: Up to 24 hours
         </p>
