@@ -156,7 +156,7 @@ export default function ForumPage() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0a0a0a',
+        background: '#fafafa',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -168,14 +168,14 @@ export default function ForumPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 20px' }}>
         {/* Header */}
         <div style={{ marginBottom: '40px' }}>
           <Link
             href="/members"
             style={{
-              color: '#9bc4b8',
+              color: '#e67e22',
               textDecoration: 'none',
               fontSize: '14px',
               marginBottom: '12px',
@@ -213,7 +213,7 @@ export default function ForumPage() {
               onClick={() => setSelectedCategory(cat)}
               style={{
                 padding: '10px 20px',
-                background: selectedCategory === cat ? '#7ba69b' : 'rgba(255, 255, 255, 0.05)',
+                background: selectedCategory === cat ? '#e67e22' : 'rgba(255, 255, 255, 0.05)',
                 border: selectedCategory === cat ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '3px',
                 color: '#1a1a1a',
@@ -237,7 +237,7 @@ export default function ForumPage() {
             background: 'rgba(123, 166, 155, 0.1)',
             border: '2px dashed rgba(123, 166, 155, 0.3)',
             borderRadius: '3px',
-            color: '#7ba69b',
+            color: '#e67e22',
             fontSize: '16px',
             fontWeight: 600,
             cursor: 'pointer',
@@ -277,7 +277,7 @@ export default function ForumPage() {
                   width: '40px',
                   height: '40px',
                   borderRadius: '50%',
-                  background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #9bc4b8, #7ba69b)',
+                  background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #e67e22, #e67e22)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   display: 'flex',
@@ -336,7 +336,7 @@ export default function ForumPage() {
                   fontSize: '18px',
                   fontWeight: 600,
                   marginBottom: '8px',
-                  color: '#9bc4b8'
+                  color: '#e67e22'
                 }}>
                   {post.title}
                 </h3>
@@ -370,7 +370,7 @@ export default function ForumPage() {
               onClick={() => setShowNewPostModal(true)}
               style={{
                 padding: '12px 24px',
-                background: '#7ba69b',
+                background: '#e67e22',
                 border: 'none',
                 borderRadius: '3px',
                 color: '#1a1a1a',
@@ -403,7 +403,7 @@ export default function ForumPage() {
             style={{
               maxWidth: '600px',
               width: '100%',
-              background: '#0a0a0a',
+              background: '#fafafa',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '3px',
               padding: '32px'
@@ -439,7 +439,7 @@ export default function ForumPage() {
                   }}
                 >
                   {categories.filter(c => c !== 'All Posts').map((cat) => (
-                    <option key={cat} value={cat} style={{ background: '#0a0a0a' }}>
+                    <option key={cat} value={cat} style={{ background: '#fafafa' }}>
                       {cat}
                     </option>
                   ))}
@@ -518,7 +518,7 @@ export default function ForumPage() {
                   style={{
                     flex: 1,
                     padding: '14px',
-                    background: posting ? 'rgba(123, 166, 155, 0.5)' : '#7ba69b',
+                    background: posting ? 'rgba(123, 166, 155, 0.5)' : '#e67e22',
                     border: 'none',
                     borderRadius: '3px',
                     color: '#1a1a1a',
