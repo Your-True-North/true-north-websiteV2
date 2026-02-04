@@ -206,13 +206,11 @@ export default function JourneyPage() {
   const handleLikeVideo = async (videoId) => {
     if (!user || !user.id) return
 
-    // Optimistically update UI
-    const newLikes = { ...videoLikes }
-    if (newLikes[videoId]) {
-      delete newLikes[videoId]
-    } else {
-      newLikes[videoId] = true
-    }
+    // Optimistically update UI - use array operations
+    const isLiked = videoLikes.includes(videoId)
+    const newLikes = isLiked
+      ? videoLikes.filter(id => id !== videoId)
+      : [...videoLikes, videoId]
     setVideoLikes(newLikes)
     localStorage.setItem('videoLikes', JSON.stringify(newLikes))
 
@@ -227,14 +225,8 @@ export default function JourneyPage() {
       if (!res.ok) {
         console.error('Failed to save like to database')
         // Revert on error
-        const revertedLikes = { ...videoLikes }
-        if (revertedLikes[videoId]) {
-          delete revertedLikes[videoId]
-        } else {
-          revertedLikes[videoId] = true
-        }
-        setVideoLikes(revertedLikes)
-        localStorage.setItem('videoLikes', JSON.stringify(revertedLikes))
+        setVideoLikes(videoLikes)
+        localStorage.setItem('videoLikes', JSON.stringify(videoLikes))
       }
     } catch (err) {
       console.error('Error saving like:', err)
