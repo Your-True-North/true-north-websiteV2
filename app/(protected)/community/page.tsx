@@ -33,6 +33,13 @@ const navLinks = [
   { label: 'Dashboard', href: '/members' },
 ]
 
+const categories = [
+  'Introductions',
+  'Wins & Breakthroughs',
+  'Questions & Support',
+  'Integration Practices'
+]
+
 export default function CommunityPage() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
@@ -42,6 +49,14 @@ export default function CommunityPage() {
   const [isMobile, setIsMobile] = useState(false)
   const [hoveredPostId, setHoveredPostId] = useState<number | null>(null)
   const [continueHovered, setContinueHovered] = useState(false)
+
+  // New post modal state - copied from forum page
+  const [showNewPostModal, setShowNewPostModal] = useState(false)
+  const [newPost, setNewPost] = useState({ title: '', content: '', category: 'Introductions' })
+  const [posting, setPosting] = useState(false)
+
+  // Like tracking
+  const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set())
 
   // Auth - same pattern as forum page
   useEffect(() => {
@@ -111,6 +126,74 @@ export default function CommunityPage() {
         .catch(err => console.error('Failed to fetch progress:', err))
     }
   }, [user?.id])
+
+  // Like handler - copied from forum [postId] page
+  const handleLike = async (e: React.MouseEvent, postId: number) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!user) return
+
+    try {
+      const res = await fetch(`/api/forum/posts/${postId}/like`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id })
+      })
+
+      if (res.ok) {
+        const data = await res.json()
+        setLikedPosts(prev => {
+          const next = new Set(prev)
+          if (data.liked) {
+            next.add(postId)
+          } else {
+            next.delete(postId)
+          }
+          return next
+        })
+        // Refresh posts to get updated like counts
+        fetchPosts()
+      }
+    } catch (err) {
+      console.error('Like error:', err)
+    }
+  }
+
+  // Create post handler - copied from forum page
+  const handleCreatePost = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!user) return
+
+    setPosting(true)
+
+    try {
+      const res = await fetch('/api/forum/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          category: newPost.category,
+          title: newPost.title || null,
+          content: newPost.content
+        })
+      })
+
+      const data = await res.json()
+
+      if (res.ok) {
+        setShowNewPostModal(false)
+        setNewPost({ title: '', content: '', category: 'Introductions' })
+        fetchPosts()
+      } else {
+        alert(data.error || 'Failed to create post')
+      }
+      setPosting(false)
+    } catch (err) {
+      console.error('Post error:', err)
+      alert('Something went wrong')
+      setPosting(false)
+    }
+  }
 
   // Time ago helper
   const getTimeAgo = (date: string) => {
@@ -262,17 +345,21 @@ export default function CommunityPage() {
             }}>
               Community Feed
             </h2>
-            <Link
-              href="/forum"
+            <button
+              onClick={() => setShowNewPostModal(true)}
               style={{
-                color: '#e67e22',
+                padding: '0.625rem 1.25rem',
+                background: '#e67e22',
+                border: 'none',
+                borderRadius: '4px',
+                color: '#ffffff',
                 fontSize: '0.875rem',
                 fontWeight: 600,
-                textDecoration: 'none'
+                cursor: 'pointer'
               }}
             >
-              Go to Forum →
-            </Link>
+              + New Post
+            </button>
           </div>
 
           {/* Mobile Toggle */}
@@ -332,7 +419,6 @@ export default function CommunityPage() {
                 fontSize: '1.25rem',
                 fontWeight: 700,
                 color: '#1a1a1a',
-                marginBottom: '0.75rem',
                 margin: '0 0 0.75rem 0'
               }}>
                 Understanding the Nervous System
@@ -343,7 +429,6 @@ export default function CommunityPage() {
                   display: 'inline-block',
                   padding: '0.75rem 1.5rem',
                   background: '#333333',
-                  border: 'none',
                   color: '#ffffff',
                   fontSize: '0.875rem',
                   fontWeight: 700,
@@ -366,99 +451,134 @@ export default function CommunityPage() {
               padding: '3rem 2rem',
               textAlign: 'center'
             }}>
-              <p style={{ color: '#666', marginBottom: '1rem', margin: '0 0 1rem 0' }}>No posts yet. Be the first to share!</p>
-              <Link
-                href="/forum"
+              <p style={{ color: '#666', margin: '0 0 1rem 0' }}>No posts yet. Be the first to share!</p>
+              <button
+                onClick={() => setShowNewPostModal(true)}
                 style={{
-                  display: 'inline-block',
                   padding: '0.75rem 1.5rem',
                   background: '#e67e22',
+                  border: 'none',
                   color: '#ffffff',
                   borderRadius: '4px',
-                  textDecoration: 'none',
                   fontWeight: 600,
-                  fontSize: '0.875rem'
+                  fontSize: '0.875rem',
+                  cursor: 'pointer'
                 }}
               >
                 Create a Post
-              </Link>
+              </button>
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {posts.map((post) => (
-                <Link
+                <div
                   key={post.id}
-                  href={`/forum/${post.id}`}
                   style={{
-                    display: 'block',
                     background: '#ffffff',
                     border: `2px solid ${hoveredPostId === post.id ? '#666' : '#e5e5e5'}`,
                     borderRadius: '6px',
                     padding: '1.5rem',
-                    textDecoration: 'none',
                     transition: 'border-color 0.2s ease'
                   }}
                   onMouseEnter={() => setHoveredPostId(post.id)}
                   onMouseLeave={() => setHoveredPostId(null)}
                 >
-                  {/* Post Header */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                    <div style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '50%',
-                      background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#fff',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      flexShrink: 0
-                    }}>
-                      {!post.user_photo && post.user_name?.charAt(0).toUpperCase()}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a1a1a' }}>
-                        {post.user_name}
+                  {/* Clickable post area */}
+                  <Link
+                    href={`/forum/${post.id}`}
+                    style={{ textDecoration: 'none', display: 'block' }}
+                  >
+                    {/* Post Header */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                      <div style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#fff',
+                        fontSize: '16px',
+                        fontWeight: 600,
+                        flexShrink: 0
+                      }}>
+                        {!post.user_photo && post.user_name?.charAt(0).toUpperCase()}
                       </div>
-                      <div style={{ fontSize: '0.75rem', color: '#999' }}>
-                        {getTimeAgo(post.created_at)}
-                        {post.category && ` · ${post.category}`}
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a1a1a' }}>
+                          {post.user_name}
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: '#999' }}>
+                          {getTimeAgo(post.created_at)}
+                          {post.category && ` · ${post.category}`}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Post Content */}
-                  {post.title && (
-                    <h3 style={{
-                      fontSize: '1.0625rem',
-                      fontWeight: 600,
-                      marginBottom: '0.5rem',
-                      color: '#e67e22',
-                      margin: '0 0 0.5rem 0'
+                    {/* Post Content */}
+                    {post.title && (
+                      <h3 style={{
+                        fontSize: '1.0625rem',
+                        fontWeight: 600,
+                        color: '#e67e22',
+                        margin: '0 0 0.5rem 0'
+                      }}>
+                        {post.title}
+                      </h3>
+                    )}
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      lineHeight: 1.6,
+                      margin: '0 0 0.75rem 0'
                     }}>
-                      {post.title}
-                    </h3>
-                  )}
-                  <p style={{
-                    fontSize: '0.875rem',
-                    color: '#333',
-                    lineHeight: 1.6,
-                    marginBottom: '0.75rem',
-                    margin: '0 0 0.75rem 0'
-                  }}>
-                    {post.content.substring(0, 200)}{post.content.length > 200 ? '...' : ''}
-                  </p>
+                      {post.content.substring(0, 200)}{post.content.length > 200 ? '...' : ''}
+                    </p>
+                  </Link>
 
-                  {/* Post Stats */}
-                  <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8125rem', color: '#999' }}>
-                    <span>{post.reply_count} {post.reply_count === 1 ? 'reply' : 'replies'}</span>
-                    <span>{post.like_count} {post.like_count === 1 ? 'like' : 'likes'}</span>
+                  {/* Post Actions - outside the Link to prevent navigation on click */}
+                  <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8125rem', color: '#999', alignItems: 'center' }}>
+                    <button
+                      onClick={(e) => handleLike(e, post.id)}
+                      style={{
+                        background: likedPosts.has(post.id) ? 'rgba(230, 126, 34, 0.1)' : 'transparent',
+                        border: `1px solid ${likedPosts.has(post.id) ? '#e67e22' : '#e5e5e5'}`,
+                        borderRadius: '4px',
+                        padding: '0.375rem 0.75rem',
+                        fontSize: '0.8125rem',
+                        color: likedPosts.has(post.id) ? '#e67e22' : '#999',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.375rem',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      {likedPosts.has(post.id) ? '❤️' : '🤍'} {post.like_count} {post.like_count === 1 ? 'like' : 'likes'}
+                    </button>
+                    <Link
+                      href={`/forum/${post.id}`}
+                      style={{
+                        background: 'transparent',
+                        border: '1px solid #e5e5e5',
+                        borderRadius: '4px',
+                        padding: '0.375rem 0.75rem',
+                        fontSize: '0.8125rem',
+                        color: '#999',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.375rem',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      💬 {post.reply_count} {post.reply_count === 1 ? 'reply' : 'replies'}
+                    </Link>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           )}
@@ -477,18 +597,21 @@ export default function CommunityPage() {
               borderRadius: '6px',
               padding: '1.5rem'
             }}>
-              <div style={{
-                width: '100%',
-                height: '150px',
-                background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                borderRadius: '4px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '2.5rem',
-                color: '#fff',
-                marginBottom: '1rem'
-              }}>▶</div>
+              <Link href="/videos" style={{ textDecoration: 'none', display: 'block' }}>
+                <div style={{
+                  width: '100%',
+                  height: '150px',
+                  background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '2.5rem',
+                  color: '#fff',
+                  marginBottom: '1rem',
+                  cursor: 'pointer'
+                }}>▶</div>
+              </Link>
               <div style={{
                 fontSize: '0.75rem',
                 fontWeight: 700,
@@ -503,7 +626,6 @@ export default function CommunityPage() {
                 fontSize: '1.125rem',
                 fontWeight: 700,
                 color: '#1a1a1a',
-                marginBottom: '0.75rem',
                 margin: '0 0 0.75rem 0'
               }}>
                 Understanding the Nervous System
@@ -514,7 +636,6 @@ export default function CommunityPage() {
                   display: 'inline-block',
                   padding: '0.75rem 1.5rem',
                   background: continueHovered ? '#1a1a1a' : '#333333',
-                  border: 'none',
                   color: '#ffffff',
                   fontSize: '0.875rem',
                   fontWeight: 700,
@@ -544,7 +665,6 @@ export default function CommunityPage() {
                 textTransform: 'uppercase' as const,
                 letterSpacing: '0.1em',
                 color: '#666',
-                marginBottom: '1rem',
                 margin: '0 0 1rem 0'
               }}>
                 Quick Links
@@ -564,6 +684,153 @@ export default function CommunityPage() {
           </aside>
         )}
       </div>
+
+      {/* New Post Modal - copied from forum page */}
+      {showNewPostModal && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.6)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            zIndex: 1000
+          }}
+          onClick={() => setShowNewPostModal(false)}
+        >
+          <div
+            style={{
+              maxWidth: '600px',
+              width: '100%',
+              background: '#ffffff',
+              borderRadius: '6px',
+              padding: '2rem',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem', color: '#1a1a1a', margin: '0 0 1.5rem 0' }}>
+              New Post
+            </h2>
+
+            <form onSubmit={handleCreatePost}>
+              <div style={{ marginBottom: '1.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.5rem', color: '#666' }}>
+                  Category
+                </label>
+                <select
+                  value={newPost.category}
+                  onChange={(e) => setNewPost({ ...newPost, category: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: '#fafafa',
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '4px',
+                    color: '#1a1a1a',
+                    fontSize: '0.9375rem',
+                    outline: 'none'
+                  }}
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div style={{ marginBottom: '1.25rem' }}>
+                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.5rem', color: '#666' }}>
+                  Title (optional)
+                </label>
+                <input
+                  type="text"
+                  value={newPost.title}
+                  onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: '#fafafa',
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '4px',
+                    color: '#1a1a1a',
+                    fontSize: '0.9375rem',
+                    outline: 'none'
+                  }}
+                  placeholder="Give your post a title..."
+                />
+              </div>
+
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.5rem', color: '#666' }}>
+                  Content *
+                </label>
+                <textarea
+                  value={newPost.content}
+                  onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+                  required
+                  minLength={10}
+                  maxLength={10000}
+                  rows={6}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    background: '#fafafa',
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '4px',
+                    color: '#1a1a1a',
+                    fontSize: '0.9375rem',
+                    outline: 'none',
+                    resize: 'vertical',
+                    fontFamily: 'inherit'
+                  }}
+                  placeholder="What's on your mind? (min 10 characters)"
+                />
+                <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '0.25rem' }}>
+                  {newPost.content.length}/10000 characters
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <button
+                  type="submit"
+                  disabled={posting || newPost.content.length < 10}
+                  style={{
+                    flex: 1,
+                    padding: '0.875rem',
+                    background: posting || newPost.content.length < 10 ? '#ccc' : '#e67e22',
+                    border: 'none',
+                    borderRadius: '4px',
+                    color: '#ffffff',
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    cursor: posting || newPost.content.length < 10 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  {posting ? 'Posting...' : 'Post'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowNewPostModal(false)}
+                  style={{
+                    padding: '0.875rem 1.5rem',
+                    background: '#fafafa',
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '4px',
+                    color: '#666',
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
