@@ -394,7 +394,7 @@ export default function CallsPage() {
                         </div>
 
                         {/* Arrow */}
-                        <svg style={{ width: '16px', height: '16px', color: 'rgba(255, 255, 255, 0.3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg style={{ width: '16px', height: '16px', color: 'rgba(26, 26, 26, 0.3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
@@ -869,7 +869,7 @@ export default function CallsPage() {
                       </p>
                       <div style={{
                         fontSize: '12px',
-                        color: 'rgba(255, 255, 255, 0.4)'
+                        color: 'rgba(26, 26, 26, 0.4)'
                       }}>
                         {new Date(video.upload_date).toLocaleDateString('en-US', {
                           month: 'long',

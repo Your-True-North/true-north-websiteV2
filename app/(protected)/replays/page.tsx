@@ -332,7 +332,7 @@ export default function ReplaysPage() {
                     </p>
                     <div style={{
                       fontSize: '12px',
-                      color: 'rgba(255, 255, 255, 0.4)'
+                      color: 'rgba(26, 26, 26, 0.4)'
                     }}>
                       {new Date(video.upload_date).toLocaleDateString('en-US', {
                         month: 'long',

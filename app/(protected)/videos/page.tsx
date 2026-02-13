@@ -277,7 +277,7 @@ export default function LibraryPage() {
                     </div>
                     <div style={{
                       fontSize: '0.75rem',
-                      color: 'rgba(255, 255, 255, 0.4)'
+                      color: 'rgba(26, 26, 26, 0.4)'
                     }}>
                       {Math.round(video.percentage)}% complete
                     </div>
@@ -552,7 +552,7 @@ export default function LibraryPage() {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       fontSize: '0.875rem',
-                      color: 'rgba(255, 255, 255, 0.4)'
+                      color: 'rgba(26, 26, 26, 0.4)'
                     }}>
                       <span>{video.duration || 'Video'}</span>
                       <span>{new Date(video.upload_date).toLocaleDateString()}</span>
