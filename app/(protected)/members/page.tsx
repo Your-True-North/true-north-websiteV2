@@ -331,7 +331,7 @@ export default function MembersPage() {
             textDecoration: 'none',
             transition: 'color 0.3s ease'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+          onMouseEnter={(e) => e.currentTarget.style.color = '#1a1a1a'}
           onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
             CIRCLE OF RETURN
           </Link>
@@ -573,7 +573,7 @@ export default function MembersPage() {
                       marginBottom: '0.75rem',
                       fontWeight: 300,
                       transition: 'color 0.3s ease',
-                      color: isCurrent ? '#fff' : 'rgba(255, 255, 255, 0.5)'
+                      color: isCurrent ? '#1a1a1a' : '#666'
                     }}>
                       {stage.toUpperCase()}
                     </div>
