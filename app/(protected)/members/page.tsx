@@ -265,7 +265,7 @@ export default function MembersPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#fff', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '6rem' }}>
       {/* Animated Background */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
@@ -390,7 +390,7 @@ export default function MembersPage() {
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '8px',
                 background: 'transparent',
-                color: '#fff',
+                color: '#1a1a1a',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}
@@ -662,7 +662,7 @@ export default function MembersPage() {
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
                     textDecoration: 'none',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
@@ -857,7 +857,7 @@ Your Progress
               padding: '1.5rem',
               borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 300, color: '#fff' }}>Profile Settings</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 300, color: '#1a1a1a' }}>Profile Settings</h2>
               <button
                 onClick={() => setShowProfileModal(false)}
                 style={{
@@ -952,7 +952,7 @@ Your Progress
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '1rem',
                     outline: 'none'
                   }}
@@ -976,7 +976,7 @@ Your Progress
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '1rem',
                     outline: 'none'
                   }}
@@ -1001,7 +1001,7 @@ Your Progress
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '1rem',
                     outline: 'none',
                     resize: 'vertical',

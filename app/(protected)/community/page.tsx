@@ -283,7 +283,7 @@ export default function CommunityPage() {
               fontFamily: 'Gambarino, serif',
               fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
               fontWeight: 700,
-              color: '#ffffff',
+              color: '#1a1a1a',
               margin: 0
             }}>
               Welcome back, {user?.name}
@@ -295,7 +295,7 @@ export default function CommunityPage() {
               gap: '0.75rem'
             }}>
               <span style={{
-                color: '#ffffff',
+                color: '#1a1a1a',
                 fontWeight: 700,
                 fontSize: '1.25rem'
               }}>
@@ -352,7 +352,7 @@ export default function CommunityPage() {
                 background: '#e67e22',
                 border: 'none',
                 borderRadius: '4px',
-                color: '#ffffff',
+                color: '#1a1a1a',
                 fontSize: '0.875rem',
                 fontWeight: 600,
                 cursor: 'pointer'
@@ -372,7 +372,7 @@ export default function CommunityPage() {
                 background: '#e67e22',
                 border: 'none',
                 borderRadius: '6px',
-                color: '#ffffff',
+                color: '#1a1a1a',
                 fontSize: '0.9375rem',
                 fontWeight: 600,
                 cursor: 'pointer',
@@ -402,7 +402,7 @@ export default function CommunityPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '2.5rem',
-                color: '#fff',
+                color: '#1a1a1a',
                 marginBottom: '1rem'
               }}>▶</div>
               <div style={{
@@ -429,7 +429,7 @@ export default function CommunityPage() {
                   display: 'inline-block',
                   padding: '0.75rem 1.5rem',
                   background: '#333333',
-                  color: '#ffffff',
+                  color: '#1a1a1a',
                   fontSize: '0.875rem',
                   fontWeight: 700,
                   textTransform: 'uppercase' as const,
@@ -458,7 +458,7 @@ export default function CommunityPage() {
                   padding: '0.75rem 1.5rem',
                   background: '#e67e22',
                   border: 'none',
-                  color: '#ffffff',
+                  color: '#1a1a1a',
                   borderRadius: '4px',
                   fontWeight: 600,
                   fontSize: '0.875rem',
@@ -500,7 +500,7 @@ export default function CommunityPage() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#fff',
+                        color: '#1a1a1a',
                         fontSize: '16px',
                         fontWeight: 600,
                         flexShrink: 0
@@ -607,7 +607,7 @@ export default function CommunityPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '2.5rem',
-                  color: '#fff',
+                  color: '#1a1a1a',
                   marginBottom: '1rem',
                   cursor: 'pointer'
                 }}>▶</div>
@@ -636,7 +636,7 @@ export default function CommunityPage() {
                   display: 'inline-block',
                   padding: '0.75rem 1.5rem',
                   background: continueHovered ? '#1a1a1a' : '#333333',
-                  color: '#ffffff',
+                  color: '#1a1a1a',
                   fontSize: '0.875rem',
                   fontWeight: 700,
                   textTransform: 'uppercase' as const,
@@ -802,7 +802,7 @@ export default function CommunityPage() {
                     background: posting || newPost.content.length < 10 ? '#ccc' : '#e67e22',
                     border: 'none',
                     borderRadius: '4px',
-                    color: '#ffffff',
+                    color: '#1a1a1a',
                     fontSize: '0.9375rem',
                     fontWeight: 600,
                     cursor: posting || newPost.content.length < 10 ? 'not-allowed' : 'pointer'
