@@ -132,14 +132,14 @@ export default function LibraryPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ color: '#999', fontWeight: 300 }}>Loading library...</div>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#1a1a1a' }}>
+    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a' }}>
       {/* Animated Background */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
