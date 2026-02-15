@@ -425,7 +425,7 @@ export default function LibraryPage() {
                 background: selectedCategory === key ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : 'rgba(255, 255, 255, 0.05)',
                 border: selectedCategory === key ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '3px',
-                color: selectedCategory === key ? '#000' : 'rgba(255, 255, 255, 0.7)',
+                color: selectedCategory === key ? '#000' : '#1a1a1a',
                 fontSize: '0.875rem',
                 fontWeight: selectedCategory === key ? 600 : 300,
                 cursor: 'pointer',
