@@ -283,7 +283,7 @@ export default function JourneyPage() {
   if (!user) {
     return (
       <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#999' }}>Loading your journey...</div>
+        <div style={{ color: '#1a1a1a' }}>Loading your journey...</div>
       </div>
     )
   }
@@ -317,8 +317,8 @@ export default function JourneyPage() {
             textDecoration: 'none',
             transition: 'color 0.3s ease'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-          onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)'}>
+          onMouseEnter={(e) => e.currentTarget.style.color = '#000'}
+          onMouseLeave={(e) => e.currentTarget.style.color = '#1a1a1a'}>
             CIRCLE OF RETURN
           </Link>
           
@@ -412,7 +412,7 @@ export default function JourneyPage() {
                       borderRadius: '8px',
                       background: selectedCategory === "All" ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
                       border: selectedCategory === "All" ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
-                      color: selectedCategory === "All" ? '#e67e22' : '#fff',
+                      color: selectedCategory === "All" ? '#e67e22' : '#1a1a1a',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease'
                     }}
@@ -451,7 +451,7 @@ export default function JourneyPage() {
                         borderRadius: '8px',
                         background: selectedCategory === category.name ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
                         border: selectedCategory === category.name ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
-                        color: selectedCategory === category.name ? '#e67e22' : '#fff',
+                        color: selectedCategory === category.name ? '#e67e22' : '#1a1a1a',
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}
@@ -671,7 +671,7 @@ export default function JourneyPage() {
                       <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: '#999', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#1a1a1a', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -712,7 +712,7 @@ export default function JourneyPage() {
                       <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: '#999', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#1a1a1a', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -841,7 +841,7 @@ export default function JourneyPage() {
                     background: videoLikes.includes(selectedVideo.id) ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 255, 255, 0.05)',
                     border: videoLikes.includes(selectedVideo.id) ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '8px',
-                    color: videoLikes.includes(selectedVideo.id) ? '#ef4444' : '#fff',
+                    color: videoLikes.includes(selectedVideo.id) ? '#ef4444' : '#1a1a1a',
                     cursor: 'pointer',
                     fontSize: '0.95rem',
                     fontWeight: 500,
@@ -943,7 +943,7 @@ export default function JourneyPage() {
                           <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#e67e22' }}>
                             {comment.userName}
                           </div>
-                          <div style={{ fontSize: '0.75rem', color: '#999' }}>
+                          <div style={{ fontSize: '0.75rem', color: '#1a1a1a' }}>
                             {new Date(comment.timestamp).toLocaleDateString('en-US', {
                               month: 'short',
                               day: 'numeric',
@@ -953,13 +953,13 @@ export default function JourneyPage() {
                           </div>
                         </div>
                       </div>
-                      <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '0.95rem', lineHeight: 1.5 }}>
+                      <p style={{ color: '#1a1a1a', fontSize: '0.95rem', lineHeight: 1.5 }}>
                         {comment.text}
                       </p>
                     </div>
                   ))}
                   {!videoComments[selectedVideo.id] || videoComments[selectedVideo.id].length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '2rem', color: '#999' }}>
+                    <div style={{ textAlign: 'center', padding: '2rem', color: '#1a1a1a' }}>
                       <p>No comments yet. Be the first to share your thoughts!</p>
                     </div>
                   ) : null}
