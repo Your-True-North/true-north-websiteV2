@@ -132,8 +132,8 @@ export default function LibraryPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#fafafa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#999', fontWeight: 300 }}>Loading library...</div>
+      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: '#1a1a1a', fontWeight: 300 }}>Loading library...</div>
       </div>
     )
   }
@@ -308,11 +308,12 @@ export default function LibraryPage() {
             fontSize: isMobile ? '2rem' : '3rem',
             fontWeight: 300,
             marginBottom: '0.5rem',
-            letterSpacing: '-0.02em'
+            letterSpacing: '-0.02em',
+            color: '#000000'
           }}>
             My Journey
           </h1>
-          <p style={{ color: '#999', fontSize: '1.125rem', fontWeight: 300 }}>
+          <p style={{ color: '#1a1a1a', fontSize: '1.125rem', fontWeight: 300 }}>
             Your path to transformation
           </p>
         </div>
@@ -443,7 +444,7 @@ export default function LibraryPage() {
           <div style={{
             padding: '4rem 2rem',
             textAlign: 'center',
-            color: '#999'
+            color: '#1a1a1a'
           }}>
             No videos found{searchQuery ? ' for your search' : ''}
           </div>
@@ -540,7 +541,7 @@ export default function LibraryPage() {
                     </h3>
                     <p style={{
                       fontSize: '0.875rem',
-                      color: '#999',
+                      color: '#1a1a1a',
                       lineHeight: 1.6,
                       marginBottom: '1rem',
                       flex: 1

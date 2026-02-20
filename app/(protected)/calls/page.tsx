@@ -200,7 +200,7 @@ export default function CallsPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#999'
+        color: '#1a1a1a'
       }}>
         Loading...
       </div>
@@ -377,7 +377,7 @@ export default function CallsPage() {
                           </div>
                           <div style={{
                             fontSize: '12px',
-                            color: '#999'
+                            color: '#1a1a1a'
                           }}>
                             {time}
                           </div>
@@ -394,7 +394,7 @@ export default function CallsPage() {
                         </div>
 
                         {/* Arrow */}
-                        <svg style={{ width: '16px', height: '16px', color: 'rgba(26, 26, 26, 0.3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg style={{ width: '16px', height: '16px', color: '#1a1a1a' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
@@ -548,7 +548,7 @@ export default function CallsPage() {
                             gap: '8px',
                             marginTop: '4px',
                             fontSize: '13px',
-                            color: '#999'
+                            color: '#1a1a1a'
                           }}>
                             <span>{dayOfWeek}</span>
                             <span>•</span>
@@ -631,7 +631,7 @@ export default function CallsPage() {
                 textAlign: 'center',
                 fontSize: isMobile ? '12px' : '14px',
                 fontWeight: 600,
-                color: '#999',
+                color: '#1a1a1a',
                 borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
               }}>
                 {isMobile ? day.charAt(0) : day}
@@ -869,7 +869,7 @@ export default function CallsPage() {
                       </p>
                       <div style={{
                         fontSize: '12px',
-                        color: 'rgba(26, 26, 26, 0.4)'
+                        color: '#1a1a1a'
                       }}>
                         {new Date(video.upload_date).toLocaleDateString('en-US', {
                           month: 'long',
