@@ -3,9 +3,10 @@ import { Client } from 'pg'
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params
     const { userId, watchedSeconds, totalDuration, completed } = await request.json()
     
     const client = new Client({
@@ -46,9 +47,10 @@ export async function POST(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await props.params
     const userId = request.headers.get('x-user-id')
     
     const client = new Client({
