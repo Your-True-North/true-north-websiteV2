@@ -484,7 +484,7 @@ export default function AdminPage() {
                       on "{activity.video_title}"
                     </div>
                   )}
-                  <div style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.4)' }}>
+                  <div style={{ fontSize: '0.7rem', color: 'rgba(26, 26, 26, 0.4)' }}>
                     {formatTime(activity.createdat)}
                   </div>
                 </div>

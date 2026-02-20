@@ -139,7 +139,7 @@ export default function LibraryPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#1a1a1a' }}>
+    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a' }}>
       {/* Animated Background */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
@@ -277,7 +277,7 @@ export default function LibraryPage() {
                     </div>
                     <div style={{
                       fontSize: '0.75rem',
-                      color: 'rgba(255, 255, 255, 0.4)'
+                      color: 'rgba(26, 26, 26, 0.4)'
                     }}>
                       {Math.round(video.percentage)}% complete
                     </div>
@@ -553,7 +553,7 @@ export default function LibraryPage() {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       fontSize: '0.875rem',
-                      color: 'rgba(255, 255, 255, 0.4)'
+                      color: 'rgba(26, 26, 26, 0.4)'
                     }}>
                       <span>{video.duration || 'Video'}</span>
                       <span>{new Date(video.upload_date).toLocaleDateString()}</span>
