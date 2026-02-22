@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 
-export async function POST(request, { params }) {
+export async function POST(request, props) {
   try {
+    const params = await props.params
     const postId = params.id
     const { userId, content, parent_reply_id } = await request.json()
 
