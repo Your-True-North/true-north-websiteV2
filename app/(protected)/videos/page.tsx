@@ -100,6 +100,12 @@ export default function LibraryPage() {
     }
   }
 
+  const getYouTubeId = (url: string) => {
+    if (!url) return null
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)
+    return match ? match[1] : null
+  }
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
@@ -455,7 +461,12 @@ export default function LibraryPage() {
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
             gap: '1.5rem'
           }}>
-            {videos.map(video => (
+            {videos.map(video => {
+              const youtubeId = getYouTubeId(video.youtube_url)
+              const thumbnailUrl = youtubeId
+                ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`
+                : null
+              return (
               <Link
                 key={video.id}
                 href={`/videos/${video.id}`}
@@ -485,7 +496,9 @@ export default function LibraryPage() {
                   <div style={{
                     width: '100%',
                     paddingTop: '56.25%',
-                    background: 'rgba(0, 0, 0, 0.5)',
+                    background: thumbnailUrl
+                      ? `url(${thumbnailUrl}) center/cover`
+                      : 'rgba(0, 0, 0, 0.5)',
                     position: 'relative'
                   }}>
                     <div style={{
@@ -563,7 +576,7 @@ export default function LibraryPage() {
                   </div>
                 </div>
               </Link>
-            ))}
+            )})}
           </div>
         )}
       </div>
