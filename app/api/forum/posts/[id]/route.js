@@ -27,10 +27,11 @@ export async function GET(request, { params }) {
       )
     }
 
-    // Get replies with user info and like counts
+    // Get replies with user info, like counts, and parent_reply_id for nesting
     const repliesResult = await query(
       `SELECT
         pr.*,
+        pr.parent_reply_id,
         u.name as user_name,
         u.profile_photo as user_photo,
         COUNT(DISTINCT rl.id) as like_count
