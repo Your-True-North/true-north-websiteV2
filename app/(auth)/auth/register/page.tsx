@@ -57,9 +57,9 @@ export default function RegisterPage() {
       // Auto-login after successful registration
       localStorage.removeItem('user')
       localStorage.setItem('user', JSON.stringify(data.user))
-      logger.debug('Register', 'Redirecting to /journey...')
+      logger.debug('Register', 'Redirecting to /community...')
 
-      window.location.replace('/journey')
+      window.location.replace('/community')
     } catch (err) {
       console.error('[Register] Error:', err)
       setError('Something went wrong. Try again.')

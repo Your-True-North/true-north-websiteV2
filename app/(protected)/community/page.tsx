@@ -68,6 +68,7 @@ export default function CommunityPage() {
   const [loading, setLoading] = useState(true)
   const [showVideoCard, setShowVideoCard] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [hoveredPostId, setHoveredPostId] = useState<number | null>(null)
   const [continueHovered, setContinueHovered] = useState(false)
 
@@ -443,53 +444,90 @@ export default function CommunityPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa' }}>
-      {/* Hero Section */}
-      <div style={{ background: '#545454', padding: '2rem 0', marginBottom: '3rem' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem' }}>
-          <nav style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem'
+      {/* Top Navigation */}
+      <nav style={{
+        position: 'sticky', top: 0, zIndex: 100,
+        background: '#fafafa', borderBottom: '1px solid #e5e5e5', padding: '1rem 0'
+      }}>
+        <div style={{
+          maxWidth: '1400px', margin: '0 auto', padding: '0 1.5rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem'
+        }}>
+          <Link href="/community" style={{
+            fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a',
+            textDecoration: 'none', fontFamily: 'Gambarino, serif'
           }}>
-            <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-              {navLinks.map((link) => (
-                <Link key={link.label} href={link.href} style={{
-                  color: link.label === 'Community' ? '#e67e22' : '#cccccc',
-                  fontSize: '0.9375rem',
-                  fontWeight: link.label === 'Community' ? 600 : 500,
-                  textDecoration: 'none', transition: 'color 0.2s ease',
-                  borderBottom: link.label === 'Community' ? '2px solid #e67e22' : '2px solid transparent',
-                  paddingBottom: '0.25rem'
-                }}>
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            <Link href="/members" style={{ color: '#cccccc', fontSize: '0.875rem', textDecoration: 'none', fontWeight: 500 }}>
-              {user?.name || 'Profile'}
-            </Link>
-          </nav>
+            True North
+          </Link>
 
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-            <h1 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, color: '#ffffff', margin: 0 }}>
-              Welcome back, {user?.name}
-            </h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'Gambarino, serif' }}>
-              {allLevels.map((level, index) => (
-                <span key={level} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  {index > 0 && <span style={{ color: '#999' }}>→</span>}
-                  <span style={{
-                    color: index === currentLevelIndex ? '#ffffff' : '#999',
-                    fontWeight: index === currentLevelIndex ? 700 : 400,
-                    fontSize: index === currentLevelIndex ? '1.25rem' : '1rem',
-                    fontFamily: 'Gambarino, serif'
-                  }}>
-                    {level}
-                  </span>
-                </span>
-              ))}
+          <div style={{ display: isMobile ? 'none' : 'flex', gap: '2rem', alignItems: 'center' }}>
+            <Link href="/videos" style={{ color: '#666', textDecoration: 'none', fontSize: '0.95rem' }}>Teachings</Link>
+            <Link href="/calls" style={{ color: '#666', textDecoration: 'none', fontSize: '0.95rem' }}>Live Call Calendar</Link>
+            <Link href="/members" style={{ color: '#666', textDecoration: 'none', fontSize: '0.95rem' }}>Dashboard</Link>
+            <Link href="/journey" style={{ color: '#666', textDecoration: 'none', fontSize: '0.95rem' }}>Journey</Link>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{
+              padding: '0.5rem 1rem', background: '#f5f5f5', borderRadius: '20px',
+              fontSize: '0.875rem', color: '#666'
+            }}>
+              {user?.name || 'Profile'}
             </div>
+            {isMobile && (
+              <button onClick={() => setShowMobileMenu(!showMobileMenu)} style={{
+                background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: '#1a1a1a'
+              }}>
+                {showMobileMenu ? '✕' : '☰'}
+              </button>
+            )}
           </div>
         </div>
+
+        {isMobile && showMobileMenu && (
+          <div style={{
+            background: '#fff', borderTop: '1px solid #e5e5e5', padding: '1rem 1.5rem',
+            display: 'flex', flexDirection: 'column', gap: '1rem'
+          }}>
+            <Link href="/videos" onClick={() => setShowMobileMenu(false)} style={{ color: '#333', textDecoration: 'none', fontSize: '0.95rem', padding: '0.5rem 0' }}>Teachings</Link>
+            <Link href="/calls" onClick={() => setShowMobileMenu(false)} style={{ color: '#333', textDecoration: 'none', fontSize: '0.95rem', padding: '0.5rem 0' }}>Live Call Calendar</Link>
+            <Link href="/members" onClick={() => setShowMobileMenu(false)} style={{ color: '#333', textDecoration: 'none', fontSize: '0.95rem', padding: '0.5rem 0' }}>Dashboard</Link>
+            <Link href="/journey" onClick={() => setShowMobileMenu(false)} style={{ color: '#333', textDecoration: 'none', fontSize: '0.95rem', padding: '0.5rem 0' }}>Journey</Link>
+          </div>
+        )}
+      </nav>
+
+      {/* Progress Bar */}
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '1.5rem 1.5rem 1rem', borderBottom: '1px solid #e5e5e5' }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          gap: '0.75rem', fontFamily: 'Gambarino, serif'
+        }}>
+          {allLevels.map((level, index) => (
+            <span key={level} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              {index > 0 && <span style={{ color: '#ccc', fontSize: '1rem' }}>→</span>}
+              <span style={{
+                color: index === currentLevelIndex ? '#1a1a1a' : '#999',
+                fontWeight: index === currentLevelIndex ? 700 : 400,
+                fontSize: index === currentLevelIndex ? '1.25rem' : '1rem',
+                fontFamily: 'Gambarino, serif',
+                transition: 'all 0.3s ease'
+              }}>
+                {level}
+              </span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Welcome Greeting */}
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '1.5rem 1.5rem 1rem' }}>
+        <h1 style={{
+          fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 300,
+          color: '#1a1a1a', fontFamily: 'Gambarino, serif', margin: 0
+        }}>
+          <span style={{ color: '#666' }}>Welcome back,</span> {user?.name}
+        </h1>
       </div>
 
       {/* Main Content */}
