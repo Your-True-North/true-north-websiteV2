@@ -440,7 +440,7 @@ export default function MembersPage() {
             marginBottom: '1rem',
             letterSpacing: '-0.02em'
           }}>
-            Welcome back, <span style={{ color: 'rgba(26, 26, 26, 0.7)' }}>{user.name}</span>
+            <span style={{ color: 'rgba(26, 26, 26, 0.6)' }}>Welcome back,</span> <span style={{ color: 'rgba(26, 26, 26, 0.7)' }}>{user.name}</span>
           </h1>
           <p style={{ color: 'rgba(26, 26, 26, 0.4)', fontSize: 'clamp(1rem, 2vw, 1.125rem)', fontWeight: 300 }}>
             Your transformation journey continues
