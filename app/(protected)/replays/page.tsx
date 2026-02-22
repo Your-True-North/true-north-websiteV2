@@ -90,7 +90,7 @@ export default function ReplaysPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#999'
+        color: '#1a1a1a'
       }}>
         Loading...
       </div>
@@ -182,7 +182,7 @@ export default function ReplaysPage() {
         <div style={{
           marginBottom: '24px',
           fontSize: '14px',
-          color: '#999'
+          color: '#1a1a1a'
         }}>
           {filteredReplays.length} {filteredReplays.length === 1 ? 'replay' : 'replays'} found
         </div>
@@ -332,7 +332,7 @@ export default function ReplaysPage() {
                     </p>
                     <div style={{
                       fontSize: '12px',
-                      color: 'rgba(26, 26, 26, 0.4)'
+                      color: '#1a1a1a'
                     }}>
                       {new Date(video.upload_date).toLocaleDateString('en-US', {
                         month: 'long',
