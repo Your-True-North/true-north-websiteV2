@@ -271,7 +271,8 @@ export default function LibraryPage() {
                     <div style={{
                       fontSize: '1.125rem',
                       fontWeight: 300,
-                      marginBottom: '0.5rem'
+                      marginBottom: '0.5rem',
+                      color: '#1a1a1a'
                     }}>
                       {video.title || 'Video'}
                     </div>
@@ -534,7 +535,8 @@ export default function LibraryPage() {
                       fontSize: '1.125rem',
                       fontWeight: 400,
                       marginBottom: '0.5rem',
-                      lineHeight: 1.4
+                      lineHeight: 1.4,
+                      color: '#1a1a1a'
                     }}>
                       {video.title}
                     </h3>
