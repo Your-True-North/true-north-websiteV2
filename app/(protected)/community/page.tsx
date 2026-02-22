@@ -363,7 +363,35 @@ export default function CommunityPage() {
   // Shared video card content
   const renderVideoCard = (height: string) => (
     <>
-      {thumbnailUrl ? (
+      {showVideoPlayer && youtubeId ? (
+        <div style={{ position: 'relative', marginBottom: '1rem' }}>
+          <div style={{
+            position: 'relative', paddingBottom: '56.25%', height: 0,
+            overflow: 'hidden', borderRadius: '4px', background: '#000'
+          }}>
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+            <button onClick={() => setIsVideoExpanded(true)} style={{
+              flex: 1, padding: '0.5rem', background: '#333', border: 'none',
+              borderRadius: '4px', color: '#fff', fontSize: '0.8125rem', cursor: 'pointer'
+            }}>
+              ↗ Expand
+            </button>
+            <button onClick={() => { setShowVideoPlayer(false); setIsVideoExpanded(false) }} style={{
+              padding: '0.5rem 1rem', background: '#e5e5e5', border: 'none',
+              borderRadius: '4px', color: '#333', fontSize: '0.8125rem', cursor: 'pointer'
+            }}>
+              ✕ Close
+            </button>
+          </div>
+        </div>
+      ) : thumbnailUrl ? (
         <div
           onClick={() => { if (youtubeId) setShowVideoPlayer(true) }}
           style={{
@@ -444,39 +472,43 @@ export default function CommunityPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa' }}>
-      {/* Top Navigation */}
+      {/* Top Navigation - z-index 50 to avoid overlapping members area menus */}
       <nav style={{
-        position: 'sticky', top: 0, zIndex: 100,
-        background: '#fafafa', borderBottom: '1px solid #e5e5e5', padding: '1rem 0'
+        position: 'sticky', top: 0, zIndex: 50,
+        background: '#fafafa', borderBottom: '1px solid #e5e5e5', padding: '0.75rem 0'
       }}>
         <div style={{
           maxWidth: '1400px', margin: '0 auto', padding: '0 1.5rem',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem'
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem'
         }}>
           <Link href="/community" style={{
             fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a',
-            textDecoration: 'none', fontFamily: 'Gambarino, serif'
+            textDecoration: 'none', fontFamily: 'Gambarino, serif', whiteSpace: 'nowrap'
           }}>
             True North
           </Link>
 
-          <div style={{ display: isMobile ? 'none' : 'flex', gap: '2rem', alignItems: 'center' }}>
-            <Link href="/videos" style={{ color: '#666', textDecoration: 'none', fontSize: '0.95rem' }}>Teachings</Link>
-            <Link href="/calls" style={{ color: '#666', textDecoration: 'none', fontSize: '0.95rem' }}>Live Call Calendar</Link>
-            <Link href="/members" style={{ color: '#666', textDecoration: 'none', fontSize: '0.95rem' }}>Dashboard</Link>
-            <Link href="/journey" style={{ color: '#666', textDecoration: 'none', fontSize: '0.95rem' }}>Journey</Link>
+          <div style={{ display: isMobile ? 'none' : 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <Link href="/videos" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Teachings</Link>
+            <Link href="/calls" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Live Call Calendar</Link>
+            <Link href="/members" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Dashboard</Link>
+            <Link href="/journey" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Journey</Link>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{
-              padding: '0.5rem 1rem', background: '#f5f5f5', borderRadius: '20px',
-              fontSize: '0.875rem', color: '#666'
-            }}>
-              {user?.name || 'Profile'}
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            {!isMobile && (
+              <div style={{
+                padding: '0.375rem 0.875rem', background: '#f0f0f0', borderRadius: '20px',
+                fontSize: '0.8125rem', color: '#666'
+              }}>
+                {user?.name || 'Profile'}
+              </div>
+            )}
             {isMobile && (
               <button onClick={() => setShowMobileMenu(!showMobileMenu)} style={{
-                background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: '#1a1a1a'
+                background: 'none', border: '1px solid #e5e5e5', borderRadius: '4px',
+                padding: '0.375rem 0.625rem', fontSize: '1.25rem', cursor: 'pointer', color: '#1a1a1a',
+                lineHeight: 1
               }}>
                 {showMobileMenu ? '✕' : '☰'}
               </button>
@@ -486,30 +518,48 @@ export default function CommunityPage() {
 
         {isMobile && showMobileMenu && (
           <div style={{
-            background: '#fff', borderTop: '1px solid #e5e5e5', padding: '1rem 1.5rem',
-            display: 'flex', flexDirection: 'column', gap: '1rem'
+            background: '#fff', borderTop: '1px solid #e5e5e5', padding: '0.75rem 1.5rem',
+            display: 'flex', flexDirection: 'column', gap: '0'
           }}>
-            <Link href="/videos" onClick={() => setShowMobileMenu(false)} style={{ color: '#333', textDecoration: 'none', fontSize: '0.95rem', padding: '0.5rem 0' }}>Teachings</Link>
-            <Link href="/calls" onClick={() => setShowMobileMenu(false)} style={{ color: '#333', textDecoration: 'none', fontSize: '0.95rem', padding: '0.5rem 0' }}>Live Call Calendar</Link>
-            <Link href="/members" onClick={() => setShowMobileMenu(false)} style={{ color: '#333', textDecoration: 'none', fontSize: '0.95rem', padding: '0.5rem 0' }}>Dashboard</Link>
-            <Link href="/journey" onClick={() => setShowMobileMenu(false)} style={{ color: '#333', textDecoration: 'none', fontSize: '0.95rem', padding: '0.5rem 0' }}>Journey</Link>
+            {[
+              { href: '/videos', label: 'Teachings' },
+              { href: '/calls', label: 'Live Call Calendar' },
+              { href: '/members', label: 'Dashboard' },
+              { href: '/journey', label: 'Journey' }
+            ].map(link => (
+              <Link key={link.href} href={link.href} onClick={() => setShowMobileMenu(false)} style={{
+                color: '#333', textDecoration: 'none', fontSize: '0.9375rem',
+                padding: '0.75rem 0', borderBottom: '1px solid #f0f0f0',
+                display: 'block'
+              }}>
+                {link.label}
+              </Link>
+            ))}
+            <div style={{ padding: '0.75rem 0', fontSize: '0.8125rem', color: '#999' }}>
+              Signed in as {user?.name}
+            </div>
           </div>
         )}
       </nav>
 
       {/* Progress Bar */}
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '1.5rem 1.5rem 1rem', borderBottom: '1px solid #e5e5e5' }}>
+      <div style={{
+        maxWidth: '1400px', margin: '0 auto',
+        padding: isMobile ? '1rem 1.5rem 0.75rem' : '1.5rem 1.5rem 1rem',
+        borderBottom: '1px solid #e5e5e5'
+      }}>
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          gap: '0.75rem', fontFamily: 'Gambarino, serif'
+          gap: isMobile ? '0.375rem' : '0.75rem', fontFamily: 'Gambarino, serif',
+          flexWrap: 'wrap'
         }}>
           {allLevels.map((level, index) => (
-            <span key={level} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              {index > 0 && <span style={{ color: '#ccc', fontSize: '1rem' }}>→</span>}
+            <span key={level} style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '0.375rem' : '0.75rem' }}>
+              {index > 0 && <span style={{ color: '#ccc', fontSize: isMobile ? '0.875rem' : '1rem' }}>→</span>}
               <span style={{
                 color: index === currentLevelIndex ? '#1a1a1a' : '#999',
                 fontWeight: index === currentLevelIndex ? 700 : 400,
-                fontSize: index === currentLevelIndex ? '1.25rem' : '1rem',
+                fontSize: index === currentLevelIndex ? (isMobile ? '1rem' : '1.25rem') : (isMobile ? '0.875rem' : '1rem'),
                 fontFamily: 'Gambarino, serif',
                 transition: 'all 0.3s ease'
               }}>
@@ -521,12 +571,17 @@ export default function CommunityPage() {
       </div>
 
       {/* Welcome Greeting */}
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '1.5rem 1.5rem 1rem' }}>
+      <div style={{
+        maxWidth: '1400px', margin: '0 auto',
+        padding: isMobile ? '1rem 1.5rem 0.5rem' : '1.5rem 1.5rem 1rem'
+      }}>
         <h1 style={{
-          fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 300,
-          color: '#1a1a1a', fontFamily: 'Gambarino, serif', margin: 0
+          fontSize: isMobile ? '1.25rem' : '2rem', fontWeight: 300,
+          color: '#1a1a1a', fontFamily: 'Gambarino, serif', margin: 0,
+          lineHeight: 1.3
         }}>
-          <span style={{ color: '#666' }}>Welcome back,</span> {user?.name}
+          <span style={{ color: '#666', fontWeight: 300 }}>Welcome back,</span>{' '}
+          <span style={{ fontWeight: 500 }}>{user?.name}</span>
         </h1>
       </div>
 
@@ -875,31 +930,38 @@ export default function CommunityPage() {
         </div>
       )}
 
-      {/* Video Player Modal */}
-      {showVideoPlayer && youtubeId && (
-        <div style={{
-          position: 'fixed', inset: 0, background: 'rgba(0, 0, 0, 0.9)',
-          zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem'
-        }}>
-          <div style={{
-            maxWidth: isVideoExpanded ? '1200px' : '600px',
-            width: '100%', position: 'relative',
-            transition: 'all 0.3s ease'
-          }}>
+      {/* Expanded Video Player Modal - only when user clicks Expand */}
+      {isVideoExpanded && youtubeId && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0, 0, 0, 0.9)',
+            zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: isMobile ? '1rem' : '2rem'
+          }}
+          onClick={() => { setIsVideoExpanded(false) }}
+        >
+          <div
+            style={{ maxWidth: '1200px', width: '100%', position: 'relative' }}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div style={{
               position: 'absolute', top: '-3rem', right: 0,
               display: 'flex', gap: '1rem', alignItems: 'center'
             }}>
-              <button onClick={() => setIsVideoExpanded(!isVideoExpanded)} style={{
-                background: 'none', border: 'none', color: '#fff', fontSize: '0.9375rem',
-                cursor: 'pointer', padding: '0.5rem', opacity: 0.8
+              <button onClick={() => setIsVideoExpanded(false)} style={{
+                background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.3)',
+                color: '#fff', fontSize: '0.875rem', cursor: 'pointer', padding: '0.5rem 1rem',
+                borderRadius: '4px'
               }}>
-                {isVideoExpanded ? '↙ Shrink' : '↗ Expand'}
+                ↙ Back to inline
               </button>
               <button onClick={() => { setShowVideoPlayer(false); setIsVideoExpanded(false) }} style={{
-                background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem',
-                cursor: 'pointer', padding: '0.5rem'
-              }}>✕ Close</button>
+                background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.3)',
+                color: '#fff', fontSize: '0.875rem', cursor: 'pointer', padding: '0.5rem 1rem',
+                borderRadius: '4px'
+              }}>
+                ✕ Close
+              </button>
             </div>
             <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '6px' }}>
               <iframe

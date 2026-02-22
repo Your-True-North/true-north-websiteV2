@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 
-export async function GET(request, { params }) {
+export async function GET(request, props) {
   try {
+    const params = await props.params
     const postId = params.id
 
     // Get post with user info and like count
