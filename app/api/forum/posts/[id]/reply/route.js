@@ -4,7 +4,7 @@ import { query } from '@/lib/db'
 export async function POST(request, { params }) {
   try {
     const postId = params.id
-    const { userId, content } = await request.json()
+    const { userId, content, parent_reply_id } = await request.json()
 
     // Validate
     if (!userId || !content || content.length < 1) {
@@ -21,12 +21,12 @@ export async function POST(request, { params }) {
       )
     }
 
-    // Insert reply
+    // Insert reply (with optional parent_reply_id for nested replies)
     const result = await query(
-      `INSERT INTO post_replies (post_id, "userId", content)
-       VALUES ($1, $2, $3)
+      `INSERT INTO post_replies (post_id, "userId", content, parent_reply_id)
+       VALUES ($1, $2, $3, $4)
        RETURNING *`,
-      [postId, userId, content]
+      [postId, userId, content, parent_reply_id || null]
     )
 
     return NextResponse.json(

@@ -31,6 +31,8 @@ interface Reply {
   user_name: string
   user_photo: string | null
   created_at: string
+  parent_reply_id: number | null
+  replies?: Reply[]
 }
 
 interface Video {
@@ -86,9 +88,13 @@ export default function CommunityPage() {
   const [submittingReply, setSubmittingReply] = useState(false)
   const [detailLiked, setDetailLiked] = useState(false)
 
+  // Nested reply state
+  const [replyingToId, setReplyingToId] = useState<number | null>(null)
+
   // Video state
   const [nextVideo, setNextVideo] = useState<Video | null>(null)
   const [showVideoPlayer, setShowVideoPlayer] = useState(false)
+  const [isVideoExpanded, setIsVideoExpanded] = useState(false)
 
   // Auth
   useEffect(() => {
@@ -262,12 +268,13 @@ export default function CommunityPage() {
       const res = await fetch(`/api/forum/posts/${selectedPost.id}/reply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user.id, content: replyContent })
+        body: JSON.stringify({ userId: user.id, content: replyContent, parent_reply_id: replyingToId })
       })
       if (res.ok) {
         const data = await res.json()
-        setReplies(prev => [...prev, { ...data.reply, user_name: user.name, user_photo: null }])
+        setReplies(prev => [...prev, { ...data.reply, user_name: user.name, user_photo: null, parent_reply_id: replyingToId }])
         setReplyContent('')
+        setReplyingToId(null)
         fetchPosts()
       } else {
         const data = await res.json()
@@ -279,6 +286,22 @@ export default function CommunityPage() {
     } finally {
       setSubmittingReply(false)
     }
+  }
+
+  // Build reply tree from flat list
+  const buildReplyTree = (flatReplies: Reply[]): Reply[] => {
+    const map = new Map<number, Reply>()
+    const roots: Reply[] = []
+    flatReplies.forEach(r => map.set(r.id, { ...r, replies: [] }))
+    flatReplies.forEach(r => {
+      const reply = map.get(r.id)!
+      if (r.parent_reply_id && map.has(r.parent_reply_id)) {
+        map.get(r.parent_reply_id)!.replies!.push(reply)
+      } else {
+        roots.push(reply)
+      }
+    })
+    return roots
   }
 
   // Create post handler
@@ -330,8 +353,9 @@ export default function CommunityPage() {
     )
   }
 
+  const allLevels = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
   const currentLevel = user?.level || 'Seeker'
-  const nextLevel = user?.nextLevel || 'Explorer'
+  const currentLevelIndex = allLevels.indexOf(currentLevel)
   const youtubeId = nextVideo ? getYouTubeId(nextVideo) : null
   const thumbnailUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : null
 
@@ -449,14 +473,20 @@ export default function CommunityPage() {
             <h1 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, color: '#ffffff', margin: 0 }}>
               Welcome back, {user?.name}
             </h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <span style={{ color: '#ffffff', fontWeight: 700, fontSize: '1.25rem' }}>{currentLevel}</span>
-              {nextLevel && (
-                <>
-                  <span style={{ color: '#999', fontSize: '1rem' }}>→</span>
-                  <span style={{ color: '#999999', fontWeight: 400, fontSize: '1rem' }}>{nextLevel}</span>
-                </>
-              )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontFamily: 'Gambarino, serif' }}>
+              {allLevels.map((level, index) => (
+                <span key={level} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  {index > 0 && <span style={{ color: '#999' }}>→</span>}
+                  <span style={{
+                    color: index === currentLevelIndex ? '#ffffff' : '#999',
+                    fontWeight: index === currentLevelIndex ? 700 : 400,
+                    fontSize: index === currentLevelIndex ? '1.25rem' : '1rem',
+                    fontFamily: 'Gambarino, serif'
+                  }}>
+                    {level}
+                  </span>
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -592,9 +622,8 @@ export default function CommunityPage() {
                 Quick Links
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <Link href="/forum" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f0f0f0' }}>Forum</Link>
-                <Link href="/videos" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f0f0f0' }}>Video Library</Link>
-                <Link href="/calls" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0' }}>Live Calls</Link>
+                <Link href="/videos" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f0f0f0' }}>Teachings</Link>
+                <Link href="/calls" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0' }}>Live Call Calendar</Link>
               </div>
             </div>
           </aside>
@@ -676,33 +705,68 @@ export default function CommunityPage() {
               <p style={{ color: '#999', padding: '1rem 0', fontSize: '0.875rem' }}>No replies yet. Be the first to respond!</p>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
-                {replies.map((reply) => (
-                  <div key={reply.id} style={{ padding: '1rem', background: '#fafafa', borderRadius: '6px', border: '1px solid #f0f0f0' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                {buildReplyTree(replies).map((reply) => {
+                  const renderReply = (r: Reply, depth: number) => (
+                    <div key={r.id} style={{ marginLeft: depth > 0 ? '2rem' : '0', marginBottom: '0.75rem' }}>
                       <div style={{
-                        width: '32px', height: '32px', borderRadius: '50%',
-                        background: reply.user_photo ? `url(${reply.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
-                        backgroundSize: 'cover', backgroundPosition: 'center',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        color: '#fff', fontSize: '13px', fontWeight: 600, flexShrink: 0
+                        padding: '1rem',
+                        background: depth > 0 ? '#f5f5f5' : '#fafafa',
+                        borderRadius: '6px',
+                        border: `1px solid ${depth > 0 ? '#e8e8e8' : '#f0f0f0'}`,
+                        borderLeft: depth > 0 ? '3px solid #e67e22' : '1px solid #f0f0f0'
                       }}>
-                        {!reply.user_photo && reply.user_name?.charAt(0).toUpperCase()}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                          <div style={{
+                            width: '32px', height: '32px', borderRadius: '50%',
+                            background: r.user_photo ? `url(${r.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
+                            backgroundSize: 'cover', backgroundPosition: 'center',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            color: '#fff', fontSize: '13px', fontWeight: 600, flexShrink: 0
+                          }}>
+                            {!r.user_photo && r.user_name?.charAt(0).toUpperCase()}
+                          </div>
+                          <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a1a1a' }}>{r.user_name}</span>
+                          <span style={{ fontSize: '0.75rem', color: '#999' }}>{getTimeAgo(r.created_at)}</span>
+                        </div>
+                        <p style={{ fontSize: '0.875rem', color: '#333', lineHeight: 1.6, margin: '0 0 0.5rem 0', whiteSpace: 'pre-wrap' }}>{r.content}</p>
+                        {depth < 3 && (
+                          <button
+                            onClick={() => setReplyingToId(replyingToId === r.id ? null : r.id)}
+                            style={{
+                              background: 'none', border: 'none', color: replyingToId === r.id ? '#e67e22' : '#999',
+                              fontSize: '0.75rem', cursor: 'pointer', padding: 0, fontWeight: 500
+                            }}
+                          >
+                            {replyingToId === r.id ? 'Cancel' : 'Reply'}
+                          </button>
+                        )}
                       </div>
-                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a1a1a' }}>{reply.user_name}</span>
-                      <span style={{ fontSize: '0.75rem', color: '#999' }}>{getTimeAgo(reply.created_at)}</span>
+                      {r.replies?.map(nested => renderReply(nested, depth + 1))}
                     </div>
-                    <p style={{ fontSize: '0.875rem', color: '#333', lineHeight: 1.6, margin: 0, whiteSpace: 'pre-wrap' }}>{reply.content}</p>
-                  </div>
-                ))}
+                  )
+                  return renderReply(reply, 0)
+                })}
               </div>
             )}
 
             {/* Reply form */}
             <form onSubmit={handleReply} style={{ borderTop: '1px solid #e5e5e5', paddingTop: '1.5rem' }}>
+              {replyingToId && (
+                <div style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  padding: '0.5rem 0.75rem', background: 'rgba(230, 126, 34, 0.1)',
+                  borderRadius: '4px', marginBottom: '0.75rem', fontSize: '0.8125rem', color: '#e67e22'
+                }}>
+                  <span>Replying to {replies.find(r => r.id === replyingToId)?.user_name || 'reply'}</span>
+                  <button type="button" onClick={() => setReplyingToId(null)} style={{
+                    background: 'none', border: 'none', color: '#e67e22', cursor: 'pointer', fontSize: '1rem', padding: 0
+                  }}>✕</button>
+                </div>
+              )}
               <textarea
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
-                placeholder="Write a reply..."
+                placeholder={replyingToId ? 'Write a nested reply...' : 'Write a reply...'}
                 rows={3}
                 style={{
                   width: '100%', padding: '0.75rem', background: '#fafafa',
@@ -776,14 +840,29 @@ export default function CommunityPage() {
       {/* Video Player Modal */}
       {showVideoPlayer && youtubeId && (
         <div style={{
-          position: 'fixed', inset: 0, background: 'rgba(0, 0, 0, 0.95)',
+          position: 'fixed', inset: 0, background: 'rgba(0, 0, 0, 0.9)',
           zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem'
         }}>
-          <div style={{ maxWidth: '960px', width: '100%', position: 'relative' }}>
-            <button onClick={() => setShowVideoPlayer(false)} style={{
+          <div style={{
+            maxWidth: isVideoExpanded ? '1200px' : '600px',
+            width: '100%', position: 'relative',
+            transition: 'all 0.3s ease'
+          }}>
+            <div style={{
               position: 'absolute', top: '-3rem', right: 0,
-              background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer', padding: '0.5rem'
-            }}>✕ Close</button>
+              display: 'flex', gap: '1rem', alignItems: 'center'
+            }}>
+              <button onClick={() => setIsVideoExpanded(!isVideoExpanded)} style={{
+                background: 'none', border: 'none', color: '#fff', fontSize: '0.9375rem',
+                cursor: 'pointer', padding: '0.5rem', opacity: 0.8
+              }}>
+                {isVideoExpanded ? '↙ Shrink' : '↗ Expand'}
+              </button>
+              <button onClick={() => { setShowVideoPlayer(false); setIsVideoExpanded(false) }} style={{
+                background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem',
+                cursor: 'pointer', padding: '0.5rem'
+              }}>✕ Close</button>
+            </div>
             <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '6px' }}>
               <iframe
                 src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
