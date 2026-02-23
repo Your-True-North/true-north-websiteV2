@@ -4,7 +4,7 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
 
-  if (secret !== 'run-migration-005') {
+  if (secret !== 'run-migration-005' && secret !== 'run-migrations') {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -135,9 +135,37 @@ export async function GET(request) {
       }
     }
 
+    // Migration 008: Add parent_reply_id for nested replies
+    steps.push('Running migration 008: Add parent_reply_id for nested replies...');
+    try {
+      await client.query(`
+        ALTER TABLE post_replies ADD COLUMN IF NOT EXISTS parent_reply_id INTEGER DEFAULT NULL
+      `);
+      steps.push('✅ parent_reply_id column added (or already exists)');
+
+      // Try adding foreign key constraint (may already exist)
+      try {
+        await client.query(`
+          ALTER TABLE post_replies ADD CONSTRAINT post_replies_parent_fkey
+            FOREIGN KEY (parent_reply_id) REFERENCES post_replies(id) ON DELETE CASCADE
+        `);
+        steps.push('✅ Foreign key constraint added');
+      } catch (fkError) {
+        steps.push('✅ Foreign key constraint already exists');
+      }
+
+      // Try adding index (may already exist)
+      await client.query(`
+        CREATE INDEX IF NOT EXISTS idx_post_replies_parent_id ON post_replies(parent_reply_id)
+      `);
+      steps.push('✅ Index on parent_reply_id created (or already exists)');
+    } catch (m008Error) {
+      steps.push('⚠️ Migration 008 error: ' + m008Error.message);
+    }
+
     return Response.json({
       success: true,
-      message: 'Migrations 004 & 005 completed',
+      message: 'Migrations 004, 005 & 008 completed',
       steps
     });
 

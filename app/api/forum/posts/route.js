@@ -1,48 +1,68 @@
 import { NextResponse } from 'next/server'
-import { Client } from 'pg'
-
-const DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
+import { query } from '@/lib/db'
 
 export async function GET(request) {
-  const client = new Client({ connectionString: DATABASE_URL })
-
   try {
-    await client.connect()
-
     const { searchParams } = new URL(request.url)
     const category = searchParams.get('category')
 
-    // Simple query - try to get all columns
-    let sql = 'SELECT * FROM community_posts'
+    // Build query with JOINs for user names, reply counts, and like counts
+    let sql = `
+      SELECT
+        cp.*,
+        u.name as user_name,
+        u.profile_photo as user_photo,
+        COUNT(DISTINCT pr.id) as reply_count,
+        COUNT(DISTINCT pl.id) as like_count
+      FROM community_posts cp
+      LEFT JOIN users u ON cp."userId" = u.id
+      LEFT JOIN post_replies pr ON cp.id = pr.post_id
+      LEFT JOIN post_likes pl ON cp.id = pl.post_id
+    `
     const params = []
 
     if (category && category !== 'All Posts') {
-      sql += ' WHERE category = $1'
+      sql += ' WHERE cp.category = $1'
       params.push(category)
     }
 
-    sql += ' ORDER BY createdat DESC'
+    sql += ' GROUP BY cp.id, u.name, u.profile_photo'
+    sql += ' ORDER BY cp.id DESC'
 
-    const postsResult = await client.query(sql, params)
+    let postsRows
+    try {
+      const result = await query(sql, params)
+      postsRows = result.rows
+    } catch (joinError) {
+      // Fallback: simpler query without joins if tables are missing
+      console.warn('[Forum Posts] JOIN query failed, using fallback:', joinError.message)
+      let fallbackSql = 'SELECT * FROM community_posts'
+      const fallbackParams = []
+      if (category && category !== 'All Posts') {
+        fallbackSql += ' WHERE category = $1'
+        fallbackParams.push(category)
+      }
+      fallbackSql += ' ORDER BY id DESC'
+      const result = await query(fallbackSql, fallbackParams)
+      postsRows = result.rows
+    }
 
-    // Build response with safe defaults
-    const posts = postsResult.rows.map(post => ({
+    // Normalize field names for client
+    const posts = postsRows.map(post => ({
       id: post.id,
       userId: post.userId || post.user_id,
       category: post.category,
       title: post.title,
       content: post.content,
-      created_at: post.createdat,
-      user_name: 'Member',
-      user_photo: null,
-      reply_count: 0,
-      like_count: 0
+      created_at: post.created_at || post.createdat,
+      user_name: post.user_name || 'Member',
+      user_photo: post.user_photo || null,
+      reply_count: parseInt(post.reply_count) || 0,
+      like_count: parseInt(post.like_count) || 0
     }))
 
-    await client.end()
     return NextResponse.json({ posts }, { status: 200 })
   } catch (error) {
-    try { await client.end() } catch {}
     console.error('[Forum Posts GET] Error:', error)
     return NextResponse.json({
       error: 'Database error',
@@ -53,11 +73,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const client = new Client({ connectionString: DATABASE_URL })
-
   try {
-    await client.connect()
-
     const { userId, category, title, content } = await request.json()
 
     if (!userId) {
@@ -68,17 +84,17 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Content required (min 10 chars)' }, { status: 400 })
     }
 
-    // Try both column name styles - don't set createdat, let DB default handle it
+    // Try with "userId" column name first, fall back to user_id
     let result
     try {
-      result = await client.query(
+      result = await query(
         `INSERT INTO community_posts ("userId", category, title, content)
          VALUES ($1, $2, $3, $4)
          RETURNING *`,
         [userId, category || null, title || null, content]
       )
     } catch (e) {
-      result = await client.query(
+      result = await query(
         `INSERT INTO community_posts (user_id, category, title, content)
          VALUES ($1, $2, $3, $4)
          RETURNING *`,
@@ -86,10 +102,8 @@ export async function POST(request) {
       )
     }
 
-    await client.end()
     return NextResponse.json({ post: result.rows[0], message: 'Post created' }, { status: 201 })
   } catch (error) {
-    try { await client.end() } catch {}
     console.error('[Forum Post CREATE] Error:', error)
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
