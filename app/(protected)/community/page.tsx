@@ -135,7 +135,12 @@ export default function CommunityPage() {
 
   // Responsive check
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+      if (window.innerWidth >= 768) {
+        setShowMobileMenu(false)
+      }
+    }
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
@@ -479,7 +484,8 @@ export default function CommunityPage() {
       }}>
         <div style={{
           maxWidth: '1400px', margin: '0 auto', padding: '0 1.5rem',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem'
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem',
+          position: 'relative'
         }}>
           <Link href="/community" style={{
             fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a',
@@ -507,10 +513,15 @@ export default function CommunityPage() {
             {isMobile && (
               <button onClick={() => setShowMobileMenu(!showMobileMenu)} style={{
                 background: 'none', border: '1px solid #e5e5e5', borderRadius: '4px',
-                padding: '0.375rem 0.625rem', fontSize: '1.25rem', cursor: 'pointer', color: '#1a1a1a',
-                lineHeight: 1
+                padding: '0.5rem', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                width: '40px', height: '40px'
               }}>
-                {showMobileMenu ? '✕' : '☰'}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', width: '20px' }}>
+                  <div style={{ width: '100%', height: '2px', background: '#1a1a1a' }} />
+                  <div style={{ width: '100%', height: '2px', background: '#1a1a1a' }} />
+                  <div style={{ width: '100%', height: '2px', background: '#1a1a1a' }} />
+                </div>
               </button>
             )}
           </div>
@@ -518,24 +529,28 @@ export default function CommunityPage() {
 
         {isMobile && showMobileMenu && (
           <div style={{
-            background: '#fff', borderTop: '1px solid #e5e5e5', padding: '0.75rem 1.5rem',
-            display: 'flex', flexDirection: 'column', gap: '0'
+            position: 'absolute', top: '100%', left: 0, right: 0,
+            background: '#fff', borderBottom: '1px solid #e5e5e5',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)', zIndex: 99,
+            display: 'flex', flexDirection: 'column'
           }}>
-            {[
-              { href: '/videos', label: 'Teachings' },
-              { href: '/calls', label: 'Live Call Calendar' },
-              { href: '/members', label: 'Dashboard' },
-              { href: '/journey', label: 'Journey' }
-            ].map(link => (
-              <Link key={link.href} href={link.href} onClick={() => setShowMobileMenu(false)} style={{
-                color: '#333', textDecoration: 'none', fontSize: '0.9375rem',
-                padding: '0.75rem 0', borderBottom: '1px solid #f0f0f0',
-                display: 'block'
-              }}>
-                {link.label}
-              </Link>
-            ))}
-            <div style={{ padding: '0.75rem 0', fontSize: '0.8125rem', color: '#999' }}>
+            <Link href="/videos" onClick={() => setShowMobileMenu(false)} style={{
+              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
+              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
+            }}>Teachings</Link>
+            <Link href="/calls" onClick={() => setShowMobileMenu(false)} style={{
+              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
+              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
+            }}>Live Call Calendar</Link>
+            <Link href="/members" onClick={() => setShowMobileMenu(false)} style={{
+              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
+              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
+            }}>Dashboard</Link>
+            <Link href="/journey" onClick={() => setShowMobileMenu(false)} style={{
+              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
+              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
+            }}>Journey</Link>
+            <div style={{ padding: '1rem 1.5rem', background: '#f9f9f9', fontSize: '0.875rem', color: '#666' }}>
               Signed in as {user?.name}
             </div>
           </div>
