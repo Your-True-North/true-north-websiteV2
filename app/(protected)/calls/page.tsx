@@ -294,8 +294,8 @@ export default function CallsPage() {
           {calendarEvents.length === 0 ? (
             <div style={{
               padding: '32px',
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#ffffff',
+              border: '1px solid #e5e5e5',
               borderRadius: '3px',
               textAlign: 'center'
             }}>
@@ -343,8 +343,8 @@ export default function CallsPage() {
                           alignItems: 'center',
                           gap: '16px',
                           padding: '12px 16px',
-                          background: 'rgba(255, 255, 255, 0.02)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          background: '#ffffff',
+                          border: '1px solid #e5e5e5',
                           borderRadius: '3px',
                           transition: 'all 0.3s ease',
                           cursor: 'pointer'
@@ -357,8 +357,8 @@ export default function CallsPage() {
                           e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                          e.currentTarget.style.background = '#ffffff'
+                          e.currentTarget.style.borderColor = '#e5e5e5'
                         }}
                       >
                         {/* Compact Date */}
@@ -567,8 +567,8 @@ export default function CallsPage() {
         {/* Monthly Calendar */}
         <div style={{
           padding: isMobile ? '24px' : '32px',
-          background: 'rgba(255, 255, 255, 0.02)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '3px',
           marginBottom: '40px'
         }}>
@@ -591,8 +591,8 @@ export default function CallsPage() {
                 onClick={goToPreviousMonth}
                 style={{
                   padding: '8px 16px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: '#fafafa',
+                  border: '1px solid #e5e5e5',
                   borderRadius: '3px',
                   color: '#e67e22',
                   cursor: 'pointer',
@@ -605,8 +605,8 @@ export default function CallsPage() {
                 onClick={goToNextMonth}
                 style={{
                   padding: '8px 16px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: '#fafafa',
+                  border: '1px solid #e5e5e5',
                   borderRadius: '3px',
                   color: '#e67e22',
                   cursor: 'pointer',
@@ -632,7 +632,7 @@ export default function CallsPage() {
                 fontSize: isMobile ? '12px' : '14px',
                 fontWeight: 600,
                 color: '#1a1a1a',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                borderBottom: '2px solid #e5e5e5'
               }}>
                 {isMobile ? day.charAt(0) : day}
               </div>
@@ -656,7 +656,7 @@ export default function CallsPage() {
                       : 'transparent',
                     border: isToday
                       ? '2px solid #e67e22'
-                      : '1px solid rgba(255, 255, 255, 0.05)',
+                      : '1px solid #e5e5e5',
                     borderRadius: '3px',
                     textAlign: 'center',
                     opacity: isCurrentMonth ? 1 : 0.3,
@@ -690,7 +690,7 @@ export default function CallsPage() {
                   <div style={{
                     fontSize: isMobile ? '14px' : '16px',
                     fontWeight: isToday ? 600 : 400,
-                    color: day.hasCall ? '#e67e22' : 'rgba(255, 255, 255, 0.7)',
+                    color: day.hasCall ? '#e67e22' : '#1a1a1a',
                     marginBottom: isMobile ? '2px' : '4px'
                   }}>
                     {day.date.getDate()}
@@ -750,8 +750,8 @@ export default function CallsPage() {
           {replays.length === 0 ? (
             <div style={{
               padding: '32px',
-              background: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#ffffff',
+              border: '1px solid #e5e5e5',
               borderRadius: '3px',
               textAlign: 'center'
             }}>
@@ -784,8 +784,8 @@ export default function CallsPage() {
                   }}
                 >
                   <div style={{
-                    background: 'rgba(255, 255, 255, 0.02)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#ffffff',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
                     overflow: 'hidden',
                     transition: 'all 0.3s ease',
@@ -796,7 +796,7 @@ export default function CallsPage() {
                     e.currentTarget.style.transform = 'translateY(-4px)'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.borderColor = '#e5e5e5'
                     e.currentTarget.style.transform = 'translateY(0)'
                   }}
                   >
