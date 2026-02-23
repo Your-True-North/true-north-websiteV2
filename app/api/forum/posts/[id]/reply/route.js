@@ -22,22 +22,42 @@ export async function POST(request, props) {
       )
     }
 
-    // Insert reply (with optional parent_reply_id for nested replies)
-    const result = await query(
-      `INSERT INTO post_replies (post_id, "userId", content, parent_reply_id)
-       VALUES ($1, $2, $3, $4)
-       RETURNING *`,
-      [postId, userId, content, parent_reply_id || null]
-    )
+    // Insert reply - try with parent_reply_id first, fall back without it
+    let result
+    try {
+      result = await query(
+        `INSERT INTO post_replies (post_id, "userId", content, parent_reply_id)
+         VALUES ($1, $2, $3, $4)
+         RETURNING *`,
+        [postId, userId, content, parent_reply_id || null]
+      )
+    } catch (insertError) {
+      // parent_reply_id column may not exist - retry without it
+      console.warn('[Forum Reply] Retrying without parent_reply_id:', insertError.message)
+      result = await query(
+        `INSERT INTO post_replies (post_id, "userId", content)
+         VALUES ($1, $2, $3)
+         RETURNING *`,
+        [postId, userId, content]
+      )
+    }
+
+    // Normalize the reply response for the client
+    const reply = result.rows[0]
+    const mappedReply = {
+      ...reply,
+      created_at: reply.created_at || reply.createdat,
+      parent_reply_id: reply.parent_reply_id || null
+    }
 
     return NextResponse.json(
-      { reply: result.rows[0], message: 'Reply posted successfully' },
+      { reply: mappedReply, message: 'Reply posted successfully' },
       { status: 201 }
     )
   } catch (error) {
     console.error('[Forum Reply] Error:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: error.message },
       { status: 500 }
     )
   }
