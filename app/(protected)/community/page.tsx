@@ -480,9 +480,9 @@ export default function CommunityPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa' }}>
-      {/* Top Navigation - z-index 50 to avoid overlapping members area menus */}
+      {/* Top Navigation */}
       <nav style={{
-        position: 'sticky', top: 0, zIndex: 50,
+        position: 'sticky', top: 0, zIndex: 100,
         background: '#fafafa', borderBottom: '1px solid #e5e5e5', padding: '0.75rem 0'
       }}>
         <div style={{
@@ -497,11 +497,12 @@ export default function CommunityPage() {
             True North
           </Link>
 
-          <div style={{ display: isMobile ? 'none' : 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          <div style={{ display: isMobile ? 'none' : 'flex', gap: '1.5rem', alignItems: 'center', marginRight: 'auto', marginLeft: '2rem' }}>
+            <Link href="/community" style={{ color: '#e67e22', textDecoration: 'none', fontSize: '0.9375rem', fontWeight: 600, borderBottom: '2px solid #e67e22', paddingBottom: '2px' }}>Community</Link>
+            <Link href="/videos" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>CoR Modules</Link>
             <Link href="/videos" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Teachings</Link>
-            <Link href="/calls" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Live Call Calendar</Link>
             <Link href="/members" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Dashboard</Link>
-            <Link href="/journey" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Journey</Link>
+            <Link href="/about" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>About</Link>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -537,71 +538,32 @@ export default function CommunityPage() {
             boxShadow: '0 4px 6px rgba(0,0,0,0.1)', zIndex: 99,
             display: 'flex', flexDirection: 'column'
           }}>
+            <Link href="/community" onClick={() => setShowMobileMenu(false)} style={{
+              padding: '1rem 1.5rem', color: '#e67e22', textDecoration: 'none',
+              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem', fontWeight: 600
+            }}>Community</Link>
+            <Link href="/videos" onClick={() => setShowMobileMenu(false)} style={{
+              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
+              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
+            }}>CoR Modules</Link>
             <Link href="/videos" onClick={() => setShowMobileMenu(false)} style={{
               padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
               borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
             }}>Teachings</Link>
-            <Link href="/calls" onClick={() => setShowMobileMenu(false)} style={{
-              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
-              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
-            }}>Live Call Calendar</Link>
             <Link href="/members" onClick={() => setShowMobileMenu(false)} style={{
               padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
               borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
             }}>Dashboard</Link>
-            <Link href="/journey" onClick={() => setShowMobileMenu(false)} style={{
+            <Link href="/about" onClick={() => setShowMobileMenu(false)} style={{
               padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
               borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
-            }}>Journey</Link>
+            }}>About</Link>
             <div style={{ padding: '1rem 1.5rem', background: '#f9f9f9', fontSize: '0.875rem', color: '#666' }}>
               Signed in as {user?.name}
             </div>
           </div>
         )}
       </nav>
-
-      {/* Progress Bar */}
-      <div style={{
-        maxWidth: '1400px', margin: '0 auto',
-        padding: isMobile ? '1rem 1.5rem 0.75rem' : '1.5rem 1.5rem 1rem',
-        borderBottom: '1px solid #e5e5e5'
-      }}>
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          gap: isMobile ? '0.375rem' : '0.75rem', fontFamily: 'Gambarino, serif',
-          flexWrap: 'wrap'
-        }}>
-          {allLevels.map((level, index) => (
-            <span key={level} style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '0.375rem' : '0.75rem' }}>
-              {index > 0 && <span style={{ color: '#ccc', fontSize: isMobile ? '0.875rem' : '1rem' }}>→</span>}
-              <span style={{
-                color: index === currentLevelIndex ? '#1a1a1a' : '#999',
-                fontWeight: index === currentLevelIndex ? 700 : 400,
-                fontSize: index === currentLevelIndex ? (isMobile ? '1rem' : '1.25rem') : (isMobile ? '0.875rem' : '1rem'),
-                fontFamily: 'Gambarino, serif',
-                transition: 'all 0.3s ease'
-              }}>
-                {level}
-              </span>
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Welcome Greeting */}
-      <div style={{
-        maxWidth: '1400px', margin: '0 auto',
-        padding: isMobile ? '1rem 1.5rem 0.5rem' : '1.5rem 1.5rem 1rem'
-      }}>
-        <h1 style={{
-          fontSize: isMobile ? '1.25rem' : '2rem', fontWeight: 300,
-          color: '#1a1a1a', fontFamily: 'Gambarino, serif', margin: 0,
-          lineHeight: 1.3
-        }}>
-          <span style={{ color: '#666', fontWeight: 300 }}>Welcome back,</span>{' '}
-          <span style={{ fontWeight: 500 }}>{user?.name}</span>
-        </h1>
-      </div>
 
       {/* Main Content */}
       <div style={{
@@ -614,7 +576,7 @@ export default function CommunityPage() {
         <div>
         {/* "Write something" inline post bar */}
         <div style={{
-          background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px',
+          background: 'rgba(155, 196, 184, 0.2)', border: '1px solid rgba(155, 196, 184, 0.4)', borderRadius: '6px',
           padding: '1rem 1.25rem', marginBottom: '1.25rem'
         }}>
           {!showInlinePost ? (
@@ -948,7 +910,7 @@ export default function CommunityPage() {
             <div style={{ background: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem' }}>
               {renderVideoCard('150px')}
             </div>
-            <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
+            <div style={{ background: 'rgba(155, 196, 184, 0.2)', border: '1px solid rgba(155, 196, 184, 0.4)', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
               <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#666', margin: '0 0 1rem 0' }}>
                 Your Journey
               </h4>
@@ -966,7 +928,7 @@ export default function CommunityPage() {
                 ))}
               </div>
             </div>
-            <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
+            <div style={{ background: 'rgba(155, 196, 184, 0.2)', border: '1px solid rgba(155, 196, 184, 0.4)', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
               <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#666', margin: '0 0 1rem 0' }}>
                 Quick Links
               </h4>
