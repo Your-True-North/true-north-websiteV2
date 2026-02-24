@@ -935,6 +935,7 @@ export default function CommunityPage() {
             ))}
           </div>
         )}
+      </div>
 
       {/* Expanded Video Player Modal - only when user clicks Expand */}
       {isVideoExpanded && youtubeId && (
