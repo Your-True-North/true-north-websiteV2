@@ -309,7 +309,7 @@ export default function MembersPage() {
         position: 'sticky',
         top: 0,
         zIndex: 20,
-        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+        borderBottom: '1px solid #e5e5e5',
         backdropFilter: 'blur(20px)',
         background: 'rgba(0, 0, 0, 0.2)'
       }}>
@@ -387,7 +387,7 @@ export default function MembersPage() {
                 padding: '0.5rem 1.25rem',
                 fontSize: '0.875rem',
                 fontWeight: 300,
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                border: '1px solid #e5e5e5',
                 borderRadius: '8px',
                 background: 'transparent',
                 color: '#1a1a1a',
@@ -395,12 +395,12 @@ export default function MembersPage() {
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                e.currentTarget.style.background = '#f5f5f5'
+                e.currentTarget.style.borderColor = '#d5d5d5'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.borderColor = '#e5e5e5'
               }}
             >
               Sign Out
@@ -421,7 +421,7 @@ export default function MembersPage() {
               background: profilePhoto ? `url(${profilePhoto})` : `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              border: '1px solid #e5e5e5',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -451,8 +451,8 @@ export default function MembersPage() {
         <div style={{
           marginBottom: '2rem',
           backdropFilter: 'blur(20px)',
-          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '12px',
           padding: 'clamp(1.5rem, 4vw, 2.5rem)',
           position: 'sticky',
@@ -555,15 +555,15 @@ export default function MembersPage() {
                       borderRadius: '8px',
                       transition: 'all 0.5s ease',
                       background: isCurrent
-                        ? 'rgba(255, 255, 255, 0.1)'
+                        ? '#f0f0f0'
                         : isActive
-                        ? 'rgba(255, 255, 255, 0.05)'
-                        : 'rgba(255, 255, 255, 0.02)',
+                        ? '#f5f5f5'
+                        : '#fafafa',
                       border: isCurrent
                         ? `2px solid ${levelColors[stage]}40`
                         : isActive
-                        ? '1px solid rgba(255, 255, 255, 0.2)'
-                        : '1px solid rgba(255, 255, 255, 0.05)',
+                        ? '1px solid #d5d5d5'
+                        : '1px solid #e5e5e5',
                       opacity: isActive ? 1 : 0.4
                     }}
                   >
@@ -586,8 +586,8 @@ export default function MembersPage() {
                         background: isCurrent
                           ? levelColors[stage]
                           : isActive
-                          ? 'rgba(255, 255, 255, 0.6)'
-                          : 'rgba(255, 255, 255, 0.2)',
+                          ? '#ccc'
+                          : '#ddd',
                         boxShadow: isCurrent ? `0 0 20px ${levelColors[stage]}80` : 'none',
                         animation: isCurrent ? 'pulse 2s ease-in-out infinite' : 'none'
                       }}></div>
@@ -615,8 +615,8 @@ export default function MembersPage() {
         <div style={{ marginBottom: '2rem' }}>
           <div style={{
             backdropFilter: 'blur(20px)',
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#ffffff',
+            border: '1px solid #e5e5e5',
             borderRadius: '12px',
             padding: '2rem',
             transition: 'border 0.3s ease',
@@ -624,14 +624,14 @@ export default function MembersPage() {
             display: 'flex',
             flexDirection: 'column'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
-          onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+          onMouseEnter={(e) => e.currentTarget.style.borderColor = '#d5d5d5'}
+          onMouseLeave={(e) => e.currentTarget.style.borderColor = '#e5e5e5'}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '1.5rem' }}>
               <div style={{
                 width: '2.5rem',
                 height: '2.5rem',
                 borderRadius: '50%',
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: '#f0f0f0',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -658,28 +658,28 @@ export default function MembersPage() {
                     alignItems: 'center',
                     gap: '1rem',
                     padding: '1rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f5f5f5',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     textDecoration: 'none',
                     color: '#1a1a1a',
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                    e.currentTarget.style.background = '#f0f0f0'
+                    e.currentTarget.style.borderColor = '#d5d5d5'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.background = '#f5f5f5'
+                    e.currentTarget.style.borderColor = '#e5e5e5'
                   }}
                 >
                   <div style={{
                     width: '3rem',
                     height: '3rem',
                     borderRadius: '50%',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f5f5f5',
+                    border: '1px solid #e5e5e5',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -708,14 +708,14 @@ export default function MembersPage() {
         <div style={{
           marginBottom: '2rem',
           backdropFilter: 'blur(20px)',
-          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '12px',
           padding: '2rem',
           transition: 'border 0.3s ease'
         }}
-        onMouseEnter={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
-        onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}>
+        onMouseEnter={(e) => e.currentTarget.style.borderColor = '#d5d5d5'}
+        onMouseLeave={(e) => e.currentTarget.style.borderColor = '#e5e5e5'}>
           <h3 style={{ 
             fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', 
             fontWeight: 300, 
@@ -735,7 +735,7 @@ Your Progress
             <div style={{
               padding: '1.5rem',
               background: 'rgba(155, 196, 184, 0.05)',
-              border: '1px solid rgba(155, 196, 184, 0.2)',
+              border: '1px solid #e5e5e5',
               borderRadius: '8px',
               transition: 'all 0.3s ease'
             }}>
@@ -750,7 +750,7 @@ Your Progress
             <div style={{
               padding: '1.5rem',
               background: 'rgba(127, 176, 105, 0.05)',
-              border: '1px solid rgba(127, 176, 105, 0.2)',
+              border: '1px solid #e5e5e5',
               borderRadius: '8px',
               transition: 'all 0.3s ease'
             }}>
@@ -765,7 +765,7 @@ Your Progress
             <div style={{
               padding: '1.5rem',
               background: 'rgba(106, 153, 78, 0.05)',
-              border: '1px solid rgba(106, 153, 78, 0.2)',
+              border: '1px solid #e5e5e5',
               borderRadius: '8px',
               transition: 'all 0.3s ease'
             }}>
@@ -783,8 +783,8 @@ Your Progress
         {/* Account Info */}
         <div style={{
           backdropFilter: 'blur(20px)',
-          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '12px',
           padding: '2rem'
         }}>
@@ -842,7 +842,7 @@ Your Progress
             style={{
               background: '#ffffff',
               borderRadius: '12px',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              border: '1px solid #d5d5d5',
               maxWidth: '32rem',
               width: '100%',
               maxHeight: '90vh',
@@ -855,7 +855,7 @@ Your Progress
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '1.5rem',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+              borderBottom: '1px solid #e5e5e5'
             }}>
               <h2 style={{ fontSize: '1.5rem', fontWeight: 300, color: '#1a1a1a' }}>Profile Settings</h2>
               <button
@@ -949,8 +949,8 @@ Your Progress
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f5f5f5',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     color: '#1a1a1a',
                     fontSize: '1rem',
@@ -973,8 +973,8 @@ Your Progress
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f5f5f5',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     color: '#1a1a1a',
                     fontSize: '1rem',
@@ -998,8 +998,8 @@ Your Progress
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f5f5f5',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     color: '#1a1a1a',
                     fontSize: '1rem',
@@ -1040,7 +1040,7 @@ Your Progress
                   style={{
                     padding: '0.875rem 1.5rem',
                     background: 'transparent',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    border: '1px solid #e5e5e5',
                     color: '#1a1a1a',
                     fontWeight: 500,
                     fontSize: '1rem',
