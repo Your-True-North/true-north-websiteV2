@@ -72,22 +72,24 @@ export default function CommunityPage() {
   const [hoveredPostId, setHoveredPostId] = useState<number | null>(null)
   const [continueHovered, setContinueHovered] = useState(false)
 
-  // New post modal state
-  const [showNewPostModal, setShowNewPostModal] = useState(false)
+  // Inline post creation state
+  const [showInlinePost, setShowInlinePost] = useState(false)
   const [newPost, setNewPost] = useState({ title: '', content: '', category: 'Introductions' })
   const [posting, setPosting] = useState(false)
+
+  // Category filter
+  const [activeCategory, setActiveCategory] = useState('All')
 
   // Like tracking
   const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set())
 
-  // Post detail modal state
+  // Inline comment expansion state
+  const [expandedPostId, setExpandedPostId] = useState<number | null>(null)
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
-  const [showPostDetail, setShowPostDetail] = useState(false)
   const [replies, setReplies] = useState<Reply[]>([])
   const [loadingReplies, setLoadingReplies] = useState(false)
   const [replyContent, setReplyContent] = useState('')
   const [submittingReply, setSubmittingReply] = useState(false)
-  const [detailLiked, setDetailLiked] = useState(false)
 
   // Nested reply state
   const [replyingToId, setReplyingToId] = useState<number | null>(null)
@@ -188,12 +190,20 @@ export default function CommunityPage() {
     return match ? match[1] : null
   }
 
-  // Fetch post detail with replies
-  const handlePostClick = async (post: Post) => {
+  // Toggle inline comment expansion
+  const handleToggleComments = async (post: Post) => {
+    if (expandedPostId === post.id) {
+      setExpandedPostId(null)
+      setReplies([])
+      setReplyContent('')
+      setReplyingToId(null)
+      return
+    }
+    setExpandedPostId(post.id)
     setSelectedPost(post)
-    setShowPostDetail(true)
     setLoadingReplies(true)
-    setDetailLiked(likedPosts.has(post.id))
+    setReplyContent('')
+    setReplyingToId(null)
     try {
       const res = await fetch(`/api/forum/posts/${post.id}`)
       const data = await res.json()
@@ -235,29 +245,22 @@ export default function CommunityPage() {
     }
   }
 
-  // Like handler for detail modal
-  const handleDetailLike = async () => {
-    if (!user || !selectedPost) return
+  // Like handler (used for both feed and inline expanded)
+  const handleDetailLike = async (postId: number) => {
+    if (!user) return
     try {
-      const res = await fetch(`/api/forum/posts/${selectedPost.id}/like`, {
+      const res = await fetch(`/api/forum/posts/${postId}/like`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.id })
       })
       if (res.ok) {
         const data = await res.json()
-        setDetailLiked(data.liked)
         setLikedPosts(prev => {
           const next = new Set(prev)
-          if (data.liked) { next.add(selectedPost.id) } else { next.delete(selectedPost.id) }
+          if (data.liked) { next.add(postId) } else { next.delete(postId) }
           return next
         })
-        // Refresh the post detail to get updated count
-        const postRes = await fetch(`/api/forum/posts/${selectedPost.id}`)
-        const postData = await postRes.json()
-        if (postRes.ok && postData.post) {
-          setSelectedPost(postData.post)
-        }
         fetchPosts()
       }
     } catch (err) {
@@ -268,10 +271,10 @@ export default function CommunityPage() {
   // Reply handler
   const handleReply = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!user || !selectedPost || !replyContent.trim()) return
+    if (!user || !expandedPostId || !replyContent.trim()) return
     setSubmittingReply(true)
     try {
-      const res = await fetch(`/api/forum/posts/${selectedPost.id}/reply`, {
+      const res = await fetch(`/api/forum/posts/${expandedPostId}/reply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.id, content: replyContent, parent_reply_id: replyingToId })
@@ -328,7 +331,7 @@ export default function CommunityPage() {
       })
       const data = await res.json()
       if (res.ok) {
-        setShowNewPostModal(false)
+        setShowInlinePost(false)
         setNewPost({ title: '', content: '', category: 'Introductions' })
         fetchPosts()
       } else {
@@ -602,348 +605,336 @@ export default function CommunityPage() {
 
       {/* Main Content */}
       <div style={{
-        maxWidth: '1100px', margin: '0 auto', padding: '0 1.5rem 3rem',
-        display: isMobile ? 'block' : 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : '1fr 320px',
-        gap: '2rem', alignItems: 'start'
+        maxWidth: '720px', margin: '0 auto', padding: '1.5rem 1.5rem 3rem'
       }}>
-        {/* Community Feed */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-            <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: '1.75rem', fontWeight: 700, color: '#1a1a1a', margin: 0 }}>
-              Community Feed
-            </h2>
-            <button onClick={() => setShowNewPostModal(true)} style={{
-              padding: '0.625rem 1.25rem', background: '#e67e22', border: 'none',
-              borderRadius: '4px', color: '#ffffff', fontSize: '0.875rem', fontWeight: 600, cursor: 'pointer'
-            }}>
-              + New Post
-            </button>
-          </div>
-
-          {/* Mobile Toggle */}
-          {isMobile && (
-            <button onClick={() => setShowVideoCard(!showVideoCard)} style={{
-              width: '100%', padding: '0.875rem 1.25rem', background: '#e67e22',
-              border: 'none', borderRadius: '6px', color: '#ffffff',
-              fontSize: '0.9375rem', fontWeight: 600, cursor: 'pointer',
-              marginBottom: '1.5rem', textAlign: 'center'
-            }}>
-              Next Teaching
-            </button>
-          )}
-
-          {/* Mobile Video Card */}
-          {isMobile && showVideoCard && (
-            <div style={{ background: '#f5f5f5', border: '2px solid #e0e0e0', borderRadius: '6px', padding: '1.5rem', marginBottom: '1.5rem' }}>
-              {renderVideoCard('160px')}
-            </div>
-          )}
-
-          {/* Posts List */}
-          {posts.length === 0 ? (
-            <div style={{ background: '#ffffff', border: '2px solid #e5e5e5', borderRadius: '6px', padding: '3rem 2rem', textAlign: 'center' }}>
-              <p style={{ color: '#666', margin: '0 0 1rem 0' }}>No posts yet. Be the first to share!</p>
-              <button onClick={() => setShowNewPostModal(true)} style={{
-                padding: '0.75rem 1.5rem', background: '#e67e22', border: 'none',
-                color: '#ffffff', borderRadius: '4px', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer'
+        {/* "Write something" inline post bar */}
+        <div style={{
+          background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px',
+          padding: '1rem 1.25rem', marginBottom: '1.25rem'
+        }}>
+          {!showInlinePost ? (
+            <div
+              onClick={() => setShowInlinePost(true)}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer'
+              }}
+            >
+              <div style={{
+                width: '36px', height: '36px', borderRadius: '50%',
+                background: 'linear-gradient(135deg, #e67e22, #d35400)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#fff', fontSize: '14px', fontWeight: 600, flexShrink: 0
               }}>
-                Create a Post
-              </button>
+                {user?.name?.charAt(0).toUpperCase()}
+              </div>
+              <div style={{
+                flex: 1, padding: '0.625rem 1rem', background: '#f5f5f5',
+                borderRadius: '6px', color: '#999', fontSize: '0.9375rem'
+              }}>
+                What's alive in you today?
+              </div>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {posts.map((post) => (
-                <div key={post.id} style={{
-                  background: '#ffffff',
-                  border: `2px solid ${hoveredPostId === post.id ? '#666' : '#e5e5e5'}`,
-                  borderRadius: '6px', padding: '1.5rem',
-                  transition: 'border-color 0.2s ease', cursor: 'pointer'
-                }}
-                  onMouseEnter={() => setHoveredPostId(post.id)}
-                  onMouseLeave={() => setHoveredPostId(null)}
-                >
-                  {/* Clickable post area - opens detail modal */}
-                  <div onClick={() => handlePostClick(post)}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-                      <div style={{
-                        width: '40px', height: '40px', borderRadius: '50%',
-                        background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
-                        backgroundSize: 'cover', backgroundPosition: 'center',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        color: '#fff', fontSize: '16px', fontWeight: 600, flexShrink: 0
-                      }}>
-                        {!post.user_photo && post.user_name?.charAt(0).toUpperCase()}
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a1a1a' }}>{post.user_name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#999' }}>
-                          {getTimeAgo(post.created_at)}{post.category && ` · ${post.category}`}
-                        </div>
-                      </div>
-                    </div>
-                    {post.title && (
-                      <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, color: '#e67e22', margin: '0 0 0.5rem 0' }}>
-                        {post.title}
-                      </h3>
-                    )}
-                    <p style={{ fontSize: '0.875rem', color: '#333', lineHeight: 1.6, margin: '0 0 0.75rem 0' }}>
-                      {post.content.substring(0, 200)}{post.content.length > 200 ? '...' : ''}
-                    </p>
-                  </div>
-
-                  {/* Post Actions */}
-                  <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8125rem', color: '#999', alignItems: 'center' }}>
-                    <button onClick={(e) => handleLike(e, post.id)} style={{
-                      background: likedPosts.has(post.id) ? 'rgba(230, 126, 34, 0.1)' : 'transparent',
-                      border: `1px solid ${likedPosts.has(post.id) ? '#e67e22' : '#e5e5e5'}`,
-                      borderRadius: '4px', padding: '0.375rem 0.75rem', fontSize: '0.8125rem',
-                      color: likedPosts.has(post.id) ? '#e67e22' : '#999',
-                      cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.375rem',
-                      transition: 'all 0.2s ease'
-                    }}>
-                      {likedPosts.has(post.id) ? '❤️' : '🤍'} {post.like_count} {post.like_count === 1 ? 'like' : 'likes'}
-                    </button>
-                    <button onClick={() => handlePostClick(post)} style={{
-                      background: 'transparent', border: '1px solid #e5e5e5',
-                      borderRadius: '4px', padding: '0.375rem 0.75rem', fontSize: '0.8125rem',
-                      color: '#999', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.375rem',
-                      transition: 'all 0.2s ease'
-                    }}>
-                      💬 {post.reply_count} {post.reply_count === 1 ? 'reply' : 'replies'}
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Sidebar - Desktop only */}
-        {!isMobile && (
-          <aside style={{ position: 'sticky', top: '2rem' }}>
-            <div style={{ background: '#f5f5f5', border: '2px solid #e0e0e0', borderRadius: '6px', padding: '1.5rem' }}>
-              {renderVideoCard('150px')}
-            </div>
-            <div style={{ background: '#ffffff', border: '2px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
-              <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', color: '#666', margin: '0 0 1rem 0' }}>
-                Quick Links
-              </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <Link href="/videos" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f0f0f0' }}>Teachings</Link>
-                <Link href="/calls" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0' }}>Live Call Calendar</Link>
-              </div>
-            </div>
-          </aside>
-        )}
-      </div>
-
-      {/* Post Detail Modal */}
-      {showPostDetail && selectedPost && (
-        <div
-          style={{
-            position: 'fixed', inset: 0, background: 'rgba(0, 0, 0, 0.7)',
-            zIndex: 1000, display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
-            padding: '2rem', overflow: 'auto'
-          }}
-          onClick={(e) => { if (e.target === e.currentTarget) { setShowPostDetail(false); setReplyContent('') } }}
-        >
-          <div style={{
-            background: '#ffffff', borderRadius: '6px', maxWidth: '800px', width: '100%',
-            maxHeight: '90vh', overflow: 'auto', padding: '2rem', marginTop: '2rem',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
-          }}>
-            {/* Close button */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-              <button onClick={() => { setShowPostDetail(false); setReplyContent('') }} style={{
-                background: 'none', border: 'none', fontSize: '1.5rem', color: '#999', cursor: 'pointer', padding: '0.25rem'
-              }}>✕</button>
-            </div>
-
-            {/* Post author */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <div style={{
-                width: '48px', height: '48px', borderRadius: '50%',
-                background: selectedPost.user_photo ? `url(${selectedPost.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
-                backgroundSize: 'cover', backgroundPosition: 'center',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#fff', fontSize: '18px', fontWeight: 600, flexShrink: 0
-              }}>
-                {!selectedPost.user_photo && selectedPost.user_name?.charAt(0).toUpperCase()}
-              </div>
-              <div>
-                <div style={{ fontSize: '1rem', fontWeight: 600, color: '#1a1a1a' }}>{selectedPost.user_name}</div>
-                <div style={{ fontSize: '0.8125rem', color: '#999' }}>
-                  {getTimeAgo(selectedPost.created_at)}{selectedPost.category && ` · ${selectedPost.category}`}
-                </div>
-              </div>
-            </div>
-
-            {/* Post content */}
-            {selectedPost.title && (
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1a1a1a', margin: '0 0 1rem 0' }}>
-                {selectedPost.title}
-              </h2>
-            )}
-            <p style={{ fontSize: '1rem', color: '#333', lineHeight: 1.7, margin: '0 0 1.5rem 0', whiteSpace: 'pre-wrap' }}>
-              {selectedPost.content}
-            </p>
-
-            {/* Like button */}
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid #e5e5e5' }}>
-              <button onClick={handleDetailLike} style={{
-                background: detailLiked ? 'rgba(230, 126, 34, 0.1)' : '#fafafa',
-                border: `1px solid ${detailLiked ? '#e67e22' : '#e5e5e5'}`,
-                borderRadius: '4px', padding: '0.5rem 1rem', fontSize: '0.875rem',
-                color: detailLiked ? '#e67e22' : '#666', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', gap: '0.5rem'
-              }}>
-                {detailLiked ? '❤️' : '🤍'} {selectedPost.like_count} {selectedPost.like_count === 1 ? 'like' : 'likes'}
-              </button>
-            </div>
-
-            {/* Replies */}
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#1a1a1a', margin: '0 0 1rem 0' }}>
-              Replies ({loadingReplies ? '...' : replies.length})
-            </h3>
-
-            {loadingReplies ? (
-              <p style={{ color: '#999', padding: '1rem 0' }}>Loading replies...</p>
-            ) : replies.length === 0 ? (
-              <p style={{ color: '#999', padding: '1rem 0', fontSize: '0.875rem' }}>No replies yet. Be the first to respond!</p>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
-                {buildReplyTree(replies).map((reply) => {
-                  const renderReply = (r: Reply, depth: number) => (
-                    <div key={r.id} style={{ marginLeft: depth > 0 ? '2rem' : '0', marginBottom: '0.75rem' }}>
-                      <div style={{
-                        padding: '1rem',
-                        background: depth > 0 ? '#f5f5f5' : '#fafafa',
-                        borderRadius: '6px',
-                        border: `1px solid ${depth > 0 ? '#e8e8e8' : '#f0f0f0'}`,
-                        borderLeft: depth > 0 ? '3px solid #e67e22' : '1px solid #f0f0f0'
-                      }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                          <div style={{
-                            width: '32px', height: '32px', borderRadius: '50%',
-                            background: r.user_photo ? `url(${r.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
-                            backgroundSize: 'cover', backgroundPosition: 'center',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            color: '#fff', fontSize: '13px', fontWeight: 600, flexShrink: 0
-                          }}>
-                            {!r.user_photo && r.user_name?.charAt(0).toUpperCase()}
-                          </div>
-                          <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a1a1a' }}>{r.user_name}</span>
-                          <span style={{ fontSize: '0.75rem', color: '#999' }}>{getTimeAgo(r.created_at)}</span>
-                        </div>
-                        <p style={{ fontSize: '0.875rem', color: '#333', lineHeight: 1.6, margin: '0 0 0.5rem 0', whiteSpace: 'pre-wrap' }}>{r.content}</p>
-                        {depth < 3 && (
-                          <button
-                            onClick={() => setReplyingToId(replyingToId === r.id ? null : r.id)}
-                            style={{
-                              background: 'none', border: 'none', color: replyingToId === r.id ? '#e67e22' : '#999',
-                              fontSize: '0.75rem', cursor: 'pointer', padding: 0, fontWeight: 500
-                            }}
-                          >
-                            {replyingToId === r.id ? 'Cancel' : 'Reply'}
-                          </button>
-                        )}
-                      </div>
-                      {r.replies?.map(nested => renderReply(nested, depth + 1))}
-                    </div>
-                  )
-                  return renderReply(reply, 0)
-                })}
-              </div>
-            )}
-
-            {/* Reply form */}
-            <form onSubmit={handleReply} style={{ borderTop: '1px solid #e5e5e5', paddingTop: '1.5rem' }}>
-              {replyingToId && (
-                <div style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '0.5rem 0.75rem', background: 'rgba(230, 126, 34, 0.1)',
-                  borderRadius: '4px', marginBottom: '0.75rem', fontSize: '0.8125rem', color: '#e67e22'
-                }}>
-                  <span>Replying to {replies.find(r => r.id === replyingToId)?.user_name || 'reply'}</span>
-                  <button type="button" onClick={() => setReplyingToId(null)} style={{
-                    background: 'none', border: 'none', color: '#e67e22', cursor: 'pointer', fontSize: '1rem', padding: 0
-                  }}>✕</button>
-                </div>
-              )}
-              <textarea
-                value={replyContent}
-                onChange={(e) => setReplyContent(e.target.value)}
-                placeholder={replyingToId ? 'Write a nested reply...' : 'Write a reply...'}
-                rows={3}
-                style={{
-                  width: '100%', padding: '0.75rem', background: '#fafafa',
-                  border: '1px solid #e5e5e5', borderRadius: '4px', color: '#1a1a1a',
-                  fontSize: '0.9375rem', outline: 'none', resize: 'vertical',
-                  fontFamily: 'inherit', marginBottom: '0.75rem'
-                }}
-              />
-              <button type="submit" disabled={submittingReply || !replyContent.trim()} style={{
-                padding: '0.625rem 1.25rem',
-                background: submittingReply || !replyContent.trim() ? '#ccc' : '#e67e22',
-                border: 'none', borderRadius: '4px', color: '#ffffff',
-                fontSize: '0.875rem', fontWeight: 600,
-                cursor: submittingReply || !replyContent.trim() ? 'not-allowed' : 'pointer'
-              }}>
-                {submittingReply ? 'Posting...' : 'Reply'}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* New Post Modal */}
-      {showNewPostModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0, 0, 0, 0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', zIndex: 1000 }}
-          onClick={() => setShowNewPostModal(false)}>
-          <div style={{ maxWidth: '600px', width: '100%', background: '#ffffff', borderRadius: '6px', padding: '2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}
-            onClick={(e) => e.stopPropagation()}>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1a1a1a', margin: '0 0 1.5rem 0' }}>New Post</h2>
             <form onSubmit={handleCreatePost}>
-              <div style={{ marginBottom: '1.25rem' }}>
-                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.5rem', color: '#666' }}>Category</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <div style={{
+                  width: '36px', height: '36px', borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #e67e22, #d35400)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: '#fff', fontSize: '14px', fontWeight: 600, flexShrink: 0
+                }}>
+                  {user?.name?.charAt(0).toUpperCase()}
+                </div>
+                <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a1a1a' }}>{user?.name}</div>
+              </div>
+              <div style={{ marginBottom: '0.75rem' }}>
                 <select value={newPost.category} onChange={(e) => setNewPost({ ...newPost, category: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: '#fafafa', border: '1px solid #e5e5e5', borderRadius: '4px', color: '#1a1a1a', fontSize: '0.9375rem', outline: 'none' }}>
+                  style={{
+                    padding: '0.5rem 0.75rem', background: '#f5f5f5', border: '1px solid #e5e5e5',
+                    borderRadius: '6px', color: '#1a1a1a', fontSize: '0.8125rem', outline: 'none'
+                  }}>
                   {categories.map((cat) => (<option key={cat} value={cat}>{cat}</option>))}
                 </select>
               </div>
-              <div style={{ marginBottom: '1.25rem' }}>
-                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.5rem', color: '#666' }}>Title (optional)</label>
-                <input type="text" value={newPost.title} onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-                  style={{ width: '100%', padding: '0.75rem', background: '#fafafa', border: '1px solid #e5e5e5', borderRadius: '4px', color: '#1a1a1a', fontSize: '0.9375rem', outline: 'none' }}
-                  placeholder="Give your post a title..." />
-              </div>
-              <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.5rem', color: '#666' }}>Content *</label>
-                <textarea value={newPost.content} onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-                  required minLength={10} maxLength={10000} rows={6}
-                  style={{ width: '100%', padding: '0.75rem', background: '#fafafa', border: '1px solid #e5e5e5', borderRadius: '4px', color: '#1a1a1a', fontSize: '0.9375rem', outline: 'none', resize: 'vertical', fontFamily: 'inherit' }}
-                  placeholder="What's on your mind? (min 10 characters)" />
-                <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '0.25rem' }}>{newPost.content.length}/10000 characters</div>
-              </div>
-              <div style={{ display: 'flex', gap: '0.75rem' }}>
-                <button type="submit" disabled={posting || newPost.content.length < 10} style={{
-                  flex: 1, padding: '0.875rem',
-                  background: posting || newPost.content.length < 10 ? '#ccc' : '#e67e22',
-                  border: 'none', borderRadius: '4px', color: '#ffffff', fontSize: '0.9375rem', fontWeight: 600,
-                  cursor: posting || newPost.content.length < 10 ? 'not-allowed' : 'pointer'
-                }}>
-                  {posting ? 'Posting...' : 'Post'}
-                </button>
-                <button type="button" onClick={() => setShowNewPostModal(false)} style={{
-                  padding: '0.875rem 1.5rem', background: '#fafafa', border: '1px solid #e5e5e5',
-                  borderRadius: '4px', color: '#666', fontSize: '0.9375rem', fontWeight: 600, cursor: 'pointer'
-                }}>Cancel</button>
+              <input
+                type="text"
+                value={newPost.title}
+                onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+                placeholder="Title (optional)"
+                style={{
+                  width: '100%', padding: '0.625rem 0', background: 'transparent', border: 'none',
+                  borderBottom: '1px solid #f0f0f0', color: '#1a1a1a', fontSize: '1rem',
+                  fontWeight: 600, outline: 'none', marginBottom: '0.5rem'
+                }}
+              />
+              <textarea
+                value={newPost.content}
+                onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+                required
+                minLength={10}
+                maxLength={10000}
+                rows={4}
+                placeholder="What's on your mind?"
+                style={{
+                  width: '100%', padding: '0.625rem 0', background: 'transparent',
+                  border: 'none', color: '#1a1a1a', fontSize: '0.9375rem', outline: 'none',
+                  resize: 'vertical', fontFamily: 'inherit', lineHeight: 1.6
+                }}
+              />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #f0f0f0' }}>
+                <span style={{ fontSize: '0.75rem', color: '#999' }}>{newPost.content.length}/10000</span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button type="button" onClick={() => { setShowInlinePost(false); setNewPost({ title: '', content: '', category: 'Introductions' }) }} style={{
+                    padding: '0.5rem 1rem', background: 'transparent', border: '1px solid #e5e5e5',
+                    borderRadius: '6px', color: '#666', fontSize: '0.8125rem', fontWeight: 600, cursor: 'pointer'
+                  }}>Cancel</button>
+                  <button type="submit" disabled={posting || newPost.content.length < 10} style={{
+                    padding: '0.5rem 1.25rem',
+                    background: posting || newPost.content.length < 10 ? '#ccc' : '#e67e22',
+                    border: 'none', borderRadius: '6px', color: '#ffffff',
+                    fontSize: '0.8125rem', fontWeight: 600,
+                    cursor: posting || newPost.content.length < 10 ? 'not-allowed' : 'pointer'
+                  }}>
+                    {posting ? 'Posting...' : 'Post'}
+                  </button>
+                </div>
               </div>
             </form>
-          </div>
+          )}
         </div>
-      )}
+
+        {/* Category Filter Buttons */}
+        <div style={{
+          display: 'flex', gap: '0.5rem', marginBottom: '1.5rem',
+          overflowX: 'auto', paddingBottom: '0.25rem',
+          WebkitOverflowScrolling: 'touch' as const
+        }}>
+          {['All', ...categories].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              style={{
+                padding: '0.5rem 1rem',
+                background: activeCategory === cat ? '#1a1a1a' : '#ffffff',
+                border: '1px solid ' + (activeCategory === cat ? '#1a1a1a' : '#e5e5e5'),
+                borderRadius: '6px',
+                color: activeCategory === cat ? '#ffffff' : '#666',
+                fontSize: '0.8125rem', fontWeight: 500,
+                cursor: 'pointer', whiteSpace: 'nowrap',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              {cat === 'All' ? 'All Posts' : cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Posts Feed */}
+        {posts.filter(p => activeCategory === 'All' || p.category === activeCategory).length === 0 ? (
+          <div style={{
+            background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px',
+            padding: '3rem 2rem', textAlign: 'center'
+          }}>
+            <p style={{ color: '#666', margin: '0 0 1rem 0' }}>
+              {activeCategory === 'All' ? 'No posts yet. Be the first to share!' : `No posts in ${activeCategory} yet.`}
+            </p>
+            <button onClick={() => setShowInlinePost(true)} style={{
+              padding: '0.75rem 1.5rem', background: '#e67e22', border: 'none',
+              color: '#ffffff', borderRadius: '6px', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer'
+            }}>
+              Create a Post
+            </button>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+            {posts
+              .filter(p => activeCategory === 'All' || p.category === activeCategory)
+              .map((post) => (
+              <div key={post.id} style={{
+                background: '#ffffff',
+                border: '1px solid #e5e5e5',
+                borderRadius: '6px',
+                marginBottom: '0.75rem',
+                overflow: 'hidden'
+              }}>
+                {/* Post Card */}
+                <div style={{ padding: '1.25rem 1.25rem 0.75rem' }}>
+                  {/* Author row */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                    <div style={{
+                      width: '40px', height: '40px', borderRadius: '50%',
+                      background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
+                      backgroundSize: 'cover', backgroundPosition: 'center',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: '#fff', fontSize: '16px', fontWeight: 600, flexShrink: 0
+                    }}>
+                      {!post.user_photo && post.user_name?.charAt(0).toUpperCase()}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#1a1a1a' }}>{post.user_name}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#999' }}>
+                        {getTimeAgo(post.created_at)}{post.category && <span style={{ color: '#ccc' }}> &middot; </span>}
+                        {post.category && <span style={{ color: '#e67e22', fontWeight: 500 }}>{post.category}</span>}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Post content */}
+                  {post.title && (
+                    <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, color: '#1a1a1a', margin: '0 0 0.375rem 0' }}>
+                      {post.title}
+                    </h3>
+                  )}
+                  <p style={{ fontSize: '0.9375rem', color: '#333', lineHeight: 1.6, margin: '0 0 1rem 0', whiteSpace: 'pre-wrap' }}>
+                    {expandedPostId === post.id ? post.content : (
+                      post.content.length > 280 ? post.content.substring(0, 280) + '...' : post.content
+                    )}
+                  </p>
+
+                  {/* Action bar */}
+                  <div style={{
+                    display: 'flex', gap: '0.25rem', borderTop: '1px solid #f0f0f0',
+                    paddingTop: '0.625rem', marginBottom: '0.25rem'
+                  }}>
+                    <button onClick={(e) => { e.stopPropagation(); handleLike(e, post.id) }} style={{
+                      flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem',
+                      background: 'transparent', border: 'none', padding: '0.5rem',
+                      fontSize: '0.8125rem', fontWeight: 500,
+                      color: likedPosts.has(post.id) ? '#e67e22' : '#999',
+                      cursor: 'pointer', borderRadius: '6px',
+                      transition: 'background 0.15s ease'
+                    }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = '#f5f5f5'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                    >
+                      {likedPosts.has(post.id) ? '❤️' : '🤍'} {post.like_count || ''}
+                    </button>
+                    <button onClick={() => handleToggleComments(post)} style={{
+                      flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem',
+                      background: expandedPostId === post.id ? '#f5f5f5' : 'transparent',
+                      border: 'none', padding: '0.5rem',
+                      fontSize: '0.8125rem', fontWeight: 500,
+                      color: expandedPostId === post.id ? '#e67e22' : '#999',
+                      cursor: 'pointer', borderRadius: '6px',
+                      transition: 'background 0.15s ease'
+                    }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = '#f5f5f5'}
+                      onMouseLeave={(e) => { if (expandedPostId !== post.id) e.currentTarget.style.background = 'transparent' }}
+                    >
+                      💬 {post.reply_count || ''} {post.reply_count === 1 ? 'comment' : (post.reply_count > 0 ? 'comments' : 'Comment')}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Inline Comments Section */}
+                {expandedPostId === post.id && (
+                  <div style={{ borderTop: '1px solid #e5e5e5', background: '#fafafa', padding: '1rem 1.25rem' }}>
+                    {loadingReplies ? (
+                      <p style={{ color: '#999', fontSize: '0.875rem', margin: 0 }}>Loading comments...</p>
+                    ) : replies.length === 0 ? (
+                      <p style={{ color: '#999', fontSize: '0.875rem', margin: '0 0 0.75rem 0' }}>No comments yet. Be the first!</p>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem' }}>
+                        {buildReplyTree(replies).map((reply) => {
+                          const renderReply = (r: Reply, depth: number) => (
+                            <div key={r.id} style={{ marginLeft: depth > 0 ? '1.5rem' : '0', marginBottom: '0.5rem' }}>
+                              <div style={{
+                                padding: '0.75rem',
+                                background: depth > 0 ? '#f0f0f0' : '#ffffff',
+                                borderRadius: '6px',
+                                border: '1px solid ' + (depth > 0 ? '#e8e8e8' : '#e5e5e5'),
+                                borderLeft: depth > 0 ? '3px solid #e67e22' : '1px solid #e5e5e5'
+                              }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.375rem' }}>
+                                  <div style={{
+                                    width: '28px', height: '28px', borderRadius: '50%',
+                                    background: r.user_photo ? `url(${r.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
+                                    backgroundSize: 'cover', backgroundPosition: 'center',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    color: '#fff', fontSize: '11px', fontWeight: 600, flexShrink: 0
+                                  }}>
+                                    {!r.user_photo && r.user_name?.charAt(0).toUpperCase()}
+                                  </div>
+                                  <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#1a1a1a' }}>{r.user_name}</span>
+                                  <span style={{ fontSize: '0.6875rem', color: '#999' }}>{getTimeAgo(r.created_at)}</span>
+                                </div>
+                                <p style={{ fontSize: '0.875rem', color: '#333', lineHeight: 1.5, margin: '0 0 0.375rem 0', whiteSpace: 'pre-wrap' }}>{r.content}</p>
+                                {depth < 3 && (
+                                  <button
+                                    onClick={() => setReplyingToId(replyingToId === r.id ? null : r.id)}
+                                    style={{
+                                      background: 'none', border: 'none', color: replyingToId === r.id ? '#e67e22' : '#999',
+                                      fontSize: '0.6875rem', cursor: 'pointer', padding: 0, fontWeight: 600,
+                                      textTransform: 'uppercase' as const, letterSpacing: '0.05em'
+                                    }}
+                                  >
+                                    {replyingToId === r.id ? 'Cancel' : 'Reply'}
+                                  </button>
+                                )}
+                              </div>
+                              {r.replies?.map(nested => renderReply(nested, depth + 1))}
+                            </div>
+                          )
+                          return renderReply(reply, 0)
+                        })}
+                      </div>
+                    )}
+
+                    {/* Inline reply form */}
+                    <form onSubmit={handleReply}>
+                      {replyingToId && (
+                        <div style={{
+                          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                          padding: '0.375rem 0.625rem', background: 'rgba(230, 126, 34, 0.1)',
+                          borderRadius: '4px', marginBottom: '0.5rem', fontSize: '0.75rem', color: '#e67e22'
+                        }}>
+                          <span>Replying to {replies.find(r => r.id === replyingToId)?.user_name || 'comment'}</span>
+                          <button type="button" onClick={() => setReplyingToId(null)} style={{
+                            background: 'none', border: 'none', color: '#e67e22', cursor: 'pointer', fontSize: '0.875rem', padding: 0
+                          }}>✕</button>
+                        </div>
+                      )}
+                      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-end' }}>
+                        <div style={{
+                          width: '28px', height: '28px', borderRadius: '50%',
+                          background: 'linear-gradient(135deg, #e67e22, #d35400)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          color: '#fff', fontSize: '11px', fontWeight: 600, flexShrink: 0
+                        }}>
+                          {user?.name?.charAt(0).toUpperCase()}
+                        </div>
+                        <textarea
+                          value={replyContent}
+                          onChange={(e) => setReplyContent(e.target.value)}
+                          placeholder={replyingToId ? 'Write a reply...' : 'Write a comment...'}
+                          rows={1}
+                          onFocus={(e) => e.currentTarget.rows = 3}
+                          onBlur={(e) => { if (!replyContent) e.currentTarget.rows = 1 }}
+                          style={{
+                            flex: 1, padding: '0.5rem 0.75rem', background: '#ffffff',
+                            border: '1px solid #e5e5e5', borderRadius: '6px', color: '#1a1a1a',
+                            fontSize: '0.875rem', outline: 'none', resize: 'none',
+                            fontFamily: 'inherit', lineHeight: 1.5
+                          }}
+                        />
+                        <button type="submit" disabled={submittingReply || !replyContent.trim()} style={{
+                          padding: '0.5rem 0.875rem',
+                          background: submittingReply || !replyContent.trim() ? '#ccc' : '#e67e22',
+                          border: 'none', borderRadius: '6px', color: '#ffffff',
+                          fontSize: '0.8125rem', fontWeight: 600,
+                          cursor: submittingReply || !replyContent.trim() ? 'not-allowed' : 'pointer',
+                          whiteSpace: 'nowrap'
+                        }}>
+                          {submittingReply ? '...' : 'Post'}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
 
       {/* Expanded Video Player Modal - only when user clicks Expand */}
       {isVideoExpanded && youtubeId && (
