@@ -605,8 +605,13 @@ export default function CommunityPage() {
 
       {/* Main Content */}
       <div style={{
-        maxWidth: '720px', margin: '0 auto', padding: '1.5rem 1.5rem 3rem'
+        maxWidth: '1200px', margin: '0 auto', padding: '1.5rem 1.5rem 3rem',
+        display: isMobile ? 'block' : 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 320px',
+        gap: '2rem',
+        alignItems: 'start'
       }}>
+        <div>
         {/* "Write something" inline post bar */}
         <div style={{
           background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px',
@@ -934,6 +939,43 @@ export default function CommunityPage() {
               </div>
             ))}
           </div>
+        )}
+        </div>
+
+        {/* Sidebar */}
+        {!isMobile && (
+          <aside style={{ position: 'sticky', top: '2rem' }}>
+            <div style={{ background: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem' }}>
+              {renderVideoCard('150px')}
+            </div>
+            <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
+              <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#666', margin: '0 0 1rem 0' }}>
+                Your Journey
+              </h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', fontFamily: 'Gambarino, serif', flexWrap: 'wrap' }}>
+                {['Seeker', 'Explorer', 'Pathfinder', 'Guide'].map((level, index) => (
+                  <span key={level} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    {index > 0 && <span style={{ color: '#ccc' }}>→</span>}
+                    <span style={{
+                      color: level === (user?.level || 'Seeker') ? '#1a1a1a' : '#999',
+                      fontWeight: level === (user?.level || 'Seeker') ? 700 : 400,
+                      fontSize: level === (user?.level || 'Seeker') ? '1.125rem' : '0.875rem',
+                      fontFamily: 'Gambarino, serif'
+                    }}>{level}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
+              <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#666', margin: '0 0 1rem 0' }}>
+                Quick Links
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <a href="/videos" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f0f0f0' }}>Teachings</a>
+                <a href="/calls" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0' }}>Live Call Calendar</a>
+              </div>
+            </div>
+          </aside>
         )}
       </div>
 
