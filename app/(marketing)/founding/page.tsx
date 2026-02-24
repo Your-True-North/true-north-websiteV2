@@ -181,11 +181,7 @@ export default function FoundingMembersPage() {
             WebkitTextFillColor: 'transparent',
             marginBottom: '32px'
           }}>
-            Join the First <span style={{
-              background: '#ffffff',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>30</span> in Circle of Return
+            The Circle of Return
           </h1>
 
           <p style={{
@@ -196,7 +192,16 @@ export default function FoundingMembersPage() {
             maxWidth: '700px',
             margin: '0 auto 48px'
           }}>
-            Lock in <strong style={{ color: '#9bc4b8' }}>£25/month FIXED</strong>. Never increases.
+            Founding member price — £25/month
+          </p>
+
+          <p style={{
+            fontSize: isMobile ? '16px' : '18px',
+            color: 'rgba(255,255,255,0.5)',
+            margin: '-32px auto 48px',
+            maxWidth: '700px'
+          }}>
+            This moves to £50 next month.
           </p>
 
           {/* Spots Counter */}
@@ -478,7 +483,7 @@ export default function FoundingMembersPage() {
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(127,176,105,0.15)'
               }}
             >
-              Secure Your Spot - £25/Month
+              Secure Your Spot — £25/month
             </a>
             </>
           )}
@@ -493,44 +498,18 @@ export default function FoundingMembersPage() {
         borderBottom: '1px solid rgba(255,255,255,0.05)'
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: isMobile ? '36px' : '56px',
-            fontWeight: 700,
-            marginBottom: '48px',
-            textAlign: 'center',
-            color: '#ffffff'
-          }}>
-            A Glimpse Into The Path
-          </h2>
-
           <div style={{
             fontSize: '19px',
             lineHeight: 1.8,
             color: 'rgba(255,255,255,0.8)',
             fontWeight: 400
           }}>
-            <p style={{ marginBottom: '28px' }}>
-              Most people spend their lives responding to what happens around them, rather than creating the life they want.
-            </p>
-
-            <p style={{ marginBottom: '28px' }}>
-              I was the same. For years, I lived in survival mode - addiction and destructive reactions became my norm. My conditioning ran so deep I didn't even realize I was protecting myself from threats that no longer existed.
-            </p>
-
-            <p style={{ marginBottom: '28px' }}>
-              This left me stuck - playing it safe when I should have moved forward, taking reckless risks when I needed stability. The result? Deep unhappiness.
-            </p>
-
-            <p style={{ marginBottom: '28px' }}>
-              Living in constant defense against invisible threats is no way to exist. The real threat was me - avoiding the parts of myself I didn't want to face.
-            </p>
-
-            <p style={{ marginBottom: '28px', fontWeight: 600, color: '#9bc4b8', fontSize: '21px' }}>
-              True growth requires knowing your whole self - the good and the uncomfortable.
+            <p style={{ marginBottom: '48px' }}>
+              I was that man. Robbed myself of peace for years before I learned how to stop. Not manage it. Stop it. I'm not standing outside of this work looking in. I came through it. That's the only reason I can guide you through it.
             </p>
 
             <p>
-              After a decade of this work and guiding hundreds through their own transformations, I see how universal this struggle is.
+              The pattern running underneath your decisions isn't a character flaw. It's old code. Written long before you were old enough to question it. And until you see it, it runs the show. Your relationships. Your opportunities. Your ability to hold what you build. The first thing that shifts is perspective. How life lands on you. Situations that used to knock you sideways start to hit differently. That's not positive thinking. That's what happens when the pattern loses its grip.
             </p>
           </div>
         </div>
@@ -603,7 +582,7 @@ export default function FoundingMembersPage() {
         </div>
       </section>
 
-      {/* What's Inside */}
+      {/* What We Do Here */}
       <section style={{
         padding: isMobile ? '100px 20px' : '160px 40px',
         background: 'rgba(0, 0, 0, 0.3)'
@@ -616,23 +595,18 @@ export default function FoundingMembersPage() {
             textAlign: 'center',
             color: '#ffffff'
           }}>
-            What's Inside the Circle
+            What we do here
           </h2>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
             gap: '32px'
           }}>
             {[
-              { title: 'Video Library', desc: 'Breathwork sessions, energy healing practices, somatic exercises, and integration guidance. New content added monthly. Everything you need to work through what\'s stored in your body and release what\'s been weighing you down.' },
-              { title: 'Live Coaching Calls', desc: 'Bi-weekly sessions with Mason plus guest experts in their fields. Bring your questions, your struggles, your breakthroughs. Get real-time guidance and watch others navigate their own journeys. All recorded for members who can\'t attend live.' },
-              { title: 'Somatic Sessions', desc: 'Body-based practices to release stored trauma and tension that talk therapy can\'t reach. Learn to feel what you\'ve been avoiding and let it move through you instead of staying stuck. Your body holds memories your mind has forgotten.' },
-              { title: 'Community Support', desc: 'Connect with others who understand when friends and family don\'t. No posturing, no fake growth talk. Just real people doing real work on themselves. The support system you didn\'t know you needed.' },
-              { title: 'Confidence Building', desc: 'Goal setting, accountability, and real transformation. Learn to trust yourself again. Build the life you actually want instead of the one you think you should want. Deep work that creates lasting change.' },
-              { title: 'Healthy Habits', desc: 'Build new patterns and ways to view yourself that actually stick. Break the cycles that keep you stuck. Replace self-destruction with self-respect. Small shifts that compound into massive life changes over time.' },
-              { title: 'Grounded Spirituality', desc: 'Monthly teachings on connecting to your higher self and working with energy without the woo-woo bullshit. God/Allah/Jah/Universe - it\'s all the same. Learn to feel what\'s beyond your five senses while keeping your feet firmly on the ground.' },
-              { title: 'Live Masterclasses', desc: 'Deep dives on shadow work, somatic release, anger transformation, and living in alignment. Interactive explorations where we go beneath the surface together. Not lectures - real work. All recorded for members.' }
+              { title: 'See it.', desc: 'Catch the pattern while it\'s running. Understand what\'s actually underneath the trigger, not the story you\'ve been telling yourself about it.' },
+              { title: 'Regulate it.', desc: 'Your body holds what your mind has rationalised away. Breathwork. Somatic work. Real capacity to hold pressure without reverting.' },
+              { title: 'Become it.', desc: 'Who does your goal require you to be. We close that gap. In practice.' },
             ].map((item, i) => (
               <div key={i} style={{
                 padding: '40px',
@@ -662,41 +636,74 @@ export default function FoundingMembersPage() {
         </div>
       </section>
 
-      {/* Why This Exists */}
+      {/* Inside the Circle */}
+      <section style={{
+        padding: isMobile ? '100px 20px' : '160px 40px'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{
+            fontSize: isMobile ? '36px' : '56px',
+            fontWeight: 700,
+            marginBottom: '80px',
+            textAlign: 'center',
+            color: '#ffffff'
+          }}>
+            Inside the Circle
+          </h2>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+            gap: '32px'
+          }}>
+            {[
+              { title: 'Bi-weekly live coaching', desc: 'Bring your real situations. We find exactly where autopilot takes over.' },
+              { title: 'Somatic and breathwork sessions', desc: 'Structured, regulated, built to increase your capacity to hold what you\'re building.' },
+              { title: 'Goal mapping calls', desc: 'You\'re working toward something specific. Drift isn\'t welcome here.' },
+              { title: 'Video library', desc: 'Frameworks and tools when you need them.' },
+              { title: 'Community', desc: 'No performance. Just men doing the work properly.' },
+            ].map((item, i) => (
+              <div key={i} style={{
+                padding: '40px',
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '3px',
+                transition: 'all 0.3s ease'
+              }}>
+                <h3 style={{
+                  fontSize: '28px',
+                  fontWeight: 700,
+                  marginBottom: '16px',
+                  color: '#9bc4b8'
+                }}>
+                  {item.title}
+                </h3>
+                <p style={{
+                  fontSize: '18px',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  lineHeight: 1.7
+                }}>
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Closing Section */}
       <section style={{
         padding: isMobile ? '100px 20px' : '160px 40px'
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: isMobile ? '36px' : '56px',
-            fontWeight: 700,
-            marginBottom: '48px',
-            textAlign: 'center',
-            color: '#ffffff'
-          }}>
-            Why This Exists
-          </h2>
-
           <div style={{
             fontSize: '19px',
             lineHeight: 1.8,
             color: 'rgba(255,255,255,0.8)',
             fontWeight: 400
           }}>
-            <p style={{ marginBottom: '28px' }}>
-              Since 2020, I've wanted to create The CoR. I didn't know what it would be, I just knew it had to give its members what this work has given me.
-            </p>
-
-            <p style={{ marginBottom: '28px' }}>
-              Life is a search for truth - you just don't know it. The truth can hurt, which is why most avoid it. But confronting it is the only way to feel at peace with who you are and where you're going.
-            </p>
-
-            <p style={{ marginBottom: '28px', fontWeight: 700, color: '#ef4444', fontSize: '21px' }}>
-              Note: You cannot run away from yourself.
-            </p>
-
             <p>
-              The Circle of Return is here to shed the layers of conditioning you've been weighed down by.
+              I'm selective about who enters this room. The work requires a level of honesty that not every man is ready for yet. There's no shame in that. Better you wait until you are. If you're ready to stop getting in your own way, this is the place. The truth is hard to hear. But you already knew it.
             </p>
           </div>
         </div>
@@ -724,7 +731,7 @@ export default function FoundingMembersPage() {
             marginBottom: '16px',
             fontWeight: 700
           }}>
-            Founding Member Pricing
+            Founding Member Price
           </div>
 
           <div style={{
@@ -746,19 +753,10 @@ export default function FoundingMembersPage() {
           <div style={{
             fontSize: '18px',
             color: 'rgba(255,255,255,0.6)',
-            marginBottom: '32px',
+            marginBottom: '40px',
             fontWeight: 600
           }}>
-            Lock in £25/month FIXED. Never increases.
-          </div>
-
-          <div style={{
-            fontSize: '16px',
-            color: 'rgba(255,255,255,0.4)',
-            textDecoration: 'none',
-            marginBottom: '40px'
-          }}>
-            Regular price: £50/month from next month
+            Founding member price £25/month. This moves to £50 next month.
           </div>
 
           {!isSoldOut ? (
@@ -810,7 +808,7 @@ export default function FoundingMembersPage() {
                   e.currentTarget.style.boxShadow = '0 4px 12px rgba(127,176,105,0.15)'
                 }}
               >
-                Secure Your Spot - £25/Month
+                Secure Your Spot — £25/month
               </a>
             </>
           ) : (
