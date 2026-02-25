@@ -5,10 +5,11 @@ import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 const links = [
-  { label: 'Dashboard', href: '/members' },
   { label: 'Community', href: '/community' },
-  { label: 'Live Teachings', href: '/videos' },
+  { label: 'Teachings', href: '/videos' },
   { label: 'Calendar', href: '/calls' },
+  { label: 'Dashboard', href: '/members' },
+  { label: 'About', href: '/about-cor' },
 ]
 
 export default function MembersNav() {
@@ -49,37 +50,38 @@ export default function MembersNav() {
         maxWidth: '1400px', margin: '0 auto', width: '100%',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between'
       }}>
-        {/* Logo - left */}
-        <Link href="/community" style={{
-          fontSize: '1.1rem', fontWeight: 500, color: '#0a0a0a',
-          textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0
-        }}>
-          The CoR
-        </Link>
-
-        {/* Desktop links - centre */}
-        {!isMobile && (
-          <div style={{
-            position: 'absolute', left: '50%', transform: 'translateX(-50%)',
-            display: 'flex', gap: '1.5rem', alignItems: 'center'
+        {/* Logo + links - left */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          <Link href="/community" style={{
+            fontSize: '1.1rem', fontWeight: 500, color: '#0a0a0a',
+            textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0
           }}>
-            {links.map((link) => {
-              const isActive = pathname === link.href
-              return (
-                <Link key={link.label} href={link.href} style={{
-                  color: isActive ? '#9bc4b8' : '#0a0a0a',
-                  textDecoration: 'none', fontSize: '0.9375rem',
-                  fontWeight: isActive ? 600 : 400,
-                  borderBottom: isActive ? '2px solid #9bc4b8' : '2px solid transparent',
-                  paddingBottom: '2px',
-                  transition: 'color 0.15s ease'
-                }}>
-                  {link.label}
-                </Link>
-              )
-            })}
-          </div>
-        )}
+            The CoR
+          </Link>
+
+          {/* Desktop links - next to logo */}
+          {!isMobile && (
+            <div style={{
+              display: 'flex', gap: '1.5rem', alignItems: 'center'
+            }}>
+              {links.map((link) => {
+                const isActive = pathname === link.href
+                return (
+                  <Link key={link.label} href={link.href} style={{
+                    color: isActive ? '#9bc4b8' : '#0a0a0a',
+                    textDecoration: 'none', fontSize: '0.9375rem',
+                    fontWeight: isActive ? 600 : 400,
+                    borderBottom: isActive ? '2px solid #9bc4b8' : '2px solid transparent',
+                    paddingBottom: '2px',
+                    transition: 'color 0.15s ease'
+                  }}>
+                    {link.label}
+                  </Link>
+                )
+              })}
+            </div>
+          )}
+        </div>
 
         {/* Desktop Sign Out - right */}
         {!isMobile && (

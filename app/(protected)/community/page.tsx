@@ -490,7 +490,7 @@ export default function CommunityPage() {
             >
               <div style={{
                 width: '36px', height: '36px', borderRadius: '50%',
-                background: '#9bc4b8',
+                background: '#ffffff', border: '1px solid #e5e5e5',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 color: '#0a0a0a', fontSize: '14px', fontWeight: 600, flexShrink: 0
               }}>
@@ -508,7 +508,7 @@ export default function CommunityPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                 <div style={{
                   width: '36px', height: '36px', borderRadius: '50%',
-                  background: '#9bc4b8',
+                  background: '#ffffff', border: '1px solid #e5e5e5',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: '#0a0a0a', fontSize: '14px', fontWeight: 600, flexShrink: 0
                 }}>
@@ -632,7 +632,8 @@ export default function CommunityPage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
                     <div style={{
                       width: '40px', height: '40px', borderRadius: '50%',
-                      background: post.user_photo ? `url(${post.user_photo})` : '#9bc4b8',
+                      background: post.user_photo ? `url(${post.user_photo})` : '#ffffff',
+                      border: post.user_photo ? 'none' : '1px solid #e5e5e5',
                       backgroundSize: 'cover', backgroundPosition: 'center',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       color: '#0a0a0a', fontSize: '16px', fontWeight: 600, flexShrink: 0
@@ -717,7 +718,8 @@ export default function CommunityPage() {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.375rem' }}>
                                   <div style={{
                                     width: '28px', height: '28px', borderRadius: '50%',
-                                    background: r.user_photo ? `url(${r.user_photo})` : '#9bc4b8',
+                                    background: r.user_photo ? `url(${r.user_photo})` : '#ffffff',
+                                    border: r.user_photo ? 'none' : '1px solid #e5e5e5',
                                     backgroundSize: 'cover', backgroundPosition: 'center',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     color: '#0a0a0a', fontSize: '11px', fontWeight: 600, flexShrink: 0
@@ -766,7 +768,7 @@ export default function CommunityPage() {
                       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-end' }}>
                         <div style={{
                           width: '28px', height: '28px', borderRadius: '50%',
-                          background: '#9bc4b8',
+                          background: '#ffffff', border: '1px solid #e5e5e5',
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                           color: '#0a0a0a', fontSize: '11px', fontWeight: 600, flexShrink: 0
                         }}>
