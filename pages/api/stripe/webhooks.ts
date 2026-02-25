@@ -98,18 +98,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           
           await client.end()
           
-          // Tag in ConvertKit
           await tagConvertKit(email, FOUNDING_MEMBER_TAG_ID)
           
-          // Send welcome email
           if (process.env.RESEND_API_KEY) {
-            const fromAddress = process.env.EMAIL_FROM || 'thecor@yourtruenorth.me';
-            const fromFormatted = fromAddress.includes('<') ? fromAddress : `Circle of Return <${fromAddress}>`;
-
             await resend.emails.send({
-              from: fromFormatted,
+              from: 'Circle of Return <CoR@yourtruenorth.me>',
               to: email,
-              subject: 'Welcome to Circle of Return',
+              subject: "You're in. Here's where to start.",
               html: `<!DOCTYPE html>
 <html>
 <head>
@@ -129,7 +124,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           </tr>
           <tr>
             <td style="padding: 40px;">
-              <p style="margin: 0 0 24px; color: #333333; font-size: 16px; line-height: 1.6;">Your account has been created. Where you are now does not have to be where you end up.</p>
+              <p style="margin: 0 0 16px; color: #333333; font-size: 16px; line-height: 1.7;">Your account is now live. Your login details are below — keep them somewhere safe.</p>
+              <p style="margin: 0 0 16px; color: #333333; font-size: 16px; line-height: 1.7;">The work begins the moment you log in.</p>
+              <p style="margin: 0 0 16px; color: #333333; font-size: 16px; line-height: 1.7;">Start with the <strong>Start Here</strong> videos. It will give you context, explain how this space runs, and set the standard for how we operate.</p>
+              <p style="margin: 0 0 16px; color: #333333; font-size: 16px; line-height: 1.7;">After that, head into the community and introduce yourself. Share where you are right now and what brought you here. You don't need to overthink it, just be honest.</p>
+              <p style="margin: 0 0 16px; color: #333333; font-size: 16px; line-height: 1.7;">If it feels weird, that's normal. Most men aren't used to stepping into a space like this, but that won't last. The feeling will be replaced with clarity, direction, and real conversations that actually help move you forward.</p>
+              <p style="margin: 0 0 32px; color: #333333; font-size: 16px; line-height: 1.7;">It's important to acknowledge that you made a deliberate decision today. Well done and thank you.</p>
+              <p style="margin: 0 0 32px; color: #333333; font-size: 16px; line-height: 1.7; font-style: italic;">Now log in. We begin the journey of self-discovery from here.</p>
+              <p style="margin: 0 0 32px; color: #111111; font-size: 16px; font-weight: 500;">— True</p>
               <table role="presentation" style="width: 100%; background: #f8f8f8; border-radius: 6px; margin: 32px 0;">
                 <tr>
                   <td style="padding: 32px;">
@@ -154,14 +156,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               <table role="presentation" style="width: 100%; margin: 32px 0;">
                 <tr>
                   <td align="center">
-                    <a href="https://yourtruenorth.me/members" style="display: inline-block; padding: 16px 48px; background: #111111; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 500; letter-spacing: 0.3px;">Access Circle of Return</a>
+                    <a href="https://yourtruenorth.me/auth/login" style="display: inline-block; padding: 16px 48px; background: #9bc4b8; color: #111111; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: 600; letter-spacing: 0.3px;">Log In to Circle of Return</a>
                   </td>
                 </tr>
               </table>
-              <table role="presentation" style="width: 100%; background: #fff9e6; border-left: 3px solid #ffcc00; margin: 32px 0;">
+              <table role="presentation" style="width: 100%; background: #f8f8f8; border-left: 3px solid #9bc4b8; margin: 32px 0;">
                 <tr>
                   <td style="padding: 16px 20px;">
-                    <p style="margin: 0; color: #8b7500; font-size: 14px; line-height: 1.5;"><strong>Important:</strong> Please change your password after your first login for security.</p>
+                    <p style="margin: 0; color: #555555; font-size: 14px; line-height: 1.5;"><strong>Important:</strong> Please change your password after your first login for security.</p>
                   </td>
                 </tr>
               </table>
@@ -169,8 +171,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           </tr>
           <tr>
             <td style="padding: 32px 40px; text-align: center; border-top: 1px solid #f0f0f0; background: #fafafa; border-radius: 0 0 6px 6px;">
-              <p style="margin: 0 0 8px; color: #666666; font-size: 13px;">True North Spiritual Transformation Coaching</p>
-              <p style="margin: 0; color: #999999; font-size: 12px;">You're receiving this because you subscribed to Circle of Return</p>
+              <p style="margin: 0 0 8px; color: #666666; font-size: 13px;">Circle of Return · True North</p>
+              <p style="margin: 0; color: #999999; font-size: 12px;">You're receiving this because you joined Circle of Return</p>
             </td>
           </tr>
         </table>
