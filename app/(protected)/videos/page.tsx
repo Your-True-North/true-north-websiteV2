@@ -318,7 +318,7 @@ export default function LibraryPage() {
             letterSpacing: '-0.02em',
             color: '#000000'
           }}>
-            My Journey
+            Live Teachings
           </h1>
           <p style={{ color: '#1a1a1a', fontSize: '1.125rem', fontWeight: 300 }}>
             Your path to transformation

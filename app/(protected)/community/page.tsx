@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 
 interface User {
   id: number
@@ -46,14 +45,6 @@ interface Video {
   duration?: string
 }
 
-const navLinks = [
-  { label: 'Journey', href: '/journey' },
-  { label: 'Teachings', href: '/videos' },
-  { label: 'Community', href: '/community' },
-  { label: 'Calendar', href: '/calls' },
-  { label: 'Dashboard', href: '/members' },
-]
-
 const categories = [
   'Introductions',
   'Wins & Breakthroughs',
@@ -68,7 +59,6 @@ export default function CommunityPage() {
   const [loading, setLoading] = useState(true)
   const [showVideoCard, setShowVideoCard] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [hoveredPostId, setHoveredPostId] = useState<number | null>(null)
   const [continueHovered, setContinueHovered] = useState(false)
 
@@ -139,9 +129,6 @@ export default function CommunityPage() {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768)
-      if (window.innerWidth >= 768) {
-        setShowMobileMenu(false)
-      }
     }
     handleResize()
     window.addEventListener('resize', handleResize)
@@ -480,91 +467,6 @@ export default function CommunityPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa' }}>
-      {/* Top Navigation */}
-      <nav style={{
-        position: 'sticky', top: 0, zIndex: 100,
-        background: '#fafafa', borderBottom: '1px solid #e5e5e5', padding: '0.75rem 0'
-      }}>
-        <div style={{
-          maxWidth: '1400px', margin: '0 auto', padding: '0 1.5rem',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem',
-          position: 'relative'
-        }}>
-          <Link href="/community" style={{
-            fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a',
-            textDecoration: 'none', fontFamily: 'Gambarino, serif', whiteSpace: 'nowrap'
-          }}>
-            True North
-          </Link>
-
-          <div style={{ display: isMobile ? 'none' : 'flex', gap: '1.5rem', alignItems: 'center', marginRight: 'auto', marginLeft: '2rem' }}>
-            <Link href="/community" style={{ color: '#e67e22', textDecoration: 'none', fontSize: '0.9375rem', fontWeight: 600, borderBottom: '2px solid #e67e22', paddingBottom: '2px' }}>Community</Link>
-            <Link href="/videos" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>CoR Modules</Link>
-            <Link href="/videos" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Teachings</Link>
-            <Link href="/members" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>Dashboard</Link>
-            <Link href="/about" style={{ color: '#666', textDecoration: 'none', fontSize: '0.9375rem' }}>About</Link>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            {!isMobile && (
-              <div style={{
-                padding: '0.375rem 0.875rem', background: '#f0f0f0', borderRadius: '20px',
-                fontSize: '0.8125rem', color: '#666'
-              }}>
-                {user?.name || 'Profile'}
-              </div>
-            )}
-            {isMobile && (
-              <button onClick={() => setShowMobileMenu(!showMobileMenu)} style={{
-                background: 'none', border: '1px solid #e5e5e5', borderRadius: '4px',
-                padding: '0.5rem', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                width: '40px', height: '40px'
-              }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', width: '20px' }}>
-                  <div style={{ width: '100%', height: '2px', background: '#1a1a1a' }} />
-                  <div style={{ width: '100%', height: '2px', background: '#1a1a1a' }} />
-                  <div style={{ width: '100%', height: '2px', background: '#1a1a1a' }} />
-                </div>
-              </button>
-            )}
-          </div>
-        </div>
-
-        {isMobile && showMobileMenu && (
-          <div style={{
-            position: 'absolute', top: '100%', left: 0, right: 0,
-            background: '#fff', borderBottom: '1px solid #e5e5e5',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)', zIndex: 99,
-            display: 'flex', flexDirection: 'column'
-          }}>
-            <Link href="/community" onClick={() => setShowMobileMenu(false)} style={{
-              padding: '1rem 1.5rem', color: '#e67e22', textDecoration: 'none',
-              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem', fontWeight: 600
-            }}>Community</Link>
-            <Link href="/videos" onClick={() => setShowMobileMenu(false)} style={{
-              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
-              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
-            }}>CoR Modules</Link>
-            <Link href="/videos" onClick={() => setShowMobileMenu(false)} style={{
-              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
-              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
-            }}>Teachings</Link>
-            <Link href="/members" onClick={() => setShowMobileMenu(false)} style={{
-              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
-              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
-            }}>Dashboard</Link>
-            <Link href="/about" onClick={() => setShowMobileMenu(false)} style={{
-              padding: '1rem 1.5rem', color: '#1a1a1a', textDecoration: 'none',
-              borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem'
-            }}>About</Link>
-            <div style={{ padding: '1rem 1.5rem', background: '#f9f9f9', fontSize: '0.875rem', color: '#666' }}>
-              Signed in as {user?.name}
-            </div>
-          </div>
-        )}
-      </nav>
-
       {/* Main Content */}
       <div style={{
         maxWidth: '1200px', margin: '0 auto', padding: '1.5rem 1.5rem 3rem',

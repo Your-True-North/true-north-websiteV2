@@ -6,10 +6,9 @@ import Link from 'next/link'
 
 const links = [
   { label: 'Dashboard', href: '/members' },
-  { label: 'Journey', href: '/journey' },
   { label: 'Community', href: '/community' },
-  { label: 'Calls', href: '/calls' },
-  { label: 'Videos', href: '/videos' },
+  { label: 'Live Teachings', href: '/videos' },
+  { label: 'Calendar', href: '/calls' },
 ]
 
 export default function MembersNav() {
@@ -30,13 +29,18 @@ export default function MembersNav() {
 
   const handleLogout = () => {
     localStorage.removeItem('user')
-    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
-    router.push('/auth/login')
+    localStorage.removeItem('videoLikes')
+    localStorage.removeItem('videoComments')
+    localStorage.removeItem('justLoggedIn')
+    localStorage.clear()
+    sessionStorage.setItem('justLoggedOut', 'true')
+    document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+    router.push('/')
   }
 
   return (
     <nav style={{
-      position: 'sticky', top: 0, zIndex: 200,
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
       background: '#ffffff', borderBottom: '1px solid #e5e5e5',
       height: '60px', display: 'flex', alignItems: 'center',
       padding: '0 1.5rem'
@@ -45,21 +49,24 @@ export default function MembersNav() {
         maxWidth: '1400px', margin: '0 auto', width: '100%',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between'
       }}>
-        {/* Logo */}
-        <Link href="/members" style={{
-          fontSize: '1.25rem', fontWeight: 600, color: '#0a0a0a',
-          textDecoration: 'none', fontFamily: 'Gambarino, serif', whiteSpace: 'nowrap'
+        {/* Logo - left */}
+        <Link href="/community" style={{
+          fontSize: '1.1rem', fontWeight: 500, color: '#0a0a0a',
+          textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0
         }}>
-          True North
+          The CoR
         </Link>
 
-        {/* Desktop links */}
+        {/* Desktop links - centre */}
         {!isMobile && (
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', marginLeft: '2rem', marginRight: 'auto' }}>
+          <div style={{
+            position: 'absolute', left: '50%', transform: 'translateX(-50%)',
+            display: 'flex', gap: '1.5rem', alignItems: 'center'
+          }}>
             {links.map((link) => {
               const isActive = pathname === link.href
               return (
-                <Link key={link.href} href={link.href} style={{
+                <Link key={link.label} href={link.href} style={{
                   color: isActive ? '#9bc4b8' : '#0a0a0a',
                   textDecoration: 'none', fontSize: '0.9375rem',
                   fontWeight: isActive ? 600 : 400,
@@ -74,18 +81,18 @@ export default function MembersNav() {
           </div>
         )}
 
-        {/* Desktop logout */}
+        {/* Desktop Sign Out - right */}
         {!isMobile && (
           <button onClick={handleLogout} style={{
             background: 'none', border: '1px solid #e5e5e5', borderRadius: '6px',
             padding: '0.375rem 1rem', fontSize: '0.8125rem', color: '#0a0a0a',
             cursor: 'pointer'
           }}>
-            Logout
+            Sign Out
           </button>
         )}
 
-        {/* Mobile hamburger */}
+        {/* Mobile hamburger - right */}
         {isMobile && (
           <button onClick={() => setMenuOpen(!menuOpen)} style={{
             background: 'none', border: '1px solid #e5e5e5', borderRadius: '4px',
@@ -113,7 +120,7 @@ export default function MembersNav() {
           {links.map((link) => {
             const isActive = pathname === link.href
             return (
-              <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)} style={{
+              <Link key={link.label} href={link.href} onClick={() => setMenuOpen(false)} style={{
                 padding: '1rem 1.5rem', textDecoration: 'none',
                 borderBottom: '1px solid #f5f5f5', fontSize: '0.95rem',
                 color: isActive ? '#9bc4b8' : '#0a0a0a',
@@ -128,7 +135,7 @@ export default function MembersNav() {
             borderTop: '1px solid #e5e5e5', fontSize: '0.95rem', color: '#0a0a0a',
             cursor: 'pointer', textAlign: 'left'
           }}>
-            Logout
+            Sign Out
           </button>
         </div>
       )}
