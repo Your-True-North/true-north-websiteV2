@@ -144,7 +144,7 @@ export default function FoundingMembersPage() {
               marginBottom: '36px',
               fontFamily: BODY_FONT,
             }}>
-              This moves to £50 next month.
+              £25 for the first 20 men. The 21st pays £50.
             </p>
 
             <a
@@ -174,7 +174,7 @@ export default function FoundingMembersPage() {
               marginTop: '12px',
               fontFamily: BODY_FONT,
             }}>
-              {SPOTS_REMAINING} of 30 spots remaining
+              {SPOTS_REMAINING} of 20 spots remaining
             </p>
           </div>
         </section>
@@ -284,7 +284,7 @@ export default function FoundingMembersPage() {
               Gets results. Builds momentum. Then somehow gets in his own way at the last moment.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              The opportunity he didn't follow through on. The relationship he watched himself pull back from. The level he could see but never quite reached.
+              Whether it's the missed opportunity. The relationship that broke down. The level he never quite hit. Different stories, but the same root. That feeling in his gut that says he's not enough.
             </p>
             <p style={{
               ...bodyText,
@@ -319,7 +319,7 @@ export default function FoundingMembersPage() {
               And until you see it, it runs the show. Your relationships. Your opportunities. Your ability to hold what you build.
             </p>
             <p style={bodyText}>
-              The first thing that shifts is perspective. How life lands on you. Situations that used to knock you sideways start to hit differently. That's not positive thinking. That's what happens when the pattern loses its grip.
+              The first thing to shift is your need to control — and your reaction when things don't go your way. How life lands on you. Situations that used to knock you sideways start to hit differently. That's not positive thinking. That's what happens when the pattern loses its grip.
             </p>
           </div>
         </section>
@@ -339,7 +339,7 @@ export default function FoundingMembersPage() {
               {[
                 {
                   bold: 'See it.',
-                  desc: " Catch the pattern while it's running. Understand what's actually underneath the trigger, not the story you've been telling yourself about it.",
+                  desc: " Catch the pattern while it's running. Understand what's underneath the trigger. Not the story about it.",
                 },
                 {
                   bold: 'Regulate it.',
@@ -421,6 +421,13 @@ export default function FoundingMembersPage() {
                 </div>
               ))}
             </div>
+
+            <p style={{ ...bodyText, marginTop: '40px' }}>
+              Imagine 20 men around the world on a shared mission. Not competing, just doing the work. That's how you grow.
+            </p>
+            <p style={{ ...bodyText, marginTop: '20px' }}>
+              This is personal work. But it happens inside a structured container.
+            </p>
           </div>
         </section>
 
@@ -428,7 +435,7 @@ export default function FoundingMembersPage() {
         <section style={{ ...section('#f8f8f8'), textAlign: 'center' }}>
           <div style={inner}>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              I'm selective about who enters this room. The work requires a level of honesty that not every man is ready for yet. There's no shame in that. Better you wait until you are.
+              I'm selective about who enters this room. The work requires a level of honesty most men avoid. There's no shame in that. Better you wait until you are.
             </p>
             <p style={{ ...bodyText, marginBottom: '48px' }}>
               If you're ready to stop getting in your own way, this is the place.
@@ -445,13 +452,17 @@ export default function FoundingMembersPage() {
               The truth is hard to hear. But you already knew it.
             </p>
 
+            <p style={{ ...bodyText, marginBottom: '48px' }}>
+              The only question is how much longer you're willing to ignore it.
+            </p>
+
             <p style={{
               fontSize: '15px',
               color: MUTED,
               marginBottom: '24px',
               fontFamily: BODY_FONT,
             }}>
-              Founding member price £25/month. This moves to £50 next month.
+              Founding member price £25/month. £25 for the first 20 men. The 21st pays £50.
             </p>
 
             <a
@@ -481,7 +492,7 @@ export default function FoundingMembersPage() {
               marginTop: '12px',
               fontFamily: BODY_FONT,
             }}>
-              {SPOTS_REMAINING} of 30 spots remaining
+              {SPOTS_REMAINING} of 20 spots remaining
             </p>
           </div>
         </section>
