@@ -576,7 +576,7 @@ export default function CommunityPage() {
         <div>
         {/* "Write something" inline post bar */}
         <div style={{
-          background: 'rgba(155, 196, 184, 0.2)', border: '1px solid rgba(155, 196, 184, 0.4)', borderRadius: '6px',
+          background: '#9bc4b8', border: '1px solid #9bc4b8', borderRadius: '6px',
           padding: '1rem 1.25rem', marginBottom: '1.25rem'
         }}>
           {!showInlinePost ? (
@@ -588,15 +588,15 @@ export default function CommunityPage() {
             >
               <div style={{
                 width: '36px', height: '36px', borderRadius: '50%',
-                background: 'linear-gradient(135deg, #e67e22, #d35400)',
+                background: '#9bc4b8',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#fff', fontSize: '14px', fontWeight: 600, flexShrink: 0
+                color: '#0a0a0a', fontSize: '14px', fontWeight: 600, flexShrink: 0
               }}>
                 {user?.name?.charAt(0).toUpperCase()}
               </div>
               <div style={{
-                flex: 1, padding: '0.625rem 1rem', background: '#f5f5f5',
-                borderRadius: '6px', color: '#999', fontSize: '0.9375rem'
+                flex: 1, padding: '0.625rem 1rem', background: 'rgba(255,255,255,0.5)',
+                borderRadius: '6px', color: '#0a0a0a', fontSize: '0.9375rem'
               }}>
                 What's alive in you today?
               </div>
@@ -606,9 +606,9 @@ export default function CommunityPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                 <div style={{
                   width: '36px', height: '36px', borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #e67e22, #d35400)',
+                  background: '#9bc4b8',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#fff', fontSize: '14px', fontWeight: 600, flexShrink: 0
+                  color: '#0a0a0a', fontSize: '14px', fontWeight: 600, flexShrink: 0
                 }}>
                   {user?.name?.charAt(0).toUpperCase()}
                 </div>
@@ -730,10 +730,10 @@ export default function CommunityPage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
                     <div style={{
                       width: '40px', height: '40px', borderRadius: '50%',
-                      background: post.user_photo ? `url(${post.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
+                      background: post.user_photo ? `url(${post.user_photo})` : '#9bc4b8',
                       backgroundSize: 'cover', backgroundPosition: 'center',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: '#fff', fontSize: '16px', fontWeight: 600, flexShrink: 0
+                      color: '#0a0a0a', fontSize: '16px', fontWeight: 600, flexShrink: 0
                     }}>
                       {!post.user_photo && post.user_name?.charAt(0).toUpperCase()}
                     </div>
@@ -815,10 +815,10 @@ export default function CommunityPage() {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.375rem' }}>
                                   <div style={{
                                     width: '28px', height: '28px', borderRadius: '50%',
-                                    background: r.user_photo ? `url(${r.user_photo})` : 'linear-gradient(135deg, #e67e22, #d35400)',
+                                    background: r.user_photo ? `url(${r.user_photo})` : '#9bc4b8',
                                     backgroundSize: 'cover', backgroundPosition: 'center',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    color: '#fff', fontSize: '11px', fontWeight: 600, flexShrink: 0
+                                    color: '#0a0a0a', fontSize: '11px', fontWeight: 600, flexShrink: 0
                                   }}>
                                     {!r.user_photo && r.user_name?.charAt(0).toUpperCase()}
                                   </div>
@@ -864,9 +864,9 @@ export default function CommunityPage() {
                       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-end' }}>
                         <div style={{
                           width: '28px', height: '28px', borderRadius: '50%',
-                          background: 'linear-gradient(135deg, #e67e22, #d35400)',
+                          background: '#9bc4b8',
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          color: '#fff', fontSize: '11px', fontWeight: 600, flexShrink: 0
+                          color: '#0a0a0a', fontSize: '11px', fontWeight: 600, flexShrink: 0
                         }}>
                           {user?.name?.charAt(0).toUpperCase()}
                         </div>
@@ -928,13 +928,13 @@ export default function CommunityPage() {
                 ))}
               </div>
             </div>
-            <div style={{ background: 'rgba(155, 196, 184, 0.2)', border: '1px solid rgba(155, 196, 184, 0.4)', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
-              <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#666', margin: '0 0 1rem 0' }}>
+            <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
+              <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#0a0a0a', margin: '0 0 1rem 0' }}>
                 Quick Links
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <a href="/videos" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f0f0f0' }}>Teachings</a>
-                <a href="/calls" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0' }}>Live Call Calendar</a>
+                <a href="/videos" style={{ color: '#0a0a0a', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f0f0f0' }}>Teachings</a>
+                <a href="/calls" style={{ color: '#0a0a0a', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0' }}>Live Call Calendar</a>
               </div>
             </div>
           </aside>
