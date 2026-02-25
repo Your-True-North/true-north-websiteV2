@@ -265,7 +265,7 @@ export default function MembersPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '2rem' }}>
       {/* Animated Background */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
@@ -304,113 +304,7 @@ export default function MembersPage() {
         }}></div>
       </div>
 
-      {/* Navigation */}
-      <nav style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 20,
-        borderBottom: '1px solid #e5e5e5',
-        backdropFilter: 'blur(20px)',
-        background: 'rgba(0, 0, 0, 0.2)'
-      }}>
-        <div style={{
-          maxWidth: '80rem',
-          margin: '0 auto',
-          padding: '1.25rem 1.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '1rem'
-        }}>
-          <Link href="/" style={{
-            fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
-            fontWeight: 300,
-            letterSpacing: '0.2em',
-            color: '#1a1a1a',
-            textDecoration: 'none',
-            transition: 'color 0.3s ease'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.color = '#000'}
-          onMouseLeave={(e) => e.currentTarget.style.color = '#1a1a1a'}>
-            CIRCLE OF RETURN
-          </Link>
-          
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            <Link href="/journey" style={{
-              padding: '0.5rem 1rem',
-              fontSize: '0.875rem',
-              fontWeight: 300,
-              border: '1px solid rgba(155, 196, 184, 0.3)',
-              borderRadius: '8px',
-              color: '#e67e22',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
-              e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent'
-              e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
-            }}>
-              The Path
-            </Link>
-            <button
-              onClick={() => setShowProfileModal(true)}
-              style={{
-                padding: '0.5rem 1rem',
-                fontSize: '0.875rem',
-                fontWeight: 300,
-                border: '1px solid rgba(155, 196, 184, 0.3)',
-                borderRadius: '8px',
-                background: 'transparent',
-                color: '#e67e22',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
-                e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
-              }}
-            >
-              Profile Settings
-            </button>
-            <button
-              onClick={handleLogout}
-              style={{
-                padding: '0.5rem 1.25rem',
-                fontSize: '0.875rem',
-                fontWeight: 300,
-                border: '1px solid #e5e5e5',
-                borderRadius: '8px',
-                background: 'transparent',
-                color: '#1a1a1a',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#f5f5f5'
-                e.currentTarget.style.borderColor = '#d5d5d5'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.borderColor = '#e5e5e5'
-              }}
-            >
-              Sign Out
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      <div style={{ position: 'sticky',
-        top: 0, zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '10rem 1.5rem 2rem' }}>
+      <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '2rem 1.5rem 2rem' }}>
         {/* Hero Section */}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <div style={{ display: 'inline-block', marginBottom: '1.5rem' }}>
@@ -450,165 +344,53 @@ export default function MembersPage() {
         {/* Journey Progress Card */}
         <div style={{
           marginBottom: '2rem',
-          backdropFilter: 'blur(20px)',
           background: '#ffffff',
           border: '1px solid #e5e5e5',
           borderRadius: '12px',
-          padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-          position: 'sticky',
-        top: 0,
-          overflow: 'hidden'
+          padding: '1.5rem'
         }}>
-          <div style={{ position: 'relative' }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isTablet ? '1fr' : '1fr auto',
-              alignItems: 'center',
-              gap: '3rem',
-              marginBottom: '2.5rem'
-            }}>
-              {/* Level Info */}
-              <div style={{ textAlign: isTablet ? 'center' : 'left' }}>
-                <div style={{
-                  fontSize: '0.75rem',
-                  letterSpacing: '0.1em',
-                  color: '#1a1a1a',
-                  marginBottom: '0.75rem',
-                  fontWeight: 300
-                }}>
-                  YOUR JOURNEY
-                </div>
-                <div style={{ fontSize: 'clamp(2.5rem, 6vw, 3rem)', fontWeight: 300, marginBottom: '1rem', color: levelColors[user.level] }}>
-                  {user.level}
-                </div>
-                {user.nextLevel ? (
-                  <div style={{ color: '#1a1a1a', fontWeight: 300 }}>
-                    <span style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 300 }}>{user.daysUntilNext}</span> days until {user.nextLevel}
-                  </div>
-                ) : (
-                  <div style={{ color: '#1a1a1a', fontWeight: 300 }}>Journey complete</div>
-                )}
-              </div>
-
-              {/* Circular Progress */}
-              <div style={{ position: 'sticky',
-        top: 0, display: 'flex', justifyContent: 'center' }}>
-                <svg style={{ width: '12rem', height: '12rem', transform: 'rotate(-90deg)' }}>
-                  <circle
-                    cx="96"
-                    cy="96"
-                    r="88"
-                    stroke="currentColor"
-                    strokeWidth="6"
-                    fill="none"
-                    style={{ color: '#e5e5e5' }}
-                  />
-                  <circle
-                    cx="96"
-                    cy="96"
-                    r="88"
-                    stroke={levelColors[user.level]}
-                    strokeWidth="6"
-                    fill="none"
-                    strokeDasharray={2 * Math.PI * 88}
-                    strokeDashoffset={2 * Math.PI * 88 * (1 - getLevelProgress() / 100)}
-                    strokeLinecap="round"
-                    style={{
-                      transition: 'all 1s ease-out',
-                      filter: `drop-shadow(0 0 8px ${levelColors[user.level]}80)`
-                    }}
-                  />
-                </svg>
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <div style={{ fontSize: '2.5rem', fontWeight: 300 }}>{Math.round(getLevelProgress())}%</div>
-                  <div style={{ fontSize: '0.75rem', color: '#1a1a1a', fontWeight: 300, marginTop: '0.25rem' }}>
-                    Complete
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Journey Path */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)',
-              gap: '0'
-            }}>
-              {levelStages.map((stage, index) => {
-                const isActive = index <= currentStageIndex
-                const isCurrent = index === currentStageIndex
-                
-                return (
-                  <div
-                    key={stage}
-                    style={{
-                      position: 'sticky',
-        top: 0,
-                      padding: '1.5rem',
-                      borderRadius: '8px',
-                      transition: 'all 0.5s ease',
-                      background: isCurrent
-                        ? '#f0f0f0'
-                        : isActive
-                        ? '#f5f5f5'
-                        : '#fafafa',
-                      border: isCurrent
-                        ? `2px solid ${levelColors[stage]}40`
-                        : isActive
-                        ? '1px solid #d5d5d5'
-                        : '1px solid #e5e5e5',
-                      opacity: isActive ? 1 : 0.4
-                    }}
-                  >
-                    <div style={{
-                      fontSize: '0.75rem',
-                      letterSpacing: '0.05em',
-                      marginBottom: '0.75rem',
-                      fontWeight: 300,
-                      transition: 'color 0.3s ease',
-                      color: isCurrent ? '#000' : '#1a1a1a'
-                    }}>
-                      {stage.toUpperCase()}
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <div style={{
-                        width: '0.75rem',
-                        height: '0.75rem',
-                        borderRadius: '50%',
-                        transition: 'all 0.3s ease',
-                        background: isCurrent
-                          ? levelColors[stage]
-                          : isActive
-                          ? '#ccc'
-                          : '#ddd',
-                        boxShadow: isCurrent ? `0 0 20px ${levelColors[stage]}80` : 'none',
-                        animation: isCurrent ? 'pulse 2s ease-in-out infinite' : 'none'
-                      }}></div>
-                    </div>
-                    {isCurrent && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '-0.25rem',
-                        right: '-0.25rem',
-                        width: '0.5rem',
-                        height: '0.5rem',
-                        background: levelColors[stage],
-                        borderRadius: '50%',
-                        animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite'
-                      }}></div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
+          <div style={{
+            fontSize: '0.75rem',
+            letterSpacing: '0.1em',
+            color: '#999',
+            marginBottom: '1rem',
+            fontWeight: 500
+          }}>
+            YOUR JOURNEY
           </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem', marginBottom: '1rem' }}>
+            {levelStages.map((stage, index) => {
+              const isCurrent = index === currentStageIndex
+              const isCompleted = index < currentStageIndex
+              const isUpcoming = index > currentStageIndex
+              return (
+                <div key={stage} style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                  padding: '0.625rem 0.875rem',
+                  background: isCurrent ? '#9bc4b8' : 'transparent',
+                  borderRadius: '6px',
+                  opacity: isCompleted ? 0.5 : isUpcoming ? 0.3 : 1
+                }}>
+                  <span style={{
+                    fontSize: '0.9375rem',
+                    color: '#0a0a0a',
+                    fontWeight: isCurrent ? 500 : 400
+                  }}>{stage}</span>
+                  <div style={{
+                    width: '8px', height: '8px', borderRadius: '50%',
+                    background: isCurrent ? '#0a0a0a' : isCompleted ? '#0a0a0a' : '#ccc'
+                  }} />
+                </div>
+              )
+            })}
+          </div>
+          {user.nextLevel ? (
+            <div style={{ fontSize: '0.8125rem', color: '#999' }}>
+              {user.daysUntilNext} days until {user.nextLevel}
+            </div>
+          ) : (
+            <div style={{ fontSize: '0.8125rem', color: '#999' }}>Journey complete</div>
+          )}
         </div>
 
         {/* Quick Actions */}
