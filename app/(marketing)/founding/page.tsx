@@ -191,7 +191,7 @@ export default function FoundingMembersPage() {
               fontStyle: 'italic',
               fontSize: '1.15rem',
               color: MUTED,
-              fontFamily: "'Gambarino', serif",
+              fontFamily: BODY_FONT,
             }}>
               For capable men ready to face what's been holding them back – and move forward differently.
             </p>
