@@ -5,7 +5,7 @@ import { Play, Pause } from 'lucide-react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
-const VIDEO_URL = 'https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%20Page1.mov'
+const VIDEO_URL = 'https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%202026.MP4'
 const SPOTS_REMAINING = 10
 const ACCENT = '#9bc4b8'
 const ACCENT_HOVER = '#7da89c'
