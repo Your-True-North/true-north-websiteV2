@@ -188,10 +188,10 @@ export default function FoundingMembersPage() {
             <p style={{
               marginBottom: '24px',
               textAlign: 'center',
-              fontStyle: 'italic',
-              fontSize: '1.15rem',
-              color: MUTED,
-              fontFamily: "'Gambarino', serif",
+              fontSize: '19px',
+              lineHeight: 1.75,
+              color: TEXT,
+              fontFamily: BODY_FONT,
             }}>
               For capable men ready to face what's been holding them back – and move forward differently.
             </p>
