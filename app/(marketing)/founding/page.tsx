@@ -379,10 +379,10 @@ export default function FoundingMembersPage() {
               The pattern running underneath your decisions isn't a character flaw. It's old code. Written long before you were old enough to question it.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              And until you see it, it runs the show. Your relationships. Your opportunities. Your ability to hold what you build.
+              And until you see it, it runs the show. Your relationships. Your opportunities, and your ability to hold what you build.
             </p>
             <p style={bodyText}>
-              The first thing to shift is your need to control — and your reaction when things don't go your way. How life lands on you. Situations that used to knock you sideways start to hit differently. That's not positive thinking. That's what happens when the pattern loses its grip.
+              The first thing to shift is your need to control, and your reaction when things don't go your way. Situations that once used to knock you sideways start to hit with less impact. My man, this isn't just positive thinking... This is what happens when the pattern loses its grip.
             </p>
           </div>
         </section>
