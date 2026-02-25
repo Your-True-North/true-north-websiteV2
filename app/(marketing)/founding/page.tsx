@@ -318,10 +318,10 @@ export default function FoundingMembersPage() {
           <div style={inner}>
             <div style={{ borderLeft: '3px solid #9bc4b8', paddingLeft: '24px' }}>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
-                I was that man. Robbed myself of peace for years before I learned how to stop. Not manage it. Stop it.
+                I was that man. I robbed myself of peace for years before I learned how to stop. Not manage it, but stop it.
               </p>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9 }}>
-                I'm not standing outside of this work looking in. I came through it. That's the only reason I can guide you through it.
+                I'm not a coach who is standing outside of this work looking in. I came through it. That's the only reason I can guide you through it.
               </p>
             </div>
           </div>
