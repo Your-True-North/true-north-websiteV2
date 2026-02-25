@@ -1,6 +1,4 @@
-import Navigation from '../components/Navigation'
-import Footer from '../components/Footer'
-import MysticalBackground from '../components/MysticalBackground'
+import MembersNav from './MembersNav'
 
 export default function ProtectedLayout({
   children,
@@ -9,12 +7,15 @@ export default function ProtectedLayout({
 }) {
   return (
     <>
-      <MysticalBackground />
-      <Navigation />
+      <style>{`
+        body > nav, header > nav, #site-nav, .site-navigation {
+          display: none !important;
+        }
+      `}</style>
+      <MembersNav />
       <main>
         {children}
       </main>
-      <Footer />
     </>
   )
 }
