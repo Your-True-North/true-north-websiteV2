@@ -185,6 +185,17 @@ export default function FoundingMembersPage() {
           padding: isMobile ? `0 0 ${vPad}` : `0 ${hPad} ${vPad}`,
         }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <p style={{
+              marginBottom: '24px',
+              textAlign: 'center',
+              fontStyle: 'italic',
+              fontSize: '1.15rem',
+              color: MUTED,
+              fontFamily: "'Gambarino', serif",
+            }}>
+              For capable men ready to face what's been holding them back — and move forward differently.
+            </p>
+
             <div style={{
               position: 'relative',
               paddingBottom: '56.25%',
@@ -271,17 +282,6 @@ export default function FoundingMembersPage() {
                 </div>
               )}
             </div>
-
-            <p style={{
-              marginTop: '28px',
-              textAlign: 'center',
-              fontStyle: 'italic',
-              fontSize: '1.2rem',
-              color: MUTED,
-              fontFamily: "'Gambarino', serif",
-            }}>
-              For capable men ready to face what's been holding them back — and move forward differently.
-            </p>
           </div>
         </section>
 
