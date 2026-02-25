@@ -327,6 +327,51 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
+        {/* ── TESTIMONIALS ── */}
+        <section style={section('#ffffff')}>
+          <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '48px',
+              fontWeight: 500,
+              color: TEXT,
+              marginBottom: '48px',
+              fontFamily: "'Gambarino', serif",
+            }}>
+              Real Transformations
+            </h2>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: '20px',
+            }}>
+              {['n8_muJ84AbU', '7Y1upKm8bZk', 'ubCK70jYQDI', 'UfbMIxlCzgM'].map((id) => (
+                <div
+                  key={id}
+                  style={{
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '6px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <iframe
+                    src={`https://www.youtube.com/embed/${id}`}
+                    style={{
+                      width: '100%',
+                      aspectRatio: '16/9',
+                      border: 'none',
+                      borderRadius: '6px',
+                      display: 'block',
+                    }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── 5. THE PATTERN ── */}
         <section style={section('#ffffff')}>
           <div style={inner}>
