@@ -193,7 +193,7 @@ export default function FoundingMembersPage() {
               color: MUTED,
               fontFamily: "'Gambarino', serif",
             }}>
-              For capable men ready to face what's been holding them back — and move forward differently.
+              For capable men ready to face what's been holding them back – and move forward differently.
             </p>
 
             <div style={{
