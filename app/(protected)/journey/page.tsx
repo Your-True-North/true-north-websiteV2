@@ -478,37 +478,36 @@ export default function JourneyPage() {
                 </div>
               </div>
 
-              <div>
-                <h3 style={{ 
-                  fontSize: '0.75rem', 
-                  fontWeight: 600, 
-                  color: '#666', 
-                  textTransform: 'uppercase', 
-                  letterSpacing: '0.1em', 
-                  marginBottom: '1rem' 
-                }}>Your Progress</h3>
-                <div style={{
-                  padding: '1rem',
-                  borderRadius: '8px',
-                  background: `linear-gradient(45deg, ${currentLevel.color}15, ${currentLevel.color}08)`,
-                  border: `1px solid ${currentLevel.color}40`
-                }}>
-                  <div style={{ 
-                    display: 'inline-block',
-                    padding: '0.5rem 0.75rem',
-                    borderRadius: '12px',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                    color: '#000',
-                    background: `linear-gradient(45deg, ${currentLevel.color}, #7fb069)`,
-                    marginBottom: '0.5rem'
-                  }}>
-                    Level 2 - {currentLevel.name}
+              <div style={{ background: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '12px', padding: '1.5rem' }}>
+                <div style={{ fontSize: '0.7rem', letterSpacing: '0.1em', color: '#666', marginBottom: '1rem', fontWeight: 400 }}>YOUR JOURNEY</div>
+                {['Seeker', 'Explorer', 'Pathfinder', 'Guide'].map((stage, index) => {
+                  const currentIndex = ['Seeker', 'Explorer', 'Pathfinder', 'Guide'].indexOf(user?.level || 'Seeker')
+                  const isCurrent = index === currentIndex
+                  const isCompleted = index < currentIndex
+                  return (
+                    <div key={stage} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '0.6rem 0.75rem',
+                      borderRadius: '6px',
+                      marginBottom: '0.4rem',
+                      background: isCurrent ? '#9bc4b8' : 'transparent',
+                      color: '#0a0a0a',
+                      opacity: isCurrent ? 1 : isCompleted ? 0.6 : 0.3,
+                      fontWeight: isCurrent ? 500 : 300,
+                      fontSize: '0.9rem'
+                    }}>
+                      <span>{stage}</span>
+                      <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: isCurrent ? '#0a0a0a' : '#9bc4b8' }} />
+                    </div>
+                  )
+                })}
+                {user?.nextLevel && (
+                  <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.75rem', fontWeight: 300 }}>
+                    {user.daysUntilNext} days until {user.nextLevel}
                   </div>
-                  <div style={{ fontSize: '0.85rem', color: '#333' }}>
-                    Next level: {nextLevelDays} days
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
