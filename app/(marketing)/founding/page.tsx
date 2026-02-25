@@ -271,6 +271,17 @@ export default function FoundingMembersPage() {
                 </div>
               )}
             </div>
+
+            <p style={{
+              marginTop: '28px',
+              textAlign: 'center',
+              fontStyle: 'italic',
+              fontSize: '1.2rem',
+              color: MUTED,
+              fontFamily: "'Gambarino', serif",
+            }}>
+              For capable men ready to face what's been holding them back — and move forward differently.
+            </p>
           </div>
         </section>
 
@@ -298,14 +309,66 @@ export default function FoundingMembersPage() {
         </section>
 
         {/* ── 4. MASON'S STORY ── */}
-        <section style={section('#f8f8f8')}>
+        <section style={{
+          ...section('#f0f0f0'),
+          paddingTop: isMobile ? '64px' : '96px',
+          paddingBottom: isMobile ? '64px' : '96px',
+          boxShadow: '0 2px 24px rgba(0,0,0,0.06)',
+        }}>
           <div style={inner}>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              I was that man. Robbed myself of peace for years before I learned how to stop. Not manage it. Stop it.
-            </p>
-            <p style={bodyText}>
-              I'm not standing outside of this work looking in. I came through it. That's the only reason I can guide you through it.
-            </p>
+            <div style={{ borderLeft: '3px solid #9bc4b8', paddingLeft: '24px' }}>
+              <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
+                I was that man. Robbed myself of peace for years before I learned how to stop. Not manage it. Stop it.
+              </p>
+              <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9 }}>
+                I'm not standing outside of this work looking in. I came through it. That's the only reason I can guide you through it.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── TESTIMONIALS ── */}
+        <section style={section('#ffffff')}>
+          <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '48px',
+              fontWeight: 500,
+              color: TEXT,
+              marginBottom: '48px',
+              fontFamily: "'Gambarino', serif",
+            }}>
+              Real Transformations
+            </h2>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: '20px',
+            }}>
+              {['n8_muJ84AbU', '7Y1upKm8bZk', 'ubCK70jYQDI', 'UfbMIxlCzgM'].map((id) => (
+                <div
+                  key={id}
+                  style={{
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '6px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <iframe
+                    src={`https://www.youtube.com/embed/${id}`}
+                    style={{
+                      width: '100%',
+                      aspectRatio: '16/9',
+                      border: 'none',
+                      borderRadius: '6px',
+                      display: 'block',
+                    }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -384,10 +447,10 @@ export default function FoundingMembersPage() {
               gap: '20px',
             }}>
               {[
-                { title: 'Bi-weekly live coaching', desc: 'Bring your real situations. We find exactly where autopilot takes over.' },
-                { title: 'Somatic & breathwork sessions', desc: "Structured, regulated, built to increase your capacity to hold what you're building." },
-                { title: 'Goal mapping calls', desc: "You're working toward something specific. Drift isn't welcome here." },
-                { title: 'Video library', desc: 'Frameworks and tools when you need them.' },
+                { title: 'Bi-weekly live calls', desc: "Bring real situations. We highlight the blind spot and expose exactly where autopilot takes over — so you know where the work needs to happen." },
+                { title: 'Somatic & breathwork sessions', desc: "Structured and regulated. Release what's blocked to build the capacity to hold the pressure that comes with ambition." },
+                { title: 'Monthly goal mapping check-ins', desc: "You're working toward something specific. We review where you are, what's slipping, and what needs tightening. Drifting isn't welcome here." },
+                { title: 'Video library', desc: 'Frameworks, tools, and content when you need them.' },
                 { title: 'Community', desc: 'No performance. Just men doing the work properly.' },
               ].map((item, i) => (
                 <div
