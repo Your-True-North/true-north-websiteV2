@@ -814,23 +814,36 @@ export default function CommunityPage() {
             <div style={{ background: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem' }}>
               {renderVideoCard('150px')}
             </div>
-            <div style={{ background: 'rgba(155, 196, 184, 0.2)', border: '1px solid rgba(155, 196, 184, 0.4)', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
-              <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#666', margin: '0 0 1rem 0' }}>
-                Your Journey
-              </h4>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', fontFamily: 'Gambarino, serif', flexWrap: 'wrap' }}>
-                {['Seeker', 'Explorer', 'Pathfinder', 'Guide'].map((level, index) => (
-                  <span key={level} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    {index > 0 && <span style={{ color: '#ccc' }}>→</span>}
-                    <span style={{
-                      color: level === (user?.level || 'Seeker') ? '#1a1a1a' : '#999',
-                      fontWeight: level === (user?.level || 'Seeker') ? 700 : 400,
-                      fontSize: level === (user?.level || 'Seeker') ? '1.125rem' : '0.875rem',
-                      fontFamily: 'Gambarino, serif'
-                    }}>{level}</span>
-                  </span>
-                ))}
-              </div>
+            <div style={{ background: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '12px', padding: '1.5rem', marginTop: '1rem' }}>
+              <div style={{ fontSize: '0.7rem', letterSpacing: '0.1em', color: '#666', marginBottom: '1rem', fontWeight: 400 }}>YOUR JOURNEY</div>
+              {['Seeker', 'Explorer', 'Pathfinder', 'Guide'].map((stage, index) => {
+                const currentIndex = ['Seeker', 'Explorer', 'Pathfinder', 'Guide'].indexOf(user?.level || 'Seeker')
+                const isCurrent = index === currentIndex
+                const isCompleted = index < currentIndex
+                return (
+                  <div key={stage} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '0.6rem 0.75rem',
+                    borderRadius: '6px',
+                    marginBottom: '0.4rem',
+                    background: isCurrent ? '#9bc4b8' : 'transparent',
+                    color: '#0a0a0a',
+                    opacity: isCurrent ? 1 : isCompleted ? 0.6 : 0.3,
+                    fontWeight: isCurrent ? 500 : 300,
+                    fontSize: '0.9rem'
+                  }}>
+                    <span>{stage}</span>
+                    <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: isCurrent ? '#0a0a0a' : '#9bc4b8' }} />
+                  </div>
+                )
+              })}
+              {user?.nextLevel && (
+                <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.75rem', fontWeight: 300 }}>
+                  {user.daysUntilNext} days until {user.nextLevel}
+                </div>
+              )}
             </div>
             <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '1.5rem', marginTop: '1rem' }}>
               <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#0a0a0a', margin: '0 0 1rem 0' }}>
