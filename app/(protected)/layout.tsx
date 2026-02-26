@@ -9,7 +9,7 @@ export default function ProtectedLayout({
   return (
     <>
       <style>{`
-        body > nav, header, header nav, nav.nav, nav.site-nav, .mobile-nav, #site-nav, #site-navigation, .site-navigation {
+        nav.nav, nav.site-nav, .mobile-nav, .desktop-nav, #site-nav, #site-navigation, .site-navigation {
           display: none !important;
         }
       `}</style>
