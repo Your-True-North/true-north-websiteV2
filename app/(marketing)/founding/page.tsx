@@ -292,18 +292,37 @@ export default function FoundingMembersPage() {
               This is for the man who—
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              Gets results. Builds momentum. Then somehow gets in his own way at the last moment.
+              Will get the result. Who'll build the momentum. And then somehow get in his own way at the last moment.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              Whether it's the missed opportunity. The relationship that broke down. The level he never quite hit. Different stories, but the same root. That feeling in his gut that says he's not enough.
+              You know exactly where in life you're sabotaging yourself. Whether it's a money-making opportunity. The relationships that break down. Or the level you feel you can reach but never quite hit.
             </p>
-            <p style={{
-              ...bodyText,
-              fontSize: '21px',
-              fontWeight: 500,
-              color: TEXT,
-            }}>
-              Capable. Functioning. And still doesn't feel like enough.
+            <p style={{ ...bodyText, marginBottom: '20px' }}>
+              Different stories, same root.
+            </p>
+            <p style={{ ...bodyText, marginBottom: '20px' }}>
+              These usually come with that feeling in the gut that says I'm not enough. Yet you are capable. You're functioning, but still not fully settled.
+            </p>
+            <p style={{ ...bodyText, marginBottom: '20px' }}>
+              That feeling in your gut that says you're not enough isn't a personality flaw. It's a pattern.
+            </p>
+            <p style={{ ...bodyText, marginBottom: '20px' }}>
+              And until you see it clearly, it will continue to run your decisions.
+            </p>
+            <p style={{ ...bodyText, marginBottom: '20px' }}>
+              You could try to work this out on your own. Most men do. They read more, think more and try harder to control their reactions. But realistically — if that was going to solve it, it probably would have by now.
+            </p>
+            <p style={{ ...bodyText, marginBottom: '20px', fontWeight: 500 }}>
+              My man, the issue isn't your lack of effort… It's in your blind spots.
+            </p>
+            <p style={{ ...bodyText, marginBottom: '20px' }}>
+              You cannot see the pattern while you're inside it — like the fish doesn't notice the water it swims in. This work is about having other eyes on the moments you justify or rationalise, and catching the reactions before the cycles cause too much damage. That shortens the frustrating process dramatically.
+            </p>
+            <p style={{ ...bodyText, marginBottom: '12px', fontWeight: 500, fontSize: '21px' }}>
+              You can spend years circling it alone.
+            </p>
+            <p style={{ ...bodyText, fontWeight: 500, fontSize: '21px' }}>
+              Or you can expose it properly and deal with it.
             </p>
           </div>
         </section>
@@ -318,10 +337,10 @@ export default function FoundingMembersPage() {
           <div style={inner}>
             <div style={{ borderLeft: '3px solid #9bc4b8', paddingLeft: '24px' }}>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
-                I was that man. I robbed myself of peace for years before I learned how to stop. Not manage it, but stop it.
+                I know this from experience — I was that man repeating the cycle. Two steps forward, then stepping back without knowing why. I robbed myself of peace and progress for years before I learned what was going on.
               </p>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9 }}>
-                I'm not a coach who is standing outside of this work looking in. I came through it. That's the only reason I can guide you through it.
+                I'm not a coach who is standing outside of this work looking in. I came through it myself, and that's the only reason I can guide you through it. Textbooks don't quite cut it compared to lived experience and navigating real life scenarios.
               </p>
             </div>
           </div>
@@ -376,13 +395,26 @@ export default function FoundingMembersPage() {
         <section style={section('#ffffff')}>
           <div style={inner}>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              The pattern running underneath your decisions isn't a character flaw. It's old code. Written long before you were old enough to question it.
+              You're currently running old code that was written long before you were old enough to question it. When this code continues to run unchecked, it shapes your relationships, your opportunities, and your ability to hold what you build.
             </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              And until you see it, it runs the show. Your relationships. Your opportunities, and your ability to hold what you build.
+            <p style={{ ...bodyText, marginBottom: '20px', fontWeight: 500 }}>
+              When the code is interrupted, something changes.
+            </p>
+            {[
+              'You stop sabotaging the very thing you say you want.',
+              'You respond instead of react.',
+              'You stay steady when things don\'t go your way.',
+              'You make decisions without second-guessing yourself afterwards.',
+            ].map((line, i) => (
+              <div key={i} style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '20px', marginBottom: '16px' }}>
+                <p style={bodyText}>{line}</p>
+              </div>
+            ))}
+            <p style={{ ...bodyText, marginTop: '24px', marginBottom: '20px' }}>
+              When you enter The CoR — you will feel shifts within weeks.
             </p>
             <p style={bodyText}>
-              The first thing to shift is your need to control, and your reaction when things don't go your way. Situations that once used to knock you sideways start to hit with less impact. My man, this isn't just positive thinking... This is what happens when the pattern loses its grip.
+              And within your first 30 days, you will identify a pattern that has been influencing your decisions for years. Once you see it clearly, you cannot unsee it — it stops running you blindly.
             </p>
           </div>
         </section>
@@ -395,22 +427,26 @@ export default function FoundingMembersPage() {
               color: TEXT,
               marginBottom: '48px',
             }}>
-              What we do here
+              How we work
             </h2>
+
+            <p style={{ ...bodyText, marginBottom: '32px' }}>
+              This isn't random conversation — this work follows a clear path.
+            </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               {[
                 {
                   bold: 'See it.',
-                  desc: " Catch the pattern while it's running. Understand what's underneath the trigger. Not the story about it.",
+                  desc: ' Catch the pattern that is running while understanding what\'s underneath it.',
                 },
                 {
                   bold: 'Regulate it.',
-                  desc: " Your body holds what your mind has rationalised away. Breathwork. Somatic work. Real capacity to hold pressure without reverting.",
+                  desc: ' Your body still holds what the mind doesn\'t want to deal with. We release what\'s been stored over the years and build the capacity to hold pressure without reverting. Breathwork. Somatic work. Practical tools that stop the spiral before it starts.',
                 },
                 {
                   bold: 'Become it.',
-                  desc: ' Who does your goal require you to be. We close that gap. In practice.',
+                  desc: ' Who does your goal require you to be? We close that gap. This cycle repeats, and is applied to real situations — until the old programme loses its grip, and we rewrite a new one.',
                 },
               ].map((item, i) => (
                 <div
@@ -447,11 +483,11 @@ export default function FoundingMembersPage() {
               gap: '20px',
             }}>
               {[
-                { title: 'Bi-weekly live calls', desc: "Bring real situations. We highlight the blind spot and expose exactly where autopilot takes over — so you know where the work needs to happen." },
-                { title: 'Somatic & breathwork sessions', desc: "Structured and regulated. Release what's blocked to build the capacity to hold the pressure that comes with ambition." },
-                { title: 'Monthly goal mapping check-ins', desc: "You're working toward something specific. We review where you are, what's slipping, and what needs tightening. Drifting isn't welcome here." },
-                { title: 'Video library', desc: 'Frameworks, tools, and content when you need them.' },
-                { title: 'Community', desc: 'No performance. Just men doing the work properly.' },
+                { title: 'Two live deep sessions each month', desc: "Built around expansion topics that reveal the pattern underneath your decisions. You apply them to your real-life situations so the work moves you forward, not just inward." },
+                { title: 'Two somatic regulation sessions', desc: "To help release what's been stuck and weighing you down. We build actual capacity, not just insight." },
+                { title: 'Quarterly community goal mapping review', desc: "So you know exactly where you're tightening and where you're slipping." },
+                { title: 'Exclusive supporting content', desc: 'We take a holistic approach — somatics, the psyche, and grounded spiritual perspectives — because understanding how and why you operate is one of the most powerful forms of growth.' },
+                { title: 'Private community', desc: 'A private community of men doing the work properly. Not a place for big egos trying to out-perform.' },
               ].map((item, i) => (
                 <div
                   key={i}
@@ -485,12 +521,16 @@ export default function FoundingMembersPage() {
               ))}
             </div>
 
-            <p style={{ ...bodyText, marginTop: '40px' }}>
-              Imagine 20 men around the world on a shared mission. Not competing, just doing the work. That's how you grow.
-            </p>
-            <p style={{ ...bodyText, marginTop: '20px' }}>
-              This is personal work. But it happens inside a structured container.
-            </p>
+            <div style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[
+                "You're looking at a few focused hours each month.",
+                "Not endless.",
+                "No daily tasks.",
+                "Just consistent application in the areas that matter.",
+              ].map((line, i) => (
+                <p key={i} style={{ ...bodyText, margin: 0 }}>{line}</p>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -498,10 +538,10 @@ export default function FoundingMembersPage() {
         <section style={{ ...section('#f8f8f8'), textAlign: 'center' }}>
           <div style={inner}>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              I'm selective about who enters this room. The work requires a level of honesty most men avoid. There's no shame in that. Better you wait until you are.
+              This is personal work inside a structured container. It requires honesty. It requires effort. And zero chaos.
             </p>
             <p style={{ ...bodyText, marginBottom: '48px' }}>
-              If you're ready to stop getting in your own way, this is the place.
+              If you're ready to stop getting in your own way, this is the most direct way to do it.
             </p>
 
             <p style={{
@@ -512,11 +552,7 @@ export default function FoundingMembersPage() {
               fontFamily: "'Gambarino', serif",
               marginBottom: '48px',
             }}>
-              The truth is hard to hear. But you already knew it.
-            </p>
-
-            <p style={{ ...bodyText, marginBottom: '48px' }}>
-              The only question is how much longer you're willing to ignore it.
+              What matters more is what it has already cost you to leave this unchecked.
             </p>
 
             <p style={{
