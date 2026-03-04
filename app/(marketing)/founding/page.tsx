@@ -113,7 +113,7 @@ export default function FoundingMembersPage() {
 
       <div style={{ minHeight: '100vh', background: '#ffffff', color: TEXT }}>
 
-        {/* 1. HERO */}
+        {/* ── 1. HERO ── */}
         <section style={{ ...section('#ffffff'), textAlign: 'center', paddingTop: isMobile ? '64px' : '96px' }}>
           <div style={inner}>
             <p style={{
@@ -165,7 +165,7 @@ export default function FoundingMembersPage() {
               onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
               onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
             >
-              Secure Your Spot - £25/month
+              Secure Your Spot — £25/month
             </a>
 
             <p style={{
@@ -179,7 +179,7 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* 2. VIDEO */}
+        {/* ── 2. VIDEO ── */}
         <section style={{
           background: '#ffffff',
           padding: isMobile ? `0 0 ${vPad}` : `0 ${hPad} ${vPad}`,
@@ -193,7 +193,7 @@ export default function FoundingMembersPage() {
               color: MUTED,
               fontFamily: "'Gambarino', serif",
             }}>
-              For capable men ready to face what's been holding them back - and move forward differently.
+              For capable men ready to face what's been holding them back – and move forward differently.
             </p>
 
             <div style={{
@@ -285,11 +285,11 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* 3. WHO THIS IS FOR */}
+        {/* ── 3. WHO THIS IS FOR ── */}
         <section style={section('#ffffff')}>
           <div style={inner}>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              This is for the man who-
+              This is for the man who—
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
               Will get the result. Who'll build the momentum. And then somehow get in his own way at the last moment.
@@ -310,24 +310,24 @@ export default function FoundingMembersPage() {
               And until you see it clearly, it will continue to run your decisions.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You could try to work this out on your own. Most men do. They read more, think more and try harder to control their reactions. But realistically - if that was going to solve it, it probably would have by now.
+              You could try to work this out on your own. Most men do. They read more, think more and try harder to control their reactions. But realistically — if that was going to solve it, it probably would have by now.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px', fontWeight: 500 }}>
-              My man, the issue isn't your lack of effort... It's in your blind spots.
+              My man, the issue isn't your lack of effort… It's in your blind spots.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You cannot see the pattern while you're inside it - like the fish doesn't notice the water it swims in.
+              You cannot see the pattern while you're inside it — like the fish doesn't notice the water it swims in. This work is about having other eyes on the moments you justify or rationalise, and catching the reactions before the cycles cause too much damage. That shortens the frustrating process dramatically.
             </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              This work is about having other eyes on the moments you justify or rationalise, and catching the reactions before the cycles cause too much damage. That shortens the frustrating process dramatically.
+            <p style={{ ...bodyText, marginBottom: '12px', fontWeight: 500, fontSize: '21px' }}>
+              You can spend years circling it alone.
             </p>
             <p style={{ ...bodyText, fontWeight: 500, fontSize: '21px' }}>
-              You can spend years circling it alone. Or you can expose it properly and deal with it.
+              Or you can expose it properly and deal with it.
             </p>
           </div>
         </section>
 
-        {/* 4. MASON'S STORY */}
+        {/* ── 4. MASON'S STORY ── */}
         <section style={{
           ...section('#f0f0f0'),
           paddingTop: isMobile ? '64px' : '96px',
@@ -337,7 +337,7 @@ export default function FoundingMembersPage() {
           <div style={inner}>
             <div style={{ borderLeft: '3px solid #9bc4b8', paddingLeft: '24px' }}>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
-                I know this from experience - I was that man repeating the cycle. Two steps forward, then stepping back without knowing why. I robbed myself of peace and progress for years before I learned what was going on.
+                I know this from experience — I was that man repeating the cycle. Two steps forward, then stepping back without knowing why. I robbed myself of peace and progress for years before I learned what was going on.
               </p>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9 }}>
                 I'm not a coach who is standing outside of this work looking in. I came through it myself, and that's the only reason I can guide you through it. Textbooks don't quite cut it compared to lived experience and navigating real life scenarios.
@@ -346,7 +346,7 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* TESTIMONIALS */}
+        {/* ── TESTIMONIALS ── */}
         <section style={section('#ffffff')}>
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
             <h2 style={{
@@ -365,10 +365,23 @@ export default function FoundingMembersPage() {
               gap: '20px',
             }}>
               {['n8_muJ84AbU', '7Y1upKm8bZk', 'ubCK70jYQDI', 'UfbMIxlCzgM'].map((id) => (
-                <div key={id} style={{ border: '1px solid #e5e5e5', borderRadius: '6px', overflow: 'hidden' }}>
+                <div
+                  key={id}
+                  style={{
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '6px',
+                    overflow: 'hidden',
+                  }}
+                >
                   <iframe
                     src={`https://www.youtube.com/embed/${id}`}
-                    style={{ width: '100%', aspectRatio: '16/9', border: 'none', borderRadius: '6px', display: 'block' }}
+                    style={{
+                      width: '100%',
+                      aspectRatio: '16/9',
+                      border: 'none',
+                      borderRadius: '6px',
+                      display: 'block',
+                    }}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
@@ -378,104 +391,159 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* 5. THE PATTERN */}
+        {/* ── 5. THE PATTERN ── */}
         <section style={section('#ffffff')}>
           <div style={inner}>
-            <p style={{ ...bodyText, marginBottom: '32px' }}>
+            <p style={{ ...bodyText, marginBottom: '20px' }}>
               You're currently running old code that was written long before you were old enough to question it. When this code continues to run unchecked, it shapes your relationships, your opportunities, and your ability to hold what you build.
             </p>
-            <p style={{ ...bodyText, fontWeight: 500, marginBottom: '20px' }}>
+            <p style={{ ...bodyText, marginBottom: '20px', fontWeight: 500 }}>
               When the code is interrupted, something changes.
             </p>
             {[
-              "You stop sabotaging the very thing you say you want.",
-              "You respond instead of react.",
-              "You stay steady when things don't go your way.",
-              "You make decisions without second-guessing yourself afterwards.",
+              'You stop sabotaging the very thing you say you want.',
+              'You respond instead of react.',
+              'You stay steady when things don\'t go your way.',
+              'You make decisions without second-guessing yourself afterwards.',
             ].map((line, i) => (
               <div key={i} style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '20px', marginBottom: '16px' }}>
                 <p style={bodyText}>{line}</p>
               </div>
             ))}
-            <p style={{ ...bodyText, marginTop: '32px', marginBottom: '20px', fontWeight: 600 }}>
-              When you enter The CoR - you will feel shifts within weeks.
+            <p style={{ ...bodyText, marginTop: '24px', marginBottom: '20px' }}>
+              When you enter The CoR — you will feel shifts within weeks.
             </p>
             <p style={bodyText}>
-              And within your first 30 days, you will identify a pattern that has been influencing your decisions for years. Once you see it clearly, you cannot unsee it - it stops running you blindly.
+              And within your first 30 days, you will identify a pattern that has been influencing your decisions for years. Once you see it clearly, you cannot unsee it — it stops running you blindly.
             </p>
           </div>
         </section>
 
-        {/* 6. HOW WE WORK */}
+        {/* ── 6. WHAT WE DO HERE ── */}
         <section style={section('#f8f8f8')}>
           <div style={inner}>
-            <h2 style={{ fontSize: isMobile ? '36px' : '48px', color: TEXT, marginBottom: '48px' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '48px',
+              color: TEXT,
+              marginBottom: '48px',
+            }}>
               How we work
             </h2>
+
             <p style={{ ...bodyText, marginBottom: '32px' }}>
-              This isn't random conversation - this work follows a clear path.
+              This isn't random conversation — this work follows a clear path.
             </p>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               {[
-                { bold: 'See it.', desc: " Catch the pattern that is running while understanding what's underneath it." },
-                { bold: 'Regulate it.', desc: " Your body still holds what the mind doesn't want to deal with. We release what's been stored over the years and build the capacity to hold pressure without reverting. Breathwork. Somatic work. Practical tools that stop the spiral before it starts." },
-                { bold: 'Become it.', desc: " Who does your goal require you to be? We close that gap. This cycle repeats, and is applied to real situations - until the old programme loses its grip, and we rewrite a new one." },
+                {
+                  bold: 'See it.',
+                  desc: ' Catch the pattern that is running while understanding what\'s underneath it.',
+                },
+                {
+                  bold: 'Regulate it.',
+                  desc: ' Your body still holds what the mind doesn\'t want to deal with. We release what\'s been stored over the years and build the capacity to hold pressure without reverting. Breathwork. Somatic work. Practical tools that stop the spiral before it starts.',
+                },
+                {
+                  bold: 'Become it.',
+                  desc: ' Who does your goal require you to be? We close that gap. This cycle repeats, and is applied to real situations — until the old programme loses its grip, and we rewrite a new one.',
+                },
               ].map((item, i) => (
-                <div key={i} style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '20px' }}>
-                  <p style={bodyText}><strong>{item.bold}</strong>{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 7. INSIDE THE CIRCLE */}
-        <section style={section('#ffffff')}>
-          <div style={inner}>
-            <h2 style={{ fontSize: isMobile ? '36px' : '48px', color: TEXT, marginBottom: '48px' }}>
-              Inside the Circle
-            </h2>
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px' }}>
-              {[
-                { title: 'Two live deep sessions each month', desc: "Built around expansion topics that reveal the pattern underneath your decisions. You apply them to your real-life situations so the work moves you forward, not just inward." },
-                { title: 'Two somatic regulation sessions', desc: "To help release what's been stuck and weighing you down. We build actual capacity, not just insight." },
-                { title: 'Quarterly community goal mapping review', desc: "So you know exactly where you're tightening and where you're slipping." },
-                { title: 'Exclusive supporting content', desc: 'We take a holistic approach - somatics, the psyche, and grounded spiritual perspectives - because understanding how and why you operate is one of the most powerful forms of growth.' },
-                { title: 'Private community', desc: 'A private community of men doing the work properly. Not a place for big egos trying to out-perform.' },
-              ].map((item, i) => (
-                <div key={i} style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px', padding: '28px' }}>
-                  <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: ACCENT, marginBottom: '10px', fontFamily: BODY_FONT }}>
-                    {item.title}
-                  </p>
-                  <p style={{ fontSize: '16px', lineHeight: 1.65, color: TEXT, fontFamily: BODY_FONT }}>
+                <div
+                  key={i}
+                  style={{
+                    borderLeft: `3px solid ${ACCENT}`,
+                    paddingLeft: '20px',
+                  }}
+                >
+                  <p style={bodyText}>
+                    <strong>{item.bold}</strong>
                     {item.desc}
                   </p>
                 </div>
               ))}
             </div>
-            <div style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <p style={{ ...bodyText, margin: 0 }}>You're looking at a few focused hours each month.</p>
-              <p style={{ ...bodyText, margin: 0 }}>No daily tasks to check off.</p>
-              <p style={{ ...bodyText, margin: 0 }}>Just consistent application in the areas that matter.</p>
+          </div>
+        </section>
+
+        {/* ── 7. INSIDE THE CIRCLE ── */}
+        <section style={section('#ffffff')}>
+          <div style={inner}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '48px',
+              color: TEXT,
+              marginBottom: '48px',
+            }}>
+              Inside the Circle
+            </h2>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: '20px',
+            }}>
+              {[
+                { title: 'Two live deep sessions each month', desc: "Built around expansion topics that reveal the pattern underneath your decisions. You apply them to your real-life situations so the work moves you forward, not just inward." },
+                { title: 'Two somatic regulation sessions', desc: "To help release what's been stuck and weighing you down. We build actual capacity, not just insight." },
+                { title: 'Quarterly community goal mapping review', desc: "So you know exactly where you're tightening and where you're slipping." },
+                { title: 'Exclusive supporting content', desc: 'We take a holistic approach — somatics, the psyche, and grounded spiritual perspectives — because understanding how and why you operate is one of the most powerful forms of growth.' },
+                { title: 'Private community', desc: 'A private community of men doing the work properly. Not a place for big egos trying to out-perform.' },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    background: '#ffffff',
+                    border: '1px solid #e5e5e5',
+                    borderRadius: '6px',
+                    padding: '28px',
+                  }}
+                >
+                  <p style={{
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    color: ACCENT,
+                    marginBottom: '10px',
+                    fontFamily: BODY_FONT,
+                  }}>
+                    {item.title}
+                  </p>
+                  <p style={{
+                    fontSize: '16px',
+                    lineHeight: 1.65,
+                    color: TEXT,
+                    fontFamily: BODY_FONT,
+                  }}>
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {[
+                "You're looking at a few focused hours each month.",
+                "Not endless.",
+                "No daily tasks.",
+                "Just consistent application in the areas that matter.",
+              ].map((line, i) => (
+                <p key={i} style={{ ...bodyText, margin: 0 }}>{line}</p>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* 8. CLOSING CTA */}
+        {/* ── 8. CLOSING CTA ── */}
         <section style={{ ...section('#f8f8f8'), textAlign: 'center' }}>
           <div style={inner}>
-            <p style={{ ...bodyText, marginBottom: '8px' }}>
-              The investment is £25 per month if you join as a founding member.
-            </p>
-            <p style={{ fontSize: '14px', color: MUTED, marginBottom: '32px', fontFamily: BODY_FONT }}>
-              Less than what most spend avoiding this work.
-            </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              What matters more is what self-sabotage has already cost you, and will continue to if left unchecked.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '48px' }}>
               This is personal work inside a structured container. It requires honesty. It requires effort. And zero chaos.
             </p>
+            <p style={{ ...bodyText, marginBottom: '48px' }}>
+              If you're ready to stop getting in your own way, this is the most direct way to do it.
+            </p>
+
             <p style={{
               fontSize: isMobile ? '28px' : '34px',
               lineHeight: 1.3,
@@ -484,11 +552,18 @@ export default function FoundingMembersPage() {
               fontFamily: "'Gambarino', serif",
               marginBottom: '48px',
             }}>
-              If you're ready to stop getting in your own way, this is the most direct way to do it.
+              What matters more is what it has already cost you to leave this unchecked.
             </p>
-            <p style={{ fontSize: '15px', color: MUTED, marginBottom: '24px', fontFamily: BODY_FONT }}>
-              Founding member price £25/month. First 20 men at £25. The next pays £50.
+
+            <p style={{
+              fontSize: '15px',
+              color: MUTED,
+              marginBottom: '24px',
+              fontFamily: BODY_FONT,
+            }}>
+              Founding member price £25/month. £25 for the first 20 men. The 21st pays £50.
             </p>
+
             <a
               href={STRIPE_URL}
               onClick={handleStripeClick}
@@ -507,9 +582,15 @@ export default function FoundingMembersPage() {
               onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
               onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
             >
-              Secure Your Spot - £25/month
+              Secure Your Spot — £25/month
             </a>
-            <p style={{ fontSize: '13px', color: MUTED, marginTop: '12px', fontFamily: BODY_FONT }}>
+
+            <p style={{
+              fontSize: '13px',
+              color: MUTED,
+              marginTop: '12px',
+              fontFamily: BODY_FONT,
+            }}>
               {SPOTS_REMAINING} of 20 spots remaining
             </p>
           </div>
