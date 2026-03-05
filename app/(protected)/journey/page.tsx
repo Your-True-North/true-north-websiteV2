@@ -52,7 +52,7 @@ export default function JourneyPage() {
             ...v,
             youtubeId: v.youtubeId,
             duration: v.duration ? `${v.duration} min` : "N/A",
-            uploadDate: new Date(v.uploadDate || v.uploaddate).toLocaleDateString(),
+            uploadDate: v.uploadDate || v.uploaddate ? new Date(v.uploadDate || v.uploaddate).toLocaleDateString() : "N/A",
             comments: 0,
             likes: 0
           }))
