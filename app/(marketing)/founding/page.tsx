@@ -1,98 +1,193 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
-import { Play, Pause } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
-const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
-const VIDEO_URL = 'https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%202026.MP4'
-const SPOTS_REMAINING = 10
-const ACCENT = '#9bc4b8'
-const ACCENT_HOVER = '#7da89c'
-const TEXT = '#0a0a0a'
-const MUTED = '#666666'
-const BODY_FONT = '-apple-system, BlinkMacSystemFont, sans-serif'
-
 export default function FoundingMembersPage() {
+  const [spotsRemaining, setSpotsRemaining] = useState<number | null>(10)
   const [isMobile, setIsMobile] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [showOverlay, setShowOverlay] = useState(true)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const [isSoldOut, setIsSoldOut] = useState(false)
+  const [waitlistEmail, setWaitlistEmail] = useState('')
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false)
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   useEffect(() => {
+    fetch('/api/founding/count')
+      .then(res => res.json())
+      .then(data => {
+        const count = data.count || 0
+        const remaining = Math.max(0, 20 - count)
+        setSpotsRemaining(remaining)
+        setIsSoldOut(count >= 20)
+      })
+      .catch(() => setSpotsRemaining(10))
+
     if (typeof window !== 'undefined' && (window as any).fbq) {
-      ;(window as any).fbq('track', 'ViewContent', {
+      (window as any).fbq('track', 'ViewContent', {
         content_name: 'Founding Members Page',
-        content_category: 'Membership',
+        content_category: 'Membership'
       })
     }
   }, [])
 
   useEffect(() => {
-    const hide = () => {
-      document
-        .querySelectorAll(
-          'nav, header, footer, [role="navigation"], [role="contentinfo"], [class*="footer"], [class*="Footer"]'
-        )
-        .forEach((el) => ((el as HTMLElement).style.display = 'none'))
-    }
-    hide()
-    setTimeout(hide, 100)
+    const hideFooter = () => {
+      const footers = document.querySelectorAll('footer, [role="contentinfo"], [class*="footer"], [class*="Footer"]');
+      footers.forEach(footer => {
+        (footer as HTMLElement).style.display = 'none';
+      });
+    };
+    hideFooter();
+    setTimeout(hideFooter, 100);
   }, [])
 
   const handleStripeClick = () => {
-    trackEvent('begin_checkout', { service: 'circle_founding', value: 25 })
+    trackEvent('begin_checkout', {
+      service: 'circle_founding',
+      value: 25
+    })
     if (typeof window !== 'undefined' && (window as any).fbq) {
-      ;(window as any).fbq('track', 'InitiateCheckout', {
+      (window as any).fbq('track', 'InitiateCheckout', {
         content_name: 'Founding Membership',
-        value: 25.0,
-        currency: 'GBP',
+        value: 25.00,
+        currency: 'GBP'
       })
     }
   }
 
-  const handleInitialPlay = () => {
-    if (videoRef.current) {
-      videoRef.current.play()
-      setIsPlaying(true)
-      setShowOverlay(false)
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const res = await fetch('/api/founding/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: waitlistEmail })
+      })
+      if (res.ok) {
+        setWaitlistSubmitted(true)
+        setWaitlistEmail('')
+      }
+    } catch (error) {
+      console.error('Waitlist error:', error)
     }
   }
 
-  const handlePlayPause = () => {
-    if (!videoRef.current) return
-    if (isPlaying) {
-      videoRef.current.pause()
-      setIsPlaying(false)
-    } else {
-      videoRef.current.play()
-      setIsPlaying(true)
-    }
-  }
+  const ctaButton = (
+    <a
+      href="https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j"
+      onClick={handleStripeClick}
+      style={{
+        display: 'inline-block',
+        padding: '24px 48px',
+        background: '#ffffff',
+        color: '#000000',
+        fontSize: '18px',
+        fontWeight: 700,
+        borderRadius: '3px',
+        border: '2px solid rgba(255,255,255,0.1)',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        textTransform: 'uppercase' as const,
+        letterSpacing: '1px',
+        boxShadow: '0 4px 12px rgba(127,176,105,0.15)',
+        textDecoration: 'none'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-2px)'
+        e.currentTarget.style.boxShadow = '0 8px 24px rgba(127,176,105,0.25)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)'
+        e.currentTarget.style.boxShadow = '0 4px 12px rgba(127,176,105,0.15)'
+      }}
+    >
+      Secure Your Spot - £25/Month
+    </a>
+  )
 
-  const vPad = isMobile ? '48px' : '80px'
-  const hPad = isMobile ? '20px' : '40px'
-  const section = (bg: string) => ({
-    background: bg,
-    padding: `${vPad} ${hPad}`,
-  })
-  const inner = {
-    maxWidth: '720px',
-    margin: '0 auto',
-  }
-  const bodyText = {
-    fontSize: '19px',
-    lineHeight: 1.75,
-    color: TEXT,
-    fontFamily: BODY_FONT,
-  }
+  const soldOutBlock = (
+    <div style={{
+      padding: '24px 48px',
+      background: 'rgba(239, 68, 68, 0.2)',
+      border: '2px solid rgba(239, 68, 68, 0.4)',
+      borderRadius: '3px',
+      fontSize: isMobile ? '20px' : '24px',
+      fontWeight: 700,
+      color: '#ef4444',
+      textTransform: 'uppercase' as const,
+      letterSpacing: '1px'
+    }}>
+      SOLD OUT - First 20 Filled
+    </div>
+  )
+
+  const waitlistBlock = (
+    !waitlistSubmitted ? (
+      <form onSubmit={handleWaitlistSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <p style={{ fontSize: '18px', marginBottom: '24px', color: 'rgba(255,255,255,0.7)' }}>
+          Join the waitlist for the next cohort
+        </p>
+        <div style={{ display: 'flex', gap: '16px', flexDirection: isMobile ? 'column' : 'row' }}>
+          <input
+            type="email"
+            value={waitlistEmail}
+            onChange={(e) => setWaitlistEmail(e.target.value)}
+            placeholder="Enter your email"
+            required
+            style={{
+              flex: 1,
+              padding: '16px 24px',
+              background: 'rgba(255,255,255,0.05)',
+              border: '2px solid rgba(255,255,255,0.1)',
+              borderRadius: '3px',
+              color: '#fff',
+              fontSize: '16px',
+              outline: 'none'
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              padding: '16px 32px',
+              background: '#ffffff',
+              border: '2px solid rgba(255,255,255,0.1)',
+              borderRadius: '3px',
+              color: '#000000',
+              fontSize: '16px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              whiteSpace: 'nowrap' as const,
+              textTransform: 'uppercase' as const,
+              letterSpacing: '1px'
+            }}
+          >
+            Join Waitlist
+          </button>
+        </div>
+      </form>
+    ) : (
+      <div style={{
+        padding: '24px',
+        background: 'rgba(127,176,105,0.2)',
+        border: '2px solid rgba(127,176,105,0.4)',
+        borderRadius: '3px',
+        color: '#7fb069',
+        fontSize: '18px',
+        fontWeight: 600
+      }}>
+        You're on the waitlist. We'll notify you when spots open.
+      </div>
+    )
+  )
 
   return (
     <>
@@ -100,501 +195,635 @@ export default function FoundingMembersPage() {
         nav,
         header,
         footer,
-        [role='navigation'],
-        [role='contentinfo'],
-        [class*='footer'],
-        [class*='Footer'] {
+        [role="navigation"],
+        [role="contentinfo"],
+        [class*="footer"],
+        [class*="Footer"] {
           display: none !important;
-        }
-        body {
-          background: #ffffff;
         }
       `}</style>
 
-      <div style={{ minHeight: '100vh', background: '#ffffff', color: TEXT }}>
+      <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff' }}>
 
-        {/* ── 1. HERO ── */}
-        <section style={{ ...section('#ffffff'), textAlign: 'center', paddingTop: isMobile ? '64px' : '96px' }}>
-          <div style={inner}>
-            <p style={{
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              color: ACCENT,
-              marginBottom: '24px',
-              fontFamily: BODY_FONT,
-            }}>
-              Founding Member · £25/Month
-            </p>
+        {/* HERO */}
+        <section style={{
+          position: 'relative',
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          padding: isMobile ? '100px 20px' : '200px 40px'
+        }}>
+          <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+            <div style={{
+              position: 'absolute', top: '20%', left: '-10%',
+              width: isMobile ? '300px' : '500px', height: isMobile ? '300px' : '500px',
+              background: 'radial-gradient(circle, rgba(155,196,184,0.15) 0%, transparent 70%)',
+              borderRadius: '50%', filter: 'blur(100px)'
+            }} />
+            <div style={{
+              position: 'absolute', bottom: '20%', right: '-10%',
+              width: isMobile ? '300px' : '500px', height: isMobile ? '300px' : '500px',
+              background: 'radial-gradient(circle, rgba(127,176,105,0.15) 0%, transparent 70%)',
+              borderRadius: '50%', filter: 'blur(100px)'
+            }} />
+          </div>
 
+          <div style={{ position: 'relative', zIndex: 10, maxWidth: '900px', textAlign: 'center', margin: '0 auto' }}>
+
+            {/* Headline */}
             <h1 style={{
-              fontSize: isMobile ? '48px' : '72px',
-              fontWeight: 500,
+              fontSize: isMobile ? 'clamp(2rem, 10vw, 3rem)' : 'clamp(3rem, 6vw, 4.5rem)',
+              fontWeight: 800,
               lineHeight: 1.1,
-              color: TEXT,
-              marginBottom: '20px',
+              letterSpacing: '-1px',
+              color: '#ffffff',
+              marginBottom: '24px'
             }}>
-              The Circle of Return
+              Most men can see their self-sabotage clearly.
+              <span style={{ display: 'block', color: '#9bc4b8', fontStyle: 'italic', marginTop: '8px' }}>
+                They just can't stop it alone.
+              </span>
             </h1>
 
             <p style={{
-              fontSize: '18px',
-              color: MUTED,
-              marginBottom: '36px',
-              fontFamily: BODY_FONT,
+              fontSize: isMobile ? '18px' : '22px',
+              color: 'rgba(255,255,255,0.7)',
+              lineHeight: 1.7,
+              maxWidth: '700px',
+              margin: '0 auto 40px'
             }}>
-              £25 for the first 20 men. The 21st pays £50.
+              You're self-employed. You're self-aware. You're capable. You can see that you're getting in your way. And somehow - knowing it isn't enough to stop it.
             </p>
-
-            <a
-              href={STRIPE_URL}
-              onClick={handleStripeClick}
-              style={{
-                display: 'inline-block',
-                padding: '16px 40px',
-                background: ACCENT,
-                color: TEXT,
-                fontSize: '16px',
-                fontWeight: 600,
-                borderRadius: '6px',
-                textDecoration: 'none',
-                transition: 'background 0.2s ease',
-                fontFamily: BODY_FONT,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
-            >
-              Secure Your Spot — £25/month
-            </a>
 
             <p style={{
-              fontSize: '13px',
-              color: MUTED,
-              marginTop: '12px',
-              fontFamily: BODY_FONT,
+              fontSize: isMobile ? '17px' : '20px',
+              color: 'rgba(255,255,255,0.6)',
+              lineHeight: 1.7,
+              maxWidth: '700px',
+              margin: '0 auto 48px',
+              fontStyle: 'italic'
             }}>
-              {SPOTS_REMAINING} of 20 spots remaining
+              The Circle of Return is a private community for men in their 30s and 40s who are done watching themselves repeat the pattern - and ready to finally interrupt it.
             </p>
+
+            {/* Video */}
+            <div style={{
+              width: '100%',
+              maxWidth: '800px',
+              margin: '0 auto 48px',
+              ...(isMobile ? {
+                position: 'relative',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '100vw'
+              } : {})
+            }}>
+              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+                <iframe
+                  src="https://www.youtube.com/embed/GbpTduHxQ9s?modestbranding=1&rel=0&controls=0&showinfo=0&iv_load_policy=3"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+
+            {/* Spots + CTA */}
+            {spotsRemaining !== null && !isSoldOut && (
+              <div style={{ marginBottom: '24px' }}>
+                <div style={{
+                  fontSize: isMobile ? '18px' : '20px',
+                  color: 'rgba(255,255,255,0.5)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px',
+                  fontWeight: 600,
+                  marginBottom: '24px'
+                }}>
+                  <span style={{ fontSize: isMobile ? '36px' : '48px', color: '#9bc4b8', fontWeight: 800 }}>
+                    {spotsRemaining}
+                  </span>{' '}of 20 founding spots remaining
+                </div>
+              </div>
+            )}
+
+            <div style={{ marginBottom: '16px' }}>
+              {isSoldOut ? soldOutBlock : ctaButton}
+            </div>
+
+            <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.4)', marginTop: '16px' }}>
+              £25/month fixed for founding members - price rises to £50 at member 21
+            </p>
+
+            {isSoldOut && <div style={{ marginTop: '40px' }}>{waitlistBlock}</div>}
           </div>
         </section>
 
-        {/* ── 2. VIDEO ── */}
+        {/* WHO THIS IS FOR */}
         <section style={{
-          background: '#ffffff',
-          padding: isMobile ? `0 0 ${vPad}` : `0 ${hPad} ${vPad}`,
+          background: 'linear-gradient(180deg, transparent 0%, rgba(127,176,105,0.03) 100%)',
+          padding: isMobile ? '100px 20px' : '120px 40px',
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          borderBottom: '1px solid rgba(255,255,255,0.05)'
         }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <p style={{
-              marginBottom: '24px',
-              textAlign: 'center',
-              fontStyle: 'italic',
-              fontSize: '1.15rem',
-              color: MUTED,
-              fontFamily: "'Gambarino', serif",
-            }}>
-              For capable men ready to face what's been holding them back – and move forward differently.
-            </p>
-
-            <div style={{
-              position: 'relative',
-              paddingBottom: '56.25%',
-              height: 0,
-              background: '#000',
-              borderRadius: isMobile ? '0' : '6px',
-              overflow: 'hidden',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-            }}>
-              <video
-                ref={videoRef}
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-                playsInline
-                onEnded={() => { setIsPlaying(false); setShowOverlay(true) }}
-              >
-                <source src={VIDEO_URL} type="video/mp4" />
-              </video>
-
-              {showOverlay && (
-                <div
-                  onClick={handleInitialPlay}
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: isMobile ? '64px' : '80px',
-                      height: isMobile ? '64px' : '80px',
-                      borderRadius: '50%',
-                      background: 'rgba(255,255,255,0.2)',
-                      backdropFilter: 'blur(8px)',
-                      border: '2px solid rgba(255,255,255,0.5)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      transition: 'background 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.35)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
-                  >
-                    <Play size={isMobile ? 24 : 32} color="#fff" fill="#fff" style={{ marginLeft: '3px' }} />
-                  </div>
-                </div>
-              )}
-
-              {!showOverlay && (
-                <div style={{
-                  position: 'absolute',
-                  bottom: '1.5rem',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  zIndex: 10,
-                }}>
-                  <button
-                    onClick={handlePlayPause}
-                    style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: '50%',
-                      background: 'rgba(255,255,255,0.2)',
-                      backdropFilter: 'blur(8px)',
-                      border: '2px solid rgba(255,255,255,0.5)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      transition: 'background 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.35)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
-                  >
-                    {isPlaying
-                      ? <Pause size={20} color="#fff" fill="#fff" />
-                      : <Play size={20} color="#fff" fill="#fff" style={{ marginLeft: '2px' }} />
-                    }
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* ── 3. WHO THIS IS FOR ── */}
-        <section style={section('#ffffff')}>
-          <div style={inner}>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              This is for the man who—
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              Will get the result. Who'll build the momentum. And then somehow get in his own way at the last moment.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You know exactly where in life you're sabotaging yourself. Whether it's a money-making opportunity. The relationships that break down. Or the level you feel you can reach but never quite hit.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              Different stories, same root.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              These usually come with that feeling in the gut that says I'm not enough. Yet you are capable. You're functioning, but still not fully settled.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              That feeling in your gut that says you're not enough isn't a personality flaw. It's a pattern.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              And until you see it clearly, it will continue to run your decisions.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You could try to work this out on your own. Most men do. They read more, think more and try harder to control their reactions. But realistically — if that was going to solve it, it probably would have by now.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px', fontWeight: 500 }}>
-              My man, the issue isn't your lack of effort… It's in your blind spots.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You cannot see the pattern while you're inside it — like the fish doesn't notice the water it swims in. This work is about having other eyes on the moments you justify or rationalise, and catching the reactions before the cycles cause too much damage. That shortens the frustrating process dramatically.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '12px', fontWeight: 500, fontSize: '21px' }}>
-              You can spend years circling it alone.
-            </p>
-            <p style={{ ...bodyText, fontWeight: 500, fontSize: '21px' }}>
-              Or you can expose it properly and deal with it.
-            </p>
-          </div>
-        </section>
-
-        {/* ── 4. MASON'S STORY ── */}
-        <section style={{
-          ...section('#f0f0f0'),
-          paddingTop: isMobile ? '64px' : '96px',
-          paddingBottom: isMobile ? '64px' : '96px',
-          boxShadow: '0 2px 24px rgba(0,0,0,0.06)',
-        }}>
-          <div style={inner}>
-            <div style={{ borderLeft: '3px solid #9bc4b8', paddingLeft: '24px' }}>
-              <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
-                I know this from experience — I was that man repeating the cycle. Two steps forward, then stepping back without knowing why. I robbed myself of peace and progress for years before I learned what was going on.
-              </p>
-              <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9 }}>
-                I'm not a coach who is standing outside of this work looking in. I came through it myself, and that's the only reason I can guide you through it. Textbooks don't quite cut it compared to lived experience and navigating real life scenarios.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ── TESTIMONIALS ── */}
-        <section style={section('#ffffff')}>
-          <div style={{ maxWidth: '960px', margin: '0 auto' }}>
             <h2 style={{
-              fontSize: isMobile ? '36px' : '48px',
-              fontWeight: 500,
-              color: TEXT,
+              fontSize: isMobile ? '36px' : '52px',
+              fontWeight: 700,
               marginBottom: '48px',
-              fontFamily: "'Gambarino', serif",
+              color: '#ffffff'
             }}>
-              Real Transformations
+              You already know this is you.
             </h2>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-              gap: '20px',
+            <div style={{ fontSize: '19px', lineHeight: 1.8, color: 'rgba(255,255,255,0.8)' }}>
+              <p style={{ marginBottom: '28px' }}>
+                You have a version of yourself you can see clearly. The man who leads with confidence and builds something real. Who doesn't run away when things get hard.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                And you know there's a gap between that man and where you stand right now.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                Not because you lack ability or because you haven't tried. But because something underneath keeps pulling you back to where you started.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                Maybe it shows up in business. You build momentum - then somehow lose the contract, delay the launch, undercharge again. You watch the opportunity pass and wonder why you let it.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                Maybe it's relationships. You find yourself in the same argument, creating the same distance. The same moment where you shut down when you most needed to stay open.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                Maybe it's the version of yourself you perform in public versus the one you live with privately. The gap between those two men is exhausting to keep up.
+              </p>
+              <p style={{ marginBottom: '28px', fontWeight: 700, color: '#9bc4b8', fontSize: '21px' }}>
+                My brother, all these different stories have the same root.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                I know you've read the books and listened to the podcasts. Maybe you've done therapy. You have more self-awareness than most men you know, yet still the pattern runs.
+              </p>
+              <p>
+                That's not a failure of effort. That's the nature of what's in the blind spot - by definition, you cannot see it from inside it.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* THE COST */}
+        <section style={{ padding: isMobile ? '100px 20px' : '120px 40px' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '52px',
+              fontWeight: 700,
+              marginBottom: '48px',
+              color: '#ffffff'
             }}>
-              {['n8_muJ84AbU', '7Y1upKm8bZk', 'ubCK70jYQDI', 'UfbMIxlCzgM'].map((id) => (
-                <div
-                  key={id}
-                  style={{
-                    border: '1px solid #e5e5e5',
-                    borderRadius: '6px',
-                    overflow: 'hidden',
-                  }}
-                >
+              Do you know what this actually costs you?
+            </h2>
+
+            <div style={{ fontSize: '19px', lineHeight: 1.8, color: 'rgba(255,255,255,0.8)' }}>
+              <p style={{ marginBottom: '28px' }}>
+                Not the frustration or the self-criticism. The real cost.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                It's the business you've half-built three times and the deals that stalled because something in you sabotaged the close. It's the income ceiling that moves just fast enough to keep you feeling like you're chasing but never quite arriving.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                It's the relationship where you keep showing up as a smaller version of yourself. The one you pulled back from when it asked you to be fully present. The one you ended before it could end you first.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                It's waking up at 3am knowing exactly who you're capable of being - and not knowing why you keep choosing something less.
+              </p>
+              <p style={{ marginBottom: '28px', fontWeight: 700, color: '#9bc4b8', fontSize: '21px' }}>
+                Most men spend years circling this alone. They get better at managing the pattern. They never actually break it.
+              </p>
+              <p>
+                That's not who you are. And it's not where this has to end.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* CREDIBILITY */}
+        <section style={{
+          background: 'rgba(0,0,0,0.3)',
+          padding: isMobile ? '100px 20px' : '120px 40px',
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          borderBottom: '1px solid rgba(255,255,255,0.05)'
+        }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '52px',
+              fontWeight: 700,
+              marginBottom: '48px',
+              color: '#ffffff'
+            }}>
+              I know this work from the inside.
+            </h2>
+
+            <div style={{ fontSize: '19px', lineHeight: 1.8, color: 'rgba(255,255,255,0.8)' }}>
+              <p style={{ marginBottom: '28px' }}>
+                I'm True. And I'm not standing outside this work looking in.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                I spent years in the same cycle - and still have my moments. Two steps forward, one back. Building things and burning them. Knowing what I was doing and doing it anyway. The pattern expressed itself in many ways - from procrastination through to violence, addiction, and a level of self-destruction.
+              </p>
+              <p style={{ marginBottom: '48px' }}>
+                What changed wasn't a book or a single breakthrough moment. It was a shift in mindset. It was sustained, structured work designed to get underneath the story you tell yourself and work with what's actually stored in the body.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              {[
+                {
+                  title: 'ICF Transformational Coach',
+                  desc: 'Internationally certified. The methodology is rigorous. The application is real-world.'
+                },
+                {
+                  title: 'Somatic Therapy Practitioner - Trained by Gabor Mate',
+                  desc: 'His work on trauma and the body-mind connection is some of the most important in the field. This isn\'t theoretical application - it\'s how I work with every man.'
+                },
+                {
+                  title: 'Breathwork Facilitator',
+                  desc: 'Breathwork accesses what conversation can\'t reach. I use it with precision, not spectacle.'
+                },
+                {
+                  title: 'Reiki Master',
+                  desc: 'Energy work as a complement to the deeper process, for the men who are open to it.'
+                }
+              ].map((cred, i) => (
+                <div key={i} style={{
+                  padding: '28px 32px',
+                  background: 'rgba(155,196,184,0.05)',
+                  border: '1px solid rgba(155,196,184,0.2)',
+                  borderRadius: '3px',
+                  borderLeft: '3px solid #9bc4b8'
+                }}>
+                  <p style={{ fontSize: '18px', fontWeight: 700, color: '#9bc4b8', marginBottom: '8px' }}>
+                    {cred.title}
+                  </p>
+                  <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
+                    {cred.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <p style={{ fontSize: '19px', lineHeight: 1.8, color: 'rgba(255,255,255,0.8)', marginTop: '40px' }}>
+              Textbooks don't cut it compared to lived experience navigating real situations. I've done this work on myself. That's the only reason I can guide you through it.
+            </p>
+          </div>
+        </section>
+
+        {/* TESTIMONIALS */}
+        <section style={{ padding: isMobile ? '100px 20px' : '120px 40px', maxWidth: '1400px', margin: '0 auto' }}>
+          <h2 style={{
+            fontSize: isMobile ? '36px' : '52px',
+            fontWeight: 700,
+            textAlign: 'center',
+            marginBottom: '24px',
+            color: '#ffffff'
+          }}>
+            From the men in the work.
+          </h2>
+          <p style={{
+            fontSize: '20px',
+            textAlign: 'center',
+            color: 'rgba(255,255,255,0.6)',
+            maxWidth: '700px',
+            margin: '0 auto 64px'
+          }}>
+            I'm not going to tell you what's possible. The men who've done this work will.
+          </p>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+            gap: '32px',
+            maxWidth: '1200px',
+            margin: '0 auto'
+          }}>
+            {[
+              { id: 'n8_muJ84AbU', label: 'Breaking the pattern' },
+              { id: '7Y1upKm8bZk', label: 'Emotional transformation' },
+              { id: 'ubCK70jYQDI', label: 'Business and identity' },
+              { id: 'UfbMIxlCzgM', label: 'Relationship breakthrough' }
+            ].map((video, i) => (
+              <div key={i}>
+                <p style={{
+                  fontSize: '15px',
+                  color: '#9bc4b8',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px',
+                  marginBottom: '12px'
+                }}>
+                  {video.label}
+                </p>
+                <div style={{
+                  position: 'relative',
+                  paddingBottom: '56.25%',
+                  height: 0,
+                  overflow: 'hidden',
+                  borderRadius: '3px',
+                  border: '1px solid rgba(255,255,255,0.1)'
+                }}>
                   <iframe
-                    src={`https://www.youtube.com/embed/${id}`}
-                    style={{
-                      width: '100%',
-                      aspectRatio: '16/9',
-                      border: 'none',
-                      borderRadius: '6px',
-                      display: 'block',
-                    }}
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                    src={`https://www.youtube.com/embed/${video.id}`}
+                    title={video.label}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── 5. THE PATTERN ── */}
-        <section style={section('#ffffff')}>
-          <div style={inner}>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You're currently running old code that was written long before you were old enough to question it. When this code continues to run unchecked, it shapes your relationships, your opportunities, and your ability to hold what you build.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '20px', fontWeight: 500 }}>
-              When the code is interrupted, something changes.
-            </p>
-            {[
-              'You stop sabotaging the very thing you say you want.',
-              'You respond instead of react.',
-              'You stay steady when things don\'t go your way.',
-              'You make decisions without second-guessing yourself afterwards.',
-            ].map((line, i) => (
-              <div key={i} style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '20px', marginBottom: '16px' }}>
-                <p style={bodyText}>{line}</p>
               </div>
             ))}
-            <p style={{ ...bodyText, marginTop: '24px', marginBottom: '20px' }}>
-              When you enter The CoR — you will feel shifts within weeks.
-            </p>
-            <p style={bodyText}>
-              And within your first 30 days, you will identify a pattern that has been influencing your decisions for years. Once you see it clearly, you cannot unsee it — it stops running you blindly.
-            </p>
           </div>
         </section>
 
-        {/* ── 6. WHAT WE DO HERE ── */}
-        <section style={section('#f8f8f8')}>
-          <div style={inner}>
+        {/* HOW IT WORKS */}
+        <section style={{
+          background: 'rgba(0,0,0,0.3)',
+          padding: isMobile ? '100px 20px' : '120px 40px',
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          borderBottom: '1px solid rgba(255,255,255,0.05)'
+        }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
             <h2 style={{
-              fontSize: isMobile ? '36px' : '48px',
-              color: TEXT,
-              marginBottom: '48px',
-            }}>
-              How we work
-            </h2>
-
-            <p style={{ ...bodyText, marginBottom: '32px' }}>
-              This isn't random conversation — this work follows a clear path.
-            </p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              {[
-                {
-                  bold: 'See it.',
-                  desc: ' Catch the pattern that is running while understanding what\'s underneath it.',
-                },
-                {
-                  bold: 'Regulate it.',
-                  desc: ' Your body still holds what the mind doesn\'t want to deal with. We release what\'s been stored over the years and build the capacity to hold pressure without reverting. Breathwork. Somatic work. Practical tools that stop the spiral before it starts.',
-                },
-                {
-                  bold: 'Become it.',
-                  desc: ' Who does your goal require you to be? We close that gap. This cycle repeats, and is applied to real situations — until the old programme loses its grip, and we rewrite a new one.',
-                },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  style={{
-                    borderLeft: `3px solid ${ACCENT}`,
-                    paddingLeft: '20px',
-                  }}
-                >
-                  <p style={bodyText}>
-                    <strong>{item.bold}</strong>
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── 7. INSIDE THE CIRCLE ── */}
-        <section style={section('#ffffff')}>
-          <div style={inner}>
-            <h2 style={{
-              fontSize: isMobile ? '36px' : '48px',
-              color: TEXT,
-              marginBottom: '48px',
-            }}>
-              Inside the Circle
-            </h2>
-
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-              gap: '20px',
-            }}>
-              {[
-                { title: 'Two live deep sessions each month', desc: "Built around expansion topics that reveal the pattern underneath your decisions. You apply them to your real-life situations so the work moves you forward, not just inward." },
-                { title: 'Two somatic regulation sessions', desc: "To help release what's been stuck and weighing you down. We build actual capacity, not just insight." },
-                { title: 'Quarterly community goal mapping review', desc: "So you know exactly where you're tightening and where you're slipping." },
-                { title: 'Exclusive supporting content', desc: 'We take a holistic approach — somatics, the psyche, and grounded spiritual perspectives — because understanding how and why you operate is one of the most powerful forms of growth.' },
-                { title: 'Private community', desc: 'A private community of men doing the work properly. Not a place for big egos trying to out-perform.' },
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  style={{
-                    background: '#ffffff',
-                    border: '1px solid #e5e5e5',
-                    borderRadius: '6px',
-                    padding: '28px',
-                  }}
-                >
-                  <p style={{
-                    fontSize: '11px',
-                    fontWeight: 600,
-                    letterSpacing: '2px',
-                    textTransform: 'uppercase',
-                    color: ACCENT,
-                    marginBottom: '10px',
-                    fontFamily: BODY_FONT,
-                  }}>
-                    {item.title}
-                  </p>
-                  <p style={{
-                    fontSize: '16px',
-                    lineHeight: 1.65,
-                    color: TEXT,
-                    fontFamily: BODY_FONT,
-                  }}>
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {[
-                "You're looking at a few focused hours each month.",
-                "Not endless.",
-                "No daily tasks.",
-                "Just consistent application in the areas that matter.",
-              ].map((line, i) => (
-                <p key={i} style={{ ...bodyText, margin: 0 }}>{line}</p>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── 8. CLOSING CTA ── */}
-        <section style={{ ...section('#f8f8f8'), textAlign: 'center' }}>
-          <div style={inner}>
-            <p style={{ ...bodyText, marginBottom: '20px' }}>
-              This is personal work inside a structured container. It requires honesty. It requires effort. And zero chaos.
-            </p>
-            <p style={{ ...bodyText, marginBottom: '48px' }}>
-              If you're ready to stop getting in your own way, this is the most direct way to do it.
-            </p>
-
-            <p style={{
-              fontSize: isMobile ? '28px' : '34px',
-              lineHeight: 1.3,
-              color: TEXT,
-              fontStyle: 'italic',
-              fontFamily: "'Gambarino', serif",
-              marginBottom: '48px',
-            }}>
-              What matters more is what it has already cost you to leave this unchecked.
-            </p>
-
-            <p style={{
-              fontSize: '15px',
-              color: MUTED,
+              fontSize: isMobile ? '36px' : '52px',
+              fontWeight: 700,
               marginBottom: '24px',
-              fontFamily: BODY_FONT,
+              color: '#ffffff'
             }}>
-              Founding member price £25/month. £25 for the first 20 men. The 21st pays £50.
+              This isn't about more insight.
+            </h2>
+            <p style={{ fontSize: '19px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginBottom: '64px' }}>
+              You already have insight. What you need is interruption, integration - and a structured container to do that work properly. The Circle of Return follows a clear progression. Not random conversation. Not motivational content. A method.
             </p>
 
-            <a
-              href={STRIPE_URL}
-              onClick={handleStripeClick}
-              style={{
-                display: 'inline-block',
-                padding: '16px 40px',
-                background: ACCENT,
-                color: TEXT,
-                fontSize: '16px',
-                fontWeight: 600,
-                borderRadius: '6px',
-                textDecoration: 'none',
-                transition: 'background 0.2s ease',
-                fontFamily: BODY_FONT,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
-            >
-              Secure Your Spot — £25/month
-            </a>
-
-            <p style={{
-              fontSize: '13px',
-              color: MUTED,
-              marginTop: '12px',
-              fontFamily: BODY_FONT,
-            }}>
-              {SPOTS_REMAINING} of 20 spots remaining
-            </p>
+            {[
+              {
+                step: '01',
+                title: 'See It',
+                desc: 'Most men know something is there. They don\'t know exactly what it is, where it comes from, or how it operates in the specific moments that matter most. We locate it. We name it. We make the invisible visible - so it stops running you blindly.'
+              },
+              {
+                step: '02',
+                title: 'Regulate It',
+                desc: 'Insight without embodiment changes nothing. Your body still holds what your mind has moved on from. Breathwork and somatic work release what\'s been stored for years and build the actual capacity to hold pressure without reverting to the pattern. This is where most approaches fail - they stay in the head. We don\'t.'
+              },
+              {
+                step: '03',
+                title: 'Become It',
+                desc: 'Who does your goal require you to be? We close that gap - applied to real situations, real decisions, real moments. The old programme loses its grip. We rewrite a new one. This cycle repeats - deeper each time - until the man you\'ve been performing becomes the man you simply are.'
+              }
+            ].map((item, i) => (
+              <div key={i} style={{
+                display: 'flex',
+                gap: '32px',
+                marginBottom: '48px',
+                alignItems: 'flex-start'
+              }}>
+                <div style={{
+                  fontSize: '48px',
+                  fontWeight: 800,
+                  color: 'rgba(155,196,184,0.3)',
+                  lineHeight: 1,
+                  minWidth: '60px'
+                }}>
+                  {item.step}
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#9bc4b8', marginBottom: '12px' }}>
+                    {item.title}
+                  </h3>
+                  <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.8 }}>
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
+
+        {/* WHAT'S INSIDE */}
+        <section style={{ padding: isMobile ? '100px 20px' : '120px 40px' }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '52px',
+              fontWeight: 700,
+              marginBottom: '16px',
+              color: '#ffffff'
+            }}>
+              What you get as a founding member.
+            </h2>
+            <p style={{ fontSize: '19px', color: 'rgba(255,255,255,0.6)', marginBottom: '64px' }}>
+              A few focused hours each month. No daily check-ins. No tasks to manage. Just consistent application in the areas that move the needle.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              {[
+                {
+                  title: 'Two live deep-dive sessions each month',
+                  desc: 'Built around the expansion topics that reveal the pattern underneath your decisions. You bring your real situations, and we work on them in real time. This is where insight becomes interruption.'
+                },
+                {
+                  title: 'Two somatic regulation sessions each month',
+                  desc: 'To release what\'s been sitting in the body that conversation can\'t reach. We build genuine capacity here - not just awareness. The ability to stay present under pressure without reverting.'
+                },
+                {
+                  title: 'Quarterly community goal mapping',
+                  desc: 'A structured review of exactly where you\'re tightening, where you\'re slipping, and what the next quarter needs to look like. Most men never do this kind of honest audit. Inside the CoR, we do.'
+                },
+                {
+                  title: 'Exclusive supporting content library',
+                  desc: 'Somatics, psychology, grounded spiritual perspective. Curated for life application, not just consumption.'
+                },
+                {
+                  title: 'Private brotherhood community',
+                  desc: 'Men doing this work properly. Not a place for performance or ego, but a place where honesty is the standard and the work is taken seriously.'
+                }
+              ].map((item, i) => (
+                <div key={i} style={{
+                  padding: '32px 36px',
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '3px',
+                  borderLeft: '3px solid rgba(155,196,184,0.4)'
+                }}>
+                  <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#ffffff', marginBottom: '10px' }}>
+                    {item.title}
+                  </h3>
+                  <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.65)', lineHeight: 1.7 }}>
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* HONEST ANSWERS */}
+        <section style={{
+          background: 'rgba(0,0,0,0.3)',
+          padding: isMobile ? '100px 20px' : '120px 40px',
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          borderBottom: '1px solid rgba(255,255,255,0.05)'
+        }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '52px',
+              fontWeight: 700,
+              marginBottom: '64px',
+              color: '#ffffff'
+            }}>
+              The questions worth asking before you decide.
+            </h2>
+
+            {[
+              {
+                q: 'Is this therapy?',
+                a: 'No. This is structured transformation work. We use somatic and breathwork methods that have therapeutic application, but this is not a clinical setting. If you\'re in a mental health crisis, therapy is the right place to start. If you\'re a functioning man with patterns that are limiting your life - this is built for you.'
+              },
+              {
+                q: 'I\'ve done coaching before and it didn\'t stick. Why would this be different?',
+                a: 'Because most coaching lives in the head. It gives you frameworks and asks you to apply them. When the pattern is rooted in the body - in nervous system responses shaped over decades - talking about it has a ceiling. We work below that ceiling. That\'s the difference.'
+              },
+              {
+                q: 'Is this group work or 1:1?',
+                a: 'The Circle is group-based - a private community with live sessions. The power is in working alongside other men who are being honest about their patterns. 1:1 work with me is available separately for men who want deeper personalised support alongside the community.'
+              },
+              {
+                q: 'How long are the sessions and where do they happen?',
+                a: 'Live sessions run via Zoom, typically 90 minutes. Somatic sessions are 60 minutes.'
+              },
+              {
+                q: 'I don\'t have much time. Is this realistic?',
+                a: 'The live sessions add up to roughly 5-6 focused hours a month. Everything else is asynchronous in the community. If you can\'t find 5 hours a month for the work that changes everything - that\'s worth looking at directly.'
+              },
+              {
+                q: '£25 seems low. What\'s the catch?',
+                a: 'There isn\'t one. This is a founding member price designed to build the initial cohort with committed men. You help build it, and 50% off is the thank you. Once 20 members are in, the price moves to £50. The men who join now lock in the founding rate for as long as they stay.'
+              },
+              {
+                q: 'What if I join and it\'s not right for me?',
+                a: 'Then you leave. What I\'d ask is that you give it 30 days and show up honestly. If you do the work and it\'s genuinely not landing, I\'ll respect that. What I won\'t do is hold space for men who aren\'t ready. If you\'re not sure you\'re ready - wait until you are.'
+              }
+            ].map((item, i) => (
+              <div key={i} style={{
+                marginBottom: '40px',
+                paddingBottom: '40px',
+                borderBottom: i < 6 ? '1px solid rgba(255,255,255,0.06)' : 'none'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#9bc4b8', marginBottom: '14px' }}>
+                  {item.q}
+                </h3>
+                <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.8 }}>
+                  {item.a}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* INVESTMENT */}
+        <section style={{ padding: isMobile ? '100px 20px' : '120px 40px' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '52px',
+              fontWeight: 700,
+              marginBottom: '48px',
+              color: '#ffffff'
+            }}>
+              What this costs. And what it doesn't.
+            </h2>
+
+            <div style={{ fontSize: '19px', lineHeight: 1.8, color: 'rgba(255,255,255,0.8)' }}>
+              <p style={{ marginBottom: '28px' }}>
+                The founding member rate is £25 per month - fixed for life for the first 20 men. The 21st pays £50.
+              </p>
+              <p style={{ marginBottom: '28px', fontWeight: 700, color: '#9bc4b8', fontSize: '21px' }}>
+                The real question isn't whether £25 is worth it. The question is what the pattern has already cost you - and what it will continue to cost if you leave it running.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                Self-sabotage has a price. You've already been paying for it in missed opportunities. In relationships that didn't reach what they could have. In the version of yourself that keeps waiting for the conditions to be right.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* CLOSING */}
+        <section style={{
+          padding: isMobile ? '100px 20px' : '120px 40px',
+          background: 'radial-gradient(circle at center, rgba(127,176,105,0.08) 0%, transparent 70%)',
+          borderTop: '1px solid rgba(255,255,255,0.05)'
+        }}>
+          <div style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center' }}>
+            <h2 style={{
+              fontSize: isMobile ? '36px' : '52px',
+              fontWeight: 700,
+              marginBottom: '48px',
+              color: '#ffffff'
+            }}>
+              One last thing.
+            </h2>
+
+            <div style={{ fontSize: '19px', lineHeight: 1.9, color: 'rgba(255,255,255,0.8)', marginBottom: '48px' }}>
+              <p style={{ marginBottom: '28px' }}>
+                You've read this far and that obviously means something. Men who aren't ready close the tab in the first two minutes.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                You already know whether this is for you. You knew it somewhere in the first few paragraphs. What you're doing now is checking whether it's safe to trust that knowing.
+              </p>
+              <p style={{ marginBottom: '40px', fontWeight: 700, color: '#9bc4b8', fontSize: '24px', fontStyle: 'italic' }}>
+                Where you are now does not have to be where you end up.
+              </p>
+              <p style={{ marginBottom: '28px' }}>
+                I'm not asking you to fix yourself because you're not broken. I'm inviting you into a container where the pattern gets interrupted properly - with other men who are serious about the same work.
+              </p>
+              <p style={{ marginBottom: '48px' }}>
+                No one can do this for you. But you don't have to do it alone.
+              </p>
+            </div>
+
+            {!isSoldOut ? (
+              <>
+                {spotsRemaining !== null && (
+                  <p style={{
+                    fontSize: '18px',
+                    color: 'rgba(255,255,255,0.5)',
+                    marginBottom: '24px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '2px'
+                  }}>
+                    <span style={{ fontSize: '32px', color: '#9bc4b8', fontWeight: 800 }}>{spotsRemaining}</span> founding spots remaining
+                  </p>
+                )}
+                <div style={{ marginBottom: '16px' }}>{ctaButton}</div>
+                <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.4)', marginTop: '16px' }}>
+                  £25/month fixed for founding members - price rises to £50 at member 21
+                </p>
+              </>
+            ) : (
+              <div>
+                {soldOutBlock}
+                <div style={{ marginTop: '40px' }}>{waitlistBlock}</div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer style={{
+          padding: '40px 20px',
+          textAlign: 'center',
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+          color: 'rgba(255,255,255,0.4)',
+          fontSize: '14px'
+        }}>
+          <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>True North</Link>
+          {' · '}Circle of Return{' · '}{new Date().getFullYear()}
+        </footer>
 
       </div>
     </>
