@@ -135,7 +135,7 @@ export default function FoundingMembersPage() {
               color: TEXT,
               marginBottom: '20px',
             }}>
-              The Circle of Return
+              Most men can see their self-sabotage clearly.
             </h1>
 
             <p style={{
@@ -144,7 +144,7 @@ export default function FoundingMembersPage() {
               marginBottom: '36px',
               fontFamily: BODY_FONT,
             }}>
-              £25 for the first 20 men. The 21st pays £50.
+              They just can't stop it alone.
             </p>
 
             <a
@@ -165,7 +165,7 @@ export default function FoundingMembersPage() {
               onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
               onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
             >
-              Secure Your Spot — £25/month
+              Secure Your Spot - £25/month
             </a>
 
             <p style={{
@@ -174,7 +174,7 @@ export default function FoundingMembersPage() {
               marginTop: '12px',
               fontFamily: BODY_FONT,
             }}>
-              {SPOTS_REMAINING} of 20 spots remaining
+              {SPOTS_REMAINING} of 20 founding spots remaining · £25/month fixed - price rises to £50 at member 21
             </p>
           </div>
         </section>
@@ -289,40 +289,40 @@ export default function FoundingMembersPage() {
         <section style={section('#ffffff')}>
           <div style={inner}>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              This is for the man who—
+              You already know this is you.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              Will get the result. Who'll build the momentum. And then somehow get in his own way at the last moment.
+              You have a version of yourself you can see clearly. The man who leads with confidence and builds something real. Who doesn't run away when things get hard.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You know exactly where in life you're sabotaging yourself. Whether it's a money-making opportunity. The relationships that break down. Or the level you feel you can reach but never quite hit.
+              And you know there's a gap between that man and where you stand right now.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              Different stories, same root.
+              Not because you lack ability or because you haven't tried. But because something underneath keeps pulling you back to where you started.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              These usually come with that feeling in the gut that says I'm not enough. Yet you are capable. You're functioning, but still not fully settled.
+              Maybe it shows up in business. You build momentum - then somehow lose the contract, delay the launch, undercharge again. You watch the opportunity pass and wonder why you let it.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              That feeling in your gut that says you're not enough isn't a personality flaw. It's a pattern.
+              Maybe it's relationships. You find yourself in the same argument, creating the same distance. The same moment where you shut down when you most needed to stay open.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              And until you see it clearly, it will continue to run your decisions.
+              Maybe it's the version of yourself you perform in public versus the one you live with privately. The gap between those two men is exhausting to keep up.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You could try to work this out on your own. Most men do. They read more, think more and try harder to control their reactions. But realistically — if that was going to solve it, it probably would have by now.
+              My brother, all these different stories have the same root.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px', fontWeight: 500 }}>
-              My man, the issue isn't your lack of effort… It's in your blind spots.
+              I know you've read the books and listened to the podcasts. Maybe you've done therapy. You have more self-awareness than most men you know, yet still the pattern runs.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You cannot see the pattern while you're inside it — like the fish doesn't notice the water it swims in. This work is about having other eyes on the moments you justify or rationalise, and catching the reactions before the cycles cause too much damage. That shortens the frustrating process dramatically.
+              That's not a failure of effort. That's the nature of what's in the blind spot - by definition, you cannot see it from inside it.
             </p>
             <p style={{ ...bodyText, marginBottom: '12px', fontWeight: 500, fontSize: '21px' }}>
-              You can spend years circling it alone.
+              
             </p>
             <p style={{ ...bodyText, fontWeight: 500, fontSize: '21px' }}>
-              Or you can expose it properly and deal with it.
+              
             </p>
           </div>
         </section>
@@ -337,10 +337,13 @@ export default function FoundingMembersPage() {
           <div style={inner}>
             <div style={{ borderLeft: '3px solid #9bc4b8', paddingLeft: '24px' }}>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
-                I know this from experience — I was that man repeating the cycle. Two steps forward, then stepping back without knowing why. I robbed myself of peace and progress for years before I learned what was going on.
+                I'm True. And I'm not standing outside this work looking in.
+              </p>
+              <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
+                I spent years in the same cycle - and still have my moments. Two steps forward, one back. Building things and burning them. Knowing what I was doing and doing it anyway. The pattern expressed itself in many ways - from procrastination through to violence, addiction, and a level of self-destruction.
               </p>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9 }}>
-                I'm not a coach who is standing outside of this work looking in. I came through it myself, and that's the only reason I can guide you through it. Textbooks don't quite cut it compared to lived experience and navigating real life scenarios.
+                What changed wasn't a book or a single breakthrough moment. It was sustained, structured work designed to get underneath the story you tell yourself and work with what's actually stored in the body.
               </p>
             </div>
           </div>
@@ -538,10 +541,10 @@ export default function FoundingMembersPage() {
         <section style={{ ...section('#f8f8f8'), textAlign: 'center' }}>
           <div style={inner}>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              This is personal work inside a structured container. It requires honesty. It requires effort. And zero chaos.
+              You've read this far and that obviously means something. Men who aren't ready close the tab in the first two minutes.
             </p>
             <p style={{ ...bodyText, marginBottom: '48px' }}>
-              If you're ready to stop getting in your own way, this is the most direct way to do it.
+              You already know whether this is for you. You knew it somewhere in the first few paragraphs. What you're doing now is checking whether it's safe to trust that knowing.
             </p>
 
             <p style={{
@@ -552,7 +555,7 @@ export default function FoundingMembersPage() {
               fontFamily: "'Gambarino', serif",
               marginBottom: '48px',
             }}>
-              What matters more is what it has already cost you to leave this unchecked.
+              Where you are now does not have to be where you end up.
             </p>
 
             <p style={{
@@ -561,7 +564,7 @@ export default function FoundingMembersPage() {
               marginBottom: '24px',
               fontFamily: BODY_FONT,
             }}>
-              Founding member price £25/month. £25 for the first 20 men. The 21st pays £50.
+              Founding member price £25/month. They just can't stop it alone.
             </p>
 
             <a
@@ -582,7 +585,7 @@ export default function FoundingMembersPage() {
               onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
               onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
             >
-              Secure Your Spot — £25/month
+              Secure Your Spot - £25/month
             </a>
 
             <p style={{
@@ -591,7 +594,7 @@ export default function FoundingMembersPage() {
               marginTop: '12px',
               fontFamily: BODY_FONT,
             }}>
-              {SPOTS_REMAINING} of 20 spots remaining
+              {SPOTS_REMAINING} of 20 founding spots remaining · £25/month fixed - price rises to £50 at member 21
             </p>
           </div>
         </section>
