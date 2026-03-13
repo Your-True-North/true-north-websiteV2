@@ -60,6 +60,15 @@ export default function VideoPlayerPage() {
   }, [])
 
   useEffect(() => {
+    const hide = () => {
+      document.querySelectorAll('footer, [role="contentinfo"], [class*="footer"], [class*="Footer"]')
+        .forEach((el) => ((el as HTMLElement).style.display = 'none'))
+    }
+    hide()
+    setTimeout(hide, 100)
+  }, [])
+
+  useEffect(() => {
     // Check auth
     const userData = localStorage.getItem('user')
     if (!userData) {
@@ -163,24 +172,26 @@ export default function VideoPlayerPage() {
     if (!video) return
 
     try {
+      const userData = localStorage.getItem('user')
+      const user = userData ? JSON.parse(userData) : null
+      if (!user?.id) return
+
+      const newCompleted = !video.completed
       const res = await fetch(`/api/videos/${videoId}/progress`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ completed: !video.completed })
+        body: JSON.stringify({
+          userId: user.id,
+          completed: newCompleted,
+          watchedSeconds: newCompleted ? 1 : 0,
+          totalDuration: 1
+        })
       })
 
       const data = await res.json()
 
       if (res.ok) {
-        setVideo({
-          ...video,
-          completed: data.completed
-        })
-
-        // Show success message
-        alert(data.completed ? 'Video marked as complete!' : 'Video marked as incomplete')
-
-        // Trigger progress recalculation
+        setVideo({ ...video, completed: data.progress?.completed ?? newCompleted })
         fetch('/api/progress/calculate')
       }
     } catch (error) {
@@ -231,7 +242,7 @@ export default function VideoPlayerPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ color: '#999', fontWeight: 300 }}>Loading video...</div>
       </div>
     )
@@ -239,7 +250,7 @@ export default function VideoPlayerPage() {
 
   if (!video) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
+      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ color: '#999', fontWeight: 300 }}>Video not found</div>
         <Link href="/videos" style={{
           padding: '0.75rem 1.5rem',
@@ -259,15 +270,14 @@ export default function VideoPlayerPage() {
   const youtubeId = video.youtubeId || extractYouTubeId(video.youtubeUrl)
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#1a1a1a' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a' }}>
       {/* Navigation */}
       <nav style={{
         position: 'sticky',
         top: 0,
         zIndex: 20,
-        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(20px)',
-        background: 'rgba(0, 0, 0, 0.2)'
+        borderBottom: '1px solid #e5e5e5',
+        background: '#ffffff'
       }}>
         <div style={{
           maxWidth: '90rem',
@@ -290,7 +300,7 @@ export default function VideoPlayerPage() {
             padding: '0.5rem 1rem',
             fontSize: '0.875rem',
             fontWeight: 300,
-            border: '1px solid rgba(155, 196, 184, 0.3)',
+            border: '1px solid #9bc4b8',
             borderRadius: '3px',
             color: '#9bc4b8',
             textDecoration: 'none'
@@ -342,8 +352,8 @@ export default function VideoPlayerPage() {
 
             {/* Video Info */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#f8f8f8',
+              border: '1px solid #e5e5e5',
               borderRadius: '3px',
               padding: '1.5rem',
               marginBottom: '1.5rem'
@@ -419,7 +429,7 @@ export default function VideoPlayerPage() {
                 alignItems: 'center',
                 gap: '1.5rem',
                 paddingTop: '1rem',
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+                borderTop: '1px solid #e5e5e5'
               }}>
                 <button
                   onClick={handleReaction}
@@ -429,9 +439,9 @@ export default function VideoPlayerPage() {
                     gap: '0.5rem',
                     padding: '0.5rem 1rem',
                     background: video.hasReacted ? 'rgba(239, 68, 68, 0.1)' : 'transparent',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
-                    color: video.hasReacted ? '#ef4444' : 'rgba(255, 255, 255, 0.7)',
+                    color: video.hasReacted ? '#ef4444' : '#666',
                     fontSize: '0.875rem',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
@@ -457,8 +467,8 @@ export default function VideoPlayerPage() {
 
             {/* Comments Section */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#f8f8f8',
+              border: '1px solid #e5e5e5',
               borderRadius: '3px',
               padding: '1.5rem'
             }}>
@@ -481,8 +491,8 @@ export default function VideoPlayerPage() {
                     width: '100%',
                     minHeight: '100px',
                     padding: '1rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#ffffff',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
                     color: '#1a1a1a',
                     fontSize: '1rem',
@@ -526,7 +536,7 @@ export default function VideoPlayerPage() {
                       display: 'flex',
                       gap: '1rem',
                       paddingBottom: '1.5rem',
-                      borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
+                      borderBottom: '1px solid #f0f0f0'
                     }}>
                       {/* Avatar */}
                       <div style={{
@@ -559,7 +569,7 @@ export default function VideoPlayerPage() {
                           <span style={{ fontWeight: 500 }}>{comment.user_name}</span>
                           <span style={{
                             fontSize: '0.875rem',
-                            color: 'rgba(255, 255, 255, 0.4)'
+                            color: '#999'
                           }}>
                             {new Date(comment.created_at).toLocaleDateString()}
                           </span>
@@ -582,8 +592,8 @@ export default function VideoPlayerPage() {
           {/* Sidebar - Related Videos */}
           <div>
             <div style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#f8f8f8',
+              border: '1px solid #e5e5e5',
               borderRadius: '3px',
               padding: '1.5rem',
               position: isMobile ? 'static' : 'sticky',
@@ -621,17 +631,17 @@ export default function VideoPlayerPage() {
                           gap: '0.75rem',
                           padding: '0.75rem',
                           borderRadius: '3px',
-                          border: '1px solid rgba(255, 255, 255, 0.05)',
+                          border: '1px solid #e5e5e5',
                           cursor: 'pointer',
                           transition: 'all 0.3s ease'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                          e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+                          e.currentTarget.style.background = '#f8f8f8'
+                          e.currentTarget.style.borderColor = '#9bc4b8'
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.background = 'transparent'
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)'
+                          e.currentTarget.style.borderColor = '#e5e5e5'
                         }}
                         >
                           {/* Thumbnail */}
