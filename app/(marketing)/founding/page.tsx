@@ -149,9 +149,8 @@ export default function FoundingMembersPage() {
               They just can't stop it alone.
             </p>
 
-            <a
-              href={STRIPE_URL}
-              onClick={handleStripeClick}
+            <button
+              onClick={() => { handleStripeClick(); setShowPopup(true) }}
               style={{
                 display: 'inline-block',
                 padding: '16px 40px',
@@ -160,7 +159,8 @@ export default function FoundingMembersPage() {
                 fontSize: '16px',
                 fontWeight: 600,
                 borderRadius: '6px',
-                textDecoration: 'none',
+                border: 'none',
+                cursor: 'pointer',
                 transition: 'background 0.2s ease',
                 fontFamily: BODY_FONT,
               }}
@@ -168,7 +168,7 @@ export default function FoundingMembersPage() {
               onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
             >
               Secure Your Spot - £25/month
-            </a>
+            </button>
 
             <p style={{
               fontSize: '13px',
@@ -560,9 +560,8 @@ export default function FoundingMembersPage() {
               Founding member price £25/month. They just can't stop it alone.
             </p>
 
-            <a
-              href={STRIPE_URL}
-              onClick={handleStripeClick}
+            <button
+              onClick={() => { handleStripeClick(); setShowPopup(true) }}
               style={{
                 display: 'inline-block',
                 padding: '16px 40px',
@@ -571,7 +570,8 @@ export default function FoundingMembersPage() {
                 fontSize: '16px',
                 fontWeight: 600,
                 borderRadius: '6px',
-                textDecoration: 'none',
+                border: 'none',
+                cursor: 'pointer',
                 transition: 'background 0.2s ease',
                 fontFamily: BODY_FONT,
               }}
@@ -579,7 +579,7 @@ export default function FoundingMembersPage() {
               onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
             >
               Secure Your Spot - £25/month
-            </a>
+            </button>
 
             <p style={{
               fontSize: '13px',
