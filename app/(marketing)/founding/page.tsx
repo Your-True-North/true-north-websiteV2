@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { Play, Pause } from 'lucide-react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
+import PatternAuditPopup from '@/app/components/PatternAuditPopup'
 
 const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
 const VIDEO_URL = 'https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%202026.MP4'
@@ -15,6 +16,7 @@ const BODY_FONT = '-apple-system, BlinkMacSystemFont, sans-serif'
 
 export default function FoundingMembersPage() {
   const [isMobile, setIsMobile] = useState(false)
+  const [showPopup, setShowPopup] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [showOverlay, setShowOverlay] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -591,6 +593,7 @@ export default function FoundingMembersPage() {
         </section>
 
       </div>
+      <PatternAuditPopup isOpen={showPopup} onClose={() => setShowPopup(false)} />
     </>
   )
 }
