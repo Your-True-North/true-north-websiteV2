@@ -226,8 +226,9 @@ export default function CallsPage() {
           </Link>
           <h1 style={{
             fontSize: isMobile ? '24px' : '32px',
-            fontWeight: 600,
-            marginBottom: '12px'
+            fontWeight: 300,
+            marginBottom: '12px',
+            color: '#1a1a1a'
           }}>
             Live Calls Calendar
           </h1>

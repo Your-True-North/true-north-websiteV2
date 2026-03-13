@@ -689,7 +689,7 @@ export default function CommunityPage() {
 
         {/* SIDEBAR */}
         {!isMobile && (
-          <aside style={{ position: 'sticky', top: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <aside style={{ position: 'sticky', top: '5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 
             {/* Video card */}
             <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>

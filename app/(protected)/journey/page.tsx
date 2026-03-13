@@ -207,12 +207,10 @@ export default function JourneyPage() {
     if (!user || !user.id) return
 
     // Optimistically update UI
-    const newLikes = { ...videoLikes }
-    if (newLikes[videoId]) {
-      delete newLikes[videoId]
-    } else {
-      newLikes[videoId] = true
-    }
+    const currentLikes = Array.isArray(videoLikes) ? videoLikes : []
+    const newLikes = currentLikes.includes(videoId)
+      ? currentLikes.filter(id => id !== videoId)
+      : [...currentLikes, videoId]
     setVideoLikes(newLikes)
     localStorage.setItem('videoLikes', JSON.stringify(newLikes))
 
@@ -227,14 +225,8 @@ export default function JourneyPage() {
       if (!res.ok) {
         console.error('Failed to save like to database')
         // Revert on error
-        const revertedLikes = { ...videoLikes }
-        if (revertedLikes[videoId]) {
-          delete revertedLikes[videoId]
-        } else {
-          revertedLikes[videoId] = true
-        }
-        setVideoLikes(revertedLikes)
-        localStorage.setItem('videoLikes', JSON.stringify(revertedLikes))
+        setVideoLikes(currentLikes)
+        localStorage.setItem('videoLikes', JSON.stringify(currentLikes))
       }
     } catch (err) {
       console.error('Error saving like:', err)
@@ -295,9 +287,9 @@ export default function JourneyPage() {
         position: 'sticky',
         top: 0,
         zIndex: 20,
-        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+        borderBottom: '1px solid #e5e5e5',
         backdropFilter: 'blur(20px)',
-        background: 'rgba(0, 0, 0, 0.2)'
+        background: '#ffffff'
       }}>
         <div style={{
           maxWidth: '80rem',

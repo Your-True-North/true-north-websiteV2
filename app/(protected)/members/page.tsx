@@ -365,11 +365,6 @@ export default function MembersPage() {
               </div>
             )
           })}
-          {user.nextLevel && (
-            <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '1rem', fontWeight: 300 }}>
-              {user.daysUntilNext} days until {user.nextLevel}
-            </div>
-          )}
         </div>
 
         {/* Quick Actions */}
@@ -401,11 +396,11 @@ export default function MembersPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300 }}>Quick Access</h3>
+              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300, color: '#1a1a1a' }}>Quick Access</h3>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {[
-                { title: 'My Journey', desc: 'Browse full video library & guided practices', href: '/videos', icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+                { title: 'My Journey', desc: 'Browse full video library & guided practices', href: '/journey', icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
                 { title: 'Weekly Teaching Videos', desc: 'Latest teachings & spiritual guidance', href: '/videos?category=Live%20Teachings', icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z' },
                 { title: 'Live Session Replays', desc: 'Watch past community calls & sessions', href: '/replays', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
                 { title: 'Live Call Calendar', desc: 'View upcoming sessions & add to calendar', href: '/calls', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
@@ -452,7 +447,7 @@ export default function MembersPage() {
                     </svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 300, transition: 'color 0.3s ease' }}>{action.title}</div>
+                    <div style={{ fontWeight: 300, transition: 'color 0.3s ease', color: '#1a1a1a' }}>{action.title}</div>
                     <div style={{ fontSize: '0.875rem', color: '#1a1a1a', fontWeight: 300 }}>{action.desc}</div>
                   </div>
                   <svg style={{ width: '1.25rem', height: '1.25rem', color: '#1a1a1a', flexShrink: 0, transition: 'all 0.3s ease' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
