@@ -400,6 +400,13 @@ export default function CommunityPage() {
         {/* LEFT COLUMN */}
         <div>
 
+          {/* Video card - mobile only (desktop version is in aside) */}
+          {isMobile && (
+            <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', marginBottom: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+              {renderVideoCard()}
+            </div>
+          )}
+
           {/* Post Composer — always visible, expands on focus */}
           <div style={{
             background: '#ffffff',

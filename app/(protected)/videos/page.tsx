@@ -170,47 +170,7 @@ export default function LibraryPage() {
         }}></div>
       </div>
 
-      {/* Navigation */}
-      <nav style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 20,
-        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(20px)',
-        background: 'rgba(0, 0, 0, 0.2)'
-      }}>
-        <div style={{
-          maxWidth: '80rem',
-          margin: '0 auto',
-          padding: '1.25rem 1.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <Link href="/members" style={{
-            fontSize: isMobile ? '1rem' : '1.5rem',
-            fontWeight: 300,
-            letterSpacing: '0.2em',
-            color: '#1a1a1a',
-            textDecoration: 'none'
-          }}>
-            CIRCLE OF RETURN
-          </Link>
-          <Link href="/members" style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontWeight: 300,
-            border: '1px solid rgba(155, 196, 184, 0.3)',
-            borderRadius: '3px',
-            color: '#9bc4b8',
-            textDecoration: 'none'
-          }}>
-            Dashboard
-          </Link>
-        </div>
-      </nav>
-
-      <div style={{ position: 'sticky',
+<div style={{ position: 'sticky',
         top: 0, zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '1rem 1.5rem' }}>
         {/* Header */}
         <div style={{ marginBottom: '2rem' }}>
