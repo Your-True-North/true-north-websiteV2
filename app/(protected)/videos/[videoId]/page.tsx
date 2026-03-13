@@ -379,7 +379,8 @@ export default function VideoPlayerPage() {
                   <h1 style={{
                     fontSize: isMobile ? '1.5rem' : '2rem',
                     fontWeight: 400,
-                    marginBottom: '0.5rem'
+                    marginBottom: '0.5rem',
+                    color: '#1a1a1a'
                   }}>
                     {video.title}
                   </h1>
@@ -475,7 +476,8 @@ export default function VideoPlayerPage() {
               <h2 style={{
                 fontSize: '1.25rem',
                 fontWeight: 400,
-                marginBottom: '1.5rem'
+                marginBottom: '1.5rem',
+                color: '#1a1a1a'
               }}>
                 Comments ({comments.length})
               </h2>
@@ -602,7 +604,8 @@ export default function VideoPlayerPage() {
               <h2 style={{
                 fontSize: '1.25rem',
                 fontWeight: 400,
-                marginBottom: '1.5rem'
+                marginBottom: '1.5rem',
+                color: '#1a1a1a'
               }}>
                 Up Next
               </h2>
@@ -679,7 +682,8 @@ export default function VideoPlayerPage() {
                               textOverflow: 'ellipsis',
                               display: '-webkit-box',
                               WebkitLineClamp: 2,
-                              WebkitBoxOrient: 'vertical'
+                              WebkitBoxOrient: 'vertical',
+                              color: '#1a1a1a'
                             }}>
                               {related.title}
                             </h3>
