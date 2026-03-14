@@ -122,11 +122,11 @@ export default function ManageVideos() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0a0a0a',
+        background: '#ffffff',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: '#666'
       }}>
         Loading videos...
       </div>
@@ -134,11 +134,11 @@ export default function ManageVideos() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a' }}>
       {/* Header */}
       <div style={{
-        background: 'rgba(255, 255, 255, 0.02)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        background: '#ffffff',
+        borderBottom: '1px solid #e5e5e5',
         padding: '20px 40px',
         display: 'flex',
         justifyContent: 'space-between',
@@ -157,7 +157,7 @@ export default function ManageVideos() {
           >
             ← Back to Dashboard
           </Link>
-          <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#fff' }}>
+          <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#1a1a1a' }}>
             Manage Videos ({videos.length})
           </h1>
         </div>
@@ -194,91 +194,91 @@ export default function ManageVideos() {
         )}
 
         <div style={{
-          background: 'rgba(255, 255, 255, 0.02)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '3px',
           overflow: 'hidden'
         }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ background: 'rgba(255, 255, 255, 0.03)' }}>
+              <tr style={{ background: '#f8f8f8' }}>
                 <th style={{
                   padding: '16px',
                   textAlign: 'left',
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#9bc4b8',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                  color: '#999',
+                  borderBottom: '1px solid #e5e5e5'
                 }}>Title</th>
                 <th style={{
                   padding: '16px',
                   textAlign: 'left',
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#9bc4b8',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                  color: '#999',
+                  borderBottom: '1px solid #e5e5e5'
                 }}>Category</th>
                 <th style={{
                   padding: '16px',
                   textAlign: 'left',
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#9bc4b8',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                  color: '#999',
+                  borderBottom: '1px solid #e5e5e5'
                 }}>Duration</th>
                 <th style={{
                   padding: '16px',
                   textAlign: 'left',
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#9bc4b8',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                  color: '#999',
+                  borderBottom: '1px solid #e5e5e5'
                 }}>Engagement</th>
                 <th style={{
                   padding: '16px',
                   textAlign: 'left',
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#9bc4b8',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                  color: '#999',
+                  borderBottom: '1px solid #e5e5e5'
                 }}>Uploaded</th>
                 <th style={{
                   padding: '16px',
                   textAlign: 'right',
                   fontSize: '14px',
                   fontWeight: 600,
-                  color: '#9bc4b8',
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+                  color: '#999',
+                  borderBottom: '1px solid #e5e5e5'
                 }}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {videos.map((video) => (
-                <tr key={video.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                <tr key={video.id} style={{ borderBottom: '1px solid #e5e5e5' }}>
                   <td style={{
                     padding: '16px',
                     fontSize: '14px',
-                    color: '#fff'
+                    color: '#1a1a1a'
                   }}>{video.title}</td>
                   <td style={{
                     padding: '16px',
                     fontSize: '14px',
-                    color: 'rgba(255, 255, 255, 0.7)'
+                    color: '#333'
                   }}>{video.category}</td>
                   <td style={{
                     padding: '16px',
                     fontSize: '14px',
-                    color: 'rgba(255, 255, 255, 0.7)'
+                    color: '#333'
                   }}>{video.duration ? `${video.duration}m` : '-'}</td>
                   <td style={{
                     padding: '16px',
                     fontSize: '14px',
-                    color: 'rgba(255, 255, 255, 0.7)'
+                    color: '#333'
                   }}>{video.comment_count || 0} / {video.reaction_count || 0}</td>
                   <td style={{
                     padding: '16px',
                     fontSize: '14px',
-                    color: 'rgba(255, 255, 255, 0.7)'
+                    color: '#333'
                   }}>{video.createdAt ? new Date(video.createdAt).toLocaleDateString() : '-'}</td>
                   <td style={{
                     padding: '16px',
@@ -289,10 +289,10 @@ export default function ManageVideos() {
                         onClick={() => window.open(video.youtubeUrl, '_blank')}
                         style={{
                           padding: '6px 12px',
-                          background: 'rgba(255, 255, 255, 0.05)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          background: '#f8f8f8',
+                          border: '1px solid #e5e5e5',
                           borderRadius: '3px',
-                          color: '#fff',
+                          color: '#1a1a1a',
                           fontSize: '12px',
                           cursor: 'pointer'
                         }}
@@ -303,8 +303,8 @@ export default function ManageVideos() {
                         onClick={() => setEditingVideo(video)}
                         style={{
                           padding: '6px 12px',
-                          background: 'rgba(155, 196, 184, 0.1)',
-                          border: '1px solid rgba(155, 196, 184, 0.3)',
+                          background: '#f0faf8',
+                          border: '1px solid #9bc4b8',
                           borderRadius: '3px',
                           color: '#9bc4b8',
                           fontSize: '12px',
@@ -339,7 +339,7 @@ export default function ManageVideos() {
           <div style={{
             textAlign: 'center',
             padding: '60px 20px',
-            color: 'rgba(255, 255, 255, 0.5)'
+            color: '#666'
           }}>
             <p style={{ marginBottom: '20px' }}>No videos uploaded yet</p>
             <Link
@@ -366,7 +366,7 @@ export default function ManageVideos() {
         <div style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(0, 0, 0, 0.8)',
+          background: 'rgba(0, 0, 0, 0.5)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -374,8 +374,8 @@ export default function ManageVideos() {
           padding: '20px'
         }}>
           <div style={{
-            background: '#1a1a1a',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#ffffff',
+            border: '1px solid #e5e5e5',
             borderRadius: '8px',
             maxWidth: '600px',
             width: '100%',
@@ -384,15 +384,15 @@ export default function ManageVideos() {
           }}>
             <div style={{
               padding: '24px',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+              borderBottom: '1px solid #e5e5e5'
             }}>
-              <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#9bc4b8' }}>
+              <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#1a1a1a' }}>
                 Edit Video
               </h2>
             </div>
             <div style={{ padding: '24px' }}>
               <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: '#666' }}>
                   Title *
                 </label>
                 <input
@@ -402,17 +402,17 @@ export default function ManageVideos() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '14px'
                   }}
                 />
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: '#666' }}>
                   Description
                 </label>
                 <textarea
@@ -422,10 +422,10 @@ export default function ManageVideos() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '14px',
                     resize: 'vertical'
                   }}
@@ -433,7 +433,7 @@ export default function ManageVideos() {
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: '#666' }}>
                   Category *
                 </label>
                 <select
@@ -442,21 +442,21 @@ export default function ManageVideos() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '14px'
                   }}
                 >
                   {categories.map((cat) => (
-                    <option key={cat} value={cat} style={{ background: '#1a1a1a' }}>{cat}</option>
+                    <option key={cat} value={cat}>{cat}</option>
                   ))}
                 </select>
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: '#666' }}>
                   YouTube URL
                 </label>
                 <input
@@ -466,17 +466,17 @@ export default function ManageVideos() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '14px'
                   }}
                 />
               </div>
 
               <div style={{ marginBottom: '24px' }}>
-                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <label style={{ display: 'block', fontSize: '14px', marginBottom: '8px', color: '#666' }}>
                   Duration (minutes)
                 </label>
                 <input
@@ -486,10 +486,10 @@ export default function ManageVideos() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '14px'
                   }}
                 />
@@ -500,10 +500,10 @@ export default function ManageVideos() {
                   onClick={() => setEditingVideo(null)}
                   style={{
                     padding: '12px 24px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
-                    color: '#fff',
+                    color: '#1a1a1a',
                     fontSize: '14px',
                     cursor: 'pointer'
                   }}

@@ -123,14 +123,14 @@ export default function AdminFoundingPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontWeight: 300 }}>Loading...</div>
+      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: '#666', fontWeight: 300 }}>Loading...</div>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff', padding: '2rem' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', padding: '2rem' }}>
       <div style={{ maxWidth: '90rem', margin: '0 auto' }}>
         {/* Header */}
         <div style={{
@@ -142,20 +142,20 @@ export default function AdminFoundingPage() {
           gap: '1rem'
         }}>
           <div>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 300, marginBottom: '0.5rem' }}>
+            <h1 style={{ fontSize: '2.5rem', fontWeight: 300, marginBottom: '0.5rem', color: '#1a1a1a' }}>
               Founding Members
             </h1>
-            <p style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+            <p style={{ color: '#666' }}>
               Circle of Return - First 30
             </p>
           </div>
 
           <Link href="/members" style={{
             padding: '0.75rem 1.5rem',
-            background: 'rgba(255, 255, 255, 0.1)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
+            background: '#f8f8f8',
+            border: '1px solid #e5e5e5',
             borderRadius: '3px',
-            color: '#fff',
+            color: '#1a1a1a',
             textDecoration: 'none',
             fontSize: '0.875rem'
           }}>
@@ -179,7 +179,7 @@ export default function AdminFoundingPage() {
             <div style={{ fontSize: '3rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.5rem' }}>
               {members.length}
             </div>
-            <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+            <div style={{ fontSize: '0.875rem', color: '#666' }}>
               Total Founding Members
             </div>
           </div>
@@ -187,10 +187,10 @@ export default function AdminFoundingPage() {
           <div style={{
             padding: '1.5rem',
             background: members.length >= 30
-              ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.1))'
+              ? 'linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05))'
               : 'linear-gradient(135deg, rgba(127, 176, 105, 0.15), rgba(155, 196, 184, 0.1))',
             border: members.length >= 30
-              ? '1px solid rgba(239, 68, 68, 0.4)'
+              ? '1px solid rgba(239, 68, 68, 0.3)'
               : '1px solid rgba(127, 176, 105, 0.3)',
             borderRadius: '3px'
           }}>
@@ -202,7 +202,7 @@ export default function AdminFoundingPage() {
             }}>
               {Math.max(0, 30 - members.length)}
             </div>
-            <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+            <div style={{ fontSize: '0.875rem', color: '#666' }}>
               {members.length >= 30 ? 'Sold Out!' : 'Spots Remaining'}
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function AdminFoundingPage() {
             <div style={{ fontSize: '3rem', fontWeight: 300, color: '#6a994e', marginBottom: '0.5rem' }}>
               {members.filter(m => m.subscription_status === 'active').length}
             </div>
-            <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+            <div style={{ fontSize: '0.875rem', color: '#666' }}>
               Active Subscriptions
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function AdminFoundingPage() {
           flexWrap: 'wrap',
           gap: '1rem'
         }}>
-          <div style={{ fontSize: '1.125rem', fontWeight: 400 }}>
+          <div style={{ fontSize: '1.125rem', fontWeight: 400, color: '#1a1a1a' }}>
             {members.length} members
           </div>
 
@@ -254,8 +254,8 @@ export default function AdminFoundingPage() {
 
         {/* Table */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '3px',
           overflow: 'hidden'
         }}>
@@ -266,14 +266,14 @@ export default function AdminFoundingPage() {
               fontSize: '0.875rem'
             }}>
               <thead>
-                <tr style={{ background: 'rgba(0, 0, 0, 0.3)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                <tr style={{ background: '#f8f8f8', borderBottom: '1px solid #e5e5e5' }}>
                   <th
                     onClick={() => handleSort('signup_number')}
                     style={{
                       padding: '1rem',
                       textAlign: 'left',
                       fontWeight: 500,
-                      color: '#9bc4b8',
+                      color: '#999',
                       cursor: 'pointer',
                       userSelect: 'none'
                     }}
@@ -286,14 +286,14 @@ export default function AdminFoundingPage() {
                       padding: '1rem',
                       textAlign: 'left',
                       fontWeight: 500,
-                      color: '#9bc4b8',
+                      color: '#999',
                       cursor: 'pointer',
                       userSelect: 'none'
                     }}
                   >
                     Name {sortBy === 'name' && (sortDir === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 500, color: '#9bc4b8' }}>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 500, color: '#999' }}>
                     Email
                   </th>
                   <th
@@ -302,17 +302,17 @@ export default function AdminFoundingPage() {
                       padding: '1rem',
                       textAlign: 'left',
                       fontWeight: 500,
-                      color: '#9bc4b8',
+                      color: '#999',
                       cursor: 'pointer',
                       userSelect: 'none'
                     }}
                   >
                     Signup Date {sortBy === 'signup_date' && (sortDir === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 500, color: '#9bc4b8' }}>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 500, color: '#999' }}>
                     Status
                   </th>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 500, color: '#9bc4b8' }}>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 500, color: '#999' }}>
                     Last Login
                   </th>
                 </tr>
@@ -323,7 +323,7 @@ export default function AdminFoundingPage() {
                     <td colSpan={6} style={{
                       padding: '3rem',
                       textAlign: 'center',
-                      color: 'rgba(255, 255, 255, 0.5)'
+                      color: '#999'
                     }}>
                       No founding members yet
                     </td>
@@ -331,33 +331,33 @@ export default function AdminFoundingPage() {
                 ) : (
                   sortedMembers.map((member, index) => (
                     <tr key={index} style={{
-                      borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                      borderBottom: '1px solid #e5e5e5',
                       transition: 'background 0.2s'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'}
+                    onMouseEnter={(e) => e.currentTarget.style.background = '#f8f8f8'}
                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                     >
                       <td style={{ padding: '1rem', color: '#9bc4b8', fontWeight: 600 }}>
                         #{member.signup_number}
                       </td>
-                      <td style={{ padding: '1rem' }}>
+                      <td style={{ padding: '1rem', color: '#1a1a1a' }}>
                         {member.name}
                       </td>
-                      <td style={{ padding: '1rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                      <td style={{ padding: '1rem', color: '#666' }}>
                         {member.email}
                       </td>
-                      <td style={{ padding: '1rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                      <td style={{ padding: '1rem', color: '#666' }}>
                         {new Date(member.signup_date).toLocaleDateString()}
                       </td>
                       <td style={{ padding: '1rem' }}>
                         <span style={{
                           padding: '0.25rem 0.75rem',
                           background: member.subscription_status === 'active'
-                            ? 'rgba(127, 176, 105, 0.2)'
-                            : 'rgba(239, 68, 68, 0.2)',
+                            ? 'rgba(127, 176, 105, 0.15)'
+                            : 'rgba(239, 68, 68, 0.1)',
                           border: `1px solid ${member.subscription_status === 'active'
                             ? 'rgba(127, 176, 105, 0.4)'
-                            : 'rgba(239, 68, 68, 0.4)'}`,
+                            : 'rgba(239, 68, 68, 0.3)'}`,
                           borderRadius: '4px',
                           fontSize: '0.75rem',
                           color: member.subscription_status === 'active' ? '#7fb069' : '#ef4444'
@@ -365,7 +365,7 @@ export default function AdminFoundingPage() {
                           {member.subscription_status}
                         </span>
                       </td>
-                      <td style={{ padding: '1rem', color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.875rem' }}>
+                      <td style={{ padding: '1rem', color: '#999', fontSize: '0.875rem' }}>
                         {member.last_login ? new Date(member.last_login).toLocaleDateString() : 'Never'}
                       </td>
                     </tr>

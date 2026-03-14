@@ -99,11 +99,11 @@ export default function UploadVideo() {
   ]
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a' }}>
       {/* Header */}
       <div style={{
-        background: 'rgba(255, 255, 255, 0.02)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        background: '#ffffff',
+        borderBottom: '1px solid #e5e5e5',
         padding: '20px 40px',
         display: 'flex',
         justifyContent: 'space-between',
@@ -122,7 +122,7 @@ export default function UploadVideo() {
           >
             ← Back to Dashboard
           </Link>
-          <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#fff' }}>
+          <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#1a1a1a' }}>
             Upload Video
           </h1>
         </div>
@@ -136,7 +136,7 @@ export default function UploadVideo() {
               display: 'block',
               fontSize: '14px',
               marginBottom: '8px',
-              color: 'rgba(255, 255, 255, 0.7)'
+              color: '#666'
             }}>
               Video Title *
             </label>
@@ -148,10 +148,10 @@ export default function UploadVideo() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '16px',
                 outline: 'none'
               }}
@@ -164,7 +164,7 @@ export default function UploadVideo() {
               display: 'block',
               fontSize: '14px',
               marginBottom: '8px',
-              color: 'rgba(255, 255, 255, 0.7)'
+              color: '#666'
             }}>
               Description
             </label>
@@ -175,10 +175,10 @@ export default function UploadVideo() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '16px',
                 outline: 'none',
                 resize: 'vertical'
@@ -192,7 +192,7 @@ export default function UploadVideo() {
               display: 'block',
               fontSize: '14px',
               marginBottom: '8px',
-              color: 'rgba(255, 255, 255, 0.7)'
+              color: '#666'
             }}>
               YouTube Video ID *
             </label>
@@ -204,10 +204,10 @@ export default function UploadVideo() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '16px',
                 outline: 'none'
               }}
@@ -215,7 +215,7 @@ export default function UploadVideo() {
             />
             <p style={{
               fontSize: '12px',
-              color: 'rgba(255, 255, 255, 0.5)',
+              color: '#999',
               marginTop: '4px'
             }}>
               From URL: https://youtube.com/watch?v=<strong>dQw4w9WgXcQ</strong>
@@ -227,7 +227,7 @@ export default function UploadVideo() {
               display: 'block',
               fontSize: '14px',
               marginBottom: '8px',
-              color: 'rgba(255, 255, 255, 0.7)'
+              color: '#666'
             }}>
               Category *
             </label>
@@ -238,17 +238,17 @@ export default function UploadVideo() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '16px',
                 outline: 'none',
                 cursor: 'pointer'
               }}
             >
               {categories.map((cat) => (
-                <option key={cat} value={cat} style={{ background: '#0a0a0a' }}>
+                <option key={cat} value={cat}>
                   {cat}
                 </option>
               ))}
@@ -260,7 +260,7 @@ export default function UploadVideo() {
               display: 'block',
               fontSize: '14px',
               marginBottom: '8px',
-              color: 'rgba(255, 255, 255, 0.7)'
+              color: '#666'
             }}>
               Duration (minutes)
             </label>
@@ -272,10 +272,10 @@ export default function UploadVideo() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '16px',
                 outline: 'none'
               }}
@@ -288,7 +288,7 @@ export default function UploadVideo() {
               display: 'block',
               fontSize: '14px',
               marginBottom: '8px',
-              color: 'rgba(255, 255, 255, 0.7)'
+              color: '#666'
             }}>
               Thumbnail URL (optional)
             </label>
@@ -299,10 +299,10 @@ export default function UploadVideo() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '16px',
                 outline: 'none'
               }}
@@ -360,10 +360,10 @@ export default function UploadVideo() {
               href="/admin/videos/manage"
               style={{
                 padding: '14px 32px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 fontSize: '16px',
                 fontWeight: 600,
                 textDecoration: 'none',

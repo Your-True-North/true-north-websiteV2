@@ -458,11 +458,11 @@ export default function JourneyPage() {
                         fontSize: '0.75rem'
                       }}>{category.icon}</div>
                       <span style={{ flex: 1, textAlign: 'left', fontSize: '0.85rem' }}>{category.name}</span>
-                      <span style={{ 
-                        background: 'rgba(255, 255, 255, 0.1)', 
-                        padding: '2px 8px', 
-                        borderRadius: '12px', 
-                        fontSize: '0.75rem' 
+                      <span style={{
+                        background: '#e8e8e8',
+                        padding: '2px 8px',
+                        borderRadius: '12px',
+                        fontSize: '0.75rem'
                       }}>{videos.filter(v => v.category === category.name).length}</span>
                     </button>
                   ))}
