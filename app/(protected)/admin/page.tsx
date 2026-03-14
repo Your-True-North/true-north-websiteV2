@@ -238,14 +238,14 @@ export default function AdminPage() {
 
   if (loading || !user) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ color: '#999' }}>Loading dashboard...</div>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0b', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
         position: 'fixed',
@@ -253,9 +253,9 @@ export default function AdminPage() {
         left: 0,
         right: 0,
         zIndex: 50,
-        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+        borderBottom: '1px solid #e5e5e5',
         backdropFilter: 'blur(20px)',
-        background: 'rgba(0, 0, 0, 0.8)'
+        background: '#ffffff'
       }}>
         <div style={{
           maxWidth: '80rem',
@@ -270,7 +270,8 @@ export default function AdminPage() {
             fontWeight: 300,
             letterSpacing: '0.2em',
             color: '#1a1a1a',
-            textDecoration: 'none'
+            textDecoration: 'none',
+            fontWeight: 600
           }}>
             CIRCLE OF RETURN
           </Link>
@@ -280,7 +281,7 @@ export default function AdminPage() {
               padding: '0.5rem 1rem',
               fontSize: '0.875rem',
               fontWeight: 300,
-              border: '1px solid rgba(155, 196, 184, 0.3)',
+              border: '1px solid #9bc4b8',
               borderRadius: '8px',
               color: '#9bc4b8',
               textDecoration: 'none'
@@ -291,7 +292,7 @@ export default function AdminPage() {
               padding: '0.5rem 1rem',
               fontSize: '0.875rem',
               fontWeight: 300,
-              border: '1px solid rgba(155, 196, 184, 0.3)',
+              border: '1px solid #9bc4b8',
               borderRadius: '8px',
               color: '#9bc4b8',
               textDecoration: 'none'
@@ -304,7 +305,7 @@ export default function AdminPage() {
 
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1rem' }}>
         <div style={{ marginBottom: '2rem' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: '0.5rem' }}>Admin Dashboard</h1>
+          <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: '0.5rem', color: '#1a1a1a' }}>Admin Dashboard</h1>
           <p style={{ color: '#666', fontSize: '0.95rem' }}>
             Manage your community, videos, and track engagement
           </p>
@@ -384,17 +385,17 @@ export default function AdminPage() {
 
           {/* Top Engaged Members */}
           <div style={{
-            background: 'rgba(255, 255, 255, 0.03)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#ffffff',
+            border: '1px solid #e5e5e5',
             borderRadius: '12px',
             overflow: 'hidden'
           }}>
             <div style={{
               padding: '1.5rem',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-              background: 'rgba(155, 196, 184, 0.05)'
+              borderBottom: '1px solid #e5e5e5',
+              background: '#f0faf8'
             }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>🌟 Top Engaged Members</h2>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a' }}>🌟 Top Engaged Members</h2>
               <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
                 Members to personally reach out to
               </p>
@@ -406,17 +407,17 @@ export default function AdminPage() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '1rem',
-                  background: 'rgba(255, 255, 255, 0.02)',
+                  background: '#f8f8f8',
                   borderRadius: '8px',
                   marginBottom: '0.75rem',
-                  border: '1px solid rgba(255, 255, 255, 0.05)'
+                  border: '1px solid #e5e5e5'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <div style={{
                       width: '2rem',
                       height: '2rem',
                       borderRadius: '50%',
-                      background: index < 3 ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : 'rgba(255, 255, 255, 0.1)',
+                      background: index < 3 ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#e8e8e8',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -447,17 +448,17 @@ export default function AdminPage() {
 
           {/* Recent Activity Feed */}
           <div style={{
-            background: 'rgba(255, 255, 255, 0.03)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#ffffff',
+            border: '1px solid #e5e5e5',
             borderRadius: '12px',
             overflow: 'hidden'
           }}>
             <div style={{
               padding: '1.5rem',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-              background: 'rgba(127, 176, 105, 0.05)'
+              borderBottom: '1px solid #e5e5e5',
+              background: '#f5faf3'
             }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>📊 Recent Activity</h2>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a' }}>📊 Recent Activity</h2>
               <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
                 Live community engagement feed
               </p>
@@ -466,7 +467,7 @@ export default function AdminPage() {
               {dashboardData?.recentActivity?.length > 0 ? dashboardData.recentActivity.map((activity, index) => (
                 <div key={index} style={{
                   padding: '0.75rem',
-                  borderLeft: '2px solid rgba(155, 196, 184, 0.3)',
+                  borderLeft: '2px solid #9bc4b8',
                   marginBottom: '0.75rem',
                   paddingLeft: '1rem'
                 }}>
@@ -484,7 +485,7 @@ export default function AdminPage() {
                       on "{activity.video_title}"
                     </div>
                   )}
-                  <div style={{ fontSize: '0.7rem', color: 'rgba(26, 26, 26, 0.4)' }}>
+                  <div style={{ fontSize: '0.7rem', color: '#999' }}>
                     {formatTime(activity.createdat)}
                   </div>
                 </div>
@@ -502,13 +503,13 @@ export default function AdminPage() {
         }}>
           <div style={{
             padding: '1.5rem',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            borderBottom: '1px solid #e5e5e5',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between'
           }}>
             <div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>🎥 Video Management</h2>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a' }}>🎥 Video Management</h2>
               <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
                 Upload and manage community videos
               </p>
@@ -533,15 +534,15 @@ export default function AdminPage() {
           <div style={{ padding: '1.5rem' }}>
             {videos.length > 0 ? videos.map((video) => (
               <div key={video.id} style={{
-                background: 'rgba(255, 255, 255, 0.02)',
-                border: '1px solid rgba(255, 255, 255, 0.05)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '8px',
                 padding: '1rem',
                 marginBottom: '1rem'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                   <div style={{ flex: 1 }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem', color: '#1a1a1a' }}>
                       {video.title}
                     </h3>
                     <div style={{
@@ -573,9 +574,9 @@ export default function AdminPage() {
                       onClick={() => setEditingVideo(video)}
                       style={{
                         padding: '0.5rem 1rem',
-                        background: 'rgba(155, 196, 184, 0.1)',
+                        background: '#f0faf8',
                         color: '#9bc4b8',
-                        border: '1px solid rgba(155, 196, 184, 0.3)',
+                        border: '1px solid #9bc4b8',
                         borderRadius: '3px',
                         cursor: 'pointer',
                         fontSize: '0.75rem'
@@ -619,9 +620,9 @@ export default function AdminPage() {
           padding: '1rem'
         }}>
           <div style={{
-            background: '#0a0a0b',
+            background: '#ffffff',
             borderRadius: '12px',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
+            border: '1px solid #e5e5e5',
             maxWidth: '600px',
             width: '100%',
             maxHeight: '90vh',
@@ -629,12 +630,12 @@ export default function AdminPage() {
           }}>
             <div style={{
               padding: '1.5rem',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+              borderBottom: '1px solid #e5e5e5',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a' }}>
                 {editingVideo ? 'Edit Video' : 'Add New Video'}
               </h2>
               <button
@@ -669,8 +670,8 @@ export default function AdminPage() {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     color: '#1a1a1a',
                     fontSize: '0.875rem'
@@ -745,8 +746,8 @@ export default function AdminPage() {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     color: '#1a1a1a',
                     fontSize: '0.875rem'
@@ -769,8 +770,8 @@ export default function AdminPage() {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     color: '#1a1a1a',
                     fontSize: '0.875rem',
@@ -793,8 +794,8 @@ export default function AdminPage() {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     color: '#1a1a1a',
                     fontSize: '0.875rem'
@@ -828,9 +829,9 @@ export default function AdminPage() {
                   }}
                   style={{
                     padding: '0.75rem 1.5rem',
-                    background: 'rgba(255, 255, 255, 0.1)',
+                    background: '#f8f8f8',
                     color: '#1a1a1a',
-                    border: 'none',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '8px',
                     cursor: 'pointer'
                   }}
