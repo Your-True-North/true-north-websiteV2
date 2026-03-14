@@ -341,7 +341,7 @@ export default function JourneyPage() {
                 padding: '0.5rem 1.25rem',
                 fontSize: '0.875rem',
                 fontWeight: 300,
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                border: '1px solid #e5e5e5',
                 borderRadius: '8px',
                 background: 'transparent',
                 color: '#1a1a1a',
@@ -349,12 +349,12 @@ export default function JourneyPage() {
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+                e.currentTarget.style.background = '#f0f0f0'
+                e.currentTarget.style.borderColor = '#d5d5d5'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.borderColor = '#e5e5e5'
               }}
             >
               Sign Out
@@ -373,10 +373,9 @@ export default function JourneyPage() {
           {/* Left Sidebar */}
           <div>
             <div style={{ 
-              background: 'rgba(255, 255, 255, 0.03)', 
-              backdropFilter: 'blur(20px)', 
-              borderRadius: '12px', 
-              border: '1px solid rgba(255, 255, 255, 0.1)', 
+              background: '#f8f8f8',
+              borderRadius: '12px',
+              border: '1px solid #e5e5e5',
               padding: '1.5rem',
               position: isMobile ? 'relative' : 'sticky',
               top: isMobile ? 'auto' : '6rem'
@@ -402,8 +401,8 @@ export default function JourneyPage() {
                       gap: '0.75rem',
                       padding: '0.75rem',
                       borderRadius: '8px',
-                      background: selectedCategory === "All" ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
-                      border: selectedCategory === "All" ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
+                      background: selectedCategory === "All" ? 'rgba(155, 196, 184, 0.15)' : 'transparent',
+                      border: selectedCategory === "All" ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid #e5e5e5',
                       color: selectedCategory === "All" ? '#e67e22' : '#1a1a1a',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease'
@@ -423,10 +422,10 @@ export default function JourneyPage() {
                     }}>∀</div>
                     <span style={{ flex: 1, textAlign: 'left', fontSize: '0.9rem' }}>All Videos</span>
                     <span style={{ 
-                      background: 'rgba(255, 255, 255, 0.1)', 
-                      padding: '2px 8px', 
-                      borderRadius: '12px', 
-                      fontSize: '0.75rem' 
+                      background: '#e8e8e8',
+                      padding: '2px 8px',
+                      borderRadius: '12px',
+                      fontSize: '0.75rem'
                     }}>{videos.length}</span>
                   </button>
                   
@@ -441,8 +440,8 @@ export default function JourneyPage() {
                         gap: '0.75rem',
                         padding: '0.75rem',
                         borderRadius: '8px',
-                        background: selectedCategory === category.name ? 'rgba(155, 196, 184, 0.15)' : 'rgba(255, 255, 255, 0.02)',
-                        border: selectedCategory === category.name ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid rgba(255, 255, 255, 0.05)',
+                        background: selectedCategory === category.name ? 'rgba(155, 196, 184, 0.15)' : 'transparent',
+                        border: selectedCategory === category.name ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid #e5e5e5',
                         color: selectedCategory === category.name ? '#e67e22' : '#1a1a1a',
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
@@ -507,15 +506,14 @@ export default function JourneyPage() {
           {/* Main Content */}
           <div>
             <div style={{ 
-              background: 'rgba(255, 255, 255, 0.03)', 
-              backdropFilter: 'blur(20px)', 
-              borderRadius: '12px', 
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#f8f8f8',
+              borderRadius: '12px',
+              border: '1px solid #e5e5e5',
               overflow: 'hidden'
             }}>
               
-              <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', fontWeight: 600, marginBottom: '0.5rem' }}>
+              <div style={{ padding: '1.5rem', borderBottom: '1px solid #e5e5e5' }}>
+                <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', fontWeight: 600, marginBottom: '0.5rem', color: '#1a1a1a' }}>
                   {selectedCategory === "All" ? "All Videos" : selectedCategory}
                 </h1>
                 <p style={{ color: '#666', fontSize: '0.95rem' }}>
@@ -540,19 +538,19 @@ export default function JourneyPage() {
                         window.history.pushState({}, '', `/journey?v=${video.id}`)
                       }}
                       style={{
-                        background: 'rgba(255, 255, 255, 0.03)',
+                        background: '#ffffff',
                         borderRadius: '12px',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        border: '1px solid #e5e5e5',
                         overflow: 'hidden',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.border = '1px solid rgba(155, 196, 184, 0.3)'
+                        e.currentTarget.style.border = '1px solid #9bc4b8'
                         e.currentTarget.style.transform = 'translateY(-4px)'
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.08)'
+                        e.currentTarget.style.border = '1px solid #e5e5e5'
                         e.currentTarget.style.transform = 'translateY(0)'
                       }}
                     >
@@ -581,9 +579,10 @@ export default function JourneyPage() {
                       
                       <div style={{ padding: '1rem' }}>
                         <h3 style={{ 
-                          fontWeight: 600, 
-                          marginBottom: '0.5rem', 
+                          fontWeight: 600,
+                          marginBottom: '0.5rem',
                           fontSize: '1rem',
+                          color: '#1a1a1a',
                           display: '-webkit-box',
                           WebkitLineClamp: 2,
                           WebkitBoxOrient: 'vertical',
@@ -636,24 +635,23 @@ export default function JourneyPage() {
             {/* Community Activity - Mobile */}
             {isMobile && (
               <div style={{ 
-                background: 'rgba(255, 255, 255, 0.03)', 
-                backdropFilter: 'blur(20px)', 
-                borderRadius: '12px', 
-                border: '1px solid rgba(255, 255, 255, 0.1)', 
+                background: '#f8f8f8',
+                borderRadius: '12px',
+                border: '1px solid #e5e5e5',
                 padding: '1.5rem',
                 marginTop: '1.5rem'
               }}>
-                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem' }}>Community Activity</h2>
-                
+                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', color: '#1a1a1a' }}>Community Activity</h2>
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {mockActivity.map((activity, index) => (
-                    <div 
-                      key={index} 
-                      style={{ 
-                        padding: '1rem', 
-                        background: 'rgba(255, 255, 255, 0.02)', 
-                        borderRadius: '8px', 
-                        borderLeft: '2px solid rgba(155, 196, 184, 0.4)' 
+                    <div
+                      key={index}
+                      style={{
+                        padding: '1rem',
+                        background: '#ffffff',
+                        borderRadius: '8px',
+                        borderLeft: '2px solid rgba(155, 196, 184, 0.4)'
                       }}
                     >
                       <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
@@ -662,7 +660,7 @@ export default function JourneyPage() {
                       <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: '#1a1a1a', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#666', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -676,25 +674,24 @@ export default function JourneyPage() {
           {!isMobile && (
             <div style={{ gridColumn: '3 / 4' }}>
               <div style={{ 
-                background: 'rgba(255, 255, 255, 0.03)', 
-                backdropFilter: 'blur(20px)', 
-                borderRadius: '12px', 
-                border: '1px solid rgba(255, 255, 255, 0.1)', 
+                background: '#f8f8f8',
+                borderRadius: '12px',
+                border: '1px solid #e5e5e5',
                 padding: '1.5rem',
                 position: 'sticky',
                 top: '6rem'
               }}>
-                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem' }}>Community Activity</h2>
-                
+                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', color: '#1a1a1a' }}>Community Activity</h2>
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {mockActivity.map((activity, index) => (
-                    <div 
-                      key={index} 
-                      style={{ 
-                        padding: '1rem', 
-                        background: 'rgba(255, 255, 255, 0.02)', 
-                        borderRadius: '8px', 
-                        borderLeft: '2px solid rgba(155, 196, 184, 0.4)' 
+                    <div
+                      key={index}
+                      style={{
+                        padding: '1rem',
+                        background: '#ffffff',
+                        borderRadius: '8px',
+                        borderLeft: '2px solid rgba(155, 196, 184, 0.4)'
                       }}
                     >
                       <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
@@ -738,7 +735,7 @@ export default function JourneyPage() {
             style={{ 
               background: '#ffffff', 
               borderRadius: '12px', 
-              border: '1px solid rgba(255, 255, 255, 0.2)', 
+              border: '1px solid #e5e5e5',
               maxWidth: '56rem', 
               width: '100%', 
               maxHeight: '90vh', 
@@ -751,9 +748,9 @@ export default function JourneyPage() {
               alignItems: 'center', 
               justifyContent: 'space-between', 
               padding: '1.5rem', 
-              borderBottom: '1px solid rgba(255, 255, 255, 0.1)' 
+              borderBottom: '1px solid #e5e5e5'
             }}>
-              <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 600, paddingRight: '1rem' }}>{selectedVideo.title}</h2>
+              <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 600, paddingRight: '1rem', color: '#1a1a1a' }}>{selectedVideo.title}</h2>
               <button
                 onClick={() => {
                   setSelectedVideo(null)
@@ -821,7 +818,7 @@ export default function JourneyPage() {
               </p>
 
               {/* Like Button */}
-              <div style={{ marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <div style={{ marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid #e5e5e5' }}>
                 <button
                   onClick={() => handleLikeVideo(selectedVideo.id)}
                   style={{
@@ -829,8 +826,8 @@ export default function JourneyPage() {
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.75rem 1.5rem',
-                    background: videoLikes.includes(selectedVideo.id) ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-                    border: videoLikes.includes(selectedVideo.id) ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
+                    background: videoLikes.includes(selectedVideo.id) ? 'rgba(239, 68, 68, 0.2)' : '#f8f8f8',
+                    border: videoLikes.includes(selectedVideo.id) ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid #e5e5e5',
                     borderRadius: '8px',
                     color: videoLikes.includes(selectedVideo.id) ? '#ef4444' : '#1a1a1a',
                     cursor: 'pointer',
@@ -840,12 +837,12 @@ export default function JourneyPage() {
                   }}
                   onMouseEnter={(e) => {
                     if (!videoLikes.includes(selectedVideo.id)) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                      e.currentTarget.style.background = '#f0f0f0'
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!videoLikes.includes(selectedVideo.id)) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'
+                      e.currentTarget.style.background = '#f8f8f8'
                     }
                   }}
                 >
@@ -857,7 +854,7 @@ export default function JourneyPage() {
 
               {/* Comments Section */}
               <div>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1a1a1a' }}>
                   <span>💬</span>
                   <span>Comments ({getVideoCommentsCount(selectedVideo.id)})</span>
                 </h3>
@@ -872,8 +869,8 @@ export default function JourneyPage() {
                     style={{
                       width: '100%',
                       padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      background: '#f8f8f8',
+                      border: '1px solid #e5e5e5',
                       borderRadius: '8px',
                       color: '#1a1a1a',
                       fontSize: '0.95rem',
@@ -881,16 +878,16 @@ export default function JourneyPage() {
                       resize: 'vertical',
                       marginBottom: '0.75rem'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
-                    onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+                    onFocus={(e) => e.target.style.borderColor = '#9bc4b8'}
+                    onBlur={(e) => e.target.style.borderColor = '#e5e5e5'}
                   />
                   <button
                     onClick={() => handleAddComment(selectedVideo.id)}
                     disabled={!newComment.trim()}
                     style={{
                       padding: '0.75rem 1.5rem',
-                      background: newComment.trim() ? 'linear-gradient(135deg, #e67e22, #7fb069)' : 'rgba(255, 255, 255, 0.1)',
-                      color: newComment.trim() ? '#000' : 'rgba(255, 255, 255, 0.3)',
+                      background: newComment.trim() ? 'linear-gradient(135deg, #e67e22, #7fb069)' : '#f0f0f0',
+                      color: newComment.trim() ? '#000' : '#999',
                       border: 'none',
                       borderRadius: '8px',
                       fontSize: '0.95rem',
@@ -910,9 +907,9 @@ export default function JourneyPage() {
                       key={comment.id}
                       style={{
                         padding: '1rem',
-                        background: 'rgba(255, 255, 255, 0.03)',
+                        background: '#f8f8f8',
                         borderRadius: '8px',
-                        border: '1px solid rgba(255, 255, 255, 0.05)'
+                        border: '1px solid #e5e5e5'
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
