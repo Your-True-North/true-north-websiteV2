@@ -136,11 +136,11 @@ export default function AdminDashboard() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0a0a0a',
+        background: '#ffffff',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'rgba(255, 255, 255, 0.5)'
+        color: '#999'
       }}>
         Loading...
       </div>
@@ -157,21 +157,21 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a' }}>
       {/* Header */}
       <div style={{
-        background: 'rgba(255, 255, 255, 0.02)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        background: '#ffffff',
+        borderBottom: '1px solid #e5e5e5',
         padding: '20px 40px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
         <div>
-          <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#9bc4b8', marginBottom: '4px' }}>
+          <h1 style={{ fontSize: '24px', fontWeight: 600, color: '#1a1a1a', marginBottom: '4px' }}>
             Admin Dashboard
           </h1>
-          <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.5)' }}>
+          <p style={{ fontSize: '14px', color: '#666' }}>
             Welcome back, {admin.name}
           </p>
         </div>
@@ -179,10 +179,10 @@ export default function AdminDashboard() {
           onClick={handleLogout}
           style={{
             padding: '10px 20px',
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#f8f8f8',
+            border: '1px solid #e5e5e5',
             borderRadius: '3px',
-            color: '#fff',
+            color: '#1a1a1a',
             fontSize: '14px',
             cursor: 'pointer'
           }}
@@ -198,7 +198,7 @@ export default function AdminDashboard() {
           display: 'flex',
           gap: '8px',
           marginBottom: '32px',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          borderBottom: '1px solid #e5e5e5',
           paddingBottom: '16px'
         }}>
           {[
@@ -212,10 +212,10 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab(tab.id as any)}
               style={{
                 padding: '12px 24px',
-                background: activeTab === tab.id ? 'rgba(127, 176, 105, 0.2)' : 'transparent',
-                border: activeTab === tab.id ? '1px solid rgba(127, 176, 105, 0.4)' : '1px solid transparent',
+                background: activeTab === tab.id ? 'rgba(127, 176, 105, 0.15)' : 'transparent',
+                border: activeTab === tab.id ? '1px solid #7fb069' : '1px solid transparent',
                 borderRadius: '3px',
-                color: activeTab === tab.id ? '#9bc4b8' : 'rgba(255, 255, 255, 0.6)',
+                color: activeTab === tab.id ? '#7fb069' : '#666',
                 fontSize: '14px',
                 fontWeight: 500,
                 cursor: 'pointer',
@@ -247,26 +247,26 @@ export default function AdminDashboard() {
                   style={{
                     display: 'block',
                     padding: '24px',
-                    background: 'rgba(255, 255, 255, 0.02)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: '#ffffff',
+                    border: '1px solid #e5e5e5',
                     borderRadius: '3px',
                     textDecoration: 'none',
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(127, 176, 105, 0.1)'
-                    e.currentTarget.style.borderColor = 'rgba(127, 176, 105, 0.3)'
+                    e.currentTarget.style.background = '#f5faf3'
+                    e.currentTarget.style.borderColor = '#7fb069'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.background = '#ffffff'
+                    e.currentTarget.style.borderColor = '#e5e5e5'
                   }}
                 >
                   <div style={{ fontSize: '32px', marginBottom: '12px' }}>{item.icon}</div>
                   <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '4px', color: '#9bc4b8' }}>
                     {item.title}
                   </h3>
-                  <p style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>{item.desc}</p>
+                  <p style={{ fontSize: '13px', color: '#666' }}>{item.desc}</p>
                 </Link>
               ))}
             </div>
@@ -276,41 +276,41 @@ export default function AdminDashboard() {
         {/* Members Tab */}
         {activeTab === 'members' && (
           <div style={{
-            background: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#ffffff',
+            border: '1px solid #e5e5e5',
             borderRadius: '3px',
             overflow: 'hidden'
           }}>
-            <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#9bc4b8' }}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid #e5e5e5' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#1a1a1a' }}>
                 Top Engaged Members ({topMembers.length})
               </h2>
             </div>
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ background: 'rgba(255, 255, 255, 0.03)' }}>
-                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Member</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Level</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Joined</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Comments</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Reactions</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Engagement</th>
+                  <tr style={{ background: '#f8f8f8' }}>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Member</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Level</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Joined</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Comments</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Reactions</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Engagement</th>
                   </tr>
                 </thead>
                 <tbody>
                   {topMembers.length === 0 ? (
                     <tr>
-                      <td colSpan={6} style={{ padding: '40px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>
+                      <td colSpan={6} style={{ padding: '40px', textAlign: 'center', color: '#999' }}>
                         No members found
                       </td>
                     </tr>
                   ) : (
                     topMembers.map((member, i) => (
-                      <tr key={member.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                      <tr key={member.id} style={{ borderBottom: '1px solid #e5e5e5' }}>
                         <td style={{ padding: '16px 20px' }}>
                           <div style={{ fontWeight: 500 }}>{member.name || 'Unknown'}</div>
-                          <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.5)' }}>{member.email}</div>
+                          <div style={{ fontSize: '13px', color: '#999' }}>{member.email}</div>
                         </td>
                         <td style={{ padding: '16px 20px' }}>
                           <span style={{
@@ -323,23 +323,23 @@ export default function AdminDashboard() {
                             {member.level || 'Seeker'}
                           </span>
                         </td>
-                        <td style={{ padding: '16px 20px', color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px' }}>
+                        <td style={{ padding: '16px 20px', color: '#333', fontSize: '14px' }}>
                           {formatDate(member.joindate)}
                         </td>
-                        <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                        <td style={{ padding: '16px 20px', textAlign: 'center', color: '#333' }}>
                           {member.comment_count}
                         </td>
-                        <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                        <td style={{ padding: '16px 20px', textAlign: 'center', color: '#333' }}>
                           {member.reaction_count}
                         </td>
                         <td style={{ padding: '16px 20px', textAlign: 'center' }}>
                           <span style={{
                             padding: '4px 12px',
-                            background: parseInt(member.total_engagement) > 5 ? 'rgba(127, 176, 105, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                            background: parseInt(member.total_engagement) > 5 ? 'rgba(127, 176, 105, 0.15)' : '#e8e8e8',
                             borderRadius: '12px',
                             fontSize: '13px',
                             fontWeight: 600,
-                            color: parseInt(member.total_engagement) > 5 ? '#7fb069' : 'rgba(255, 255, 255, 0.7)'
+                            color: parseInt(member.total_engagement) > 5 ? '#7fb069' : '#666'
                           }}>
                             {member.total_engagement}
                           </span>
@@ -356,13 +356,13 @@ export default function AdminDashboard() {
         {/* Videos Tab */}
         {activeTab === 'videos' && (
           <div style={{
-            background: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#ffffff',
+            border: '1px solid #e5e5e5',
             borderRadius: '3px',
             overflow: 'hidden'
           }}>
-            <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#9bc4b8' }}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid #e5e5e5', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#1a1a1a' }}>
                 Top Engaged Videos
               </h2>
               <Link href="/admin/videos/manage" style={{
@@ -380,24 +380,24 @@ export default function AdminDashboard() {
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ background: 'rgba(255, 255, 255, 0.03)' }}>
-                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Video</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Category</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Uploaded</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Comments</th>
-                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.5)', textTransform: 'uppercase' }}>Reactions</th>
+                  <tr style={{ background: '#f8f8f8' }}>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Video</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Category</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'left', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Uploaded</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Comments</th>
+                    <th style={{ padding: '14px 20px', textAlign: 'center', fontSize: '12px', fontWeight: 600, color: '#999', textTransform: 'uppercase' }}>Reactions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {topVideos.length === 0 ? (
                     <tr>
-                      <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>
+                      <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: '#999' }}>
                         No videos found
                       </td>
                     </tr>
                   ) : (
                     topVideos.map((video) => (
-                      <tr key={video.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                      <tr key={video.id} style={{ borderBottom: '1px solid #e5e5e5' }}>
                         <td style={{ padding: '16px 20px' }}>
                           <div style={{ fontWeight: 500 }}>{video.title}</div>
                         </td>
@@ -412,13 +412,13 @@ export default function AdminDashboard() {
                             {video.category}
                           </span>
                         </td>
-                        <td style={{ padding: '16px 20px', color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px' }}>
+                        <td style={{ padding: '16px 20px', color: '#333', fontSize: '14px' }}>
                           {formatDate(video.createdAt)}
                         </td>
-                        <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                        <td style={{ padding: '16px 20px', textAlign: 'center', color: '#333' }}>
                           {video.comment_count}
                         </td>
-                        <td style={{ padding: '16px 20px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                        <td style={{ padding: '16px 20px', textAlign: 'center', color: '#333' }}>
                           {video.reaction_count}
                         </td>
                       </tr>
@@ -433,26 +433,26 @@ export default function AdminDashboard() {
         {/* Activity Tab */}
         {activeTab === 'activity' && (
           <div style={{
-            background: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#ffffff',
+            border: '1px solid #e5e5e5',
             borderRadius: '3px',
             overflow: 'hidden'
           }}>
-            <div style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
-              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#9bc4b8' }}>
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid #e5e5e5' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: '#1a1a1a' }}>
                 Recent Activity
               </h2>
             </div>
             <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
               {recentActivity.length === 0 ? (
-                <div style={{ padding: '40px', textAlign: 'center', color: 'rgba(255, 255, 255, 0.5)' }}>
+                <div style={{ padding: '40px', textAlign: 'center', color: '#999' }}>
                   No recent activity
                 </div>
               ) : (
                 recentActivity.map((activity, i) => (
                   <div key={i} style={{
                     padding: '16px 24px',
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                    borderBottom: '1px solid #e5e5e5',
                     display: 'flex',
                     gap: '16px',
                     alignItems: 'flex-start'
@@ -474,12 +474,12 @@ export default function AdminDashboard() {
                       <div style={{ fontWeight: 500, marginBottom: '4px' }}>
                         {activity.title}
                       </div>
-                      <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '4px' }}>
+                      <div style={{ fontSize: '13px', color: '#666', marginBottom: '4px' }}>
                         {activity.description}
                         {activity.user_name && <span> by <strong style={{ color: '#9bc4b8' }}>{activity.user_name}</strong></span>}
                         {activity.video_title && <span> on "{activity.video_title}"</span>}
                       </div>
-                      <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.4)' }}>
+                      <div style={{ fontSize: '12px', color: '#999' }}>
                         {formatDateTime(activity.createdAt)}
                       </div>
                     </div>
@@ -494,21 +494,21 @@ export default function AdminDashboard() {
         <div style={{
           marginTop: '60px',
           padding: '32px',
-          background: 'rgba(255, 255, 255, 0.02)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '3px'
         }}>
           <h2 style={{
             fontSize: '20px',
             fontWeight: 600,
             marginBottom: '24px',
-            color: '#9bc4b8'
+            color: '#1a1a1a'
           }}>
             Platform Statistics
           </h2>
 
           {statsLoading ? (
-            <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255, 255, 255, 0.5)' }}>
+            <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
               Loading stats...
             </div>
           ) : stats ? (
@@ -526,7 +526,7 @@ export default function AdminDashboard() {
                 <div style={{ fontSize: '32px', fontWeight: 600, color: '#7fb069', marginBottom: '8px' }}>
                   {stats.totalVideos}
                 </div>
-                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ fontSize: '14px', color: '#666' }}>
                   Total Videos
                 </div>
               </div>
@@ -540,35 +540,35 @@ export default function AdminDashboard() {
                 <div style={{ fontSize: '32px', fontWeight: 600, color: '#9bc4b8', marginBottom: '8px' }}>
                   {stats.totalMembers}
                 </div>
-                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ fontSize: '14px', color: '#666' }}>
                   Total Members
                 </div>
               </div>
 
               <div style={{
                 padding: '24px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px'
               }}>
-                <div style={{ fontSize: '32px', fontWeight: 600, color: '#fff', marginBottom: '8px' }}>
+                <div style={{ fontSize: '32px', fontWeight: 600, color: '#1a1a1a', marginBottom: '8px' }}>
                   {stats.totalComments}
                 </div>
-                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ fontSize: '14px', color: '#666' }}>
                   Total Comments
                 </div>
               </div>
 
               <div style={{
                 padding: '24px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px'
               }}>
-                <div style={{ fontSize: '32px', fontWeight: 600, color: '#fff', marginBottom: '8px' }}>
+                <div style={{ fontSize: '32px', fontWeight: 600, color: '#1a1a1a', marginBottom: '8px' }}>
                   {stats.totalReactions}
                 </div>
-                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ fontSize: '14px', color: '#666' }}>
                   Total Reactions
                 </div>
               </div>
@@ -582,13 +582,13 @@ export default function AdminDashboard() {
                 <div style={{ fontSize: '32px', fontWeight: 600, color: '#7fb069', marginBottom: '8px' }}>
                   {stats.videosThisMonth}
                 </div>
-                <div style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+                <div style={{ fontSize: '14px', color: '#666' }}>
                   Videos This Month
                 </div>
               </div>
             </div>
           ) : (
-            <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255, 255, 255, 0.5)' }}>
+            <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
               Failed to load stats
             </div>
           )}
@@ -598,15 +598,15 @@ export default function AdminDashboard() {
         <div style={{
           marginTop: '40px',
           padding: '32px',
-          background: 'rgba(255, 255, 255, 0.02)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '3px'
         }}>
           <h2 style={{
             fontSize: '20px',
             fontWeight: 600,
             marginBottom: '20px',
-            color: '#9bc4b8'
+            color: '#1a1a1a'
           }}>
             Quick Actions
           </h2>
@@ -629,10 +629,10 @@ export default function AdminDashboard() {
               href="/admin/founding"
               style={{
                 padding: '12px 24px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
-                color: '#fff',
+                color: '#1a1a1a',
                 textDecoration: 'none',
                 fontSize: '14px',
                 fontWeight: 600
