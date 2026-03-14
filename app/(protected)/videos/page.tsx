@@ -113,7 +113,7 @@ export default function LibraryPage() {
       case 'in_progress':
         return '#9bc4b8'
       default:
-        return 'rgba(255, 255, 255, 0.6)'
+        return '#e8e8e8'
     }
   }
 
@@ -138,8 +138,8 @@ export default function LibraryPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0a0a0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#1a1a1a', fontWeight: 300 }}>Loading library...</div>
+      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: '#999', fontWeight: 300 }}>Loading library...</div>
       </div>
     )
   }
@@ -244,7 +244,7 @@ export default function LibraryPage() {
                     </div>
                     <div style={{
                       fontSize: '0.75rem',
-                      color: 'rgba(26, 26, 26, 0.4)'
+                      color: '#999'
                     }}>
                       {Math.round(video.percentage)}% complete
                     </div>
@@ -254,7 +254,7 @@ export default function LibraryPage() {
                   <div style={{
                     width: '100%',
                     height: '4px',
-                    background: 'rgba(255, 255, 255, 0.1)',
+                    background: '#e5e5e5',
                     borderRadius: '2px',
                     overflow: 'hidden'
                   }}>
@@ -348,8 +348,8 @@ export default function LibraryPage() {
             style={{
               flex: 1,
               padding: '0.875rem 1rem',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#f8f8f8',
+              border: '1px solid #e5e5e5',
               borderRadius: '3px',
               color: '#1a1a1a',
               fontSize: '1rem',
@@ -361,8 +361,8 @@ export default function LibraryPage() {
             onChange={(e) => setSortBy(e.target.value)}
             style={{
               padding: '0.875rem 1rem',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#f8f8f8',
+              border: '1px solid #e5e5e5',
               borderRadius: '3px',
               color: '#1a1a1a',
               fontSize: '1rem',
@@ -390,8 +390,8 @@ export default function LibraryPage() {
               onClick={() => setSelectedCategory(key)}
               style={{
                 padding: '0.75rem 1.5rem',
-                background: selectedCategory === key ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : 'rgba(255, 255, 255, 0.05)',
-                border: selectedCategory === key ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
+                background: selectedCategory === key ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#f8f8f8',
+                border: selectedCategory === key ? 'none' : '1px solid #e5e5e5',
                 borderRadius: '3px',
                 color: selectedCategory === key ? '#000' : '#1a1a1a',
                 fontSize: '0.875rem',
@@ -433,8 +433,8 @@ export default function LibraryPage() {
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: '#ffffff',
+                  border: '1px solid #e5e5e5',
                   borderRadius: '3px',
                   overflow: 'hidden',
                   transition: 'all 0.3s ease',
@@ -444,11 +444,11 @@ export default function LibraryPage() {
                   flexDirection: 'column'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+                  e.currentTarget.style.borderColor = '#9bc4b8'
                   e.currentTarget.style.transform = 'translateY(-4px)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  e.currentTarget.style.borderColor = '#e5e5e5'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }}
                 >
@@ -528,7 +528,7 @@ export default function LibraryPage() {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       fontSize: '0.875rem',
-                      color: 'rgba(26, 26, 26, 0.4)'
+                      color: '#999'
                     }}>
                       <span>{video.duration || 'Video'}</span>
                       <span>{new Date(video.upload_date).toLocaleDateString()}</span>
