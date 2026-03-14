@@ -89,7 +89,8 @@ export default function MembersPage() {
               ...parsedUser,
               level: data.level,
               nextLevel: data.nextLevel,
-              daysUntilNext: data.daysUntilNext
+              daysUntilNext: data.daysUntilNext,
+              progress: data.progress
             }
             setUser(updatedUser)
             localStorage.setItem('user', JSON.stringify(updatedUser))
@@ -250,9 +251,10 @@ export default function MembersPage() {
 
   const getLevelProgress = () => {
     if (user.level === 'Guide') return 100
-    const totalDays = user.level === 'Seeker' ? 30 : user.level === 'Explorer' ? 60 : 90
-    const progress = ((totalDays - user.daysUntilNext) / totalDays) * 100
-    return Math.max(0, Math.min(100, progress))
+    const overallProgress = user.progress ?? 0
+    const levelMin = user.level === 'Seeker' ? 0 : user.level === 'Explorer' ? 25 : 50
+    const levelMax = levelMin + 25
+    return Math.max(0, Math.min(100, ((overallProgress - levelMin) / (levelMax - levelMin)) * 100))
   }
 
   const levelStages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
