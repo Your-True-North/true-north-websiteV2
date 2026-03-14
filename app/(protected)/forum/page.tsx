@@ -131,7 +131,7 @@ export default function ForumPage() {
       if (res.ok) {
         setShowNewPostModal(false)
         setNewPost({ title: '', content: '', category: 'Introductions' })
-        router.push(`/forum/${data.post.id}`)
+        router.push(`/community`)
       } else {
         alert(data.error || 'Failed to create post')
       }

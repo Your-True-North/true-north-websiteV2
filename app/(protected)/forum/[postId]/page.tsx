@@ -169,7 +169,7 @@ export default function PostDetailPage() {
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
         {/* Back Link */}
         <Link
-          href="/forum"
+          href="/community"
           style={{
             color: '#9bc4b8',
             textDecoration: 'none',
