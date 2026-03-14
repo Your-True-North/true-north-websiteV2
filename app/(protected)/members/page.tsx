@@ -332,7 +332,8 @@ export default function MembersPage() {
             fontSize: 'clamp(2rem, 6vw, 3.75rem)',
             fontWeight: 300,
             marginBottom: '1rem',
-            letterSpacing: '-0.02em'
+            letterSpacing: '-0.02em',
+            color: '#1a1a1a'
           }}>
             <span style={{ color: 'rgba(26, 26, 26, 0.6)' }}>Welcome back,</span> <span style={{ color: 'rgba(26, 26, 26, 0.7)' }}>{user.name}</span>
           </h1>
@@ -472,13 +473,14 @@ export default function MembersPage() {
         }}
         onMouseEnter={(e) => e.currentTarget.style.borderColor = '#d5d5d5'}
         onMouseLeave={(e) => e.currentTarget.style.borderColor = '#e5e5e5'}>
-          <h3 style={{ 
-            fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', 
-            fontWeight: 300, 
+          <h3 style={{
+            fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
+            fontWeight: 300,
             marginBottom: '1.5rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0'
+            gap: '0',
+            color: '#1a1a1a'
           }}>
 Your Progress
           </h3>
@@ -544,7 +546,7 @@ Your Progress
           borderRadius: '12px',
           padding: '2rem'
         }}>
-          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0' }}>
+          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0', color: '#1a1a1a' }}>
             <svg style={{ width: '1.25rem', height: '1.25rem', color: '#1a1a1a' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
