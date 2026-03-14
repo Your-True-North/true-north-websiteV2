@@ -117,7 +117,8 @@ export default function ReplaysPage() {
           <h1 style={{
             fontSize: isMobile ? '24px' : '32px',
             fontWeight: 600,
-            marginBottom: '12px'
+            marginBottom: '12px',
+            color: '#1a1a1a'
           }}>
             Live Session Replays
           </h1>
@@ -146,15 +147,15 @@ export default function ReplaysPage() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                background: '#f8f8f8',
+                border: '1px solid #e5e5e5',
                 borderRadius: '3px',
                 color: '#1a1a1a',
                 fontSize: '14px',
                 outline: 'none'
               }}
-              onFocus={(e) => e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'}
-              onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+              onFocus={(e) => e.currentTarget.style.borderColor = '#9bc4b8'}
+              onBlur={(e) => e.currentTarget.style.borderColor = '#e5e5e5'}
             />
           </div>
 
@@ -164,8 +165,8 @@ export default function ReplaysPage() {
             onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest')}
             style={{
               padding: '12px 16px',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#f8f8f8',
+              border: '1px solid #e5e5e5',
               borderRadius: '3px',
               color: '#1a1a1a',
               fontSize: '14px',
@@ -191,8 +192,8 @@ export default function ReplaysPage() {
         {filteredReplays.length === 0 ? (
           <div style={{
             padding: '64px 32px',
-            background: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: '#f8f8f8',
+            border: '1px solid #e5e5e5',
             borderRadius: '3px',
             textAlign: 'center'
           }}>
@@ -215,8 +216,8 @@ export default function ReplaysPage() {
                 style={{
                   marginTop: '16px',
                   padding: '8px 16px',
-                  background: 'rgba(155, 196, 184, 0.1)',
-                  border: '1px solid rgba(155, 196, 184, 0.3)',
+                  background: '#f0faf8',
+                  border: '1px solid #9bc4b8',
                   borderRadius: '3px',
                   color: '#e67e22',
                   cursor: 'pointer',
@@ -243,8 +244,8 @@ export default function ReplaysPage() {
                 }}
               >
                 <div style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: '#ffffff',
+                  border: '1px solid #e5e5e5',
                   borderRadius: '3px',
                   overflow: 'hidden',
                   transition: 'all 0.3s ease',
@@ -254,11 +255,11 @@ export default function ReplaysPage() {
                   flexDirection: 'column'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+                  e.currentTarget.style.borderColor = '#9bc4b8'
                   e.currentTarget.style.transform = 'translateY(-4px)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                  e.currentTarget.style.borderColor = '#e5e5e5'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }}
                 >
@@ -303,7 +304,8 @@ export default function ReplaysPage() {
                         background: 'rgba(0, 0, 0, 0.8)',
                         borderRadius: '3px',
                         fontSize: '12px',
-                        fontWeight: 600
+                        fontWeight: 600,
+                        color: '#ffffff'
                       }}>
                         {video.duration}
                       </div>
