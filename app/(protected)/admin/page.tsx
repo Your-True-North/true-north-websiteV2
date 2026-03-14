@@ -496,8 +496,8 @@ export default function AdminPage() {
 
         {/* Video Management */}
         <div style={{
-          background: 'rgba(255, 255, 255, 0.03)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: '#ffffff',
+          border: '1px solid #e5e5e5',
           borderRadius: '12px',
           overflow: 'hidden'
         }}>
@@ -695,8 +695,8 @@ export default function AdminPage() {
                     style={{
                       width: '100%',
                       padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      background: '#f8f8f8',
+                      border: '1px solid #e5e5e5',
                       borderRadius: '8px',
                       color: '#1a1a1a',
                       fontSize: '0.875rem'
@@ -718,8 +718,8 @@ export default function AdminPage() {
                     style={{
                       width: '100%',
                       padding: '0.75rem',
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      background: '#f8f8f8',
+                      border: '1px solid #e5e5e5',
                       borderRadius: '8px',
                       color: '#1a1a1a',
                       fontSize: '0.875rem'
