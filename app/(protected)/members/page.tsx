@@ -307,25 +307,50 @@ export default function MembersPage() {
       <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '2rem 1.5rem 2rem' }}>
         {/* Hero Section */}
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <div style={{ display: 'inline-block', marginBottom: '1.5rem' }}>
-            <div style={{
-              width: '5rem',
-              height: '5rem',
-              borderRadius: '50%',
-              background: profilePhoto ? `url(${profilePhoto})` : `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              border: '1px solid #e5e5e5',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backdropFilter: 'blur(20px)'
-            }}>
+          <div style={{ display: 'inline-block', marginBottom: '1.5rem', position: 'relative' }}>
+            <div
+              onClick={() => setShowProfileModal(true)}
+              style={{
+                width: '5rem',
+                height: '5rem',
+                borderRadius: '50%',
+                background: profilePhoto ? `url(${profilePhoto})` : `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                border: '1px solid #e5e5e5',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backdropFilter: 'blur(20px)',
+                cursor: 'pointer'
+              }}
+            >
               {!profilePhoto && (
                 <svg style={{ width: '2.5rem', height: '2.5rem', color: '#1a1a1a' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               )}
+            </div>
+            <div
+              onClick={() => setShowProfileModal(true)}
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                width: '1.5rem',
+                height: '1.5rem',
+                borderRadius: '50%',
+                background: '#e67e22',
+                border: '2px solid #ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+            >
+              <svg style={{ width: '0.75rem', height: '0.75rem', color: '#ffffff' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536M9 11l6.364-6.364a2 2 0 112.828 2.828L11.828 13.828a4 4 0 01-1.414.707l-2.828.707.707-2.828a4 4 0 01.707-1.414z" />
+              </svg>
             </div>
           </div>
           <h1 style={{
@@ -366,6 +391,23 @@ export default function MembersPage() {
               </div>
             )
           })}
+          {user.level !== 'Guide' && (
+            <div style={{ marginTop: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#666', marginBottom: '0.4rem', fontWeight: 300 }}>
+                <span>Progress to {user.nextLevel || 'next level'}</span>
+                <span>{Math.round(getLevelProgress())}%</span>
+              </div>
+              <div style={{ height: '6px', background: '#e5e5e5', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{
+                  height: '100%',
+                  width: `${getLevelProgress()}%`,
+                  background: 'linear-gradient(90deg, #9bc4b8, #7fb069)',
+                  borderRadius: '3px',
+                  transition: 'width 0.6s ease'
+                }} />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Quick Actions */}
@@ -667,6 +709,9 @@ Your Progress
                   Upload Photo
                   <input type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
                 </label>
+                <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '0.5rem', fontWeight: 300 }}>
+                  Square image recommended · Min 200×200px · Max 5MB
+                </div>
               </div>
 
               {profileError && (
