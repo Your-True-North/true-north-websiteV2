@@ -793,7 +793,7 @@ export default function CallsPage() {
                     cursor: 'pointer'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
+                    e.currentTarget.style.borderColor = '#9bc4b8'
                     e.currentTarget.style.transform = 'translateY(-4px)'
                   }}
                   onMouseLeave={(e) => {
@@ -842,7 +842,8 @@ export default function CallsPage() {
                           background: 'rgba(0, 0, 0, 0.8)',
                           borderRadius: '3px',
                           fontSize: '12px',
-                          fontWeight: 600
+                          fontWeight: 600,
+                          color: '#ffffff'
                         }}>
                           {video.duration}
                         </div>
