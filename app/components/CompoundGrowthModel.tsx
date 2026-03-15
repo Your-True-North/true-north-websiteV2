@@ -208,9 +208,9 @@ export default function CompoundGrowthModel() {
 
   return (
     <div style={{ marginBottom: '4rem' }}>
-      <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginBottom: '20px', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-        How does this work help with...
-      </div>
+      <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, marginBottom: '28px', maxWidth: '560px' }}>
+        Most men arrive here through one door — money, relationships, health, anger, or a loss of purpose. The work is the same regardless. Select what brought you here and follow it through.
+      </p>
 
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
         {goals.map(g => (
@@ -220,13 +220,13 @@ export default function CompoundGrowthModel() {
             style={{
               padding: '11px 22px',
               fontSize: '14px',
-              borderRadius: '999px',
+              borderRadius: '4px',
               border: currentGoal === g.key ? '1px solid rgba(155,196,184,0.8)' : '1px solid rgba(255,255,255,0.18)',
               background: currentGoal === g.key ? 'rgba(155,196,184,0.15)' : 'rgba(255,255,255,0.04)',
               color: currentGoal === g.key ? '#9bc4b8' : 'rgba(255,255,255,0.6)',
               cursor: 'pointer',
               transition: 'all 0.2s',
-              letterSpacing: '0.01em',
+              letterSpacing: '0.02em',
             }}
           >
             {g.label}
