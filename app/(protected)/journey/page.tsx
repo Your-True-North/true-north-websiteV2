@@ -484,7 +484,7 @@ export default function JourneyPage() {
                       {/* Grey track */}
                       <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#e0e0e0', borderRadius: '1px' }} />
                       {/* Filled track */}
-                      <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #9bc4b8, #7fb069)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
+                      <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
                       {/* Dots + labels */}
                       {stages.map((stage, index) => {
                         const isCurrent = index === currentIndex
@@ -495,10 +495,10 @@ export default function JourneyPage() {
                         return (
                           <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
                             {isCurrent && (
-                              <div className="journey-pulse-ring" style={{ position: 'absolute', top: '50%', left: '50%', width: '18px', height: '18px', borderRadius: '50%', background: '#9bc4b8', zIndex: 0 }} />
+                              <div className="journey-pulse-ring" style={{ position: 'absolute', top: '50%', left: '50%', width: '22px', height: '22px', borderRadius: '50%', background: '#4a9e5c', zIndex: 0 }} />
                             )}
-                            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: isCurrent ? '#7fb069' : isCompleted ? '#7fb069' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#7fb069' : '#d0d0d0'}`, position: 'relative', zIndex: 1, boxShadow: isCurrent ? '0 0 0 3px rgba(127,176,105,0.15)' : 'none' }} />
-                            <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#1a1a1a' : isCompleted ? '#7fb069' : '#bbb', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
+                            <div style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`, position: 'relative', zIndex: 1, boxShadow: isCurrent ? '0 0 0 4px rgba(74,158,92,0.2)' : 'none' }} />
+                            <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
                           </div>
                         )
                       })}

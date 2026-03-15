@@ -393,7 +393,7 @@ export default function MembersPage() {
               left: 0,
               height: '2px',
               width: `${Math.min(100, (currentStageIndex / 3) * 100 + (getLevelProgress() / 3))}%`,
-              background: 'linear-gradient(90deg, #9bc4b8, #7fb069)',
+              background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)',
               borderRadius: '1px',
               transition: 'width 0.8s ease'
             }} />
@@ -421,32 +421,32 @@ export default function MembersPage() {
                     <div className="journey-pulse-ring" style={{
                       position: 'absolute',
                       top: '50%',
-                      left: isFirst ? '50%' : isLast ? '50%' : '50%',
-                      width: '18px',
-                      height: '18px',
+                      left: '50%',
+                      width: '22px',
+                      height: '22px',
                       borderRadius: '50%',
-                      background: '#9bc4b8',
+                      background: '#4a9e5c',
                       zIndex: 0
                     }} />
                   )}
 
                   {/* Dot */}
                   <div style={{
-                    width: '10px',
-                    height: '10px',
+                    width: '11px',
+                    height: '11px',
                     borderRadius: '50%',
-                    background: isCurrent ? '#7fb069' : isCompleted ? '#7fb069' : '#ffffff',
-                    border: `2px solid ${isCurrent ? '#7fb069' : isCompleted ? '#7fb069' : '#d0d0d0'}`,
+                    background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff',
+                    border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`,
                     position: 'relative',
                     zIndex: 1,
-                    boxShadow: isCurrent ? '0 0 0 3px rgba(127,176,105,0.15)' : 'none'
+                    boxShadow: isCurrent ? '0 0 0 4px rgba(74,158,92,0.2)' : 'none'
                   }} />
 
                   {/* Label */}
                   <div style={{
                     marginTop: '8px',
                     fontSize: '0.68rem',
-                    color: isCurrent ? '#1a1a1a' : isCompleted ? '#7fb069' : '#bbb',
+                    color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb',
                     fontWeight: isCurrent ? 600 : 400,
                     whiteSpace: 'nowrap',
                     letterSpacing: '0.02em'
