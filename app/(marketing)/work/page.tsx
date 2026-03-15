@@ -67,7 +67,7 @@ export default function Work() {
       title: "1:1 Transformational Coaching",
       description: "You're ready for deep, personalised work. Let's journey together through intensive transformation.",
       cta: "Explore Coaching",
-      link: "/work"
+      link: "/work#coaching"
     },
     circle: {
       title: "Circle of Return Membership",
@@ -917,7 +917,7 @@ export default function Work() {
           </div>
         </section>
 
-        <section className="section" style={{paddingTop: isMobile ? '3rem' : '0'}}>
+        <section id="coaching" className="section" style={{paddingTop: isMobile ? '3rem' : '0'}}>
           <div className="container">
             <div style={{
               marginBottom: '5rem',
