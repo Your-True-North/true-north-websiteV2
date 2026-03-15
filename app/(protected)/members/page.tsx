@@ -80,6 +80,7 @@ export default function MembersPage() {
 
       // Fetch real progress and level
       fetch('/api/progress/calculate', {
+        credentials: 'include',
         headers: { 'Authorization': `Bearer ${document.cookie.match(/auth_token=([^;]+)/)?.[1]}` }
       })
         .then(res => res.json())

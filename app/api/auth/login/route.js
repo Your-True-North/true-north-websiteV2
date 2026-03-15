@@ -49,12 +49,13 @@ export async function POST(request) {
 
     const response = NextResponse.json({
       success: true,
-      user: { 
-        id: user.id, 
-        email: user.email, 
-        name: user.name, 
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
         role: user.role,
-        level: 'Seeker',
+        level: user.level || 'Seeker',
+        progress: user.progress || 0,
         daysUntilNext: 30,
         nextLevel: 'Explorer',
         joinDate: user.createdAt || new Date().toISOString()
