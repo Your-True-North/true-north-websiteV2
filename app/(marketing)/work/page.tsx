@@ -788,7 +788,7 @@ export default function Work() {
                 marginBottom: '2.5rem',
                 maxWidth: '560px'
               }}>
-                Four questions. No fluff. Answer honestly and you'll get a clear read on where you're at and which path makes most sense for you right now.
+                Four questions. Answer honestly and you'll get a clear read on where you're at and which path makes most sense for you right now.
               </p>
 
               {!showResult ? (
