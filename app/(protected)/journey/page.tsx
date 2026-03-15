@@ -473,7 +473,7 @@ export default function JourneyPage() {
                 <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#999', marginBottom: '1.75rem', fontWeight: 400 }}>YOUR JOURNEY</div>
                 {(() => {
                   const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
-                  const currentIndex = stages.indexOf(user?.level || 'Seeker')
+                  const currentIndex = Math.max(0, stages.indexOf(user?.level || 'Seeker'))
                   const overallProgress = user?.progress ?? 0
                   const levelMin = currentIndex * 25
                   const levelProgress = currentIndex === 3 ? 100 : Math.max(0, Math.min(100, ((overallProgress - levelMin) / 25) * 100))

@@ -259,7 +259,7 @@ export default function MembersPage() {
   }
 
   const levelStages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
-  const currentStageIndex = levelStages.indexOf(user.level)
+  const currentStageIndex = Math.max(0, levelStages.indexOf(user.level))
   const levelColors: { [key: string]: string } = {
     'Seeker': '#e67e22',
     'Explorer': '#7fb069',
