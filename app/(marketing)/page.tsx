@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import CompoundGrowthModel from '@/app/components/CompoundGrowthModel'
 
 export default function Home() {
   const [shimmerPhase, setShimmerPhase] = useState(0)
@@ -353,6 +354,8 @@ export default function Home() {
             <div style={{textAlign: 'center', marginBottom: '4rem'}}>
               <h2 className="h2 shimmer-accent" style={{fontSize: isMobile ? '2rem' : '2.5rem'}}>How the work moves.</h2>
             </div>
+
+            <CompoundGrowthModel />
 
             <div style={{
               display: 'grid',
