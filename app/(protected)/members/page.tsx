@@ -416,30 +416,15 @@ export default function MembersPage() {
                   flexDirection: 'column',
                   alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center'
                 }}>
-                  {/* Pulse ring */}
-                  {isCurrent && (
-                    <div className="journey-pulse-ring" style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      width: '22px',
-                      height: '22px',
-                      borderRadius: '50%',
-                      background: '#4a9e5c',
-                      zIndex: 0
-                    }} />
-                  )}
-
                   {/* Dot */}
-                  <div style={{
+                  <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{
                     width: '11px',
                     height: '11px',
                     borderRadius: '50%',
                     background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff',
                     border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`,
                     position: 'relative',
-                    zIndex: 1,
-                    boxShadow: isCurrent ? '0 0 0 4px rgba(74,158,92,0.2)' : 'none'
+                    zIndex: 1
                   }} />
 
                   {/* Label */}

@@ -494,10 +494,7 @@ export default function JourneyPage() {
                         const isLast = index === 3
                         return (
                           <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
-                            {isCurrent && (
-                              <div className="journey-pulse-ring" style={{ position: 'absolute', top: '50%', left: '50%', width: '22px', height: '22px', borderRadius: '50%', background: '#4a9e5c', zIndex: 0 }} />
-                            )}
-                            <div style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`, position: 'relative', zIndex: 1, boxShadow: isCurrent ? '0 0 0 4px rgba(74,158,92,0.2)' : 'none' }} />
+                            <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`, position: 'relative', zIndex: 1 }} />
                             <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
                           </div>
                         )
