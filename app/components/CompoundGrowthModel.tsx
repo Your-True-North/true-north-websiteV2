@@ -208,24 +208,25 @@ export default function CompoundGrowthModel() {
 
   return (
     <div style={{ marginBottom: '4rem' }}>
-      <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginBottom: '12px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+      <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginBottom: '20px', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
         How does this work help with...
       </div>
 
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '2rem' }}>
+      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
         {goals.map(g => (
           <button
             key={g.key}
             onClick={() => selectGoal(g.key)}
             style={{
-              padding: '8px 16px',
-              fontSize: '13px',
+              padding: '11px 22px',
+              fontSize: '14px',
               borderRadius: '999px',
-              border: currentGoal === g.key ? '1px solid rgba(155,196,184,0.8)' : '1px solid rgba(255,255,255,0.15)',
-              background: currentGoal === g.key ? 'rgba(155,196,184,0.15)' : 'transparent',
-              color: currentGoal === g.key ? '#9bc4b8' : 'rgba(255,255,255,0.5)',
+              border: currentGoal === g.key ? '1px solid rgba(155,196,184,0.8)' : '1px solid rgba(255,255,255,0.18)',
+              background: currentGoal === g.key ? 'rgba(155,196,184,0.15)' : 'rgba(255,255,255,0.04)',
+              color: currentGoal === g.key ? '#9bc4b8' : 'rgba(255,255,255,0.6)',
               cursor: 'pointer',
               transition: 'all 0.2s',
+              letterSpacing: '0.01em',
             }}
           >
             {g.label}
@@ -234,7 +235,7 @@ export default function CompoundGrowthModel() {
       </div>
 
       {data && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {data.stages.map((s, i) => {
             const isUnlocked = i < unlockedCount
             const isCurrent = i === unlockedCount - 1
@@ -244,13 +245,13 @@ export default function CompoundGrowthModel() {
               <div
                 key={i}
                 style={{
-                  border: isCurrent ? '1px solid rgba(155,196,184,0.4)' : '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '8px',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '10px',
                   overflow: 'hidden',
-                  background: 'rgba(255,255,255,0.02)',
-                  opacity: isUnlocked ? 1 : 0.3,
+                  background: isCurrent ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)',
+                  opacity: isUnlocked ? 1 : 0.25,
                   pointerEvents: isUnlocked ? 'auto' : 'none',
-                  transition: 'opacity 0.3s',
+                  transition: 'opacity 0.3s, background 0.2s',
                 }}
               >
                 <div
@@ -258,30 +259,30 @@ export default function CompoundGrowthModel() {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
-                    padding: '14px 16px',
+                    gap: '14px',
+                    padding: '18px 20px',
                     cursor: isUnlocked ? 'pointer' : 'default',
                   }}
                 >
                   <div style={{
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '12px',
+                    fontSize: '13px',
                     fontWeight: 500,
                     flexShrink: 0,
                     border: isCurrent ? '1px solid #9bc4b8' : '1px solid rgba(255,255,255,0.2)',
                     background: isCurrent ? 'rgba(155,196,184,0.2)' : 'transparent',
-                    color: isCurrent ? '#9bc4b8' : 'rgba(255,255,255,0.4)',
+                    color: isCurrent ? '#9bc4b8' : 'rgba(255,255,255,0.35)',
                   }}>
                     {i + 1}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '14px', fontWeight: 500, color: 'rgba(255,255,255,0.9)' }}>{s.title}</div>
-                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '2px' }}>{s.sub}</div>
+                    <div style={{ fontSize: '15px', fontWeight: 500, color: 'rgba(255,255,255,0.92)' }}>{s.title}</div>
+                    <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginTop: '3px' }}>{s.sub}</div>
                   </div>
                   {isUnlocked && (
                     <div style={{
@@ -294,34 +295,36 @@ export default function CompoundGrowthModel() {
                 </div>
 
                 {isOpen && (
-                  <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '14px 16px 16px' }}>
-                    <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, marginBottom: '12px' }}>
+                  <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', padding: '18px 20px 20px' }}>
+                    <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: '16px' }}>
                       {s.mechanism}
                     </p>
                     <div style={{
-                      background: 'rgba(155,196,184,0.06)',
-                      borderRadius: '6px',
-                      padding: '10px 14px',
-                      fontSize: '13px',
-                      color: 'rgba(255,255,255,0.8)',
+                      background: 'rgba(155,196,184,0.08)',
+                      borderRadius: '8px',
+                      padding: '14px 16px',
+                      fontSize: '14px',
+                      color: 'rgba(255,255,255,0.85)',
                       fontWeight: 500,
-                      marginBottom: '12px',
+                      lineHeight: 1.6,
+                      marginBottom: '16px',
                     }}>
                       {s.outcome}
                     </div>
                     <button
                       onClick={() => advance(i)}
                       style={{
-                        fontSize: '12px',
-                        padding: '6px 14px',
+                        fontSize: '13px',
+                        padding: '9px 20px',
                         borderRadius: '999px',
                         border: '1px solid rgba(155,196,184,0.4)',
                         background: 'transparent',
                         color: '#9bc4b8',
                         cursor: 'pointer',
+                        letterSpacing: '0.01em',
                       }}
                     >
-                      {i === data.stages.length - 1 ? 'See the result' : 'Unlock next stage'} →
+                      {i === data.stages.length - 1 ? 'See where this leads →' : 'As your journey continues →'}
                     </button>
                   </div>
                 )}
