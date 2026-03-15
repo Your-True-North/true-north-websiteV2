@@ -729,7 +729,7 @@ export default function Work() {
 
       <main className="page-container">
         <section className="section" style={{
-          paddingTop: isMobile ? '0' : '5rem',
+          paddingTop: isMobile ? '0' : '9rem',
           position: 'relative',
           minHeight: isMobile ? '100vh' : 'auto',
           display: isMobile ? 'flex' : 'block',
@@ -766,7 +766,7 @@ export default function Work() {
                 lineHeight: '1.7',
                 textShadow: isMobile ? '1px 1px 2px rgba(0, 0, 0, 0.7)' : undefined
               }}>
-                All powerful. All transformational. I don't just talk mindset — I teach regulation. I don't just say believe in yourself — I show you how to build that belief in your body. Where you are right now determines where we start.
+                All powerful. All transformational. I don't just talk mindset. I teach regulation. I don't just say believe in yourself. I show you how to build that belief in your body.
               </div>
             </div>
           </div>
@@ -775,70 +775,75 @@ export default function Work() {
         {/* WHERE ARE YOU RIGHT NOW */}
         <section className="section section-alt">
           <div className="container">
-            <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+            <div style={{maxWidth: '760px', margin: '0 auto'}}>
               <h2 className="h2 shimmer-accent" style={{
                 color: 'var(--text-primary-inverse)',
-                fontSize: isMobile ? '2rem' : '2.5rem'
+                fontSize: isMobile ? '2rem' : '2.5rem',
+                marginBottom: '1rem'
               }}>Where are you right now?</h2>
-              <p className="body-large" style={{
-                color: 'rgba(246, 246, 246, 0.9)',
-                fontSize: isMobile ? '1rem' : '1.1rem'
+              <p style={{
+                fontSize: '15px',
+                color: 'rgba(255,255,255,0.55)',
+                lineHeight: 1.75,
+                marginBottom: '2.5rem',
+                maxWidth: '560px'
               }}>
-                Four questions. No fluff. A clear read on where you're at and what might be next.
+                Four questions. No fluff. Answer honestly and you'll get a clear read on where you're at and which path makes most sense for you right now.
               </p>
-            </div>
 
-            <div className="card" style={{maxWidth: '800px', margin: '0 auto'}}>
               {!showResult ? (
                 <div>
                   <div style={{marginBottom: '2rem'}}>
                     <div style={{
                       display: 'flex',
                       justifyContent: 'space-between',
-                      color: 'var(--text-muted)',
-                      fontSize: '0.85rem',
-                      marginBottom: '0.5rem'
+                      color: 'rgba(255,255,255,0.35)',
+                      fontSize: '12px',
+                      letterSpacing: '0.05em',
+                      marginBottom: '8px'
                     }}>
-                      <span>Question {currentQuestion + 1} of {questions.length}</span>
+                      <span>{currentQuestion + 1} / {questions.length}</span>
                       <span>{Math.round((currentQuestion / questions.length) * 100)}%</span>
                     </div>
                     <div style={{
                       width: '100%',
-                      background: 'var(--bg-tertiary)',
-                      borderRadius: '10px',
-                      height: '6px'
+                      background: 'rgba(255,255,255,0.08)',
+                      borderRadius: '999px',
+                      height: '3px'
                     }}>
                       <div style={{
-                        background: 'linear-gradient(90deg, var(--primary), var(--accent))',
-                        height: '6px',
-                        borderRadius: '10px',
-                        width: `${((currentQuestion) / questions.length) * 100}%`,
+                        background: '#9bc4b8',
+                        height: '3px',
+                        borderRadius: '999px',
+                        width: `${(currentQuestion / questions.length) * 100}%`,
                         transition: 'width 0.5s ease'
                       }} />
                     </div>
                   </div>
 
-                  <h3 style={{
-                    fontSize: isMobile ? '1.3rem' : '1.5rem',
-                    color: 'var(--text-primary)',
-                    marginBottom: '2rem',
-                    lineHeight: '1.4'
+                  <p style={{
+                    fontSize: isMobile ? '1.1rem' : '1.25rem',
+                    color: 'rgba(255,255,255,0.92)',
+                    marginBottom: '1.5rem',
+                    lineHeight: '1.5',
+                    fontWeight: 500
                   }}>
                     {questions[currentQuestion].question}
-                  </h3>
+                  </p>
 
-                  <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+                  <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
                     {questions[currentQuestion].options.map((option, index) => (
                       <button key={index} onClick={() => handleAnswer(option.value)} style={{
                         textAlign: 'left',
-                        padding: '1.5rem',
-                        background: 'var(--bg-tertiary)',
-                        border: '1px solid var(--border-primary)',
-                        borderRadius: '0.5rem',
-                        color: 'var(--text-primary)',
-                        fontSize: isMobile ? '0.9rem' : '1rem',
+                        padding: '14px 20px',
+                        background: 'rgba(255,255,255,0.04)',
+                        border: '1px solid rgba(255,255,255,0.12)',
+                        borderRadius: '8px',
+                        color: 'rgba(255,255,255,0.75)',
+                        fontSize: '14px',
                         cursor: 'pointer',
-                        transition: 'all 0.2s ease'
+                        transition: 'all 0.2s ease',
+                        lineHeight: '1.5'
                       }}>
                         {option.text}
                       </button>
@@ -846,43 +851,65 @@ export default function Work() {
                   </div>
                 </div>
               ) : (
-                <div style={{textAlign: 'center'}}>
-                  <div style={{fontSize: '3rem', marginBottom: '2rem'}}>🪞</div>
-                  <h3 style={{
-                    fontSize: isMobile ? '1.5rem' : '1.8rem',
-                    color: 'var(--text-primary)',
-                    marginBottom: '1rem'
-                  }}>
-                    {recommendations[recommendation].title}
-                  </h3>
-                  <p style={{
-                    fontSize: isMobile ? '1rem' : '1.1rem',
-                    color: 'var(--text-secondary)',
-                    marginBottom: '2rem',
-                    lineHeight: '1.6'
-                  }}>
-                    {recommendations[recommendation].description}
-                  </p>
+                <div>
                   <div style={{
-                    display: 'flex',
-                    gap: '1rem',
-                    justifyContent: 'center',
-                    flexWrap: 'wrap'
+                    border: '1px solid rgba(155,196,184,0.2)',
+                    borderRadius: '10px',
+                    background: 'rgba(155,196,184,0.05)',
+                    padding: '28px 24px',
+                    marginBottom: '16px'
                   }}>
-                    <Link href={recommendations[recommendation].link} className="btn-primary" style={{
-                      borderRadius: '3px',
-                      padding: '1rem 2rem',
-                      fontSize: '1rem'
+                    <p style={{
+                      fontSize: '11px',
+                      letterSpacing: '0.12em',
+                      color: '#9bc4b8',
+                      marginBottom: '12px',
+                      fontWeight: 500
+                    }}>YOUR RESULT</p>
+                    <p style={{
+                      fontSize: isMobile ? '1.2rem' : '1.4rem',
+                      color: 'rgba(255,255,255,0.92)',
+                      fontWeight: 500,
+                      marginBottom: '12px',
+                      lineHeight: '1.35'
                     }}>
-                      {recommendations[recommendation].cta} <span>→</span>
-                    </Link>
-                    <button onClick={resetQuiz} className="btn-secondary" style={{
-                      borderRadius: '3px',
-                      padding: '1rem 2rem',
-                      fontSize: '1rem'
+                      {recommendations[recommendation].title}
+                    </p>
+                    <p style={{
+                      fontSize: '14px',
+                      color: 'rgba(255,255,255,0.6)',
+                      lineHeight: 1.75,
+                      marginBottom: '20px'
                     }}>
-                      Take Again
-                    </button>
+                      {recommendations[recommendation].description}
+                    </p>
+                    <div style={{display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
+                      <Link href={recommendations[recommendation].link} style={{
+                        padding: '10px 22px',
+                        borderRadius: '4px',
+                        border: '1px solid rgba(155,196,184,0.6)',
+                        background: 'rgba(155,196,184,0.12)',
+                        color: '#9bc4b8',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        textDecoration: 'none',
+                        letterSpacing: '0.02em'
+                      }}>
+                        {recommendations[recommendation].cta} →
+                      </Link>
+                      <button onClick={resetQuiz} style={{
+                        padding: '10px 22px',
+                        borderRadius: '4px',
+                        border: '1px solid rgba(255,255,255,0.15)',
+                        background: 'transparent',
+                        color: 'rgba(255,255,255,0.5)',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        letterSpacing: '0.02em'
+                      }}>
+                        Start over
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
