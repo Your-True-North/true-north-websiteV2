@@ -5,10 +5,6 @@ import CompoundGrowthModel from '@/app/components/CompoundGrowthModel'
 
 export default function Home() {
   const [shimmerPhase, setShimmerPhase] = useState(0)
-  const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [answers, setAnswers] = useState<string[]>([])
-  const [showResult, setShowResult] = useState(false)
-  const [recommendation, setRecommendation] = useState<'coaching' | 'circle' | 'library'>('library')
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -29,104 +25,6 @@ export default function Home() {
     }
   }, [])
 
-  const questions = [
-    {
-      id: 1,
-      question: "How would you describe where you are in your personal growth journey?",
-      options: [
-        { text: "Just starting to recognise I need change", value: "beginning" },
-        { text: "I've tried some approaches but need deeper work", value: "intermediate" },
-        { text: "I'm ready for intensive, transformational work", value: "ready" },
-        { text: "I need ongoing support to maintain my progress", value: "maintenance" }
-      ]
-    },
-    {
-      id: 2,
-      question: "When it comes to making real changes in your life, how do you feel right now?",
-      options: [
-        { text: "I'm willing to explore but want to take it slow", value: "cautious" },
-        { text: "I'm committed and ready to do whatever it takes", value: "committed" },
-        { text: "I need guidance to figure out what I actually need", value: "uncertain" },
-        { text: "I've been putting this off but know I can't wait anymore", value: "urgent" }
-      ]
-    },
-    {
-      id: 3,
-      question: "How do you prefer to do your deepest personal work?",
-      options: [
-        { text: "One on one where I can go deep without distraction", value: "individual" },
-        { text: "In a group where I can learn from others' experiences", value: "group" },
-        { text: "I'm open to both, depending on what works best", value: "flexible" },
-        { text: "I prefer to start with resources I can explore on my own", value: "self_directed" }
-      ]
-    },
-    {
-      id: 4,
-      question: "How comfortable are you with intense emotional and somatic work?",
-      options: [
-        { text: "I'm ready to feel everything and work through the body", value: "comfortable" },
-        { text: "I'm nervous but willing to be pushed outside my comfort zone", value: "willing" },
-        { text: "I'd prefer to start gentle and build up gradually", value: "gradual" },
-        { text: "I'm not sure what that involves yet", value: "learning" }
-      ]
-    }
-  ]
-
-  const recommendations = {
-    coaching: {
-      title: "1:1 Transformational Coaching",
-      description: "You're ready for deep, personalised work. Let's journey together through intensive transformation.",
-      cta: "Explore Coaching",
-      link: "/work"
-    },
-    circle: {
-      title: "Circle of Return Membership",
-      description: "You'd benefit from ongoing support and community. Join others on the path of authentic living.",
-      cta: "Join the Circle",
-      link: "/circle"
-    },
-    library: {
-      title: "Free Resource Library",
-      description: "Start with foundational tools and practices. Build your understanding before diving deeper.",
-      cta: "Explore Resources",
-      link: "/library"
-    }
-  }
-
-  const handleAnswer = (value: string) => {
-    const newAnswers = [...answers, value]
-    setAnswers(newAnswers)
-
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1)
-    } else {
-      const readinessLevel = newAnswers[0]
-      const changeCommitment = newAnswers[1]
-      const workPreference = newAnswers[2]
-      const comfortLevel = newAnswers[3]
-
-      if ((readinessLevel === 'ready' || changeCommitment === 'committed' || changeCommitment === 'urgent') &&
-          (workPreference === 'individual' || workPreference === 'flexible') &&
-          (comfortLevel === 'comfortable' || comfortLevel === 'willing')) {
-        setRecommendation('coaching')
-      }
-      else if ((readinessLevel === 'intermediate' || readinessLevel === 'maintenance') ||
-               (workPreference === 'group' && (comfortLevel === 'willing' || comfortLevel === 'gradual'))) {
-        setRecommendation('circle')
-      }
-      else {
-        setRecommendation('library')
-      }
-
-      setShowResult(true)
-    }
-  }
-
-  const resetQuiz = () => {
-    setCurrentQuestion(0)
-    setAnswers([])
-    setShowResult(false)
-  }
 
   const shimmerThemes = [
     { primary: '#9bc4b8', accent: '#d4af37', shimmer: 'rgba(155, 196, 184, 0.12)' },

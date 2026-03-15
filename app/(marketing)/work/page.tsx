@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { X, Play, Pause, RotateCcw } from 'lucide-react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
@@ -12,6 +13,110 @@ export default function Work() {
   const [showCTA, setShowCTA] = useState(false)
   const playerRef = useRef(null)
   const whatsappNumber = "+447449052909"
+
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [answers, setAnswers] = useState<string[]>([])
+  const [showResult, setShowResult] = useState(false)
+  const [recommendation, setRecommendation] = useState<'coaching' | 'circle' | 'library'>('library')
+
+  const questions = [
+    {
+      id: 1,
+      question: "How would you describe where you are in your personal growth journey?",
+      options: [
+        { text: "Just starting to recognise I need change", value: "beginning" },
+        { text: "I've tried some approaches but need deeper work", value: "intermediate" },
+        { text: "I'm ready for intensive, transformational work", value: "ready" },
+        { text: "I need ongoing support to maintain my progress", value: "maintenance" }
+      ]
+    },
+    {
+      id: 2,
+      question: "When it comes to making real changes in your life, how do you feel right now?",
+      options: [
+        { text: "I'm willing to explore but want to take it slow", value: "cautious" },
+        { text: "I'm committed and ready to do whatever it takes", value: "committed" },
+        { text: "I need guidance to figure out what I actually need", value: "uncertain" },
+        { text: "I've been putting this off but know I can't wait anymore", value: "urgent" }
+      ]
+    },
+    {
+      id: 3,
+      question: "How do you prefer to do your deepest personal work?",
+      options: [
+        { text: "One on one where I can go deep without distraction", value: "individual" },
+        { text: "In a group where I can learn from others' experiences", value: "group" },
+        { text: "I'm open to both, depending on what works best", value: "flexible" },
+        { text: "I prefer to start with resources I can explore on my own", value: "self_directed" }
+      ]
+    },
+    {
+      id: 4,
+      question: "How comfortable are you with intense emotional and somatic work?",
+      options: [
+        { text: "I'm ready to feel everything and work through the body", value: "comfortable" },
+        { text: "I'm nervous but willing to be pushed outside my comfort zone", value: "willing" },
+        { text: "I'd prefer to start gentle and build up gradually", value: "gradual" },
+        { text: "I'm not sure what that involves yet", value: "learning" }
+      ]
+    }
+  ]
+
+  const recommendations = {
+    coaching: {
+      title: "1:1 Transformational Coaching",
+      description: "You're ready for deep, personalised work. Let's journey together through intensive transformation.",
+      cta: "Explore Coaching",
+      link: "/work"
+    },
+    circle: {
+      title: "Circle of Return Membership",
+      description: "You'd benefit from ongoing support and community. Join others on the path of authentic living.",
+      cta: "Join the Circle",
+      link: "/circle"
+    },
+    library: {
+      title: "Free Resource Library",
+      description: "Start with foundational tools and practices. Build your understanding before diving deeper.",
+      cta: "Explore Resources",
+      link: "/library"
+    }
+  }
+
+  const handleAnswer = (value: string) => {
+    const newAnswers = [...answers, value]
+    setAnswers(newAnswers)
+
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1)
+    } else {
+      const readinessLevel = newAnswers[0]
+      const changeCommitment = newAnswers[1]
+      const workPreference = newAnswers[2]
+      const comfortLevel = newAnswers[3]
+
+      if ((readinessLevel === 'ready' || changeCommitment === 'committed' || changeCommitment === 'urgent') &&
+          (workPreference === 'individual' || workPreference === 'flexible') &&
+          (comfortLevel === 'comfortable' || comfortLevel === 'willing')) {
+        setRecommendation('coaching')
+      }
+      else if ((readinessLevel === 'intermediate' || readinessLevel === 'maintenance') ||
+               (workPreference === 'group' && (comfortLevel === 'willing' || comfortLevel === 'gradual'))) {
+        setRecommendation('circle')
+      }
+      else {
+        setRecommendation('library')
+      }
+
+      setShowResult(true)
+    }
+  }
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0)
+    setAnswers([])
+    setShowResult(false)
+  }
   
   useEffect(() => {
     const checkMobile = () => {
@@ -653,31 +758,134 @@ export default function Work() {
               }}>
                 Four ways to work with me.
               </h1>
-              <h2 style={{
-                fontSize: isMobile ? 'clamp(1rem, 4vw, 1.5rem)' : 'clamp(1.4rem, 3vw, 2rem)',
-                marginBottom: '3rem',
-                color: 'rgba(255, 255, 255, 0.9)',
-                fontWeight: '400',
-                fontStyle: 'italic',
-                textShadow: isMobile ? '1px 1px 2px rgba(0, 0, 0, 0.7)' : undefined
-              }}>
-                All powerful, and all transformational!
-              </h2>
               <div style={{
                 maxWidth: '600px',
                 margin: '0 auto',
                 fontSize: isMobile ? '1rem' : '1.1rem',
                 color: 'rgba(255, 255, 255, 0.85)',
-                lineHeight: '1.6',
+                lineHeight: '1.7',
                 textShadow: isMobile ? '1px 1px 2px rgba(0, 0, 0, 0.7)' : undefined
               }}>
-                <p style={{marginBottom: '1rem'}}>
-                  I don't just talk mindset. I teach regulation.
-                </p>
-                <p style={{margin: 0}}>
-                  I don't just say "believe in yourself." I show you how to build that belief in your body.
-                </p>
+                All powerful. All transformational. I don't just talk mindset — I teach regulation. I don't just say believe in yourself — I show you how to build that belief in your body. Where you are right now determines where we start.
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* WHERE ARE YOU RIGHT NOW */}
+        <section className="section section-alt">
+          <div className="container">
+            <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+              <h2 className="h2 shimmer-accent" style={{
+                color: 'var(--text-primary-inverse)',
+                fontSize: isMobile ? '2rem' : '2.5rem'
+              }}>Where are you right now?</h2>
+              <p className="body-large" style={{
+                color: 'rgba(246, 246, 246, 0.9)',
+                fontSize: isMobile ? '1rem' : '1.1rem'
+              }}>
+                Four questions. No fluff. A clear read on where you're at and what might be next.
+              </p>
+            </div>
+
+            <div className="card" style={{maxWidth: '800px', margin: '0 auto'}}>
+              {!showResult ? (
+                <div>
+                  <div style={{marginBottom: '2rem'}}>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      color: 'var(--text-muted)',
+                      fontSize: '0.85rem',
+                      marginBottom: '0.5rem'
+                    }}>
+                      <span>Question {currentQuestion + 1} of {questions.length}</span>
+                      <span>{Math.round((currentQuestion / questions.length) * 100)}%</span>
+                    </div>
+                    <div style={{
+                      width: '100%',
+                      background: 'var(--bg-tertiary)',
+                      borderRadius: '10px',
+                      height: '6px'
+                    }}>
+                      <div style={{
+                        background: 'linear-gradient(90deg, var(--primary), var(--accent))',
+                        height: '6px',
+                        borderRadius: '10px',
+                        width: `${((currentQuestion) / questions.length) * 100}%`,
+                        transition: 'width 0.5s ease'
+                      }} />
+                    </div>
+                  </div>
+
+                  <h3 style={{
+                    fontSize: isMobile ? '1.3rem' : '1.5rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '2rem',
+                    lineHeight: '1.4'
+                  }}>
+                    {questions[currentQuestion].question}
+                  </h3>
+
+                  <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+                    {questions[currentQuestion].options.map((option, index) => (
+                      <button key={index} onClick={() => handleAnswer(option.value)} style={{
+                        textAlign: 'left',
+                        padding: '1.5rem',
+                        background: 'var(--bg-tertiary)',
+                        border: '1px solid var(--border-primary)',
+                        borderRadius: '0.5rem',
+                        color: 'var(--text-primary)',
+                        fontSize: isMobile ? '0.9rem' : '1rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}>
+                        {option.text}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div style={{textAlign: 'center'}}>
+                  <div style={{fontSize: '3rem', marginBottom: '2rem'}}>🪞</div>
+                  <h3 style={{
+                    fontSize: isMobile ? '1.5rem' : '1.8rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: '1rem'
+                  }}>
+                    {recommendations[recommendation].title}
+                  </h3>
+                  <p style={{
+                    fontSize: isMobile ? '1rem' : '1.1rem',
+                    color: 'var(--text-secondary)',
+                    marginBottom: '2rem',
+                    lineHeight: '1.6'
+                  }}>
+                    {recommendations[recommendation].description}
+                  </p>
+                  <div style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap'
+                  }}>
+                    <Link href={recommendations[recommendation].link} className="btn-primary" style={{
+                      borderRadius: '3px',
+                      padding: '1rem 2rem',
+                      fontSize: '1rem'
+                    }}>
+                      {recommendations[recommendation].cta} <span>→</span>
+                    </Link>
+                    <button onClick={resetQuiz} className="btn-secondary" style={{
+                      borderRadius: '3px',
+                      padding: '1rem 2rem',
+                      fontSize: '1rem'
+                    }}>
+                      Take Again
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>
