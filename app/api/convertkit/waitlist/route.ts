@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
 const CONVERTKIT_API_URL = 'https://api.convertkit.com/v3'
 const WAITLIST_TAG_ID = '10466972'
+const WAITLIST_SEQUENCE_ID = '1234567'
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,6 +31,16 @@ export async function POST(request: NextRequest) {
       console.error('[Waitlist] Tagging failed:', errorText)
       return NextResponse.json({ error: 'Failed to join waitlist' }, { status: 500 })
     }
+
+    // Add to sequence
+    await fetch(`${CONVERTKIT_API_URL}/sequences/${WAITLIST_SEQUENCE_ID}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        api_secret: CONVERTKIT_API_KEY,
+        email: email
+      })
+    }).catch((err) => console.error('[Waitlist] Sequence subscription failed:', err))
 
     return NextResponse.json({
       success: true,
