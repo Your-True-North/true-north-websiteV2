@@ -369,7 +369,7 @@ export default function Circle() {
                 marginBottom: '2rem',
                 fontWeight: '300'
               }}>
-                Maybe it shows up in business. You build momentum — then somehow lose the contract, delay the launch, undercharge again. Maybe it's relationships. You find yourself in the same argument, the same moment where you shut down when you most needed to stay open. Maybe it's the version of yourself you perform in public versus the one you live with privately.
+                Maybe it shows up in business. You build momentum, then somehow lose the contract, delay the launch, undercharge again. Maybe it's relationships. You find yourself in the same argument, the same moment where you shut down when you most needed to stay open. Maybe it's the version of yourself you perform in public versus the one you live with privately.
               </p>
 
               <p style={{
@@ -399,7 +399,7 @@ export default function Circle() {
                 fontWeight: '400',
                 marginTop: '3rem'
               }}>
-                That's not a failure of effort. That's the nature of what's in the blind spot — by definition, you cannot see it from inside it.
+                That's not a failure of effort. That's the nature of what's in the blind spot. By definition, you cannot see it from inside it.
               </p>
             </div>
           </section>
@@ -438,7 +438,7 @@ export default function Circle() {
                 marginBottom: '1.5rem',
                 fontWeight: '300'
               }}>
-                I spent years in the same cycle — and still have my moments. Two steps forward, one back. Building things and burning them. Knowing what I was doing and doing it anyway. The pattern expressed itself in many ways — from procrastination through to violence, addiction, and a level of self-destruction.
+                I spent years in the same cycle, and still have my moments. Two steps forward, one back. Building things and burning them. Knowing what I was doing and doing it anyway. The pattern expressed itself in many ways: from procrastination through to violence, addiction, and a level of self-destruction.
               </p>
               <p style={{
                 fontSize: isMobile ? '1.1rem' : '1.2rem',
@@ -478,7 +478,7 @@ export default function Circle() {
               lineHeight: '1.6',
               fontWeight: '300'
             }}>
-              This isn't random conversation — this work follows a clear path. Nervous system work. Body work. Real change from the inside out.
+              This isn't random conversation. This work follows a clear path. Nervous system work. Body work. Real change from the inside out.
             </p>
 
             <div style={{
@@ -500,7 +500,7 @@ export default function Circle() {
                 },
                 {
                   title: 'Exclusive supporting content',
-                  desc: 'We take a holistic approach — somatics, the psyche, and grounded spiritual perspectives — because understanding how and why you operate is one of the most powerful forms of growth.'
+                  desc: 'We take a holistic approach: somatics, the psyche, and grounded spiritual perspectives. Because understanding how and why you operate is one of the most powerful forms of growth.'
                 },
                 {
                   title: 'Private community',
@@ -594,7 +594,7 @@ export default function Circle() {
                 marginTop: '2rem',
                 fontWeight: '400'
               }}>
-                When you enter The CoR — you will feel shifts within weeks. And within your first 30 days, you will identify a pattern that has been influencing your decisions for years.
+                When you enter The CoR, you will feel shifts within weeks. And within your first 30 days, you will identify a pattern that has been influencing your decisions for years.
               </p>
             </div>
           </section>
@@ -642,7 +642,7 @@ export default function Circle() {
                 {
                   num: '03',
                   title: 'Become it.',
-                  desc: "Who does your goal require you to be? We close that gap. This cycle repeats, and is applied to real situations — until the old programme loses its grip, and we rewrite a new one."
+                  desc: "Who does your goal require you to be? We close that gap. This cycle repeats, applied to real situations, until the old programme loses its grip and we rewrite a new one."
                 },
                 {
                   num: '04',
@@ -728,13 +728,13 @@ export default function Circle() {
                 marginBottom: '2rem',
                 fontWeight: '300'
               }}>
-                I've sat in rooms with men I'd never normally meet. Entrepreneurs, other coaches, business owners. Men who seem like they have it together — and I found they were all running the same patterns I was, just dressed differently.
+                I've sat in rooms with men I'd never normally meet. Entrepreneurs, other coaches, business owners. Men who seem like they have it together. And I found they were all running the same patterns I was, just dressed differently.
               </p>
 
               {[
                 'Hearing another man describe his fear of success made me see my own fear of failure.',
                 'Watching someone else catch their sabotage mid-sentence gave me the language to catch mine.',
-                "And knowing I wasn't the only one — and I wasn't behind — kept me showing up when the work got hard.",
+                "And knowing I wasn't the only one, and I wasn't behind, kept me showing up when the work got hard.",
               ].map((line, i) => (
                 <div key={i} style={{ borderLeft: '3px solid rgba(155,196,184,0.6)', paddingLeft: '1.25rem', marginBottom: '1.25rem' }}>
                   <p style={{
