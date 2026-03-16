@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 const GOALS = {
   money: {
@@ -183,6 +184,7 @@ export default function CompoundGrowthModel() {
     setCurrentGoal(key)
     setUnlockedCount(1)
     setOpenStage(0)
+    trackEvent('healing_journey_domain', { domain: key })
   }
 
   function toggleStage(i: number) {
