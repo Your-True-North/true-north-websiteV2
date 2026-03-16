@@ -410,6 +410,53 @@ export default function Circle() {
             margin: isMobile ? '3rem 0' : '4rem 0'
           }} />
 
+          {/* MASON'S STORY SECTION */}
+          <section style={{
+            padding: isMobile ? '3rem 0' : '5rem 0'
+          }}>
+            <div style={{
+              maxWidth: '800px',
+              padding: isMobile ? '2rem 1.5rem' : '3rem 2.5rem',
+              background: 'rgba(255, 255, 255, 0.03)',
+              borderRadius: '3px',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderLeft: '3px solid rgba(155, 196, 184, 0.6)'
+            }}>
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.9',
+                marginBottom: '1.5rem',
+                fontWeight: '300'
+              }}>
+                I'm True. And I'm not standing outside this work looking in.
+              </p>
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.9',
+                marginBottom: '1.5rem',
+                fontWeight: '300'
+              }}>
+                I spent years in the same cycle — and still have my moments. Two steps forward, one back. Building things and burning them. Knowing what I was doing and doing it anyway. The pattern expressed itself in many ways — from procrastination through to violence, addiction, and a level of self-destruction.
+              </p>
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: '#ffffff',
+                lineHeight: '1.9',
+                fontWeight: '400'
+              }}>
+                What changed wasn't a book or a single breakthrough moment. It was sustained, structured work designed to get underneath the story you tell yourself and work with what's actually stored in the body.
+              </p>
+            </div>
+          </section>
+
+          <div style={{
+            height: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+            margin: isMobile ? '3rem 0' : '4rem 0'
+          }} />
+
           {/* WHAT YOU GET SECTION */}
           <section style={{
             padding: isMobile ? '3rem 0' : '5rem 0'
