@@ -710,76 +710,39 @@ export default function Circle() {
           <section style={{
             padding: isMobile ? '3rem 0' : '5rem 0'
           }}>
-            <h2 style={{
-              fontSize: isMobile ? '1.8rem' : '2.5rem',
-              color: '#ffffff',
-              fontWeight: '300',
-              marginBottom: '3rem',
-              letterSpacing: '-0.01em'
-            }}>
-              What members say.
-            </h2>
+            <div style={{ maxWidth: '800px' }}>
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.25rem',
+                color: '#ffffff',
+                lineHeight: '1.8',
+                marginBottom: '2.5rem',
+                fontWeight: '400'
+              }}>
+                Here's what I've learned about doing this work in a container.
+              </p>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-              gap: '2rem'
-            }}>
+              <p style={{
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                color: 'rgba(255, 255, 255, 0.85)',
+                lineHeight: '1.8',
+                marginBottom: '2rem',
+                fontWeight: '300'
+              }}>
+                I've sat in rooms with men I'd never normally meet. Entrepreneurs, other coaches, business owners. Men who seem like they have it together — and I found they were all running the same patterns I was, just dressed differently.
+              </p>
+
               {[
-                {
-                  quote: "I've tried therapy, courses, everything. This is the first time something actually shifted in my body, not just my head.",
-                  name: "James",
-                  result: "Found clarity after years of confusion"
-                },
-                {
-                  quote: "The accountability and the space to be honest without judgement changed everything for me.",
-                  name: "David",
-                  result: "Broke a 15-year pattern"
-                },
-                {
-                  quote: "I didn't know what I was looking for. Now I do. And I know how to get there.",
-                  name: "Michael",
-                  result: "Reconnected with purpose"
-                },
-                {
-                  quote: "This isn't like other memberships. People actually show up. The work actually lands.",
-                  name: "Chris",
-                  result: "Transformed his relationships"
-                }
-              ].map((testimonial, i) => (
-                <div key={i} style={{
-                  padding: isMobile ? '2rem 1.5rem' : '2.5rem 2rem',
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  borderRadius: '3px',
-                  border: '1px solid rgba(255, 255, 255, 0.08)'
-                }}>
+                'Hearing another man describe his fear of success made me see my own fear of failure.',
+                'Watching someone else catch their sabotage mid-sentence gave me the language to catch mine.',
+                'And knowing I wasn't the only one — and I wasn't behind — kept me showing up when the work got hard.',
+              ].map((line, i) => (
+                <div key={i} style={{ borderLeft: '3px solid rgba(155,196,184,0.6)', paddingLeft: '1.25rem', marginBottom: '1.25rem' }}>
                   <p style={{
                     fontSize: isMobile ? '1rem' : '1.1rem',
                     color: 'rgba(255, 255, 255, 0.85)',
                     lineHeight: '1.7',
-                    marginBottom: '1.5rem',
-                    fontWeight: '300',
-                    fontStyle: 'italic'
-                  }}>
-                    "{testimonial.quote}"
-                  </p>
-                  <div>
-                    <p style={{
-                      fontSize: '1rem',
-                      color: '#ffffff',
-                      fontWeight: '500',
-                      marginBottom: '0.25rem'
-                    }}>
-                      {testimonial.name}
-                    </p>
-                    <p style={{
-                      fontSize: '0.9rem',
-                      color: 'rgba(155, 196, 184, 0.9)',
-                      fontWeight: '400'
-                    }}>
-                      {testimonial.result}
-                    </p>
-                  </div>
+                    fontWeight: '300'
+                  }}>{line}</p>
                 </div>
               ))}
             </div>
