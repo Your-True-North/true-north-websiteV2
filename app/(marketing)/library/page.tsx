@@ -17,7 +17,8 @@ export default function Library() {
     const immediateResources = [
       "Realistic Anger Management",
       "Integration Journal",
-      "A Mans Guide to Knowing Himself"
+      "A Mans Guide to Knowing Himself",
+      "Retain or Release"
     ]
 
     // 2-WEEK VIDEO COURSES
@@ -81,7 +82,8 @@ export default function Library() {
         const pdfMap = {
           "Realistic Anger Management": "/Realistic_Anger_Management.pdf",
           "Integration Journal": "/Integration_Journal.pdf",
-          "A Mans Guide to Knowing Himself": "/A_Mans_Guide_to_Knowing_Himself.pdf"
+          "A Mans Guide to Knowing Himself": "/A_Mans_Guide_to_Knowing_Himself.pdf",
+          "Retain or Release": "https://yourtruenorth.me/retain-or-release.pdf"
         };
         
         if (pdfMap[selectedResource]) {
@@ -143,6 +145,11 @@ export default function Library() {
       title: "Awaken The Truth",
       description: "A 5-minute mind-body audio to help ignite and empower as you start your day.",
       type: "Audio Practice"
+    },
+    {
+      title: "Retain or Release",
+      description: "A Man's Guide to Sexual Energy Mastery — should you release or retain? Most men are leaking their power without knowing it.",
+      type: "PDF Guide"
     }
   ]
 
