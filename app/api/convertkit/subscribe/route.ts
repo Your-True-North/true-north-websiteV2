@@ -9,7 +9,8 @@ const RESOURCE_TAG_MAP: { [key: string]: string } = {
   "Take Back Control": process.env.THE_LIBRARY_TAKE_BACK_CONTROL_TAG_ID || '',
   "A Mans Guide to Knowing Himself": process.env.THE_LIBRARY_MANS_GUIDE_TAG_ID || '',
   "Integration Journal": process.env.THE_LIBRARY_INTEGRATION_JOURNAL_TAG_ID || '',
-  "Awaken The Truth": process.env.THE_LIBRARY_AWAKEN_THE_TRUTH_TAG_ID || ''
+  "Awaken The Truth": process.env.THE_LIBRARY_AWAKEN_THE_TRUTH_TAG_ID || '',
+  "Retain or Release": process.env.THE_LIBRARY_RETAIN_OR_RELEASE_TAG_ID || ''
 };
 
 // Fallback to generic library tag if resource-specific tag not found
