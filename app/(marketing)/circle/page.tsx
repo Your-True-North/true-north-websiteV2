@@ -734,7 +734,7 @@ export default function Circle() {
               {[
                 'Hearing another man describe his fear of success made me see my own fear of failure.',
                 'Watching someone else catch their sabotage mid-sentence gave me the language to catch mine.',
-                'And knowing I wasn't the only one — and I wasn't behind — kept me showing up when the work got hard.',
+                "And knowing I wasn't the only one — and I wasn't behind — kept me showing up when the work got hard.",
               ].map((line, i) => (
                 <div key={i} style={{ borderLeft: '3px solid rgba(155,196,184,0.6)', paddingLeft: '1.25rem', marginBottom: '1.25rem' }}>
                   <p style={{
