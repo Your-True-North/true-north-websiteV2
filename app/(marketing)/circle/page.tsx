@@ -71,10 +71,7 @@ export default function Circle() {
       const data = await response.json()
 
       if (response.ok) {
-        trackEvent('join_waitlist', {
-          list: 'circle_of_return',
-          value: 1
-        })
+        trackEvent('cor_waitlist_join')
 
         setMessage('success')
       } else {

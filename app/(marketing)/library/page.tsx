@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function Library() {
   const [showModal, setShowModal] = useState(false)
@@ -42,6 +43,7 @@ export default function Library() {
   }
 
   const handleResourceClick = (resourceName) => {
+    trackEvent('resource_click', { resource: resourceName })
     setSelectedResource(resourceName)
     setShowModal(true)
     setErrorMessage('')
@@ -72,6 +74,7 @@ export default function Library() {
 
       if (response.ok) {
         console.log('[Library Form] Success! Showing success message')
+        trackEvent('library_signup', { resource: selectedResource })
         setSubmitted(true)
         
         // Auto-download PDF if available for this resource

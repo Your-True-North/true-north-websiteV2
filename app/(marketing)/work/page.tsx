@@ -335,10 +335,11 @@ export default function Work() {
                 </p>
               </div>
 
-              <a 
+              <a
                 href={createWhatsAppLink("Hi Mason, I'm interested in the 5-session pack with 15% off. I want to commit to deeper transformation work. Can you share details about how this works?")}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent('session_pack_click')}
                 style={{
                   display: 'inline-block',
                   padding: '1.2rem 2.5rem',
@@ -1004,7 +1005,7 @@ export default function Work() {
 
               <div style={{textAlign: 'center'}}>
                 <button
-                  onClick={() => setShowVSL(true)}
+                  onClick={() => { setShowVSL(true); trackEvent('coaching_apply_click') }}
                   style={{
                     display: 'inline-block',
                     padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
@@ -1180,7 +1181,7 @@ export default function Work() {
                       href="https://buy.stripe.com/28E9AU9D1c2Fck01bh9IQ0f"
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => trackEvent('initiate_checkout', {
+                      onClick={() => trackEvent('begin_checkout', {
                         service: 'breathwork',
                         value: 200
                       })}
@@ -1292,7 +1293,7 @@ export default function Work() {
                       href="https://buy.stripe.com/cNi4gA9D17Mp0BibPV9IQ0g"
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => trackEvent('initiate_checkout', {
+                      onClick={() => trackEvent('begin_checkout', {
                         service: 'energy_healing',
                         value: 120
                       })}
