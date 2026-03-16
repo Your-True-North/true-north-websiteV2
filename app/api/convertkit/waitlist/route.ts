@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
     }
 
-    const subscriberResponse = await fetch(`${CONVERTKIT_API_URL}/subscribers`, {
+    const tagResponse = await fetch(`${CONVERTKIT_API_URL}/tags/${WAITLIST_TAG_ID}/subscribe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -25,23 +25,10 @@ export async function POST(request: NextRequest) {
       })
     })
 
-    if (!subscriberResponse.ok) {
-      const errorText = await subscriberResponse.text()
-      console.error('[Waitlist] Subscriber creation failed:', errorText)
-      return NextResponse.json({ error: 'Failed to subscribe' }, { status: 500 })
-    }
-
-    const tagResponse = await fetch(`${CONVERTKIT_API_URL}/tags/${WAITLIST_TAG_ID}/subscribe`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        api_key: CONVERTKIT_API_KEY,
-        email: email
-      })
-    })
-
     if (!tagResponse.ok) {
-      console.error('[Waitlist] Tagging failed')
+      const errorText = await tagResponse.text()
+      console.error('[Waitlist] Tagging failed:', errorText)
+      return NextResponse.json({ error: 'Failed to join waitlist' }, { status: 500 })
     }
 
     return NextResponse.json({
