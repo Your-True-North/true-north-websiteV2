@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
-const VIMEO_ID = '1174218563'
+const VIMEO_ID = '1174400479'
 const PDF_URL = 'https://yourtruenorth.me/pattern-audit-workbook.pdf'
 
 const ACCENT = '#9bc4b8'
