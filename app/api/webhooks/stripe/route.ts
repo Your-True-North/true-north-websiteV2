@@ -1,9 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
 
 // NOTE: Add NEXT_PUBLIC_GA_API_SECRET to Vercel environment variables.
 // Get it from: GA4 → Admin → Data Streams → your stream → Measurement Protocol API secrets.
 const GA_MEASUREMENT_ID = 'G-C4DKTB8W13'
 const GA_API_SECRET = process.env.NEXT_PUBLIC_GA_API_SECRET
+
+// Pattern Audit detection
+// Set PATTERN_AUDIT_PRICE_ID in Vercel to the Stripe price ID for the £37 Pattern Audit product.
+const PATTERN_AUDIT_PRICE_ID = process.env.PATTERN_AUDIT_PRICE_ID
+
+// ConvertKit
+const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
+const PATTERN_AUDIT_TAG_ID = process.env.THE_PATTERN_AUDIT_TAG_ID
+
+// Resend
+const resend = new Resend(process.env.RESEND_API_KEY)
+const PATTERN_AUDIT_PAGE_URL = process.env.NEXT_PUBLIC_PATTERN_AUDIT_PAGE_URL || 'https://yourtruenorth.me/library/pattern-audit'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Mason <mason@yourtruenorth.me>'
 
 function sendGA4Purchase(transactionId: string, value: number) {
   if (!GA_API_SECRET) return
@@ -31,14 +45,61 @@ function sendGA4Purchase(transactionId: string, value: number) {
   })
 }
 
+function applyConvertKitTag(email: string, firstName: string) {
+  if (!CONVERTKIT_API_KEY || !PATTERN_AUDIT_TAG_ID) return
+  fetch(`https://api.convertkit.com/v3/tags/${PATTERN_AUDIT_TAG_ID}/subscribe`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      api_secret: CONVERTKIT_API_KEY,
+      email,
+      first_name: firstName,
+    }),
+  }).catch((err) => console.error('[Stripe Webhook] ConvertKit tag failed:', err))
+}
+
+function sendPatternAuditEmail(email: string, firstName: string) {
+  resend.emails.send({
+    from: FROM_EMAIL,
+    to: email,
+    subject: 'Your Pattern Audit is ready',
+    html: `
+      <div style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Hey${firstName ? ` ${firstName}` : ''},</p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Your Pattern Audit is ready.</p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 24px;">This is where we start — before the first session. Watch the video, then work through the workbook honestly. The more you put in here, the more precise we can be when we meet.</p>
+        <a href="${PATTERN_AUDIT_PAGE_URL}" style="display: inline-block; padding: 14px 28px; background: #9bc4b8; color: #0a0a0a; text-decoration: none; border-radius: 5px; font-weight: 600; font-size: 15px;">Access the Pattern Audit</a>
+        <p style="font-size: 13px; color: #666; margin-top: 32px; line-height: 1.6;">Take your time with it. There is no rush.</p>
+        <p style="font-size: 13px; color: #666; margin-top: 8px;">Mason</p>
+      </div>
+    `,
+  }).catch((err) => console.error('[Stripe Webhook] Resend email failed:', err))
+}
+
+async function isPatternAuditPurchase(stripe: any, session: any): Promise<boolean> {
+  if (!PATTERN_AUDIT_PRICE_ID) return false
+
+  try {
+    const expanded = await stripe.checkout.sessions.retrieve(session.id, {
+      expand: ['line_items'],
+    })
+    const lineItems = expanded.line_items?.data ?? []
+    return lineItems.some((item: any) => item.price?.id === PATTERN_AUDIT_PRICE_ID)
+  } catch (err) {
+    console.error('[Stripe Webhook] Failed to fetch line items:', err)
+    return false
+  }
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')
 
   let event: any
 
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
   try {
-    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
     if (webhookSecret && sig) {
@@ -56,6 +117,15 @@ export async function POST(req: NextRequest) {
     const transactionId = session.payment_intent || session.id
     const value = session.amount_total ?? 0
     sendGA4Purchase(transactionId, value)
+
+    const email = session.customer_details?.email
+    const firstName = session.customer_details?.name?.split(' ')[0] || ''
+
+    if (email && (await isPatternAuditPurchase(stripe, session))) {
+      console.log('[Stripe Webhook] Pattern Audit purchase detected for:', email)
+      sendPatternAuditEmail(email, firstName)
+      applyConvertKitTag(email, firstName)
+    }
   }
 
   if (event.type === 'payment_intent.succeeded') {
