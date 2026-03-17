@@ -115,41 +115,26 @@ export default function PatternAuditPage() {
             <div
               style={{
                 position: 'relative',
-                paddingTop: '56.25%',
+                paddingTop: '75%',
                 background: '#0a0a0a',
                 borderRadius: '6px',
                 overflow: 'hidden',
               }}
             >
-              {VIMEO_ID ? (
-                <iframe
-                  src={`https://player.vimeo.com/video/${VIMEO_ID}?badge=0&autopause=0&player_id=0&app_id=58479`}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    border: 'none',
-                  }}
-                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                  title="The Pattern Audit"
-                />
-              ) : (
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'rgba(255,255,255,0.3)',
-                    fontSize: '14px',
-                  }}
-                >
-                  Video coming soon
-                </div>
-              )}
+              <iframe
+                src={`https://player.vimeo.com/video/${VIMEO_ID}?badge=0&autopause=0&player_id=0&app_id=58479`}
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                }}
+                title="PATTERN AUDIT"
+              />
             </div>
 
             <div style={{ marginTop: '20px' }}>
