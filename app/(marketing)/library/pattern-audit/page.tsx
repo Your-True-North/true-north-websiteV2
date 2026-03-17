@@ -97,7 +97,23 @@ export default function PatternAuditPage() {
             The Pattern Audit
           </h1>
           <p style={{ fontSize: '15px', color: MUTED, lineHeight: 1.6 }}>
-            Guided video and structured workbook. Work through this before your first session.
+            Guided video and structured workbook. Return to it between sessions.
+          </p>
+        </div>
+
+        {/* Intro */}
+        <div
+          style={{
+            borderLeft: `3px solid ${ACCENT}`,
+            paddingLeft: '20px',
+            marginBottom: isMobile ? '28px' : '36px',
+          }}
+        >
+          <p style={{ fontSize: '15px', color: TEXT, lineHeight: 1.8, marginBottom: '12px' }}>
+            Most men who come into the Circle have a surface-level read on what their pattern is. They can name it. But naming it has not changed it. Because the name is not the root.
+          </p>
+          <p style={{ fontSize: '15px', color: TEXT, lineHeight: 1.8 }}>
+            The Pattern Audit is designed to take you one layer deeper. Not to fix anything. To see clearly. That is where the work actually starts.
           </p>
         </div>
 
@@ -195,7 +211,7 @@ export default function PatternAuditPage() {
                     marginBottom: '20px',
                   }}
                 >
-                  The structured workbook. Focused questions designed to surface the pattern underneath the pattern — the layer that keeps the same outcomes repeating.
+                  The structured workbook. Focused questions designed to surface the pattern underneath the pattern. The layer that keeps the same outcomes repeating.
                 </p>
                 <a
                   href={PDF_URL}
