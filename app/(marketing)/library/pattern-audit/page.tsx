@@ -115,7 +115,7 @@ export default function PatternAuditPage() {
             <div
               style={{
                 position: 'relative',
-                paddingTop: '75%',
+                paddingTop: '56.25%',
                 background: '#0a0a0a',
                 borderRadius: '6px',
                 overflow: 'hidden',
