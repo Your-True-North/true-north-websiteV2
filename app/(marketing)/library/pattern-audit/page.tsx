@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
-const VIMEO_ID = process.env.NEXT_PUBLIC_PATTERN_AUDIT_VIMEO_ID || ''
-const PDF_URL = process.env.NEXT_PUBLIC_PATTERN_AUDIT_PDF_URL || '#'
+const VIMEO_ID = '1174218563'
+const PDF_URL = '' // TODO: add PDF download URL when ready
 
 const ACCENT = '#9bc4b8'
 const TEXT = '#1a1a1a'
