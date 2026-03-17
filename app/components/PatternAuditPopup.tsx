@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 const ACCENT = '#9bc4b8'
 const ACCENT_HOVER = '#7da89c'
@@ -8,7 +9,7 @@ const TEXT = '#0a0a0a'
 const MUTED = '#666666'
 const BODY_FONT = '-apple-system, BlinkMacSystemFont, sans-serif'
 
-const UPSELL_STRIPE_URL = 'https://buy.stripe.com/PLACEHOLDER'
+const UPSELL_STRIPE_URL = 'https://buy.stripe.com/fZuaEY3eDaYB83K4nt9IQ0k'
 const MAIN_STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
 
 interface PatternAuditPopupProps {
@@ -23,6 +24,7 @@ export default function PatternAuditPopup({ isOpen, onClose }: PatternAuditPopup
     if (isOpen) {
       document.body.style.overflow = 'hidden'
       setTimeout(() => setVisible(true), 10)
+      trackEvent('pattern_audit_upsell_shown')
     } else {
       setVisible(false)
       document.body.style.overflow = ''
@@ -97,9 +99,9 @@ export default function PatternAuditPopup({ isOpen, onClose }: PatternAuditPopup
             </div>
           </div>
 
-          <a href={UPSELL_STRIPE_URL} style={{ display: 'block', width: '100%', padding: '15px', background: ACCENT, color: TEXT, fontSize: '15px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', textAlign: 'center', fontFamily: BODY_FONT, boxSizing: 'border-box' }} onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)} onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}>Yes - Add the Pattern Audit · £37</a>
+          <a href={UPSELL_STRIPE_URL} onClick={() => trackEvent('pattern_audit_upsell_accepted')} style={{ display: 'block', width: '100%', padding: '15px', background: ACCENT, color: TEXT, fontSize: '15px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', textAlign: 'center', fontFamily: BODY_FONT, boxSizing: 'border-box' }} onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)} onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}>Yes - Add the Pattern Audit · £37</a>
 
-          <a href={MAIN_STRIPE_URL} style={{ display: 'block', textAlign: 'center', marginTop: '14px', fontSize: '13px', color: MUTED, textDecoration: 'none', fontFamily: BODY_FONT }} onMouseEnter={(e) => (e.currentTarget.style.color = TEXT)} onMouseLeave={(e) => (e.currentTarget.style.color = MUTED)}>No thanks - just the membership</a>
+          <a href={MAIN_STRIPE_URL} onClick={() => trackEvent('pattern_audit_upsell_declined')} style={{ display: 'block', textAlign: 'center', marginTop: '14px', fontSize: '13px', color: MUTED, textDecoration: 'none', fontFamily: BODY_FONT }} onMouseEnter={(e) => (e.currentTarget.style.color = TEXT)} onMouseLeave={(e) => (e.currentTarget.style.color = MUTED)}>No thanks - just the membership</a>
         </div>
       </div>
     </div>
