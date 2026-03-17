@@ -84,7 +84,7 @@ export default function JourneyPage() {
       if (res.ok) {
         const data = await res.json()
         if (data.success && data.likes) {
-          setVideoLikes(data.likes)
+          setVideoLikes(Array.isArray(data.likes) ? data.likes : [])
         }
       }
     } catch (error) {
@@ -256,7 +256,7 @@ export default function JourneyPage() {
 
   const getVideoLikesCount = (videoId) => {
     const baseLikes = videos.find(v => v.id === videoId)?.likes || 0
-    return baseLikes + (videoLikes.includes(videoId) ? 1 : 0)
+    return baseLikes + (Array.isArray(videoLikes) && videoLikes.includes(videoId) ? 1 : 0)
   }
 
   const getVideoCommentsCount = (videoId) => {
