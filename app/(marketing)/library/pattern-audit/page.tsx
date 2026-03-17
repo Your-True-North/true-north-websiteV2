@@ -164,7 +164,7 @@ export default function PatternAuditPage() {
                 How to use this
               </h2>
               <p style={{ fontSize: '14px', color: MUTED, lineHeight: 1.75, marginBottom: '10px' }}>
-                Watch the video first. Mason walks you through the audit process, explains what you are looking for, and gives you the context you need before you put pen to paper.
+                Watch the video first. I will walk you through the audit process, explain what you are looking for, and give you the context you need before you put pen to paper.
               </p>
               <p style={{ fontSize: '14px', color: MUTED, lineHeight: 1.75 }}>
                 Then open the workbook and work through it honestly. There are no right answers. The value is in what surfaces when you slow down enough to look.
