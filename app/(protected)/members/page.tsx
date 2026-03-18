@@ -103,7 +103,7 @@ export default function MembersPage() {
       localStorage.removeItem('user')
       window.location.replace('/auth/login')
     }
-  }, [router])
+  }, [])
 
   useEffect(() => {
     const handleResize = () => {
