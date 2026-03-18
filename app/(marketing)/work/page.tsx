@@ -777,32 +777,33 @@ export default function Work() {
         {/* SLIDE-OUT QUIZ TAB */}
         {/* Tab trigger — fixed to right edge */}
         <div
-          onClick={() => { setShowQuizPanel(true); resetQuiz() }}
+          onClick={() => showQuizPanel ? setShowQuizPanel(false) : (setShowQuizPanel(true), resetQuiz())}
           style={{
             position: 'fixed',
             right: 0,
-            top: '50%',
+            top: 'calc(50% + 40px)',
             transform: 'translateY(-50%)',
-            zIndex: 200,
+            zIndex: 500,
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: '#9bc4b8',
+            background: showQuizPanel ? '#7da89c' : '#9bc4b8',
             color: '#0a0a0a',
             writingMode: 'vertical-rl',
             textOrientation: 'mixed',
-            padding: '18px 10px',
-            fontSize: '11px',
-            fontWeight: 700,
-            letterSpacing: '0.12em',
+            padding: '22px 13px',
+            fontSize: '12px',
+            fontWeight: 800,
+            letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            borderRadius: '6px 0 0 6px',
-            boxShadow: '-2px 0 12px rgba(0,0,0,0.2)',
+            borderRadius: '8px 0 0 8px',
+            boxShadow: '-4px 0 20px rgba(0,0,0,0.35)',
             userSelect: 'none',
+            transition: 'background 0.2s',
           }}
         >
-          Where are you now?
+          {showQuizPanel ? '✕ Close' : 'Where are you now?'}
         </div>
 
         {/* Overlay */}
@@ -831,7 +832,7 @@ export default function Work() {
           zIndex: 400,
           overflowY: 'auto',
           transition: 'right 0.35s cubic-bezier(0.4,0,0.2,1)',
-          padding: '32px 28px 48px',
+          padding: '64px 28px 48px',
           boxSizing: 'border-box',
         }}>
           {/* Close */}
@@ -841,15 +842,18 @@ export default function Work() {
               position: 'absolute',
               top: '16px',
               right: '16px',
-              background: 'none',
-              border: 'none',
-              color: 'rgba(255,255,255,0.4)',
-              fontSize: '22px',
+              background: 'rgba(255,255,255,0.08)',
+              border: '1px solid rgba(255,255,255,0.15)',
+              borderRadius: '6px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '13px',
+              fontWeight: 600,
               cursor: 'pointer',
               lineHeight: 1,
-              padding: '4px',
+              padding: '6px 12px',
+              letterSpacing: '0.04em',
             }}
-          >×</button>
+          >✕ Close</button>
 
           <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: '#9bc4b8', marginBottom: '16px' }}>Find your path</p>
           <h2 style={{ fontSize: '22px', fontWeight: 500, color: 'rgba(255,255,255,0.92)', marginBottom: '10px', lineHeight: 1.25 }}>Where are you right now?</h2>
