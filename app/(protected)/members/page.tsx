@@ -372,7 +372,12 @@ export default function MembersPage() {
 
         {/* Journey Progress — horizontal timeline */}
         <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '12px', padding: '1.25rem 1.5rem 1.75rem', marginBottom: '2rem' }}>
-          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#999', marginBottom: '1.75rem', fontWeight: 400 }}>YOUR JOURNEY</div>
+          <div style={{ marginBottom: '1.75rem' }}>
+            <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#999', fontWeight: 400, marginBottom: '4px' }}>YOUR JOURNEY</div>
+            <div style={{ fontSize: '0.8rem', color: '#666', lineHeight: 1.5 }}>
+              Track your progress here and compare it to your life elevation outside the Circle. As you move through the stages, notice where things shift.
+            </div>
+          </div>
 
           <div style={{ position: 'relative', height: '48px' }}>
             {/* Grey track */}
