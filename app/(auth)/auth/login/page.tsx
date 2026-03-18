@@ -22,6 +22,16 @@ export default function LoginPage() {
       try {
         const user = JSON.parse(userData)
         if (user && user.email) {
+          // Only redirect if the auth cookie is actually present
+          // Without this check, a missing cookie causes an infinite redirect loop:
+          // /members -> middleware (no cookie) -> /auth/login -> /community -> middleware -> loop
+          const hasCookie = document.cookie.includes('auth_token=')
+          if (!hasCookie) {
+            // Cookie expired or cleared — clear stale localStorage and show login form
+            localStorage.removeItem('user')
+            setCheckingAuth(false)
+            return
+          }
           // Redirect admin to admin dashboard, others to community
           const redirectUrl = user.email === 'cor@yourtruenorth.me' ? '/admin/dashboard' : '/community'
           console.log('[LOGIN] User already logged in, redirecting to', redirectUrl)
