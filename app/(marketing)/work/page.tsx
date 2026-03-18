@@ -731,7 +731,7 @@ export default function Work() {
 
       <main className="page-container">
         <section className="section" style={{
-          paddingTop: isMobile ? '0' : '13rem',
+          paddingTop: isMobile ? '0' : '20rem',
           position: 'relative',
           minHeight: isMobile ? '100vh' : 'auto',
           display: isMobile ? 'flex' : 'block',
