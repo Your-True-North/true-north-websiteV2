@@ -705,7 +705,10 @@ export default function CommunityPage() {
 
             {/* Journey progress */}
             <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-              <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', marginBottom: '0.875rem', fontWeight: 600, textTransform: 'uppercase' }}>Your Journey</div>
+              <div style={{ marginBottom: '0.875rem' }}>
+                <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', fontWeight: 600, textTransform: 'uppercase', marginBottom: '4px' }}>Your Journey</div>
+                <div style={{ fontSize: '0.75rem', color: '#999', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
+              </div>
               {['Seeker', 'Explorer', 'Pathfinder', 'Guide'].map((stage, index) => {
                 const currentIndex = ['Seeker', 'Explorer', 'Pathfinder', 'Guide'].indexOf(user?.level || 'Seeker')
                 const isCurrent = index === currentIndex
