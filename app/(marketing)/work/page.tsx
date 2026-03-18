@@ -781,7 +781,7 @@ export default function Work() {
           style={{
             position: 'fixed',
             right: 0,
-            top: 'calc(50% + 40px)',
+            top: 'calc(50% + 80px)',
             transform: 'translateY(-50%)',
             zIndex: 500,
             cursor: 'pointer',
@@ -832,16 +832,15 @@ export default function Work() {
           zIndex: 400,
           overflowY: 'auto',
           transition: 'right 0.35s cubic-bezier(0.4,0,0.2,1)',
-          padding: '64px 28px 48px',
+          padding: '28px 28px 48px',
           boxSizing: 'border-box',
         }}>
           {/* Close */}
           <button
             onClick={() => setShowQuizPanel(false)}
             style={{
-              position: 'absolute',
-              top: '16px',
-              right: '16px',
+              display: 'block',
+              marginBottom: '28px',
               background: 'rgba(255,255,255,0.08)',
               border: '1px solid rgba(255,255,255,0.15)',
               borderRadius: '6px',
@@ -850,7 +849,7 @@ export default function Work() {
               fontWeight: 600,
               cursor: 'pointer',
               lineHeight: 1,
-              padding: '6px 12px',
+              padding: '8px 14px',
               letterSpacing: '0.04em',
             }}
           >✕ Close</button>
