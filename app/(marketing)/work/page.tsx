@@ -14,6 +14,7 @@ export default function Work() {
   const playerRef = useRef(null)
   const whatsappNumber = "+447449052909"
 
+  const [showQuizPanel, setShowQuizPanel] = useState(false)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<string[]>([])
   const [showResult, setShowResult] = useState(false)
@@ -730,7 +731,7 @@ export default function Work() {
 
       <main className="page-container">
         <section className="section" style={{
-          paddingTop: isMobile ? '0' : '9rem',
+          paddingTop: isMobile ? '0' : '13rem',
           position: 'relative',
           minHeight: isMobile ? '100vh' : 'auto',
           display: isMobile ? 'flex' : 'block',
@@ -746,7 +747,7 @@ export default function Work() {
           }}>
             <div style={{
               textAlign: 'center', 
-              marginBottom: isMobile ? '0' : '6rem',
+              marginBottom: isMobile ? '0' : '10rem',
               animation: 'fadeInUp 1.2s ease-out'
             }}>
               <h1 style={{
@@ -773,150 +774,167 @@ export default function Work() {
           </div>
         </section>
 
-        {/* WHERE ARE YOU RIGHT NOW */}
-        <section className="section section-alt">
-          <div className="container">
-            <div style={{maxWidth: '760px', margin: '0 auto'}}>
-              <h2 className="h2 shimmer-accent" style={{
-                color: 'var(--text-primary-inverse)',
-                fontSize: isMobile ? '2rem' : '2.5rem',
-                marginBottom: '1rem'
-              }}>Where are you right now?</h2>
-              <p style={{
-                fontSize: '15px',
-                color: 'rgba(255,255,255,0.55)',
-                lineHeight: 1.75,
-                marginBottom: '2.5rem',
-                maxWidth: '560px'
-              }}>
-                Four questions. Answer honestly and you'll get a clear read on where you're at and which path makes most sense for you right now.
+        {/* SLIDE-OUT QUIZ TAB */}
+        {/* Tab trigger — fixed to right edge */}
+        <div
+          onClick={() => { setShowQuizPanel(true); resetQuiz() }}
+          style={{
+            position: 'fixed',
+            right: 0,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 200,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#9bc4b8',
+            color: '#0a0a0a',
+            writingMode: 'vertical-rl',
+            textOrientation: 'mixed',
+            padding: '18px 10px',
+            fontSize: '11px',
+            fontWeight: 700,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            borderRadius: '6px 0 0 6px',
+            boxShadow: '-2px 0 12px rgba(0,0,0,0.2)',
+            userSelect: 'none',
+          }}
+        >
+          Where are you now?
+        </div>
+
+        {/* Overlay */}
+        {showQuizPanel && (
+          <div
+            onClick={() => setShowQuizPanel(false)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0,0,0,0.4)',
+              zIndex: 300,
+            }}
+          />
+        )}
+
+        {/* Slide-out panel */}
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          right: showQuizPanel ? 0 : '-420px',
+          width: '100%',
+          maxWidth: '420px',
+          height: '100vh',
+          background: '#0f1a17',
+          borderLeft: '1px solid rgba(155,196,184,0.15)',
+          zIndex: 400,
+          overflowY: 'auto',
+          transition: 'right 0.35s cubic-bezier(0.4,0,0.2,1)',
+          padding: '32px 28px 48px',
+          boxSizing: 'border-box',
+        }}>
+          {/* Close */}
+          <button
+            onClick={() => setShowQuizPanel(false)}
+            style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              background: 'none',
+              border: 'none',
+              color: 'rgba(255,255,255,0.4)',
+              fontSize: '22px',
+              cursor: 'pointer',
+              lineHeight: 1,
+              padding: '4px',
+            }}
+          >×</button>
+
+          <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: '#9bc4b8', marginBottom: '16px' }}>Find your path</p>
+          <h2 style={{ fontSize: '22px', fontWeight: 500, color: 'rgba(255,255,255,0.92)', marginBottom: '10px', lineHeight: 1.25 }}>Where are you right now?</h2>
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginBottom: '28px' }}>
+            Four questions. Answer honestly and you will get a clear read on where you are at and which path makes the most sense right now.
+          </p>
+
+          {!showResult ? (
+            <div>
+              <div style={{ marginBottom: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'rgba(255,255,255,0.3)', fontSize: '11px', letterSpacing: '0.05em', marginBottom: '6px' }}>
+                  <span>{currentQuestion + 1} / {questions.length}</span>
+                  <span>{Math.round((currentQuestion / questions.length) * 100)}%</span>
+                </div>
+                <div style={{ width: '100%', background: 'rgba(255,255,255,0.08)', borderRadius: '999px', height: '2px' }}>
+                  <div style={{ background: '#9bc4b8', height: '2px', borderRadius: '999px', width: `${(currentQuestion / questions.length) * 100}%`, transition: 'width 0.5s ease' }} />
+                </div>
+              </div>
+
+              <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.88)', marginBottom: '16px', lineHeight: 1.55, fontWeight: 500 }}>
+                {questions[currentQuestion].question}
               </p>
 
-              {!showResult ? (
-                <div>
-                  <div style={{marginBottom: '2rem'}}>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      color: 'rgba(255,255,255,0.35)',
-                      fontSize: '12px',
-                      letterSpacing: '0.05em',
-                      marginBottom: '8px'
-                    }}>
-                      <span>{currentQuestion + 1} / {questions.length}</span>
-                      <span>{Math.round((currentQuestion / questions.length) * 100)}%</span>
-                    </div>
-                    <div style={{
-                      width: '100%',
-                      background: 'rgba(255,255,255,0.08)',
-                      borderRadius: '999px',
-                      height: '3px'
-                    }}>
-                      <div style={{
-                        background: '#9bc4b8',
-                        height: '3px',
-                        borderRadius: '999px',
-                        width: `${(currentQuestion / questions.length) * 100}%`,
-                        transition: 'width 0.5s ease'
-                      }} />
-                    </div>
-                  </div>
-
-                  <p style={{
-                    fontSize: isMobile ? '1.1rem' : '1.25rem',
-                    color: 'rgba(255,255,255,0.92)',
-                    marginBottom: '1.5rem',
-                    lineHeight: '1.5',
-                    fontWeight: 500
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {questions[currentQuestion].options.map((option, index) => (
+                  <button key={index} onClick={() => handleAnswer(option.value)} style={{
+                    textAlign: 'left',
+                    padding: '12px 16px',
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '6px',
+                    color: 'rgba(255,255,255,0.7)',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    lineHeight: 1.5,
                   }}>
-                    {questions[currentQuestion].question}
-                  </p>
-
-                  <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-                    {questions[currentQuestion].options.map((option, index) => (
-                      <button key={index} onClick={() => handleAnswer(option.value)} style={{
-                        textAlign: 'left',
-                        padding: '14px 20px',
-                        background: 'rgba(255,255,255,0.04)',
-                        border: '1px solid rgba(255,255,255,0.12)',
-                        borderRadius: '8px',
-                        color: 'rgba(255,255,255,0.75)',
-                        fontSize: '14px',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                        lineHeight: '1.5'
-                      }}>
-                        {option.text}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <div style={{
-                    border: '1px solid rgba(155,196,184,0.2)',
-                    borderRadius: '10px',
-                    background: 'rgba(155,196,184,0.05)',
-                    padding: '28px 24px',
-                    marginBottom: '16px'
-                  }}>
-                    <p style={{
-                      fontSize: '11px',
-                      letterSpacing: '0.12em',
-                      color: '#9bc4b8',
-                      marginBottom: '12px',
-                      fontWeight: 500
-                    }}>YOUR RESULT</p>
-                    <p style={{
-                      fontSize: isMobile ? '1.2rem' : '1.4rem',
-                      color: 'rgba(255,255,255,0.92)',
-                      fontWeight: 500,
-                      marginBottom: '12px',
-                      lineHeight: '1.35'
-                    }}>
-                      {recommendations[recommendation].title}
-                    </p>
-                    <p style={{
-                      fontSize: '14px',
-                      color: 'rgba(255,255,255,0.6)',
-                      lineHeight: 1.75,
-                      marginBottom: '20px'
-                    }}>
-                      {recommendations[recommendation].description}
-                    </p>
-                    <div style={{display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
-                      <Link href={recommendations[recommendation].link} style={{
-                        padding: '10px 22px',
-                        borderRadius: '4px',
-                        border: '1px solid rgba(155,196,184,0.6)',
-                        background: 'rgba(155,196,184,0.12)',
-                        color: '#9bc4b8',
-                        fontSize: '14px',
-                        cursor: 'pointer',
-                        textDecoration: 'none',
-                        letterSpacing: '0.02em'
-                      }}>
-                        {recommendations[recommendation].cta} →
-                      </Link>
-                      <button onClick={resetQuiz} style={{
-                        padding: '10px 22px',
-                        borderRadius: '4px',
-                        border: '1px solid rgba(255,255,255,0.15)',
-                        background: 'transparent',
-                        color: 'rgba(255,255,255,0.5)',
-                        fontSize: '14px',
-                        cursor: 'pointer',
-                        letterSpacing: '0.02em'
-                      }}>
-                        Start over
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+                    {option.text}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          ) : (
+            <div>
+              <div style={{ border: '1px solid rgba(155,196,184,0.2)', borderRadius: '8px', background: 'rgba(155,196,184,0.05)', padding: '22px 20px', marginBottom: '14px' }}>
+                <p style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#9bc4b8', marginBottom: '10px', fontWeight: 600 }}>YOUR RESULT</p>
+                <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.92)', fontWeight: 500, marginBottom: '10px', lineHeight: 1.35 }}>
+                  {recommendations[recommendation].title}
+                </p>
+                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, marginBottom: '18px' }}>
+                  {recommendations[recommendation].description}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <Link href={recommendations[recommendation].link} onClick={() => setShowQuizPanel(false)} style={{
+                    padding: '10px 20px',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(155,196,184,0.6)',
+                    background: 'rgba(155,196,184,0.12)',
+                    color: '#9bc4b8',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    textDecoration: 'none',
+                    letterSpacing: '0.02em',
+                    display: 'inline-block',
+                    textAlign: 'center',
+                  }}>
+                    {recommendations[recommendation].cta} →
+                  </Link>
+                  <button onClick={resetQuiz} style={{
+                    padding: '10px 20px',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    background: 'transparent',
+                    color: 'rgba(255,255,255,0.4)',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    letterSpacing: '0.02em',
+                  }}>
+                    Start over
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
 
         <section id="coaching" className="section" style={{paddingTop: isMobile ? '3rem' : '0'}}>
           <div className="container">
