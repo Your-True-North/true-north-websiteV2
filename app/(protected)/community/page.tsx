@@ -407,6 +407,41 @@ export default function CommunityPage() {
             </div>
           )}
 
+          {/* Journey progress - mobile only */}
+          {isMobile && (() => {
+            const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
+            const currentIndex = Math.max(0, stages.indexOf(user?.level || 'Seeker'))
+            const overallProgress = user?.progress ?? 0
+            const levelMin = currentIndex * 25
+            const levelProgress = currentIndex === 3 ? 100 : Math.max(0, Math.min(100, ((overallProgress - levelMin) / 25) * 100))
+            const fillPercent = Math.min(100, (currentIndex / 3) * 100 + (levelProgress / 3))
+            return (
+              <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem 1.25rem 1.75rem', marginBottom: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                <div style={{ marginBottom: '1.75rem' }}>
+                  <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', fontWeight: 600, textTransform: 'uppercase' as const, marginBottom: '4px' }}>Your Journey</div>
+                  <div style={{ fontSize: '0.75rem', color: '#999', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
+                </div>
+                <div style={{ position: 'relative', height: '48px' }}>
+                  <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#e0e0e0', borderRadius: '1px' }} />
+                  <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
+                  {stages.map((stage, index) => {
+                    const isCurrent = index === currentIndex
+                    const isCompleted = index < currentIndex
+                    const posPercent = (index / 3) * 100
+                    const isFirst = index === 0
+                    const isLast = index === 3
+                    return (
+                      <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
+                        <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`, position: 'relative', zIndex: 1 }} />
+                        <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })()}
+
           {/* Post Composer — always visible, expands on focus */}
           <div style={{
             background: '#ffffff',
@@ -704,37 +739,39 @@ export default function CommunityPage() {
             </div>
 
             {/* Journey progress */}
-            <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-              <div style={{ marginBottom: '0.875rem' }}>
-                <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', fontWeight: 600, textTransform: 'uppercase', marginBottom: '4px' }}>Your Journey</div>
-                <div style={{ fontSize: '0.75rem', color: '#999', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
-              </div>
-              {['Seeker', 'Explorer', 'Pathfinder', 'Guide'].map((stage, index) => {
-                const currentIndex = ['Seeker', 'Explorer', 'Pathfinder', 'Guide'].indexOf(user?.level || 'Seeker')
-                const isCurrent = index === currentIndex
-                const isCompleted = index < currentIndex
-                return (
-                  <div key={stage} style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    padding: '0.5rem 0.75rem', borderRadius: '6px', marginBottom: '0.375rem',
-                    background: isCurrent ? ACCENT : 'transparent',
-                    color: isCurrent ? '#0a0a0a' : '#1a1a1a',
-                    opacity: isCurrent ? 1 : isCompleted ? 0.5 : 0.25,
-                    fontWeight: isCurrent ? 600 : 400,
-                    fontSize: '0.875rem',
-                    fontFamily: isCurrent ? GAMBARINO : BODY_FONT
-                  }}>
-                    <span>{stage}</span>
-                    <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: isCurrent ? '#0a0a0a' : ACCENT }} />
+            {(() => {
+              const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
+              const currentIndex = Math.max(0, stages.indexOf(user?.level || 'Seeker'))
+              const overallProgress = user?.progress ?? 0
+              const levelMin = currentIndex * 25
+              const levelProgress = currentIndex === 3 ? 100 : Math.max(0, Math.min(100, ((overallProgress - levelMin) / 25) * 100))
+              const fillPercent = Math.min(100, (currentIndex / 3) * 100 + (levelProgress / 3))
+              return (
+                <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem 1.25rem 1.75rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                  <div style={{ marginBottom: '1.75rem' }}>
+                    <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', fontWeight: 600, textTransform: 'uppercase' as const, marginBottom: '4px' }}>Your Journey</div>
+                    <div style={{ fontSize: '0.75rem', color: '#999', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
                   </div>
-                )
-              })}
-              {user?.nextLevel && (
-                <div style={{ fontSize: '0.75rem', color: '#bbb', marginTop: '0.75rem' }}>
-                  {user.daysUntilNext} days until {user.nextLevel}
+                  <div style={{ position: 'relative', height: '48px' }}>
+                    <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#e0e0e0', borderRadius: '1px' }} />
+                    <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
+                    {stages.map((stage, index) => {
+                      const isCurrent = index === currentIndex
+                      const isCompleted = index < currentIndex
+                      const posPercent = (index / 3) * 100
+                      const isFirst = index === 0
+                      const isLast = index === 3
+                      return (
+                        <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
+                          <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`, position: 'relative', zIndex: 1 }} />
+                          <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
-              )}
-            </div>
+              )
+            })()}
 
             {/* Quick links */}
             <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
