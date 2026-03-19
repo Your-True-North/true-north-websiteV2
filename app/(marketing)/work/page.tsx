@@ -330,7 +330,7 @@ export default function Work() {
                   lineHeight: '1.6',
                   margin: 0
                 }}>
-                  Mix and match Breathwork Journeys (£200) and Energy Healing Experiences (£120). 
+                  Mix and match Breathwork Journeys (£120) and Energy Healing Experiences (£90).
                   <br/><br/>
                   <strong style={{color: '#ffffff'}}>This is for those ready to go deeper.</strong>
                 </p>
@@ -1193,7 +1193,7 @@ export default function Work() {
                       fontSize: '2.2rem', 
                       fontWeight: '300', 
                       color: 'rgba(255, 255, 255, 0.9)'
-                    }}>£200</div>
+                    }}>£120</div>
                     <div style={{color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem'}}>120 minutes</div>
                   </div>
 
@@ -1204,7 +1204,7 @@ export default function Work() {
                       rel="noopener noreferrer"
                       onClick={() => trackEvent('begin_checkout', {
                         service: 'breathwork',
-                        value: 200
+                        value: 120
                       })}
                       style={{
                         display: 'block',
@@ -1305,7 +1305,7 @@ export default function Work() {
                       fontSize: '2.2rem', 
                       fontWeight: '300', 
                       color: 'rgba(255, 255, 255, 0.9)'
-                    }}>£120</div>
+                    }}>£90</div>
                     <div style={{color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem'}}>90 minutes</div>
                   </div>
 
@@ -1316,7 +1316,7 @@ export default function Work() {
                       rel="noopener noreferrer"
                       onClick={() => trackEvent('begin_checkout', {
                         service: 'energy_healing',
-                        value: 120
+                        value: 90
                       })}
                       style={{
                         display: 'block',
