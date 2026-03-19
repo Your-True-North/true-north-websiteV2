@@ -1199,7 +1199,7 @@ export default function Work() {
 
                   <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
                     <a
-                      href="https://buy.stripe.com/28E9AU9D1c2Fck01bh9IQ0f"
+                      href="https://buy.stripe.com/eVqfZidTh6Il0Bi7zF9IQ0m"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackEvent('begin_checkout', {
@@ -1311,7 +1311,7 @@ export default function Work() {
 
                   <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
                     <a
-                      href="https://buy.stripe.com/cNi4gA9D17Mp0BibPV9IQ0g"
+                      href="https://buy.stripe.com/28E3cwdThc2F4Ry07d9IQ0n"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackEvent('begin_checkout', {
