@@ -10,9 +10,15 @@ const GA_API_SECRET = process.env.NEXT_PUBLIC_GA_API_SECRET
 // Set PATTERN_AUDIT_PRICE_ID in Vercel to the Stripe price ID for the £37 Pattern Audit product.
 const PATTERN_AUDIT_PRICE_ID = process.env.PATTERN_AUDIT_PRICE_ID
 
+// Session price IDs for ConvertKit sequence enrollment
+const BREATHWORK_PRICE_ID = 'price_1TCaOCIEGgnmE0KKRZIc0xZI'
+const ENERGY_HEALING_PRICE_ID = 'price_1TCaPRIEGgnmE0KKY7gBuwzF'
+
 // ConvertKit
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
 const PATTERN_AUDIT_TAG_ID = process.env.THE_PATTERN_AUDIT_TAG_ID
+const BREATHWORK_SEQUENCE_ID = '17656423'
+const ENERGY_HEALING_SEQUENCE_ID = '17656427'
 
 // Resend
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -76,19 +82,29 @@ function sendPatternAuditEmail(email: string, firstName: string) {
   }).catch((err) => console.error('[Stripe Webhook] Resend email failed:', err))
 }
 
-async function isPatternAuditPurchase(stripe: any, session: any): Promise<boolean> {
-  if (!PATTERN_AUDIT_PRICE_ID) return false
-
+async function getLineItemPriceIds(stripe: any, session: any): Promise<string[]> {
   try {
     const expanded = await stripe.checkout.sessions.retrieve(session.id, {
       expand: ['line_items'],
     })
-    const lineItems = expanded.line_items?.data ?? []
-    return lineItems.some((item: any) => item.price?.id === PATTERN_AUDIT_PRICE_ID)
+    return (expanded.line_items?.data ?? []).map((item: any) => item.price?.id).filter(Boolean)
   } catch (err) {
     console.error('[Stripe Webhook] Failed to fetch line items:', err)
-    return false
+    return []
   }
+}
+
+function subscribeToConvertKitSequence(email: string, firstName: string, sequenceId: string) {
+  if (!CONVERTKIT_API_KEY) return
+  fetch(`https://api.convertkit.com/v3/sequences/${sequenceId}/subscribe`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      api_secret: CONVERTKIT_API_KEY,
+      email,
+      first_name: firstName,
+    }),
+  }).catch((err) => console.error(`[Stripe Webhook] ConvertKit sequence ${sequenceId} failed:`, err))
 }
 
 export async function POST(req: NextRequest) {
@@ -121,10 +137,24 @@ export async function POST(req: NextRequest) {
     const email = session.customer_details?.email
     const firstName = session.customer_details?.name?.split(' ')[0] || ''
 
-    if (email && (await isPatternAuditPurchase(stripe, session))) {
-      console.log('[Stripe Webhook] Pattern Audit purchase detected for:', email)
-      sendPatternAuditEmail(email, firstName)
-      applyConvertKitTag(email, firstName)
+    if (email) {
+      const priceIds = await getLineItemPriceIds(stripe, session)
+
+      if (PATTERN_AUDIT_PRICE_ID && priceIds.includes(PATTERN_AUDIT_PRICE_ID)) {
+        console.log('[Stripe Webhook] Pattern Audit purchase detected for:', email)
+        sendPatternAuditEmail(email, firstName)
+        applyConvertKitTag(email, firstName)
+      }
+
+      if (priceIds.includes(BREATHWORK_PRICE_ID)) {
+        console.log('[Stripe Webhook] Breathwork purchase detected for:', email)
+        subscribeToConvertKitSequence(email, firstName, BREATHWORK_SEQUENCE_ID)
+      }
+
+      if (priceIds.includes(ENERGY_HEALING_PRICE_ID)) {
+        console.log('[Stripe Webhook] Energy Healing purchase detected for:', email)
+        subscribeToConvertKitSequence(email, firstName, ENERGY_HEALING_SEQUENCE_ID)
+      }
     }
   }
 
