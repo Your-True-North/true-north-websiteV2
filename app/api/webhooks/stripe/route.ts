@@ -160,7 +160,23 @@ export async function POST(req: NextRequest) {
 
   if (event.type === 'payment_intent.succeeded') {
     const paymentIntent = event.data.object
-    sendGA4Purchase(paymentIntent.id, paymentIntent.amount ?? 0)
+    const amount = paymentIntent.amount ?? 0
+    sendGA4Purchase(paymentIntent.id, amount)
+
+    // Detect Calendly-originated session payments by amount
+    // £120 (12000p) = Breathwork Journey, £90 (9000p) = Energy Healing Experience
+    const email = paymentIntent.receipt_email || paymentIntent.customer_details?.email
+    const firstName = ''
+
+    if (email && amount === 12000) {
+      console.log('[Stripe Webhook] Calendly Breathwork payment detected for:', email)
+      subscribeToConvertKitSequence(email, firstName, BREATHWORK_SEQUENCE_ID)
+    }
+
+    if (email && amount === 9000) {
+      console.log('[Stripe Webhook] Calendly Energy Healing payment detected for:', email)
+      subscribeToConvertKitSequence(email, firstName, ENERGY_HEALING_SEQUENCE_ID)
+    }
   }
 
   return NextResponse.json({ received: true })
