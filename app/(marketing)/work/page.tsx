@@ -1198,29 +1198,28 @@ export default function Work() {
                   </div>
 
                   <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                    <a
-                      href="https://buy.stripe.com/eVqfZidTh6Il0Bi7zF9IQ0m"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => trackEvent('begin_checkout', {
-                        service: 'breathwork',
-                        value: 120
-                      })}
+                    <button
+                      onClick={() => {
+                        trackEvent('book_session', { service: 'breathwork', value: 120 })
+                        window.open('https://calendly.com/callwithmason/breathwork-journey', '_blank')
+                      }}
                       style={{
                         display: 'block',
+                        width: '100%',
                         padding: '1rem',
                         background: 'rgba(255, 255, 255, 0.9)',
                         color: '#000',
-                        textDecoration: 'none',
+                        border: 'none',
                         fontWeight: '700',
                         borderRadius: '3px',
                         textAlign: 'center',
                         fontSize: '0.95rem',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer'
                       }}
                     >
                       Book Now
-                    </a>
+                    </button>
                     
                     <a 
                       href={createWhatsAppLink("Hi Mason, I'd like to learn more about the Breathwork Journey session. What exactly does this 120-minute experience involve and how do I know if it's right for me?")}
@@ -1310,29 +1309,28 @@ export default function Work() {
                   </div>
 
                   <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-                    <a
-                      href="https://buy.stripe.com/28E3cwdThc2F4Ry07d9IQ0n"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => trackEvent('begin_checkout', {
-                        service: 'energy_healing',
-                        value: 90
-                      })}
+                    <button
+                      onClick={() => {
+                        trackEvent('book_session', { service: 'energy_healing', value: 90 })
+                        window.open('https://calendly.com/callwithmason/energy-healing-experience', '_blank')
+                      }}
                       style={{
                         display: 'block',
+                        width: '100%',
                         padding: '1rem',
                         background: 'rgba(255, 255, 255, 0.9)',
                         color: '#000',
-                        textDecoration: 'none',
+                        border: 'none',
                         fontWeight: '700',
                         borderRadius: '3px',
                         textAlign: 'center',
                         fontSize: '0.95rem',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s ease',
+                        cursor: 'pointer'
                       }}
                     >
                       Book Now
-                    </a>
+                    </button>
                     
                     <a 
                       href={createWhatsAppLink("Hi Mason, I'd like to learn more about the Energy Healing Experience. What exactly happens during this 90-minute session and how do I know if it's right for me?")}
