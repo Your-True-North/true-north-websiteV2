@@ -14,6 +14,10 @@ const PATTERN_AUDIT_PRICE_ID = process.env.PATTERN_AUDIT_PRICE_ID
 const BREATHWORK_PRICE_ID = 'price_1TCaOCIEGgnmE0KKRZIc0xZI'
 const ENERGY_HEALING_PRICE_ID = 'price_1TCaPRIEGgnmE0KKY7gBuwzF'
 
+// Circle of Resonance membership
+const COR_PRICE_ID = 'price_1S0gabLEGgnmE0KKGnWlJuWN'
+const COR_TAG_ID = '8362450'
+
 // ConvertKit
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
 const PATTERN_AUDIT_TAG_ID = process.env.THE_PATTERN_AUDIT_TAG_ID
@@ -49,6 +53,15 @@ function sendGA4Purchase(transactionId: string, value: number) {
   ).catch(() => {
     // Silently ignore — never block the webhook response
   })
+}
+
+function applyConvertKitTagById(email: string, firstName: string, tagId: string) {
+  if (!CONVERTKIT_API_KEY) return
+  fetch(`https://api.convertkit.com/v3/tags/${tagId}/subscribe`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ api_secret: CONVERTKIT_API_KEY, email, first_name: firstName }),
+  }).catch((err) => console.error(`[Stripe Webhook] ConvertKit tag ${tagId} failed:`, err))
 }
 
 function applyConvertKitTag(email: string, firstName: string) {
@@ -144,6 +157,11 @@ export async function POST(req: NextRequest) {
         console.log('[Stripe Webhook] Pattern Audit purchase detected for:', email)
         sendPatternAuditEmail(email, firstName)
         applyConvertKitTag(email, firstName)
+      }
+
+      if (priceIds.includes(COR_PRICE_ID)) {
+        console.log('[Stripe Webhook] CoR membership purchase detected for:', email)
+        applyConvertKitTagById(email, firstName, COR_TAG_ID)
       }
 
       if (priceIds.includes(BREATHWORK_PRICE_ID)) {
