@@ -152,7 +152,6 @@ export default function AdminDashboard() {
   const menuItems = [
     { title: 'Upload Videos', href: '/admin/videos/upload', icon: '📹', desc: 'Add new video content' },
     { title: 'Manage Videos', href: '/admin/videos/manage', icon: '🎬', desc: 'Edit and delete videos' },
-    { title: 'Forum Starters', href: '/admin/forum/starters', icon: '💬', desc: 'Manage conversation starters' },
     { title: 'Founding Members', href: '/admin/founding', icon: '👥', desc: 'View founding member list' }
   ]
 
