@@ -1,1 +1,8 @@
-{}
+{
+  "crons": [
+    {
+      "path": "/api/cron/process-enrollments",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}
