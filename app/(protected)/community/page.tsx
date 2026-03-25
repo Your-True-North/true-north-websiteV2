@@ -578,7 +578,7 @@ export default function CommunityPage() {
               color: '#6b4c2a',
               lineHeight: 1.7
             }}>
-              <span style={{ fontWeight: 600 }}>Share your introduction:</span> who you are, what pulled you here, what you're wanting to shift.
+              <span style={{ fontWeight: 600 }}>Introduce yourself.</span> Who you are, what pulled you here, what you're wanting to shift.
             </div>
           )}
 
