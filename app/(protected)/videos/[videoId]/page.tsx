@@ -324,8 +324,7 @@ export default function VideoPlayerPage() {
           <div>
             {/* Video Player */}
             <div style={{
-              position: 'sticky',
-        top: 0,
+              position: 'relative',
               paddingTop: '56.25%',
               background: '#000',
               borderRadius: '3px',
@@ -356,7 +355,10 @@ export default function VideoPlayerPage() {
               border: '1px solid #e5e5e5',
               borderRadius: '3px',
               padding: '1.5rem',
-              marginBottom: '1.5rem'
+              marginBottom: '1.5rem',
+              position: isMobile ? 'static' : 'sticky',
+              top: isMobile ? 'auto' : '4.5rem',
+              zIndex: 10
             }}>
               <div style={{
                 display: 'flex',
@@ -654,8 +656,6 @@ export default function VideoPlayerPage() {
                             borderRadius: '4px',
                             background: '#000',
                             flexShrink: 0,
-                            position: 'sticky',
-        top: 0,
                             overflow: 'hidden'
                           }}>
                             {relatedYoutubeId && (
