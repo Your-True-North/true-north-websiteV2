@@ -566,6 +566,22 @@ export default function CommunityPage() {
             ))}
           </div>
 
+          {/* Introductions prompt */}
+          {activeCategory === 'Introductions' && (
+            <div style={{
+              background: '#fff8f0',
+              border: '1px solid #f0e0cc',
+              borderRadius: '10px',
+              padding: '1.125rem 1.25rem',
+              marginBottom: '1.25rem',
+              fontSize: '0.9375rem',
+              color: '#6b4c2a',
+              lineHeight: 1.7
+            }}>
+              <span style={{ fontWeight: 600 }}>Share your introduction:</span> who you are, what pulled you here, what you're wanting to shift.
+            </div>
+          )}
+
           {/* Posts Feed */}
           {posts.filter(p => activeCategory === 'All' || p.category === activeCategory).length === 0 ? (
             <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '3rem 2rem', textAlign: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
