@@ -29,7 +29,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/cor-icon.svg" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="CoR" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <style dangerouslySetInnerHTML={{__html: `
           * { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
           h1, h2, h3, h4, h5, h6 { font-family: "Gambarino", serif !important; }
@@ -58,6 +63,13 @@ export default function RootLayout({
       <body>
         <GoogleAnalytics />
         {children}
+        <script dangerouslySetInnerHTML={{__html: `
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+              navigator.serviceWorker.register('/sw.js')
+            })
+          }
+        `}} />
       </body>
     </html>
   )
