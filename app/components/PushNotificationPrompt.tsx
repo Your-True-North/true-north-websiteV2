@@ -81,7 +81,7 @@ export default function PushNotificationPrompt({ userId }: { userId?: number }) 
     }}>
       <div>
         <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: '#1a1a1a', marginBottom: '2px' }}>
-          Stay in the loop
+          Stay connected
         </div>
         <div style={{ fontSize: '0.8125rem', color: '#666' }}>
           {status === 'denied'
