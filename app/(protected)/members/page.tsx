@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { logger } from '@/lib/logger'
 import NextSessionCard from '../../components/calendar/NextSessionCard'
+import PushNotificationPrompt from '../../components/PushNotificationPrompt'
 
 interface User {
   id: number
@@ -269,6 +270,9 @@ export default function MembersPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '2rem' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <PushNotificationPrompt userId={user?.id} />
+      </div>
       {/* Animated Background */}
       <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
