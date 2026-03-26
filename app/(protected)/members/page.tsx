@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { logger } from '@/lib/logger'
 import NextSessionCard from '../../components/calendar/NextSessionCard'
 import PushNotificationPrompt from '../../components/PushNotificationPrompt'
+import InstallAppBanner from '../../components/InstallAppBanner'
 
 interface User {
   id: number
@@ -271,6 +272,7 @@ export default function MembersPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '2rem' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <InstallAppBanner />
         <PushNotificationPrompt userId={user?.id} />
       </div>
       {/* Animated Background */}
