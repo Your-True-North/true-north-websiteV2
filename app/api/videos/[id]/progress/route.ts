@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Client } from 'pg'
+import pkg from 'pg'
+const { Client } = pkg
+
+const FALLBACK_DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
 
 export async function POST(
   request: NextRequest,
@@ -10,11 +13,13 @@ export async function POST(
     const { userId, watchedSeconds, totalDuration, completed } = await request.json()
     
     const client = new Client({
-      connectionString: process.env.DATABASE_URL
+      connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || FALLBACK_DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
+      connectionTimeoutMillis: 5000,
     })
-    
+
     await client.connect()
-    
+
     const percentage = Math.round((watchedSeconds / totalDuration) * 100)
     
     const progressData = {
@@ -54,11 +59,13 @@ export async function GET(
     const userId = request.headers.get('x-user-id')
     
     const client = new Client({
-      connectionString: process.env.DATABASE_URL
+      connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || FALLBACK_DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
+      connectionTimeoutMillis: 5000,
     })
-    
+
     await client.connect()
-    
+
     const result = await client.query(
       'SELECT video_progress FROM users WHERE id = $1',
       [userId]
