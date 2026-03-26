@@ -126,15 +126,15 @@ export default function InstallAppBanner() {
                 <div style={{ width: '28px', height: '28px', background: '#9bc4b8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>1</div>
                 <div>
                   <div style={{ fontWeight: 600, marginBottom: '2px' }}>Tap the Share button</div>
-                  <div style={{ fontSize: '0.875rem', color: '#666' }}>The box with an arrow pointing up — at the bottom of your Safari browser</div>
+                  <div style={{ fontSize: '0.875rem', color: '#666' }}>The box with an arrow pointing up. On newer iPhones it's at the <strong>bottom centre</strong> of Safari. On older iOS it's in the <strong>bottom toolbar</strong>.</div>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                 <div style={{ width: '28px', height: '28px', background: '#9bc4b8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>2</div>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '2px' }}>Scroll down and tap "Add to Home Screen"</div>
-                  <div style={{ fontSize: '0.875rem', color: '#666' }}>You may need to scroll the menu to find it</div>
+                  <div style={{ fontWeight: 600, marginBottom: '2px' }}>Tap "Add to Home Screen"</div>
+                  <div style={{ fontSize: '0.875rem', color: '#666' }}>In the share sheet, <strong>scroll down</strong> past AirDrop and the app icons — it's further down the list</div>
                 </div>
               </div>
 
