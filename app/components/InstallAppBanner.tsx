@@ -147,10 +147,15 @@ export default function InstallAppBanner() {
               </div>
             </div>
 
-            {/* Arrow pointing down to Safari bar */}
-            <div style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '1rem' }}>↓</div>
-            <div style={{ textAlign: 'center', fontSize: '0.8125rem', color: '#999', marginBottom: '1.5rem' }}>
-              Look for this icon in Safari
+            {/* Share icon visual */}
+            <div style={{ background: '#f4f4f4', borderRadius: '10px', padding: '1rem', textAlign: 'center', marginBottom: '1.5rem' }}>
+              <div style={{ fontSize: '0.8125rem', color: '#666', marginBottom: '0.5rem' }}>The Share button looks like this:</div>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                <polyline points="16 6 12 2 8 6"/>
+                <line x1="12" y1="2" x2="12" y2="15"/>
+              </svg>
+              <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '0.5rem' }}>It's in the toolbar at the bottom of Safari.<br/>If you don't see it, scroll down on the share sheet to find "Add to Home Screen".</div>
             </div>
 
             <button
