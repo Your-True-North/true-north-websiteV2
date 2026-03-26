@@ -17,6 +17,7 @@ const ENERGY_HEALING_PRICE_ID = 'price_1TCaPRIEGgnmE0KKY7gBuwzF'
 // Circle of Resonance membership
 const COR_PRICE_ID = 'price_1S0gabLEGgnmE0KKGnWlJuWN'
 const COR_TAG_ID = '8362450'
+const COR_ABANDONED_TAG_ID = '17879543'
 
 // ConvertKit
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
@@ -194,6 +195,20 @@ export async function POST(req: NextRequest) {
     if (email && amount === 9000) {
       console.log('[Stripe Webhook] Calendly Energy Healing payment detected for:', email)
       subscribeToConvertKitSequence(email, firstName, ENERGY_HEALING_SEQUENCE_ID)
+    }
+  }
+
+  if (event.type === 'checkout.session.expired') {
+    const session = event.data.object
+    const email = session.customer_details?.email
+    const firstName = session.customer_details?.name?.split(' ')[0] || ''
+
+    if (email) {
+      const priceIds = await getLineItemPriceIds(stripe, session)
+      if (priceIds.includes(COR_PRICE_ID)) {
+        console.log('[Stripe Webhook] CoR abandoned cart detected for:', email)
+        applyConvertKitTagById(email, firstName, COR_ABANDONED_TAG_ID)
+      }
     }
   }
 
