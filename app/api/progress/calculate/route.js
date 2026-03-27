@@ -16,7 +16,7 @@ export async function GET(request) {
 
     // Get completed videos for user
     const videosCompleted = await query(
-      'SELECT COUNT(*) as completed FROM user_video_progress WHERE "userId" = $1 AND completed = true',
+      'SELECT COUNT(*) as completed FROM user_video_progress WHERE user_id = $1 AND completed = true',
       [user.userId]
     )
     const completedVideos = parseInt(videosCompleted.rows[0]?.completed || 0)
