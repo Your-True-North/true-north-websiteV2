@@ -72,11 +72,9 @@ export default function InstallAppBanner() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{
             width: '40px', height: '40px', background: '#ffffff',
-            borderRadius: '8px', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', fontWeight: 700, fontSize: '0.75rem',
-            color: '#1a1a1a', flexShrink: 0, letterSpacing: '0.02em'
+            borderRadius: '8px', overflow: 'hidden', flexShrink: 0
           }}>
-            CoR
+            <img src="/logo-b.png" alt="CoR" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div>
             <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: '#ffffff', marginBottom: '2px' }}>
