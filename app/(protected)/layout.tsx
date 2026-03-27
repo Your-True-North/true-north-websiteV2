@@ -14,7 +14,7 @@ export default function ProtectedLayout({
         }
       `}</style>
       <MembersNav />
-      <main style={{ paddingTop: '60px' }}>
+      <main style={{ paddingTop: '90px' }}>
         {children}
       </main>
       <Footer />

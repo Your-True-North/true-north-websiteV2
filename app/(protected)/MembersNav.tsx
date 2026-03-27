@@ -43,7 +43,7 @@ export default function MembersNav() {
     <nav style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
       background: '#ffffff', borderBottom: '1px solid #e5e5e5',
-      height: '60px', display: 'flex', alignItems: 'center',
+      height: '90px', display: 'flex', alignItems: 'center',
       padding: '0 1.5rem'
     }}>
       <div style={{
@@ -53,7 +53,7 @@ export default function MembersNav() {
         {/* Logo + links - left */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           <Link href="/community" style={{ textDecoration: 'none', flexShrink: 0 }}>
-            <img src="/the-cor-logo.png" alt="The CoR" style={{ height: '70px', width: 'auto', display: 'block' }} />
+            <img src="/the-cor-logo.png" alt="The CoR" style={{ height: '70px', width: 'auto', display: 'block', margin: '8px 0' }} />
           </Link>
 
           {/* Desktop links - next to logo */}
