@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Client } from 'pg'
+import pkg from 'pg'
+const { Client } = pkg
 
-const DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
+const FALLBACK_DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
 
 export async function GET(request: NextRequest) {
   try {
@@ -9,8 +10,13 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category') || 'all'
     const sort = searchParams.get('sort') || 'newest'
     const search = searchParams.get('search') || ''
+    const userId = request.headers.get('x-user-id') || searchParams.get('userId')
 
-    const client = new Client({ connectionString: DATABASE_URL })
+    const client = new Client({
+      connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || FALLBACK_DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
+      connectionTimeoutMillis: 5000,
+    })
     await client.connect()
 
     let query = 'SELECT * FROM videos WHERE status = $1'
@@ -37,37 +43,59 @@ export async function GET(request: NextRequest) {
     const result = await client.query(query, params)
 
     const catResult = await client.query(`
-      SELECT category, COUNT(*) as count 
-      FROM videos 
-      WHERE status = 'active' 
+      SELECT category, COUNT(*) as count
+      FROM videos
+      WHERE status = 'active'
       GROUP BY category
     `)
+
+    // Fetch user progress if userId provided
+    let progressMap: Record<string, { completed: boolean; last_watched: string | null }> = {}
+    let completedVideos = 0
+    let videosWatched = 0
+
+    if (userId) {
+      const progressResult = await client.query(
+        'SELECT video_id, completed, last_watched FROM user_video_progress WHERE user_id = $1',
+        [userId]
+      )
+      progressResult.rows.forEach((row: any) => {
+        progressMap[row.video_id] = { completed: row.completed, last_watched: row.last_watched }
+        if (row.completed) completedVideos++
+        if (row.last_watched) videosWatched++
+      })
+    }
+
+    await client.end()
 
     const categories: any = { all: result.rows.length }
     catResult.rows.forEach((row: any) => {
       categories[row.category] = parseInt(row.count)
     })
 
-    await client.end()
+    const videos = result.rows.map((v: any) => {
+      const progress = progressMap[v.id]
+      const completed = progress?.completed ?? false
+      const lastWatched = progress?.last_watched ?? null
+      return {
+        id: v.id,
+        title: v.title,
+        description: v.description,
+        youtube_url: v.youtubeUrl,
+        youtubeId: v.youtubeId,
+        category: v.category,
+        duration: v.duration,
+        upload_date: v.uploadDate || v.createdAt,
+        completed,
+        last_watched: lastWatched,
+        status: completed ? 'completed' : lastWatched ? 'in_progress' : 'new'
+      }
+    })
 
-    const videos = result.rows.map(v => ({
-      id: v.id,
-      title: v.title,
-      description: v.description,
-      youtube_url: v.youtubeUrl,
-      youtubeId: v.youtubeId,
-      category: v.category,
-      duration: v.duration,
-      upload_date: v.uploadDate || v.createdAt,
-      completed: false,
-      last_watched: null,
-      status: 'new'
-    }))
-
-    return NextResponse.json({ 
-      videos, 
+    return NextResponse.json({
+      videos,
       categories,
-      stats: { completedVideos: 0, videosWatched: 0, totalWatchTime: 0 }
+      stats: { completedVideos, videosWatched, totalWatchTime: 0 }
     })
   } catch (error: any) {
     console.error('[Videos API] Error:', error)

@@ -72,7 +72,11 @@ export default function LibraryPage() {
         params.append('search', searchQuery)
       }
 
-      const res = await fetch(`/api/videos?${params}`)
+      const userData = localStorage.getItem('user')
+      const userId = userData ? JSON.parse(userData).id : null
+      const res = await fetch(`/api/videos?${params}`, {
+        headers: userId ? { 'x-user-id': userId.toString() } : {}
+      })
       const data = await res.json()
 
       if (res.ok) {
