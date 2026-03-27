@@ -52,11 +52,8 @@ export default function MembersNav() {
       }}>
         {/* Logo + links - left */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-          <Link href="/community" style={{
-            fontSize: '1.1rem', fontWeight: 500, color: '#0a0a0a',
-            textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0
-          }}>
-            The CoR
+          <Link href="/community" style={{ textDecoration: 'none', flexShrink: 0 }}>
+            <img src="/logo-b.png" alt="The CoR" style={{ height: '36px', width: 'auto', display: 'block' }} />
           </Link>
 
           {/* Desktop links - next to logo */}
