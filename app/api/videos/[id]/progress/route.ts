@@ -29,14 +29,23 @@ export async function POST(
 
     const client = await getClient()
     try {
+      // Get video duration to record watch time
+      let watchTime = 0
+      if (completed) {
+        const videoResult = await client.query('SELECT duration FROM videos WHERE id = $1', [videoId])
+        const duration = videoResult.rows[0]?.duration
+        if (duration) watchTime = parseInt(duration) || 0
+      }
+
       await client.query(`
-        INSERT INTO user_video_progress (user_id, video_id, completed, last_watched, completion_date)
-        VALUES ($1, $2, $3, NOW(), CASE WHEN $3 = true THEN NOW() ELSE NULL END)
+        INSERT INTO user_video_progress (user_id, video_id, completed, last_watched, completion_date, watch_time)
+        VALUES ($1, $2, $3, NOW(), CASE WHEN $3 = true THEN NOW() ELSE NULL END, $4)
         ON CONFLICT (user_id, video_id) DO UPDATE
         SET completed = $3,
             last_watched = NOW(),
-            completion_date = CASE WHEN $3 = true THEN NOW() ELSE user_video_progress.completion_date END
-      `, [userId, videoId, completed])
+            completion_date = CASE WHEN $3 = true THEN NOW() ELSE user_video_progress.completion_date END,
+            watch_time = CASE WHEN $3 = true THEN $4 ELSE user_video_progress.watch_time END
+      `, [userId, videoId, completed, watchTime])
     } finally {
       await client.end()
     }

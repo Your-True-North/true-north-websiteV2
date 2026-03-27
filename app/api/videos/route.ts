@@ -54,15 +54,17 @@ export async function GET(request: NextRequest) {
     let completedVideos = 0
     let videosWatched = 0
 
+    let totalWatchTime = 0
     if (userId) {
       const progressResult = await client.query(
-        'SELECT video_id, completed, last_watched FROM user_video_progress WHERE user_id = $1',
+        'SELECT video_id, completed, last_watched, watch_time FROM user_video_progress WHERE user_id = $1',
         [userId]
       )
       progressResult.rows.forEach((row: any) => {
         progressMap[row.video_id] = { completed: row.completed, last_watched: row.last_watched }
         if (row.completed) completedVideos++
         if (row.last_watched) videosWatched++
+        if (row.watch_time) totalWatchTime += parseInt(row.watch_time) || 0
       })
     }
 
@@ -95,7 +97,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       videos,
       categories,
-      stats: { completedVideos, videosWatched, totalWatchTime: 0 }
+      stats: { completedVideos, videosWatched, totalWatchTime }
     })
   } catch (error: any) {
     console.error('[Videos API] Error:', error)
