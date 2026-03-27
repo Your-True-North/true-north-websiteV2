@@ -48,6 +48,7 @@ export default function VideoPlayerPage() {
   const [newComment, setNewComment] = useState('')
   const [loading, setLoading] = useState(true)
   const [submittingComment, setSubmittingComment] = useState(false)
+  const [markingComplete, setMarkingComplete] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -169,33 +170,39 @@ export default function VideoPlayerPage() {
   }
 
   const handleMarkComplete = async () => {
-    if (!video) return
+    if (!video || markingComplete) return
+
+    const newCompleted = !video.completed
+    setMarkingComplete(true)
+    // Optimistic update — feels instant
+    setVideo({ ...video, completed: newCompleted })
 
     try {
       const userData = localStorage.getItem('user')
       const user = userData ? JSON.parse(userData) : null
-      if (!user?.id) return
 
-      const newCompleted = !video.completed
+      if (!user?.id) {
+        console.error('[Mark Complete] No user id in localStorage')
+        setMarkingComplete(false)
+        return
+      }
+
       const res = await fetch(`/api/videos/${videoId}/progress`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          completed: newCompleted,
-          watchedSeconds: newCompleted ? 1 : 0,
-          totalDuration: 1
-        })
+        body: JSON.stringify({ userId: user.id, completed: newCompleted })
       })
 
-      const data = await res.json()
-
-      if (res.ok) {
-        setVideo({ ...video, completed: data.progress?.completed ?? newCompleted })
-        fetch('/api/progress/calculate')
+      if (!res.ok) {
+        // Revert on failure
+        setVideo({ ...video, completed: !newCompleted })
+        console.error('[Mark Complete] API error:', await res.text())
       }
     } catch (error) {
+      setVideo({ ...video, completed: !newCompleted })
       console.error('[Mark Complete] Error:', error)
+    } finally {
+      setMarkingComplete(false)
     }
   }
 
@@ -401,6 +408,7 @@ export default function VideoPlayerPage() {
 
                 <button
                   onClick={handleMarkComplete}
+                  disabled={markingComplete}
                   style={{
                     padding: '0.875rem 1.5rem',
                     background: video.completed ? 'rgba(127, 176, 105, 0.2)' : 'linear-gradient(135deg, #9bc4b8, #7fb069)',
@@ -409,11 +417,12 @@ export default function VideoPlayerPage() {
                     color: video.completed ? '#7fb069' : '#000',
                     fontSize: '1rem',
                     fontWeight: 600,
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap'
+                    cursor: markingComplete ? 'not-allowed' : 'pointer',
+                    whiteSpace: 'nowrap',
+                    opacity: markingComplete ? 0.7 : 1
                   }}
                 >
-                  {video.completed ? '✓ Completed' : 'Mark Complete'}
+                  {markingComplete ? '...' : video.completed ? '✓ Completed' : 'Mark Complete'}
                 </button>
               </div>
 
