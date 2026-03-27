@@ -53,7 +53,7 @@ export default function MembersNav() {
         {/* Logo + links - left */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           <Link href="/community" style={{ textDecoration: 'none', flexShrink: 0 }}>
-            <img src="/the-cor-logo.png" alt="The CoR" style={{ height: '44px', width: 'auto', display: 'block' }} />
+            <img src="/the-cor-logo.png" alt="The CoR" style={{ height: '56px', width: 'auto', display: 'block' }} />
           </Link>
 
           {/* Desktop links - next to logo */}
