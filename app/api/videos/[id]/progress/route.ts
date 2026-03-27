@@ -29,28 +29,14 @@ export async function POST(
 
     const client = await getClient()
     try {
-      // Ensure table exists
       await client.query(`
-        CREATE TABLE IF NOT EXISTS user_video_progress (
-          id SERIAL PRIMARY KEY,
-          "userId" INTEGER NOT NULL,
-          "videoId" INTEGER NOT NULL,
-          completed BOOLEAN DEFAULT FALSE,
-          last_watched TIMESTAMPTZ DEFAULT NOW(),
-          completion_date TIMESTAMPTZ,
-          UNIQUE ("userId", "videoId")
-        )
-      `)
-
-      await client.query(`
-        INSERT INTO user_video_progress ("userId", "videoId", completed, last_watched, completion_date)
+        INSERT INTO user_video_progress (user_id, video_id, completed, last_watched, completion_date)
         VALUES ($1, $2, $3, NOW(), CASE WHEN $3 = true THEN NOW() ELSE NULL END)
-        ON CONFLICT ("userId", "videoId") DO UPDATE
+        ON CONFLICT (user_id, video_id) DO UPDATE
         SET completed = $3,
             last_watched = NOW(),
             completion_date = CASE WHEN $3 = true THEN NOW() ELSE user_video_progress.completion_date END
-      `, [userId, parseInt(videoId), completed])
-
+      `, [userId, videoId, completed])
     } finally {
       await client.end()
     }
@@ -76,8 +62,8 @@ export async function GET(
     const client = await getClient()
     try {
       const result = await client.query(
-        'SELECT completed FROM user_video_progress WHERE "userId" = $1 AND "videoId" = $2',
-        [parseInt(userId), parseInt(params.id)]
+        'SELECT completed FROM user_video_progress WHERE user_id = $1 AND video_id = $2',
+        [userId, params.id]
       )
       return NextResponse.json({ progress: result.rows[0] || null })
     } finally {
