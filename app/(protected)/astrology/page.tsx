@@ -52,18 +52,18 @@ interface NatalChart {
 // ─── Interpretive content ────────────────────────────────────────────────────
 
 const PLANET_MEANING: Record<string, { title: string; meaning: string }> = {
-  sun:      { title: 'Sun',       meaning: 'Your core identity — who you are at your most essential. The self you\'re becoming.' },
+  sun:      { title: 'Sun',       meaning: 'Your core identity. Who you are at your most essential and the self you are becoming.' },
   moon:     { title: 'Moon',      meaning: 'Your emotional world. What you need to feel safe, held, and at home in yourself.' },
   mercury:  { title: 'Mercury',   meaning: 'How you think, learn, and communicate. The way your mind works.' },
   venus:    { title: 'Venus',     meaning: 'What you love, value, and are drawn toward. How you relate and what you find beautiful.' },
   mars:     { title: 'Mars',      meaning: 'How you take action and assert yourself. Where your drive, anger, and desire live.' },
   jupiter:  { title: 'Jupiter',   meaning: 'Where you expand naturally. Your sense of luck, growth, and what opens up for you.' },
   saturn:   { title: 'Saturn',    meaning: 'Your biggest lessons and where life demands the most from you. Also where mastery lives.' },
-  chiron:   { title: 'Chiron',    meaning: 'The Wounded Healer. Your deepest wound — and once you\'ve moved through it, your greatest gift to others.' },
+  chiron:   { title: 'Chiron',    meaning: 'The Wounded Healer. The area of life where you carry your oldest, deepest wound. Once you stop running from it, it becomes the source of your greatest strength.' },
   uranus:   { title: 'Uranus',    meaning: 'Where you need freedom and where you\'ll break patterns no matter the cost.' },
   neptune:  { title: 'Neptune',   meaning: 'Your spiritual depth, your idealism, and where illusion or dissolution can either heal or confuse you.' },
   pluto:    { title: 'Pluto',     meaning: 'Where you transform completely. The part of life where you die and come back different.' },
-  northNode:{ title: 'North Node',meaning: 'The direction your soul is growing toward in this life. Not easy — but magnetic.' },
+  northNode:{ title: 'North Node',meaning: 'The direction your soul is growing toward in this life. It won\'t feel natural. It will feel magnetic.' },
 }
 
 const SIGN_QUALITY: Record<string, string> = {
@@ -82,18 +82,18 @@ const SIGN_QUALITY: Record<string, string> = {
 }
 
 const CHIRON_WOUND: Record<string, string> = {
-  Aries:       'The wound around the right to exist boldly — to want things, to go first, to take up space without apology. Often shows up as aggression masking fear, or holding back to avoid being "too much."',
-  Taurus:      'The wound around security and self-worth — a deep sense that you don\'t quite deserve good things or that stability will always be pulled away. Often leads to over-accumulating or feeling worthless despite evidence to the contrary.',
-  Gemini:      'The wound around being understood — feeling as though your voice doesn\'t land, that you\'re not believed, or that your mind works differently in a way that others can\'t follow. Sometimes a wound around early learning or being silenced.',
-  Cancer:      'The wound around belonging and being nurtured — often rooted in early experiences of home feeling unsafe or love feeling conditional. Can manifest as either fierce over-nurturing of others or difficulty receiving care.',
-  Leo:         'The wound around recognition — a deep fear of not being enough, of being overlooked, or that your true self, when shown, will be rejected. Often compensated through performing or withdrawing entirely.',
-  Virgo:       'The wound around being good enough — relentless self-criticism, perfectionism, and the sense that something is inherently broken or wrong in you. The inner critic is loud here.',
-  Libra:       'The wound around relationships and worth within them — a fear of rejection that leads to over-accommodating, loss of self in partnerships, or avoiding closeness altogether to stay safe.',
-  Scorpio:     'The wound around trust and betrayal — often from early experiences of having vulnerability used against you. Closeness feels dangerous. Walls go up fast. The healing is learning that depth is survivable.',
-  Sagittarius: 'The wound around meaning and freedom — a fear that life has no purpose, or that your beliefs will be taken from you. Can lead to restlessness, dogmatism, or an inability to commit to anything that might disappoint.',
-  Capricorn:   'The wound around achievement and authority — never feeling successful enough, a difficult relationship with father figures or institutions, and a relentless drive that\'s really fear of being seen as a failure.',
-  Aquarius:    'The wound around belonging — feeling fundamentally different, alien, like you\'ll never quite fit. Often leads to either radical detachment or desperate conformity. The gift is being the one who shows others a different way.',
-  Pisces:      'The wound around boundaries and reality — a sensitivity so deep that the world can feel overwhelming, leading to escapism, dissolution, or a spiritual hunger that can\'t be filled. The gift is profound compassion when the wound is owned.',
+  Aries:       'Your wound lives in your sense of identity and the right to assert yourself. Early experiences may have taught you that your desire, your anger, or your needs were too much. The result is often a swinging between aggression and total self-erasure. You either push too hard or hold back entirely. The work is learning that taking up space is not a threat to others. When this is healed, you become someone who teaches others to find and use their own power without apology.',
+  Taurus:      'Your wound sits in security and self-worth. Not the kind you can earn or buy, but the felt sense that you deserve to be here, to be well, to receive good things. This often comes with a deep distrust that stability will last, which can push you toward over-accumulating or sabotaging what you have before it can be taken. The work is building an inner foundation that does not depend on what is in the bank or who approves of you.',
+  Gemini:      'Your wound is around being truly heard and understood. There may be early experiences of your words being dismissed, twisted, or ignored. You may have learned to speak in a way that keeps you safe rather than honest. The result can be anxiety around communication, overexplaining, or going quiet altogether. The work is trusting that your thoughts matter and that the right people will be able to follow where your mind goes.',
+  Cancer:      'Your wound is in belonging and nurturance. Home, in the emotional sense, may have felt unsafe, unstable, or conditional growing up. You know how to care for others intensely, but receiving care without suspicion is difficult. The work is learning to feel at home inside yourself rather than searching for it in other people, and understanding that needing nurturing is not weakness.',
+  Leo:         'Your wound is around being truly seen. Not just noticed, but genuinely recognised for who you are beneath the performance. Early messages may have made you feel that love was conditional on being impressive or useful. This can swing between overperforming to earn approval and retreating to avoid the risk of rejection. The work is separating your worth from your output and learning that you are worth witnessing simply as you are.',
+  Virgo:       'Your wound lives in the belief that you are fundamentally flawed or not good enough. This drives relentless self-improvement, hyper-criticism of both yourself and others, and an inability to rest. Nothing ever feels finished or right. The work is not to lower your standards but to separate your value as a person from the quality of what you produce. Imperfection is not the same as failure.',
+  Libra:       'Your wound is in relationship and in your sense of worth within it. There is often a deep fear of rejection or abandonment that leads to chronic people-pleasing, losing yourself in partnerships, or avoiding closeness entirely to stay protected. You may give and give while quietly disappearing. The work is learning what you actually want, what your limits are, and that saying so will not cost you everything.',
+  Scorpio:     'Your wound is around trust and what happens when you open up. At some point, being vulnerable was used against you, and that memory runs deep. The result is thick walls, difficulty letting people in, and an intensity that can push others away before they get close enough to hurt you. The work is not to become naive but to learn that intimacy can exist without it ending in betrayal. Depth is survivable.',
+  Sagittarius: 'Your wound is in meaning and faith. There is often an underlying fear that life has no real purpose, or that your freedom and beliefs will be stripped from you. This can show up as relentless searching, inability to commit, dogmatism, or a restlessness that no place or philosophy ever fully satisfies. The work is finding meaning that does not depend on certainty, and learning to stay present rather than always reaching for the next horizon.',
+  Capricorn:   'Your wound is in achievement and what it means to be enough. There is often a harsh internal authority figure who measures your worth entirely by output, status, or success. No accomplishment ever quite lands. Failure feels existential. This often traces back to a difficult relationship with a father figure or with authority more broadly. The work is learning that your value is not a performance review and that rest is not the same as failure.',
+  Aquarius:    'Your wound is in belonging to the group while remaining yourself. There is a felt sense of being fundamentally different, of not quite fitting anywhere, of being too strange or too ahead to be accepted. This can flip between radical detachment and desperately wanting to belong. The work is making peace with being an outsider, understanding that the things that make you odd are also the things that make you necessary.',
+  Pisces:      'Your wound is in boundaries and in the permeability of your nervous system. You feel everything, often without knowing where you end and others begin. Early life may have been chaotic, confusing, or spiritually disorienting. Escapism, fantasy, or substances can become a way to manage the overwhelm. The work is learning to be in the world without being consumed by it, and discovering that your sensitivity is a gift when it is grounded rather than flooded.',
 }
 
 const HOUSE_MEANING: Record<number, string> = {
@@ -118,12 +118,12 @@ const PLANET_DISPLAY: Record<string, string> = {
 }
 
 const ASPECT_MEANING: Record<string, string> = {
-  Conjunction:  'Merged energy — these two forces act as one, amplifying each other.',
-  Opposition:   'Tension between opposites — a push-pull that creates awareness through conflict.',
-  Trine:        'Natural flow — these energies support each other easily.',
-  Square:       'Friction and challenge — the tension here is the engine for growth.',
-  Sextile:      'Opportunity — these energies work well together when you engage them.',
-  Quincunx:     'Awkward adjustment — these energies don\'t naturally speak the same language.',
+  Conjunction:  'Merged energy. These two forces act as one and amplify each other.',
+  Opposition:   'Tension between opposites. A push-pull that creates awareness through friction.',
+  Trine:        'Natural flow. These energies support each other and work together easily.',
+  Square:       'Friction and challenge. The tension here is the engine for growth.',
+  Sextile:      'Opportunity. These energies work well together when you actively engage them.',
+  Quincunx:     'Awkward adjustment. These energies don\'t naturally speak the same language and require conscious effort.',
 }
 
 function formatDeg(deg: number): string {
@@ -134,9 +134,9 @@ function formatDeg(deg: number): string {
 
 function planetInterpretation(planet: Planet): string {
   const quality = SIGN_QUALITY[planet.sign] || ''
-  const retro = planet.isRetrograde ? ' (retrograde — the energy turns inward)' : ''
+  const retro = planet.isRetrograde ? ' Retrograde, so this energy turns inward rather than outward.' : ''
   const house = HOUSE_MEANING[planet.house] ? ` In your ${HOUSE_MEANING[planet.house].toLowerCase()} area of life.` : ''
-  return `Expressed through ${planet.sign} energy — ${quality}.${retro}${house}`
+  return `Expressed through ${planet.sign} energy: ${quality}.${retro}${house}`
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -212,16 +212,16 @@ export default function AstrologyPage() {
           <div style={{ ...card, background: '#ffffff', borderLeft: '3px solid #9bc4b8', borderRadius: '0 12px 12px 0' }}>
             <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#9bc4b8', fontWeight: 600, marginBottom: '1rem' }}>WHY IS THIS IN HERE?</div>
             <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-              Honestly — I resisted astrology for years. It felt like something people used to avoid taking responsibility for themselves. I didn't take it seriously.
+              I was sceptical of astrology for years. It felt like something people used to avoid responsibility. I didn't take it seriously. What changed my mind wasn't belief. It was looking at the natal chart properly and realising it wasn't about prediction at all.
             </p>
             <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-              But when I actually looked at it properly — not horoscopes, but the natal chart — I found something different. It's not about prediction. It's pattern recognition. A map of the energies you were born into. And used honestly, it can reveal things about yourself that might otherwise take years to uncover.
+              A natal chart is a map of the energies present at the moment you were born. Each planet was in a particular sign and house, and those placements describe patterns in how you operate: how you think, what you fear, where you expand naturally, where you contract, what drives you, and what wounds you carry. None of it is destiny. But it is a remarkably accurate mirror.
             </p>
             <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-              <strong style={{ fontWeight: 600 }}>Chiron</strong> in particular stopped me in my tracks. The "Wounded Healer" — the placement that points at your deepest wound, your core fear, the thing you've been compensating for your whole life. Once I understood mine, so much of my behaviour made sense.
+              The placement I pay most attention to is <strong style={{ fontWeight: 600 }}>Chiron</strong>. Named after the mythological centaur who could heal others but couldn't heal his own wound, Chiron in your chart points directly at the thing you have been compensating for your whole life. Not a weakness. Not a flaw. A wound. And like Chiron himself, the people who have sat with that wound the longest are often the most capable of helping others through the same pain.
             </p>
             <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#3a3a3a', fontSize: '0.9375rem' }}>
-              Working with the planets isn't a belief system. You don't have to believe in astrology the way you'd believe in something else. Think of it as another language for self-understanding. Another lens. If it resonates, use it. If it doesn't, leave it. That's all it is — another way to navigate.
+              You don't need to believe in astrology. Think of it as another language for self-understanding. If it gives you something useful, use it. If it doesn't land, leave it. Working with the planets is simply another way to navigate.
             </p>
           </div>
         </div>
@@ -298,15 +298,15 @@ export default function AstrologyPage() {
                   <span style={{ fontSize: '1.4rem' }}>⚷</span>
                   <div>
                     <div style={{ fontWeight: 500, fontSize: '1rem', color: '#1a1a1a' }}>Chiron in {chiron.sign}</div>
-                    <div style={{ fontSize: '0.8rem', color: '#9bc4b8' }}>Your Wound & Your Gift · House {chiron.house}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#9bc4b8' }}>The Wounded Healer · House {chiron.house}</div>
                   </div>
                 </div>
-                <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
+                <div style={{ padding: '0.875rem 1rem', background: '#f8f8f8', border: '1px solid #ececec', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.8125rem', color: '#555', lineHeight: 1.75 }}>
+                  <strong style={{ color: '#1a1a1a', fontWeight: 500 }}>What is Chiron?</strong> In mythology, Chiron was the wisest of the centaurs and a great healer. He was struck by a poisoned arrow and couldn't die, but also couldn't heal himself. In your chart, Chiron marks the area of life where you carry an old, persistent wound. You may have become highly capable in this area precisely because the pain pushed you to understand it deeply. That is why it becomes a gift. Not despite the wound, but because of it.
+                </div>
+                <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', fontSize: '0.9375rem' }}>
                   {CHIRON_WOUND[chiron.sign] || `Your Chiron in ${chiron.sign} points to where your deepest healing work lives.`}
                 </p>
-                <div style={{ padding: '0.875rem', background: 'rgba(155,196,184,0.08)', borderRadius: '8px', fontSize: '0.875rem', color: '#555', lineHeight: 1.7 }}>
-                  The wound isn't a flaw to be fixed — it's the place where, once you've moved through it, you become most capable of helping others with the same pain. That's what "Wounded Healer" means.
-                </div>
               </div>
             )}
 
@@ -433,7 +433,7 @@ export default function AstrologyPage() {
             {activeTab === 'aspects' && (
               <div>
                 <p style={{ fontSize: '0.875rem', color: '#666', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                  Aspects are the relationships between planets — how their energies talk to each other. A tight aspect (small orb) is more powerful. Trines and sextiles flow easily. Squares and oppositions create tension that can become tremendous strength.
+                  Aspects are the relationships between planets and how their energies interact. A tight aspect with a small orb is more powerful. Trines and sextiles flow easily. Squares and oppositions create tension that, when worked with, becomes tremendous strength.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                   {chart.aspects.filter(a => a.nature === 'major').map((a, i) => (
