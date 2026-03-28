@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { sendEmail } from '@/lib/sendgrid'
+import { sendEmail } from '@/lib/email'
 import pkg from 'pg'
 const { Client } = pkg
 
