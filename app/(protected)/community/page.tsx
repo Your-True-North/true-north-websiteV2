@@ -316,7 +316,7 @@ export default function CommunityPage() {
   const Avatar = ({ name, photo, size = 40 }: { name: string, photo?: string | null, size?: number }) => (
     <div style={{
       width: `${size}px`, height: `${size}px`, borderRadius: '50%',
-      background: photo ? `url(${photo})` : '#f0f0f0',
+      background: photo ? `url(${photo})` : ACCENT,
       border: '1px solid #e8e8e8',
       backgroundSize: 'cover', backgroundPosition: 'center',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
