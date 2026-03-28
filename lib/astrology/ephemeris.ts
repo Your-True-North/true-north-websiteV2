@@ -124,6 +124,15 @@ interface OrbitalElements {
 }
 
 const PLANET_ELEMENTS: Record<string, OrbitalElements> = {
+  // Chiron (2060): Keplerian elements, J2000 epoch. Perihelion was ~Feb 1996.
+  chiron: {
+    a: 13.6442, da: 0,
+    e: 0.3836,  de: 0,
+    I: 6.9349,  dI: 0,
+    L: 216.6,   dL: 710.5,   // mean longitude at J2000; rate 360/50.68 * 100 °/century
+    wp: 188.9,  dwp: 0,      // longitude of perihelion (Ω + ω)
+    Om: 209.37, dOm: 0       // longitude of ascending node
+  },
   mercury: {
     a:0.38709927, da:0.00000037,
     e:0.20563593, de:0.00001906,
@@ -272,11 +281,8 @@ export function northNodePosition(jd: number): BodyPosition {
   return { lon: Om, lat: 0, speed: -0.053 }
 }
 
-// ─── Chiron (approximate) ────────────────────────────────────────────────────
+// ─── Chiron (Keplerian, much better than linear) ─────────────────────────────
 
 export function chironPosition(jd: number): BodyPosition {
-  const T = julianCenturies(jd)
-  // Chiron orbital period ~50.42 years, mean longitude ~209° at J2000
-  const L = norm360(209.0 + (360 / 50.42) * T * 100)
-  return { lon: L, lat: 6.9, speed: 0.020 }
+  return planetPosition('chiron', jd)
 }

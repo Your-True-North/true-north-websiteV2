@@ -209,26 +209,24 @@ export default function AstrologyPage() {
             Your Astrology
           </h1>
 
-          <div style={{ ...card, background: '#ffffff', borderLeft: '3px solid #9bc4b8', borderRadius: '0 12px 12px 0' }}>
-            <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#9bc4b8', fontWeight: 600, marginBottom: '1rem' }}>WHY IS THIS IN HERE?</div>
-            <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-              I was sceptical of astrology for years. It felt like something people used to avoid responsibility. I didn't take it seriously. What changed my mind wasn't belief. It was looking at the natal chart properly and realising it wasn't about prediction at all.
-            </p>
-            <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-              A natal chart is a map of the energies present at the moment you were born. Each planet was in a particular sign and house, and those placements describe patterns in how you operate: how you think, what you fear, where you expand naturally, where you contract, what drives you, and what wounds you carry. None of it is destiny. But it is a remarkably accurate mirror.
-            </p>
-            <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-              The placement I pay most attention to is <strong style={{ fontWeight: 600 }}>Chiron</strong>. Named after the mythological centaur who could heal others but couldn't heal his own wound, Chiron in your chart points directly at the thing you have been compensating for your whole life. Not a weakness. Not a flaw. A wound. And like Chiron himself, the people who have sat with that wound the longest are often the most capable of helping others through the same pain.
-            </p>
-            <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#3a3a3a', fontSize: '0.9375rem' }}>
-              You don't need to believe in astrology. Think of it as another language for self-understanding. If it gives you something useful, use it. If it doesn't land, leave it. Working with the planets is simply another way to navigate.
-            </p>
-          </div>
+          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#444', fontWeight: 600, marginBottom: '1.25rem' }}>WHY IS THIS IN HERE?</div>
+          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
+            I was sceptical of astrology for years. It felt like something people used to avoid responsibility. I didn't take it seriously. What changed my mind wasn't belief. It was looking at the natal chart properly and realising it wasn't about prediction at all.
+          </p>
+          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
+            A natal chart is a map of the energies present at the moment you were born. Each planet was in a particular sign and house, and those placements describe patterns in how you operate: how you think, what you fear, where you expand naturally, where you contract, what drives you, and what wounds you carry. None of it is destiny. But it is a remarkably accurate mirror.
+          </p>
+          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
+            The placement I pay most attention to is <strong style={{ fontWeight: 600 }}>Chiron</strong>. Chiron in your chart points directly at the thing you have been compensating for your whole life. Not a weakness. Not a flaw. A wound. The people who have sat with that wound the longest are often the most capable of helping others through the same pain.
+          </p>
+          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#3a3a3a', fontSize: '0.9375rem', marginBottom: '0' }}>
+            You don't need to believe in astrology. Think of it as another language for self-understanding. If it gives you something useful, use it. If it doesn't land, leave it. Working with the planets is simply another way to navigate.
+          </p>
         </div>
 
         {/* ─── Form ─── */}
         <div style={card}>
-          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#999', fontWeight: 600, marginBottom: '1.25rem' }}>YOUR BIRTH DETAILS</div>
+          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#444', fontWeight: 600, marginBottom: '1.25rem' }}>YOUR BIRTH DETAILS</div>
           <form onSubmit={handleSubmit}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <div>
@@ -275,7 +273,7 @@ export default function AstrologyPage() {
 
             {/* Big Three */}
             <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#999', fontWeight: 600, marginBottom: '0.875rem' }}>YOUR BIG THREE</div>
+              <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#444', fontWeight: 600, marginBottom: '0.875rem' }}>YOUR BIG THREE</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
                 {[
                   { label: 'Sun Sign', sub: 'Who you are', planet: chart.planets.find(p => p.name === 'sun') },
@@ -283,7 +281,7 @@ export default function AstrologyPage() {
                   { label: 'Rising Sign', sub: 'How you appear', planet: { sign: chart.ascendant.sign, signDegree: chart.ascendant.signDegree } as any }
                 ].map(({ label, sub, planet }) => planet ? (
                   <div key={label} style={{ background: '#fff', border: '1px solid #e5e5e5', borderRadius: '10px', padding: '1.25rem', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: '#9bc4b8', marginBottom: '0.5rem' }}>{label.toUpperCase()}</div>
+                    <div style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: '#444', marginBottom: '0.5rem' }}>{label.toUpperCase()}</div>
                     <div style={{ fontSize: '1.25rem', fontWeight: 400, color: '#1a1a1a', marginBottom: '0.25rem' }}>{planet.sign}</div>
                     <div style={{ fontSize: '0.75rem', color: '#999' }}>{sub}</div>
                   </div>
@@ -298,12 +296,12 @@ export default function AstrologyPage() {
                   <span style={{ fontSize: '1.4rem' }}>⚷</span>
                   <div>
                     <div style={{ fontWeight: 500, fontSize: '1rem', color: '#1a1a1a' }}>Chiron in {chiron.sign}</div>
-                    <div style={{ fontSize: '0.8rem', color: '#9bc4b8' }}>The Wounded Healer · House {chiron.house}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#444' }}>The Wounded Healer · House {chiron.house}</div>
                   </div>
                 </div>
-                <div style={{ padding: '0.875rem 1rem', background: '#f8f8f8', border: '1px solid #ececec', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.8125rem', color: '#555', lineHeight: 1.75 }}>
-                  <strong style={{ color: '#1a1a1a', fontWeight: 500 }}>What is Chiron?</strong> In mythology, Chiron was the wisest of the centaurs and a great healer. He was struck by a poisoned arrow and couldn't die, but also couldn't heal himself. In your chart, Chiron marks the area of life where you carry an old, persistent wound. You may have become highly capable in this area precisely because the pain pushed you to understand it deeply. That is why it becomes a gift. Not despite the wound, but because of it.
-                </div>
+                <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#555', fontSize: '0.8125rem', marginBottom: '1rem' }}>
+                  Chiron marks the area of life where you carry an old, persistent wound. You may have become highly capable in this area precisely because the pain pushed you to understand it deeply. That is why it becomes a gift. Not despite the wound, but because of it.
+                </p>
                 <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', fontSize: '0.9375rem' }}>
                   {CHIRON_WOUND[chiron.sign] || `Your Chiron in ${chiron.sign} points to where your deepest healing work lives.`}
                 </p>
@@ -359,7 +357,7 @@ export default function AstrologyPage() {
                           <div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                               <span style={{ fontWeight: 500, fontSize: '0.9375rem' }}>{info?.title || PLANET_DISPLAY[p.name]}</span>
-                              <span style={{ color: '#9bc4b8', fontSize: '0.9375rem' }}>in {p.sign}</span>
+                              <span style={{ color: '#444', fontSize: '0.9375rem' }}>in {p.sign}</span>
                               {p.isRetrograde && <span style={{ fontSize: '0.7rem', color: '#c0392b', border: '1px solid rgba(192,57,43,0.3)', borderRadius: '4px', padding: '0 4px' }}>Rx</span>}
                               <span style={{ fontSize: '0.75rem', color: '#bbb' }}>H{p.house}</span>
                             </div>
@@ -410,7 +408,7 @@ export default function AstrologyPage() {
                           <span style={{ fontSize: '0.7rem', color: '#bbb', fontWeight: 600, minWidth: '2rem' }}>H{h.house}</span>
                           <div>
                             <div style={{ fontSize: '0.875rem', color: '#1a1a1a', fontWeight: isAngular ? 500 : 400 }}>{HOUSE_MEANING[h.house]}</div>
-                            <div style={{ fontSize: '0.775rem', color: '#9bc4b8' }}>{h.sign}</div>
+                            <div style={{ fontSize: '0.775rem', color: '#444' }}>{h.sign}</div>
                           </div>
                         </div>
                         {planets.length > 0 && (
@@ -448,7 +446,7 @@ export default function AstrologyPage() {
                         <span style={{ fontWeight: 500, fontSize: '0.9rem' }}>{PLANET_DISPLAY[a.body1]}</span>
                         <span style={{ fontSize: '1.1rem' }}>{a.symbol}</span>
                         <span style={{ fontWeight: 500, fontSize: '0.9rem' }}>{PLANET_DISPLAY[a.body2]}</span>
-                        <span style={{ fontSize: '0.75rem', color: '#9bc4b8', marginLeft: 'auto' }}>{a.type} · {a.orb}° orb</span>
+                        <span style={{ fontSize: '0.75rem', color: '#444', marginLeft: 'auto' }}>{a.type} · {a.orb}° orb</span>
                       </div>
                       <div style={{ fontSize: '0.8125rem', color: '#666', lineHeight: 1.6 }}>
                         {ASPECT_MEANING[a.type] || ''}
