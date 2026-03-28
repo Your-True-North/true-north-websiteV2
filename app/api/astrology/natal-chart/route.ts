@@ -40,28 +40,14 @@ export async function POST(req: NextRequest) {
     let timezone = 'UTC'
     let formattedLocation = location || `${lat}, ${lng}`
 
-    if (location && (providedLat === undefined || providedLng === undefined)) {
+    if (location) {
       const geo = await geocodeLocation(location)
       lat = geo.lat
       lng = geo.lng
       timezone = geo.timezone
       formattedLocation = geo.formattedLocation
-    } else if (location) {
-      // Still look up timezone even if coords provided
-      try {
-        const geo = await geocodeLocation(location)
-        timezone = geo.timezone
-        formattedLocation = geo.formattedLocation
-      } catch {
-        // Use geo-tz fallback if geocoding fails but coords available
-        try {
-          const { find } = await import('geo-tz')
-          const tzList = find(lat, lng)
-          if (tzList.length) timezone = tzList[0]
-        } catch {}
-      }
     } else {
-      // Only coords provided, use geo-tz
+      // Coords provided directly — just resolve timezone
       try {
         const { find } = await import('geo-tz')
         const tzList = find(lat, lng)

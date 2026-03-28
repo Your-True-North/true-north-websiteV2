@@ -1,4 +1,4 @@
-// Geocoding via OpenCage API + timezone via geo-tz, with in-memory cache
+// Geocoding via Nominatim (OpenStreetMap, no API key) + timezone via geo-tz
 
 import NodeCache from 'node-cache'
 
@@ -16,23 +16,24 @@ export async function geocodeLocation(location: string): Promise<GeoResult> {
   const cached = cache.get<GeoResult>(key)
   if (cached) return cached
 
-  const apiKey = process.env.OPENCAGE_API_KEY
-  if (!apiKey) throw new Error('OPENCAGE_API_KEY not configured')
-
-  const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}&limit=1&no_annotations=0`
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`Geocoding API error: ${res.status}`)
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`
+  const res = await fetch(url, {
+    headers: { 'User-Agent': 'CoR-AstrologyService/1.0' }
+  })
+  if (!res.ok) throw new Error(`Geocoding error: ${res.status}`)
 
   const data = await res.json()
-  if (!data.results?.length) throw new Error(`Location not found: ${location}`)
+  if (!data?.length) throw new Error(`Location not found: ${location}`)
 
-  const result = data.results[0]
-  const { lat, lng } = result.geometry
-  const timezone = result.annotations?.timezone?.name
+  const lat = parseFloat(data[0].lat)
+  const lng = parseFloat(data[0].lon)
+  const formatted = data[0].display_name || location
 
-  if (!timezone) throw new Error('Could not determine timezone for location')
-
-  const formatted = result.formatted || location
+  // Resolve timezone from coordinates
+  const { find } = await import('geo-tz')
+  const tzList = find(lat, lng)
+  if (!tzList.length) throw new Error('Could not determine timezone for location')
+  const timezone = tzList[0]
 
   const geoResult: GeoResult = { lat, lng, timezone, formattedLocation: formatted }
   cache.set(key, geoResult)
