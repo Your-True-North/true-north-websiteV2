@@ -9,6 +9,7 @@ const links = [
   { label: 'Teachings', href: '/videos' },
   { label: 'Calendar', href: '/calls' },
   { label: 'Dashboard', href: '/members' },
+  { label: 'Your Astrology', href: '/astrology' },
   { label: 'About', href: '/about-cor' },
 ]
 
