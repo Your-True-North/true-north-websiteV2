@@ -13,12 +13,12 @@ interface SendEmailOptions {
 export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
   try {
     console.log('[Resend] Preparing to send email...');
-    console.log('[Resend] From:', process.env.EMAIL_FROM || 'thecor@yourtruenorth.me');
+    console.log('[Resend] From:', process.env.EMAIL_FROM || 'cor@yourtruenorth.me');
     console.log('[Resend] To:', to);
     console.log('[Resend] Subject:', subject);
     console.log('[Resend] API Key present:', !!process.env.RESEND_API_KEY);
 
-    const fromAddress = process.env.EMAIL_FROM || 'thecor@yourtruenorth.me';
+    const fromAddress = process.env.EMAIL_FROM || 'cor@yourtruenorth.me';
     const fromFormatted = fromAddress.includes('<') ? fromAddress : `Circle of Return <${fromAddress}>`;
 
     const result = await resend.emails.send({

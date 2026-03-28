@@ -23,16 +23,16 @@ export async function GET(request) {
 
     const resend = new Resend(apiKey)
 
-    const fromAddress = emailFrom || 'thecor@yourtruenorth.me'
+    const fromAddress = emailFrom || 'cor@yourtruenorth.me'
     const fromFormatted = fromAddress.includes('<') ? fromAddress : `Circle of Return <${fromAddress}>`
 
     console.log('[Test Resend] Attempting to send test email...')
     console.log('[Test Resend] From:', fromFormatted)
-    console.log('[Test Resend] To: thecor@yourtruenorth.me')
+    console.log('[Test Resend] To: cor@yourtruenorth.me')
 
     const result = await resend.emails.send({
       from: fromFormatted,
-      to: 'thecor@yourtruenorth.me',
+      to: 'cor@yourtruenorth.me',
       subject: 'Test Email from Resend - ' + new Date().toISOString(),
       html: `
         <html>
@@ -77,7 +77,7 @@ export async function GET(request) {
 
     return NextResponse.json({
       success: true,
-      message: 'Test email sent to thecor@yourtruenorth.me',
+      message: 'Test email sent to cor@yourtruenorth.me',
       result: result,
       env: {
         apiKeySet: true,

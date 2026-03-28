@@ -73,7 +73,7 @@ export async function POST(request) {
     const resend = new Resend(process.env.RESEND_API_KEY)
 
     const emailResult = await resend.emails.send({
-      from: 'Circle of Return <cor@thecor.yourtruenorth.me>',
+      from: 'Circle of Return <cor@yourtruenorth.me>',
       to: email,
       subject: 'Welcome to Circle of Return',
       html: `
