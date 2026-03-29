@@ -87,7 +87,7 @@ export async function POST(request) {
       UPDATE users
       SET ${updates.join(', ')}, "updatedAt" = NOW()
       WHERE id = $${paramCount}
-      RETURNING id, name, email, profile_photo, bio, level, progress, role, "createdAt"
+      RETURNING id, name, email, profile_photo, bio, level, role, "createdAt"
     `
 
     const result = await query(updateQuery, values)
@@ -110,7 +110,6 @@ export async function POST(request) {
         profile_photo: updatedUser.profile_photo,
         bio: updatedUser.bio,
         level: updatedUser.level,
-        progress: updatedUser.progress,
         role: updatedUser.role,
         joinDate: updatedUser.createdAt
       }
