@@ -155,6 +155,7 @@ export default function MembersPage() {
       const res = await fetch('/api/user/update-profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           userId: user?.id,
           name: profileForm.name,
