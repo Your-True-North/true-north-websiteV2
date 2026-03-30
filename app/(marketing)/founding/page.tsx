@@ -407,10 +407,10 @@ export default function FoundingMembersPage() {
               </div>
             ))}
             <p style={{ ...bodyText, marginTop: '24px', marginBottom: '20px' }}>
-              When you enter The CoR — you will feel shifts within weeks.
+              When you enter The CoR, you will feel shifts within weeks.
             </p>
             <p style={bodyText}>
-              And within your first 30 days, you will identify a pattern that has been influencing your decisions for years. Once you see it clearly, you cannot unsee it — it stops running you blindly.
+              And within your first 30 days, you will identify a pattern that has been influencing your decisions for years. Once you see it clearly, you cannot unsee it. It stops running you blindly.
             </p>
           </div>
         </section>
@@ -427,7 +427,7 @@ export default function FoundingMembersPage() {
             </h2>
 
             <p style={{ ...bodyText, marginBottom: '32px' }}>
-              This isn't random conversation — this work follows a clear path.
+              This isn't random conversation. This work follows a clear path.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -442,7 +442,7 @@ export default function FoundingMembersPage() {
                 },
                 {
                   bold: 'Become it.',
-                  desc: ' Who does your goal require you to be? We close that gap. This cycle repeats, and is applied to real situations — until the old programme loses its grip, and we rewrite a new one.',
+                  desc: ' Who does your goal require you to be? We close that gap. This cycle repeats, and is applied to real situations, until the old programme loses its grip and we rewrite a new one.',
                 },
               ].map((item, i) => (
                 <div
@@ -482,7 +482,7 @@ export default function FoundingMembersPage() {
                 { title: 'Two live deep sessions each month', desc: "Built around expansion topics that reveal the pattern underneath your decisions. You apply them to your real-life situations so the work moves you forward, not just inward." },
                 { title: 'Two somatic regulation sessions', desc: "To help release what's been stuck and weighing you down. We build actual capacity, not just insight." },
                 { title: 'Quarterly community goal mapping review', desc: "So you know exactly where you're tightening and where you're slipping." },
-                { title: 'Exclusive supporting content', desc: 'We take a holistic approach — somatics, the psyche, and grounded spiritual perspectives — because understanding how and why you operate is one of the most powerful forms of growth.' },
+                { title: 'Exclusive supporting content', desc: 'We take a holistic approach: somatics, the psyche, and grounded spiritual perspectives. Understanding how and why you operate is one of the most powerful forms of growth.' },
                 { title: 'Private community', desc: 'A private community of men doing the work properly. Not a place for big egos trying to out-perform.' },
               ].map((item, i) => (
                 <div
