@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import bcrypt from 'bcryptjs'
+import { query } from '@/lib/db'
 
 // NOTE: Add NEXT_PUBLIC_GA_API_SECRET to Vercel environment variables.
 // Get it from: GA4 → Admin → Data Streams → your stream → Measurement Protocol API secrets.
@@ -96,6 +98,68 @@ function sendPatternAuditEmail(email: string, firstName: string) {
   }).catch((err) => console.error('[Stripe Webhook] Resend email failed:', err))
 }
 
+function generatePassword(): string {
+  const chars = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$'
+  let pwd = ''
+  for (let i = 0; i < 12; i++) {
+    pwd += chars[Math.floor(Math.random() * chars.length)]
+  }
+  return pwd
+}
+
+async function createCorMember(email: string, name: string, stripeCustomerId: string): Promise<string | null> {
+  try {
+    const password = generatePassword()
+    const hashed = await bcrypt.hash(password, 10)
+    const id = stripeCustomerId || `cor_${Date.now()}`
+
+    const result = await query(
+      `INSERT INTO users (id, email, name, password, role, "isActive", "createdAt", "updatedAt")
+       VALUES ($1, $2, $3, $4, 'member', true, NOW(), NOW())
+       ON CONFLICT (email) DO UPDATE SET
+         "isActive" = true,
+         "updatedAt" = NOW()
+       RETURNING (xmax = 0) AS inserted`,
+      [id, email, name || email.split('@')[0], hashed]
+    )
+
+    const wasInserted = result.rows[0]?.inserted
+    if (wasInserted) {
+      console.log('[Stripe Webhook] ✅ New CoR member account created for:', email)
+      return password
+    } else {
+      console.log('[Stripe Webhook] ✅ Existing member account reactivated for:', email)
+      return null // account already exists — do not send credentials email
+    }
+  } catch (err) {
+    console.error('[Stripe Webhook] ❌ Failed to create CoR member account:', err)
+    return null
+  }
+}
+
+function sendCorWelcomeEmail(email: string, firstName: string, password: string): void {
+  resend.emails.send({
+    from: FROM_EMAIL,
+    to: email,
+    subject: "You're in — here's how to access the Circle",
+    html: `
+      <div style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Brother, you're in.</p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Your founding membership is confirmed and your place in the Circle is secured.</p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 8px;">Log in here: <a href="https://yourtruenorth.me/auth/login" style="color: #9bc4b8;">yourtruenorth.me/auth/login</a></p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 4px;">Email: ${email}</p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 24px;">Password: <strong>${password}</strong></p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">The Circle comes alive on April 10th. Before then, log in, explore the platform and get familiar with the space. There is already content waiting for you and more will be added as we build this together.</p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">You will hear from me before the 10th with everything you need to know.</p>
+        <p style="font-size: 15px; line-height: 1.7; margin-bottom: 8px;">You made the right call.</p>
+        <p style="font-size: 15px; line-height: 1.7;">True North</p>
+      </div>
+    `,
+  }).then(() => {
+    console.log('[Stripe Webhook] ✅ CoR welcome email sent to:', email)
+  }).catch((err) => console.error('[Stripe Webhook] ❌ CoR welcome email failed:', err))
+}
+
 async function getLineItemPriceIds(stripe: any, session: any): Promise<string[]> {
   try {
     const expanded = await stripe.checkout.sessions.retrieve(session.id, {
@@ -163,6 +227,13 @@ export async function POST(req: NextRequest) {
       if (priceIds.includes(COR_PRICE_ID)) {
         console.log('[Stripe Webhook] CoR membership purchase detected for:', email)
         applyConvertKitTagById(email, firstName, COR_TAG_ID)
+        console.log('[Stripe Webhook] ✅ CoR ConvertKit tag applied for:', email)
+        subscribeToConvertKitSequence(email, firstName, '12084779')
+        console.log('[Stripe Webhook] ✅ CoR ConvertKit sequence 12084779 enrolled for:', email)
+        const tempPassword = await createCorMember(email, firstName, session.customer as string)
+        if (tempPassword) {
+          sendCorWelcomeEmail(email, firstName, tempPassword)
+        }
       }
 
       if (priceIds.includes(BREATHWORK_PRICE_ID)) {
