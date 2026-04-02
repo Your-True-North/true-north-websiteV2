@@ -228,7 +228,7 @@ export async function POST(req: NextRequest) {
         console.log('[Stripe Webhook] CoR membership purchase detected for:', email)
         applyConvertKitTagById(email, firstName, COR_TAG_ID)
         console.log('[Stripe Webhook] ✅ CoR ConvertKit tag applied for:', email)
-        subscribeToConvertKitSequence(email, firstName, '12084779')
+        subscribeToConvertKitSequence(email, firstName, '2539333')
         console.log('[Stripe Webhook] ✅ CoR ConvertKit sequence 12084779 enrolled for:', email)
         const tempPassword = await createCorMember(email, firstName, session.customer as string)
         if (tempPassword) {
