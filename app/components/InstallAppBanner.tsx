@@ -74,7 +74,7 @@ export default function InstallAppBanner() {
             width: '40px', height: '40px', background: '#ffffff',
             borderRadius: '8px', overflow: 'hidden', flexShrink: 0
           }}>
-            <img src="/the-cor-logo.png" alt="CoR" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            <img src="/cor-logo.png" alt="Circle of Return" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div>
             <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: '#ffffff', marginBottom: '2px' }}>
