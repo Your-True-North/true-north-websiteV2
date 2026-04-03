@@ -227,9 +227,10 @@ export async function POST(req: NextRequest) {
       if (priceIds.includes(COR_PRICE_ID)) {
         console.log('[Stripe Webhook] CoR membership purchase detected for:', email)
         applyConvertKitTagById(email, firstName, COR_TAG_ID)
-        console.log('[Stripe Webhook] ✅ CoR ConvertKit tag applied for:', email)
+        applyConvertKitTagById(email, firstName, '12084779')
+        console.log('[Stripe Webhook] ✅ CoR ConvertKit tags applied for:', email)
         subscribeToConvertKitSequence(email, firstName, '2539333')
-        console.log('[Stripe Webhook] ✅ CoR ConvertKit sequence 12084779 enrolled for:', email)
+        console.log('[Stripe Webhook] ✅ CoR ConvertKit sequence enrolled for:', email)
         const tempPassword = await createCorMember(email, firstName, session.customer as string)
         if (tempPassword) {
           sendCorWelcomeEmail(email, firstName, tempPassword)
