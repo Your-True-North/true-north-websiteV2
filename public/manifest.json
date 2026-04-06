@@ -1,13 +1,19 @@
 {
-  "name": "Circle of Resonance",
+  "name": "Circle of Return",
   "short_name": "CoR",
-  "description": "The Circle of Resonance members area",
+  "description": "The Circle of Return members area",
   "start_url": "/members",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "orientation": "portrait",
   "icons": [
+    {
+      "src": "/cor-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
     {
       "src": "/cor-app-icon.png",
       "sizes": "any",
