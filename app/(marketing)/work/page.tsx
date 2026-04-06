@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Script from 'next/script'
 import { X, Play, Pause, RotateCcw } from 'lucide-react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
@@ -13,6 +14,39 @@ export default function Work() {
   const [showCTA, setShowCTA] = useState(false)
   const playerRef = useRef(null)
   const whatsappNumber = "+447449052909"
+  const popupShownRef = useRef(false)
+  const sessionHoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleMensAngerCalendly = () => {
+    trackEvent('mens_anger_programme_click')
+    if (typeof window !== 'undefined' && (window as any).Calendly) {
+      ;(window as any).Calendly.initPopupWidget({
+        url: 'https://calendly.com/callwithmason/introduction',
+      })
+    } else {
+      window.open('https://calendly.com/callwithmason/introduction', '_blank')
+    }
+  }
+
+  const handleSessionAreaMouseEnter = () => {
+    if (popupShownRef.current) return
+    sessionHoverTimerRef.current = setTimeout(() => {
+      const hasSeenPopup = sessionStorage.getItem('hasSeenPackPopup')
+      if (!hasSeenPopup) {
+        popupShownRef.current = true
+        setShowPackPopup(true)
+        sessionStorage.setItem('hasSeenPackPopup', 'true')
+        trackEvent('view_session_pack', { value: 850 })
+      }
+    }, 500)
+  }
+
+  const handleSessionAreaMouseLeave = () => {
+    if (sessionHoverTimerRef.current) {
+      clearTimeout(sessionHoverTimerRef.current)
+      sessionHoverTimerRef.current = null
+    }
+  }
 
   const [showQuizPanel, setShowQuizPanel] = useState(false)
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -123,24 +157,12 @@ export default function Work() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
     }
-    
+
     checkMobile()
     window.addEventListener('resize', checkMobile)
-    
-    const timer = setTimeout(() => {
-      const hasSeenPopup = sessionStorage.getItem('hasSeenPackPopup')
-      if (!hasSeenPopup) {
-        setShowPackPopup(true)
-        sessionStorage.setItem('hasSeenPackPopup', 'true')
-        trackEvent('view_session_pack', {
-          value: 850
-        })
-      }
-    }, 3000)
-    
+
     return () => {
       window.removeEventListener('resize', checkMobile)
-      clearTimeout(timer)
     }
   }, [])
 
@@ -261,6 +283,15 @@ export default function Work() {
 
   return (
     <>
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+      />
+      <link
+        href="https://assets.calendly.com/assets/external/widget.css"
+        rel="stylesheet"
+      />
+
       {showPackPopup && (
         <div style={{
           position: 'fixed',
@@ -1111,7 +1142,87 @@ export default function Work() {
               </div>
             </div>
 
-            <div style={{marginBottom: '5rem'}}>
+            <div style={{
+              marginBottom: '5rem',
+              padding: isMobile ? '2rem' : '3rem',
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              borderRadius: '3px',
+              transition: 'all 0.4s ease',
+              animation: 'slideUp 0.8s ease-out 0.8s both'
+            }}>
+              <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: isMobile ? '2rem' : '2.8rem',
+                  marginBottom: '1rem',
+                  color: '#ffffff',
+                  fontWeight: '700'
+                }}>
+                  Men's Anger Programme
+                </h2>
+                <p style={{
+                  fontSize: isMobile ? '1.1rem' : '1.3rem',
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  marginBottom: '0.5rem'
+                }}>
+                  Small, intensive men's group container — 3 months
+                </p>
+                <p style={{
+                  fontSize: '1.1rem',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  fontWeight: '600',
+                  marginBottom: '1rem'
+                }}>
+                  £333/month
+                </p>
+                <p style={{
+                  fontSize: '1rem',
+                  color: 'rgba(255, 255, 255, 0.75)',
+                  maxWidth: '600px',
+                  margin: '0 auto',
+                  lineHeight: '1.6'
+                }}>
+                  An intensive programme that will give you more control of your reactions by learning and working through the pain you're carrying at the cause of the anger.
+                </p>
+              </div>
+
+              <div style={{textAlign: 'center'}}>
+                <button
+                  onClick={handleMensAngerCalendly}
+                  style={{
+                    display: 'inline-block',
+                    padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
+                    background: 'transparent',
+                    border: '2px solid rgba(255, 255, 255, 0.7)',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    fontWeight: '700',
+                    borderRadius: '3px',
+                    fontSize: isMobile ? '1rem' : '1.1rem',
+                    textTransform: 'uppercase' as const,
+                    letterSpacing: '0.5px',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'
+                    e.currentTarget.style.transform = 'translateY(-2px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            <div
+              onMouseEnter={handleSessionAreaMouseEnter}
+              onMouseLeave={handleSessionAreaMouseLeave}
+              style={{marginBottom: '5rem'}}
+            >
               <div style={{textAlign: 'center', marginBottom: '4rem'}}>
                 <h2 style={{
                   fontSize: isMobile ? '2rem' : '2.8rem',

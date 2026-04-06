@@ -394,6 +394,7 @@ export default function Contact() {
                       <option value="" style={{background: '#1a1a1a', color: '#ffffff'}}>Select one...</option>
                       <option value="1:1 Coaching Program" style={{background: '#1a1a1a', color: '#ffffff'}}>1:1 Coaching Program</option>
                       <option value="Circle of Return Membership" style={{background: '#1a1a1a', color: '#ffffff'}}>Circle of Return Membership</option>
+                      <option value="Men's Container" style={{background: '#1a1a1a', color: '#ffffff'}}>Men's Container</option>
                       <option value="Individual Sessions (Breathwork/Energy)" style={{background: '#1a1a1a', color: '#ffffff'}}>Individual Sessions (Breathwork/Energy)</option>
                       <option value="Not sure yet - exploring options" style={{background: '#1a1a1a', color: '#ffffff'}}>Not sure yet - exploring options</option>
                       <option value="Other" style={{background: '#1a1a1a', color: '#ffffff'}}>Other</option>
