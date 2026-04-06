@@ -10,9 +10,9 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://yourtruenorth.me/cor-logo.png',
-        width: 1080,
-        height: 1080,
+        url: 'https://yourtruenorth.me/cor-og-image.png',
+        width: 600,
+        height: 600,
         alt: 'Circle of Return',
       },
     ],
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: 'Circle of Return — Founding Membership',
     description: 'A private circle for men doing the work properly. Founding membership now open.',
-    images: ['https://yourtruenorth.me/cor-logo.png'],
+    images: ['https://yourtruenorth.me/cor-og-image.png'],
   },
 }
 
