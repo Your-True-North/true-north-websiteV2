@@ -71,13 +71,10 @@ export default function Navigation() {
      }}>
        <div className="nav-container">
          <Link href="/" className="nav-logo">
-           <Image
-             src="/white white star.png"
-             alt="True North"
-             width={72}
-             height={72}
-             className="nav-logo-image"
-             priority
+           <img
+             src="/cor-mark-black.svg"
+             alt="Circle of Return"
+             style={{ height: '52px', width: 'auto', display: 'block' }}
            />
          </Link>
 
