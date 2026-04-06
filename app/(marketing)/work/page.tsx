@@ -12,20 +12,41 @@ export default function Work() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [playerReady, setPlayerReady] = useState(false)
   const [showCTA, setShowCTA] = useState(false)
+  const [showMensAngerForm, setShowMensAngerForm] = useState(false)
+  const [mensAngerFormData, setMensAngerFormData] = useState({
+    name: '',
+    email: '',
+    calling: '',
+    support: "Men's Container"
+  })
   const playerRef = useRef(null)
   const whatsappNumber = "+447449052909"
   const popupShownRef = useRef(false)
   const sessionHoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleMensAngerFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setMensAngerFormData(prev => ({ ...prev, [name]: value }))
+  }
 
   const handleMensAngerCalendly = () => {
     trackEvent('mens_anger_programme_click')
     if (typeof window !== 'undefined' && (window as any).Calendly) {
       ;(window as any).Calendly.initPopupWidget({
         url: 'https://calendly.com/callwithmason/introduction',
+        prefill: {
+          name: mensAngerFormData.name,
+          email: mensAngerFormData.email,
+          customAnswers: {
+            a1: mensAngerFormData.calling,
+            a2: mensAngerFormData.support,
+          }
+        }
       })
     } else {
       window.open('https://calendly.com/callwithmason/introduction', '_blank')
     }
+    setShowMensAngerForm(false)
   }
 
   const handleSessionAreaMouseEnter = () => {
@@ -402,6 +423,123 @@ export default function Work() {
                 marginTop: '1rem'
               }}>
                 Transformation happens in commitment
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showMensAngerForm && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          background: 'rgba(0, 0, 0, 0.85)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          padding: '1rem',
+          backdropFilter: 'blur(8px)'
+        }} onClick={() => setShowMensAngerForm(false)}>
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(20, 20, 20, 0.98) 0%, rgba(10, 10, 10, 0.98) 100%)',
+            padding: isMobile ? '2rem' : '3rem',
+            borderRadius: '3px',
+            maxWidth: '560px',
+            width: '100%',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            position: 'relative',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
+            maxHeight: '90vh',
+            overflowY: 'auto'
+          }} onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setShowMensAngerForm(false)} style={{
+              position: 'absolute', top: '1rem', right: '1rem',
+              background: 'transparent', border: 'none',
+              color: 'rgba(255, 255, 255, 0.6)', fontSize: '1.5rem',
+              cursor: 'pointer', padding: '0.5rem', lineHeight: 1
+            }}>×</button>
+
+            <h3 style={{ fontSize: '1.5rem', color: '#ffffff', marginBottom: '0.5rem', fontWeight: '600' }}>
+              Men's Anger Programme
+            </h3>
+            <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', marginBottom: '2rem', lineHeight: '1.6' }}>
+              This isn't a sales call. It's a conversation about where you are, where you want to go, and whether this work is right for you.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Name *</label>
+                <input
+                  type="text" name="name" value={mensAngerFormData.name}
+                  onChange={handleMensAngerFormChange} required
+                  style={{ width: '100%', padding: '0.75rem', borderRadius: '3px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.05)', color: '#ffffff', fontSize: '1rem', outline: 'none', boxSizing: 'border-box' as const }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)' }}
+                  onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Email *</label>
+                <input
+                  type="email" name="email" value={mensAngerFormData.email}
+                  onChange={handleMensAngerFormChange} required
+                  style={{ width: '100%', padding: '0.75rem', borderRadius: '3px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.05)', color: '#ffffff', fontSize: '1rem', outline: 'none', boxSizing: 'border-box' as const }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)' }}
+                  onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>What's led you to book this call? *</label>
+                <textarea
+                  name="calling" value={mensAngerFormData.calling}
+                  onChange={handleMensAngerFormChange} required rows={4}
+                  placeholder="Share what's happening in your life that brought you here..."
+                  style={{ width: '100%', padding: '0.75rem', borderRadius: '3px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.05)', color: '#ffffff', fontSize: '1rem', resize: 'vertical', outline: 'none', boxSizing: 'border-box' as const }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)' }}
+                  onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>What support are you looking for? *</label>
+                <select
+                  name="support" value={mensAngerFormData.support}
+                  onChange={handleMensAngerFormChange} required
+                  style={{ width: '100%', padding: '0.75rem', borderRadius: '3px', border: '1px solid rgba(255,255,255,0.2)', background: 'rgba(255,255,255,0.05)', color: '#ffffff', fontSize: '1rem', outline: 'none', boxSizing: 'border-box' as const }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)' }}
+                  onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                >
+                  <option value="" style={{ background: '#1a1a1a', color: '#ffffff' }}>Select one...</option>
+                  <option value="1:1 Coaching Program" style={{ background: '#1a1a1a', color: '#ffffff' }}>1:1 Coaching Program</option>
+                  <option value="Circle of Return Membership" style={{ background: '#1a1a1a', color: '#ffffff' }}>Circle of Return Membership</option>
+                  <option value="Men's Container" style={{ background: '#1a1a1a', color: '#ffffff' }}>Men's Container</option>
+                  <option value="Individual Sessions (Breathwork/Energy)" style={{ background: '#1a1a1a', color: '#ffffff' }}>Individual Sessions (Breathwork/Energy)</option>
+                  <option value="Not sure yet - exploring options" style={{ background: '#1a1a1a', color: '#ffffff' }}>Not sure yet - exploring options</option>
+                  <option value="Other" style={{ background: '#1a1a1a', color: '#ffffff' }}>Other</option>
+                </select>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleMensAngerCalendly}
+                style={{
+                  width: '100%', padding: '1rem',
+                  background: 'rgba(255, 255, 255, 0.9)', border: 'none',
+                  borderRadius: '3px', color: '#000000', fontSize: '1rem',
+                  fontWeight: '600', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  gap: '0.5rem', transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.9)'; e.currentTarget.style.transform = 'translateY(0)' }}
+              >
+                Schedule Discovery Call <span>→</span>
+              </button>
+
+              <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem', textAlign: 'center', margin: 0 }}>
+                Your info will be passed to Calendly for scheduling.
               </p>
             </div>
           </div>
@@ -1189,7 +1327,7 @@ export default function Work() {
 
               <div style={{textAlign: 'center'}}>
                 <button
-                  onClick={handleMensAngerCalendly}
+                  onClick={() => setShowMensAngerForm(true)}
                   style={{
                     display: 'inline-block',
                     padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
