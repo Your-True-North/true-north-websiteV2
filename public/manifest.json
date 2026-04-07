@@ -9,12 +9,6 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/cor-app-icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    },
-    {
       "src": "/cor-app-icon.png",
       "sizes": "any",
       "type": "image/png",
