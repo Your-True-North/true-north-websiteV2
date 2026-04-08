@@ -1,5 +1,4 @@
 import MembersNav from './MembersNav'
-import Footer from '../components/Footer'
 
 export default function ProtectedLayout({
   children,
@@ -17,7 +16,6 @@ export default function ProtectedLayout({
       <main style={{ paddingTop: '90px' }}>
         {children}
       </main>
-      <Footer />
     </>
   )
 }

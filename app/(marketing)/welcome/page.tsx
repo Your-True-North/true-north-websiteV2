@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import MembersNav from '@/app/(protected)/MembersNav'
 
 const UPSELL_STRIPE_URL = 'https://buy.stripe.com/fZuaEY3eDaYB83K4nt9IQ0k'
 const ACCENT = '#9bc4b8'
@@ -20,9 +21,13 @@ export default function WelcomePage() {
   }, [])
 
   return (
+    <>
+    <style>{`nav, header, .site-nav, .nav-container { display: none !important; }`}</style>
+    <MembersNav />
     <div style={{
       minHeight: '100vh',
       background: '#0a0a0a',
+      paddingTop: '90px',
       color: '#fff',
       display: 'flex',
       alignItems: 'center',
@@ -233,5 +238,6 @@ export default function WelcomePage() {
         </p>
       </div>
     </div>
+    </>
   )
 }
