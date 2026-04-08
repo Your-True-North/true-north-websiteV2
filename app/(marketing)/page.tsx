@@ -2,10 +2,12 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import CompoundGrowthModel from '@/app/components/CompoundGrowthModel'
+import FoundingPopup from '@/app/components/FoundingPopup'
 
 export default function Home() {
   const [shimmerPhase, setShimmerPhase] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+  const [showFoundingPopup, setShowFoundingPopup] = useState(false)
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -18,6 +20,10 @@ export default function Home() {
     const interval = setInterval(() => {
       setShimmerPhase(prev => (prev + 1) % 4)
     }, 180000)
+
+    if (window.location.search.includes('join')) {
+      setShowFoundingPopup(true)
+    }
 
     return () => {
       clearInterval(interval)
@@ -400,6 +406,7 @@ export default function Home() {
         </section>
       </main>
 
+      <FoundingPopup isOpen={showFoundingPopup} onClose={() => setShowFoundingPopup(false)} />
     </>
   )
 }
