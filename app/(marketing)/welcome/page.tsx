@@ -3,6 +3,10 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
+const UPSELL_STRIPE_URL = 'https://buy.stripe.com/fZuaEY3eDaYB83K4nt9IQ0k'
+const ACCENT = '#9bc4b8'
+const ACCENT_HOVER = '#7da89c'
+
 export default function WelcomePage() {
   const [isMobile, setIsMobile] = useState(false)
 
@@ -95,6 +99,46 @@ export default function WelcomePage() {
         }}>
           Check your email for your login details.
         </p>
+
+        {/* Pattern Audit Upsell */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(155, 196, 184, 0.05))',
+          border: '1px solid rgba(155, 196, 184, 0.3)',
+          borderRadius: '3px',
+          padding: '2rem',
+          marginBottom: '2rem',
+          textAlign: 'left'
+        }}>
+          <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2.5px', textTransform: 'uppercase', color: ACCENT, marginBottom: '12px' }}>
+            One-Time Offer · Before You Begin
+          </p>
+          <h2 style={{ fontSize: isMobile ? '1.5rem' : '1.75rem', fontWeight: 500, lineHeight: 1.2, color: '#fff', marginBottom: '8px', fontFamily: "'Gambarino', serif" }}>
+            The Pattern Audit
+          </h2>
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginBottom: '16px' }}>
+            Guided video + structured workbook · £37 one time
+          </p>
+          <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'rgba(255,255,255,0.75)', marginBottom: '16px' }}>
+            Most men believe they already know what their patterns are. The Pattern Audit goes one layer deeper — so when we meet for your first session, we start with precision, not guesswork.
+          </p>
+          <a
+            href={UPSELL_STRIPE_URL}
+            style={{
+              display: 'block', width: '100%', padding: '14px',
+              background: ACCENT, color: '#0a0a0a', fontSize: '15px',
+              fontWeight: 600, borderRadius: '3px', textDecoration: 'none',
+              textAlign: 'center', boxSizing: 'border-box', marginBottom: '10px',
+              transition: 'background 0.2s ease'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
+            onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
+          >
+            Add the Pattern Audit · £37
+          </a>
+          <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', textAlign: 'center', margin: 0 }}>
+            Skip this and go straight to your portal below
+          </p>
+        </div>
 
         {/* What's Next */}
         <div style={{

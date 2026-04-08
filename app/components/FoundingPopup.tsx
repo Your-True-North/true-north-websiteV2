@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { Play, Pause } from 'lucide-react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
-import PatternAuditPopup from '@/app/components/PatternAuditPopup'
 
 const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
 const VIDEO_URL = 'https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%202026.MP4'
@@ -22,7 +21,6 @@ interface FoundingPopupProps {
 export default function FoundingPopup({ isOpen, onClose }: FoundingPopupProps) {
   const [visible, setVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [showCheckout, setShowCheckout] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [showOverlay, setShowOverlay] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -57,6 +55,7 @@ export default function FoundingPopup({ isOpen, onClose }: FoundingPopupProps) {
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
+
   const handleStripeClick = () => {
     trackEvent('begin_checkout', { service: 'circle_founding', value: 25 })
     if (typeof window !== 'undefined' && (window as any).fbq) {
@@ -66,7 +65,7 @@ export default function FoundingPopup({ isOpen, onClose }: FoundingPopupProps) {
         currency: 'GBP',
       })
     }
-    setShowCheckout(true)
+    window.location.href = STRIPE_URL
   }
 
   const handleInitialPlay = () => {
@@ -407,7 +406,6 @@ export default function FoundingPopup({ isOpen, onClose }: FoundingPopupProps) {
         </div>
       </div>
 
-      <PatternAuditPopup isOpen={showCheckout} onClose={() => setShowCheckout(false)} />
     </>
   )
 }
