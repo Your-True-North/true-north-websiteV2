@@ -58,40 +58,74 @@ export default function WelcomePage() {
             background: '#ffffff',
             border: '1px solid #e8e8e8',
             borderRadius: '10px',
-            padding: '1.75rem',
             marginBottom: '1.5rem',
             textAlign: 'left',
             boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+            overflow: 'hidden',
           }}>
-            <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2.5px', textTransform: 'uppercase', color: ACCENT, marginBottom: '10px' }}>
-              One-Time Offer · Before You Begin
-            </p>
-            <h2 style={{ fontSize: isMobile ? '1.375rem' : '1.5rem', fontWeight: 500, color: TEXT, marginBottom: '6px', fontFamily: "'Gambarino', serif" }}>
-              The Pattern Audit
-            </h2>
-            <p style={{ fontSize: '13px', color: MUTED, marginBottom: '14px' }}>
-              Guided video + structured workbook · £37 one time
-            </p>
-            <p style={{ fontSize: '15px', lineHeight: 1.7, color: TEXT, marginBottom: '20px' }}>
-              Most men believe they already know what their patterns are. The Pattern Audit goes one layer deeper — so when we meet for your first session, we start with precision, not guesswork.
-            </p>
-            <a
-              href={UPSELL_STRIPE_URL}
-              style={{
-                display: 'block', width: '100%', padding: '14px',
-                background: ACCENT, color: TEXT, fontSize: '15px',
-                fontWeight: 600, borderRadius: '6px', textDecoration: 'none',
-                textAlign: 'center', boxSizing: 'border-box', marginBottom: '10px',
-                transition: 'background 0.2s ease',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
-            >
-              Add the Pattern Audit · £37
-            </a>
-            <p style={{ fontSize: '12px', color: MUTED, textAlign: 'center', margin: 0 }}>
-              Skip this and go straight to your portal below
-            </p>
+            <div style={{ height: '3px', background: ACCENT }} />
+            <div style={{ padding: '1.75rem' }}>
+              <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2.5px', textTransform: 'uppercase', color: ACCENT, marginBottom: '12px' }}>
+                One-Time Offer · Before You Begin
+              </p>
+              <h2 style={{ fontSize: isMobile ? '1.375rem' : '1.625rem', fontWeight: 500, color: TEXT, marginBottom: '6px', fontFamily: "'Gambarino', serif" }}>
+                The Pattern Audit
+              </h2>
+              <p style={{ fontSize: '14px', color: MUTED, marginBottom: '20px' }}>
+                Guided video + structured workbook · £37 one time
+              </p>
+              <div style={{ height: '1px', background: '#efefef', marginBottom: '18px' }} />
+              <p style={{ fontSize: '15px', lineHeight: 1.8, color: TEXT, marginBottom: '12px' }}>
+                Before our first session, you will receive access to the Pattern Audit.
+              </p>
+              <p style={{ fontSize: '15px', lineHeight: 1.8, color: TEXT, marginBottom: '12px' }}>
+                Most men believe they already know what their patterns are. They can name the surface issue. But if that were the full story, they would already have changed it.
+              </p>
+              <p style={{ fontSize: '15px', lineHeight: 1.8, color: TEXT, marginBottom: '12px' }}>
+                The reality is that most patterns have another layer underneath. A blind spot that keeps the same reactions, decisions, and outcomes repeating.
+              </p>
+              <p style={{ fontSize: '15px', lineHeight: 1.8, color: TEXT, fontWeight: 600, marginBottom: '20px' }}>
+                The Pattern Audit is designed to help you uncover that layer so that when we meet for the first session, we start with precision. Not guesswork.
+              </p>
+
+              {/* What's included box */}
+              <div style={{ borderRadius: '6px', border: '1px solid #e0e0e0', overflow: 'hidden', marginBottom: '20px' }}>
+                <div style={{ background: '#3a3a3a', padding: '10px 18px' }}>
+                  <p style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: '#ffffff', margin: 0 }}>What's included</p>
+                </div>
+                <div style={{ padding: '14px 18px', background: '#fafafa' }}>
+                  {[
+                    'Guided video with True - walking you through the audit process',
+                    'Structured workbook - focused questions and reflections',
+                    'Clarity on what is actually running underneath your decisions',
+                    'A clear starting point for your first Circle session',
+                  ].map((item, i, arr) => (
+                    <div key={i} style={{ display: 'flex', gap: '12px', paddingBottom: i < arr.length - 1 ? '12px' : 0, marginBottom: i < arr.length - 1 ? '12px' : 0, borderBottom: i < arr.length - 1 ? '1px solid #ececec' : 'none', alignItems: 'flex-start' }}>
+                      <span style={{ width: '18px', height: '18px', borderRadius: '50%', background: ACCENT, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px', fontSize: '10px', color: TEXT, fontWeight: 700 }}>✓</span>
+                      <p style={{ fontSize: '14px', color: TEXT, lineHeight: 1.6, margin: 0 }}>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <a
+                href={UPSELL_STRIPE_URL}
+                style={{
+                  display: 'block', width: '100%', padding: '15px',
+                  background: ACCENT, color: TEXT, fontSize: '15px',
+                  fontWeight: 600, borderRadius: '6px', textDecoration: 'none',
+                  textAlign: 'center', boxSizing: 'border-box', marginBottom: '12px',
+                  transition: 'background 0.2s ease',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
+                onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
+              >
+                Yes - Add the Pattern Audit · £37
+              </a>
+              <p style={{ fontSize: '13px', color: MUTED, textAlign: 'center', margin: 0 }}>
+                No thanks, just take me to my portal
+              </p>
+            </div>
           </div>
 
           {/* What's Next */}
