@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   icons: {
-    icon: '/cor-icon.svg',
+    icon: '/cor-mark-black.svg',
     apple: '/cor-app-icon.png',
   },
 }
