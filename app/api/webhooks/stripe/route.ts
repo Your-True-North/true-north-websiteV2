@@ -281,7 +281,10 @@ export async function POST(req: NextRequest) {
 
     if (email) {
       const priceIds = await getLineItemPriceIds(stripe, session)
-      if (priceIds.includes(COR_PRICE_ID)) {
+      const isCorAbandoned =
+        priceIds.includes(COR_PRICE_ID) ||
+        (priceIds.length === 0 && session.mode === 'subscription')
+      if (isCorAbandoned) {
         console.log('[Stripe Webhook] CoR abandoned cart detected for:', email)
         applyConvertKitTagById(email, firstName, COR_ABANDONED_TAG_ID)
       }
