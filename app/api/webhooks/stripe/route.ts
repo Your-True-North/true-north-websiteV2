@@ -17,7 +17,7 @@ const BREATHWORK_PRICE_ID = 'price_1TCaOCIEGgnmE0KKRZIc0xZI'
 const ENERGY_HEALING_PRICE_ID = 'price_1TCaPRIEGgnmE0KKY7gBuwzF'
 
 // Circle of Resonance membership
-const COR_PRICE_ID = 'price_1S0gabLEGgnmE0KKGnWlJuWN'
+const COR_PRICE_ID = 'price_1SN63oIEGgnmE0KKEM0Ihkvt'
 const COR_TAG_ID = '8362450'
 const COR_ABANDONED_TAG_ID = '17879543'
 
