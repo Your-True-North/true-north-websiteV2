@@ -1,4 +1,12 @@
 import MembersNav from './MembersNav'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  icons: {
+    icon: '/cor-icon.svg',
+    apple: '/cor-app-icon.png',
+  },
+}
 
 export default function ProtectedLayout({
   children,
