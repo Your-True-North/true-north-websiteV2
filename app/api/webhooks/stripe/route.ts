@@ -224,8 +224,12 @@ export async function POST(req: NextRequest) {
         applyConvertKitTag(email, firstName)
       }
 
-      if (priceIds.includes(COR_PRICE_ID)) {
-        console.log('[Stripe Webhook] CoR membership purchase detected for:', email)
+      const isCorPurchase =
+        priceIds.includes(COR_PRICE_ID) ||
+        (priceIds.length === 0 && session.mode === 'subscription' && (session.amount_total === 2500 || session.amount_subtotal === 2500))
+
+      if (isCorPurchase) {
+        console.log('[Stripe Webhook] CoR membership purchase detected for:', email, '| priceIds:', priceIds, '| mode:', session.mode, '| amount:', session.amount_total)
         applyConvertKitTagById(email, firstName, COR_TAG_ID)
         applyConvertKitTagById(email, firstName, '12084779')
         console.log('[Stripe Webhook] ✅ CoR ConvertKit tags applied for:', email)
