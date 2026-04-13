@@ -64,16 +64,16 @@ export default function AboutCorPage() {
         {/* Section 1 — Why this exists */}
         <div style={sectionGap}>
           <p style={body}>
-            I built The Circle of Return because I have seen what real inner work does to a man. Not just to him. Through him.
+            I built The Circle of Return because I have seen what real inner work does to a man. Not just to him, but all of his life domains.
           </p>
           <p style={body}>
-            The men I have worked with closely do not just become calmer or clearer. They go home differently. They father differently. They show up at work differently. Their children feel it. Their partners feel it. The people around them feel it without being told anything has changed.
+            The men I have worked with closely do not just become calmer, clearer or more confident. They go home differently, they father differently, they show up at work differently. The people around them feel it, and they comment on it - without being told anything has changed.
           </p>
           <p style={body}>
-            That is not metaphor. That is what happens when a man actually does the work rather than thinking about doing the work.
+            This is not metaphor... it's what happens when a man actually does the work rather than thinking about doing the work.
           </p>
           <p style={{ ...body, marginBottom: 0 }}>
-            I created this Circle because I believe we are at a moment where men doing genuine inner work is not optional any more. The cost of men who are numb, reactive, or checked out is everywhere. I want to be part of building something that runs in the opposite direction. Something that <span style={{ color: ACCENT }}>compounds</span>.
+            I created this Circle because I believe we are at a moment where men doing genuine inner work is not optional any more. The cost of men who are numb, reactive, or checked out is everywhere. I want to be part of building something that runs in the opposite direction. This work you're doing will <span style={{ color: ACCENT }}>compound</span>.
           </p>
         </div>
 
@@ -92,10 +92,10 @@ export default function AboutCorPage() {
             I am thinking about tens of thousands of men.
           </p>
           <p style={body}>
-            Not followers. Not customers. Men who have done the work and carry themselves differently because of it. Men who have sat in the discomfort, looked at the parts of themselves they would rather not see, and come out the other side more whole.
+            Not followers or customers. I'm talking men who have done the work and carry themselves differently because of it - the ones who have sat in the discomfort, looked at the parts of themselves they would rather not see, and come out the other side more whole.
           </p>
           <p style={body}>
-            Every man who transforms here creates a ripple. In his family. In his friendships. In the way he earns, leads, and fathers. The compound interest of inner work at scale is staggering when you think it through. One man becomes a better father. His children grow up feeling safe. They build relationships from that security. The ripple moves forward in time for decades.
+            Every man who transforms here will create a ripple - in his family, his friendships, in the way he earns, leads, and fathers. The compound interest of inner work at scale is staggering when you think about it. One man becomes a better father. His children grow up feeling safe. They build relationships from that security. The ripple moves forward in time for decades.
           </p>
           <p style={{ ...body, marginBottom: 0 }}>
             That is what I am building toward. And every man who joins this Circle is part of that.
@@ -143,46 +143,34 @@ export default function AboutCorPage() {
             The Circle is not a course. It is not coaching.
           </p>
           <p style={body}>
-            It is a living community of men committed to real transformation. The sessions are live. The conversations are real. There is no script and no performance expected.
+            It is a living community of men committed to real transformation. The sessions are live and the conversations are real. There is no script and no performance expected.
           </p>
           <p style={body}>
-            We meet weekly. We do somatic work. We look at what is actually running underneath the behaviour. We build regulation, not just insight. We hold each other accountable to the work between sessions, not just during them.
+            We meet weekly. We do somatic work and we look at what is actually running underneath the behaviour. We build genuine regulation, not just insight. We hold each other accountable to the work between sessions, not just during them.
+          </p>
+          <p style={body}>
+            The community is private so what gets said here stays here. This isn't the place to "be the best". Men come here to do the actual work, and that creates a <span style={{ color: ACCENT }}>different kind of room</span>.
           </p>
           <p style={{ ...body, marginBottom: 0 }}>
-            The community is private by design. What gets said here stays here. There is no posturing, no one-upmanship, no performance of having it together. Men come here to do the actual work, and that creates a <span style={{ color: ACCENT }}>different kind of room</span>.
+            You are not just a member. You are part of the bigger mission that is now in motion.
           </p>
         </div>
 
         {/* Section 4 — Their part in this */}
         <div style={sectionGap}>
-          <p
-            style={{
-              fontFamily: 'Gambarino, serif',
-              fontSize: isMobile ? '26px' : '30px',
-              fontWeight: 400,
-              lineHeight: 1.35,
-              color: '#1a1a1a',
-              marginBottom: '28px',
-            }}
-          >
-            You are not just a member. You are the mission in motion.
+          <p style={body}>
+            Every time you show up honestly in this space, you are proof that something different is possible. You are not here to consume content. You are here to become someone. You're here to carry it out into your life. Into every interaction where a less conscious version of you would have reacted, avoided, or shut down.
           </p>
           <p style={body}>
-            Every time you show up honestly in this space, you are proof that something different is possible. You are not here to consume content. You are here to become someone. And that becoming does not stay contained to your sessions.
-          </p>
-          <p style={body}>
-            You carry it out. Into your home. Into your work. Into every interaction where a less conscious version of you would have reacted, avoided, or shut down. You might not name it. You might not notice it. But the people around you will.
+            I want you to feel the weight of that. Not as pressure, but as an honour because you chose to be here. That choice already says something about who you are becoming.
           </p>
           <p style={{ ...body, marginBottom: 0 }}>
-            I want you to feel the weight of that. Not as pressure. As honour. You chose to be here. That choice already says something about who you are becoming.
+            I am not interested in men who want to talk about change. I am interested in men who want to do it. That is who this Circle was built for.
           </p>
         </div>
 
         {/* Close */}
         <div>
-          <p style={body}>
-            I am not interested in men who want to talk about change. I am interested in men who want to do it. That is who this Circle was built for.
-          </p>
           <p
             style={{
               fontFamily: 'Gambarino, serif',
