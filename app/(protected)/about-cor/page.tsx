@@ -15,54 +15,61 @@ export default function AboutCorPage() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  useEffect(() => {
-    document.querySelectorAll('footer').forEach((el) => {
-      ;(el as HTMLElement).style.display = 'none'
-    })
-  }, [])
-
-  const containerPadding = isMobile ? '32px 20px 64px' : '48px 24px 80px'
-
   const body: React.CSSProperties = {
-    fontSize: '16px',
-    lineHeight: 1.85,
-    color: '#333',
+    fontSize: '17px',
+    lineHeight: 1.9,
+    color: '#444',
     fontFamily: BODY_FONT,
     marginBottom: '20px',
   }
 
-  const sectionGap: React.CSSProperties = {
-    marginBottom: '64px',
+  const heading: React.CSSProperties = {
+    fontFamily: 'Gambarino, serif',
+    fontSize: isMobile ? '26px' : '32px',
+    fontWeight: 400,
+    lineHeight: 1.35,
+    color: '#1a1a1a',
+    marginBottom: '24px',
   }
 
-  return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a' }}>
-      <div
-        style={{
-          maxWidth: '680px',
-          margin: '0 auto',
-          padding: containerPadding,
-        }}
-      >
+  const divider = (
+    <div style={{ width: '40px', height: '2px', background: ACCENT, margin: '48px 0' }} />
+  )
 
-        {/* Opening statement */}
-        <div style={{ marginBottom: '64px' }}>
-          <p
-            style={{
-              fontFamily: 'Gambarino, serif',
-              fontSize: isMobile ? '22px' : '26px',
-              fontWeight: 400,
-              lineHeight: 1.4,
-              color: '#1a1a1a',
-              margin: 0,
-            }}
-          >
+  return (
+    <div style={{ minHeight: '100vh', background: '#f4f4f2', fontFamily: BODY_FONT }}>
+
+      {/* Hero strip */}
+      <div style={{
+        background: '#ffffff',
+        borderBottom: '1px solid #e8e8e8',
+        padding: isMobile ? '40px 20px' : '56px 24px',
+      }}>
+        <div style={{ maxWidth: '680px', margin: '0 auto' }}>
+          <p style={{
+            fontSize: '11px', fontWeight: 700, letterSpacing: '2px',
+            textTransform: 'uppercase', color: ACCENT, marginBottom: '16px',
+          }}>
+            About the Circle
+          </p>
+          <p style={{
+            fontFamily: 'Gambarino, serif',
+            fontSize: isMobile ? '24px' : '30px',
+            fontWeight: 400,
+            lineHeight: 1.45,
+            color: '#1a1a1a',
+            margin: 0,
+          }}>
             This is not a product, a programme or a course. It's a journey of self-discovery.
           </p>
         </div>
+      </div>
 
-        {/* Section 1 — Why this exists */}
-        <div style={sectionGap}>
+      {/* Body */}
+      <div style={{ maxWidth: '680px', margin: '0 auto', padding: isMobile ? '40px 20px 80px' : '56px 24px 100px' }}>
+
+        {/* Section 1 */}
+        <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
           <p style={body}>
             I built The Circle of Return because I have seen what real inner work does to a man. Not just to him, but all of his life domains.
           </p>
@@ -73,24 +80,13 @@ export default function AboutCorPage() {
             This is not metaphor... it's what happens when a man actually does the work rather than thinking about doing the work.
           </p>
           <p style={{ ...body, marginBottom: 0 }}>
-            I created this Circle because I believe we are at a moment where men doing genuine inner work is not optional any more. The cost of men who are numb, reactive, or checked out is everywhere. I want to be part of building something that runs in the opposite direction. This work you're doing will <span style={{ color: ACCENT }}>compound</span>.
+            I created this Circle because I believe we are at a moment where men doing genuine inner work is not optional any more. The cost of men who are numb, reactive, or checked out is everywhere. I want to be part of building something that runs in the opposite direction. This work you're doing will <span style={{ color: ACCENT, fontWeight: 500 }}>compound</span>.
           </p>
         </div>
 
-        {/* Section 2 — The scale of the vision */}
-        <div style={sectionGap}>
-          <p
-            style={{
-              fontFamily: 'Gambarino, serif',
-              fontSize: isMobile ? '26px' : '30px',
-              fontWeight: 400,
-              lineHeight: 1.35,
-              color: '#1a1a1a',
-              marginBottom: '28px',
-            }}
-          >
-            I am thinking about tens of thousands of men.
-          </p>
+        {/* Section 2 */}
+        <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+          <p style={heading}>I am thinking about tens of thousands of men.</p>
           <p style={body}>
             Not followers or customers. I'm talking men who have done the work and carry themselves differently because of it - the ones who have sat in the discomfort, looked at the parts of themselves they would rather not see, and come out the other side more whole.
           </p>
@@ -102,46 +98,21 @@ export default function AboutCorPage() {
           </p>
         </div>
 
-        {/* Photo of True North */}
-        <div style={{ ...sectionGap, textAlign: 'center' }}>
+        {/* Photo */}
+        <div style={{ marginBottom: '24px', borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
           <img
             src="/serious.jpg"
             alt="True North"
-            style={{
-              width: isMobile ? '100%' : '300px',
-              maxWidth: '300px',
-              borderRadius: '8px',
-              display: 'block',
-              margin: '0 auto',
-            }}
+            style={{ width: '100%', display: 'block', maxHeight: '480px', objectFit: 'cover', objectPosition: 'top' }}
           />
-          <p
-            style={{
-              fontSize: '13px',
-              color: '#666',
-              fontFamily: BODY_FONT,
-              marginTop: '12px',
-              marginBottom: 0,
-            }}
-          >
-            True North. London.
-          </p>
+          <div style={{ background: '#ffffff', padding: '16px 24px' }}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#999', fontFamily: BODY_FONT }}>True North</p>
+          </div>
         </div>
 
-        {/* Section 3 — What the Circle actually is */}
-        <div style={sectionGap}>
-          <p
-            style={{
-              fontFamily: 'Gambarino, serif',
-              fontSize: isMobile ? '26px' : '30px',
-              fontWeight: 400,
-              lineHeight: 1.35,
-              color: '#1a1a1a',
-              marginBottom: '28px',
-            }}
-          >
-            The Circle is not a course. It is not coaching.
-          </p>
+        {/* Section 3 */}
+        <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+          <p style={heading}>The Circle is not a course. It is not coaching.</p>
           <p style={body}>
             It is a living community of men committed to real transformation. The sessions are live and the conversations are real. There is no script and no performance expected.
           </p>
@@ -149,15 +120,15 @@ export default function AboutCorPage() {
             We meet weekly. We do somatic work and we look at what is actually running underneath the behaviour. We build genuine regulation, not just insight. We hold each other accountable to the work between sessions, not just during them.
           </p>
           <p style={body}>
-            The community is private so what gets said here stays here. This isn't the place to "be the best". Men come here to do the actual work, and that creates a <span style={{ color: ACCENT }}>different kind of room</span>.
+            The community is private so what gets said here stays here. This isn't the place to "be the best". Men come here to do the actual work, and that creates a <span style={{ color: ACCENT, fontWeight: 500 }}>different kind of room</span>.
           </p>
           <p style={{ ...body, marginBottom: 0 }}>
             You are not just a member. You are part of the bigger mission that is now in motion.
           </p>
         </div>
 
-        {/* Section 4 — Their part in this */}
-        <div style={sectionGap}>
+        {/* Section 4 */}
+        <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
           <p style={body}>
             Every time you show up honestly in this space, you are proof that something different is possible. You are not here to consume content. You are here to become someone. You're here to carry it out into your life. Into every interaction where a less conscious version of you would have reacted, avoided, or shut down.
           </p>
@@ -170,17 +141,15 @@ export default function AboutCorPage() {
         </div>
 
         {/* Close */}
-        <div>
-          <p
-            style={{
-              fontFamily: 'Gambarino, serif',
-              fontSize: isMobile ? '22px' : '26px',
-              fontWeight: 400,
-              lineHeight: 1.45,
-              color: '#1a1a1a',
-              margin: 0,
-            }}
-          >
+        <div style={{ padding: isMobile ? '28px 24px' : '40px 48px', textAlign: 'center' }}>
+          <p style={{
+            fontFamily: 'Gambarino, serif',
+            fontSize: isMobile ? '24px' : '30px',
+            fontWeight: 400,
+            lineHeight: 1.45,
+            color: '#1a1a1a',
+            margin: 0,
+          }}>
             Where you are now does not have to be where you end up.
           </p>
         </div>
