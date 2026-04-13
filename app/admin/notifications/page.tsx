@@ -14,12 +14,12 @@ export default function NotificationsPage() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    const adminData = localStorage.getItem('admin')
-    if (!adminData) { router.push('/admin/login'); return }
+    const userData = localStorage.getItem('user')
+    if (!userData) { router.push('/auth/login'); return }
     try {
-      const parsed = JSON.parse(adminData)
-      if (parsed.role !== 'admin') router.push('/admin/login')
-    } catch { router.push('/admin/login') }
+      const parsed = JSON.parse(userData)
+      if (parsed.role !== 'admin') router.push('/members')
+    } catch { router.push('/auth/login') }
   }, [router])
 
   const handleSend = async (e: React.FormEvent) => {
@@ -45,7 +45,7 @@ export default function NotificationsPage() {
       } else {
         setError(data.error || 'Failed to send')
       }
-    } catch (err) {
+    } catch {
       setError('Something went wrong')
     } finally {
       setSending(false)
@@ -57,10 +57,10 @@ export default function NotificationsPage() {
       <div style={{ background: '#ffffff', borderBottom: '1px solid #e5e5e5', padding: '20px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h1 style={{ fontSize: '24px', fontWeight: 600, marginBottom: '4px' }}>Send Notification</h1>
-          <p style={{ fontSize: '14px', color: '#666' }}>Push a message to all CoR members</p>
+          <p style={{ fontSize: '14px', color: '#666' }}>Emails all active CoR members + shows a popup when they next log in</p>
         </div>
-        <Link href="/admin/dashboard" style={{ padding: '10px 20px', background: '#f8f8f8', border: '1px solid #e5e5e5', borderRadius: '3px', color: '#1a1a1a', fontSize: '14px', textDecoration: 'none' }}>
-          ← Dashboard
+        <Link href="/admin" style={{ padding: '10px 20px', background: '#f8f8f8', border: '1px solid #e5e5e5', borderRadius: '3px', color: '#1a1a1a', fontSize: '14px', textDecoration: 'none' }}>
+          Dashboard
         </Link>
       </div>
 
@@ -73,7 +73,7 @@ export default function NotificationsPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              placeholder="New video posted"
+              placeholder="New session posted"
               style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e5e5', borderRadius: '4px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
             />
           </div>
@@ -84,8 +84,8 @@ export default function NotificationsPage() {
               value={body}
               onChange={(e) => setBody(e.target.value)}
               required
-              rows={3}
-              placeholder="A new session is available in your library."
+              rows={4}
+              placeholder="A new session is available in the library."
               style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e5e5', borderRadius: '4px', fontSize: '14px', outline: 'none', resize: 'vertical', fontFamily: 'inherit', boxSizing: 'border-box' }}
             />
           </div>
@@ -98,13 +98,14 @@ export default function NotificationsPage() {
               placeholder="/members"
               style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e5e5', borderRadius: '4px', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
             />
+            <p style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>Path within the site, e.g. /videos or /members</p>
           </div>
 
           {error && <p style={{ color: '#e53e3e', fontSize: '14px', margin: 0 }}>{error}</p>}
 
           {result && (
             <div style={{ padding: '12px 16px', background: 'rgba(127, 176, 105, 0.1)', border: '1px solid rgba(127, 176, 105, 0.3)', borderRadius: '4px', fontSize: '14px', color: '#2d6a1f' }}>
-              Sent to {result.sent} member{result.sent !== 1 ? 's' : ''}{result.failed > 0 ? ` (${result.failed} failed)` : ''}
+              Sent to {result.sent} member{result.sent !== 1 ? 's' : ''}{result.failed > 0 ? ` (${result.failed} failed to send)` : ''}. The popup will appear for all members on their next visit.
             </div>
           )}
 
