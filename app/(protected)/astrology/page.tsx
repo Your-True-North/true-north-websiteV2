@@ -52,18 +52,18 @@ interface NatalChart {
 // ─── Interpretive content ────────────────────────────────────────────────────
 
 const PLANET_MEANING: Record<string, { title: string; meaning: string }> = {
-  sun:      { title: 'Sun',       meaning: 'Your core identity. Who you are at your most essential and the self you are becoming.' },
-  moon:     { title: 'Moon',      meaning: 'Your emotional world. What you need to feel safe, held, and at home in yourself.' },
-  mercury:  { title: 'Mercury',   meaning: 'How you think, learn, and communicate. The way your mind works.' },
-  venus:    { title: 'Venus',     meaning: 'What you love, value, and are drawn toward. How you relate and what you find beautiful.' },
-  mars:     { title: 'Mars',      meaning: 'How you take action and assert yourself. Where your drive, anger, and desire live.' },
-  jupiter:  { title: 'Jupiter',   meaning: 'Where you expand naturally. Your sense of luck, growth, and what opens up for you.' },
-  saturn:   { title: 'Saturn',    meaning: 'Your biggest lessons and where life demands the most from you. Also where mastery lives.' },
-  chiron:   { title: 'Chiron',    meaning: 'The Wounded Healer. The area of life where you carry your oldest, deepest wound. Once you stop running from it, it becomes the source of your greatest strength.' },
-  uranus:   { title: 'Uranus',    meaning: 'Where you need freedom and where you\'ll break patterns no matter the cost.' },
-  neptune:  { title: 'Neptune',   meaning: 'Your spiritual depth, your idealism, and where illusion or dissolution can either heal or confuse you.' },
-  pluto:    { title: 'Pluto',     meaning: 'Where you transform completely. The part of life where you die and come back different.' },
-  northNode:{ title: 'North Node',meaning: 'The direction your soul is growing toward in this life. It won\'t feel natural. It will feel magnetic.' },
+  sun:      { title: 'Sun',        meaning: 'Your core identity and the self you are still becoming.' },
+  moon:     { title: 'Moon',       meaning: 'What you need to feel safe, held, and at home in yourself.' },
+  mercury:  { title: 'Mercury',    meaning: 'How you think, learn, and communicate.' },
+  venus:    { title: 'Venus',      meaning: 'What you love, what you value, and what you are drawn toward.' },
+  mars:     { title: 'Mars',       meaning: 'How you take action and assert yourself, and where your drive and desire live.' },
+  jupiter:  { title: 'Jupiter',    meaning: 'Where you expand naturally and where life opens up for you.' },
+  saturn:   { title: 'Saturn',     meaning: 'Where life demands the most from you, and where mastery lives if you do the work.' },
+  chiron:   { title: 'Chiron',     meaning: 'The area of life where you carry your oldest wound. Once you stop running from it, it becomes your greatest source of strength.' },
+  uranus:   { title: 'Uranus',     meaning: 'Where you need freedom and where you will break patterns no matter what it costs.' },
+  neptune:  { title: 'Neptune',    meaning: 'Your spiritual depth and idealism, and where illusion can either heal or confuse you.' },
+  pluto:    { title: 'Pluto',      meaning: 'Where you transform completely and come back different.' },
+  northNode:{ title: 'North Node', meaning: 'The direction your soul is moving toward in this life. It will not feel natural. It will feel magnetic.' },
 }
 
 const SIGN_QUALITY: Record<string, string> = {
