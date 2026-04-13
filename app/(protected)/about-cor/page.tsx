@@ -24,7 +24,6 @@ export default function AboutCorPage() {
   }
 
   const heading: React.CSSProperties = {
-    fontFamily: 'Gambarino, serif',
     fontSize: isMobile ? '26px' : '32px',
     fontWeight: 400,
     lineHeight: 1.35,
@@ -52,8 +51,7 @@ export default function AboutCorPage() {
           }}>
             About the Circle
           </p>
-          <p style={{
-            fontFamily: 'Gambarino, serif',
+          <h2 style={{
             fontSize: isMobile ? '24px' : '30px',
             fontWeight: 400,
             lineHeight: 1.45,
@@ -61,7 +59,7 @@ export default function AboutCorPage() {
             margin: 0,
           }}>
             This is not a product, a programme or a course. It's a journey of self-discovery.
-          </p>
+          </h2>
         </div>
       </div>
 
@@ -86,7 +84,7 @@ export default function AboutCorPage() {
 
         {/* Section 2 */}
         <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-          <p style={heading}>I am thinking about tens of thousands of men.</p>
+          <h2 style={heading}>I am thinking about tens of thousands of men.</h2>
           <p style={body}>
             Not followers or customers. I'm talking men who have done the work and carry themselves differently because of it - the ones who have sat in the discomfort, looked at the parts of themselves they would rather not see, and come out the other side more whole.
           </p>
@@ -112,7 +110,7 @@ export default function AboutCorPage() {
 
         {/* Section 3 */}
         <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-          <p style={heading}>The Circle is not a course. It is not coaching.</p>
+          <h2 style={heading}>The Circle is not a course. It is not coaching.</h2>
           <p style={body}>
             It is a living community of men committed to real transformation. The sessions are live and the conversations are real. There is no script and no performance expected.
           </p>
@@ -142,8 +140,7 @@ export default function AboutCorPage() {
 
         {/* Close */}
         <div style={{ padding: isMobile ? '28px 24px' : '40px 48px', textAlign: 'center' }}>
-          <p style={{
-            fontFamily: 'Gambarino, serif',
+          <h2 style={{
             fontSize: isMobile ? '24px' : '30px',
             fontWeight: 400,
             lineHeight: 1.45,
@@ -151,7 +148,7 @@ export default function AboutCorPage() {
             margin: 0,
           }}>
             Where you are now does not have to be where you end up.
-          </p>
+          </h2>
         </div>
 
       </div>
