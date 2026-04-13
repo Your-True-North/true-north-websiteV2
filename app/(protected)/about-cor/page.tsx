@@ -50,14 +50,14 @@ export default function AboutCorPage() {
           <p
             style={{
               fontFamily: 'Gambarino, serif',
-              fontSize: isMobile ? '30px' : '36px',
+              fontSize: isMobile ? '22px' : '26px',
               fontWeight: 400,
-              lineHeight: 1.3,
+              lineHeight: 1.4,
               color: '#1a1a1a',
               margin: 0,
             }}
           >
-            This is not a product. It is not a programme. It is what happens when enough men stop performing and start becoming.
+            This is not a product, a programme or a course. It's a journey of self-discovery.
           </p>
         </div>
 
