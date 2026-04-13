@@ -793,7 +793,7 @@ export default function CommunityPage() {
             <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
               <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', marginBottom: '0.875rem', fontWeight: 600, textTransform: 'uppercase' }}>Quick Links</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-                <a href="/journey" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f2f2f2', fontFamily: GAMBARINO }}>Video Library</a>
+                <a href="/videos" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f2f2f2', fontFamily: GAMBARINO }}>Video Library</a>
                 <a href="/calls" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', fontFamily: GAMBARINO }}>Live Call Calendar</a>
               </div>
             </div>

@@ -120,9 +120,9 @@ export default function AdminPage() {
 
       // Check admin role
       if (userData.role !== 'admin') {
-        logger.debug('Admin', 'Non-admin user, redirecting to journey')
-        setLoading(false) // Set loading false before redirect
-        window.location.replace('/journey')
+        logger.debug('Admin', 'Non-admin user, redirecting to members')
+        setLoading(false)
+        window.location.replace('/members')
         return
       }
 
@@ -288,7 +288,7 @@ export default function AdminPage() {
             }}>
               Members Dashboard
             </Link>
-            <Link href="/journey" style={{
+            <Link href="/videos" style={{
               padding: '0.5rem 1rem',
               fontSize: '0.875rem',
               fontWeight: 300,
@@ -297,7 +297,7 @@ export default function AdminPage() {
               color: '#9bc4b8',
               textDecoration: 'none'
             }}>
-              Journey
+              Teachings
             </Link>
           </div>
         </div>
