@@ -117,13 +117,37 @@ const PLANET_DISPLAY: Record<string, string> = {
   neptune: 'Neptune', pluto: 'Pluto', northNode: 'North Node', chiron: 'Chiron'
 }
 
-const ASPECT_MEANING: Record<string, string> = {
-  Conjunction:  'These two planets sit together and blend into one force. They amplify each other.',
-  Opposition:   'These two planets sit across from each other. There is a push and pull here that asks you to hold both at once.',
-  Trine:        'These two planets work together easily. The energy flows without effort.',
-  Square:       'These two planets create friction with each other. This is where challenge lives, and also where growth comes from.',
-  Sextile:      'These two planets support each other. The energy is cooperative when you actively use it.',
-  Quincunx:     'These two planets do not naturally communicate. It takes conscious effort to bring them into alignment.',
+const PLANET_SHORT: Record<string, string> = {
+  sun:       'your core identity',
+  moon:      'your emotional needs',
+  mercury:   'how your mind works',
+  venus:     'what you love and value',
+  mars:      'how you act and assert yourself',
+  jupiter:   'where you naturally expand',
+  saturn:    'where life demands the most from you',
+  chiron:    'your deepest wound',
+  uranus:    'your need for freedom',
+  neptune:   'your spiritual depth',
+  pluto:     'where you transform completely',
+  northNode: 'the direction your soul is moving',
+}
+
+const ASPECT_TEMPLATE: Record<string, (p1: string, p2: string) => string> = {
+  Conjunction: (p1, p2) => `${p1} and ${p2} are fused together in your chart. They act as one force and constantly amplify each other. This is a dominant pairing in how you operate.`,
+  Opposition:  (p1, p2) => `${p1} sits in direct tension with ${p2}. You likely swing between the two, or you live one fully while projecting the other onto people around you. The work is learning to hold both at the same time.`,
+  Trine:       (p1, p2) => `${p1} flows naturally with ${p2}. This is easy, unforced territory for you. These two energies cooperate without effort. You may not even notice it as a strength because it has always come naturally.`,
+  Square:      (p1, p2) => `${p1} is in friction with ${p2}. These two forces pull against each other. You will feel this as internal conflict or as recurring tension in the areas of life they govern. This is not a flaw. It is an engine. The men who do the most with their charts have learned to work with their squares rather than avoid them.`,
+  Sextile:     (p1, p2) => `${p1} and ${p2} support each other. This is an opportunity that is available to you when you actively engage it. It does not fire on its own, but when you put energy in, these two work well together.`,
+  Quincunx:    (p1, p2) => `${p1} and ${p2} do not naturally communicate. Adjusting one tends to throw the other off. It requires ongoing conscious effort to get them working in the same direction.`,
+}
+
+function getAspectText(body1: string, body2: string, type: string): string {
+  const p1 = PLANET_SHORT[body1] || body1
+  const p2 = PLANET_SHORT[body2] || body2
+  const template = ASPECT_TEMPLATE[type]
+  if (!template) return ''
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+  return template(cap(p1), p2)
 }
 
 function formatDeg(deg: number): string {
@@ -449,7 +473,7 @@ export default function AstrologyPage() {
                         <span style={{ fontSize: '0.75rem', color: '#444', marginLeft: 'auto' }}>{a.type} · {a.orb}° orb</span>
                       </div>
                       <div style={{ fontSize: '0.8125rem', color: '#666', lineHeight: 1.6 }}>
-                        {ASPECT_MEANING[a.type] || ''}
+                        {getAspectText(a.body1, a.body2, a.type)}
                       </div>
                     </div>
                   ))}
