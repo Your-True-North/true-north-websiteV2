@@ -118,12 +118,12 @@ const PLANET_DISPLAY: Record<string, string> = {
 }
 
 const ASPECT_MEANING: Record<string, string> = {
-  Conjunction:  'Merged energy. These two forces act as one and amplify each other.',
-  Opposition:   'Tension between opposites. A push-pull that creates awareness through friction.',
-  Trine:        'Natural flow. These energies support each other and work together easily.',
-  Square:       'Friction and challenge. The tension here is the engine for growth.',
-  Sextile:      'Opportunity. These energies work well together when you actively engage them.',
-  Quincunx:     'Awkward adjustment. These energies don\'t naturally speak the same language and require conscious effort.',
+  Conjunction:  'These two planets sit together and blend into one force. They amplify each other.',
+  Opposition:   'These two planets sit across from each other. There is a push and pull here that asks you to hold both at once.',
+  Trine:        'These two planets work together easily. The energy flows without effort.',
+  Square:       'These two planets create friction with each other. This is where challenge lives, and also where growth comes from.',
+  Sextile:      'These two planets support each other. The energy is cooperative when you actively use it.',
+  Quincunx:     'These two planets do not naturally communicate. It takes conscious effort to bring them into alignment.',
 }
 
 function formatDeg(deg: number): string {
@@ -211,16 +211,16 @@ export default function AstrologyPage() {
 
           <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#444', fontWeight: 600, marginBottom: '1.25rem' }}>WHY IS THIS IN HERE?</div>
           <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-            I was sceptical of astrology for years. It felt like something people used to avoid responsibility. I didn't take it seriously. What changed my mind wasn't belief. It was looking at the natal chart properly and realising it wasn't about prediction at all.
+            I was sceptical of astrology for years. It felt like something people used to avoid responsibility, so I didn't take it seriously. My mind changed when I opened to the idea that I am factually a complex formulation of energy, as is everything in our universe, including the planets. So why couldn't they affect me? If my ex-girlfriend coming into the room I was sitting in could change the way I felt without any words said, why couldn't these huge balls of energy influence how I felt and, in response, how I behaved?
           </p>
           <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-            A natal chart is a map of the energies present at the moment you were born. Each planet was in a particular sign and house, and those placements describe patterns in how you operate: how you think, what you fear, where you expand naturally, where you contract, what drives you, and what wounds you carry. None of it is destiny. But it is a remarkably accurate mirror.
+            I'm not talking about the horoscopes you can get online. I'm talking about natal charts. Where were the planets positioned when your soul entered this planet? When I was introduced to my natal chart and looked at it properly, I realised it wasn't about prediction at all. A natal chart is a map of the energies present at the moment you were born. Each planet was in a particular sign and house, and those placements describe patterns in how you operate. How you think, what you fear, where you expand naturally, where you contract, what drives you, and what wounds you carry. None of it is destiny. But it is an extremely accurate mirror.
           </p>
           <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
-            The placement I pay most attention to is <strong style={{ fontWeight: 600 }}>Chiron</strong>. Chiron in your chart points directly at the thing you have been compensating for your whole life. Not a weakness. Not a flaw. A wound. The people who have sat with that wound the longest are often the most capable of helping others through the same pain.
+            The placement I pay most attention to is <strong style={{ fontWeight: 600 }}>Chiron</strong>. Chiron in your chart points directly at the thing you have been compensating for your whole life. It's not a weakness or a flaw, although it can feel like it. It's a wound. The people who have sat with that wound the longest are often the most capable of helping others through the same pain.
           </p>
           <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#3a3a3a', fontSize: '0.9375rem', marginBottom: '0' }}>
-            You don't need to believe in astrology. Think of it as another language for self-understanding. If it gives you something useful, use it. If it doesn't land, leave it. Working with the planets is simply another way to navigate.
+            You don't need to believe in astrology. Think of it as another language for self-understanding. If it gives you something useful, use it. If it doesn't land, leave it. Working with the planets is simply another way to navigate. Below you can enter your information and find what wound you have been unknowingly carrying around.
           </p>
         </div>
 
@@ -387,7 +387,7 @@ export default function AstrologyPage() {
             {activeTab === 'houses' && (
               <div>
                 <p style={{ fontSize: '0.875rem', color: '#666', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                  The 12 houses represent the different areas of your life. Each house's sign tells you <em>how</em> that area of life is coloured for you. Any planets in a house bring their energy directly into that domain.
+                  There are 12 houses. Each one covers a different area of your life. The sign on each house describes how that area operates for you. If a planet sits in a house, it brings its energy directly into that part of your life.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                   {chart.houses.map(h => {
@@ -431,7 +431,7 @@ export default function AstrologyPage() {
             {activeTab === 'aspects' && (
               <div>
                 <p style={{ fontSize: '0.875rem', color: '#666', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                  Aspects are the relationships between planets and how their energies interact. A tight aspect with a small orb is more powerful. Trines and sextiles flow easily. Squares and oppositions create tension that, when worked with, becomes tremendous strength.
+                  Aspects are the angles between planets. They describe how those energies relate to each other. Some flow naturally. Some create friction. The friction ones are not bad. They are often where the most growth comes from.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                   {chart.aspects.filter(a => a.nature === 'major').map((a, i) => (
