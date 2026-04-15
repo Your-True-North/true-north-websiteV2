@@ -264,7 +264,7 @@ export default function AstrologyPage() {
             </div>
             <div style={{ marginBottom: '1.25rem' }}>
               <label style={{ display: 'block', fontSize: '0.875rem', color: '#666', marginBottom: '0.4rem' }}>Place of birth</label>
-              <input type="text" placeholder="e.g. London, UK" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} required style={input} />
+              <input type="text" placeholder="e.g. London, UK · Lagos, Nigeria · New York, US · Mumbai, India" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} required style={input} />
             </div>
             {error && (
               <div style={{ padding: '0.875rem', background: 'rgba(192,57,43,0.07)', border: '1px solid rgba(192,57,43,0.2)', borderRadius: '8px', marginBottom: '1rem', color: '#c0392b', fontSize: '0.875rem' }}>

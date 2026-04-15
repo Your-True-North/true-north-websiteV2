@@ -124,6 +124,16 @@ interface OrbitalElements {
 }
 
 const PLANET_ELEMENTS: Record<string, OrbitalElements> = {
+  // Pluto (JPL Keplerian, 1800-2050, ~1° accuracy)
+  pluto: {
+    a: 39.48168677, da: -0.00076912,
+    e: 0.24880766,  de: 0.00006465,
+    I: 17.14175,    dI: 0.00000501,
+    L: 238.92881,   dL: 145.18084,
+    wp: 224.09703,  dwp: -0.00968,
+    Om: 110.30347,  dOm: -0.01175,
+    b: -0.01262724, c: 0, f: 0, s: 0
+  },
   // Chiron (2060): Keplerian elements, J2000 epoch. Perihelion was ~Feb 1996.
   chiron: {
     a: 13.6442, da: 0,
@@ -258,13 +268,10 @@ export function planetPosition(name: string, jd: number): BodyPosition {
   return { lon, lat, distance, speed }
 }
 
-// ─── Pluto (mean motion approximation) ──────────────────────────────────────
+// ─── Pluto (JPL Keplerian elements, same method as other planets) ────────────
 
 export function plutoPosition(jd: number): BodyPosition {
-  const T = julianCenturies(jd)
-  // Pluto mean longitude J2000: ~238.96°, period 247.68 years
-  const L = norm360(238.9508 + (360 / 247.68) * T * 100)
-  return { lon: L, lat: 17.14, speed: 0.004 }
+  return planetPosition('pluto', jd)
 }
 
 // ─── Lunar North Node ────────────────────────────────────────────────────────
