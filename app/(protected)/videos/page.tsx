@@ -40,6 +40,7 @@ export default function LibraryPage() {
   const [loading, setLoading] = useState(true)
   const [continueWatching, setContinueWatching] = useState<Video[]>([])
   const [isMobile, setIsMobile] = useState(false)
+  const [activeSection, setActiveSection] = useState<'teachings' | 'replays'>('teachings')
 
   useEffect(() => {
     const handleResize = () => {
@@ -133,12 +134,20 @@ export default function LibraryPage() {
   }
 
   const categoryLabels: { [key: string]: string } = {
-    all: 'All Videos',
+    all: 'All',
     'Foundation Work': 'Foundation Work',
     'Breathwork Sessions': 'Breathwork',
     'Live Teachings': 'Live Teachings',
     'Integration Practices': 'Integration'
   }
+
+  const REPLAY_CATEGORY = 'Live Replays'
+
+  const teachingsVideos = videos.filter(v => v.category !== REPLAY_CATEGORY)
+  const replayVideos = videos.filter(v => v.category === REPLAY_CATEGORY)
+  const displayVideos = activeSection === 'teachings'
+    ? teachingsVideos.filter(v => selectedCategory === 'all' || v.category === selectedCategory)
+    : replayVideos
 
   if (loading) {
     return (
@@ -282,11 +291,40 @@ export default function LibraryPage() {
             letterSpacing: '-0.02em',
             color: '#000000'
           }}>
-            Live Teachings
+            {activeSection === 'teachings' ? 'Teachings' : 'Live Call Replays'}
           </h1>
-          <p style={{ color: '#1a1a1a', fontSize: '1.125rem', fontWeight: 300 }}>
-            Your path to transformation
+          <p style={{ color: '#666', fontSize: '1rem', fontWeight: 300, marginBottom: '1.5rem' }}>
+            {activeSection === 'teachings'
+              ? 'The sessions, practices, and foundation work. Work through these at your own pace between live calls.'
+              : 'Every live call is recorded and uploaded here. If you missed one, catch up before the next session.'
+            }
           </p>
+
+          {/* Section toggle */}
+          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+            {(['teachings', 'replays'] as const).map(section => (
+              <button
+                key={section}
+                onClick={() => { setActiveSection(section); setSelectedCategory('all') }}
+                style={{
+                  padding: '0.625rem 1.25rem',
+                  background: activeSection === section ? '#1a1a1a' : '#f0f0f0',
+                  border: 'none',
+                  borderRadius: '4px',
+                  color: activeSection === section ? '#fff' : '#666',
+                  fontSize: '0.875rem',
+                  fontWeight: activeSection === section ? 600 : 400,
+                  cursor: 'pointer',
+                  transition: 'all 0.15s'
+                }}
+              >
+                {section === 'teachings' ? 'Teachings' : 'Live Replays'}
+                {section === 'replays' && replayVideos.length > 0 && (
+                  <span style={{ marginLeft: '6px', fontSize: '0.75rem', opacity: 0.8 }}>({replayVideos.length})</span>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Stats */}
@@ -380,44 +418,65 @@ export default function LibraryPage() {
           </select>
         </div>
 
-        {/* Category Tabs */}
-        <div style={{
-          display: 'flex',
-          gap: '0.5rem',
-          marginBottom: '2rem',
-          overflowX: 'auto',
-          paddingBottom: '0.5rem'
-        }}>
-          {Object.entries(categoryLabels).map(([key, label]) => (
-            <button
-              key={key}
-              onClick={() => setSelectedCategory(key)}
-              style={{
-                padding: '0.75rem 1.5rem',
-                background: selectedCategory === key ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#f8f8f8',
-                border: selectedCategory === key ? 'none' : '1px solid #e5e5e5',
-                borderRadius: '3px',
-                color: selectedCategory === key ? '#000' : '#1a1a1a',
-                fontSize: '0.875rem',
-                fontWeight: selectedCategory === key ? 600 : 300,
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-                transition: 'all 0.3s ease'
-              }}
-            >
-              {label} ({categories[key] || 0})
-            </button>
-          ))}
-        </div>
+        {/* Category Tabs — teachings only */}
+        {activeSection === 'teachings' && (
+          <div style={{
+            display: 'flex',
+            gap: '0.5rem',
+            marginBottom: '2rem',
+            overflowX: 'auto',
+            paddingBottom: '0.5rem'
+          }}>
+            {Object.entries(categoryLabels).map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => setSelectedCategory(key)}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  background: selectedCategory === key ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#f8f8f8',
+                  border: selectedCategory === key ? 'none' : '1px solid #e5e5e5',
+                  borderRadius: '3px',
+                  color: selectedCategory === key ? '#000' : '#1a1a1a',
+                  fontSize: '0.875rem',
+                  fontWeight: selectedCategory === key ? 600 : 300,
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Replays catch-up notice */}
+        {activeSection === 'replays' && replayVideos.length > 0 && (
+          <div style={{
+            padding: '1rem 1.25rem',
+            background: 'rgba(155,196,184,0.08)',
+            border: '1px solid rgba(155,196,184,0.25)',
+            borderRadius: '6px',
+            marginBottom: '1.5rem',
+            fontSize: '0.9rem',
+            color: '#444',
+            lineHeight: 1.6
+          }}>
+            Missed a call? Every session is recorded and posted here, usually within 24 hours. Watch it before the next live call so you stay with the group and do not fall behind on the work.
+          </div>
+        )}
 
         {/* Video Grid */}
-        {videos.length === 0 ? (
+        {displayVideos.length === 0 ? (
           <div style={{
             padding: '4rem 2rem',
             textAlign: 'center',
-            color: '#1a1a1a'
+            color: '#999',
+            fontSize: '0.95rem'
           }}>
-            No videos found{searchQuery ? ' for your search' : ''}
+            {activeSection === 'replays'
+              ? 'No replays posted yet. Check back after the next live call.'
+              : `No videos found${searchQuery ? ' for your search' : ''}`}
           </div>
         ) : (
           <div style={{
@@ -425,7 +484,7 @@ export default function LibraryPage() {
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
             gap: '1.5rem'
           }}>
-            {videos.map(video => {
+            {displayVideos.map(video => {
               const youtubeId = getYouTubeId(video.youtube_url)
               const thumbnailUrl = youtubeId
                 ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`
