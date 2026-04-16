@@ -301,26 +301,37 @@ export default function LibraryPage() {
           </p>
 
           {/* Section toggle */}
-          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '0', marginBottom: '0.5rem', border: '1px solid #e0e0e0', borderRadius: '6px', overflow: 'hidden', width: 'fit-content' }}>
             {(['teachings', 'replays'] as const).map(section => (
               <button
                 key={section}
                 onClick={() => { setActiveSection(section); setSelectedCategory('all') }}
                 style={{
-                  padding: '0.625rem 1.25rem',
-                  background: activeSection === section ? '#1a1a1a' : '#f0f0f0',
+                  padding: '0.75rem 1.75rem',
+                  background: activeSection === section
+                    ? section === 'replays' ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#1a1a1a'
+                    : '#fff',
                   border: 'none',
-                  borderRadius: '4px',
-                  color: activeSection === section ? '#fff' : '#666',
-                  fontSize: '0.875rem',
+                  borderRight: section === 'teachings' ? '1px solid #e0e0e0' : 'none',
+                  color: activeSection === section ? '#fff' : '#888',
+                  fontSize: '0.9rem',
                   fontWeight: activeSection === section ? 600 : 400,
                   cursor: 'pointer',
-                  transition: 'all 0.15s'
+                  transition: 'all 0.15s',
+                  letterSpacing: '0.01em'
                 }}
               >
                 {section === 'teachings' ? 'Teachings' : 'Live Replays'}
                 {section === 'replays' && replayVideos.length > 0 && (
-                  <span style={{ marginLeft: '6px', fontSize: '0.75rem', opacity: 0.8 }}>({replayVideos.length})</span>
+                  <span style={{
+                    marginLeft: '8px',
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    background: activeSection === 'replays' ? 'rgba(255,255,255,0.3)' : '#9bc4b8',
+                    color: '#fff',
+                    padding: '1px 6px',
+                    borderRadius: '10px'
+                  }}>{replayVideos.length}</span>
                 )}
               </button>
             ))}
