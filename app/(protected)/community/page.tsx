@@ -154,15 +154,18 @@ export default function CommunityPage() {
     }
   }, [user?.id])
 
-  // Fetch next video
+  // Fetch Start Here video
   useEffect(() => {
     if (!user) return
     const fetchNextVideo = async () => {
       try {
-        const res = await fetch('/api/admin/videos')
+        const res = await fetch('/api/videos?category=all&sort=newest')
         const data = await res.json()
-        if (data.videos && data.videos.length > 0) {
-          setNextVideo(data.videos[0])
+        if (data.videos) {
+          const startHere = data.videos.find((v: any) =>
+            v.title?.toLowerCase().includes('start here')
+          )
+          setNextVideo(startHere || data.videos[0])
         }
       } catch (err) {
         console.error('Failed to fetch videos:', err)
