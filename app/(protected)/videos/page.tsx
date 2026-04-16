@@ -462,7 +462,7 @@ export default function LibraryPage() {
             color: '#444',
             lineHeight: 1.6
           }}>
-            Missed a call? Every session is recorded and posted here, usually within 24 hours. Watch it before the next live call so you stay with the group and do not fall behind on the work.
+            Missed a call? Every session is recorded and posted here, usually within 48 hours. Watch it before the next live call so you stay with the group and do not fall behind on the work.
           </div>
         )}
 
