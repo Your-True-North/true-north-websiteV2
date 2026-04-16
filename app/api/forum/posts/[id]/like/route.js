@@ -16,14 +16,14 @@ export async function POST(request, props) {
 
     // Check if already liked
     const existing = await query(
-      'SELECT * FROM post_likes WHERE post_id = $1 AND "userId" = $2',
+      'SELECT * FROM post_likes WHERE post_id = $1 AND user_id = $2',
       [postId, userId]
     )
 
     if (existing.rows.length > 0) {
       // Unlike
       await query(
-        'DELETE FROM post_likes WHERE post_id = $1 AND "userId" = $2',
+        'DELETE FROM post_likes WHERE post_id = $1 AND user_id = $2',
         [postId, userId]
       )
 
@@ -34,7 +34,7 @@ export async function POST(request, props) {
     } else {
       // Like
       await query(
-        'INSERT INTO post_likes (post_id, "userId") VALUES ($1, $2)',
+        'INSERT INTO post_likes (post_id, user_id) VALUES ($1, $2)',
         [postId, userId]
       )
 
