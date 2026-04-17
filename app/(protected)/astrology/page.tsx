@@ -150,17 +150,103 @@ function getAspectText(body1: string, body2: string, type: string): string {
   return template(cap(p1), p2)
 }
 
+const SIGN_NATURE: Record<string, { desires: string; avoid: string }> = {
+  Aries: {
+    desires: 'speed, challenge, and the freedom to act without waiting for permission. It needs to initiate, compete, and see direct results from its effort.',
+    avoid: 'If this energy is forced into slow, passive, or heavily controlled environments, it becomes aggression, frustration, or burnout. Aries cannot wait indefinitely — it needs to move.',
+  },
+  Taurus: {
+    desires: 'physical comfort, beauty, consistency, and a pace that does not rush. It needs sensory richness — good food, calm spaces, financial stability, things that last.',
+    avoid: 'If this energy is placed in constant chaos, instability, or ugliness, it becomes anxious and depleted. A Taurus placement is not being precious about comfort. It is telling you what it needs to function. Do not put it in conditions that contradict it.',
+  },
+  Gemini: {
+    desires: 'variety, conversation, mental stimulation, and the freedom to move between ideas and people. It needs options, not one fixed path.',
+    avoid: 'If this energy is locked into repetitive, isolated, or intellectually flat environments, it becomes restless, scattered, or checked out. The mind needs to keep moving.',
+  },
+  Cancer: {
+    desires: 'safety, belonging, and a home that feels like a sanctuary. It needs privacy, emotional closeness, and the ability to retreat when the world is too much.',
+    avoid: 'If this energy has no stable home base — emotionally or physically — it becomes defensive, withdrawn, or chronically unsettled. Cancer placements are not soft. They are telling you that safety is not optional.',
+  },
+  Leo: {
+    desires: 'to be seen, appreciated, and given space to create and lead. It needs genuine recognition — not flattery, but real acknowledgement that what it brings matters.',
+    avoid: 'If this energy is consistently ignored, minimised, or kept in the background, it either dims entirely or overcompensates and becomes performative. The need to be witnessed is real. Build a life that allows for it.',
+  },
+  Virgo: {
+    desires: 'order, purpose, and the satisfaction of doing something well. It needs clean systems, meaningful work, and the ability to improve things.',
+    avoid: 'If this energy is placed in chaos, purposelessness, or environments where precision is impossible, it becomes hypercritical and anxious. Give it structure and a problem worth solving.',
+  },
+  Libra: {
+    desires: 'harmony, beauty, and genuine partnership. It needs aesthetically pleasing environments, fairness, and relationships that feel reciprocal.',
+    avoid: 'If this energy lives in ugly, conflict-heavy, or one-sided environments, it cannot function well. Ugliness and injustice are not small things to a Libra placement — they are draining at a fundamental level. If your chart has Libra strongly placed and you are living in a chaotic or aesthetically harsh environment, that is not trivial. It matters.',
+  },
+  Scorpio: {
+    desires: 'depth, truth, and real intimacy. It needs to go beneath the surface in everything — relationships, work, inner life. Shallow living suffocates it.',
+    avoid: 'If this energy is forced into shallow, dishonest, or emotionally closed environments, it becomes suspicious, controlling, or destructive. It needs somewhere to go deep. Give it that.',
+  },
+  Sagittarius: {
+    desires: 'freedom, meaning, and open horizons. It needs to explore — physically, intellectually, philosophically. It cannot be caged for long without consequences.',
+    avoid: 'If this energy is locked into rigid routine, small thinking, or environments with no room to grow or roam, it becomes restless, blunt, or escapist. This is not wanderlust as a personality quirk. It is a genuine requirement. A Sagittarius placement locked in a life with no freedom will always be looking for the exit.',
+  },
+  Capricorn: {
+    desires: 'structure, progress, and the slow building of something that lasts. It needs to feel that its effort is moving toward something real and worth building.',
+    avoid: 'If this energy is placed in chaotic, purposeless, or unstable environments with no clear path forward, it becomes rigid, cold, or workaholic as a way to cope. It needs a goal worth the climb.',
+  },
+  Aquarius: {
+    desires: 'independence, originality, and the freedom to think and operate differently. It needs intellectual stimulation and space to do things its own way.',
+    avoid: 'If this energy is forced into conformity, rigid hierarchies, or environments that punish individuality, it detaches, rebels, or becomes contrarian. It is not being difficult. It is telling you it cannot thrive under those conditions.',
+  },
+  Pisces: {
+    desires: 'quiet, beauty, and spiritual depth. It is sensitive to its environment in ways that are not always obvious — noise, harshness, and ugliness register physically in this energy.',
+    avoid: 'If this energy is chronically overwhelmed by loud, harsh, or chaotic environments, it retreats into fantasy, avoidance, or emotional shutdown. A Pisces placement is not being weak. It is telling you it needs a gentler environment to do its best work.',
+  },
+}
+
+function getPlanetFrame(name: string, sign: string): string {
+  switch (name) {
+    case 'sun':       return `Your Sun is in ${sign}. This is your core identity — the self you are becoming and the energy you naturally lead with.`
+    case 'moon':      return `Your Moon is in ${sign}. This describes what you need to feel emotionally safe and regulated. It is not who you perform as — it is what you require underneath.`
+    case 'mercury':   return `Your Mercury is in ${sign}. This is how your mind works — how you think, communicate, and process information.`
+    case 'venus':     return `Your Venus is in ${sign}. This describes what you need in love, relationships, and your physical environment. What attracts you, and what you need to feel at home.`
+    case 'mars':      return `Your Mars is in ${sign}. This is how you take action, where your drive lives, and what you need to feel energised and purposeful.`
+    case 'jupiter':   return `Your Jupiter is in ${sign}. This is where you expand naturally and where life tends to open up when you lean into it.`
+    case 'saturn':    return `Your Saturn is in ${sign}. This is where life has demanded the most from you — the area of persistent challenge and, eventually, mastery.`
+    case 'uranus':    return `Your Uranus is in ${sign}. This is where you need freedom and where you will disrupt the status quo whether you intend to or not.`
+    case 'neptune':   return `Your Neptune is in ${sign}. This is where you idealise, where you are spiritually open, and where illusion can either inspire or mislead.`
+    case 'pluto':     return `Your Pluto is in ${sign}. This is where deep transformation is at work — the area of life where you are being fundamentally rebuilt over time.`
+    case 'northNode': return `Your North Node is in ${sign}. This is the direction your soul is moving toward in this life — unfamiliar territory that pulls you forward even when it is uncomfortable.`
+    default:          return `This placement is in ${sign}.`
+  }
+}
+
+function planetInterpretation(planet: Planet): string {
+  const nature = SIGN_NATURE[planet.sign]
+  const houseDesc = HOUSE_MEANING[planet.house]
+
+  const frame = getPlanetFrame(planet.name, planet.sign)
+
+  let text = frame
+
+  if (nature) {
+    text += ` ${planet.sign} desires ${nature.desires}`
+    if (houseDesc) {
+      text += ` This sits in your ${houseDesc.toLowerCase()} — so this desire shows up most directly in that area of your life.`
+    }
+    text += ` ${nature.avoid}`
+  } else if (houseDesc) {
+    text += ` It shows up in your ${houseDesc.toLowerCase()}.`
+  }
+
+  if (planet.isRetrograde) {
+    text += ` This placement is retrograde. That means the energy turns inward before it moves outward. You process it more internally than most. That often leads to deeper understanding over time, but the expression of it is slower and more complex.`
+  }
+
+  return text
+}
+
 function formatDeg(deg: number): string {
   const d = Math.floor(deg)
   const m = Math.floor((deg - d) * 60)
   return `${d}°${m.toString().padStart(2, '0')}'`
-}
-
-function planetInterpretation(planet: Planet): string {
-  const quality = SIGN_QUALITY[planet.sign] || ''
-  const retro = planet.isRetrograde ? ' Retrograde, so this energy turns inward rather than outward.' : ''
-  const house = HOUSE_MEANING[planet.house] ? ` In your ${HOUSE_MEANING[planet.house].toLowerCase()} area of life.` : ''
-  return `Expressed through ${planet.sign} energy: ${quality}.${retro}${house}`
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
