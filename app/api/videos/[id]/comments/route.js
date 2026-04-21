@@ -16,13 +16,14 @@ export async function GET(request, { params }) {
         c.id,
         c.content,
         c."createdAt" as created_at,
+        c."parentId" as parent_comment_id,
         u.id as user_id,
         u.name as user_name,
         u.profile_photo
       FROM comments c
-      JOIN users u ON c."userId" = u.id
+      JOIN users u ON c."userId"::text = u.id::text
       WHERE c."videoId" = $1
-      ORDER BY c."createdAt" DESC
+      ORDER BY c."createdAt" ASC
     `, [videoId])
 
     return NextResponse.json({
@@ -54,7 +55,7 @@ export async function POST(request, { params }) {
     }
 
     const videoId = params.id
-    const { content } = await request.json()
+    const { content, parentId } = await request.json()
 
     if (!content || content.trim().length === 0) {
       return NextResponse.json(
@@ -73,10 +74,10 @@ export async function POST(request, { params }) {
     const sanitizedContent = sanitizeInput(content, 5000)
 
     const result = await query(`
-      INSERT INTO comments (id, "videoId", "userId", content, "createdAt", "updatedAt")
-      VALUES (gen_random_uuid(), $1, $2, $3, NOW(), NOW())
-      RETURNING id, content, "createdAt" as created_at
-    `, [videoId, user.userId, sanitizedContent])
+      INSERT INTO comments (id, "videoId", "userId", content, "parentId", "createdAt", "updatedAt")
+      VALUES (gen_random_uuid(), $1, $2, $3, $4, NOW(), NOW())
+      RETURNING id, content, "createdAt" as created_at, "parentId" as parent_comment_id
+    `, [videoId, user.userId, sanitizedContent, parentId || null])
 
     const comment = result.rows[0]
 
@@ -94,7 +95,8 @@ export async function POST(request, { params }) {
         ...comment,
         user_id: user.userId,
         user_name: userInfo.name,
-        profile_photo: userInfo.profile_photo
+        profile_photo: userInfo.profile_photo,
+        parent_comment_id: comment.parent_comment_id || null
       }
     }, { status: 201 })
   } catch (error) {

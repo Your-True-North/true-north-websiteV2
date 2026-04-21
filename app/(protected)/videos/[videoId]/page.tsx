@@ -21,12 +21,14 @@ interface Video {
 }
 
 interface Comment {
-  id: number
+  id: string
   content: string
   created_at: string
   user_id: number
   user_name: string
   profile_photo: string | null
+  parent_comment_id: string | null
+  replies?: Comment[]
 }
 
 interface RelatedVideo {
@@ -50,6 +52,8 @@ export default function VideoPlayerPage() {
   const [submittingComment, setSubmittingComment] = useState(false)
   const [markingComplete, setMarkingComplete] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [replyingToId, setReplyingToId] = useState<string | null>(null)
+  const [replyContent, setReplyContent] = useState('')
 
   useEffect(() => {
     const handleResize = () => {
@@ -237,6 +241,46 @@ export default function VideoPlayerPage() {
     } catch (error) {
       console.error('[Submit Comment] Error:', error)
       alert('Failed to post comment')
+    } finally {
+      setSubmittingComment(false)
+    }
+  }
+
+  const buildCommentTree = (flat: Comment[]): Comment[] => {
+    const map = new Map<string, Comment>()
+    const roots: Comment[] = []
+    flat.forEach(c => map.set(c.id, { ...c, replies: [] }))
+    flat.forEach(c => {
+      const node = map.get(c.id)!
+      if (c.parent_comment_id && map.has(c.parent_comment_id)) {
+        map.get(c.parent_comment_id)!.replies!.push(node)
+      } else {
+        roots.push(node)
+      }
+    })
+    return roots
+  }
+
+  const handleSubmitReply = async (parentId: string) => {
+    if (!replyContent.trim()) return
+    setSubmittingComment(true)
+    try {
+      const res = await fetch(`/api/videos/${videoId}/comments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: replyContent, parentId })
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setComments(prev => [...prev, data.comment])
+        setReplyContent('')
+        setReplyingToId(null)
+        if (video) setVideo({ ...video, commentsCount: video.commentsCount + 1 })
+      } else {
+        alert(data.error || 'Failed to post reply')
+      }
+    } catch {
+      alert('Failed to post reply')
     } finally {
       setSubmittingComment(false)
     }
@@ -534,70 +578,71 @@ export default function VideoPlayerPage() {
               </form>
 
               {/* Comments List */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {comments.length === 0 ? (
-                  <div style={{
-                    padding: '2rem',
-                    textAlign: 'center',
-                    color: '#999'
-                  }}>
+                  <div style={{ padding: '2rem', textAlign: 'center', color: '#999' }}>
                     No comments yet. Be the first to share your thoughts!
                   </div>
-                ) : (
-                  comments.map(comment => (
-                    <div key={comment.id} style={{
-                      display: 'flex',
-                      gap: '1rem',
-                      paddingBottom: '1.5rem',
-                      borderBottom: '1px solid #f0f0f0'
-                    }}>
-                      {/* Avatar */}
+                ) : (() => {
+                  const renderComment = (comment: Comment, depth: number): React.ReactNode => (
+                    <div key={comment.id} style={{ marginLeft: depth > 0 ? '2rem' : '0' }}>
                       <div style={{
-                        width: '40px',
-                        height: '40px',
-                        borderRadius: '50%',
-                        background: comment.profile_photo ? `url(${comment.profile_photo})` : 'linear-gradient(135deg, rgba(155, 196, 184, 0.3), rgba(127, 176, 105, 0.2))',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        flexShrink: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                        background: depth > 0 ? '#e8e6e1' : '#eceae5',
+                        border: '1px solid ' + (depth > 0 ? '#d8d6d1' : '#dddbd6'),
+                        borderLeft: depth > 0 ? '3px solid #9bc4b8' : '3px solid #d0cec9',
+                        borderRadius: '8px',
+                        padding: '0.875rem 1rem',
+                        marginBottom: '0.5rem'
                       }}>
-                        {!comment.profile_photo && (
-                          <svg style={{ width: '20px', height: '20px', color: '#999' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '0.375rem' }}>
+                          <div style={{
+                            width: '28px', height: '28px', borderRadius: '50%', flexShrink: 0,
+                            background: comment.profile_photo ? `url(${comment.profile_photo}) center/cover` : 'linear-gradient(135deg, rgba(155,196,184,0.5), rgba(127,176,105,0.3))',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center'
+                          }}>
+                            {!comment.profile_photo && <svg style={{ width: '14px', height: '14px', color: '#999' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>}
+                          </div>
+                          <span style={{ fontWeight: 600, fontSize: '0.875rem', color: '#1a1a1a' }}>{comment.user_name}</span>
+                          <span style={{ fontSize: '0.75rem', color: '#aaa' }}>{new Date(comment.created_at).toLocaleDateString()}</span>
+                        </div>
+                        <p style={{ color: '#333', lineHeight: 1.6, fontSize: '0.9375rem', margin: '0 0 0.5rem 0' }}>{comment.content}</p>
+                        {depth < 3 && (
+                          <button
+                            onClick={() => setReplyingToId(replyingToId === comment.id ? null : comment.id)}
+                            style={{ background: 'none', border: 'none', color: replyingToId === comment.id ? '#9bc4b8' : '#aaa', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', padding: 0, letterSpacing: '0.04em', textTransform: 'uppercase' as const }}
+                          >
+                            {replyingToId === comment.id ? 'Cancel' : 'Reply'}
+                          </button>
                         )}
                       </div>
-
-                      {/* Comment Content */}
-                      <div style={{ flex: 1 }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.75rem',
-                          marginBottom: '0.5rem'
-                        }}>
-                          <span style={{ fontWeight: 500 }}>{comment.user_name}</span>
-                          <span style={{
-                            fontSize: '0.875rem',
-                            color: '#999'
-                          }}>
-                            {new Date(comment.created_at).toLocaleDateString()}
-                          </span>
+                      {replyingToId === comment.id && (
+                        <div style={{ marginLeft: depth > 0 ? '0' : '2rem', marginBottom: '0.75rem' }}>
+                          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-end' }}>
+                            <textarea
+                              value={replyContent}
+                              onChange={(e) => setReplyContent(e.target.value)}
+                              placeholder="Write a reply..."
+                              autoFocus
+                              rows={2}
+                              style={{ flex: 1, padding: '0.625rem 0.75rem', background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '6px', color: '#1a1a1a', fontSize: '0.875rem', outline: 'none', resize: 'none', fontFamily: 'inherit' }}
+                            />
+                            <button
+                              onClick={() => handleSubmitReply(comment.id)}
+                              disabled={submittingComment || !replyContent.trim()}
+                              style={{ padding: '0.625rem 1rem', background: submittingComment || !replyContent.trim() ? '#ddd' : 'linear-gradient(135deg, #9bc4b8, #7fb069)', border: 'none', borderRadius: '6px', color: '#000', fontSize: '0.8125rem', fontWeight: 600, cursor: submittingComment || !replyContent.trim() ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap' }}
+                            >
+                              {submittingComment ? '...' : 'Post'}
+                            </button>
+                          </div>
                         </div>
-                        <p style={{
-                          color: '#333',
-                          lineHeight: 1.6,
-                          fontSize: '0.9375rem'
-                        }}>
-                          {comment.content}
-                        </p>
-                      </div>
+                      )}
+                      {comment.replies && comment.replies.length > 0 && (
+                        <div>{comment.replies.map(r => renderComment(r, depth + 1))}</div>
+                      )}
                     </div>
-                  ))
-                )}
+                  )
+                  return buildCommentTree(comments).map(c => renderComment(c, 0))
+                })()}
               </div>
             </div>
           </div>
