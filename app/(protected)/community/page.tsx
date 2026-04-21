@@ -689,10 +689,10 @@ export default function CommunityPage() {
                               <div key={r.id} style={{ marginLeft: depth > 0 ? '1.5rem' : '0', marginBottom: '0.5rem' }}>
                                 <div style={{
                                   padding: '0.75rem',
-                                  background: depth > 0 ? '#f2f2f0' : '#ffffff',
+                                  background: depth > 0 ? '#e2e0db' : '#eceae5',
                                   borderRadius: '8px',
-                                  border: '1px solid ' + (depth > 0 ? '#ebebeb' : '#e8e8e8'),
-                                  borderLeft: depth > 0 ? `3px solid ${ACCENT}` : '1px solid #e8e8e8'
+                                  border: '1px solid ' + (depth > 0 ? '#d8d6d1' : '#dddbd6'),
+                                  borderLeft: depth > 0 ? `3px solid ${ACCENT}` : `3px solid #d0cec9`
                                 }}>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.375rem' }}>
                                     <Avatar name={r.user_name} photo={r.user_photo} size={26} />
