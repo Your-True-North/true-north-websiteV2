@@ -22,6 +22,7 @@ interface Post {
   user_photo: string | null
   reply_count: number
   like_count: number
+  replies?: Reply[]
 }
 
 interface Reply {
@@ -47,6 +48,7 @@ interface Video {
 
 const categories = [
   'Introductions',
+  'Reflections',
   'Wins & Breakthroughs',
   'Questions & Support',
   'Integration Practices'
@@ -670,16 +672,19 @@ export default function CommunityPage() {
                     </div>
                   </div>
 
-                  {/* Inline Comments */}
-                  {expandedPostId === post.id && (
+                  {/* Inline Comments — always visible */}
+                  {((post.replies && post.replies.length > 0) || expandedPostId === post.id) && (
                     <div style={{ borderTop: '1px solid #f2f2f2', background: '#fafaf8', padding: '1rem 1.25rem' }}>
-                      {loadingReplies ? (
+                      {loadingReplies && expandedPostId === post.id ? (
                         <p style={{ color: '#bbb', fontSize: '0.875rem', margin: 0 }}>Loading comments...</p>
-                      ) : replies.length === 0 ? (
-                        <p style={{ color: '#bbb', fontSize: '0.875rem', margin: '0 0 0.75rem 0' }}>No comments yet. Be the first.</p>
                       ) : (
+                        (() => {
+                          const allInlineReplies = post.replies || []
+                          const displayReplies = expandedPostId === post.id ? replies : allInlineReplies.slice(0, 3)
+                          const hasMoreReplies = expandedPostId !== post.id && allInlineReplies.length > 3
+                          return displayReplies.length === 0 ? null : (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem' }}>
-                          {buildReplyTree(replies).map((reply) => {
+                          {buildReplyTree(displayReplies).map((reply) => {
                             const renderReply = (r: Reply, depth: number) => (
                               <div key={r.id} style={{ marginLeft: depth > 0 ? '1.5rem' : '0', marginBottom: '0.5rem' }}>
                                 <div style={{
@@ -709,11 +714,18 @@ export default function CommunityPage() {
                             )
                             return renderReply(reply, 0)
                           })}
+                          {hasMoreReplies && (
+                            <button onClick={() => handleToggleComments(post)} style={{ background: 'none', border: 'none', color: '#888', fontSize: '0.8125rem', cursor: 'pointer', padding: '0.125rem 0', fontFamily: BODY_FONT, textAlign: 'left' as const }}>
+                              See all {post.reply_count} comments →
+                            </button>
+                          )}
                         </div>
+                        )
+                        })()
                       )}
 
-                      {/* Reply form */}
-                      <form onSubmit={handleReply}>
+                      {/* Reply form — only show when post is expanded */}
+                      {expandedPostId === post.id && <form onSubmit={handleReply}>
                         {replyingToId && (
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.375rem 0.625rem', background: 'rgba(155,196,184,0.1)', borderRadius: '4px', marginBottom: '0.5rem', fontSize: '0.75rem', color: ACCENT }}>
                             <span>Replying to {replies.find(r => r.id === replyingToId)?.user_name || 'comment'}</span>
@@ -739,7 +751,8 @@ export default function CommunityPage() {
                             {submittingReply ? '...' : 'Post'}
                           </button>
                         </div>
-                      </form>
+                      </form>}
+
                     </div>
                   )}
                 </div>

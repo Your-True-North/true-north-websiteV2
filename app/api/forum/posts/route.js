@@ -61,7 +61,42 @@ export async function GET(request) {
       like_count: parseInt(post.like_count) || 0
     }))
 
-    return NextResponse.json({ posts }, { status: 200 })
+    // Fetch all replies for all posts in one query
+    const postIds = posts.map(p => p.id)
+    let repliesByPost = {}
+    if (postIds.length > 0) {
+      try {
+        const repliesResult = await query(
+          `SELECT pr.id, pr.post_id, pr."userId", pr.content, pr.created_at, pr.parent_reply_id,
+                  u.name as user_name, u.profile_photo as user_photo
+           FROM post_replies pr
+           LEFT JOIN users u ON pr."userId" = u.id
+           WHERE pr.post_id = ANY($1::int[])
+           ORDER BY pr.created_at ASC`,
+          [postIds]
+        )
+        repliesResult.rows.forEach(r => {
+          if (!repliesByPost[r.post_id]) repliesByPost[r.post_id] = []
+          repliesByPost[r.post_id].push({
+            id: r.id,
+            content: r.content,
+            created_at: r.created_at,
+            parent_reply_id: r.parent_reply_id || null,
+            user_name: r.user_name || 'Member',
+            user_photo: r.user_photo || null,
+          })
+        })
+      } catch (e) {
+        console.warn('[Forum Posts] Could not fetch replies:', e.message)
+      }
+    }
+
+    const postsWithReplies = posts.map(p => ({
+      ...p,
+      replies: repliesByPost[p.id] || []
+    }))
+
+    return NextResponse.json({ posts: postsWithReplies }, { status: 200 })
   } catch (error) {
     console.error('[Forum Posts GET] Error:', error)
     return NextResponse.json({
