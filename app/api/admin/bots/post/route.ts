@@ -12,11 +12,11 @@ const BOTS = [
 const BOT_POSTS = [
   { category: 'Reflections', title: 'Something from this week', content: 'Had a moment this week that connected back to what came up in session three. Did not expect it to surface in a conversation at work but there it was. The pattern showing up somewhere I was not looking for it.' },
   { category: 'Reflections', title: 'The breathwork', content: 'Did the breathwork session again on my own this time. Different without the group but still something moved. I think I have been avoiding sitting with my breath for a long time without knowing that is what I was doing.' },
-  { category: 'Reflections', title: 'A week in', content: 'Been doing this for a few weeks now and something has changed in how I respond at home. My partner noticed before I did. She asked what was different. I didn't have a clean answer but it's something.' },
-  { category: 'Questions & Support', title: 'Resistance', content: 'Has anyone else hit a wall where they know what the work is asking of them but they just don't want to do it? Not avoidance exactly. More like a part of me knows the next thing and is refusing. Wondering if that is part of the process or something I need to push through.' },
+  { category: 'Reflections', title: 'A week in', content: "Been doing this for a few weeks now and something has changed in how I respond at home. My partner noticed before I did. She asked what was different. I didn't have a clean answer but it's something." },
+  { category: 'Questions & Support', title: 'Resistance', content: "Has anyone else hit a wall where they know what the work is asking of them but they just don't want to do it? Not avoidance exactly. More like a part of me knows the next thing and is refusing. Wondering if that is part of the process or something I need to push through." },
   { category: 'Questions & Support', title: 'Integrating between sessions', content: 'What does the integration work actually look like for you in practice? I do the replay, I sit with it, but then the week runs away and I feel like I lose the thread. Curious what others are doing to keep it alive between calls.' },
   { category: 'Reflections', title: 'On the Chiron work', content: 'Went back to the astrology section and read the Chiron description again. The first time I was not ready to take it seriously. Second read was different. There is something in there about my relationship with my father that I have been sitting with since.' },
-  { category: 'Reflections', title: 'The Hero Journey replay', content: 'Finally watched the full session. Three times I had to stop and come back to it. The part about the ordinary world and why we resist leaving it. I have been living in the ordinary world by choice, thinking it was safety. It's not.' },
+  { category: 'Reflections', title: 'The Hero Journey replay', content: "Finally watched the full session. Three times I had to stop and come back to it. The part about the ordinary world and why we resist leaving it. I have been living in the ordinary world by choice, thinking it was safety. It's not." },
 ]
 
 // Pool of realistic bot replies
@@ -26,9 +26,9 @@ const BOT_REPLIES = [
   'Appreciate you sharing that. It takes something to put this stuff into words.',
   'This is the work. The fact you are noticing is already different to before.',
   'I had a similar moment last week. It came out of nowhere and I was not ready for it.',
-  'Good question. I have been wondering the same thing. Haven't got there yet.',
+  "Good question. I have been wondering the same thing. Haven't got there yet.",
   'Watching the replay helped me with this. There is a section in session two that speaks directly to what you are describing.',
-  'That is honest. I think a lot of men in here feel this but don't say it. Good that you did.',
+  "That is honest. I think a lot of men in here feel this but don't say it. Good that you did.",
   'The body work was the thing I resisted the most and the thing that moved me the most. Strange how that works.',
   'Sitting with this one. Thank you for posting it.',
 ]
