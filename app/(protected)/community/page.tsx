@@ -89,6 +89,9 @@ export default function CommunityPage() {
   // Nested reply state
   const [replyingToId, setReplyingToId] = useState<number | null>(null)
 
+  // Announcement popup
+  const [announcement, setAnnouncement] = useState<{ id: number; title: string; body: string; url: string } | null>(null)
+
   // Video state
   const [nextVideo, setNextVideo] = useState<Video | null>(null)
   const [showVideoPlayer, setShowVideoPlayer] = useState(false)
@@ -129,6 +132,20 @@ export default function CommunityPage() {
       fetchPosts()
     }
   }, [user, fetchPosts])
+
+  // Announcement popup
+  useEffect(() => {
+    fetch('/api/announcements/latest')
+      .then(res => res.json())
+      .then(data => {
+        if (!data.announcement) return
+        const dismissed = localStorage.getItem('dismissed_announcement')
+        if (dismissed !== String(data.announcement.id)) {
+          setAnnouncement(data.announcement)
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   // Responsive check
   useEffect(() => {
@@ -392,6 +409,24 @@ export default function CommunityPage() {
         textarea { font-family: inherit; }
         select { font-family: inherit; }
       `}</style>
+
+      {/* Announcement popup */}
+      {announcement && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
+          <div style={{ background: '#fff', borderRadius: '12px', maxWidth: '480px', width: '100%', padding: '2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.2)', position: 'relative' }}>
+            <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', fontSize: '1.25rem', color: '#aaa', cursor: 'pointer', lineHeight: 1 }}>×</button>
+            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9bc4b8', marginBottom: '12px' }}>From Mason</div>
+            <h2 style={{ fontSize: '20px', fontWeight: 500, color: '#1a1a1a', marginBottom: '12px', lineHeight: 1.4 }}>{announcement.title}</h2>
+            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#444', marginBottom: '1.5rem' }}>{announcement.body}</p>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              {announcement.url && announcement.url !== '/members' && (
+                <a href={announcement.url} onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, display: 'block', textAlign: 'center' as const, padding: '12px', background: '#9bc4b8', color: '#0a0a0a', borderRadius: '6px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}>View Now</a>
+              )}
+              <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, padding: '12px', background: '#f5f5f5', border: 'none', borderRadius: '6px', color: '#666', fontSize: '14px', cursor: 'pointer', fontFamily: BODY_FONT }}>Got it</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div style={{
         maxWidth: '1160px', margin: '0 auto',
