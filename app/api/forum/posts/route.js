@@ -15,7 +15,7 @@ export async function GET(request) {
         COUNT(DISTINCT pr.id) as reply_count,
         COUNT(DISTINCT pl.id) as like_count
       FROM community_posts cp
-      LEFT JOIN users u ON cp."userId" = u.id
+      LEFT JOIN users u ON cp."userId"::text = u.id::text
       LEFT JOIN post_replies pr ON cp.id = pr.post_id
       LEFT JOIN post_likes pl ON cp.id = pl.post_id
     `
@@ -70,7 +70,7 @@ export async function GET(request) {
           `SELECT pr.id, pr.post_id, pr."userId", pr.content, pr.created_at, pr.parent_reply_id,
                   u.name as user_name, u.profile_photo as user_photo
            FROM post_replies pr
-           LEFT JOIN users u ON pr."userId" = u.id
+           LEFT JOIN users u ON pr."userId"::text = u.id::text
            WHERE pr.post_id = ANY($1::int[])
            ORDER BY pr.created_at ASC`,
           [postIds]
