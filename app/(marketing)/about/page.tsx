@@ -104,7 +104,7 @@ export default function About() {
                 color: '#ffffff',
                 lineHeight: '1.2'
               }}>
-                I'm not your guru. I'm not your therapist. I'm a guide who's lived it.
+                Not a guru, not a therapist - a guide who's actually lived it.
               </h1>
 
               <Link href="/work" className="btn-primary" style={{
