@@ -63,6 +63,8 @@ export default function RootLayout({
       <body>
         <GoogleAnalytics />
         {children}
+        <script src="//widget.manychat.com/4464506_d1c15.js" defer></script>
+        <script src="https://mccdn.me/assets/js/widget.js" defer></script>
         <script dangerouslySetInnerHTML={{__html: `
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
