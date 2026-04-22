@@ -104,7 +104,7 @@ export default function About() {
                 color: '#ffffff',
                 lineHeight: '1.2'
               }}>
-                Not a life coach, not a therapist - a guide shaped by the same fire you're standing in.
+                Not just a life coach, therapist or practitioner - a guide shaped by the same fire you're standing in.
               </h1>
 
               <Link href="/work" className="btn-primary" style={{
