@@ -104,7 +104,7 @@ export default function About() {
                 color: '#ffffff',
                 lineHeight: '1.2'
               }}>
-                Hi, I'm True North
+                I'm not your guru. I'm not your therapist. I'm a guide who's lived it.
               </h1>
 
               <Link href="/work" className="btn-primary" style={{
@@ -124,6 +124,9 @@ export default function About() {
             <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
               <div style={{ maxWidth: '900px', margin: '0 auto', marginBottom: '4rem' }}>
                 <div className="body-large" style={{ lineHeight: '1.8', fontSize: '1.1rem' }}>
+                  <p style={{ marginBottom: '2rem', fontSize: '1.4rem', fontWeight: 600 }}>
+                    Hi, I'm True North.
+                  </p>
                   <p style={{ marginBottom: '2rem' }}>
                     I don't believe anyone makes it through life unscathed. Feeling the full range of emotions is our gift, it's the whole purpose for being here. Being able to recognise and navigate those emotions so you avoid causing too much damage, to yourself and to others, that's where the work begins.
                   </p>
