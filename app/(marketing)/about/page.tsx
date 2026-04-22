@@ -104,7 +104,7 @@ export default function About() {
                 color: '#ffffff',
                 lineHeight: '1.2'
               }}>
-                I'm not your guru. I'm not your therapist. I'm a guide who's lived it.
+                Hi, I'm True North
               </h1>
 
               <Link href="/work" className="btn-primary" style={{
@@ -125,13 +125,22 @@ export default function About() {
               <div style={{ maxWidth: '900px', margin: '0 auto', marginBottom: '4rem' }}>
                 <div className="body-large" style={{ lineHeight: '1.8', fontSize: '1.1rem' }}>
                   <p style={{ marginBottom: '2rem' }}>
-                    My name is Mason. I go by True North.
+                    I don't believe anyone makes it through life unscathed. Feeling the full range of emotions is our gift, it's the whole purpose for being here. Being able to recognise and navigate those emotions so you avoid causing too much damage, to yourself and to others, that's where the work begins.
                   </p>
                   <p style={{ marginBottom: '2rem' }}>
-                    <strong style={{ color: currentTheme.accent }}>Addiction. Depression. Prison. Violence.</strong> That was my life for years. Stuck in a cycle of pain, numbing what I didn't know how to face.
+                    I have survived a hundred percent of the shit I've been through so far. Addiction, depression and nearly everything in between, I have had my fair share. People ask would I change things, and honestly there are a few changes I would make, but I do not regret the experiences I went through because they gave me everything I needed to do this work.
                   </p>
                   <p style={{ marginBottom: '2rem' }}>
-                    I broke free. Built businesses. Became a professional athlete. On paper, I'd made it. But I still felt disconnected. Still lost. Still carrying weight I couldn't name.
+                    I broke free. Built businesses. Became a professional athlete. On paper I thought I'd made it, but I still felt disconnected, still lost, still carrying around something I couldn't name. I thought the external stuff would fix it.
+                  </p>
+                  <p style={{ marginBottom: '2rem' }}>
+                    So I stopped looking outward and started going inward, because it became evident that no amount of external change was making a difference to how I internally felt. I'd done all the cliché things, ticked all the boxes, and still felt the same weight.
+                  </p>
+                  <p style={{ marginBottom: '2rem' }}>
+                    When I started to come out the other side I was told that my path was to pay it forward, to guide others going through their own blocked or difficult season. I was reluctant, but everything kept calling me to it.
+                  </p>
+                  <p style={{ marginBottom: '2rem' }}>
+                    So I spent more than a decade training with some of the best in the world. Breathwork, nervous system work, men's work, emotional mastery, somatic therapy, energy work. I did all of it on myself first, not to escape myself but to feel myself and meet myself.
                   </p>
                   <p style={{
                     fontSize: '1.2rem',
@@ -141,7 +150,7 @@ export default function About() {
                     padding: '2rem 0',
                     fontStyle: 'italic'
                   }}>
-                    So I stopped looking outward and started doing the real work.
+                    And that is the work I do with others.
                   </p>
                 </div>
               </div>
@@ -153,26 +162,17 @@ export default function About() {
         <section className="section">
           <div className="container">
             <div style={{ maxWidth: '900px', margin: '0 auto', marginBottom: '4rem' }}>
-              <p className="body-large" style={{ marginBottom: '3rem', lineHeight: '1.8' }}>
-                Over the last decade, I've trained across the world with spiritual teachers, somatic experts, and coaches who showed me everything I'd been avoiding.
-              </p>
-
-              <p className="body-large" style={{ marginBottom: '3rem', lineHeight: '1.8' }}>
-                Breathwork. Nervous system healing. Men's work. Emotional mastery. Deep self-inquiry. Somatic therapy. Energy work.
-              </p>
-
-              <p className="body-large" style={{ marginBottom: '3rem', lineHeight: '1.8' }}>
-                Not to escape myself. To meet myself.
-              </p>
-
               <p style={{
                 fontSize: '1.5rem',
                 fontFamily: 'Gambarino, serif',
                 textAlign: 'center',
                 color: currentTheme.primary,
-                marginBottom: '2rem'
+                marginBottom: '1.5rem'
               }}>
-                What I found was peace. Power. Purpose.
+                What I found was peace, I found power and I found purpose.
+              </p>
+              <p className="body-large" style={{ textAlign: 'center', marginBottom: '3rem', lineHeight: '1.8' }}>
+                Now I help others find the same.
               </p>
             </div>
           </div>
@@ -181,29 +181,20 @@ export default function About() {
         {/* BRIDGE SECTION */}
         <section className="section section-alt">
           <div className="container">
-            <h2 className="h2" style={{
-              textAlign: 'center',
-              marginBottom: '3rem',
-              fontSize: isMobile ? '2rem' : '2.5rem',
-              fontWeight: 'bold'
-            }}>
-              Now I help others find the same.
-            </h2>
-
             <div style={{ maxWidth: '900px', margin: '0 auto', marginBottom: '3rem' }}>
               <p className="body-large" style={{
                 textAlign: 'center',
                 marginBottom: '3rem',
                 lineHeight: '1.8'
               }}>
-                No hype. No surface-level talk. Real tools that work in the body, the mind, and in life.
+                No hype. No surface level talk. Real tools that work in the body, the mind and in life.
               </p>
 
               <div className="body-large" style={{ lineHeight: '1.8', marginBottom: '3rem', textAlign: 'center' }}>
-                <p style={{ marginBottom: '0.75rem' }}>If you're stuck in anger, shame, anxiety, or burnout.</p>
-                <p style={{ marginBottom: '0.75rem' }}>If you've lost motivation and can't find your edge.</p>
-                <p style={{ marginBottom: '0.75rem' }}>If you've lost yourself in the noise.</p>
-                <p style={{ marginBottom: '0.75rem' }}>If you know you're built for more but can't access it.</p>
+                <p style={{ marginBottom: '0.75rem' }}>If you're stuck in anger, shame, anxiety or burnout,</p>
+                <p style={{ marginBottom: '0.75rem' }}>if you've lost motivation and can't find your edge,</p>
+                <p style={{ marginBottom: '0.75rem' }}>if you've lost yourself in the noise,</p>
+                <p style={{ marginBottom: '0.75rem' }}>if you know you're built for more but can't access it</p>
               </div>
 
               <p className="body-large" style={{
@@ -237,13 +228,13 @@ export default function About() {
 
               <div className="body" style={{ lineHeight: '1.8', fontSize: '1.1rem', marginBottom: '3rem' }}>
                 <p style={{ marginBottom: '2rem' }}>
-                  I'm a certified coach and member of the <strong style={{ color: currentTheme.accent }}>ICF</strong>, <strong style={{ color: currentTheme.accent }}>EMCC</strong>, and <strong style={{ color: currentTheme.accent }}>Association for Coaching</strong> — three of the most respected bodies in the coaching world.
+                  I'm a certified coach and member of the <strong style={{ color: currentTheme.accent }}>ICF</strong>, <strong style={{ color: currentTheme.accent }}>EMCC</strong> and <strong style={{ color: currentTheme.accent }}>Association for Coaching</strong>, three of the most respected bodies in the coaching world.
                 </p>
                 <p style={{ marginBottom: '2rem' }}>
-                  I'm a certified breathwork practitioner, trained by <strong style={{ color: currentTheme.accent }}>BreathOnIt</strong> (Los Angeles), and recognised by the <strong style={{ color: currentTheme.accent }}>International Breathwork Foundation</strong>.
+                  I'm a certified breathwork practitioner, trained by <strong style={{ color: currentTheme.accent }}>BreathOnIt</strong> in Los Angeles and recognised by the <strong style={{ color: currentTheme.accent }}>International Breathwork Foundation</strong>.
                 </p>
                 <p style={{ marginBottom: '2rem' }}>
-                  I hold formal certification in trauma-informed somatic therapy, trained under some of the world's leading voices in the field, including <strong style={{ color: currentTheme.accent }}>Dr. Gabor Maté</strong>.
+                  I hold formal certification in trauma informed somatic therapy, trained under some of the world's leading voices in the field including <strong style={{ color: currentTheme.accent }}>Dr Gabor Maté</strong>.
                 </p>
                 <p style={{ marginBottom: '3rem' }}>
                   I've completed <strong style={{ color: currentTheme.accent }}>Reiki Master training</strong> at the <strong style={{ color: currentTheme.accent }}>London Reiki Science Academy</strong>, grounding my energy work in structure and precision.
@@ -278,18 +269,18 @@ export default function About() {
                 fontWeight: '600',
                 fontSize: '1.2rem'
               }}>
-                My work is shaped by real life. Not textbooks.
+                My work is shaped by real life, not textbooks.
               </p>
 
               <div className="body" style={{ lineHeight: '1.8', fontSize: '1.1rem' }}>
                 <p style={{ marginBottom: '2rem' }}>
-                  I've lived through addiction, trauma, heartbreak, and financial collapse. These experiences taught me what no training ever could. How to meet people where they are. With depth. With truth.
+                  I've lived through addiction, trauma, heartbreak and financial collapse. These experiences taught me what no training ever could, how to meet people where they are, with depth, with truth.
                 </p>
                 <p style={{ marginBottom: '2rem' }}>
-                  I spent over seven years running one of London's early corporate wellness companies, delivering coaching and mental health support inside global tech firms, pharmaceutical companies, and construction leaders. I've seen both sides of the system. The pressure on employees. The blind spots in leadership.
+                  I spent over seven years running one of London's early corporate wellness companies, delivering coaching and mental health support inside global tech firms, pharmaceutical companies and construction leaders. I've seen both sides of the system, the pressure on employees, the blind spots in leadership.
                 </p>
                 <p style={{ marginBottom: '2rem' }}>
-                  In my private practice, I work with high performers across industries who've hit external success but still feel empty. Over time, I've learnt how to cut through the noise and get to the root of what's missing. Fast.
+                  In my private practice I work with high performers across industries who've hit external success but still feel empty. Over time I've learnt how to cut through the noise and get to the root of what's missing, fast.
                 </p>
                 <p style={{
                   fontSize: '1.2rem',
@@ -298,7 +289,7 @@ export default function About() {
                   textAlign: 'center',
                   padding: '2rem 0'
                 }}>
-                  Clients leave with clarity, direction, and a deeper connection to who they actually are.
+                  Clients leave with clarity, direction and a deeper connection to who they actually are.
                 </p>
               </div>
             </div>
@@ -335,24 +326,10 @@ export default function About() {
                 <p className="body" style={{ fontSize: '1.1rem', fontWeight: '500', color: currentTheme.primary }}>
                   Transformation doesn't happen in your head. It happens in your body.
                 </p>
+                <p style={{ fontSize: '0.8rem', color: currentTheme.primary, opacity: 0.7, marginTop: '0.75rem', fontStyle: 'italic' }}>
+                  Audio practice library - coming soon
+                </p>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FINAL CTA SECTION */}
-        <section className="section section-alt">
-          <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <h2 className="h2" style={{ marginBottom: '2rem' }}>
-                This isn't for everyone. If it's for you, you'll know.
-              </h2>
-              <p className="body-large" style={{ marginBottom: '3rem', lineHeight: '1.8' }}>
-                Let's clear what's been holding you back and help you step into who you actually are. Grounded. Clear. Powerful.
-              </p>
-              <Link href="/work" className="btn-primary" style={{ fontSize: '1.1rem', padding: '1rem 2rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                Work With Me <span>→</span>
-              </Link>
             </div>
           </div>
         </section>

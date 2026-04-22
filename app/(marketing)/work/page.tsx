@@ -1304,7 +1304,7 @@ export default function Work() {
                   color: 'rgba(255, 255, 255, 0.85)',
                   marginBottom: '0.5rem'
                 }}>
-                  Small, intensive men's group container — 3 months
+                  Small, intensive men's group container - 3 months
                 </p>
                 <p style={{
                   fontSize: '1.1rem',

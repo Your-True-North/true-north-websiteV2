@@ -227,7 +227,7 @@ export default function Home() {
                   }}>
                     "You already have the answers. You just lost access to them. This work clears the way back."
                   </p>
-                  <footer className="body-small" style={{fontWeight: 'bold'}}>— Core Principle</footer>
+                  <footer className="body-small" style={{fontWeight: 'bold'}}>- Core Principle</footer>
                 </blockquote>
               </div>
             </div>

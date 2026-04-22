@@ -211,7 +211,7 @@ export default function CompoundGrowthModel() {
   return (
     <div style={{ marginBottom: '4rem' }}>
       <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, marginBottom: '28px', maxWidth: '560px' }}>
-        Most men arrive here through one door — money, relationships, health, anger, or a loss of purpose. The work is the same regardless. Select what brought you here and follow it through.
+        Most men arrive here through one door - money, relationships, health, anger, or a loss of purpose. The work is the same regardless. Select what brought you here and follow it through.
       </p>
 
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '2.5rem' }}>

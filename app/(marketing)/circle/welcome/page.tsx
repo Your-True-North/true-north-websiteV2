@@ -185,7 +185,7 @@ export default function CircleWelcome() {
                 fontStyle: 'italic',
                 transition: 'color 2s ease'
               }}>
-                Something deeper called you here — and you answered.
+                Something deeper called you here - and you answered.
               </p>
             </div>
           </div>
@@ -219,11 +219,11 @@ export default function CircleWelcome() {
               {[
                 {
                   title: 'Within minutes',
-                  desc: "Your email will arrive. Inside, you&apos;ll find your member login and the gateway to The Circle. Check everywhere — inbox, promotions, spam. It&apos;s there, waiting."
+                  desc: "Your email will arrive. Inside, you&apos;ll find your member login and the gateway to The Circle. Check everywhere - inbox, promotions, spam. It&apos;s there, waiting."
                 },
                 {
                   title: 'Your first step',
-                  desc: "Enter the private portal. Inside, you&apos;ll discover the Foundation Module — your guided introduction to the work. No rush. No pressure. Just presence."
+                  desc: "Enter the private portal. Inside, you&apos;ll discover the Foundation Module - your guided introduction to the work. No rush. No pressure. Just presence."
                 },
                 {
                   title: 'The weekly rhythm',
@@ -231,7 +231,7 @@ export default function CircleWelcome() {
                 },
                 {
                   title: 'The community',
-                  desc: "You&apos;re not doing this alone. Inside The Circle, others are walking the same path — showing up messy, honest, and committed to the return."
+                  desc: "You&apos;re not doing this alone. Inside The Circle, others are walking the same path - showing up messy, honest, and committed to the return."
                 }
               ].map((item, index) => (
                 <div key={index} style={{

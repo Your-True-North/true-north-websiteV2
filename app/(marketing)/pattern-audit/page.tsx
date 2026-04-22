@@ -78,7 +78,7 @@ export default function PatternAuditSalesPage() {
       onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
       onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
     >
-      Get The Pattern Audit — £37
+      Get The Pattern Audit - £37
     </a>
   )
 
@@ -136,7 +136,7 @@ export default function PatternAuditSalesPage() {
               maxWidth: '600px',
               margin: '0 auto 40px',
             }}>
-              Most men spend years trying to fix the same problems. The Pattern Audit shows you what's actually running the show — so you can change it at the root.
+              Most men spend years trying to fix the same problems. The Pattern Audit shows you what's actually running the show - so you can change it at the root.
             </p>
 
             {ctaButton}
@@ -147,7 +147,7 @@ export default function PatternAuditSalesPage() {
         <section style={section('#ffffff')}>
           <div style={inner}>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
-              You've tried changing the behaviour. You set new intentions. You've been through the podcasts, the books, maybe the therapy. And still — the same wall.
+              You've tried changing the behaviour. You set new intentions. You've been through the podcasts, the books, maybe the therapy. And still - the same wall.
             </p>
             <p style={{ ...bodyText, marginBottom: '20px' }}>
               In money it looks one way. You build momentum and then something happens. You undercharge. You delay. You watch the opportunity pass and there's a part of you that already knew you would.
@@ -187,7 +187,7 @@ export default function PatternAuditSalesPage() {
               Most men can name their pattern. They've been naming it for years. The name hasn't changed anything because the name is not the root.
             </p>
             <p style={{ ...bodyText, marginBottom: '32px' }}>
-              The Audit moves through seven layers: the surface behaviour, the trigger beneath it, the emotion underneath that, the internal story driving it, the hidden payoff keeping it in place, the identity fear that protects it, and finally the full picture — seen whole for the first time.
+              The Audit moves through seven layers: the surface behaviour, the trigger beneath it, the emotion underneath that, the internal story driving it, the hidden payoff keeping it in place, the identity fear that protects it, and finally the full picture - seen whole for the first time.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
@@ -212,7 +212,7 @@ export default function PatternAuditSalesPage() {
             </div>
 
             <p style={{ ...bodyText, marginBottom: '0' }}>
-              It takes 30 to 45 minutes. This is not a course. Not a programme. One focused session that changes what you're able to see — and once you see it, you can't unsee it.
+              It takes 30 to 45 minutes. This is not a course. Not a programme. One focused session that changes what you're able to see - and once you see it, you can't unsee it.
             </p>
           </div>
         </section>
@@ -233,9 +233,9 @@ export default function PatternAuditSalesPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               {[
                 "You'll know exactly what pattern is running your life, where it started, and what it has been protecting you from all this time.",
-                "You'll see where the same pattern shows up across money, relationships, health, and purpose at once — the connecting thread you've been missing.",
+                "You'll see where the same pattern shows up across money, relationships, health, and purpose at once - the connecting thread you've been missing.",
                 "You'll have a clear starting point. Not more information. A specific, named thing to actually work with.",
-                "You'll understand why effort and discipline haven't been enough — and what the work beneath the work actually looks like.",
+                "You'll understand why effort and discipline haven't been enough - and what the work beneath the work actually looks like.",
               ].map((text, i) => (
                 <div
                   key={i}
@@ -261,7 +261,7 @@ export default function PatternAuditSalesPage() {
           <div style={inner}>
             <div style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '24px' }}>
               <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
-                I built the Pattern Audit because naming a pattern is not the same as seeing it. I've sat with enough men to know that the ones who are stuck aren't lacking insight — they're missing depth. They've got the surface story down. What they haven't touched is the layer underneath that wrote the story in the first place. That's what this is for. Not to fix anything. Just to see clearly. Because that's where the real work starts.
+                I built the Pattern Audit because naming a pattern is not the same as seeing it. I've sat with enough men to know that the ones who are stuck aren't lacking insight - they're missing depth. They've got the surface story down. What they haven't touched is the layer underneath that wrote the story in the first place. That's what this is for. Not to fix anything. Just to see clearly. Because that's where the real work starts.
               </p>
               <p style={{
                 fontSize: '14px',
@@ -269,7 +269,7 @@ export default function PatternAuditSalesPage() {
                 fontFamily: BODY_FONT,
                 margin: 0,
               }}>
-                — True North
+                - True North
               </p>
             </div>
           </div>

@@ -148,7 +148,7 @@ export default function Library() {
     },
     {
       title: "Retain or Release",
-      description: "A Man's Guide to Sexual Energy Mastery — should you release or retain? Most men are leaking their power without knowing it.",
+      description: "A Man's Guide to Sexual Energy Mastery - should you release or retain? Most men are leaking their power without knowing it.",
       type: "PDF Guide"
     }
   ]
