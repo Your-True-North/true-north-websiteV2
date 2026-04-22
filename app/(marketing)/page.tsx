@@ -151,7 +151,7 @@ export default function Home() {
                 fontSize: isMobile ? '1.05rem' : '1.2rem',
                 lineHeight: '1.7'
               }}>
-                The anger. The numbness. The cycles you can't seem to break. They're not flaws. They're your nervous system telling you something needs to shift. This work gets you to the root.
+                The anger, the numbness, the cycles you can't seem to break - they're not flaws, they're your nervous system telling you something needs to shift. This work gets you to the root.
               </p>
 
               <div style={{
