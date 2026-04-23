@@ -234,7 +234,7 @@ export default function About() {
                   I'm a certified coach and member of the <strong style={{ color: currentTheme.accent }}>ICF</strong>, <strong style={{ color: currentTheme.accent }}>EMCC</strong> and <strong style={{ color: currentTheme.accent }}>Association for Coaching</strong>, three of the most respected bodies in the coaching world.
                 </p>
                 <p style={{ marginBottom: '2rem' }}>
-                  I'm a certified breathwork practitioner, trained by <strong style={{ color: currentTheme.accent }}>BreathOnIt</strong> in Los Angeles and recognised by the <strong style={{ color: currentTheme.accent }}>International Breathwork Foundation</strong>.
+                  I'm a certified breathwork practitioner, recognised by the <strong style={{ color: currentTheme.accent }}>International Breathwork Foundation</strong>.
                 </p>
                 <p style={{ marginBottom: '2rem' }}>
                   I hold formal certification in trauma informed somatic therapy, trained under some of the world's leading voices in the field including <strong style={{ color: currentTheme.accent }}>Dr Gabor Maté</strong>.
