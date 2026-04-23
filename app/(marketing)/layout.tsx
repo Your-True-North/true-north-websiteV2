@@ -1,5 +1,6 @@
 import Navigation from '../components/Navigation'
 import MysticalBackground from '../components/MysticalBackground'
+import Footer from '../components/Footer'
 
 export default function MarketingLayout({
   children,
@@ -13,6 +14,7 @@ export default function MarketingLayout({
       <main>
         {children}
       </main>
+      <Footer />
     </>
   )
 }
