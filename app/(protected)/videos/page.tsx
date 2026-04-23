@@ -136,7 +136,7 @@ export default function LibraryPage() {
   const categoryLabels: { [key: string]: string } = {
     all: 'All',
     'Foundation Work': 'Foundation Work',
-    'Breathwork Sessions': 'Breathwork',
+    'Breathwork Sessions': 'Somatic Work',
     'Live Teachings': 'Live Teachings',
     'Integration Practices': 'Integration'
   }
