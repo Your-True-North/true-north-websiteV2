@@ -190,7 +190,7 @@ export default function About() {
                 marginBottom: '3rem',
                 lineHeight: '1.8'
               }}>
-                No hype. No surface level talk. Real tools that work in the body, the mind and in life.
+                This isn't surface-level goal-setting talk. These are real tools that work in the mind, the body, and in life.
               </p>
 
               <div className="body-large" style={{ lineHeight: '1.8', marginBottom: '3rem', textAlign: 'center' }}>
