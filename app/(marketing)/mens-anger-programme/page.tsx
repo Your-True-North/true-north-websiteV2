@@ -4,47 +4,51 @@ import Link from 'next/link'
 
 const BOOK_URL = '/contact'
 
-const BTN = {
-  display: 'inline-block' as const,
-  background: '#9bc4b8',
-  color: '#0a0a0a',
+// 10% accent - sage green on CTA only
+const BTN: React.CSSProperties = {
+  display: 'inline-block',
+  background: '#7ba69b',
+  color: '#ffffff',
   padding: '1rem 2.5rem',
   borderRadius: '4px',
   fontWeight: 700,
-  fontSize: '1.1rem',
+  fontSize: '1.05rem',
   textDecoration: 'none',
   letterSpacing: '0.02em',
-  transition: 'background 0.2s ease',
 }
 
-function BookBtn({ label = 'Book Your Call' }: { label?: string }) {
-  return (
-    <Link href={BOOK_URL} style={BTN}>
-      {label} →
-    </Link>
-  )
+function BookBtn({ label = 'Book Your Discovery Call' }: { label?: string }) {
+  return <Link href={BOOK_URL} style={BTN}>{label} →</Link>
 }
+
+// colours
+const NAVY = '#38485d'
+const SAGE = '#7ba69b'
+const BG_LIGHT = '#f6f6f6'
+const BG_WHITE = '#ffffff'
+const TEXT = '#1c1c1e'
+const TEXT_MUTED = '#5a6472'
+const BORDER = 'rgba(56,72,93,0.12)'
 
 export default function MensAngerProgramme() {
   const [openPillar, setOpenPillar] = useState<number | null>(null)
 
   return (
-    <div style={{ background: '#0a0a0b', color: '#f6f6f6', fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
+    <div style={{ background: BG_LIGHT, color: TEXT, fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
 
       {/* ── HERO ── */}
-      <section style={{ minHeight: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '6rem 1.5rem 4rem', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, rgba(155,196,184,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <div style={{ maxWidth: '780px', position: 'relative', zIndex: 1 }}>
-          <p style={{ fontSize: '0.8rem', fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase', color: '#9bc4b8', marginBottom: '2rem' }}>
+      <section style={{ minHeight: '88vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '7rem 1.5rem 5rem', background: BG_WHITE }}>
+        <div style={{ maxWidth: '760px' }}>
+          <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase', color: SAGE, marginBottom: '2rem' }}>
             Men's Anger Programme · 12 Weeks · 10 Spots
           </p>
-          <h1 style={{ fontSize: 'clamp(2.2rem, 6vw, 4rem)', fontFamily: 'Gambarino, serif', fontWeight: 400, lineHeight: 1.15, marginBottom: '1.75rem', color: '#ffffff' }}>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 6vw, 3.75rem)', fontFamily: 'Gambarino, serif', fontWeight: 400, lineHeight: 1.15, marginBottom: '1.75rem', color: NAVY }}>
             You already know your anger is costing you.
           </h1>
-          <p style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', lineHeight: 1.75, color: 'rgba(246,246,246,0.75)', marginBottom: '1.25rem' }}>
+          <p style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', lineHeight: 1.8, color: TEXT, marginBottom: '1.25rem', maxWidth: '640px', margin: '0 auto 1.25rem' }}>
             You just haven't found anything that goes deep enough to change it.
           </p>
-          <p style={{ fontSize: '1rem', lineHeight: 1.75, color: 'rgba(246,246,246,0.6)', marginBottom: '2.5rem', maxWidth: '620px', margin: '0 auto 2.5rem' }}>
+          <p style={{ fontSize: '1rem', lineHeight: 1.8, color: TEXT_MUTED, marginBottom: '2.5rem', maxWidth: '620px', margin: '0 auto 2.5rem' }}>
             The breathing exercises didn't work. The "just walk away" advice didn't work. Telling yourself you'd be calmer this time didn't work. Because none of that touches the thing your anger is actually protecting. This programme does.
           </p>
           <BookBtn />
@@ -52,9 +56,9 @@ export default function MensAngerProgramme() {
       </section>
 
       {/* ── RECOGNITION ── */}
-      <section style={{ padding: '5rem 1.5rem', background: '#111113' }}>
+      <section style={{ padding: '5rem 1.5rem', background: BG_LIGHT }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 400, marginBottom: '2.5rem', color: '#ffffff' }}>
+          <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.3rem)', fontWeight: 400, marginBottom: '2.5rem', color: NAVY }}>
             This is what anger looks like when no one's watching.
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -67,25 +71,25 @@ export default function MensAngerProgramme() {
               "You feel a constant low level tension that you've accepted as normal.",
             ].map((line, i) => (
               <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#9bc4b8', flexShrink: 0, marginTop: '0.6rem' }} />
-                <p style={{ fontSize: '1.0625rem', lineHeight: 1.7, color: 'rgba(246,246,246,0.8)', margin: 0 }}>{line}</p>
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: SAGE, flexShrink: 0, marginTop: '0.65rem' }} />
+                <p style={{ fontSize: '1.0625rem', lineHeight: 1.75, color: TEXT, margin: 0 }}>{line}</p>
               </div>
             ))}
           </div>
-          <p style={{ marginTop: '2.5rem', fontSize: '1rem', lineHeight: 1.8, color: 'rgba(246,246,246,0.6)', fontStyle: 'italic' }}>
+          <p style={{ marginTop: '2.5rem', fontSize: '1rem', lineHeight: 1.8, color: TEXT_MUTED, fontStyle: 'italic' }}>
             None of this makes you a bad person. But it is shaping your life in ways you can feel but might not want to admit yet.
           </p>
         </div>
       </section>
 
       {/* ── VIDEO TESTIMONIALS 1 ── */}
-      <section style={{ padding: '4rem 1.5rem', background: '#0a0a0b' }}>
+      <section style={{ padding: '4rem 1.5rem', background: BG_WHITE }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: '#9bc4b8', marginBottom: '2rem', textAlign: 'center' }}>What men say</p>
+          <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: SAGE, marginBottom: '2rem', textAlign: 'center' }}>What men say</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
             {[1, 2, 3].map(n => (
-              <div key={n} style={{ background: '#1a1a1c', borderRadius: '6px', aspectRatio: '9/16', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(155,196,184,0.2)' }}>
-                <p style={{ color: 'rgba(246,246,246,0.3)', fontSize: '0.875rem', textAlign: 'center', padding: '1rem' }}>Video testimonial {n}</p>
+              <div key={n} style={{ background: BG_LIGHT, borderRadius: '6px', aspectRatio: '9/16', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px dashed ${BORDER}` }}>
+                <p style={{ color: TEXT_MUTED, fontSize: '0.875rem', textAlign: 'center', padding: '1rem' }}>Video testimonial {n}</p>
               </div>
             ))}
           </div>
@@ -93,12 +97,12 @@ export default function MensAngerProgramme() {
       </section>
 
       {/* ── PROGRAMME ── */}
-      <section style={{ padding: '5rem 1.5rem', background: '#111113' }}>
+      <section style={{ padding: '5rem 1.5rem', background: BG_LIGHT }}>
         <div style={{ maxWidth: '760px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 400, marginBottom: '0.75rem', color: '#ffffff' }}>
+          <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.3rem)', fontWeight: 400, marginBottom: '0.75rem', color: NAVY }}>
             12 weeks to understand, heal, and rebuild.
           </h2>
-          <p style={{ fontSize: '1rem', lineHeight: 1.75, color: 'rgba(246,246,246,0.6)', marginBottom: '3rem' }}>
+          <p style={{ fontSize: '1rem', lineHeight: 1.8, color: TEXT_MUTED, marginBottom: '3rem' }}>
             This is not anger management. This is not coping strategies. This is the deep work that most men never get access to because most programmes don't go here.
           </p>
 
@@ -122,30 +126,30 @@ export default function MensAngerProgramme() {
               body: "We don't just clear the old. We build the new. Your relationships, your career, your emotional control. We work towards getting you where you actually want to be, in a way that is fully aligned with who you are, your strengths, and your areas for growth.",
             },
           ].map((pillar, i) => (
-            <div key={i} style={{ borderTop: '1px solid rgba(155,196,184,0.15)', padding: '1.75rem 0', cursor: 'pointer' }} onClick={() => setOpenPillar(openPillar === i ? null : i)}>
+            <div key={i} style={{ borderTop: `1px solid ${BORDER}`, padding: '1.75rem 0', cursor: 'pointer' }} onClick={() => setOpenPillar(openPillar === i ? null : i)}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
                 <div>
-                  <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: '#9bc4b8', marginBottom: '0.375rem' }}>{pillar.label} · {pillar.weeks}</p>
-                  <h3 style={{ fontFamily: 'Gambarino, serif', fontSize: '1.5rem', fontWeight: 400, color: '#ffffff', margin: 0 }}>{pillar.title}</h3>
+                  <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: SAGE, marginBottom: '0.375rem' }}>{pillar.label} · {pillar.weeks}</p>
+                  <h3 style={{ fontFamily: 'Gambarino, serif', fontSize: '1.5rem', fontWeight: 400, color: NAVY, margin: 0 }}>{pillar.title}</h3>
                 </div>
-                <div style={{ fontSize: '1.25rem', color: '#9bc4b8', flexShrink: 0, marginTop: '0.25rem' }}>{openPillar === i ? '−' : '+'}</div>
+                <div style={{ fontSize: '1.25rem', color: NAVY, flexShrink: 0, marginTop: '0.25rem', opacity: 0.5 }}>{openPillar === i ? '−' : '+'}</div>
               </div>
               {openPillar === i && (
-                <p style={{ marginTop: '1.25rem', fontSize: '1rem', lineHeight: 1.8, color: 'rgba(246,246,246,0.7)' }}>{pillar.body}</p>
+                <p style={{ marginTop: '1.25rem', fontSize: '1rem', lineHeight: 1.8, color: TEXT_MUTED }}>{pillar.body}</p>
               )}
             </div>
           ))}
-          <div style={{ borderTop: '1px solid rgba(155,196,184,0.15)', paddingTop: '3rem', textAlign: 'center' }}>
+          <div style={{ borderTop: `1px solid ${BORDER}`, paddingTop: '3rem', textAlign: 'center' }}>
             <BookBtn />
           </div>
         </div>
       </section>
 
       {/* ── WHO IT'S FOR ── */}
-      <section style={{ padding: '5rem 1.5rem', background: '#0a0a0b' }}>
+      <section style={{ padding: '5rem 1.5rem', background: BG_WHITE }}>
         <div style={{ maxWidth: '760px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
           <div>
-            <h3 style={{ fontFamily: 'Gambarino, serif', fontSize: '1.5rem', fontWeight: 400, color: '#9bc4b8', marginBottom: '1.5rem' }}>This is for you if:</h3>
+            <h3 style={{ fontFamily: 'Gambarino, serif', fontSize: '1.5rem', fontWeight: 400, color: NAVY, marginBottom: '1.5rem' }}>This is for you if:</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {[
                 "You're a man who knows his anger is a problem but has never said it out loud.",
@@ -155,14 +159,14 @@ export default function MensAngerProgramme() {
                 "You want to be the man your kids, your partner, and you yourself can genuinely respect.",
               ].map((line, i) => (
                 <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#9bc4b8', flexShrink: 0, marginTop: '0.6rem' }} />
-                  <p style={{ fontSize: '0.9375rem', lineHeight: 1.7, color: 'rgba(246,246,246,0.8)', margin: 0 }}>{line}</p>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: SAGE, flexShrink: 0, marginTop: '0.6rem' }} />
+                  <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: TEXT, margin: 0 }}>{line}</p>
                 </div>
               ))}
             </div>
           </div>
           <div>
-            <h3 style={{ fontFamily: 'Gambarino, serif', fontSize: '1.5rem', fontWeight: 400, color: 'rgba(246,246,246,0.4)', marginBottom: '1.5rem' }}>This is not for you if:</h3>
+            <h3 style={{ fontFamily: 'Gambarino, serif', fontSize: '1.5rem', fontWeight: 400, color: TEXT_MUTED, marginBottom: '1.5rem' }}>This is not for you if:</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {[
                 'You\'re looking for a quick fix or a trick to "manage" it.',
@@ -170,8 +174,8 @@ export default function MensAngerProgramme() {
                 "You think your anger is everyone else's fault.",
               ].map((line, i) => (
                 <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'rgba(246,246,246,0.2)', flexShrink: 0, marginTop: '0.6rem' }} />
-                  <p style={{ fontSize: '0.9375rem', lineHeight: 1.7, color: 'rgba(246,246,246,0.45)', margin: 0 }}>{line}</p>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: BORDER, flexShrink: 0, marginTop: '0.6rem', border: `1px solid ${TEXT_MUTED}` }} />
+                  <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: TEXT_MUTED, margin: 0 }}>{line}</p>
                 </div>
               ))}
             </div>
@@ -179,13 +183,13 @@ export default function MensAngerProgramme() {
         </div>
       </section>
 
-      {/* ── GUIDE ── */}
-      <section style={{ padding: '5rem 1.5rem', background: '#111113' }}>
+      {/* ── GUIDE ── navy block for contrast (structural element = 30%) */}
+      <section style={{ padding: '5rem 1.5rem', background: NAVY }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 400, marginBottom: '2rem', color: '#ffffff' }}>
+          <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.3rem)', fontWeight: 400, marginBottom: '2rem', color: '#ffffff' }}>
             I've been where you are.
           </h2>
-          <p style={{ fontSize: '0.8rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: '#9bc4b8', marginBottom: '1.5rem' }}>True North</p>
+          <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: SAGE, marginBottom: '1.5rem' }}>True North</p>
           {[
             "I'm True. I'm an anger and addiction coach, a certified somatic therapy practitioner trained by Gabor Maté, a breathwork facilitator, ICF transformational coach, and Reiki master.",
             "But none of that matters as much as this: I lived it.",
@@ -194,20 +198,23 @@ export default function MensAngerProgramme() {
             "That's the work I now hold space for. And I've watched it change men's lives, their relationships, their careers, their sense of themselves.",
             "I'm selective about who I work with. Not because I'm exclusive, but because this work requires readiness. The call is where we figure that out together.",
           ].map((para, i) => (
-            <p key={i} style={{ fontSize: '1rem', lineHeight: 1.8, color: i === 1 ? '#ffffff' : 'rgba(246,246,246,0.7)', marginBottom: '1.25rem', fontWeight: i === 1 ? 600 : 400 }}>
+            <p key={i} style={{ fontSize: '1rem', lineHeight: 1.8, color: i === 1 ? '#ffffff' : 'rgba(255,255,255,0.75)', marginBottom: '1.25rem', fontWeight: i === 1 ? 600 : 400 }}>
               {para}
             </p>
           ))}
+          <div style={{ marginTop: '2.5rem' }}>
+            <BookBtn label="Book Your Discovery Call" />
+          </div>
         </div>
       </section>
 
       {/* ── VIDEO TESTIMONIALS 2 ── */}
-      <section style={{ padding: '4rem 1.5rem', background: '#0a0a0b' }}>
+      <section style={{ padding: '4rem 1.5rem', background: BG_WHITE }}>
         <div style={{ maxWidth: '700px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
             {[1, 2].map(n => (
-              <div key={n} style={{ background: '#1a1a1c', borderRadius: '6px', aspectRatio: '9/16', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px dashed rgba(155,196,184,0.2)' }}>
-                <p style={{ color: 'rgba(246,246,246,0.3)', fontSize: '0.875rem', textAlign: 'center', padding: '1rem' }}>Video testimonial {n}</p>
+              <div key={n} style={{ background: BG_LIGHT, borderRadius: '6px', aspectRatio: '9/16', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px dashed ${BORDER}` }}>
+                <p style={{ color: TEXT_MUTED, fontSize: '0.875rem', textAlign: 'center', padding: '1rem' }}>Video testimonial {n}</p>
               </div>
             ))}
           </div>
@@ -215,9 +222,9 @@ export default function MensAngerProgramme() {
       </section>
 
       {/* ── INVESTMENT ── */}
-      <section style={{ padding: '5rem 1.5rem', background: '#111113', textAlign: 'center' }}>
+      <section style={{ padding: '5rem 1.5rem', background: BG_LIGHT, textAlign: 'center' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 400, marginBottom: '2.5rem', color: '#ffffff' }}>
+          <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.3rem)', fontWeight: 400, marginBottom: '2.5rem', color: NAVY }}>
             The details.
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '3rem', textAlign: 'left', maxWidth: '380px', margin: '0 auto 3rem' }}>
@@ -227,20 +234,20 @@ export default function MensAngerProgramme() {
               ['Investment', '£333 per month'],
               ['Methods', 'Somatic therapy, nervous system recalibration, breathwork, and direct coaching'],
             ].map(([label, value]) => (
-              <div key={label} style={{ display: 'flex', gap: '1rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(155,196,184,0.1)' }}>
-                <span style={{ fontSize: '0.8rem', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: '#9bc4b8', minWidth: '90px', paddingTop: '0.125rem' }}>{label}</span>
-                <span style={{ fontSize: '0.9375rem', color: 'rgba(246,246,246,0.75)', lineHeight: 1.6 }}>{value}</span>
+              <div key={label} style={{ display: 'flex', gap: '1rem', paddingBottom: '1rem', borderBottom: `1px solid ${BORDER}` }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', color: NAVY, minWidth: '90px', paddingTop: '0.125rem' }}>{label}</span>
+                <span style={{ fontSize: '0.9375rem', color: TEXT_MUTED, lineHeight: 1.6 }}>{value}</span>
               </div>
             ))}
           </div>
-          <p style={{ fontSize: '1rem', color: 'rgba(246,246,246,0.6)', marginBottom: '2rem', lineHeight: 1.7 }}>
+          <p style={{ fontSize: '1rem', color: TEXT_MUTED, marginBottom: '2rem', lineHeight: 1.8 }}>
             The first step is a call. We'll talk. I'll ask you some questions, you'll ask me some. No pressure. We'll both know if it's right.
           </p>
           <BookBtn />
-          <p style={{ marginTop: '2.5rem', fontSize: '1.1rem', color: 'rgba(246,246,246,0.5)', fontStyle: 'italic' }}>
+          <p style={{ marginTop: '2.5rem', fontSize: '1.1rem', color: TEXT_MUTED, fontStyle: 'italic', fontFamily: 'Gambarino, serif' }}>
             You've carried this long enough.
           </p>
-          <p style={{ marginTop: '0.5rem', fontSize: '1rem', color: 'rgba(246,246,246,0.4)' }}>True</p>
+          <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: TEXT_MUTED }}>True</p>
         </div>
       </section>
 
