@@ -37,7 +37,7 @@ function baseTemplate(previewText: string, body: string) {
         <tr>
           <td align="center" style="padding-top:32px;">
             <p style="margin:0;font-size:12px;color:#888;font-family:Arial,sans-serif;">
-              You received this because you expressed interest in the Men&apos;s Anger Programme.<br/>
+              You received this because you expressed interest in The MAP.<br/>
               <a href="${UNSUBSCRIBE_URL}" style="color:#888;">Unsubscribe</a>
             </p>
           </td>
@@ -181,12 +181,12 @@ ${sig()}`
   },
   6: {
     subject: "10 men. 12 weeks. Let's go.",
-    preview: "The Anger Programme is open",
+    preview: "The MAP is open",
     html: baseTemplate(
       "The Anger Programme is open",
       `${p("Over the last couple of weeks I've been talking about anger. Not the surface level stuff - the real thing underneath it. The shame, the pain, the patterns that have been running the show for years.")}
 ${p("If any of that resonated, this email is the one that matters.")}
-${p("I'm opening the doors to this year's 12 week Anger Programme.")}
+${p("I'm opening the doors to this year's cohort of The MAP - Men's Anger Programme.")}
 ${p("<strong style='color:#38485d;'>10 spots. That's it.</strong>")}
 ${p("This is not anger management. I'm not going to teach you breathing techniques and send you on your way. This is 12 weeks of deep, structured work to understand where your anger actually comes from and dismantle it at the root.")}
 ${p("<strong style='color:#38485d;'>Pillar 1: Self Exploration</strong><br/>We start by looking at how you see yourself. Because your outer world - your reactions, your triggers, all of it - is a reflection of your inner world. You'll begin to understand why you act and react to life the way you do. Why certain things hit you harder than they should. We create distance between the true you and the conditioned parts of you that have been running the show.")}
@@ -205,7 +205,7 @@ ${sig()}`
     preview: "That's what I said too",
     html: baseTemplate(
       "That's what I said too",
-      `${p("If you read my last email about the Anger Programme and your first thought was 'I can manage it myself' - I get it.")}
+      `${p("If you read my last email about The MAP and your first thought was 'I can manage it myself' - I get it.")}
 ${p("I said the same thing. For years.")}
 ${p("And to be fair, you probably can manage it. For a while. You can keep it together in public, and when you don't you can apologise after. You can tell yourself it's getting better.")}
 ${p("But managing something is not the same as being free of it.")}
@@ -213,7 +213,7 @@ ${p("Managing means the thing is still there, you're just holding it in place.")
 ${p("You know the difference between a day where you feel genuinely calm and a day where you're just keeping the lid on.")}
 ${p("On the calm days, life is different. Your patience, the way you speak to people, even the way you carry yourself changes.")}
 ${p("That's not managing. That's what it feels like when the weight isn't there.")}
-${p("The 12 weeks I've built is designed to get you to that place permanently - by helping you actually put the weight down. No short-term tricks.")}
+${p("The MAP is designed to get you to that place permanently - 12 weeks of work that helps you actually put the weight down. No short-term tricks.")}
 ${p("Somatic work, nervous system recalibration, getting into the body where the real patterns live. Not just talking about it. Feeling it, processing it, and letting it go.")}
 ${p("I'm not for everyone. I'm direct, I'll challenge you, and I won't let you hide behind the story you've been telling yourself. But if you're ready for that, the shifts are real.")}
 ${p("There are 10 spots. Some have already gone.")}
@@ -250,7 +250,7 @@ ${sig()}`
     html: baseTemplate(
       "The remaining spots won't be here long",
       `${p("Short one today.")}
-${p("The Anger Programme has limited spots remaining.")}
+${p("The MAP has limited spots remaining.")}
 ${p("12 weeks. Deep work. The kind that changes how you respond to life, not just how you cope with it.")}
 ${p("If you've been reading these emails and recognising yourself in them, you already know whether this is for you.")}
 ${p("The question isn't whether you need it. The question is whether you're going to do what you've always done - tell yourself you'll sort it on your own, wait until the next blowup, and then feel that same shame again.")}
