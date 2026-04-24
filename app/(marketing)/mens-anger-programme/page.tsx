@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-const BOOK_URL = '/contact'
+const BOOK_URL = 'https://calendly.com/callwithmason/the-map'
 
 // 10% accent - sage green on CTA only
 const BTN: React.CSSProperties = {

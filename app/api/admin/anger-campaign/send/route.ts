@@ -4,7 +4,7 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const FROM = 'True North <navigate@yourtruenorth.me>'
-const BOOK_URL = 'https://yourtruenorth.me/mens-anger-programme'
+const BOOK_URL = 'https://calendly.com/callwithmason/the-map'
 const UNSUBSCRIBE_URL = 'https://yourtruenorth.me/unsubscribe'
 
 function baseTemplate(previewText: string, body: string) {
