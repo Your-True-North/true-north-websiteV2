@@ -1,8 +1,7 @@
 'use client'
 
 import CircleCalendarTeaser from './components/CircleCalendarTeaser'
-import { useState, useEffect, useRef } from 'react'
-import { Play, Pause, RotateCcw } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 export default function Circle() {
@@ -12,10 +11,6 @@ export default function Circle() {
   const [message, setMessage] = useState('')
   const [pricingPlan, setPricingPlan] = useState('yearly')
   const [showWaitlistPopup, setShowWaitlistPopup] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [showOverlay, setShowOverlay] = useState(true)
-  const videoRef = useRef<HTMLVideoElement>(null)
-
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768)
@@ -27,32 +22,6 @@ export default function Circle() {
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-
-  const handleInitialPlay = () => {
-    if (videoRef.current) {
-      videoRef.current.play()
-      setIsPlaying(true)
-      setShowOverlay(false)
-    }
-  }
-
-  const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause()
-        setIsPlaying(false)
-      } else {
-        videoRef.current.play()
-        setIsPlaying(true)
-      }
-    }
-  }
-
-  const handleRewind = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = Math.max(0, videoRef.current.currentTime - 10)
-    }
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -91,219 +60,35 @@ export default function Circle() {
         <section style={{
           position: 'relative',
           width: '100%',
-          height: isMobile ? '100vh' : '110vh',
-          overflow: 'hidden',
+          minHeight: isMobile ? '100vh' : '90vh',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          textAlign: 'center',
+          padding: isMobile ? '8rem 1.5rem 5rem' : '10rem 2rem 6rem',
         }}>
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%'
-          }}>
-            {/* Fade overlay at sides */}
-            <div style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: "linear-gradient(90deg, rgba(10,10,11,0.8) 0%, transparent 15%, transparent 85%, rgba(10,10,11,0.8) 100%)",
-              pointerEvents: "none",
-              zIndex: 2
-            }} />
-            <video
-              ref={videoRef}
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                width: isMobile ? '177.78vh' : '100%',
-                height: isMobile ? '100vh' : '100%',
-                minWidth: '100%',
-                minHeight: '100%',
-                transform: 'translate(-50%, -50%)',
-                objectFit: 'cover',
-                pointerEvents: showOverlay ? 'none' : 'auto',
-                opacity: showOverlay ? 0 : 1,
-                transition: 'opacity 0.3s ease'
-              }}
-              playsInline
-              onEnded={() => {
-                setIsPlaying(false)
-                setShowOverlay(true)
-              }}
-            >
-              <source src="https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%202026.MP4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          {showOverlay && (
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: 'transparent',
-              zIndex: 10,
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              gap: isMobile ? '2rem' : '3rem',
-              padding: isMobile ? '2rem' : '4rem'
-            }}
-            onClick={handleInitialPlay}
-            >
-              <div style={{
-                textAlign: 'center',
-                maxWidth: '700px'
-              }}>
-                <h2 className="breathing-title" style={{
-                  fontSize: isMobile ? '1.2rem' : '1.4rem',
-                  fontWeight: '400',
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  marginBottom: '1rem',
-                  lineHeight: '1.2',
-                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-                  letterSpacing: '0.1em'
-                }}>
-                  The Circle of Return.
-                </h2>
-                <p style={{
-                  fontSize: isMobile ? '1.4rem' : '1.8rem',
-                  color: '#ffffff',
-                  lineHeight: '1.4',
-                  textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-                  fontWeight: '300'
-                }}>
-                  The work you keep putting off.<br />Done together.
-                </p>
-              </div>
-
-              <div style={{
-                width: isMobile ? '70px' : '90px',
-                height: isMobile ? '70px' : '90px',
-                borderRadius: '50%',
-                background: 'rgba(155, 196, 184, 0.3)',
-                backdropFilter: 'blur(10px)',
-                border: '2px solid rgba(255, 255, 255, 0.3)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.1)'
-                e.currentTarget.style.background = 'rgba(155, 196, 184, 0.5)'
-                e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.5)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)'
-                e.currentTarget.style.background = 'rgba(155, 196, 184, 0.3)'
-                e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)'
-              }}
-              >
-                <Play size={isMobile ? 28 : 36} color="#fff" fill="#fff" style={{ marginLeft: '4px' }} />
-              </div>
-
-              <p style={{
-                fontSize: isMobile ? '0.9rem' : '1rem',
-                color: 'rgba(255, 255, 255, 0.7)',
-                textAlign: 'center',
-                marginTop: isMobile ? '-1rem' : '0'
-              }}>
-                {isMobile ? 'Tap to watch' : 'Click to watch'}
-              </p>
-            </div>
-          )}
-
-          {isPlaying && !showOverlay && (
-            <div style={{
-              position: 'absolute',
-              bottom: isMobile ? '2rem' : '1.5rem',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              gap: '1rem',
-              zIndex: 100,
-              padding: '0.75rem 1.5rem',
-              background: 'rgba(0, 0, 0, 0.7)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '50px',
-              border: '1px solid rgba(155, 196, 184, 0.3)',
-              transition: 'opacity 0.3s ease'
+          <div style={{ maxWidth: '700px', position: 'relative', zIndex: 1 }}>
+            <p className="breathing-title" style={{
+              fontSize: isMobile ? '1rem' : '1.1rem',
+              fontWeight: '400',
+              color: 'rgba(255, 255, 255, 0.6)',
+              marginBottom: '1.5rem',
+              lineHeight: '1.4',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase'
             }}>
-              <button
-                onClick={handleRewind}
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '50%',
-                  background: 'rgba(155, 196, 184, 0.2)',
-                  backdropFilter: 'blur(10px)',
-                  border: '2px solid rgba(255, 255, 255, 0.3)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.4)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.2)'
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
-                }}
-              >
-                <RotateCcw size={20} color="#fff" />
-              </button>
-
-              <button
-                onClick={handlePlayPause}
-                style={{
-                  width: '52px',
-                  height: '52px',
-                  borderRadius: '50%',
-                  background: 'rgba(155, 196, 184, 0.3)',
-                  backdropFilter: 'blur(10px)',
-                  border: '2px solid rgba(255, 255, 255, 0.3)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)'
-                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.5)'
-                  e.currentTarget.style.boxShadow = '0 5px 20px rgba(155, 196, 184, 0.5)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)'
-                  e.currentTarget.style.background = 'rgba(155, 196, 184, 0.3)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              >
-                {isPlaying ? (
-                  <Pause size={24} color="#fff" fill="#fff" />
-                ) : (
-                  <Play size={24} color="#fff" fill="#fff" style={{ marginLeft: '2px' }} />
-                )}
-              </button>
-            </div>
-          )}
+              The Circle of Return
+            </p>
+            <h1 style={{
+              fontSize: isMobile ? '2rem' : '2.8rem',
+              color: '#ffffff',
+              lineHeight: '1.3',
+              fontWeight: '300',
+              marginBottom: '2rem'
+            }}>
+              The work you keep putting off.<br />Done together.
+            </h1>
+          </div>
         </section>
 
         <div style={{

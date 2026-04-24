@@ -82,14 +82,24 @@ export default function MensAngerProgramme() {
         </div>
       </section>
 
-      {/* ── VIDEO TESTIMONIALS 1 ── */}
+      {/* ── VIDEO TESTIMONIALS ── */}
       <section style={{ padding: '4rem 1.5rem', background: BG_WHITE }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: SAGE, marginBottom: '2rem', textAlign: 'center' }}>What men say</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
-            {[1, 2, 3].map(n => (
-              <div key={n} style={{ background: BG_LIGHT, borderRadius: '6px', aspectRatio: '9/16', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px dashed ${BORDER}` }}>
-                <p style={{ color: TEXT_MUTED, fontSize: '0.875rem', textAlign: 'center', padding: '1rem' }}>Video testimonial {n}</p>
+            {[
+              { title: 'From Chaos to Clarity', id: '7Y1upKm8bZk' },
+              { title: 'Breaking the Cycle', id: 'ubCK70jYQDI' },
+              { title: 'Finding My Power', id: 'UfbMIxlCzgM' },
+            ].map(v => (
+              <div key={v.id} style={{ borderRadius: '6px', overflow: 'hidden', aspectRatio: '9/16', position: 'relative' }}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${v.id}`}
+                  title={v.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                />
               </div>
             ))}
           </div>
@@ -208,20 +218,8 @@ export default function MensAngerProgramme() {
         </div>
       </section>
 
-      {/* ── VIDEO TESTIMONIALS 2 ── */}
-      <section style={{ padding: '4rem 1.5rem', background: BG_WHITE }}>
-        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
-            {[1, 2].map(n => (
-              <div key={n} style={{ background: BG_LIGHT, borderRadius: '6px', aspectRatio: '9/16', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px dashed ${BORDER}` }}>
-                <p style={{ color: TEXT_MUTED, fontSize: '0.875rem', textAlign: 'center', padding: '1rem' }}>Video testimonial {n}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ── INVESTMENT ── */}
+{/* ── INVESTMENT ── */}
       <section style={{ padding: '5rem 1.5rem', background: BG_LIGHT, textAlign: 'center' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
           <h2 style={{ fontFamily: 'Gambarino, serif', fontSize: 'clamp(1.6rem, 4vw, 2.3rem)', fontWeight: 400, marginBottom: '2.5rem', color: NAVY }}>
