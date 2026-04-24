@@ -6,12 +6,14 @@ import Link from 'next/link'
 
 const EMAIL_META = [
   { number: 1, day: 1,  subject: "You'd rather tell people you're an alcoholic" },
-  { number: 2, day: 4,  subject: "Your anger is not the problem" },
-  { number: 3, day: 8,  subject: "I used to scare people" },
-  { number: 4, day: 12, subject: "What your anger is actually costing you" },
-  { number: 5, day: 16, subject: "10 men. 12 weeks. Let's go." },
-  { number: 6, day: 20, subject: "I can manage it myself" },
-  { number: 7, day: 24, subject: "Last call" },
+  { number: 2, day: 4,  subject: "You haven't raised your voice in months and you're still angry" },
+  { number: 3, day: 7,  subject: "Your anger is not the problem" },
+  { number: 4, day: 10, subject: "I used to scare people" },
+  { number: 5, day: 13, subject: "What your anger is actually costing you" },
+  { number: 6, day: 17, subject: "10 men. 12 weeks. Let's go." },
+  { number: 7, day: 19, subject: '"I can manage it myself"' },
+  { number: 8, day: 24, subject: "You're not the only man carrying this" },
+  { number: 9, day: 26, subject: "Last call" },
 ]
 
 type Subscriber = { id: number; email: string; name: string; subscribed_at: string; unsubscribed: boolean; tags: string }
