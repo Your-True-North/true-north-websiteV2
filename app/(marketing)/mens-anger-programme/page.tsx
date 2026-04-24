@@ -40,7 +40,7 @@ export default function MensAngerProgramme() {
       <section style={{ minHeight: '88vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '7rem 1.5rem 5rem', background: BG_WHITE }}>
         <div style={{ maxWidth: '760px' }}>
           <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '3px', textTransform: 'uppercase', color: SAGE, marginBottom: '2rem' }}>
-            Men's Anger Programme · 12 Weeks · 10 Spots
+            The MAP · 12 Weeks · 10 Spots
           </p>
           <h1 style={{ fontSize: 'clamp(2.2rem, 6vw, 3.75rem)', fontFamily: 'Gambarino, serif', fontWeight: 400, lineHeight: 1.15, marginBottom: '1.75rem', color: NAVY }}>
             You already know your anger is costing you.
