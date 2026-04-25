@@ -154,7 +154,8 @@ export default function AdminDashboard() {
     { title: 'Manage Videos', href: '/admin/videos/manage', icon: '🎬', desc: 'Edit and delete videos' },
     { title: 'Send Notification', href: '/admin/notifications', icon: '🔔', desc: 'Push message to all members' },
     { title: 'Founding Members', href: '/admin/founding', icon: '👥', desc: 'View founding member list' },
-    { title: "Anger Programme Emails", href: '/admin/anger-campaign', icon: '✉️', desc: 'Send 7-email campaign sequence' }
+    { title: "Anger Programme Emails", href: '/admin/anger-campaign', icon: '✉️', desc: 'Send 7-email campaign sequence' },
+    { title: 'Budget', href: '/admin/budget', icon: '💷', desc: 'Personal finance & spending tracker' }
   ]
 
   return (
