@@ -191,12 +191,6 @@ export default function FoundingMembersPage() {
             <p style={{ ...bodyText, marginBottom: '20px' }}>
               That's not a failure of effort. That's the nature of what's in the blind spot - by definition, you cannot see it from inside it.
             </p>
-            <p style={{ ...bodyText, marginBottom: '12px', fontWeight: 500, fontSize: '21px' }}>
-              
-            </p>
-            <p style={{ ...bodyText, fontWeight: 500, fontSize: '21px' }}>
-              
-            </p>
           </div>
         </section>
 
@@ -437,7 +431,7 @@ export default function FoundingMembersPage() {
               marginBottom: '24px',
               fontFamily: BODY_FONT,
             }}>
-              Founding member price £25/month. They just can't stop it alone.
+              Founding member price: £25/month. Locked in for life — rises to £50 at member 21.
             </p>
 
             <button
