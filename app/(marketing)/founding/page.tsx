@@ -1,11 +1,9 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
-import { Play, Pause } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
-const VIDEO_URL = 'https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/Circle%202026.MP4'
 const SPOTS_REMAINING = 10
 const ACCENT = '#9bc4b8'
 const ACCENT_HOVER = '#7da89c'
@@ -15,9 +13,6 @@ const BODY_FONT = '-apple-system, BlinkMacSystemFont, sans-serif'
 
 export default function FoundingMembersPage() {
   const [isMobile, setIsMobile] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [showOverlay, setShowOverlay] = useState(true)
-  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
@@ -59,24 +54,6 @@ export default function FoundingMembersPage() {
     window.location.href = STRIPE_URL
   }
 
-  const handleInitialPlay = () => {
-    if (videoRef.current) {
-      videoRef.current.play()
-      setIsPlaying(true)
-      setShowOverlay(false)
-    }
-  }
-
-  const handlePlayPause = () => {
-    if (!videoRef.current) return
-    if (isPlaying) {
-      videoRef.current.pause()
-      setIsPlaying(false)
-    } else {
-      videoRef.current.play()
-      setIsPlaying(true)
-    }
-  }
 
   const vPad = isMobile ? '48px' : '80px'
   const hPad = isMobile ? '20px' : '40px'
@@ -180,102 +157,6 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* ── 2. VIDEO ── */}
-        <section style={{
-          background: '#ffffff',
-          padding: isMobile ? `0 0 ${vPad}` : `0 ${hPad} ${vPad}`,
-        }}>
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-
-
-            <div style={{
-              position: 'relative',
-              paddingBottom: '56.25%',
-              height: 0,
-              background: '#000',
-              borderRadius: isMobile ? '0' : '6px',
-              overflow: 'hidden',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-            }}>
-              <video
-                ref={videoRef}
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-                playsInline
-                onEnded={() => { setIsPlaying(false); setShowOverlay(true) }}
-              >
-                <source src={VIDEO_URL} type="video/mp4" />
-              </video>
-
-              {showOverlay && (
-                <div
-                  onClick={handleInitialPlay}
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: isMobile ? '64px' : '80px',
-                      height: isMobile ? '64px' : '80px',
-                      borderRadius: '50%',
-                      background: 'rgba(255,255,255,0.2)',
-                      backdropFilter: 'blur(8px)',
-                      border: '2px solid rgba(255,255,255,0.5)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      transition: 'background 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.35)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
-                  >
-                    <Play size={isMobile ? 24 : 32} color="#fff" fill="#fff" style={{ marginLeft: '3px' }} />
-                  </div>
-                </div>
-              )}
-
-              {!showOverlay && (
-                <div style={{
-                  position: 'absolute',
-                  bottom: '1.5rem',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  zIndex: 10,
-                }}>
-                  <button
-                    onClick={handlePlayPause}
-                    style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: '50%',
-                      background: 'rgba(255,255,255,0.2)',
-                      backdropFilter: 'blur(8px)',
-                      border: '2px solid rgba(255,255,255,0.5)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      transition: 'background 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.35)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
-                  >
-                    {isPlaying
-                      ? <Pause size={20} color="#fff" fill="#fff" />
-                      : <Play size={20} color="#fff" fill="#fff" style={{ marginLeft: '2px' }} />
-                    }
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
 
         {/* ── 3. WHO THIS IS FOR ── */}
         <section style={section('#ffffff')}>
