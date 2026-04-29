@@ -347,52 +347,26 @@ export default function LibraryPage() {
           </div>
         </div>
 
-        {/* Stats */}
+        {/* Stats — compact strip */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-          gap: '1rem',
-          marginBottom: '2rem'
+          display: 'flex',
+          gap: '1.5rem',
+          marginBottom: '2rem',
+          padding: '0.75rem 1rem',
+          background: '#f8f8f8',
+          borderRadius: '6px',
+          flexWrap: 'wrap'
         }}>
-          <div style={{
-            padding: '1.5rem',
-            background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.1), rgba(127, 176, 105, 0.05))',
-            border: '1px solid rgba(155, 196, 184, 0.2)',
-            borderRadius: '3px'
-          }}>
-            <div style={{ fontSize: '2rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.25rem' }}>
-              {stats.completedVideos}
+          {[
+            { value: stats.completedVideos, label: 'Completed', color: '#9bc4b8' },
+            { value: stats.videosWatched, label: 'Watched', color: '#7fb069' },
+            { value: `${Math.floor(stats.totalWatchTime / 60)}h`, label: 'Practice', color: '#6a994e' },
+          ].map(({ value, label, color }) => (
+            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontSize: '1.1rem', fontWeight: 600, color }}>{value}</span>
+              <span style={{ fontSize: '0.8rem', color: '#999' }}>{label}</span>
             </div>
-            <div style={{ fontSize: '0.875rem', color: '#666' }}>
-              Videos Completed
-            </div>
-          </div>
-          <div style={{
-            padding: '1.5rem',
-            background: 'linear-gradient(135deg, rgba(127, 176, 105, 0.1), rgba(155, 196, 184, 0.05))',
-            border: '1px solid rgba(127, 176, 105, 0.2)',
-            borderRadius: '3px'
-          }}>
-            <div style={{ fontSize: '2rem', fontWeight: 300, color: '#7fb069', marginBottom: '0.25rem' }}>
-              {stats.videosWatched}
-            </div>
-            <div style={{ fontSize: '0.875rem', color: '#666' }}>
-              Videos Watched
-            </div>
-          </div>
-          <div style={{
-            padding: '1.5rem',
-            background: 'linear-gradient(135deg, rgba(106, 153, 78, 0.1), rgba(155, 196, 184, 0.05))',
-            border: '1px solid rgba(106, 153, 78, 0.2)',
-            borderRadius: '3px'
-          }}>
-            <div style={{ fontSize: '2rem', fontWeight: 300, color: '#6a994e', marginBottom: '0.25rem' }}>
-              {Math.floor(stats.totalWatchTime / 60)}h
-            </div>
-            <div style={{ fontSize: '0.875rem', color: '#666' }}>
-              Hours of Practice
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Search and Sort */}
@@ -441,32 +415,48 @@ export default function LibraryPage() {
         {/* Category Tabs — teachings only */}
         {activeSection === 'teachings' && (
           <div style={{
-            display: 'flex',
-            gap: '0.5rem',
-            marginBottom: '2rem',
-            overflowX: 'auto',
-            paddingBottom: '0.5rem'
+            display: 'grid',
+            gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : `repeat(${TOPICS.length + 1}, 1fr)`,
+            gap: '0.75rem',
+            marginBottom: '2.5rem',
           }}>
-            {(['all', ...TOPICS] as const).map((key) => (
-              <button
-                key={key}
-                onClick={() => setSelectedCategory(key)}
-                style={{
-                  padding: '0.75rem 1.5rem',
-                  background: selectedCategory === key ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#f8f8f8',
-                  border: selectedCategory === key ? 'none' : '1px solid #e5e5e5',
-                  borderRadius: '3px',
-                  color: selectedCategory === key ? '#000' : '#1a1a1a',
-                  fontSize: '0.875rem',
-                  fontWeight: selectedCategory === key ? 600 : 300,
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                {key === 'all' ? 'All' : key}
-              </button>
-            ))}
+            {(['all', ...TOPICS] as const).map((key) => {
+              const isActive = selectedCategory === key
+              return (
+                <button
+                  key={key}
+                  onClick={() => setSelectedCategory(key)}
+                  style={{
+                    padding: '1rem 0.5rem',
+                    background: isActive ? '#1a1a1a' : '#ffffff',
+                    border: isActive ? '2px solid #1a1a1a' : '2px solid #e5e5e5',
+                    borderRadius: '8px',
+                    color: isActive ? '#ffffff' : '#444',
+                    fontSize: isMobile ? '0.8rem' : '0.95rem',
+                    fontWeight: isActive ? 600 : 400,
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    transition: 'all 0.2s ease',
+                    textAlign: 'center',
+                    letterSpacing: '0.01em',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.borderColor = '#9bc4b8'
+                      e.currentTarget.style.color = '#1a1a1a'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.borderColor = '#e5e5e5'
+                      e.currentTarget.style.color = '#444'
+                    }
+                  }}
+                >
+                  {key === 'all' ? 'All Topics' : key}
+                </button>
+              )
+            })}
           </div>
         )}
 
