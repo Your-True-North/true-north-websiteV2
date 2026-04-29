@@ -13,6 +13,7 @@ const BODY_FONT = '-apple-system, BlinkMacSystemFont, sans-serif'
 
 export default function FoundingMembersPage() {
   const [isMobile, setIsMobile] = useState(false)
+  const [gate, setGate] = useState<'question1' | 'question2' | 'open'>('question1')
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
@@ -70,6 +71,160 @@ export default function FoundingMembersPage() {
     lineHeight: 1.75,
     color: TEXT,
     fontFamily: BODY_FONT,
+  }
+
+  if (gate !== 'open') {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: '#0a0a0a',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2rem',
+        fontFamily: BODY_FONT,
+      }}>
+        <div style={{ maxWidth: '560px', width: '100%', textAlign: 'center' }}>
+
+          {gate === 'question1' && (
+            <>
+              <p style={{
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '3px',
+                textTransform: 'uppercase',
+                color: ACCENT,
+                marginBottom: '2rem',
+              }}>
+                Before you read this
+              </p>
+              <h1 style={{
+                fontSize: isMobile ? '2rem' : '2.75rem',
+                fontWeight: 500,
+                lineHeight: 1.2,
+                color: '#ffffff',
+                marginBottom: '3rem',
+              }}>
+                Did you click this link because you self-sabotage?
+              </h1>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <button
+                  onClick={() => setGate('question2')}
+                  style={{
+                    padding: '1.25rem 2rem',
+                    background: ACCENT,
+                    border: 'none',
+                    borderRadius: '6px',
+                    color: '#0a0a0a',
+                    fontSize: '1.1rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'background 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => setGate('open')}
+                  style={{
+                    padding: '1.25rem 2rem',
+                    background: 'transparent',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: '6px',
+                    color: 'rgba(255,255,255,0.5)',
+                    fontSize: '1.1rem',
+                    fontWeight: 400,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
+                >
+                  No
+                </button>
+              </div>
+              <p style={{ marginTop: '1.5rem', fontSize: '0.8rem', color: 'rgba(255,255,255,0.25)' }}>
+                There is no wrong answer.
+              </p>
+            </>
+          )}
+
+          {gate === 'question2' && (
+            <>
+              <p style={{
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '3px',
+                textTransform: 'uppercase',
+                color: ACCENT,
+                marginBottom: '2rem',
+              }}>
+                Good. You just caught it.
+              </p>
+              <h1 style={{
+                fontSize: isMobile ? '2rem' : '2.75rem',
+                fontWeight: 500,
+                lineHeight: 1.2,
+                color: '#ffffff',
+                marginBottom: '1rem',
+              }}>
+                Will you continue to self-sabotage by ignoring what comes next?
+              </h1>
+              <p style={{
+                fontSize: '1.1rem',
+                color: 'rgba(255,255,255,0.5)',
+                marginBottom: '3rem',
+                lineHeight: 1.7,
+              }}>
+                Most men will. They'll read this, feel something, and close the tab.<br />
+                That's the pattern.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <button
+                  onClick={() => setGate('open')}
+                  style={{
+                    padding: '1.25rem 2rem',
+                    background: ACCENT,
+                    border: 'none',
+                    borderRadius: '6px',
+                    color: '#0a0a0a',
+                    fontSize: '1.1rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'background 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = ACCENT_HOVER)}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
+                >
+                  No — show me what this is
+                </button>
+                <button
+                  onClick={() => window.history.back()}
+                  style={{
+                    padding: '1.25rem 2rem',
+                    background: 'transparent',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: '6px',
+                    color: 'rgba(255,255,255,0.5)',
+                    fontSize: '1.1rem',
+                    fontWeight: 400,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
+                >
+                  Yes — I'll leave
+                </button>
+              </div>
+            </>
+          )}
+
+        </div>
+      </div>
+    )
   }
 
   return (
