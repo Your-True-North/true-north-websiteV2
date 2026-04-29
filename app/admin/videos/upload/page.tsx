@@ -13,7 +13,7 @@ export default function UploadVideo() {
     title: '',
     description: '',
     youtubeId: '',
-    category: 'Foundation Work',
+    category: 'Spirituality',
     duration: '',
     thumbnailUrl: ''
   })
@@ -75,7 +75,7 @@ export default function UploadVideo() {
         title: '',
         description: '',
         youtubeId: '',
-        category: 'Foundation Work',
+        category: 'Spirituality',
         duration: '',
         thumbnailUrl: ''
       })
@@ -92,10 +92,11 @@ export default function UploadVideo() {
   }
 
   const categories = [
-    'Foundation Work',
-    'Breathwork Sessions',
-    'Live Teachings',
-    'Integration Practices'
+    'Spirituality',
+    'Masculinity',
+    'The Psyche',
+    'Somatic Work',
+    'Live Replays',
   ]
 
   return (

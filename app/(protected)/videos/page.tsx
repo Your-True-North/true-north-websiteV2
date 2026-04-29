@@ -133,18 +133,27 @@ export default function LibraryPage() {
     }
   }
 
-  const categoryLabels: { [key: string]: string } = {
-    all: 'All',
-    'Foundation Work': 'Foundation Work',
-    'Breathwork Sessions': 'Somatic Work',
-    'Live Teachings': 'Live Teachings',
-    'Integration Practices': 'Integration'
+  const TOPICS = ['Spirituality', 'Masculinity', 'The Psyche', 'Somatic Work']
+
+  // Normalise old DB category names to new topic names
+  const normaliseCategory = (cat: string): string => {
+    const map: { [key: string]: string } = {
+      'Foundation Work': 'Spirituality',
+      'Live Teachings': 'Masculinity',
+      'Integration Practices': 'The Psyche',
+      'Breathwork Sessions': 'Somatic Work',
+    }
+    return map[cat] ?? cat
   }
 
   const REPLAY_CATEGORY = 'Live Replays'
 
-  const teachingsVideos = videos.filter(v => v.category !== REPLAY_CATEGORY)
+  const teachingsVideos = videos
+    .filter(v => v.category !== REPLAY_CATEGORY)
+    .map(v => ({ ...v, category: normaliseCategory(v.category) }))
+
   const replayVideos = videos.filter(v => v.category === REPLAY_CATEGORY)
+
   const displayVideos = activeSection === 'teachings'
     ? teachingsVideos.filter(v => selectedCategory === 'all' || v.category === selectedCategory)
     : replayVideos
@@ -438,7 +447,7 @@ export default function LibraryPage() {
             overflowX: 'auto',
             paddingBottom: '0.5rem'
           }}>
-            {Object.entries(categoryLabels).map(([key, label]) => (
+            {(['all', ...TOPICS] as const).map((key) => (
               <button
                 key={key}
                 onClick={() => setSelectedCategory(key)}
@@ -455,7 +464,7 @@ export default function LibraryPage() {
                   transition: 'all 0.3s ease'
                 }}
               >
-                {label}
+                {key === 'all' ? 'All' : key}
               </button>
             ))}
           </div>
@@ -488,6 +497,56 @@ export default function LibraryPage() {
             {activeSection === 'replays'
               ? 'No replays posted yet. Check back after the next live call.'
               : `No videos found${searchQuery ? ' for your search' : ''}`}
+          </div>
+        ) : activeSection === 'teachings' && selectedCategory === 'all' ? (
+          // Grouped by topic
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+            {TOPICS.map(topic => {
+              const topicVideos = displayVideos.filter(v => v.category === topic)
+              if (topicVideos.length === 0) return null
+              return (
+                <div key={topic}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem' }}>
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: 500, color: '#1a1a1a', margin: 0 }}>{topic}</h2>
+                    <div style={{ flex: 1, height: '1px', background: '#e5e5e5' }} />
+                    <span style={{ fontSize: '0.8rem', color: '#999' }}>{topicVideos.length} video{topicVideos.length !== 1 ? 's' : ''}</span>
+                  </div>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
+                    gap: '1.5rem'
+                  }}>
+                    {topicVideos.map(video => {
+                      const youtubeId = getYouTubeId(video.youtube_url)
+                      const thumbnailUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : null
+                      return (
+                        <Link key={video.id} href={`/videos/${video.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                          <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '3px', overflow: 'hidden', transition: 'all 0.3s ease', cursor: 'pointer', height: '100%', display: 'flex', flexDirection: 'column' }}
+                            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#9bc4b8'; e.currentTarget.style.transform = 'translateY(-4px)' }}
+                            onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e5e5'; e.currentTarget.style.transform = 'translateY(0)' }}
+                          >
+                            <div style={{ width: '100%', paddingTop: '56.25%', background: thumbnailUrl ? `url(${thumbnailUrl}) center/cover` : 'rgba(0,0,0,0.5)', position: 'relative' }}>
+                              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #9bc4b8, #7fb069)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <svg style={{ width: '24px', height: '24px', color: '#000' }} fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
+                              </div>
+                              <div style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', padding: '0.25rem 0.75rem', background: getStatusColor(video.status), borderRadius: '20px', fontSize: '0.75rem', fontWeight: 600, color: '#000' }}>{getStatusLabel(video.status)}</div>
+                            </div>
+                            <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                              <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem', lineHeight: 1.4, color: '#1a1a1a' }}>{video.title}</h3>
+                              <p style={{ fontSize: '0.875rem', color: '#1a1a1a', lineHeight: 1.6, marginBottom: '1rem', flex: 1 }}>{video.description?.substring(0, 100)}{video.description?.length > 100 ? '...' : ''}</p>
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.875rem', color: '#999' }}>
+                                <span>{video.duration || 'Video'}</span>
+                                <span>{new Date(video.upload_date).toLocaleDateString()}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         ) : (
           <div style={{
