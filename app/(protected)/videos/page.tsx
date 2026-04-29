@@ -133,7 +133,7 @@ export default function LibraryPage() {
     }
   }
 
-  const TOPICS = ['Spirituality', 'Masculinity', 'The Psyche', 'Somatic Work']
+  const TOPICS = ['Start Here', 'Spirituality', 'Masculinity', 'The Psyche', 'Somatic Work']
 
   // Normalise old DB category names to new topic names
   const normaliseCategory = (cat: string): string => {

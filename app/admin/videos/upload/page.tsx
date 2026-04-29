@@ -92,6 +92,7 @@ export default function UploadVideo() {
   }
 
   const categories = [
+    'Start Here',
     'Spirituality',
     'Masculinity',
     'The Psyche',
