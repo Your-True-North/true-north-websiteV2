@@ -387,7 +387,7 @@ export default function RetreatPage() {
               This retreat came from that same place. It is a genuine response to what I keep seeing in the people around me right now: people who are carrying something heavy and know it is time to put it down, and people who feel ready for the next version of themselves but cannot quite see clearly enough to move forward.
             </p>
             <p style={{ fontFamily: sans, fontSize: '16px', lineHeight: 1.85, color: C.bodyText, marginBottom: '20px' }}>
-              The retreat takes place in the UK, Friday morning through to Sunday evening. A countryside setting, a small group of around ten people, two ceremonies, and the kind of space that most of us have never actually given ourselves.
+              The retreat takes place in the UK, Friday morning through to Sunday evening. A countryside setting, a small intimate group, two ceremonies, and the kind of space that most of us have never actually given ourselves.
             </p>
             <p style={{ fontFamily: sans, fontSize: '16px', lineHeight: 1.85, color: C.bodyText, marginBottom: '32px' }}>
               If you feel a pull toward this, listen to it. That pull is worth paying attention to.
@@ -477,7 +477,7 @@ export default function RetreatPage() {
               },
               {
                 svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="7" r="2.5"/><path d="M 9,10 L 9,19 M 6,13 L 12,13 M 9,19 L 6,24 M 9,19 L 12,24"/><circle cx="19" cy="7" r="2.5"/><path d="M 19,10 L 19,19 M 16,13 L 22,13 M 19,19 L 16,24 M 19,19 L 22,24"/></svg>,
-                label: 'Small Group of ~10',
+                label: 'Small Intimate Group',
               },
             ] as { svg: React.ReactNode; label: string }[]).map(({ svg, label }) => (
               <div key={label} style={{ background: C.cream, padding: '24px 16px', borderRadius: '2px' }}>
@@ -548,7 +548,7 @@ export default function RetreatPage() {
               },
               {
                 title: 'Small, Vetted Group',
-                body: 'Around ten people maximum. Every participant fills in a thorough application before being accepted. The calibre of the group matters to the quality of the experience for everyone.',
+                body: 'Deliberately small. Every participant fills in a thorough application before being accepted. The calibre of the group matters to the quality of the experience for everyone.',
               },
               {
                 title: 'Preparation & Integration',
@@ -607,7 +607,7 @@ export default function RetreatPage() {
                 { label: 'Both psilocybin ceremonies', included: true },
                 { label: 'All movement & somatic sessions', included: true },
                 { label: 'Integration support', included: true },
-                { label: 'Small group (max 10)', included: true },
+                { label: 'Small intimate group', included: true },
               ].map(({ label }) => (
                 <p key={label} style={{ fontFamily: sans, fontSize: '14px', color: C.darkMuted, display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span style={{ color: C.sage, fontSize: '16px' }}>✓</span> {label}
@@ -623,7 +623,7 @@ export default function RetreatPage() {
             </div>
             <div style={{ background: '#232320', padding: '28px' }}>
               <p style={{ fontFamily: serif, fontSize: '18px', color: C.sage, marginBottom: '10px' }}>Step 2: Secure Your Place</p>
-              <p style={{ fontFamily: sans, fontSize: '14px', color: C.darkMuted, lineHeight: 1.75 }}>Once the venue is confirmed (currently finalising between two countryside locations), those who wish to secure a place will be invited to leave a fully <strong style={{ color: C.darkText }}>refundable £300 deposit</strong>.</p>
+              <p style={{ fontFamily: sans, fontSize: '14px', color: C.darkMuted, lineHeight: 1.75 }}>Once the venue is confirmed (currently finalising between two countryside locations), those who wish to secure a place will be invited to leave a <strong style={{ color: C.darkText }}>£300 deposit</strong>. The deposit is non-refundable unless someone takes your space.</p>
             </div>
           </div>
 
@@ -673,11 +673,11 @@ export default function RetreatPage() {
           />
           <FAQ
             q="Can I reserve a spot right now?"
-            a="Not yet, but you can express your interest, which is the important thing at this stage. Once the venue is confirmed, those who have registered will be invited to secure their place with a fully refundable £300 deposit."
+            a="Not yet, but you can express your interest, which is the important thing at this stage. Once the venue is confirmed, those who have registered will be invited to secure their place with a £300 deposit."
           />
           <FAQ
             q="Is the deposit refundable?"
-            a="Yes, fully. If for any reason you can no longer attend once you've paid the deposit, it will be returned to you in full. The deposit exists purely to hold your space once numbers are being finalised."
+            a="The deposit is non-refundable. However, if someone takes your space, you will receive it back. This is why we ask that you only commit once you are genuinely sure about attending."
           />
           <FAQ
             q="Why do I need to fill in an application?"
@@ -853,7 +853,7 @@ export default function RetreatPage() {
           </button>
 
           <p style={{ fontFamily: sans, fontSize: '13px', color: 'rgba(240,235,224,0.3)', marginTop: '12px' }}>
-            UK · June 2026 · Small Group · £600 · £300 refundable deposit to secure
+            UK · June 2026 · Small Group · £600 · £300 deposit to secure
           </p>
 
           <p style={{ fontFamily: sans, fontSize: '12px', color: 'rgba(240,235,224,0.2)', marginTop: '48px', letterSpacing: '2px', textTransform: 'uppercase' }}>
