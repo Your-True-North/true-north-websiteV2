@@ -84,6 +84,66 @@ function Label({ children, light }: { children: string; light?: boolean }) {
   )
 }
 
+// ─── Mushroom botanical background art ───────────────────────────────────────
+function MushroomBg({ opacity = 0.09, stroke = '#8aaa96' }: { opacity?: number; stroke?: string }) {
+  // Each mushroom: cap-base center at (cx, cy), drawn in local coords then translated.
+  // Local coords: y-up = negative y. Cap base at origin. Stem goes down (+y).
+  // All paths use fill=none, stroke only, strokeWidth=1 for thin-line look.
+  const S = ({ cx, cy, sc = 1, rot = 0 }: { cx: number; cy: number; sc?: number; rot?: number }) => (
+    <g
+      transform={`translate(${cx},${cy}) rotate(${rot}) scale(${sc})`}
+      fill="none"
+      stroke={stroke}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* Cap — bell/dome, slightly asymmetric */}
+      <path
+        d="M 0,0 C -8,-2 -26,-10 -28,-24 C -30,-38 -20,-50 0,-50 C 20,-50 30,-38 28,-24 C 26,-10 8,-2 0,0 Z"
+        strokeWidth="1"
+      />
+      {/* Gill lines radiating from cap base */}
+      <line x1="0" y1="0" x2="-24" y2="-8"  strokeWidth="0.5" />
+      <line x1="0" y1="0" x2="-18" y2="-3"  strokeWidth="0.5" />
+      <line x1="0" y1="0" x2="-10" y2="-1"  strokeWidth="0.5" />
+      <line x1="0" y1="0" x2=" 10" y2="-1"  strokeWidth="0.5" />
+      <line x1="0" y1="0" x2=" 18" y2="-3"  strokeWidth="0.5" />
+      <line x1="0" y1="0" x2=" 24" y2="-8"  strokeWidth="0.5" />
+      {/* Stem — gently tapered and slightly sinuous */}
+      <path d="M 0,0 C -2,14 2,28 0,46 C -2,58 1,66 0,76" strokeWidth="1" />
+      {/* Annulus (skirt) roughly 60% down the stem */}
+      <path d="M -11,42 Q 0,46 11,42" strokeWidth="0.8" />
+    </g>
+  )
+
+  return (
+    <svg
+      aria-hidden="true"
+      style={{
+        position: 'absolute', inset: 0,
+        width: '100%', height: '100%',
+        opacity, pointerEvents: 'none', zIndex: 0,
+      }}
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      {/* Bottom-left cluster */}
+      <S cx={80}  cy={870} sc={3.2}  rot={-12} />
+      <S cx={190} cy={895} sc={2.1}  rot={6}   />
+      <S cx={30}  cy={895} sc={2.5}  rot={-22} />
+      {/* Lone tall one, left edge */}
+      <S cx={148} cy={840} sc={1.4}  rot={4}   />
+      {/* Top-right cluster */}
+      <S cx={1360} cy={220} sc={2.8}  rot={10}  />
+      <S cx={1410} cy={260} sc={1.6}  rot={-5}  />
+      {/* Right-edge mid */}
+      <S cx={1430} cy={560} sc={2.0}  rot={8}   />
+      {/* Bottom-centre-right */}
+      <S cx={820}  cy={890} sc={1.8}  rot={3}   />
+    </svg>
+  )
+}
+
 // ─── FAQ item ─────────────────────────────────────────────────────────────────
 function FAQ({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false)
@@ -219,6 +279,9 @@ export default function RetreatPage() {
           background: 'radial-gradient(circle, rgba(138,170,150,0.06) 0%, transparent 70%)',
           pointerEvents: 'none',
         }} />
+
+        {/* mushroom botanical art */}
+        <MushroomBg opacity={0.09} />
 
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '760px' }}>
           <p style={{
@@ -704,6 +767,9 @@ export default function RetreatPage() {
           background: 'radial-gradient(ellipse, rgba(138,170,150,0.07) 0%, transparent 70%)',
           pointerEvents: 'none',
         }} />
+
+        {/* mushroom botanical art — slightly more visible on closing */}
+        <MushroomBg opacity={0.11} stroke="#a8c8b4" />
 
         <FadeSection style={{ maxWidth: '680px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <Divider color={C.sage} />
