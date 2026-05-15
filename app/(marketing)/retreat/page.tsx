@@ -85,34 +85,59 @@ function Label({ children, light }: { children: string; light?: boolean }) {
 }
 
 // ─── Mushroom botanical background art ───────────────────────────────────────
+// Accurate Psilocybe cubensis morphology:
+//   - Wide, flat dome cap (3-4× wider than tall) with small central umbo
+//   - Cap edge droops slightly below the stem junction (concave underside)
+//   - Thick cylindrical stem (~30% of cap width)
+//   - Drooping membranous annulus ring on upper stem
+//   - Fine gill lines radiating from stem to cap edge
+// Coordinate system: (0,0) = stem base, negative-y = upward.
+// Template fits in ~90 wide × 130 tall units.
 function MushroomBg({ opacity = 0.09, stroke = '#8aaa96' }: { opacity?: number; stroke?: string }) {
-  // Each mushroom: cap-base center at (cx, cy), drawn in local coords then translated.
-  // Local coords: y-up = negative y. Cap base at origin. Stem goes down (+y).
-  // All paths use fill=none, stroke only, strokeWidth=1 for thin-line look.
-  const S = ({ cx, cy, sc = 1, rot = 0 }: { cx: number; cy: number; sc?: number; rot?: number }) => (
+  const S = ({ x, y, sc = 1, rot = 0 }: { x: number; y: number; sc?: number; rot?: number }) => (
     <g
-      transform={`translate(${cx},${cy}) rotate(${rot}) scale(${sc})`}
+      transform={`translate(${x},${y}) rotate(${rot},0,0) scale(${sc})`}
       fill="none"
       stroke={stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      {/* Cap — bell/dome, slightly asymmetric */}
+      {/* ── Outer silhouette ── */}
+      {/* Broad dome cap: umbo peak → sweeps wide → drooping edge → concave underside → stem */}
       <path
-        d="M 0,0 C -8,-2 -26,-10 -28,-24 C -30,-38 -20,-50 0,-50 C 20,-50 30,-38 28,-24 C 26,-10 8,-2 0,0 Z"
         strokeWidth="1"
+        d={[
+          'M 0,-118',                              // umbo peak
+          'C 6,-118 18,-114 28,-108',              // right: umbo → upper dome
+          'C 38,-102 46,-92 46,-84',               // right: dome widens
+          'C 46,-77 42,-73 36,-72',                // right: edge droops slightly
+          'C 26,-72 14,-74 8,-77',                 // right: underside curves back in
+          'C 7,-78 7,-80 7,-80',                   // right: tight junction to stem
+          'L 7,0',                                  // right stem edge
+          'L -7,0',                                 // stem base
+          'L -7,-80',                               // left stem edge
+          'C -7,-80 -7,-78 -8,-77',                // left junction
+          'C -14,-74 -26,-72 -36,-72',             // left underside
+          'C -42,-73 -46,-77 -46,-84',             // left edge
+          'C -46,-92 -38,-102 -28,-108',           // left dome
+          'C -18,-114 -6,-118 0,-118 Z',           // left umbo → close
+        ].join(' ')}
       />
-      {/* Gill lines radiating from cap base */}
-      <line x1="0" y1="0" x2="-24" y2="-8"  strokeWidth="0.5" />
-      <line x1="0" y1="0" x2="-18" y2="-3"  strokeWidth="0.5" />
-      <line x1="0" y1="0" x2="-10" y2="-1"  strokeWidth="0.5" />
-      <line x1="0" y1="0" x2=" 10" y2="-1"  strokeWidth="0.5" />
-      <line x1="0" y1="0" x2=" 18" y2="-3"  strokeWidth="0.5" />
-      <line x1="0" y1="0" x2=" 24" y2="-8"  strokeWidth="0.5" />
-      {/* Stem — gently tapered and slightly sinuous */}
-      <path d="M 0,0 C -2,14 2,28 0,46 C -2,58 1,66 0,76" strokeWidth="1" />
-      {/* Annulus (skirt) roughly 60% down the stem */}
-      <path d="M -11,42 Q 0,46 11,42" strokeWidth="0.8" />
+      {/* ── Gill lines — thin radials from stem junction to drooping cap edge ── */}
+      <line x1=" 7" y1="-80" x2=" 44" y2="-82" strokeWidth="0.45" />
+      <line x1=" 7" y1="-80" x2=" 36" y2="-74" strokeWidth="0.45" />
+      <line x1=" 7" y1="-80" x2=" 24" y2="-73" strokeWidth="0.45" />
+      <line x1="-7" y1="-80" x2="-24" y2="-73" strokeWidth="0.45" />
+      <line x1="-7" y1="-80" x2="-36" y2="-74" strokeWidth="0.45" />
+      <line x1="-7" y1="-80" x2="-44" y2="-82" strokeWidth="0.45" />
+      {/* ── Annulus — drooping membranous skirt on upper third of stem ── */}
+      <path
+        strokeWidth="0.7"
+        d="M -16,-52 C -10,-46 10,-46 16,-52"
+      />
+      {/* Skirt drape hints */}
+      <path strokeWidth="0.4" d="M -16,-52 C -15,-56 -13,-60 -11,-55" />
+      <path strokeWidth="0.4" d="M  16,-52 C  15,-56  13,-60  11,-55" />
     </g>
   )
 
@@ -128,18 +153,16 @@ function MushroomBg({ opacity = 0.09, stroke = '#8aaa96' }: { opacity?: number; 
       preserveAspectRatio="xMidYMid slice"
     >
       {/* Bottom-left cluster */}
-      <S cx={80}  cy={870} sc={3.2}  rot={-12} />
-      <S cx={190} cy={895} sc={2.1}  rot={6}   />
-      <S cx={30}  cy={895} sc={2.5}  rot={-22} />
-      {/* Lone tall one, left edge */}
-      <S cx={148} cy={840} sc={1.4}  rot={4}   />
+      <S x={100}  y={882} sc={2.2} rot={-7}  />
+      <S x={185}  y={892} sc={1.6} rot={8}   />
+      <S x={48}   y={894} sc={1.8} rot={-18} />
+      <S x={152}  y={896} sc={1.1} rot={3}   />
       {/* Top-right cluster */}
-      <S cx={1360} cy={220} sc={2.8}  rot={10}  />
-      <S cx={1410} cy={260} sc={1.6}  rot={-5}  />
-      {/* Right-edge mid */}
-      <S cx={1430} cy={560} sc={2.0}  rot={8}   />
-      {/* Bottom-centre-right */}
-      <S cx={820}  cy={890} sc={1.8}  rot={3}   />
+      <S x={1352} y={228} sc={2.0} rot={10}  />
+      <S x={1408} y={268} sc={1.4} rot={-6}  />
+      <S x={1310} y={214} sc={1.2} rot={16}  />
+      {/* Lone right-edge */}
+      <S x={1436} y={565} sc={1.7} rot={6}   />
     </svg>
   )
 }
