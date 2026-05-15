@@ -381,16 +381,16 @@ export default function RetreatPage() {
               I'm not going to dress this up with flowery language or a polished sales pitch. If you're here, something in you already knows why.
             </p>
             <p style={{ fontFamily: sans, fontSize: '16px', lineHeight: 1.85, color: C.bodyText, marginBottom: '20px' }}>
-              Over the past decade, I've held space for hundreds of men and women going through genuinely hard things — grief, burnout, identity loss, the quiet ache of feeling disconnected from your own life. The sessions that moved people most were never the big, produced ones. They were the intimate ones. The small rooms. The honest conversations. The work that happened when the environment itself felt safe enough for something real to happen.
+              Over the past decade, I've held space for hundreds of men and women going through genuinely hard things. Grief, burnout, identity loss, the quiet ache of feeling disconnected from your own life. The sessions that moved people most were always the intimate ones, the honest conversations, the work that happened when the environment itself felt safe enough for something real to surface.
             </p>
             <p style={{ fontFamily: sans, fontSize: '16px', lineHeight: 1.85, color: C.bodyText, marginBottom: '20px' }}>
-              This retreat came from exactly that impulse. Not a product. Not a programme. A genuine response to what I'm seeing in the people around me right now — people who are carrying something heavy and know it's time to put it down, or who feel ready for the next version of themselves but can't quite see clearly enough to move forward.
+              This retreat came from that same place. It is a genuine response to what I keep seeing in the people around me right now: people who are carrying something heavy and know it is time to put it down, and people who feel ready for the next version of themselves but cannot quite see clearly enough to move forward.
             </p>
             <p style={{ fontFamily: sans, fontSize: '16px', lineHeight: 1.85, color: C.bodyText, marginBottom: '20px' }}>
-              The Psilocybin Weekend Retreat will take place in the UK — Friday morning to Sunday evening. A countryside setting, a small group of around ten people, two ceremonies, and the kind of space that most of us have never actually given ourselves.
+              The retreat takes place in the UK, Friday morning through to Sunday evening. A countryside setting, a small group of around ten people, two ceremonies, and the kind of space that most of us have never actually given ourselves.
             </p>
             <p style={{ fontFamily: sans, fontSize: '16px', lineHeight: 1.85, color: C.bodyText, marginBottom: '32px' }}>
-              If you feel a pull toward this — listen to it. That pull is worth paying attention to.
+              If you feel a pull toward this, listen to it. That pull is worth paying attention to.
             </p>
             <p style={{ fontFamily: sans, fontSize: '15px', color: C.muted, fontStyle: 'italic' }}>
               — Mason, True North
@@ -415,18 +415,18 @@ export default function RetreatPage() {
             {[
               {
                 day: 'Friday',
-                title: 'Arrival & Ground',
-                items: ['Travel & settle in', 'Introductions & orientation', 'Opening circle', 'Group dinner together', 'Intentions & preparation']
+                title: 'Arrival & First Ceremony',
+                items: ['Travel & settle in', 'Introductions & orientation', 'Opening circle', 'Group dinner together', 'First ceremony (evening, indoors)']
               },
               {
                 day: 'Saturday',
-                title: 'The First Ceremony',
-                items: ['Morning meditation & breathwork', 'Somatic grounding work', 'Daytime ceremony in nature', 'Open sky, open ground', 'Evening integration & rest']
+                title: 'The Second Ceremony',
+                items: ['Morning meditation & breathwork', 'Somatic grounding work', 'Second ceremony (daytime, outdoors)', 'Open sky, open ground', 'Evening integration & rest']
               },
               {
                 day: 'Sunday',
-                title: 'The Second Ceremony',
-                items: ['Morning movement & stillness', 'Second ceremony — indoors', 'Deep integration support', 'Closing circle', 'Departure Sunday evening']
+                title: 'Integration & Closing',
+                items: ['Morning movement & stillness', 'Deep integration support', 'Closing circle', 'Shared final meal', 'Departure Sunday evening']
               },
             ].map(({ day, title, items }) => (
               <div key={day} style={{ background: C.cream, padding: '32px 28px' }}>
@@ -446,18 +446,42 @@ export default function RetreatPage() {
             Everything You Need Is Included
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)', gap: '16px', textAlign: 'center' }}>
-            {[
-              { icon: '🏡', label: 'Countryside Accommodation' },
-              { icon: '🍽', label: 'All Meals Provided' },
-              { icon: '🌿', label: 'Two Guided Ceremonies' },
-              { icon: '🧘', label: 'Breathwork & Meditation' },
-              { icon: '🌄', label: 'Nature Hike' },
-              { icon: '🫀', label: 'Somatic Practices' },
-              { icon: '🤝', label: 'Integration Support' },
-              { icon: '👥', label: 'Small Group of ~10' },
-            ].map(({ icon, label }) => (
+            {([
+              {
+                svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><path d="M 2,14 L 14,4 L 26,14"/><path d="M 4,14 L 4,24 L 24,24 L 24,14"/><path d="M 11,24 L 11,17 C 11,16 17,16 17,17 L 17,24"/></svg>,
+                label: 'Countryside Accommodation',
+              },
+              {
+                svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><line x1="10" y1="4" x2="10" y2="24"/><path d="M 7,4 L 7,10 C 7,12 13,12 13,10 L 13,4"/><line x1="20" y1="17" x2="20" y2="24"/><path d="M 18,4 C 18,10 23,12 20,17 C 17,12 22,10 22,4"/></svg>,
+                label: 'All Meals Provided',
+              },
+              {
+                svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><path d="M 14,15 C 8,15 5,11 5,8 C 5,5 9,3 14,3 C 19,3 23,5 23,8 C 23,11 20,15 14,15"/><path d="M 11,15 L 11.5,23 C 11.5,24 16.5,24 16.5,23 L 17,15"/><path d="M 9,20 Q 14,22 19,20" strokeWidth={0.9}/></svg>,
+                label: 'Two Guided Ceremonies',
+              },
+              {
+                svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><circle cx="14" cy="7" r="3"/><path d="M 9,18 C 9,13 11,11 14,11 C 17,11 19,13 19,18"/><path d="M 6,20 L 22,20"/><path d="M 9,18 L 6,20 M 19,18 L 22,20"/></svg>,
+                label: 'Breathwork & Meditation',
+              },
+              {
+                svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><path d="M 2,24 L 11,9 L 16,16 L 20,10 L 26,24"/><path d="M 9,13 L 11,9 L 13,13" strokeWidth={0.9}/></svg>,
+                label: 'Nature Hike',
+              },
+              {
+                svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><path d="M 3,11 C 6,7 9,15 12,11 C 15,7 18,15 21,11 C 23,9 25,11 25,11"/><path d="M 3,18 C 6,14 9,22 12,18 C 15,14 18,22 21,18 C 23,16 25,18 25,18"/></svg>,
+                label: 'Somatic Practices',
+              },
+              {
+                svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><path d="M 14,23 C 7,21 4,16 5,11 C 6,6 10,4 14,5 C 18,4 22,6 23,11 C 24,16 21,21 14,23"/><path d="M 14,23 L 14,5" strokeWidth={0.8}/><path d="M 14,14 C 10,12 8,8 10,6" strokeWidth={0.8}/></svg>,
+                label: 'Integration Support',
+              },
+              {
+                svg: <svg viewBox="0 0 28 28" width={28} height={28} fill="none" stroke={C.sageMid} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="7" r="2.5"/><path d="M 9,10 L 9,19 M 6,13 L 12,13 M 9,19 L 6,24 M 9,19 L 12,24"/><circle cx="19" cy="7" r="2.5"/><path d="M 19,10 L 19,19 M 16,13 L 22,13 M 19,19 L 16,24 M 19,19 L 22,24"/></svg>,
+                label: 'Small Group of ~10',
+              },
+            ] as { svg: React.ReactNode; label: string }[]).map(({ svg, label }) => (
               <div key={label} style={{ background: C.cream, padding: '24px 16px', borderRadius: '2px' }}>
-                <div style={{ fontSize: '24px', marginBottom: '10px' }}>{icon}</div>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '12px' }}>{svg}</div>
                 <p style={{ fontFamily: sans, fontSize: '13px', color: C.bodyText, lineHeight: 1.5 }}>{label}</p>
               </div>
             ))}
@@ -477,19 +501,19 @@ export default function RetreatPage() {
             {[
               {
                 heading: "The Weight You've Got Used To",
-                body: "Grief, stress, disconnection, a relationship that no longer fits — most people don't collapse under it. They adapt. They keep moving. Until one day they notice they haven't felt like themselves in a very long time.",
+                body: "Grief, stress, disconnection, a relationship that no longer fits. Most people don't collapse under it. They adapt. They keep moving. Until one day they notice they haven't felt like themselves in a very long time.",
               },
               {
                 heading: 'The Space Between Versions',
-                body: 'You can see who you want to become. You know something needs to change. But the noise of ordinary life makes it nearly impossible to think clearly — let alone feel clearly.',
+                body: "You can see who you want to become. You know something needs to change. But the noise of ordinary life makes it nearly impossible to think clearly, let alone feel clearly.",
               },
               {
                 heading: "The Clarity You Can't Force",
-                body: "Some breakthroughs don't happen from thinking harder. They happen when you finally stop running, step away from your normal environment, and give yourself a space where something deeper can be heard.",
+                body: "Some breakthroughs don't happen from thinking harder. They happen when you finally stop running, step away from your normal environment, and give yourself a space where something deeper can actually be heard.",
               },
               {
                 heading: "The Reconnection You're Ready For",
-                body: "Not just with yourself — with what actually matters. With the relationships, the direction, the sense of purpose that's been obscured by the pace and pressure of everyday life.",
+                body: "With yourself, and with what actually matters. With the relationships, the direction, the sense of purpose that has been obscured by the pace and pressure of everyday life.",
               },
             ].map(({ heading, body }) => (
               <div key={heading} style={{ background: '#232320', padding: '32px' }}>
@@ -510,7 +534,7 @@ export default function RetreatPage() {
         <FadeSection style={inner}>
           <Label>Held With Care</Label>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? '28px' : '40px', color: C.charcoal, fontWeight: 400, lineHeight: 1.3, marginBottom: '16px' }}>
-            Safety Isn't An Afterthought.<br />It's The Foundation.
+            Safety Is The Foundation
           </h2>
           <p style={{ fontFamily: sans, fontSize: '16px', color: C.muted, lineHeight: 1.7, marginBottom: '52px', maxWidth: '560px', margin: '0 auto 52px' }}>
             Psilocybin used intentionally, in a carefully held space, with proper preparation and integration support, can be one of the most profound experiences of a person's life. We take that seriously.
@@ -532,7 +556,7 @@ export default function RetreatPage() {
               },
               {
                 title: 'Not Recreational',
-                body: "This is a structured, intentional environment. The work is real. If you're looking for a party or a novelty experience, this isn't the right fit — and we'll say so directly.",
+                body: "This is a structured, intentional environment. The work is real. If you're looking for a party or a novelty experience this isn't the right fit, and we'll say so honestly.",
               },
               {
                 title: 'Beginners Welcome',
@@ -540,7 +564,7 @@ export default function RetreatPage() {
               },
               {
                 title: 'Emotionally Ready',
-                body: "We ask that you only apply if you genuinely feel called to this work — not just curious. There's a difference, and you'll know which one is true for you.",
+                body: "We ask that you only apply if you genuinely feel called to this work, not just curious. There's a difference, and you'll know which one is true for you.",
               },
             ].map(({ title, body }) => (
               <div key={title} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
@@ -555,7 +579,7 @@ export default function RetreatPage() {
 
           <div style={{ background: C.stone, padding: '28px 32px', borderLeft: `3px solid ${C.sage}`, textAlign: 'left', maxWidth: '580px', margin: '0 auto' }}>
             <p style={{ fontFamily: sans, fontSize: '14px', color: C.bodyText, lineHeight: 1.8 }}>
-              <strong>Important:</strong> All applicants are required to complete a thorough screening application before being accepted. This is a non-negotiable part of the process — for your safety and the safety of the group.
+              <strong>Important:</strong> All applicants are required to complete a thorough screening application before being accepted. This is a non-negotiable part of the process, for your safety and the safety of the group.
             </p>
           </div>
         </FadeSection>
@@ -594,11 +618,11 @@ export default function RetreatPage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '16px', textAlign: 'left', marginBottom: '40px' }}>
             <div style={{ background: '#232320', padding: '28px' }}>
-              <p style={{ fontFamily: serif, fontSize: '18px', color: C.sage, marginBottom: '10px' }}>Step 1 — Express Interest</p>
-              <p style={{ fontFamily: sans, fontSize: '14px', color: C.darkMuted, lineHeight: 1.75 }}>Complete the short form below. No payment, no commitment. Just letting me know you're genuinely interested.</p>
+              <p style={{ fontFamily: serif, fontSize: '18px', color: C.sage, marginBottom: '10px' }}>Step 1: Express Interest</p>
+              <p style={{ fontFamily: sans, fontSize: '14px', color: C.darkMuted, lineHeight: 1.75 }}>Complete the short form below. No payment, no commitment, just letting me know you're genuinely interested.</p>
             </div>
             <div style={{ background: '#232320', padding: '28px' }}>
-              <p style={{ fontFamily: serif, fontSize: '18px', color: C.sage, marginBottom: '10px' }}>Step 2 — Secure Your Place</p>
+              <p style={{ fontFamily: serif, fontSize: '18px', color: C.sage, marginBottom: '10px' }}>Step 2: Secure Your Place</p>
               <p style={{ fontFamily: sans, fontSize: '14px', color: C.darkMuted, lineHeight: 1.75 }}>Once the venue is confirmed (currently finalising between two countryside locations), those who wish to secure a place will be invited to leave a fully <strong style={{ color: C.darkText }}>refundable £300 deposit</strong>.</p>
             </div>
           </div>
@@ -621,15 +645,15 @@ export default function RetreatPage() {
 
           <FAQ
             q="Do I need experience with psilocybin?"
-            a="No. First-timers are genuinely welcome. In fact, some of the most profound experiences happen with beginners who approach the work with open, clear minds. What matters is that you're emotionally ready — not how much you've done before."
+            a="No. First-timers are genuinely welcome. Some of the most profound experiences happen with people who have never done this before and approach it with an open mind. What matters is that you're emotionally ready, not how much you've done."
           />
           <FAQ
             q="Will accommodation be shared?"
-            a="Yes, most likely. This is a countryside cottage setting — shared spaces and communal meals are part of the intimacy of the experience. Specific accommodation details will be confirmed once the venue is finalised."
+            a="Yes, most likely. This is a countryside cottage setting where shared spaces and communal meals are part of what makes the experience what it is. Specific accommodation details will be confirmed once the venue is finalised."
           />
           <FAQ
             q="Is food included?"
-            a="Yes. All meals are included from Friday dinner through to Sunday lunch. We eat well. Good food is part of how we care for the body during this kind of work."
+            a="Yes. All meals are included from Friday dinner through to Sunday lunch. Good food is part of how we care for the body during this kind of work, and we eat well."
           />
           <FAQ
             q="What if I'm nervous?"
@@ -641,15 +665,15 @@ export default function RetreatPage() {
           />
           <FAQ
             q="Is this a recreational experience?"
-            a="No. This is intentional, facilitated inner work. The structure, the preparation, the integration support — all of it is designed for depth, not entertainment. If you're looking for a recreational experience, this isn't the right fit."
+            a="No. This is intentional, facilitated inner work. The structure, the preparation and the integration support are all designed for depth, not entertainment. If you're looking for a recreational experience, this isn't the right fit."
           />
           <FAQ
             q="When will the location be confirmed?"
-            a="Very soon. We're finalising between two excellent countryside venues — targeting the first or second weekend of June 2026. Everyone who registers interest will be the first to hear."
+            a="Very soon. We're finalising between two excellent countryside venues, targeting the first or second weekend of June 2026. Everyone who registers interest will be the first to hear."
           />
           <FAQ
             q="Can I reserve a spot right now?"
-            a="Not yet — but you can express your interest, which is the important thing at this stage. Once the venue is confirmed, those who've registered will be invited to secure their place with a fully refundable £300 deposit."
+            a="Not yet, but you can express your interest, which is the important thing at this stage. Once the venue is confirmed, those who have registered will be invited to secure their place with a fully refundable £300 deposit."
           />
           <FAQ
             q="Is the deposit refundable?"
@@ -657,7 +681,7 @@ export default function RetreatPage() {
           />
           <FAQ
             q="Why do I need to fill in an application?"
-            a="Because this isn't a standard ticketed event. An application form ensures the environment is right for everyone — that each person is approaching this with genuine readiness, and that the group dynamic supports deep work. It's a non-negotiable part of the process."
+            a="Because this isn't a standard ticketed event. An application form ensures the environment is right for everyone, that each person is approaching this with genuine readiness, and that the group dynamic supports deep work. It is a non-negotiable part of the process."
           />
         </FadeSection>
       </section>
@@ -685,7 +709,7 @@ export default function RetreatPage() {
                 Thank you.
               </h3>
               <p style={{ fontFamily: sans, fontSize: '15px', color: C.darkMuted, lineHeight: 1.8, maxWidth: '420px', margin: '0 auto' }}>
-                Your interest has been received. Check your inbox for a confirmation — and I'll be in touch personally once the venue is confirmed.
+                Your interest has been received. Check your inbox for a confirmation and I'll be in touch personally once the venue is confirmed.
               </p>
               <div style={{ width: '48px', height: '1px', background: C.sage, margin: '32px auto 0' }} />
             </div>
@@ -712,7 +736,7 @@ export default function RetreatPage() {
                 <label style={labelStyle}>Experience With Psilocybin</label>
                 <select name="experience" value={formState.experience} onChange={handleChange} style={inputStyle}>
                   <option value="">Select one…</option>
-                  <option value="none">No experience — this would be my first time</option>
+                  <option value="none">No experience, this would be my first time</option>
                   <option value="some">Some experience (1–3 times)</option>
                   <option value="regular">Regular experience (multiple times)</option>
                   <option value="ceremonial">Ceremonial or facilitated experience</option>
@@ -725,7 +749,7 @@ export default function RetreatPage() {
                   name="calling"
                   value={formState.calling}
                   onChange={handleChange}
-                  placeholder="Share as much or as little as feels right. There are no right answers here — just what's true for you."
+                  placeholder="Share as much or as little as feels right. There are no right answers, just what's true for you."
                   rows={5}
                   style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.7 }}
                 />
@@ -735,9 +759,9 @@ export default function RetreatPage() {
                 <label style={labelStyle}>Once The Venue Is Confirmed, Would You Likely Secure Your Place With A £300 Deposit?</label>
                 <select name="deposit" value={formState.deposit} onChange={handleChange} style={inputStyle}>
                   <option value="">Select one…</option>
-                  <option value="yes">Yes — I'd likely secure my space</option>
+                  <option value="yes">Yes, I'd likely secure my space</option>
                   <option value="probably">Probably, if the dates work</option>
-                  <option value="maybe">Not sure yet — want to hear more first</option>
+                  <option value="maybe">Not sure yet, want to hear more first</option>
                   <option value="no">No, just keeping an eye on it for now</option>
                 </select>
               </div>
@@ -809,7 +833,7 @@ export default function RetreatPage() {
             fontFamily: sans, fontSize: '16px', color: 'rgba(240,235,224,0.6)',
             lineHeight: 1.8, marginTop: '36px', marginBottom: '48px',
           }}>
-            If something in you is responding to this — that's worth listening to. The form is short. Nothing is owed. And whatever happens from here, the fact that you're even considering it says something about where you are right now.
+            If something in you is responding to this, that's worth listening to. The form is short, nothing is owed, and whatever happens from here, the fact that you're even considering it says something about where you are right now.
           </p>
 
           <button
