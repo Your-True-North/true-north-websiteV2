@@ -323,7 +323,7 @@ export default function RetreatPage() {
             fontFamily: sans, fontSize: '11px', letterSpacing: '4px',
             textTransform: 'uppercase', color: C.sage, marginBottom: '36px',
           }}>
-            True North · UK Countryside · June 2026
+            True North · UK Countryside · 4th to 7th June 2026
           </p>
 
           <h1 style={{
@@ -399,7 +399,7 @@ export default function RetreatPage() {
               This retreat came from that same place. It is a genuine response to what I keep seeing in the people around me right now: people who are carrying something heavy and know it is time to put it down, and people who feel ready for the next version of themselves but cannot quite see clearly enough to move forward.
             </p>
             <p style={{ fontFamily: sans, fontSize: '16px', lineHeight: 1.85, color: C.bodyText, marginBottom: '20px' }}>
-              The retreat takes place in the UK, Friday morning through to Sunday evening. A countryside setting, a small intimate group, two ceremonies, and the kind of space that most of us have never actually given ourselves.
+              The retreat takes place in the UK, Thursday 4th June through to Sunday 7th June. Arrive Thursday evening, work begins Friday morning. A countryside setting, a small intimate group, two ceremonies, and the kind of space that most of us have never actually given ourselves.
             </p>
             <p style={{ fontFamily: sans, fontSize: '16px', lineHeight: 1.85, color: C.bodyText, marginBottom: '32px' }}>
               If you feel a pull toward this, listen to it. That pull is worth paying attention to.
@@ -416,29 +416,37 @@ export default function RetreatPage() {
         <FadeSection style={inner}>
           <Label>The Retreat</Label>
           <h2 style={{ fontFamily: serif, fontSize: isMobile ? '30px' : '42px', color: C.charcoal, fontWeight: 400, lineHeight: 1.25, marginBottom: '16px' }}>
-            Friday to Sunday.<br />UK Countryside.
+            Thursday 4th to Sunday 7th June.<br />UK Countryside.
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '16px', color: C.muted, lineHeight: 1.7, marginBottom: '56px' }}>
-            Three days away from ordinary life. Nowhere to be. Nothing to perform.
+          <p style={{ fontFamily: sans, fontSize: '16px', color: C.muted, lineHeight: 1.7, marginBottom: '8px' }}>
+            Four days away from ordinary life. Nowhere to be. Nothing to perform.
+          </p>
+          <p style={{ fontFamily: sans, fontSize: '13px', color: C.sage, lineHeight: 1.7, marginBottom: '56px', letterSpacing: '0.5px' }}>
+            Preliminary dates, subject to numbers confirming.
           </p>
 
           {/* Weekend timeline */}
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: '2px', textAlign: 'left', marginBottom: '64px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr 1fr', gap: '2px', textAlign: 'left', marginBottom: '64px' }}>
             {[
               {
-                day: 'Friday',
-                title: 'Arrival & First Ceremony',
-                items: ['Travel & settle in', 'Introductions & orientation', 'Opening circle', 'Group dinner together', 'First ceremony (evening, indoors)']
+                day: 'Thursday 4th',
+                title: 'Arrival',
+                items: ['Travel & arrive', 'Settle in', 'Meet the group', 'Dinner together', 'Orientation & intentions']
               },
               {
-                day: 'Saturday',
+                day: 'Friday 5th',
+                title: 'The First Ceremony',
+                items: ['Morning meditation & breathwork', 'Somatic grounding work', 'Time to rest & integrate', 'First ceremony (evening, indoors)']
+              },
+              {
+                day: 'Saturday 6th',
                 title: 'The Second Ceremony',
-                items: ['Morning meditation & breathwork', 'Somatic grounding work', 'Second ceremony (daytime, outdoors)', 'Open sky, open ground', 'Evening integration & rest']
+                items: ['Morning movement & stillness', 'Second ceremony (daytime, outdoors)', 'Open sky, open ground', 'Evening integration & rest']
               },
               {
-                day: 'Sunday',
+                day: 'Sunday 7th',
                 title: 'Integration & Closing',
-                items: ['Morning movement & stillness', 'Deep integration support', 'Closing circle', 'Shared final meal', 'Departure Sunday evening']
+                items: ['Morning reflection', 'Deep integration support', 'Closing circle', 'Shared final meal', 'Depart by lunchtime']
               },
             ].map(({ day, title, items }) => (
               <div key={day} style={{ background: C.cream, padding: '32px 28px' }}>
@@ -614,7 +622,7 @@ export default function RetreatPage() {
             <Divider color={C.fieldBorder} />
             <div style={{ marginTop: '28px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px', textAlign: 'left' }}>
               {[
-                { label: 'Full weekend accommodation', included: true },
+                { label: 'Full accommodation Thu to Sun', included: true },
                 { label: 'All food & drink', included: true },
                 { label: 'Both psilocybin ceremonies', included: true },
                 { label: 'All movement & somatic sessions', included: true },
@@ -640,7 +648,7 @@ export default function RetreatPage() {
           </div>
 
           <p style={{ fontFamily: sans, fontSize: '14px', color: C.darkMuted, lineHeight: 1.7 }}>
-            The retreat is being planned for the first or second weekend of June 2026. Dates will be confirmed shortly once the venue is locked in.
+            Preliminary dates are Thursday 4th to Sunday 7th June 2026, subject to numbers confirming. The venue will be locked in shortly and everyone who has registered interest will hear first.
           </p>
         </FadeSection>
       </section>
@@ -665,7 +673,7 @@ export default function RetreatPage() {
           />
           <FAQ
             q="Is food included?"
-            a="Yes. All meals are included from Friday dinner through to Sunday lunch. Good food is part of how we care for the body during this kind of work, and we eat well."
+            a="Yes. All meals are included from Thursday evening dinner through to Sunday lunch. Good food is part of how we care for the body during this kind of work, and we eat well."
           />
           <FAQ
             q="What if I'm nervous?"
@@ -681,7 +689,7 @@ export default function RetreatPage() {
           />
           <FAQ
             q="When will the location be confirmed?"
-            a="Very soon. We're finalising between two excellent countryside venues, targeting the first or second weekend of June 2026. Everyone who registers interest will be the first to hear."
+            a="Very soon. Preliminary dates are 4th to 7th June 2026, subject to numbers. We're finalising between two countryside venues and everyone who has registered interest will hear first."
           />
           <FAQ
             q="Can I reserve a spot right now?"
@@ -865,7 +873,7 @@ export default function RetreatPage() {
           </button>
 
           <p style={{ fontFamily: sans, fontSize: '13px', color: 'rgba(240,235,224,0.3)', marginTop: '12px' }}>
-            UK · June 2026 · Small Group · £600 · £300 deposit to secure
+            UK · 4th to 7th June 2026 · Small Group · £600 · £300 deposit to secure
           </p>
 
           <p style={{ fontFamily: sans, fontSize: '12px', color: 'rgba(240,235,224,0.2)', marginTop: '48px', letterSpacing: '2px', textTransform: 'uppercase' }}>
