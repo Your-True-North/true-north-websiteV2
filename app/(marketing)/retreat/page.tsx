@@ -218,17 +218,6 @@ export default function RetreatPage() {
     setTimeout(hide, 150)
   }, [])
 
-  useEffect(() => {
-    const prev = (document.querySelector("link[rel~='icon']") as HTMLLinkElement | null)?.href ?? ''
-    let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement | null
-    if (!link) {
-      link = document.createElement('link')
-      link.rel = 'icon'
-      document.head.appendChild(link)
-    }
-    link.href = '/mushroom-favicon.png'
-    return () => { if (link) link.href = prev }
-  }, [])
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
