@@ -6,6 +6,10 @@ export const metadata = {
   description: 'Deep transformational work for men. 1:1 coaching, breathwork, energy healing, and the Circle of Return community. Teaching regulation, not just mindset.',
   keywords: 'masculine transformation, breathwork, energy healing, mens coaching, emotional regulation, somatic practices, Circle of Return',
   authors: [{ name: 'Mason - True North' }],
+  icons: {
+    icon: '/favicon.png',
+    apple: '/cor-app-icon.png',
+  },
   openGraph: {
     title: 'True North - Transformation Through Embodiment',
     description: 'Where you are now does not have to be where you end up',
@@ -28,8 +32,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/cor-app-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
