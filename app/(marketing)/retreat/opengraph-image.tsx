@@ -11,8 +11,6 @@ export default function Image() {
   const mushroomData = readFileSync(path.join(process.cwd(), 'public/mushroom-favicon.png'))
   const mushroomSrc = `data:image/png;base64,${mushroomData.toString('base64')}`
 
-  const fontData = readFileSync(path.join(process.cwd(), 'public/fonts/Gambarino-Regular.woff2'))
-
   return new ImageResponse(
     (
       <div
@@ -68,7 +66,7 @@ export default function Image() {
           textAlign: 'center',
           lineHeight: 1.2,
           maxWidth: '880px',
-          fontFamily: 'Gambarino',
+          fontFamily: 'Georgia, serif',
           flexWrap: 'wrap',
           justifyContent: 'center',
         }}>
@@ -97,14 +95,6 @@ export default function Image() {
     ),
     {
       ...size,
-      fonts: [
-        {
-          name: 'Gambarino',
-          data: fontData,
-          style: 'normal',
-          weight: 400,
-        },
-      ],
     }
   )
 }
