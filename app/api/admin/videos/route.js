@@ -59,13 +59,20 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Accept either youtubeUrl (full URL) or youtubeId (just the ID)
+    // Accept either youtubeUrl (full URL) or youtubeId (just the ID or a full URL)
     let finalYoutubeUrl = youtubeUrl
     let finalYoutubeId = youtubeId
 
     if (youtubeId && !youtubeUrl) {
-      // Build URL from ID
-      finalYoutubeUrl = `https://www.youtube.com/watch?v=${youtubeId}`
+      // Extract ID if user pasted a full URL into the youtubeId field
+      const urlMatch = youtubeId.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#\s]+)/)
+      if (urlMatch) {
+        finalYoutubeId = urlMatch[1]
+      } else {
+        // Strip any leading =?& chars from partial pastes like "=-6yjAy4aA0s"
+        finalYoutubeId = youtubeId.replace(/^[=?&v]+/, '').trim()
+      }
+      finalYoutubeUrl = `https://www.youtube.com/watch?v=${finalYoutubeId}`
     } else if (youtubeUrl && !youtubeId) {
       // Extract ID from URL
       const match = youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)

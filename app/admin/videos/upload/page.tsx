@@ -35,31 +35,27 @@ export default function UploadVideo() {
     }
   }, [router])
 
+  const extractYoutubeId = (input: string): string => {
+    const match = input.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#\s]+)/)
+    if (match) return match[1]
+    // Strip leading = or ? in case user copied from URL bar (e.g. "v=-6yjAy4aA0s")
+    return input.replace(/^[=?&v]+/, '').trim()
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setSuccess('')
 
-    // Validate thumbnail URL - reject local file paths
-    if (formData.thumbnailUrl && formData.thumbnailUrl.trim()) {
-      const url = formData.thumbnailUrl.trim()
-      if (url.startsWith('file://') || url.startsWith('/') || url.match(/^[A-Za-z]:\\/)) {
-        setError('Thumbnail URL must be a web URL (https://...), not a local file path')
-        return
-      }
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        setError('Thumbnail URL must start with http:// or https://')
-        return
-      }
-    }
-
     setLoading(true)
+
+    const cleanedYoutubeId = extractYoutubeId(formData.youtubeId)
 
     try {
       const res = await fetch('/api/admin/videos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, youtubeId: cleanedYoutubeId })
       })
 
       const data = await res.json()
@@ -196,7 +192,7 @@ export default function UploadVideo() {
               marginBottom: '8px',
               color: '#666'
             }}>
-              YouTube Video ID *
+              YouTube URL or Video ID *
             </label>
             <input
               type="text"
@@ -213,14 +209,14 @@ export default function UploadVideo() {
                 fontSize: '16px',
                 outline: 'none'
               }}
-              placeholder="dQw4w9WgXcQ (just the ID, not full URL)"
+              placeholder="Paste full YouTube URL or just the video ID"
             />
             <p style={{
               fontSize: '12px',
               color: '#999',
               marginTop: '4px'
             }}>
-              From URL: https://youtube.com/watch?v=<strong>dQw4w9WgXcQ</strong>
+              Paste the full YouTube URL or just the ID (e.g. <strong>dQw4w9WgXcQ</strong>)
             </p>
           </div>
 
