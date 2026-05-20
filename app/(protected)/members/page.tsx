@@ -31,6 +31,7 @@ export default function MembersPage() {
   const [saving, setSaving] = useState(false)
   const [profileError, setProfileError] = useState('')
   const [profileSuccess, setProfileSuccess] = useState('')
+  const [billingLoading, setBillingLoading] = useState(false)
   const [stats, setStats] = useState({ videosWatched: 0, totalWatchTime: 0, completionRate: 0 })
   const [announcement, setAnnouncement] = useState<{ id: number; title: string; body: string; url: string } | null>(null)
 
@@ -254,6 +255,25 @@ export default function MembersPage() {
     } catch (error) {
       console.error('Error compressing image:', error)
       setProfileError('Failed to process image. Please try another.')
+    }
+  }
+
+  const handleManageBilling = async () => {
+    setBillingLoading(true)
+    try {
+      const token = document.cookie.match(/auth_token=([^;]+)/)?.[1]
+      const res = await fetch('/api/stripe/billing-portal', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch {
+      // silently fail — Stripe portal is best-effort
+    } finally {
+      setBillingLoading(false)
     }
   }
 
@@ -726,13 +746,36 @@ Your Progress
                 MEMBER SINCE
               </div>
               <div style={{ fontWeight: 300, color: '#1a1a1a' }}>
-                {new Date(user.joinDate).toLocaleDateString('en-US', { 
-                  month: 'long', 
-                  day: 'numeric', 
-                  year: 'numeric' 
+                {new Date(user.joinDate).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric'
                 })}
               </div>
             </div>
+          </div>
+
+          <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e5e5e5' }}>
+            <button
+              onClick={handleManageBilling}
+              disabled={billingLoading}
+              style={{
+                padding: '0.75rem 1.5rem',
+                background: '#f5f5f5',
+                border: '1px solid #e5e5e5',
+                borderRadius: '8px',
+                color: '#1a1a1a',
+                fontSize: '0.875rem',
+                fontWeight: 400,
+                cursor: billingLoading ? 'not-allowed' : 'pointer',
+                opacity: billingLoading ? 0.6 : 1,
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => { if (!billingLoading) e.currentTarget.style.borderColor = '#d5d5d5' }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e5e5' }}
+            >
+              {billingLoading ? 'Loading...' : 'Manage payment details'}
+            </button>
           </div>
         </div>
       </div>
