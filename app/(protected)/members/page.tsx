@@ -32,6 +32,7 @@ export default function MembersPage() {
   const [profileError, setProfileError] = useState('')
   const [profileSuccess, setProfileSuccess] = useState('')
   const [billingLoading, setBillingLoading] = useState(false)
+  const [billingError, setBillingError] = useState('')
   const [stats, setStats] = useState({ videosWatched: 0, totalWatchTime: 0, completionRate: 0 })
   const [announcement, setAnnouncement] = useState<{ id: number; title: string; body: string; url: string } | null>(null)
 
@@ -260,6 +261,7 @@ export default function MembersPage() {
 
   const handleManageBilling = async () => {
     setBillingLoading(true)
+    setBillingError('')
     try {
       const token = document.cookie.match(/auth_token=([^;]+)/)?.[1]
       const res = await fetch('/api/stripe/billing-portal', {
@@ -269,9 +271,11 @@ export default function MembersPage() {
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url
+      } else {
+        setBillingError(data.error || 'Could not open billing portal. Please contact support.')
       }
     } catch {
-      // silently fail — Stripe portal is best-effort
+      setBillingError('Something went wrong. Please try again.')
     } finally {
       setBillingLoading(false)
     }
@@ -776,6 +780,9 @@ Your Progress
             >
               {billingLoading ? 'Loading...' : 'Manage payment details'}
             </button>
+            {billingError && (
+              <p style={{ marginTop: '0.75rem', fontSize: '0.875rem', color: '#ef4444' }}>{billingError}</p>
+            )}
           </div>
         </div>
       </div>
