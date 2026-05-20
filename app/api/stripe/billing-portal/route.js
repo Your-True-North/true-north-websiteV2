@@ -9,7 +9,7 @@ export async function POST(request) {
   const { userId } = authResult.user
 
   const result = await query(
-    'SELECT "stripeCustomerId" FROM "User" WHERE id = $1',
+    'SELECT "stripeCustomerId" FROM users WHERE id = $1',
     [userId]
   )
 
