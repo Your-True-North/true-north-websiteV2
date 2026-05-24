@@ -391,7 +391,7 @@ export default function CommunityPage() {
       </h3>
       {nextVideo?.duration && <div style={{ fontSize: '0.75rem', color: '#aaa', marginBottom: '0.75rem', fontFamily: BODY_FONT }}>{nextVideo.duration} min</div>}
       <button
-        onClick={() => youtubeId ? setShowVideoPlayer(true) : router.push('/videos')}
+        onClick={() => router.push(nextVideo ? `/videos/${nextVideo.id}` : '/videos')}
         style={{ padding: '0.625rem 1.25rem', background: continueHovered ? '#000' : '#1a1a1a', border: 'none', color: '#fff', fontSize: '0.8125rem', fontWeight: 600, borderRadius: '6px', cursor: 'pointer', transition: 'background 0.15s ease', fontFamily: BODY_FONT }}
         onMouseEnter={() => setContinueHovered(true)}
         onMouseLeave={() => setContinueHovered(false)}
