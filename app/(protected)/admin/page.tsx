@@ -238,14 +238,14 @@ export default function AdminPage() {
 
   if (loading || !user) {
     return (
-      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#999' }}>Loading dashboard...</div>
+      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: '#666' }}>Loading dashboard...</div>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
         position: 'fixed',
@@ -253,9 +253,9 @@ export default function AdminPage() {
         left: 0,
         right: 0,
         zIndex: 50,
-        borderBottom: '1px solid #e5e5e5',
+        borderBottom: '1px solid #242422',
         backdropFilter: 'blur(20px)',
-        background: '#ffffff'
+        background: '#111110'
       }}>
         <div style={{
           maxWidth: '80rem',
@@ -269,7 +269,7 @@ export default function AdminPage() {
             fontSize: '1.5rem',
             fontWeight: 300,
             letterSpacing: '0.2em',
-            color: '#1a1a1a',
+            color: '#f0ede8',
             textDecoration: 'none',
             fontWeight: 600
           }}>
@@ -305,8 +305,8 @@ export default function AdminPage() {
 
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1rem' }}>
         <div style={{ marginBottom: '2rem' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: '0.5rem', color: '#1a1a1a' }}>Admin Dashboard</h1>
-          <p style={{ color: '#666', fontSize: '0.95rem' }}>
+          <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: '0.5rem', color: '#f0ede8' }}>Admin Dashboard</h1>
+          <p style={{ color: '#a0a09c', fontSize: '0.95rem' }}>
             Manage your community, videos, and track engagement
           </p>
         </div>
@@ -325,13 +325,13 @@ export default function AdminPage() {
               borderRadius: '12px',
               padding: '1.5rem'
             }}>
-              <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#a0a09c', marginBottom: '0.5rem' }}>
                 Total Videos
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 600, color: '#9bc4b8' }}>
                 {dashboardData.stats.totalVideos}
               </div>
-              <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '0.5rem' }}>
+              <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.5rem' }}>
                 {dashboardData.stats.videosThisMonth} this month
               </div>
             </div>
@@ -342,7 +342,7 @@ export default function AdminPage() {
               borderRadius: '12px',
               padding: '1.5rem'
             }}>
-              <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#a0a09c', marginBottom: '0.5rem' }}>
                 Members
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 600, color: '#7fb069' }}>
@@ -356,7 +356,7 @@ export default function AdminPage() {
               borderRadius: '12px',
               padding: '1.5rem'
             }}>
-              <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#a0a09c', marginBottom: '0.5rem' }}>
                 Comments
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 600, color: '#6a994e' }}>
@@ -370,7 +370,7 @@ export default function AdminPage() {
               borderRadius: '12px',
               padding: '1.5rem'
             }}>
-              <div style={{ fontSize: '0.875rem', color: '#666', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '0.875rem', color: '#a0a09c', marginBottom: '0.5rem' }}>
                 Reactions
               </div>
               <div style={{ fontSize: '2rem', fontWeight: 600, color: '#8db4a8' }}>
@@ -385,18 +385,18 @@ export default function AdminPage() {
 
           {/* Top Engaged Members */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e5e5e5',
+            background: '#1a1a18',
+            border: '1px solid #2c2c2a',
             borderRadius: '12px',
             overflow: 'hidden'
           }}>
             <div style={{
               padding: '1.5rem',
-              borderBottom: '1px solid #e5e5e5',
-              background: '#f0faf8'
+              borderBottom: '1px solid #2c2c2a',
+              background: 'rgba(155,196,184,0.05)'
             }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a' }}>🌟 Top Engaged Members</h2>
-              <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#f0ede8' }}>🌟 Top Engaged Members</h2>
+              <p style={{ fontSize: '0.875rem', color: '#a0a09c', marginTop: '0.25rem' }}>
                 Members to personally reach out to
               </p>
             </div>
@@ -407,17 +407,17 @@ export default function AdminPage() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '1rem',
-                  background: '#f8f8f8',
+                  background: '#141412',
                   borderRadius: '8px',
                   marginBottom: '0.75rem',
-                  border: '1px solid #e5e5e5'
+                  border: '1px solid #2c2c2a'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <div style={{
                       width: '2rem',
                       height: '2rem',
                       borderRadius: '50%',
-                      background: index < 3 ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#e8e8e8',
+                      background: index < 3 ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#252523',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -428,7 +428,7 @@ export default function AdminPage() {
                     </div>
                     <div>
                       <div style={{ fontWeight: 500 }}>{member.name}</div>
-                      <div style={{ fontSize: '0.75rem', color: '#999' }}>
+                      <div style={{ fontSize: '0.75rem', color: '#666' }}>
                         {member.email}
                       </div>
                     </div>
@@ -437,29 +437,29 @@ export default function AdminPage() {
                     <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#9bc4b8' }}>
                       {member.total_engagement} actions
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#999' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#666' }}>
                       {member.comment_count} comments · {member.reaction_count} likes
                     </div>
                   </div>
                 </div>
-              )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#999' }}>No member data yet</div>}
+              )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>No member data yet</div>}
             </div>
           </div>
 
           {/* Recent Activity Feed */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e5e5e5',
+            background: '#1a1a18',
+            border: '1px solid #2c2c2a',
             borderRadius: '12px',
             overflow: 'hidden'
           }}>
             <div style={{
               padding: '1.5rem',
-              borderBottom: '1px solid #e5e5e5',
-              background: '#f5faf3'
+              borderBottom: '1px solid #2c2c2a',
+              background: 'rgba(127,176,105,0.05)'
             }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a' }}>📊 Recent Activity</h2>
-              <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#f0ede8' }}>📊 Recent Activity</h2>
+              <p style={{ fontSize: '0.875rem', color: '#a0a09c', marginTop: '0.25rem' }}>
                 Live community engagement feed
               </p>
             </div>
@@ -476,41 +476,41 @@ export default function AdminPage() {
                       {activity.user_name || 'Unknown'}
                     </span>
                     {' '}
-                    <span style={{ color: '#333' }}>
+                    <span style={{ color: '#a0a09c' }}>
                       {activity.title}
                     </span>
                   </div>
                   {activity.video_title && (
-                    <div style={{ fontSize: '0.75rem', color: '#666', marginBottom: '0.25rem' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#a0a09c', marginBottom: '0.25rem' }}>
                       on "{activity.video_title}"
                     </div>
                   )}
-                  <div style={{ fontSize: '0.7rem', color: '#999' }}>
+                  <div style={{ fontSize: '0.7rem', color: '#555' }}>
                     {formatTime(activity.createdat)}
                   </div>
                 </div>
-              )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#999' }}>No activity yet</div>}
+              )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>No activity yet</div>}
             </div>
           </div>
         </div>
 
         {/* Video Management */}
         <div style={{
-          background: '#ffffff',
-          border: '1px solid #e5e5e5',
+          background: '#1a1a18',
+          border: '1px solid #2c2c2a',
           borderRadius: '12px',
           overflow: 'hidden'
         }}>
           <div style={{
             padding: '1.5rem',
-            borderBottom: '1px solid #e5e5e5',
+            borderBottom: '1px solid #2c2c2a',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between'
           }}>
             <div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a' }}>🎥 Video Management</h2>
-              <p style={{ fontSize: '0.875rem', color: '#666', marginTop: '0.25rem' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#f0ede8' }}>🎥 Video Management</h2>
+              <p style={{ fontSize: '0.875rem', color: '#a0a09c', marginTop: '0.25rem' }}>
                 Upload and manage community videos
               </p>
             </div>
@@ -519,7 +519,7 @@ export default function AdminPage() {
               style={{
                 padding: '0.75rem 1.5rem',
                 background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                color: '#000',
+                color: '#0f0f0d',
                 borderRadius: '8px',
                 border: 'none',
                 fontWeight: 600,
@@ -534,22 +534,22 @@ export default function AdminPage() {
           <div style={{ padding: '1.5rem' }}>
             {videos.length > 0 ? videos.map((video) => (
               <div key={video.id} style={{
-                background: '#f8f8f8',
-                border: '1px solid #e5e5e5',
+                background: '#141412',
+                border: '1px solid #2c2c2a',
                 borderRadius: '8px',
                 padding: '1rem',
                 marginBottom: '1rem'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                   <div style={{ flex: 1 }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem', color: '#1a1a1a' }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem', color: '#f0ede8' }}>
                       {video.title}
                     </h3>
                     <div style={{
                       display: 'flex',
                       gap: '1rem',
                       fontSize: '0.75rem',
-                      color: '#666',
+                      color: '#a0a09c',
                       marginBottom: '0.5rem'
                     }}>
                       <span>{video.category}</span>
@@ -565,7 +565,7 @@ export default function AdminPage() {
                         {video.status}
                       </span>
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#999' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#666' }}>
                       💬 {video.comment_count} comments · ❤️ {video.reaction_count} reactions
                     </div>
                   </div>
@@ -574,7 +574,7 @@ export default function AdminPage() {
                       onClick={() => setEditingVideo(video)}
                       style={{
                         padding: '0.5rem 1rem',
-                        background: '#f0faf8',
+                        background: 'rgba(155,196,184,0.1)',
                         color: '#9bc4b8',
                         border: '1px solid #9bc4b8',
                         borderRadius: '3px',
@@ -601,7 +601,7 @@ export default function AdminPage() {
                   </div>
                 </div>
               </div>
-            )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#999' }}>No videos yet. Click "+ Add Video" to upload.</div>}
+            )) : <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>No videos yet. Click "+ Add Video" to upload.</div>}
           </div>
         </div>
       </div>
@@ -620,9 +620,9 @@ export default function AdminPage() {
           padding: '1rem'
         }}>
           <div style={{
-            background: '#ffffff',
+            background: '#1a1a18',
             borderRadius: '12px',
-            border: '1px solid #e5e5e5',
+            border: '1px solid #2c2c2a',
             maxWidth: '600px',
             width: '100%',
             maxHeight: '90vh',
@@ -630,12 +630,12 @@ export default function AdminPage() {
           }}>
             <div style={{
               padding: '1.5rem',
-              borderBottom: '1px solid #e5e5e5',
+              borderBottom: '1px solid #2c2c2a',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#1a1a1a' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#f0ede8' }}>
                 {editingVideo ? 'Edit Video' : 'Add New Video'}
               </h2>
               <button
@@ -646,7 +646,7 @@ export default function AdminPage() {
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: '#666',
+                  color: '#888',
                   fontSize: '1.5rem',
                   cursor: 'pointer'
                 }}
@@ -657,7 +657,7 @@ export default function AdminPage() {
 
             <div style={{ padding: '1.5rem' }}>
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#a0a09c' }}>
                   Title *
                 </label>
                 <input
@@ -670,10 +670,10 @@ export default function AdminPage() {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: '#f8f8f8',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#1a1a1a',
+                    color: '#f0ede8',
                     fontSize: '0.875rem'
                   }}
                   placeholder="Enter video title"
@@ -682,7 +682,7 @@ export default function AdminPage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#a0a09c' }}>
                     Duration (minutes)
                   </label>
                   <input
@@ -695,10 +695,10 @@ export default function AdminPage() {
                     style={{
                       width: '100%',
                       padding: '0.75rem',
-                      background: '#f8f8f8',
-                      border: '1px solid #e5e5e5',
+                      background: '#252523',
+                      border: '1px solid #333',
                       borderRadius: '8px',
-                      color: '#1a1a1a',
+                      color: '#f0ede8',
                       fontSize: '0.875rem'
                     }}
                     placeholder="25"
@@ -706,7 +706,7 @@ export default function AdminPage() {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#a0a09c' }}>
                     Category *
                   </label>
                   <select
@@ -718,10 +718,10 @@ export default function AdminPage() {
                     style={{
                       width: '100%',
                       padding: '0.75rem',
-                      background: '#f8f8f8',
-                      border: '1px solid #e5e5e5',
+                      background: '#252523',
+                      border: '1px solid #333',
                       borderRadius: '8px',
-                      color: '#1a1a1a',
+                      color: '#f0ede8',
                       fontSize: '0.875rem'
                     }}
                   >
@@ -733,7 +733,7 @@ export default function AdminPage() {
               </div>
 
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#a0a09c' }}>
                   YouTube URL *
                 </label>
                 <input
@@ -746,10 +746,10 @@ export default function AdminPage() {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: '#f8f8f8',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#1a1a1a',
+                    color: '#f0ede8',
                     fontSize: '0.875rem'
                   }}
                   placeholder="https://www.youtube.com/watch?v=..."
@@ -757,7 +757,7 @@ export default function AdminPage() {
               </div>
 
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#a0a09c' }}>
                   Description
                 </label>
                 <textarea
@@ -770,10 +770,10 @@ export default function AdminPage() {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: '#f8f8f8',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#1a1a1a',
+                    color: '#f0ede8',
                     fontSize: '0.875rem',
                     resize: 'vertical'
                   }}
@@ -782,7 +782,7 @@ export default function AdminPage() {
               </div>
 
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#333' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: '#a0a09c' }}>
                   Status
                 </label>
                 <select
@@ -794,10 +794,10 @@ export default function AdminPage() {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: '#f8f8f8',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#1a1a1a',
+                    color: '#f0ede8',
                     fontSize: '0.875rem'
                   }}
                 >
@@ -813,7 +813,7 @@ export default function AdminPage() {
                     flex: 1,
                     padding: '0.75rem',
                     background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                    color: '#000',
+                    color: '#0f0f0d',
                     border: 'none',
                     borderRadius: '8px',
                     fontWeight: 600,
@@ -829,9 +829,9 @@ export default function AdminPage() {
                   }}
                   style={{
                     padding: '0.75rem 1.5rem',
-                    background: '#f8f8f8',
-                    color: '#1a1a1a',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    color: '#a0a09c',
+                    border: '1px solid #333',
                     borderRadius: '8px',
                     cursor: 'pointer'
                   }}
