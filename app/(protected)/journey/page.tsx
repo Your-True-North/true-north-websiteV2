@@ -274,22 +274,22 @@ export default function JourneyPage() {
 
   if (!user) {
     return (
-      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#1a1a1a' }}>Loading your journey...</div>
+      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: '#666' }}>Loading your journey...</div>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8', paddingTop: '6rem' }}>
       {/* Navigation */}
       <nav style={{
         position: 'sticky',
         top: 0,
         zIndex: 20,
-        borderBottom: '1px solid #e5e5e5',
+        borderBottom: '1px solid #242422',
         backdropFilter: 'blur(20px)',
-        background: '#ffffff'
+        background: '#111110'
       }}>
         <div style={{
           maxWidth: '80rem',
@@ -305,15 +305,15 @@ export default function JourneyPage() {
             fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
             fontWeight: 300,
             letterSpacing: '0.2em',
-            color: '#1a1a1a',
+            color: '#f0ede8',
             textDecoration: 'none',
             transition: 'color 0.3s ease'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.color = '#000'}
-          onMouseLeave={(e) => e.currentTarget.style.color = '#1a1a1a'}>
+          onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
+          onMouseLeave={(e) => e.currentTarget.style.color = '#f0ede8'}>
             CIRCLE OF RETURN
           </Link>
-          
+
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <Link href="/members" style={{
               padding: '0.5rem 1rem',
@@ -321,7 +321,7 @@ export default function JourneyPage() {
               fontWeight: 300,
               border: '1px solid rgba(155, 196, 184, 0.3)',
               borderRadius: '8px',
-              color: '#e67e22',
+              color: '#9bc4b8',
               textDecoration: 'none',
               transition: 'all 0.3s ease'
             }}
@@ -341,20 +341,20 @@ export default function JourneyPage() {
                 padding: '0.5rem 1.25rem',
                 fontSize: '0.875rem',
                 fontWeight: 300,
-                border: '1px solid #e5e5e5',
+                border: '1px solid #333',
                 borderRadius: '8px',
                 background: 'transparent',
-                color: '#1a1a1a',
+                color: '#888',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#f0f0f0'
-                e.currentTarget.style.borderColor = '#d5d5d5'
+                e.currentTarget.style.background = '#1a1a18'
+                e.currentTarget.style.borderColor = '#3a3a38'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.borderColor = '#e5e5e5'
+                e.currentTarget.style.borderColor = '#333'
               }}
             >
               Sign Out
@@ -373,9 +373,9 @@ export default function JourneyPage() {
           {/* Left Sidebar */}
           <div>
             <div style={{ 
-              background: '#f8f8f8',
+              background: '#1a1a18',
               borderRadius: '12px',
-              border: '1px solid #e5e5e5',
+              border: '1px solid #2c2c2a',
               padding: '1.5rem',
               position: isMobile ? 'relative' : 'sticky',
               top: isMobile ? 'auto' : '6rem'
@@ -385,10 +385,10 @@ export default function JourneyPage() {
                 <h3 style={{ 
                   fontSize: '0.75rem', 
                   fontWeight: 600, 
-                  color: '#666', 
-                  textTransform: 'uppercase', 
-                  letterSpacing: '0.1em', 
-                  marginBottom: '1rem' 
+                  color: '#555',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  marginBottom: '1rem'
                 }}>Categories</h3>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -402,8 +402,8 @@ export default function JourneyPage() {
                       padding: '0.75rem',
                       borderRadius: '8px',
                       background: selectedCategory === "All" ? 'rgba(155, 196, 184, 0.15)' : 'transparent',
-                      border: selectedCategory === "All" ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid #e5e5e5',
-                      color: selectedCategory === "All" ? '#e67e22' : '#1a1a1a',
+                      border: selectedCategory === "All" ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid #2c2c2a',
+                      color: selectedCategory === "All" ? '#9bc4b8' : '#a0a09c',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease'
                     }}
@@ -422,13 +422,14 @@ export default function JourneyPage() {
                     }}>∀</div>
                     <span style={{ flex: 1, textAlign: 'left', fontSize: '0.9rem' }}>All Videos</span>
                     <span style={{ 
-                      background: '#e8e8e8',
+                      background: '#2c2c2a',
                       padding: '2px 8px',
                       borderRadius: '12px',
-                      fontSize: '0.75rem'
+                      fontSize: '0.75rem',
+                      color: '#666'
                     }}>{videos.length}</span>
                   </button>
-                  
+
                   {mockCategories.map((category) => (
                     <button
                       key={category.name}
@@ -440,9 +441,9 @@ export default function JourneyPage() {
                         gap: '0.75rem',
                         padding: '0.75rem',
                         borderRadius: '8px',
-                        background: selectedCategory === category.name ? 'rgba(155, 196, 184, 0.15)' : 'transparent',
-                        border: selectedCategory === category.name ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid #e5e5e5',
-                        color: selectedCategory === category.name ? '#e67e22' : '#1a1a1a',
+                        background: selectedCategory === category.name ? 'rgba(155, 196, 184, 0.1)' : 'transparent',
+                        border: selectedCategory === category.name ? '1px solid rgba(155, 196, 184, 0.4)' : '1px solid #2c2c2a',
+                        color: selectedCategory === category.name ? '#9bc4b8' : '#a0a09c',
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}
@@ -459,17 +460,18 @@ export default function JourneyPage() {
                       }}>{category.icon}</div>
                       <span style={{ flex: 1, textAlign: 'left', fontSize: '0.85rem' }}>{category.name}</span>
                       <span style={{
-                        background: '#e8e8e8',
+                        background: '#2c2c2a',
                         padding: '2px 8px',
                         borderRadius: '12px',
-                        fontSize: '0.75rem'
+                        fontSize: '0.75rem',
+                        color: '#666'
                       }}>{videos.filter(v => v.category === category.name).length}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div style={{ background: '#f5f5f5', border: '1px solid #e5e5e5', borderRadius: '12px', padding: '1.25rem 1.25rem 1.75rem' }}>
+              <div style={{ background: '#141412', border: '1px solid #2c2c2a', borderRadius: '12px', padding: '1.25rem 1.25rem 1.75rem' }}>
                 <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#999', marginBottom: '1.75rem', fontWeight: 400 }}>YOUR JOURNEY</div>
                 {(() => {
                   const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
@@ -482,7 +484,7 @@ export default function JourneyPage() {
                   return (
                     <div style={{ position: 'relative', height: '48px' }}>
                       {/* Grey track */}
-                      <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#e0e0e0', borderRadius: '1px' }} />
+                      <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#2c2c2a', borderRadius: '1px' }} />
                       {/* Filled track */}
                       <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
                       {/* Dots + labels */}
@@ -494,8 +496,8 @@ export default function JourneyPage() {
                         const isLast = index === 3
                         return (
                           <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
-                            <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`, position: 'relative', zIndex: 1 }} />
-                            <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
+                            <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#252523', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#3a3a38'}`, position: 'relative', zIndex: 1 }} />
+                            <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#f0ede8' : isCompleted ? '#4a9e5c' : '#444', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
                           </div>
                         )
                       })}
@@ -509,23 +511,23 @@ export default function JourneyPage() {
           {/* Main Content */}
           <div>
             <div style={{ 
-              background: '#f8f8f8',
+              background: '#1a1a18',
               borderRadius: '12px',
-              border: '1px solid #e5e5e5',
+              border: '1px solid #2c2c2a',
               overflow: 'hidden'
             }}>
               
-              <div style={{ padding: '1.5rem', borderBottom: '1px solid #e5e5e5' }}>
-                <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', fontWeight: 600, marginBottom: '0.5rem', color: '#1a1a1a' }}>
+              <div style={{ padding: '1.5rem', borderBottom: '1px solid #2c2c2a' }}>
+                <h1 style={{ fontSize: 'clamp(1.25rem, 4vw, 1.75rem)', fontWeight: 600, marginBottom: '0.5rem', color: '#f0ede8' }}>
                   {selectedCategory === "All" ? "All Videos" : selectedCategory}
                 </h1>
-                <p style={{ color: '#666', fontSize: '0.95rem' }}>
+                <p style={{ color: '#a0a09c', fontSize: '0.95rem' }}>
                   {selectedCategory === "All" 
                     ? "Your complete transformation journey" 
                     : `${filteredVideos.length} videos in this category`}
                 </p>
-                {selectedCategory === "Somatic Work" && (<a href="https://yourtruenorth.me/Breathwork_Session_Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #e67e22, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
-                {selectedCategory === "Integration Practices" && (<a href="https://yourtruenorth.me/Integration_Journal.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #e67e22, #7fb069)", color: "#000", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download The Integration Journal</a>)}              </div>
+                {selectedCategory === "Somatic Work" && (<a href="https://yourtruenorth.me/Breathwork_Session_Preparation.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#0f0f0d", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download Breathwork Preparation Guide</a>)}
+                {selectedCategory === "Integration Practices" && (<a href="https://yourtruenorth.me/Integration_Journal.pdf" download style={{ display: "inline-block", marginTop: "1rem", padding: "0.75rem 1.5rem", background: "linear-gradient(135deg, #9bc4b8, #7fb069)", color: "#0f0f0d", borderRadius: "6px", fontSize: "0.875rem", fontWeight: 600, textDecoration: "none" }}>Download The Integration Journal</a>)}              </div>
 
               <div style={{ padding: '1.5rem' }}>
                 <div style={{ 
@@ -541,19 +543,19 @@ export default function JourneyPage() {
                         window.history.pushState({}, '', `/journey?v=${video.id}`)
                       }}
                       style={{
-                        background: '#ffffff',
-                        borderRadius: '12px',
-                        border: '1px solid #e5e5e5',
+                        background: '#141412',
+                        borderRadius: '6px',
+                        border: '1px solid #2c2c2a',
                         overflow: 'hidden',
                         cursor: 'pointer',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.2s ease'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.border = '1px solid #9bc4b8'
-                        e.currentTarget.style.transform = 'translateY(-4px)'
+                        e.currentTarget.style.transform = 'translateY(-2px)'
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.border = '1px solid #e5e5e5'
+                        e.currentTarget.style.border = '1px solid #2c2c2a'
                         e.currentTarget.style.transform = 'translateY(0)'
                       }}
                     >
@@ -585,7 +587,7 @@ export default function JourneyPage() {
                           fontWeight: 600,
                           marginBottom: '0.5rem',
                           fontSize: '1rem',
-                          color: '#1a1a1a',
+                          color: '#f0ede8',
                           display: '-webkit-box',
                           WebkitLineClamp: 2,
                           WebkitBoxOrient: 'vertical',
@@ -596,8 +598,8 @@ export default function JourneyPage() {
                           display: 'flex', 
                           alignItems: 'center', 
                           gap: '1rem', 
-                          color: '#666', 
-                          fontSize: '0.85rem', 
+                          color: '#666',
+                          fontSize: '0.85rem',
                           marginBottom: '0.75rem',
                           flexWrap: 'wrap'
                         }}>
@@ -644,7 +646,7 @@ export default function JourneyPage() {
                 padding: '1.5rem',
                 marginTop: '1.5rem'
               }}>
-                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', color: '#1a1a1a' }}>Community Activity</h2>
+                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', color: '#f0ede8' }}>Community Activity</h2>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {mockActivity.map((activity, index) => (
@@ -652,18 +654,18 @@ export default function JourneyPage() {
                       key={index}
                       style={{
                         padding: '1rem',
-                        background: '#ffffff',
+                        background: '#141412',
                         borderRadius: '8px',
                         borderLeft: '2px solid rgba(155, 196, 184, 0.4)'
                       }}
                     >
-                      <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                      <div style={{ color: '#9bc4b8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                         {activity.user}
                       </div>
-                      <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                      <div style={{ color: '#a0a09c', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: '#666', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#555', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -684,7 +686,7 @@ export default function JourneyPage() {
                 position: 'sticky',
                 top: '6rem'
               }}>
-                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', color: '#1a1a1a' }}>Community Activity</h2>
+                <h2 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1.5rem', color: '#f0ede8' }}>Community Activity</h2>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {mockActivity.map((activity, index) => (
@@ -692,18 +694,18 @@ export default function JourneyPage() {
                       key={index}
                       style={{
                         padding: '1rem',
-                        background: '#ffffff',
+                        background: '#141412',
                         borderRadius: '8px',
                         borderLeft: '2px solid rgba(155, 196, 184, 0.4)'
                       }}
                     >
-                      <div style={{ color: '#e67e22', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
+                      <div style={{ color: '#9bc4b8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.25rem' }}>
                         {activity.user}
                       </div>
-                      <div style={{ color: '#333', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+                      <div style={{ color: '#a0a09c', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
                         {activity.action}
                       </div>
-                      <div style={{ color: '#1a1a1a', fontSize: '0.75rem' }}>
+                      <div style={{ color: '#555', fontSize: '0.75rem' }}>
                         {activity.time}
                       </div>
                     </div>
@@ -735,10 +737,10 @@ export default function JourneyPage() {
           }}
         >
           <div 
-            style={{ 
-              background: '#ffffff', 
-              borderRadius: '12px', 
-              border: '1px solid #e5e5e5',
+            style={{
+              background: '#1a1a18',
+              borderRadius: '12px',
+              border: '1px solid #2c2c2a',
               maxWidth: '56rem', 
               width: '100%', 
               maxHeight: '90vh', 
@@ -751,16 +753,16 @@ export default function JourneyPage() {
               alignItems: 'center', 
               justifyContent: 'space-between', 
               padding: '1.5rem', 
-              borderBottom: '1px solid #e5e5e5'
+              borderBottom: '1px solid #2c2c2a'
             }}>
-              <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 600, paddingRight: '1rem', color: '#1a1a1a' }}>{selectedVideo.title}</h2>
+              <h2 style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: 600, paddingRight: '1rem', color: '#f0ede8' }}>{selectedVideo.title}</h2>
               <button
                 onClick={() => {
                   setSelectedVideo(null)
                   window.history.pushState({}, '', '/journey')
                 }}
                 style={{
-                  color: '#666',
+                  color: '#888',
                   fontSize: '1.5rem',
                   background: 'none',
                   border: 'none',
@@ -804,7 +806,7 @@ export default function JourneyPage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '1.5rem',
-                color: '#666',
+                color: '#a0a09c',
                 fontSize: '0.85rem',
                 marginBottom: '1rem',
                 flexWrap: 'wrap'
@@ -816,12 +818,12 @@ export default function JourneyPage() {
                 <span>{selectedVideo.category}</span>
               </div>
 
-              <p style={{ color: '#333', marginBottom: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)', lineHeight: 1.6 }}>
+              <p style={{ color: '#a0a09c', marginBottom: '1.5rem', fontSize: 'clamp(0.875rem, 2vw, 1rem)', lineHeight: 1.6 }}>
                 {selectedVideo.description}
               </p>
 
               {/* Like Button */}
-              <div style={{ marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid #e5e5e5' }}>
+              <div style={{ marginBottom: '2rem', paddingBottom: '1.5rem', borderBottom: '1px solid #2c2c2a' }}>
                 <button
                   onClick={() => handleLikeVideo(selectedVideo.id)}
                   style={{
@@ -829,10 +831,10 @@ export default function JourneyPage() {
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.75rem 1.5rem',
-                    background: videoLikes.includes(selectedVideo.id) ? 'rgba(239, 68, 68, 0.2)' : '#f8f8f8',
-                    border: videoLikes.includes(selectedVideo.id) ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid #e5e5e5',
+                    background: videoLikes.includes(selectedVideo.id) ? 'rgba(239, 68, 68, 0.2)' : '#252523',
+                    border: videoLikes.includes(selectedVideo.id) ? '1px solid rgba(239, 68, 68, 0.4)' : '1px solid #2c2c2a',
                     borderRadius: '8px',
-                    color: videoLikes.includes(selectedVideo.id) ? '#ef4444' : '#1a1a1a',
+                    color: videoLikes.includes(selectedVideo.id) ? '#ef4444' : '#a0a09c',
                     cursor: 'pointer',
                     fontSize: '0.95rem',
                     fontWeight: 500,
@@ -840,12 +842,12 @@ export default function JourneyPage() {
                   }}
                   onMouseEnter={(e) => {
                     if (!videoLikes.includes(selectedVideo.id)) {
-                      e.currentTarget.style.background = '#f0f0f0'
+                      e.currentTarget.style.background = '#1e1e1c'
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!videoLikes.includes(selectedVideo.id)) {
-                      e.currentTarget.style.background = '#f8f8f8'
+                      e.currentTarget.style.background = '#252523'
                     }
                   }}
                 >
@@ -857,7 +859,7 @@ export default function JourneyPage() {
 
               {/* Comments Section */}
               <div>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1a1a1a' }}>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f0ede8' }}>
                   <span>💬</span>
                   <span>Comments ({getVideoCommentsCount(selectedVideo.id)})</span>
                 </h3>
@@ -872,25 +874,25 @@ export default function JourneyPage() {
                     style={{
                       width: '100%',
                       padding: '0.75rem',
-                      background: '#f8f8f8',
-                      border: '1px solid #e5e5e5',
+                      background: '#252523',
+                      border: '1px solid #333',
                       borderRadius: '8px',
-                      color: '#1a1a1a',
+                      color: '#f0ede8',
                       fontSize: '0.95rem',
                       fontFamily: 'inherit',
                       resize: 'vertical',
                       marginBottom: '0.75rem'
                     }}
                     onFocus={(e) => e.target.style.borderColor = '#9bc4b8'}
-                    onBlur={(e) => e.target.style.borderColor = '#e5e5e5'}
+                    onBlur={(e) => e.target.style.borderColor = '#333'}
                   />
                   <button
                     onClick={() => handleAddComment(selectedVideo.id)}
                     disabled={!newComment.trim()}
                     style={{
                       padding: '0.75rem 1.5rem',
-                      background: newComment.trim() ? 'linear-gradient(135deg, #e67e22, #7fb069)' : '#f0f0f0',
-                      color: newComment.trim() ? '#000' : '#999',
+                      background: newComment.trim() ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#252523',
+                      color: newComment.trim() ? '#0f0f0d' : '#555',
                       border: 'none',
                       borderRadius: '8px',
                       fontSize: '0.95rem',
@@ -910,9 +912,9 @@ export default function JourneyPage() {
                       key={comment.id}
                       style={{
                         padding: '1rem',
-                        background: '#f8f8f8',
+                        background: '#252523',
                         borderRadius: '8px',
-                        border: '1px solid #e5e5e5'
+                        border: '1px solid #333'
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
@@ -920,21 +922,21 @@ export default function JourneyPage() {
                           width: '32px',
                           height: '32px',
                           borderRadius: '50%',
-                          background: 'linear-gradient(135deg, #e67e22, #7fb069)',
+                          background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           fontSize: '0.875rem',
                           fontWeight: 600,
-                          color: '#000'
+                          color: '#0f0f0d'
                         }}>
                           {comment.userName.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#e67e22' }}>
+                          <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#9bc4b8' }}>
                             {comment.userName}
                           </div>
-                          <div style={{ fontSize: '0.75rem', color: '#1a1a1a' }}>
+                          <div style={{ fontSize: '0.75rem', color: '#555' }}>
                             {new Date(comment.timestamp).toLocaleDateString('en-US', {
                               month: 'short',
                               day: 'numeric',
@@ -944,13 +946,13 @@ export default function JourneyPage() {
                           </div>
                         </div>
                       </div>
-                      <p style={{ color: '#1a1a1a', fontSize: '0.95rem', lineHeight: 1.5 }}>
+                      <p style={{ color: '#a0a09c', fontSize: '0.95rem', lineHeight: 1.5 }}>
                         {comment.text}
                       </p>
                     </div>
                   ))}
                   {!videoComments[selectedVideo.id] || videoComments[selectedVideo.id].length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '2rem', color: '#1a1a1a' }}>
+                    <div style={{ textAlign: 'center', padding: '2rem', color: '#666' }}>
                       <p>No comments yet. Be the first to share your thoughts!</p>
                     </div>
                   ) : null}
