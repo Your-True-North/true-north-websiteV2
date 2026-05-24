@@ -282,14 +282,14 @@ export default function AstrologyPage() {
   }
 
   const card: React.CSSProperties = {
-    background: '#ffffff', border: '1px solid #e5e5e5',
+    background: '#1a1a18', border: '1px solid #2c2c2a',
     borderRadius: '12px', padding: '1.5rem', marginBottom: '1.25rem'
   }
 
   const input: React.CSSProperties = {
     width: '100%', padding: '0.75rem',
-    background: '#f5f5f5', border: '1px solid #e5e5e5',
-    borderRadius: '8px', color: '#1a1a1a', fontSize: '1rem', outline: 'none',
+    background: '#252523', border: '1px solid #333',
+    borderRadius: '8px', color: '#f0ede8', fontSize: '1rem', outline: 'none',
     boxSizing: 'border-box'
   }
 
@@ -301,7 +301,7 @@ export default function AstrologyPage() {
   ] : []
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a' }}>
+    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8' }}>
       <div style={{ maxWidth: '760px', margin: '0 auto', padding: '2rem 1.5rem 4rem' }}>
 
         <Link
@@ -315,41 +315,41 @@ export default function AstrologyPage() {
 
         {/* ─── Why astrology? ─── */}
         <div style={{ marginBottom: '2.5rem' }}>
-          <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 300, letterSpacing: '-0.02em', color: '#1a1a1a', marginBottom: '1.5rem' }}>
+          <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 300, letterSpacing: '-0.02em', color: '#f0ede8', marginBottom: '1.5rem' }}>
             Your Astrology
           </h1>
 
-          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#444', fontWeight: 600, marginBottom: '1.25rem' }}>WHY IS THIS IN HERE?</div>
-          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
+          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#555', fontWeight: 600, marginBottom: '1.25rem' }}>WHY IS THIS IN HERE?</div>
+          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#a0a09c', marginBottom: '1rem', fontSize: '0.9375rem' }}>
             I was sceptical of astrology for years. It felt like something people used to avoid responsibility, so I didn't take it seriously. My mind changed when I opened to the idea that I am factually a complex formulation of energy, as is everything in our universe, including the planets. So why couldn't they affect me? If my ex-girlfriend coming into the room I was sitting in could change the way I felt without any words said, why couldn't these huge balls of energy influence how I felt and, in response, how I behaved?
           </p>
-          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
+          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#a0a09c', marginBottom: '1rem', fontSize: '0.9375rem' }}>
             I'm not talking about the horoscopes you can get online. I'm talking about natal charts. Where were the planets positioned when your soul entered this planet? When I was introduced to my natal chart and looked at it properly, I realised it wasn't about prediction at all. A natal chart is a map of the energies present at the moment you were born. Each planet was in a particular sign and house, and those placements describe patterns in how you operate. How you think, what you fear, where you expand naturally, where you contract, what drives you, and what wounds you carry. None of it is destiny. But it is an extremely accurate mirror.
           </p>
-          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', marginBottom: '1rem', fontSize: '0.9375rem' }}>
+          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#a0a09c', marginBottom: '1rem', fontSize: '0.9375rem' }}>
             The placement I pay most attention to is <strong style={{ fontWeight: 600 }}>Chiron</strong>. Chiron in your chart points directly at the thing you have been compensating for your whole life. It's not a weakness or a flaw, although it can feel like it. It's a wound. The people who have sat with that wound the longest are often the most capable of helping others through the same pain.
           </p>
-          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#3a3a3a', fontSize: '0.9375rem', marginBottom: '0' }}>
+          <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#a0a09c', fontSize: '0.9375rem', marginBottom: '0' }}>
             You don't need to believe in astrology. Think of it as another language for self-understanding. If it gives you something useful, use it. If it doesn't land, leave it. Working with the planets is simply another way to navigate. Below you can enter your information and find what wound you have been unknowingly carrying around.
           </p>
         </div>
 
         {/* ─── Form ─── */}
         <div style={card}>
-          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#444', fontWeight: 600, marginBottom: '1.25rem' }}>YOUR BIRTH DETAILS</div>
+          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#555', fontWeight: 600, marginBottom: '1.25rem' }}>YOUR BIRTH DETAILS</div>
           <form onSubmit={handleSubmit}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', color: '#666', marginBottom: '0.4rem' }}>Date of birth</label>
+                <label style={{ display: 'block', fontSize: '0.875rem', color: '#a0a09c', marginBottom: '0.4rem' }}>Date of birth</label>
                 <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} required style={input} />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '0.875rem', color: '#666', marginBottom: '0.4rem' }}>Time of birth</label>
+                <label style={{ display: 'block', fontSize: '0.875rem', color: '#a0a09c', marginBottom: '0.4rem' }}>Time of birth</label>
                 <input type="time" value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} required style={input} />
               </div>
             </div>
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.875rem', color: '#666', marginBottom: '0.4rem' }}>Place of birth</label>
+              <label style={{ display: 'block', fontSize: '0.875rem', color: '#a0a09c', marginBottom: '0.4rem' }}>Place of birth</label>
               <input type="text" placeholder="e.g. London, UK · Lagos, Nigeria · New York, US · Mumbai, India" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} required style={input} />
             </div>
             {error && (
@@ -364,7 +364,7 @@ export default function AstrologyPage() {
                 width: '100%', padding: '0.875rem',
                 background: loading ? '#e5e5e5' : 'linear-gradient(135deg, #9bc4b8, #7fb069)',
                 border: 'none', borderRadius: '8px',
-                color: loading ? '#999' : '#1a1a1a',
+                color: loading ? '#555' : '#0f0f0d',
                 fontWeight: 600, fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer'
               }}
             >
@@ -377,23 +377,23 @@ export default function AstrologyPage() {
         {chart && (
           <>
             {/* Summary line */}
-            <div style={{ fontSize: '0.8rem', color: '#999', marginBottom: '1.75rem', textAlign: 'center' }}>
+            <div style={{ fontSize: '0.8rem', color: '#666', marginBottom: '1.75rem', textAlign: 'center' }}>
               Chart for {chart.birthData.date} · {chart.birthData.time} · {chart.birthData.location}
             </div>
 
             {/* Big Three */}
             <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#444', fontWeight: 600, marginBottom: '0.875rem' }}>YOUR BIG THREE</div>
+              <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#555', fontWeight: 600, marginBottom: '0.875rem' }}>YOUR BIG THREE</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
                 {[
                   { label: 'Sun Sign', sub: 'Who you are', planet: chart.planets.find(p => p.name === 'sun') },
                   { label: 'Moon Sign', sub: 'How you feel', planet: chart.planets.find(p => p.name === 'moon') },
                   { label: 'Rising Sign', sub: 'How you appear', planet: { sign: chart.ascendant.sign, signDegree: chart.ascendant.signDegree } as any }
                 ].map(({ label, sub, planet }) => planet ? (
-                  <div key={label} style={{ background: '#fff', border: '1px solid #e5e5e5', borderRadius: '10px', padding: '1.25rem', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: '#444', marginBottom: '0.5rem' }}>{label.toUpperCase()}</div>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 400, color: '#1a1a1a', marginBottom: '0.25rem' }}>{planet.sign}</div>
-                    <div style={{ fontSize: '0.75rem', color: '#999' }}>{sub}</div>
+                  <div key={label} style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '10px', padding: '1.25rem', textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: '#555', marginBottom: '0.5rem' }}>{label.toUpperCase()}</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 400, color: '#f0ede8', marginBottom: '0.25rem' }}>{planet.sign}</div>
+                    <div style={{ fontSize: '0.75rem', color: '#666' }}>{sub}</div>
                   </div>
                 ) : null)}
               </div>
@@ -405,21 +405,21 @@ export default function AstrologyPage() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
                   <span style={{ fontSize: '1.4rem' }}>⚷</span>
                   <div>
-                    <div style={{ fontWeight: 500, fontSize: '1rem', color: '#1a1a1a' }}>Chiron in {chiron.sign}</div>
-                    <div style={{ fontSize: '0.8rem', color: '#444' }}>The Wounded Healer · House {chiron.house}</div>
+                    <div style={{ fontWeight: 500, fontSize: '1rem', color: '#f0ede8' }}>Chiron in {chiron.sign}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#555' }}>The Wounded Healer · House {chiron.house}</div>
                   </div>
                 </div>
-                <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#555', fontSize: '0.8125rem', marginBottom: '1rem' }}>
+                <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#a0a09c', fontSize: '0.8125rem', marginBottom: '1rem' }}>
                   Chiron marks the area of life where you carry an old, persistent wound. You may have become highly capable in this area precisely because the pain pushed you to understand it deeply. That is why it becomes a gift. Not despite the wound, but because of it.
                 </p>
-                <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#1a1a1a', fontSize: '0.9375rem' }}>
+                <p style={{ fontWeight: 300, lineHeight: 1.8, color: '#a0a09c', fontSize: '0.9375rem' }}>
                   {CHIRON_WOUND[chiron.sign] || `Your Chiron in ${chiron.sign} points to where your deepest healing work lives.`}
                 </p>
               </div>
             )}
 
             {/* ─── Tabs ─── */}
-            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid #e5e5e5', paddingBottom: '0' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid #2c2c2a', paddingBottom: '0' }}>
               {([
                 { id: 'planets', label: 'Planets' },
                 { id: 'houses', label: 'Houses' },
@@ -432,7 +432,7 @@ export default function AstrologyPage() {
                     padding: '0.625rem 1.25rem',
                     background: 'none', border: 'none',
                     borderBottom: activeTab === tab.id ? '2px solid #9bc4b8' : '2px solid transparent',
-                    color: activeTab === tab.id ? '#1a1a1a' : '#999',
+                    color: activeTab === tab.id ? '#f0ede8' : '#555',
                     fontWeight: activeTab === tab.id ? 600 : 400,
                     fontSize: '0.9rem', cursor: 'pointer',
                     marginBottom: '-1px', transition: 'all 0.15s'
@@ -454,12 +454,12 @@ export default function AstrologyPage() {
                       key={p.name}
                       onClick={() => setExpandedPlanet(isOpen ? null : p.name)}
                       style={{
-                        background: '#fff', border: '1px solid #e5e5e5', borderRadius: '10px',
+                        background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '10px',
                         padding: '1rem 1.25rem', cursor: 'pointer',
                         transition: 'border-color 0.15s'
                       }}
-                      onMouseEnter={e => (e.currentTarget.style.borderColor = '#d0d0d0')}
-                      onMouseLeave={e => (e.currentTarget.style.borderColor = '#e5e5e5')}
+                      onMouseEnter={e => (e.currentTarget.style.borderColor = '#9bc4b8')}
+                      onMouseLeave={e => (e.currentTarget.style.borderColor = '#2c2c2a')}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
@@ -467,21 +467,21 @@ export default function AstrologyPage() {
                           <div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                               <span style={{ fontWeight: 500, fontSize: '0.9375rem' }}>{info?.title || PLANET_DISPLAY[p.name]}</span>
-                              <span style={{ color: '#444', fontSize: '0.9375rem' }}>in {p.sign}</span>
+                              <span style={{ color: '#a0a09c', fontSize: '0.9375rem' }}>in {p.sign}</span>
                               {p.isRetrograde && <span style={{ fontSize: '0.7rem', color: '#c0392b', border: '1px solid rgba(192,57,43,0.3)', borderRadius: '4px', padding: '0 4px' }}>Rx</span>}
-                              <span style={{ fontSize: '0.75rem', color: '#bbb' }}>H{p.house}</span>
+                              <span style={{ fontSize: '0.75rem', color: '#555' }}>H{p.house}</span>
                             </div>
-                            <div style={{ fontSize: '0.8125rem', color: '#999', marginTop: '0.1rem' }}>{info?.meaning}</div>
+                            <div style={{ fontSize: '0.8125rem', color: '#666', marginTop: '0.1rem' }}>{info?.meaning}</div>
                           </div>
                         </div>
-                        <span style={{ color: '#ccc', fontSize: '0.875rem', flexShrink: 0, marginLeft: '0.5rem' }}>{isOpen ? '▲' : '▼'}</span>
+                        <span style={{ color: '#555', fontSize: '0.875rem', flexShrink: 0, marginLeft: '0.5rem' }}>{isOpen ? '▲' : '▼'}</span>
                       </div>
                       {isOpen && (
-                        <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #f0f0f0' }}>
-                          <div style={{ fontSize: '0.875rem', color: '#444', lineHeight: 1.75 }}>
+                        <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #2c2c2a' }}>
+                          <div style={{ fontSize: '0.875rem', color: '#a0a09c', lineHeight: 1.75 }}>
                             {planetInterpretation(p)}
                           </div>
-                          <div style={{ marginTop: '0.75rem', fontSize: '0.8rem', color: '#bbb' }}>
+                          <div style={{ marginTop: '0.75rem', fontSize: '0.8rem', color: '#555' }}>
                             {formatDeg(p.signDegree)} {p.sign} · House {p.house} · {HOUSE_MEANING[p.house]}
                             {p.isApproximate && ' · position is approximate'}
                           </div>
@@ -496,7 +496,7 @@ export default function AstrologyPage() {
             {/* ─── Houses tab ─── */}
             {activeTab === 'houses' && (
               <div>
-                <p style={{ fontSize: '0.875rem', color: '#666', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+                <p style={{ fontSize: '0.875rem', color: '#a0a09c', lineHeight: 1.7, marginBottom: '1.25rem' }}>
                   There are 12 houses. Each one covers a different area of your life. The sign on each house describes how that area operates for you. If a planet sits in a house, it brings its energy directly into that part of your life.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
@@ -509,22 +509,22 @@ export default function AstrologyPage() {
                         style={{
                           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                           padding: '0.75rem 1rem',
-                          background: isAngular ? 'rgba(155,196,184,0.07)' : '#fff',
-                          border: `1px solid ${isAngular ? 'rgba(155,196,184,0.25)' : '#ececec'}`,
+                          background: isAngular ? 'rgba(155,196,184,0.07)' : '#1a1a18',
+                          border: `1px solid ${isAngular ? 'rgba(155,196,184,0.25)' : '#2c2c2a'}`,
                           borderRadius: '8px', flexWrap: 'wrap', gap: '0.5rem'
                         }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
-                          <span style={{ fontSize: '0.7rem', color: '#bbb', fontWeight: 600, minWidth: '2rem' }}>H{h.house}</span>
+                          <span style={{ fontSize: '0.7rem', color: '#555', fontWeight: 600, minWidth: '2rem' }}>H{h.house}</span>
                           <div>
-                            <div style={{ fontSize: '0.875rem', color: '#1a1a1a', fontWeight: isAngular ? 500 : 400 }}>{HOUSE_MEANING[h.house]}</div>
-                            <div style={{ fontSize: '0.775rem', color: '#444' }}>{h.sign}</div>
+                            <div style={{ fontSize: '0.875rem', color: '#f0ede8', fontWeight: isAngular ? 500 : 400 }}>{HOUSE_MEANING[h.house]}</div>
+                            <div style={{ fontSize: '0.775rem', color: '#a0a09c' }}>{h.sign}</div>
                           </div>
                         </div>
                         {planets.length > 0 && (
                           <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
                             {planets.map(p => (
-                              <span key={p.name} style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', background: '#f0f0f0', borderRadius: '4px', color: '#555' }}>
+                              <span key={p.name} style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', background: '#252523', borderRadius: '4px', color: '#a0a09c' }}>
                                 {p.symbol} {PLANET_DISPLAY[p.name]}
                               </span>
                             ))}
@@ -540,7 +540,7 @@ export default function AstrologyPage() {
             {/* ─── Aspects tab ─── */}
             {activeTab === 'aspects' && (
               <div>
-                <p style={{ fontSize: '0.875rem', color: '#666', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+                <p style={{ fontSize: '0.875rem', color: '#a0a09c', lineHeight: 1.7, marginBottom: '1.25rem' }}>
                   Aspects are the angles between planets. They describe how those energies relate to each other. Some flow naturally. Some create friction. The friction ones are not bad. They are often where the most growth comes from.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
@@ -548,7 +548,7 @@ export default function AstrologyPage() {
                     <div
                       key={i}
                       style={{
-                        background: '#fff', border: '1px solid #ececec', borderRadius: '8px',
+                        background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '8px',
                         padding: '0.875rem 1rem'
                       }}
                     >
@@ -556,19 +556,19 @@ export default function AstrologyPage() {
                         <span style={{ fontWeight: 500, fontSize: '0.9rem' }}>{PLANET_DISPLAY[a.body1]}</span>
                         <span style={{ fontSize: '1.1rem' }}>{a.symbol}</span>
                         <span style={{ fontWeight: 500, fontSize: '0.9rem' }}>{PLANET_DISPLAY[a.body2]}</span>
-                        <span style={{ fontSize: '0.75rem', color: '#444', marginLeft: 'auto' }}>{a.type} · {a.orb}° orb</span>
+                        <span style={{ fontSize: '0.75rem', color: '#a0a09c', marginLeft: 'auto' }}>{a.type} · {a.orb}° orb</span>
                       </div>
-                      <div style={{ fontSize: '0.8125rem', color: '#666', lineHeight: 1.6 }}>
+                      <div style={{ fontSize: '0.8125rem', color: '#a0a09c', lineHeight: 1.6 }}>
                         {getAspectText(a.body1, a.body2, a.type)}
                       </div>
                     </div>
                   ))}
                   {chart.aspects.filter(a => a.nature === 'minor').length > 0 && (
-                    <div style={{ marginTop: '0.5rem', padding: '0.75rem', background: '#f8f8f8', borderRadius: '8px' }}>
-                      <div style={{ fontSize: '0.75rem', color: '#bbb', marginBottom: '0.5rem' }}>MINOR ASPECTS</div>
+                    <div style={{ marginTop: '0.5rem', padding: '0.75rem', background: '#1a1a18', borderRadius: '8px' }}>
+                      <div style={{ fontSize: '0.75rem', color: '#555', marginBottom: '0.5rem' }}>MINOR ASPECTS</div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                         {chart.aspects.filter(a => a.nature === 'minor').map((a, i) => (
-                          <span key={i} style={{ fontSize: '0.775rem', color: '#888', padding: '0.25rem 0.625rem', background: '#fff', border: '1px solid #e5e5e5', borderRadius: '4px' }}>
+                          <span key={i} style={{ fontSize: '0.775rem', color: '#a0a09c', padding: '0.25rem 0.625rem', background: '#252523', border: '1px solid #333', borderRadius: '4px' }}>
                             {PLANET_DISPLAY[a.body1]} {a.symbol} {PLANET_DISPLAY[a.body2]}
                           </span>
                         ))}
