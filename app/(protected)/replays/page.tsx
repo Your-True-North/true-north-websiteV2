@@ -86,11 +86,11 @@ export default function ReplaysPage() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#fafafa',
+        background: '#0f0f0d',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#1a1a1a'
+        color: '#a0a09c'
       }}>
         Loading...
       </div>
@@ -98,14 +98,14 @@ export default function ReplaysPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 16px' : '40px 20px' }}>
         {/* Header */}
         <div style={{ marginBottom: '40px' }}>
           <Link
             href="/members"
             style={{
-              color: '#e67e22',
+              color: '#9bc4b8',
               textDecoration: 'none',
               fontSize: '14px',
               marginBottom: '12px',
@@ -118,13 +118,13 @@ export default function ReplaysPage() {
             fontSize: isMobile ? '24px' : '32px',
             fontWeight: 600,
             marginBottom: '12px',
-            color: '#1a1a1a'
+            color: '#f0ede8'
           }}>
             Live Session Replays
           </h1>
           <p style={{
             fontSize: '16px',
-            color: '#666'
+            color: '#a0a09c'
           }}>
             Catch up on past live teaching sessions and community calls
           </p>
@@ -147,15 +147,15 @@ export default function ReplaysPage() {
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                background: '#f8f8f8',
-                border: '1px solid #e5e5e5',
+                background: '#1a1a18',
+                border: '1px solid #2c2c2a',
                 borderRadius: '3px',
-                color: '#1a1a1a',
+                color: '#f0ede8',
                 fontSize: '14px',
                 outline: 'none'
               }}
               onFocus={(e) => e.currentTarget.style.borderColor = '#9bc4b8'}
-              onBlur={(e) => e.currentTarget.style.borderColor = '#e5e5e5'}
+              onBlur={(e) => e.currentTarget.style.borderColor = '#2c2c2a'}
             />
           </div>
 
@@ -165,10 +165,10 @@ export default function ReplaysPage() {
             onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest')}
             style={{
               padding: '12px 16px',
-              background: '#f8f8f8',
-              border: '1px solid #e5e5e5',
+              background: '#1a1a18',
+              border: '1px solid #2c2c2a',
               borderRadius: '3px',
-              color: '#1a1a1a',
+              color: '#f0ede8',
               fontSize: '14px',
               outline: 'none',
               cursor: 'pointer'
@@ -183,7 +183,7 @@ export default function ReplaysPage() {
         <div style={{
           marginBottom: '24px',
           fontSize: '14px',
-          color: '#1a1a1a'
+          color: '#666'
         }}>
           {filteredReplays.length} {filteredReplays.length === 1 ? 'replay' : 'replays'} found
         </div>
@@ -192,17 +192,11 @@ export default function ReplaysPage() {
         {filteredReplays.length === 0 ? (
           <div style={{
             padding: '64px 32px',
-            background: '#f8f8f8',
-            border: '1px solid #e5e5e5',
+            background: '#1a1a18',
+            border: '1px solid #2c2c2a',
             borderRadius: '3px',
             textAlign: 'center'
           }}>
-            <div style={{
-              fontSize: '48px',
-              marginBottom: '16px'
-            }}>
-              🎥
-            </div>
             <p style={{
               fontSize: '16px',
               color: '#666',
@@ -216,10 +210,10 @@ export default function ReplaysPage() {
                 style={{
                   marginTop: '16px',
                   padding: '8px 16px',
-                  background: '#f0faf8',
+                  background: 'transparent',
                   border: '1px solid #9bc4b8',
                   borderRadius: '3px',
-                  color: '#e67e22',
+                  color: '#9bc4b8',
                   cursor: 'pointer',
                   fontSize: '14px'
                 }}
@@ -244,11 +238,11 @@ export default function ReplaysPage() {
                 }}
               >
                 <div style={{
-                  background: '#ffffff',
-                  border: '1px solid #e5e5e5',
-                  borderRadius: '3px',
+                  background: '#1a1a18',
+                  border: '1px solid #2c2c2a',
+                  borderRadius: '6px',
                   overflow: 'hidden',
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.2s ease',
                   cursor: 'pointer',
                   height: '100%',
                   display: 'flex',
@@ -256,10 +250,10 @@ export default function ReplaysPage() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = '#9bc4b8'
-                  e.currentTarget.style.transform = 'translateY(-4px)'
+                  e.currentTarget.style.transform = 'translateY(-2px)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#e5e5e5'
+                  e.currentTarget.style.borderColor = '#2c2c2a'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }}
                 >
@@ -283,13 +277,13 @@ export default function ReplaysPage() {
                       width: '64px',
                       height: '64px',
                       borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #e67e22, #7fb069)',
+                      background: 'rgba(155, 196, 184, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
                     }}>
-                      <svg style={{ width: '32px', height: '32px', color: '#000', marginLeft: '4px' }} fill="currentColor" viewBox="0 0 20 20">
+                      <svg style={{ width: '32px', height: '32px', color: '#9bc4b8', marginLeft: '4px' }} fill="currentColor" viewBox="0 0 20 20">
                         <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                       </svg>
                     </div>
@@ -318,14 +312,14 @@ export default function ReplaysPage() {
                       fontSize: '18px',
                       fontWeight: 500,
                       marginBottom: '8px',
-                      color: '#1a1a1a',
+                      color: '#f0ede8',
                       lineHeight: 1.4
                     }}>
                       {video.title}
                     </h3>
                     <p style={{
                       fontSize: '14px',
-                      color: '#666',
+                      color: '#a0a09c',
                       lineHeight: 1.6,
                       marginBottom: '12px',
                       flex: 1
@@ -334,7 +328,7 @@ export default function ReplaysPage() {
                     </p>
                     <div style={{
                       fontSize: '12px',
-                      color: '#1a1a1a'
+                      color: '#666'
                     }}>
                       {new Date(video.upload_date).toLocaleDateString('en-US', {
                         month: 'long',
