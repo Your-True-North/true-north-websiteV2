@@ -236,14 +236,14 @@ export default function TheMapPage() {
           textAlign: 'center',
         }}>
           {[
-            { value: 'Gabor Maté', label: 'Trained by' },
-            { value: 'ICF Certified', label: 'Transformational Coach' },
+            { value: 'Gabor Maté', label: 'Somatic therapy — trained by' },
+            { value: 'ICF + EMCC', label: 'Certified Coach' },
             { value: '12 Weeks', label: 'Structured programme' },
             { value: '10 Men', label: 'Per cohort — no more' },
           ].map(({ value, label }) => (
             <div key={label}>
-              <div style={{ fontSize: isMobile ? '1rem' : '1.125rem', fontWeight: 600, color: C.sage, marginBottom: '0.25rem', fontFamily: SANS }}>{value}</div>
-              <div style={{ fontSize: '0.8125rem', color: C.mutedDark, fontFamily: SANS }}>{label}</div>
+              <div style={{ fontSize: '0.75rem', color: C.mutedDark, fontFamily: SANS, marginBottom: '0.25rem', letterSpacing: '0.04em' }}>{label}</div>
+              <div style={{ fontSize: isMobile ? '1rem' : '1.125rem', fontWeight: 600, color: C.sage, fontFamily: SANS }}>{value}</div>
             </div>
           ))}
         </div>
