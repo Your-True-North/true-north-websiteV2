@@ -148,6 +148,15 @@ export default function TheMapPage() {
   ]
 
   return (
+    <>
+    <style jsx global>{`
+      nav, header, footer,
+      [role='navigation'], [role='contentinfo'],
+      [class*='footer'], [class*='Footer'],
+      [class*='nav'], [class*='Nav'] {
+        display: none !important;
+      }
+    `}</style>
     <div style={{ fontFamily: SANS, color: C.textLight, overflowX: 'hidden' }}>
 
       {/* ─── HERO ─── */}
@@ -744,5 +753,6 @@ export default function TheMapPage() {
       </section>
 
     </div>
+    </>
   )
 }
