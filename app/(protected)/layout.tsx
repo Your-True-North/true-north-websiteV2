@@ -19,9 +19,10 @@ export default function ProtectedLayout({
         nav.nav, nav.site-nav, .mobile-nav, .desktop-nav, #site-nav, #site-navigation, .site-navigation {
           display: none !important;
         }
+        body { background: #0f0f0d !important; }
       `}</style>
       <MembersNav />
-      <main style={{ paddingTop: '90px' }}>
+      <main style={{ paddingTop: '90px', minHeight: '100vh', background: '#0f0f0d' }}>
         {children}
       </main>
     </>

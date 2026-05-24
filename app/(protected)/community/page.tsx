@@ -351,8 +351,8 @@ export default function CommunityPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#f4f4f2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#999', fontFamily: BODY_FONT }}>Loading...</div>
+      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: '#555', fontFamily: BODY_FONT }}>Loading...</div>
       </div>
     )
   }
@@ -404,12 +404,12 @@ export default function CommunityPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#0f0f0d', fontFamily: BODY_FONT }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
         * { box-sizing: border-box; }
         textarea { font-family: inherit; }
         select { font-family: inherit; }
-        textarea::placeholder { color: #555; }
-        input::placeholder { color: #555; }
+        textarea::placeholder { color: #555 !important; }
+        input::placeholder { color: #555 !important; }
+        select option { background: #1a1a18; color: #f0ede8; }
       `}</style>
 
       {/* Announcement popup */}
