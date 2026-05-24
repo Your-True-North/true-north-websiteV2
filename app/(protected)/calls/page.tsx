@@ -196,11 +196,11 @@ export default function CallsPage() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#fafafa',
+        background: '#0f0f0d',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#1a1a1a'
+        color: '#666'
       }}>
         Loading...
       </div>
@@ -208,14 +208,14 @@ export default function CallsPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fafafa', color: '#1a1a1a', paddingTop: '6rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8', paddingTop: '6rem' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 16px' : '40px 20px' }}>
         {/* Header */}
         <div style={{ marginBottom: '40px' }}>
           <Link
             href="/members"
             style={{
-              color: '#e67e22',
+              color: '#9bc4b8',
               textDecoration: 'none',
               fontSize: '14px',
               marginBottom: '12px',
@@ -228,13 +228,13 @@ export default function CallsPage() {
             fontSize: isMobile ? '24px' : '32px',
             fontWeight: 300,
             marginBottom: '12px',
-            color: '#1a1a1a'
+            color: '#f0ede8'
           }}>
             Live Calls Calendar
           </h1>
           <p style={{
             fontSize: '16px',
-            color: '#666'
+            color: '#a0a09c'
           }}>
             Join monthly live sessions with True and guest experts
           </p>
@@ -262,7 +262,7 @@ export default function CallsPage() {
             <h2 style={{
               fontSize: isMobile ? '20px' : '24px',
               fontWeight: 600,
-              color: '#e67e22',
+              color: '#9bc4b8',
               margin: 0
             }}>
               Upcoming Sessions {calendarEvents.length > 0 && `(${calendarEvents.filter(e => new Date(e.date) >= new Date()).length})`}
@@ -295,9 +295,9 @@ export default function CallsPage() {
           {calendarEvents.length === 0 ? (
             <div style={{
               padding: '32px',
-              background: '#ffffff',
-              border: '1px solid #e5e5e5',
-              borderRadius: '3px',
+              background: '#1a1a18',
+              border: '1px solid #2c2c2a',
+              borderRadius: '6px',
               textAlign: 'center'
             }}>
               <div style={{
@@ -344,9 +344,9 @@ export default function CallsPage() {
                           alignItems: 'center',
                           gap: '16px',
                           padding: '12px 16px',
-                          background: '#ffffff',
-                          border: '1px solid #e5e5e5',
-                          borderRadius: '3px',
+                          background: '#1a1a18',
+                          border: '1px solid #2c2c2a',
+                          borderRadius: '6px',
                           transition: 'all 0.3s ease',
                           cursor: 'pointer'
                         }}
@@ -354,12 +354,12 @@ export default function CallsPage() {
                           window.open(generateGoogleCalendarUrl(event), '_blank')
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'
+                          e.currentTarget.style.background = 'rgba(155, 196, 184, 0.08)'
                           e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.background = '#ffffff'
-                          e.currentTarget.style.borderColor = '#e5e5e5'
+                          e.currentTarget.style.background = '#1a1a18'
+                          e.currentTarget.style.borderColor = '#2c2c2a'
                         }}
                       >
                         {/* Compact Date */}
@@ -378,7 +378,7 @@ export default function CallsPage() {
                           </div>
                           <div style={{
                             fontSize: '12px',
-                            color: '#1a1a1a'
+                            color: '#a0a09c'
                           }}>
                             {time}
                           </div>
@@ -389,13 +389,13 @@ export default function CallsPage() {
                           flex: 1,
                           fontSize: '15px',
                           fontWeight: 500,
-                          color: '#1a1a1a'
+                          color: '#f0ede8'
                         }}>
                           {event.title}
                         </div>
 
                         {/* Arrow */}
-                        <svg style={{ width: '16px', height: '16px', color: '#1a1a1a' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg style={{ width: '16px', height: '16px', color: '#666' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
@@ -481,7 +481,7 @@ export default function CallsPage() {
                           <div style={{
                             fontSize: '32px',
                             fontWeight: 700,
-                            color: '#e67e22',
+                            color: '#9bc4b8',
                             lineHeight: 1
                           }}>
                             {day}
@@ -511,7 +511,7 @@ export default function CallsPage() {
                             <h3 style={{
                               fontSize: isMobile ? '18px' : '20px',
                               fontWeight: 600,
-                              color: '#1a1a1a',
+                              color: '#f0ede8',
                               margin: 0
                             }}>
                               {event.title}
@@ -535,7 +535,7 @@ export default function CallsPage() {
                           {event.description && (
                             <p style={{
                               fontSize: '14px',
-                              color: '#666',
+                              color: '#a0a09c',
                               lineHeight: 1.6,
                               margin: 0
                             }}>
@@ -549,7 +549,7 @@ export default function CallsPage() {
                             gap: '8px',
                             marginTop: '4px',
                             fontSize: '13px',
-                            color: '#1a1a1a'
+                            color: '#666'
                           }}>
                             <span>{dayOfWeek}</span>
                             <span>•</span>
@@ -568,9 +568,9 @@ export default function CallsPage() {
         {/* Monthly Calendar */}
         <div style={{
           padding: isMobile ? '24px' : '32px',
-          background: '#ffffff',
-          border: '1px solid #e5e5e5',
-          borderRadius: '3px',
+          background: '#1a1a18',
+          border: '1px solid #2c2c2a',
+          borderRadius: '6px',
           marginBottom: '40px'
         }}>
           <div style={{
@@ -582,7 +582,7 @@ export default function CallsPage() {
             <h2 style={{
               fontSize: isMobile ? '20px' : '24px',
               fontWeight: 600,
-              color: '#e67e22',
+              color: '#9bc4b8',
               margin: 0
             }}>
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
@@ -592,10 +592,10 @@ export default function CallsPage() {
                 onClick={goToPreviousMonth}
                 style={{
                   padding: '8px 16px',
-                  background: '#fafafa',
-                  border: '1px solid #e5e5e5',
+                  background: '#252523',
+                  border: '1px solid #333',
                   borderRadius: '3px',
-                  color: '#e67e22',
+                  color: '#9bc4b8',
                   cursor: 'pointer',
                   fontSize: '14px'
                 }}
@@ -606,10 +606,10 @@ export default function CallsPage() {
                 onClick={goToNextMonth}
                 style={{
                   padding: '8px 16px',
-                  background: '#fafafa',
-                  border: '1px solid #e5e5e5',
+                  background: '#252523',
+                  border: '1px solid #333',
                   borderRadius: '3px',
-                  color: '#e67e22',
+                  color: '#9bc4b8',
                   cursor: 'pointer',
                   fontSize: '14px'
                 }}
@@ -632,8 +632,8 @@ export default function CallsPage() {
                 textAlign: 'center',
                 fontSize: isMobile ? '12px' : '14px',
                 fontWeight: 600,
-                color: '#1a1a1a',
-                borderBottom: '2px solid #e5e5e5'
+                color: '#666',
+                borderBottom: '2px solid #2c2c2a'
               }}>
                 {isMobile ? day.charAt(0) : day}
               </div>
@@ -656,8 +656,8 @@ export default function CallsPage() {
                       ? 'linear-gradient(135deg, rgba(155, 196, 184, 0.2), rgba(127, 176, 105, 0.2))'
                       : 'transparent',
                     border: isToday
-                      ? '2px solid #e67e22'
-                      : '1px solid #e5e5e5',
+                      ? '2px solid #9bc4b8'
+                      : '1px solid #2c2c2a',
                     borderRadius: '3px',
                     textAlign: 'center',
                     opacity: isCurrentMonth ? 1 : 0.3,
@@ -691,7 +691,7 @@ export default function CallsPage() {
                   <div style={{
                     fontSize: isMobile ? '14px' : '16px',
                     fontWeight: isToday ? 600 : 400,
-                    color: day.hasCall ? '#e67e22' : '#1a1a1a',
+                    color: day.hasCall ? '#9bc4b8' : '#a0a09c',
                     marginBottom: isMobile ? '2px' : '4px'
                   }}>
                     {day.date.getDate()}
@@ -728,7 +728,7 @@ export default function CallsPage() {
           }}>
             <p style={{
               fontSize: '14px',
-              color: '#666',
+              color: '#a0a09c',
               margin: 0,
               lineHeight: 1.5
             }}>
@@ -743,7 +743,7 @@ export default function CallsPage() {
             fontSize: isMobile ? '20px' : '24px',
             fontWeight: 600,
             marginBottom: '24px',
-            color: '#e67e22'
+            color: '#f0ede8'
           }}>
             Call Replays
           </h2>
@@ -751,9 +751,9 @@ export default function CallsPage() {
           {replays.length === 0 ? (
             <div style={{
               padding: '32px',
-              background: '#ffffff',
-              border: '1px solid #e5e5e5',
-              borderRadius: '3px',
+              background: '#1a1a18',
+              border: '1px solid #2c2c2a',
+              borderRadius: '6px',
               textAlign: 'center'
             }}>
               <div style={{
@@ -785,19 +785,19 @@ export default function CallsPage() {
                   }}
                 >
                   <div style={{
-                    background: '#ffffff',
-                    border: '1px solid #e5e5e5',
-                    borderRadius: '3px',
+                    background: '#1a1a18',
+                    border: '1px solid #2c2c2a',
+                    borderRadius: '6px',
                     overflow: 'hidden',
-                    transition: 'all 0.3s ease',
+                    transition: 'all 0.2s ease',
                     cursor: 'pointer'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = '#9bc4b8'
-                    e.currentTarget.style.transform = 'translateY(-4px)'
+                    e.currentTarget.style.transform = 'translateY(-2px)'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = '#e5e5e5'
+                    e.currentTarget.style.borderColor = '#2c2c2a'
                     e.currentTarget.style.transform = 'translateY(0)'
                   }}
                   >
@@ -821,13 +821,13 @@ export default function CallsPage() {
                         width: '64px',
                         height: '64px',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #e67e22, #7fb069)',
+                        background: 'rgba(155, 196, 184, 0.15)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
                       }}>
-                        <svg style={{ width: '32px', height: '32px', color: '#000', marginLeft: '4px' }} fill="currentColor" viewBox="0 0 20 20">
+                        <svg style={{ width: '32px', height: '32px', color: '#9bc4b8', marginLeft: '4px' }} fill="currentColor" viewBox="0 0 20 20">
                           <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                         </svg>
                       </div>
@@ -856,14 +856,14 @@ export default function CallsPage() {
                         fontSize: '18px',
                         fontWeight: 500,
                         marginBottom: '8px',
-                        color: '#1a1a1a',
+                        color: '#f0ede8',
                         lineHeight: 1.4
                       }}>
                         {video.title}
                       </h3>
                       <p style={{
                         fontSize: '14px',
-                        color: '#666',
+                        color: '#a0a09c',
                         lineHeight: 1.6,
                         marginBottom: '12px'
                       }}>
@@ -871,7 +871,7 @@ export default function CallsPage() {
                       </p>
                       <div style={{
                         fontSize: '12px',
-                        color: '#1a1a1a'
+                        color: '#666'
                       }}>
                         {new Date(video.upload_date).toLocaleDateString('en-US', {
                           month: 'long',
