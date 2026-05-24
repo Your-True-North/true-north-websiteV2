@@ -99,16 +99,6 @@ export default function TheMapPage() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Hide marketing nav and footer — this is a focused landing page
-  useEffect(() => {
-    const hide = () => {
-      document.querySelectorAll('nav, header, footer, [data-nav], [data-footer]')
-        .forEach(el => ((el as HTMLElement).style.display = 'none'))
-    }
-    hide()
-    setTimeout(hide, 100)
-  }, [])
-
   const pillars = [
     {
       num: '01',
