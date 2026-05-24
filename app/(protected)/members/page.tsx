@@ -283,8 +283,8 @@ export default function MembersPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#1a1a1a', fontWeight: 300 }}>Entering portal...</div>
+      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: '#666', fontWeight: 300 }}>Entering portal...</div>
       </div>
     )
   }
@@ -309,7 +309,7 @@ export default function MembersPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#ffffff', color: '#1a1a1a', paddingTop: '2rem' }}>
+    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8', paddingTop: '2rem' }}>
 
       {/* Announcement popup */}
       {announcement && (
@@ -318,8 +318,8 @@ export default function MembersPage() {
           display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem'
         }}>
           <div style={{
-            background: '#fff', borderRadius: '12px', maxWidth: '480px', width: '100%',
-            padding: '2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.2)', position: 'relative'
+            background: '#1a1a18', borderRadius: '12px', maxWidth: '480px', width: '100%',
+            padding: '2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.6)', border: '1px solid #2c2c2a', position: 'relative'
           }}>
             <button
               onClick={() => {
@@ -333,10 +333,10 @@ export default function MembersPage() {
             <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: '#9bc4b8', marginBottom: '12px' }}>
               From Mason
             </div>
-            <h2 style={{ fontSize: '20px', fontWeight: 500, color: '#1a1a1a', marginBottom: '12px', lineHeight: 1.4 }}>
+            <h2 style={{ fontSize: '20px', fontWeight: 500, color: '#f0ede8', marginBottom: '12px', lineHeight: 1.4 }}>
               {announcement.title}
             </h2>
-            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#444', marginBottom: '1.5rem' }}>
+            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#a0a09c', marginBottom: '1.5rem' }}>
               {announcement.body}
             </p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -357,7 +357,7 @@ export default function MembersPage() {
                   localStorage.setItem('dismissed_announcement', String(announcement.id))
                   setAnnouncement(null)
                 }}
-                style={{ flex: 1, padding: '12px', background: '#f5f5f5', border: 'none', borderRadius: '6px', color: '#666', fontSize: '14px', cursor: 'pointer' }}
+                style={{ flex: 1, padding: '12px', background: '#252523', border: '1px solid #333', borderRadius: '6px', color: '#888', fontSize: '14px', cursor: 'pointer' }}
               >
                 Got it
               </button>
@@ -421,7 +421,7 @@ export default function MembersPage() {
                 background: profilePhoto ? `url(${profilePhoto})` : `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                border: '1px solid #e5e5e5',
+                border: '1px solid #2c2c2a',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -430,7 +430,7 @@ export default function MembersPage() {
               }}
             >
               {!profilePhoto && (
-                <svg style={{ width: '2.5rem', height: '2.5rem', color: '#1a1a1a' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg style={{ width: '2.5rem', height: '2.5rem', color: '#555' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               )}
@@ -444,8 +444,8 @@ export default function MembersPage() {
                 width: '1.5rem',
                 height: '1.5rem',
                 borderRadius: '50%',
-                background: '#e67e22',
-                border: '2px solid #ffffff',
+                background: '#9bc4b8',
+                border: '2px solid #0f0f0d',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -462,20 +462,20 @@ export default function MembersPage() {
             fontWeight: 300,
             marginBottom: '1rem',
             letterSpacing: '-0.02em',
-            color: '#1a1a1a'
+            color: '#f0ede8'
           }}>
-            <span style={{ color: 'rgba(26, 26, 26, 0.6)' }}>Welcome back,</span> <span style={{ color: 'rgba(26, 26, 26, 0.7)' }}>{user.name}</span>
+            <span style={{ color: 'rgba(240, 237, 232, 0.5)' }}>Welcome back,</span> <span style={{ color: '#f0ede8' }}>{user.name}</span>
           </h1>
-          <p style={{ color: '#1a1a1a', fontSize: 'clamp(1rem, 2vw, 1.125rem)', fontWeight: 300 }}>
+          <p style={{ color: '#a0a09c', fontSize: 'clamp(1rem, 2vw, 1.125rem)', fontWeight: 300 }}>
             Your transformation journey continues
           </p>
         </div>
 
         {/* Journey Progress — horizontal timeline */}
-        <div style={{ background: '#ffffff', border: '1px solid #e5e5e5', borderRadius: '12px', padding: '1.25rem 1.5rem 1.75rem', marginBottom: '2rem' }}>
+        <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '12px', padding: '1.25rem 1.5rem 1.75rem', marginBottom: '2rem' }}>
           <div style={{ marginBottom: '1.75rem' }}>
-            <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#999', fontWeight: 400, marginBottom: '4px' }}>YOUR JOURNEY</div>
-            <div style={{ fontSize: '0.8rem', color: '#666', lineHeight: 1.5 }}>
+            <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#555', fontWeight: 400, marginBottom: '4px' }}>YOUR JOURNEY</div>
+            <div style={{ fontSize: '0.8rem', color: '#a0a09c', lineHeight: 1.5 }}>
               Track your progress here and compare it to your life elevation outside the Circle. As you move through the stages, notice where things shift.
             </div>
           </div>
@@ -488,7 +488,7 @@ export default function MembersPage() {
               left: 0,
               right: 0,
               height: '2px',
-              background: '#e5e5e5',
+              background: '#2c2c2a',
               borderRadius: '1px'
             }} />
 
@@ -527,8 +527,8 @@ export default function MembersPage() {
                     width: '11px',
                     height: '11px',
                     borderRadius: '50%',
-                    background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff',
-                    border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`,
+                    background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#252523',
+                    border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#3a3a38'}`,
                     position: 'relative',
                     zIndex: 1
                   }} />
@@ -537,7 +537,7 @@ export default function MembersPage() {
                   <div style={{
                     marginTop: '8px',
                     fontSize: '0.68rem',
-                    color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb',
+                    color: isCurrent ? '#f0ede8' : isCompleted ? '#4a9e5c' : '#444',
                     fontWeight: isCurrent ? 600 : 400,
                     whiteSpace: 'nowrap',
                     letterSpacing: '0.02em'
@@ -563,14 +563,14 @@ export default function MembersPage() {
             display: 'flex',
             flexDirection: 'column'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.borderColor = '#d5d5d5'}
-          onMouseLeave={(e) => e.currentTarget.style.borderColor = '#e5e5e5'}>
+          onMouseEnter={(e) => e.currentTarget.style.borderColor = '#3a3a38'}
+          onMouseLeave={(e) => e.currentTarget.style.borderColor = '#2c2c2a'}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '1.5rem' }}>
               <div style={{
                 width: '2.5rem',
                 height: '2.5rem',
                 borderRadius: '50%',
-                background: '#f0f0f0',
+                background: '#252523',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -579,7 +579,7 @@ export default function MembersPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300, color: '#1a1a1a' }}>Quick Access</h3>
+              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300, color: '#f0ede8' }}>Quick Access</h3>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {[
@@ -597,28 +597,28 @@ export default function MembersPage() {
                     alignItems: 'center',
                     gap: '1rem',
                     padding: '1rem',
-                    background: '#f5f5f5',
-                    border: '1px solid #e5e5e5',
+                    background: '#141412',
+                    border: '1px solid #2c2c2a',
                     borderRadius: '8px',
                     textDecoration: 'none',
-                    color: '#1a1a1a',
-                    transition: 'all 0.3s ease'
+                    color: '#f0ede8',
+                    transition: 'all 0.2s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#f0f0f0'
-                    e.currentTarget.style.borderColor = '#d5d5d5'
+                    e.currentTarget.style.background = '#1e1e1c'
+                    e.currentTarget.style.borderColor = '#9bc4b8'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#f5f5f5'
-                    e.currentTarget.style.borderColor = '#e5e5e5'
+                    e.currentTarget.style.background = '#141412'
+                    e.currentTarget.style.borderColor = '#2c2c2a'
                   }}
                 >
                   <div style={{
                     width: '3rem',
                     height: '3rem',
                     borderRadius: '50%',
-                    background: '#f5f5f5',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    border: '1px solid #333',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -630,10 +630,10 @@ export default function MembersPage() {
                     </svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 300, transition: 'color 0.3s ease', color: '#1a1a1a' }}>{action.title}</div>
-                    <div style={{ fontSize: '0.875rem', color: '#1a1a1a', fontWeight: 300 }}>{action.desc}</div>
+                    <div style={{ fontWeight: 300, transition: 'color 0.3s ease', color: '#f0ede8' }}>{action.title}</div>
+                    <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>{action.desc}</div>
                   </div>
-                  <svg style={{ width: '1.25rem', height: '1.25rem', color: '#1a1a1a', flexShrink: 0, transition: 'all 0.3s ease' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg style={{ width: '1.25rem', height: '1.25rem', color: '#555', flexShrink: 0, transition: 'all 0.3s ease' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
@@ -647,14 +647,14 @@ export default function MembersPage() {
         <div style={{
           marginBottom: '2rem',
           backdropFilter: 'blur(20px)',
-          background: '#ffffff',
-          border: '1px solid #e5e5e5',
+          background: '#1a1a18',
+          border: '1px solid #2c2c2a',
           borderRadius: '12px',
           padding: '2rem',
           transition: 'border 0.3s ease'
         }}
-        onMouseEnter={(e) => e.currentTarget.style.borderColor = '#d5d5d5'}
-        onMouseLeave={(e) => e.currentTarget.style.borderColor = '#e5e5e5'}>
+        onMouseEnter={(e) => e.currentTarget.style.borderColor = '#3a3a38'}
+        onMouseLeave={(e) => e.currentTarget.style.borderColor = '#2c2c2a'}>
           <h3 style={{
             fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
             fontWeight: 300,
@@ -662,7 +662,7 @@ export default function MembersPage() {
             display: 'flex',
             alignItems: 'center',
             gap: '0',
-            color: '#1a1a1a'
+            color: '#f0ede8'
           }}>
 Your Progress
           </h3>
@@ -675,14 +675,14 @@ Your Progress
             <div style={{
               padding: '1.5rem',
               background: 'rgba(155, 196, 184, 0.05)',
-              border: '1px solid #e5e5e5',
+              border: '1px solid #2c2c2a',
               borderRadius: '8px',
               transition: 'all 0.3s ease'
             }}>
-              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#e67e22', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.5rem' }}>
                 {stats.videosWatched || 0}
               </div>
-              <div style={{ fontSize: '0.875rem', color: '#1a1a1a', fontWeight: 300 }}>
+              <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>
                 Videos Watched
               </div>
             </div>
@@ -697,7 +697,7 @@ Your Progress
               <div style={{ fontSize: '2rem', fontWeight: 300, color: '#7fb069', marginBottom: '0.5rem' }}>
                 {Math.round((stats.totalWatchTime || 0) / 60)}m
               </div>
-              <div style={{ fontSize: '0.875rem', color: '#1a1a1a', fontWeight: 300 }}>
+              <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>
                 Watch Time
               </div>
             </div>
@@ -712,7 +712,7 @@ Your Progress
               <div style={{ fontSize: '2rem', fontWeight: 300, color: '#6a994e', marginBottom: '0.5rem' }}>
                 {stats.completionRate || 0}%
               </div>
-              <div style={{ fontSize: '0.875rem', color: '#1a1a1a', fontWeight: 300 }}>
+              <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>
                 Completion Rate
               </div>
             </div>
@@ -723,13 +723,13 @@ Your Progress
         {/* Account Info */}
         <div style={{
           backdropFilter: 'blur(20px)',
-          background: '#ffffff',
-          border: '1px solid #e5e5e5',
+          background: '#1a1a18',
+          border: '1px solid #2c2c2a',
           borderRadius: '12px',
           padding: '2rem'
         }}>
-          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0', color: '#1a1a1a' }}>
-            <svg style={{ width: '1.25rem', height: '1.25rem', color: '#1a1a1a' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0', color: '#f0ede8' }}>
+            <svg style={{ width: '1.25rem', height: '1.25rem', color: '#555' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
             Account Details
@@ -740,16 +740,16 @@ Your Progress
             gap: '2rem'
           }}>
             <div>
-              <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#1a1a1a', marginBottom: '0.5rem', fontWeight: 300 }}>
+              <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#555', marginBottom: '0.5rem', fontWeight: 300 }}>
                 EMAIL ADDRESS
               </div>
-              <div style={{ fontWeight: 300, color: '#1a1a1a' }}>{user.email}</div>
+              <div style={{ fontWeight: 300, color: '#f0ede8' }}>{user.email}</div>
             </div>
             <div>
-              <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#1a1a1a', marginBottom: '0.5rem', fontWeight: 300 }}>
+              <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#555', marginBottom: '0.5rem', fontWeight: 300 }}>
                 MEMBER SINCE
               </div>
-              <div style={{ fontWeight: 300, color: '#1a1a1a' }}>
+              <div style={{ fontWeight: 300, color: '#f0ede8' }}>
                 {new Date(user.joinDate).toLocaleDateString('en-US', {
                   month: 'long',
                   day: 'numeric',
@@ -759,24 +759,24 @@ Your Progress
             </div>
           </div>
 
-          <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e5e5e5' }}>
+          <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #2c2c2a' }}>
             <button
               onClick={handleManageBilling}
               disabled={billingLoading}
               style={{
                 padding: '0.75rem 1.5rem',
-                background: '#f5f5f5',
-                border: '1px solid #e5e5e5',
+                background: '#252523',
+                border: '1px solid #333',
                 borderRadius: '8px',
-                color: '#1a1a1a',
+                color: '#a0a09c',
                 fontSize: '0.875rem',
                 fontWeight: 400,
                 cursor: billingLoading ? 'not-allowed' : 'pointer',
                 opacity: billingLoading ? 0.6 : 1,
                 transition: 'all 0.2s ease'
               }}
-              onMouseEnter={(e) => { if (!billingLoading) e.currentTarget.style.borderColor = '#d5d5d5' }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e5e5e5' }}
+              onMouseEnter={(e) => { if (!billingLoading) e.currentTarget.style.borderColor = '#9bc4b8' }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#333' }}
             >
               {billingLoading ? 'Loading...' : 'Manage payment details'}
             </button>
@@ -806,9 +806,9 @@ Your Progress
         >
           <div
             style={{
-              background: '#ffffff',
+              background: '#1a1a18',
               borderRadius: '12px',
-              border: '1px solid #d5d5d5',
+              border: '1px solid #2c2c2a',
               maxWidth: '32rem',
               width: '100%',
               maxHeight: '90vh',
@@ -821,13 +821,13 @@ Your Progress
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '1.5rem',
-              borderBottom: '1px solid #e5e5e5'
+              borderBottom: '1px solid #2c2c2a'
             }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 300, color: '#1a1a1a' }}>Profile Settings</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 300, color: '#f0ede8' }}>Profile Settings</h2>
               <button
                 onClick={() => setShowProfileModal(false)}
                 style={{
-                  color: '#1a1a1a',
+                  color: '#888',
                   fontSize: '1.5rem',
                   background: 'none',
                   border: 'none',
@@ -856,7 +856,7 @@ Your Progress
                   justifyContent: 'center'
                 }}>
                   {!profilePhoto && (
-                    <svg style={{ width: '2.5rem', height: '2.5rem', color: '#1a1a1a' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg style={{ width: '2.5rem', height: '2.5rem', color: '#555' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   )}
@@ -864,10 +864,10 @@ Your Progress
                 <label style={{
                   display: 'inline-block',
                   padding: '0.5rem 1rem',
-                  background: '#f0faf8',
+                  background: 'transparent',
                   border: '1px solid #9bc4b8',
                   borderRadius: '8px',
-                  color: '#e67e22',
+                  color: '#9bc4b8',
                   fontSize: '0.875rem',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
@@ -906,7 +906,7 @@ Your Progress
 
               {/* Name */}
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', color: '#1a1a1a', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                <label style={{ display: 'block', color: '#a0a09c', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
                   Name
                 </label>
                 <input
@@ -918,10 +918,10 @@ Your Progress
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: '#f5f5f5',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#1a1a1a',
+                    color: '#f0ede8',
                     fontSize: '1rem',
                     outline: 'none'
                   }}
@@ -930,7 +930,7 @@ Your Progress
 
               {/* Email */}
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', color: '#1a1a1a', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                <label style={{ display: 'block', color: '#a0a09c', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
                   Email
                 </label>
                 <input
@@ -942,10 +942,10 @@ Your Progress
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: '#f5f5f5',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#1a1a1a',
+                    color: '#f0ede8',
                     fontSize: '1rem',
                     outline: 'none'
                   }}
@@ -954,8 +954,8 @@ Your Progress
 
               {/* Bio */}
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', color: '#1a1a1a', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  Bio <span style={{ color: '#1a1a1a' }}>(optional)</span>
+                <label style={{ display: 'block', color: '#a0a09c', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                  Bio <span style={{ color: '#555' }}>(optional)</span>
                 </label>
                 <textarea
                   value={profileForm.bio}
@@ -967,17 +967,17 @@ Your Progress
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: '#f5f5f5',
-                    border: '1px solid #e5e5e5',
+                    background: '#252523',
+                    border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#1a1a1a',
+                    color: '#f0ede8',
                     fontSize: '1rem',
                     outline: 'none',
                     resize: 'vertical',
                     fontFamily: 'inherit'
                   }}
                 />
-                <div style={{ textAlign: 'right', fontSize: '0.75rem', color: '#1a1a1a', marginTop: '0.25rem' }}>
+                <div style={{ textAlign: 'right', fontSize: '0.75rem', color: '#555', marginTop: '0.25rem' }}>
                   {profileForm.bio.length}/500
                 </div>
               </div>
@@ -990,8 +990,8 @@ Your Progress
                   style={{
                     flex: 1,
                     padding: '0.875rem',
-                    background: 'linear-gradient(135deg, #e67e22, #7fb069)',
-                    color: '#000',
+                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    color: '#0f0f0d',
                     fontWeight: 600,
                     fontSize: '1rem',
                     borderRadius: '8px',
@@ -1009,8 +1009,8 @@ Your Progress
                   style={{
                     padding: '0.875rem 1.5rem',
                     background: 'transparent',
-                    border: '1px solid #e5e5e5',
-                    color: '#1a1a1a',
+                    border: '1px solid #333',
+                    color: '#888',
                     fontWeight: 500,
                     fontSize: '1rem',
                     borderRadius: '8px',
