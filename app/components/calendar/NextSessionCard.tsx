@@ -127,13 +127,13 @@ END:VCALENDAR`;
     return (
       <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem' }}>
         <div style={{
-          background: '#f8f8f8',
-          border: '1px solid #e5e5e5',
-          borderRadius: '3px',
+          background: '#1a1a18',
+          border: '1px solid #2c2c2a',
+          borderRadius: '6px',
           padding: '2rem',
           textAlign: 'center'
         }}>
-          <div style={{ color: '#999', fontSize: '0.9rem', fontWeight: 300 }}>Loading sessions...</div>
+          <div style={{ color: '#666', fontSize: '0.9rem' }}>Loading sessions...</div>
         </div>
       </div>
     );
@@ -143,13 +143,13 @@ END:VCALENDAR`;
     return (
       <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem' }}>
         <div style={{
-          background: '#f8f8f8',
-          border: '1px solid #e5e5e5',
-          borderRadius: '3px',
+          background: '#1a1a18',
+          border: '1px solid #2c2c2a',
+          borderRadius: '6px',
           padding: '2rem',
           textAlign: 'center'
         }}>
-          <div style={{ color: '#999', fontSize: '0.9rem', fontWeight: 300 }}>No upcoming sessions</div>
+          <div style={{ color: '#666', fontSize: '0.9rem' }}>No upcoming sessions</div>
         </div>
       </div>
     );
@@ -161,27 +161,27 @@ END:VCALENDAR`;
   return (
     <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem', marginBottom: '3rem' }}>
       <div style={{
-        background: '#f8f8f8',
-        border: '1px solid #e5e5e5',
-        borderRadius: '3px',
+        background: '#1a1a18',
+        border: '1px solid #2c2c2a',
+        borderRadius: '6px',
         padding: '2rem',
         position: 'relative'
       }}>
         <div style={{
-          fontSize: '0.75rem',
-          color: '#999',
+          fontSize: '0.7rem',
+          color: '#9bc4b8',
           textTransform: 'uppercase',
-          letterSpacing: '0.1em',
+          letterSpacing: '0.12em',
           marginBottom: '1rem',
-          fontWeight: 300
+          fontWeight: 600
         }}>
           Next Session
         </div>
 
         <h3 style={{
           fontSize: '1.5rem',
-          color: '#1a1a1a',
-          fontWeight: 300,
+          color: '#f0ede8',
+          fontWeight: 500,
           marginBottom: '1rem',
           letterSpacing: '-0.01em'
         }}>
@@ -196,27 +196,27 @@ END:VCALENDAR`;
           flexWrap: 'wrap'
         }}>
           <div style={{
-            color: '#e67e22',
+            color: '#9bc4b8',
             fontSize: '0.95rem',
-            fontWeight: 400
+            fontWeight: 500
           }}>
             {nextSession.date}
           </div>
           <div style={{
-            color: '#666',
+            color: '#a0a09c',
             fontSize: '0.95rem',
-            fontWeight: 300
+            fontWeight: 400
           }}>
             {nextSession.time}
           </div>
           <div style={{
-            background: 'rgba(230, 126, 34, 0.1)',
-            border: '1px solid rgba(230, 126, 34, 0.2)',
-            borderRadius: '3px',
+            background: 'rgba(155, 196, 184, 0.1)',
+            border: '1px solid rgba(155, 196, 184, 0.25)',
+            borderRadius: '4px',
             padding: '0.25rem 0.75rem',
             fontSize: '0.8rem',
-            color: '#e67e22',
-            fontWeight: 400
+            color: '#9bc4b8',
+            fontWeight: 500
           }}>
             {countdown}
           </div>
@@ -224,11 +224,11 @@ END:VCALENDAR`;
 
         {nextSession.description && (
           <p style={{
-            color: '#666',
+            color: '#a0a09c',
             fontSize: '0.9rem',
             lineHeight: '1.6',
             marginBottom: '1.5rem',
-            fontWeight: 300
+            fontWeight: 400
           }}>
             {nextSession.description?.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()}
           </p>
@@ -239,22 +239,24 @@ END:VCALENDAR`;
             onClick={() => setShowCalendarOptions(!showCalendarOptions)}
             style={{
               padding: '0.75rem 1.5rem',
-              background: '#ffffff',
-              border: '1px solid #e5e5e5',
-              borderRadius: '3px',
-              color: '#1a1a1a',
+              background: '#252523',
+              border: '1px solid #333',
+              borderRadius: '6px',
+              color: '#a0a09c',
               fontSize: '0.9rem',
-              fontWeight: 300,
+              fontWeight: 500,
               cursor: 'pointer',
               transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#f0f0f0';
-              e.currentTarget.style.borderColor = '#d5d5d5';
+              e.currentTarget.style.background = '#1e1e1c';
+              e.currentTarget.style.borderColor = '#9bc4b8';
+              e.currentTarget.style.color = '#f0ede8';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#ffffff';
-              e.currentTarget.style.borderColor = '#e5e5e5';
+              e.currentTarget.style.background = '#252523';
+              e.currentTarget.style.borderColor = '#333';
+              e.currentTarget.style.color = '#a0a09c';
             }}
           >
             Add to Calendar
@@ -266,13 +268,13 @@ END:VCALENDAR`;
               top: '100%',
               left: 0,
               marginTop: '0.5rem',
-              background: '#ffffff',
-              border: '1px solid #e5e5e5',
-              borderRadius: '3px',
+              background: '#1a1a18',
+              border: '1px solid #2c2c2a',
+              borderRadius: '6px',
               overflow: 'hidden',
               zIndex: 10,
               minWidth: '200px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
+              boxShadow: '0 4px 16px rgba(0,0,0,0.4)'
             }}>
               {['google', 'apple', 'outlook', 'ical'].map((provider) => (
                 <button
@@ -283,19 +285,21 @@ END:VCALENDAR`;
                     padding: '0.75rem 1rem',
                     background: 'transparent',
                     border: 'none',
-                    borderBottom: '1px solid #f5f5f5',
-                    color: '#1a1a1a',
+                    borderBottom: '1px solid #2c2c2a',
+                    color: '#a0a09c',
                     fontSize: '0.85rem',
-                    fontWeight: 300,
+                    fontWeight: 400,
                     cursor: 'pointer',
                     textAlign: 'left',
                     transition: 'all 0.2s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#f8f8f8';
+                    e.currentTarget.style.background = '#1e1e1c';
+                    e.currentTarget.style.color = '#f0ede8';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = '#a0a09c';
                   }}
                 >
                   {provider === 'google' ? 'Google Calendar' :
@@ -311,16 +315,18 @@ END:VCALENDAR`;
       {upcomingSessions.length > 0 && (
         <div style={{
           marginTop: '1.5rem',
-          background: '#f8f8f8',
-          border: '1px solid #e5e5e5',
-          borderRadius: '3px',
+          background: '#1a1a18',
+          border: '1px solid #2c2c2a',
+          borderRadius: '6px',
           padding: '1.5rem'
         }}>
           <div style={{
-            fontSize: '0.85rem',
-            color: '#666',
+            fontSize: '0.7rem',
+            color: '#9bc4b8',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em',
             marginBottom: '1rem',
-            fontWeight: 300
+            fontWeight: 600
           }}>
             Upcoming
           </div>
@@ -333,14 +339,14 @@ END:VCALENDAR`;
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: '0.75rem 0',
-                  borderBottom: index < upcomingSessions.length - 1 ? '1px solid #efefef' : 'none'
+                  borderBottom: index < upcomingSessions.length - 1 ? '1px solid #2c2c2a' : 'none'
                 }}
               >
                 <div>
-                  <div style={{ color: '#1a1a1a', fontSize: '0.9rem', fontWeight: 300, marginBottom: '0.25rem' }}>
+                  <div style={{ color: '#f0ede8', fontSize: '0.9rem', fontWeight: 400, marginBottom: '0.25rem' }}>
                     {session.title}
                   </div>
-                  <div style={{ color: '#e67e22', fontSize: '0.8rem', fontWeight: 400 }}>
+                  <div style={{ color: '#9bc4b8', fontSize: '0.8rem', fontWeight: 400 }}>
                     {session.date} • {session.time}
                   </div>
                 </div>
@@ -349,21 +355,21 @@ END:VCALENDAR`;
                   style={{
                     padding: '0.5rem 1rem',
                     background: 'transparent',
-                    border: '1px solid #e5e5e5',
-                    borderRadius: '3px',
+                    border: '1px solid #333',
+                    borderRadius: '6px',
                     color: '#666',
                     fontSize: '0.8rem',
-                    fontWeight: 300,
+                    fontWeight: 400,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
                     position: 'relative'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#d5d5d5';
-                    e.currentTarget.style.color = '#1a1a1a';
+                    e.currentTarget.style.borderColor = '#9bc4b8';
+                    e.currentTarget.style.color = '#f0ede8';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = '#e5e5e5';
+                    e.currentTarget.style.borderColor = '#333';
                     e.currentTarget.style.color = '#666';
                   }}
                 >
@@ -374,13 +380,13 @@ END:VCALENDAR`;
                       top: '100%',
                       right: 0,
                       marginTop: '0.5rem',
-                      background: '#ffffff',
-                      border: '1px solid #e5e5e5',
-                      borderRadius: '3px',
+                      background: '#1a1a18',
+                      border: '1px solid #2c2c2a',
+                      borderRadius: '6px',
                       overflow: 'hidden',
                       zIndex: 10,
                       minWidth: '180px',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.4)'
                     }}>
                       {['google', 'apple', 'outlook', 'ical'].map((provider) => (
                         <button
@@ -394,19 +400,21 @@ END:VCALENDAR`;
                             padding: '0.75rem 1rem',
                             background: 'transparent',
                             border: 'none',
-                            borderBottom: '1px solid #f5f5f5',
-                            color: '#1a1a1a',
+                            borderBottom: '1px solid #2c2c2a',
+                            color: '#a0a09c',
                             fontSize: '0.8rem',
-                            fontWeight: 300,
+                            fontWeight: 400,
                             cursor: 'pointer',
                             textAlign: 'left',
                             transition: 'all 0.2s ease'
                           }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.background = '#f8f8f8';
+                            e.currentTarget.style.background = '#1e1e1c';
+                            e.currentTarget.style.color = '#f0ede8';
                           }}
                           onMouseLeave={(e) => {
                             e.currentTarget.style.background = 'transparent';
+                            e.currentTarget.style.color = '#a0a09c';
                           }}
                         >
                           {provider === 'google' ? 'Google' :

@@ -111,54 +111,55 @@ export default function InstallAppBanner() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: '#ffffff', borderRadius: '16px', padding: '2rem',
-              width: '100%', maxWidth: '400px', marginBottom: '1rem'
+              background: '#1a1a18', borderRadius: '16px', padding: '2rem',
+              width: '100%', maxWidth: '400px', marginBottom: '1rem',
+              border: '1px solid #2c2c2a'
             }}
           >
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem', color: '#1a1a1a' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.5rem', color: '#f0ede8' }}>
               Add to Home Screen
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2rem' }}>
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <div style={{ width: '28px', height: '28px', background: '#9bc4b8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>1</div>
+                <div style={{ width: '28px', height: '28px', background: '#9bc4b8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f0f0d', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>1</div>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '2px' }}>Tap the Share button</div>
-                  <div style={{ fontSize: '0.875rem', color: '#666' }}>The box with an arrow pointing up. On newer iPhones it's at the <strong>bottom centre</strong> of Safari. On older iOS it's in the <strong>bottom toolbar</strong>.</div>
+                  <div style={{ fontWeight: 600, marginBottom: '2px', color: '#f0ede8' }}>Tap the Share button</div>
+                  <div style={{ fontSize: '0.875rem', color: '#a0a09c' }}>The box with an arrow pointing up. On newer iPhones it's at the <strong style={{ color: '#f0ede8' }}>bottom centre</strong> of Safari. On older iOS it's in the <strong style={{ color: '#f0ede8' }}>bottom toolbar</strong>.</div>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <div style={{ width: '28px', height: '28px', background: '#9bc4b8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>2</div>
+                <div style={{ width: '28px', height: '28px', background: '#9bc4b8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f0f0d', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>2</div>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '2px' }}>Tap "Add to Home Screen"</div>
-                  <div style={{ fontSize: '0.875rem', color: '#666' }}>In the share sheet, <strong>scroll down</strong> past AirDrop and the app icons — it's further down the list</div>
+                  <div style={{ fontWeight: 600, marginBottom: '2px', color: '#f0ede8' }}>Tap "Add to Home Screen"</div>
+                  <div style={{ fontSize: '0.875rem', color: '#a0a09c' }}>In the share sheet, <strong style={{ color: '#f0ede8' }}>scroll down</strong> past AirDrop and the app icons — it's further down the list</div>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                <div style={{ width: '28px', height: '28px', background: '#9bc4b8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>3</div>
+                <div style={{ width: '28px', height: '28px', background: '#9bc4b8', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f0f0d', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>3</div>
                 <div>
-                  <div style={{ fontWeight: 600, marginBottom: '2px' }}>Tap Add</div>
-                  <div style={{ fontSize: '0.875rem', color: '#666' }}>CoR will appear on your home screen</div>
+                  <div style={{ fontWeight: 600, marginBottom: '2px', color: '#f0ede8' }}>Tap Add</div>
+                  <div style={{ fontSize: '0.875rem', color: '#a0a09c' }}>CoR will appear on your home screen</div>
                 </div>
               </div>
             </div>
 
             {/* Share icon visual */}
-            <div style={{ background: '#f4f4f4', borderRadius: '10px', padding: '1rem', textAlign: 'center', marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '0.8125rem', color: '#666', marginBottom: '0.5rem' }}>The Share button looks like this:</div>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div style={{ background: '#252523', borderRadius: '10px', padding: '1rem', textAlign: 'center', marginBottom: '1.5rem' }}>
+              <div style={{ fontSize: '0.8125rem', color: '#a0a09c', marginBottom: '0.5rem' }}>The Share button looks like this:</div>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#9bc4b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
                 <polyline points="16 6 12 2 8 6"/>
                 <line x1="12" y1="2" x2="12" y2="15"/>
               </svg>
-              <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '0.5rem' }}>It's in the toolbar at the bottom of Safari.<br/>If you don't see it, scroll down on the share sheet to find "Add to Home Screen".</div>
+              <div style={{ fontSize: '0.75rem', color: '#666', marginTop: '0.5rem' }}>It's in the toolbar at the bottom of Safari.<br/>If you don't see it, scroll down on the share sheet to find "Add to Home Screen".</div>
             </div>
 
             <button
               onClick={() => setShowModal(false)}
-              style={{ width: '100%', padding: '0.875rem', background: '#1a1a1a', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '1rem', fontWeight: 600, cursor: 'pointer' }}
+              style={{ width: '100%', padding: '0.875rem', background: 'linear-gradient(135deg, #9bc4b8, #7fb069)', border: 'none', borderRadius: '8px', color: '#0f0f0d', fontSize: '1rem', fontWeight: 600, cursor: 'pointer' }}
             >
               Got it
             </button>

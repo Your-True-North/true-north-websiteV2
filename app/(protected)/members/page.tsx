@@ -554,8 +554,8 @@ export default function MembersPage() {
         <div style={{ marginBottom: '2rem' }}>
           <div style={{
             backdropFilter: 'blur(20px)',
-            background: '#ffffff',
-            border: '1px solid #e5e5e5',
+            background: '#1a1a18',
+            border: '1px solid #2c2c2a',
             borderRadius: '12px',
             padding: '2rem',
             transition: 'border 0.3s ease',

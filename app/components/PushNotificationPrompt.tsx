@@ -68,9 +68,9 @@ export default function PushNotificationPrompt({ userId }: { userId?: number }) 
 
   return (
     <div style={{
-      background: '#f8f8f8',
-      border: '1px solid #e5e5e5',
-      borderRadius: '10px',
+      background: '#1a1a18',
+      border: '1px solid #2c2c2a',
+      borderRadius: '8px',
       padding: '1rem 1.25rem',
       marginBottom: '1.25rem',
       display: 'flex',
@@ -80,10 +80,10 @@ export default function PushNotificationPrompt({ userId }: { userId?: number }) 
       flexWrap: 'wrap'
     }}>
       <div>
-        <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: '#1a1a1a', marginBottom: '2px' }}>
+        <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: '#f0ede8', marginBottom: '2px' }}>
           Stay connected
         </div>
-        <div style={{ fontSize: '0.8125rem', color: '#666' }}>
+        <div style={{ fontSize: '0.8125rem', color: '#a0a09c' }}>
           {status === 'denied'
             ? 'Notifications blocked — enable them in your browser settings.'
             : 'Get notified when new content and calls are posted.'}
@@ -93,14 +93,14 @@ export default function PushNotificationPrompt({ userId }: { userId?: number }) 
         <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
           <button
             onClick={handleDismiss}
-            style={{ padding: '0.5rem 0.875rem', background: 'transparent', border: '1px solid #e5e5e5', borderRadius: '6px', color: '#999', fontSize: '0.8125rem', cursor: 'pointer' }}
+            style={{ padding: '0.5rem 0.875rem', background: 'transparent', border: '1px solid #333', borderRadius: '6px', color: '#666', fontSize: '0.8125rem', cursor: 'pointer' }}
           >
             Not now
           </button>
           <button
             onClick={handleEnable}
             disabled={loading}
-            style={{ padding: '0.5rem 0.875rem', background: '#1a1a1a', border: 'none', borderRadius: '6px', color: '#fff', fontSize: '0.8125rem', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}
+            style={{ padding: '0.5rem 0.875rem', background: '#9bc4b8', border: 'none', borderRadius: '6px', color: '#0f0f0d', fontSize: '0.8125rem', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}
           >
             {loading ? 'Enabling...' : 'Enable'}
           </button>
