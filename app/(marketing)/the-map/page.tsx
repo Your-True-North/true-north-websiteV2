@@ -104,30 +104,30 @@ export default function TheMapPage() {
       num: '01',
       label: 'Weeks 1–4',
       title: 'Self Exploration',
-      body: "We can't change every situation that triggers you. But we can change how you see it. We start by examining your self-perception,because your outer world is a reflection of your inner world. This is where you begin to understand why things impact you the way they do, where the awareness gets sharp enough that you see the pattern before it plays out.",
+      body: "We start with self-perception, because your outer world is a reflection of your inner world. You can't change every situation that triggers you, but you can change how you relate to it. This is where the awareness gets sharp enough that you start to see the pattern before it plays out, rather than only recognising it in the aftermath.",
     },
     {
       num: '02',
       label: 'Weeks 5–8',
       title: 'Self Discovery',
-      body: "Your mind thinks it's dealt with the pain. Your body hasn't. This pillar is about getting out of your head and into the places where the real patterns live. Somatic experiencing, nervous system work, connecting to the parts of yourself that have been running the show from the shadows. This is where the real shifts happen.",
+      body: "Your mind has often made sense of the pain, but your body still holds it. This pillar moves you out of your head and into the places where the real patterns actually live. Through somatic experiencing, nervous system work, and connecting with the parts of yourself that have been running the show from the shadows, this is where the real shifts happen.",
     },
     {
       num: '03',
       label: 'Weeks 9–12',
       title: 'Personal Blueprint',
-      body: "We don't just clear the old. We build the new. Your relationships, your career, your emotional control. We work towards getting you where you actually want to be,in a way that is fully aligned with who you are, your strengths, and your areas for growth.",
+      body: "We don't just clear what isn't working. We build what you actually want. Your relationships, your career, your emotional life. This pillar works towards getting you where you genuinely want to be, in a way that is fully aligned with who you are, your strengths, and the areas you're still growing into.",
     },
   ]
 
   const faqs = [
     {
       q: "I've tried therapy before. How is this different?",
-      a: "Traditional therapy helps you understand the story. Somatic work helps you change the pattern in the body where it actually lives. Most men who come to me have done talk therapy. They can explain their anger perfectly. It still happens. This goes deeper.",
+      a: "Traditional therapy helps you understand the story. Somatic work changes the pattern in the body where it actually lives. Most men who come to me have done talk therapy and can explain their anger perfectly — but it still happens. This work goes somewhere different, into the nervous system, into the body, into the root of where the pattern was formed.",
     },
     {
       q: "Is this anger management?",
-      a: "No. Anger management gives you strategies to suppress or redirect anger. This goes to what the anger is protecting. The wound underneath. When that's worked with directly, the anger loses its intensity naturally,not because you've learned to bottle it better.",
+      a: "No. Anger management gives you strategies to suppress or redirect what you're feeling. This programme goes to the source — what the anger is protecting and why it formed in the first place. When you work with that directly, the anger naturally loses its intensity, not because you've learned to contain it better but because the thing it was guarding has finally been met.",
     },
     {
       q: "What does a typical session look like?",
@@ -135,15 +135,15 @@ export default function TheMapPage() {
     },
     {
       q: "£333 a month feels like a lot.",
-      a: "One session with a family solicitor costs more. A divorce costs on average £13,000. The further cost to your kids, your relationship, your own mental health,those are harder to quantify. The question isn't whether you can afford this. It's what it costs to keep going as you are.",
+      a: "One session with a family solicitor costs more than a month on this programme. A divorce costs an average of £13,000. The toll on your children, your relationship, and your own health is harder to put a number on. The real question isn't whether you can afford this. It's what you'll keep paying if nothing changes.",
     },
     {
       q: "I'm not sure I'm ready.",
-      a: "Book the call and say that. Readiness is something we assess together. Most men who aren't ready don't book the call. The fact that you're reading this says something.",
+      a: "Book the call and say exactly that. Readiness isn't something you need to have sorted before we speak — it's something we work out together. The fact that you've read this far already tells me something.",
     },
     {
       q: "How do I know this will work for me?",
-      a: "You don't,and I won't promise it. What I can say is that the men who do the work see results. The ones who don't aren't wrong people, they're just not ready. The call is where we figure out which is true for you.",
+      a: "I can't promise it, and I won't. What I can say is that the men who genuinely do the work see real results. The ones who don't aren't bad people — they just weren't quite ready. The call is where we work out honestly which applies to you.",
     },
   ]
 
@@ -189,22 +189,11 @@ export default function TheMapPage() {
             fontSize: isMobile ? '1.0625rem' : '1.2rem',
             lineHeight: 1.8,
             color: C.mutedDark,
-            marginBottom: '0.875rem',
-            maxWidth: '600px',
-            margin: '0 auto 0.875rem',
-          }}>
-            You just haven't found anything that goes deep enough to change it.
-          </p>
-
-          <p style={{
-            fontSize: '1rem',
-            lineHeight: 1.8,
-            color: 'rgba(160,160,156,0.7)',
             marginBottom: '3rem',
-            maxWidth: '560px',
+            maxWidth: '600px',
             margin: '0 auto 3rem',
           }}>
-            The breathing exercises didn't work. The counting to ten didn't work. Telling yourself you'd be calmer this time didn't work. Because none of it touches what your anger is actually protecting.
+            You've tried the breathing exercises, the counting to ten, the promises to yourself that this time would be different. None of it worked because none of it touches what your anger is actually protecting. That is what this programme does.
           </p>
 
           <CTA label="Book Your Free Discovery Call" />
@@ -236,10 +225,10 @@ export default function TheMapPage() {
           textAlign: 'center',
         }}>
           {[
-            { value: 'Gabor Maté', label: 'Somatic therapy,trained by' },
+            { value: 'Gabor Maté', label: 'Somatic therapy, trained by' },
             { value: 'ICF + EMCC', label: 'Certified Coach' },
             { value: '12 Weeks', label: 'Structured programme' },
-            { value: '10 Men', label: 'Per cohort,no more' },
+            { value: '10 Men', label: 'Per cohort, maximum' },
           ].map(({ value, label }) => (
             <div key={label}>
               <div style={{ fontSize: '0.75rem', color: C.mutedDark, fontFamily: SANS, marginBottom: '0.25rem', letterSpacing: '0.04em' }}>{label}</div>
@@ -267,7 +256,7 @@ export default function TheMapPage() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.375rem', marginBottom: '2.5rem' }}>
             {[
-              "You react to things that shouldn't bother you,and you know it in the moment but you can't stop.",
+              "You react to things that shouldn't bother you, and you know it in the moment but you can't stop.",
               "Your partner has stopped telling you when something's wrong because they know how you'll respond.",
               "Your kids go quiet around you when your mood shifts.",
               "You carry guilt after every outburst, but the apology cycle keeps repeating.",
@@ -376,13 +365,10 @@ export default function TheMapPage() {
           </h2>
 
           <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.mutedLight, marginBottom: '1.25rem' }}>
-            The breathing exercises. The counting to ten. The "just walk away." The apology and the promise that this time will be different.
-          </p>
-          <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.mutedLight, marginBottom: '1.25rem' }}>
-            These aren't bad ideas. They fail because they target the symptom. Your anger isn't the problem. Your anger is protection. It's a layer of armour over something older,something that got lodged in your nervous system long before you had the words for it.
+            You've probably tried most of it already. The breathing exercises, the counting to ten, the walking away, the apologies and the promises that this time would be different. These aren't bad ideas. The problem is that they target the symptom rather than the source.
           </p>
           <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.textLight, fontWeight: 500, marginBottom: 0 }}>
-            Until you meet what's underneath, nothing changes permanently. That's what this programme does. And it's why most men who join have already tried everything else.
+            Your anger isn't the problem. It's protection. A layer of armour over something older that got lodged in your nervous system long before you had the words for it. Until you meet what's underneath, nothing changes permanently. That is what this programme does, and it is why most men who join have already tried everything else.
           </p>
         </div>
       </section>
@@ -400,10 +386,10 @@ export default function TheMapPage() {
             marginBottom: '0.75rem',
             letterSpacing: '-0.02em',
           }}>
-            12 weeks. One man. Real change.
+            Real Change in 12 Weeks
           </h2>
           <p style={{ fontSize: '1rem', lineHeight: 1.8, color: C.mutedDark, marginBottom: '3rem' }}>
-            This is not anger management. This is not coping strategies. This is the deep work that most men never get access to because most programmes don't go here.
+            This is not anger management and it is not coping strategies. It is deep, structured work that most programmes never reach — the kind that actually shifts the pattern rather than teaching you to manage it.
           </p>
 
           {pillars.map((pillar, i) => (
@@ -516,19 +502,17 @@ export default function TheMapPage() {
           </div>
 
           {[
-            "I'm True. I'm an anger and addiction coach, a certified somatic therapy practitioner trained by Gabor Maté, a breathwork facilitator, ICF transformational coach, and Reiki master.",
-            "But none of that matters as much as this: I lived it.",
-            "I came from a world where violence was the only language. Drugs, chaos, aggression. My anger used to scare people. It used to scare me. I'd kick off over nothing and the shame afterwards was crushing.",
-            "What changed me wasn't learning to calm down. It was learning to meet the pain my anger was guarding. The hurt I'd been carrying since I was young. The grief I didn't know was there.",
-            "That's the work I now hold space for. And I've watched it change men's lives,their relationships, their careers, their sense of themselves.",
-            "I'm selective about who I work with. Not because I'm exclusive, but because this work requires readiness. The call is where we figure that out together.",
+            "I'm True. An anger and addiction coach, a certified somatic therapy practitioner trained by Gabor Maté, a breathwork facilitator, ICF and EMCC certified transformational coach, and Reiki master. But more than any of that, I lived this. I know what it is to be run by anger you don't fully understand.",
+            "I came from a world where violence was the only language. Drugs, chaos, aggression. My anger used to scare people, and there were times it scared me too. I'd react over nothing and the shame that followed was crushing.",
+            "What changed me wasn't learning to calm down. It was learning to meet the pain my anger was guarding, the hurt I'd been carrying since I was young, the grief I didn't even know was there.",
+            "That is the work I now hold space for. I have watched it change men's lives: their relationships, their careers, their sense of who they actually are. I'm selective about who I work with, not because I'm exclusive, but because this work requires readiness. The call is where we figure that out together.",
           ].map((para, i) => (
             <p key={i} style={{
               fontSize: '1rem',
               lineHeight: 1.85,
-              color: i === 1 ? C.textDark : C.mutedDark,
+              color: C.mutedDark,
               marginBottom: '1.25rem',
-              fontWeight: i === 1 ? 600 : 400,
+              fontWeight: 400,
             }}>
               {para}
             </p>
@@ -555,7 +539,7 @@ export default function TheMapPage() {
               {[
                 "You're a man who knows his anger is a problem but has never said it out loud.",
                 "You've tried to control it on your own and it keeps coming back.",
-                "You're tired of the shame cycle,the outburst, the guilt, the promise, the repeat.",
+                "You're tired of the shame cycle: the outburst, the guilt, the promise, the repeat.",
                 "You know there's something deeper driving it and you're ready to look at it.",
                 "You want to be the man your kids, your partner, and you yourself can genuinely respect.",
               ].map((line, i) => (
@@ -609,7 +593,7 @@ export default function TheMapPage() {
             {[
               ['Duration',    '12 weeks of structured, deep work'],
               ['Format',      '1:1 sessions with Mason directly'],
-              ['Spots',       '10 men per cohort,strictly limited'],
+              ['Spots',       '10 men per cohort, strictly limited'],
               ['Investment',  '£333 per month'],
               ['Methods',     'Somatic therapy, nervous system work, breathwork, and direct coaching'],
             ].map(([label, value], i, arr) => (
@@ -652,15 +636,14 @@ export default function TheMapPage() {
           }}>
             <p style={{ fontFamily: SANS, fontSize: '0.8125rem', color: C.mutedDark, lineHeight: 1.7, margin: 0 }}>
               One session with a family solicitor costs more than a month of this programme. A divorce costs on average £13,000.
-              The cost to your children, your health, and your sense of yourself,harder to put a number on.
-              The question is never whether you can afford to do this. It's what it costs to keep going as you are.
+              The toll on your children, your relationship, and your own health is harder to put a number on. The real question is never whether you can afford this. It is what you will keep paying if nothing changes.
             </p>
           </div>
 
           <SpotsBar />
 
           <p style={{ fontSize: '1rem', color: C.mutedDark, marginBottom: '2rem', lineHeight: 1.8 }}>
-            The first step is a call. We'll talk. I'll ask you some questions, you'll ask me some. No sales pressure. We'll both know if it's right.
+            The first step is a conversation. We'll talk honestly, I'll ask you some questions and you'll ask me some. There's no sales pressure. By the end we'll both have a clear sense of whether this is the right fit.
           </p>
 
           <CTA />
@@ -743,7 +726,7 @@ export default function TheMapPage() {
             The men in your life need you to do this work.
           </h2>
           <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.mutedDark, marginBottom: '2.75rem' }}>
-            Not the version of you that manages it better. The version that has actually dealt with it. Book the call. That's all this is.
+            Not the version of you that manages it better, but the version who has actually worked through it. Book the call. That is all this is.
           </p>
           <CTA label="Book Your Free Discovery Call" />
           <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: 'rgba(160,160,156,0.4)', fontFamily: SANS }}>
