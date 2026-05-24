@@ -385,11 +385,11 @@ export default function CommunityPage() {
           </div>
         </div>
       ) : null}
-      <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.15em', color: '#aaa', marginBottom: '4px', fontFamily: BODY_FONT }}>Continue Your Journey</div>
-      <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#1a1a1a', margin: '0 0 4px 0', fontFamily: GAMBARINO, lineHeight: 1.3 }}>
+      <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.15em', color: '#9bc4b8', marginBottom: '4px', fontFamily: BODY_FONT }}>Continue Your Journey</div>
+      <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#f0ede8', margin: '0 0 4px 0', fontFamily: GAMBARINO, lineHeight: 1.3 }}>
         {nextVideo?.title || 'Start Here'}
       </h3>
-      {nextVideo?.duration && <div style={{ fontSize: '0.75rem', color: '#aaa', marginBottom: '0.75rem', fontFamily: BODY_FONT }}>{nextVideo.duration} min</div>}
+      {nextVideo?.duration && <div style={{ fontSize: '0.75rem', color: '#666', marginBottom: '0.75rem', fontFamily: BODY_FONT }}>{nextVideo.duration} min</div>}
       <button
         onClick={() => router.push(nextVideo ? `/videos/${nextVideo.id}` : '/videos')}
         style={{ padding: '0.625rem 1.25rem', background: continueHovered ? '#000' : '#1a1a1a', border: 'none', color: '#fff', fontSize: '0.8125rem', fontWeight: 600, borderRadius: '6px', cursor: 'pointer', transition: 'background 0.15s ease', fontFamily: BODY_FONT }}
@@ -402,27 +402,29 @@ export default function CommunityPage() {
   )
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f4f2', fontFamily: BODY_FONT }}>
+    <div style={{ minHeight: '100vh', background: '#0f0f0d', fontFamily: BODY_FONT }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
         * { box-sizing: border-box; }
         textarea { font-family: inherit; }
         select { font-family: inherit; }
+        textarea::placeholder { color: #555; }
+        input::placeholder { color: #555; }
       `}</style>
 
       {/* Announcement popup */}
       {announcement && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
-          <div style={{ background: '#fff', borderRadius: '12px', maxWidth: '480px', width: '100%', padding: '2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.2)', position: 'relative' }}>
-            <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', fontSize: '1.25rem', color: '#aaa', cursor: 'pointer', lineHeight: 1 }}>×</button>
+          <div style={{ background: '#1a1a18', borderRadius: '6px', maxWidth: '480px', width: '100%', padding: '2rem', border: '1px solid #2e2e2c', position: 'relative' }}>
+            <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', fontSize: '1.25rem', color: '#666', cursor: 'pointer', lineHeight: 1 }}>×</button>
             <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9bc4b8', marginBottom: '12px' }}>From Mason</div>
-            <h2 style={{ fontSize: '20px', fontWeight: 500, color: '#1a1a1a', marginBottom: '12px', lineHeight: 1.4 }}>{announcement.title}</h2>
-            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#444', marginBottom: '1.5rem' }}>{announcement.body}</p>
+            <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#f0ede8', marginBottom: '12px', lineHeight: 1.4 }}>{announcement.title}</h2>
+            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#a0a09c', marginBottom: '1.5rem' }}>{announcement.body}</p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               {announcement.url && announcement.url !== '/members' && (
-                <a href={announcement.url} onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, display: 'block', textAlign: 'center' as const, padding: '12px', background: '#9bc4b8', color: '#0a0a0a', borderRadius: '6px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}>View Now</a>
+                <a href={announcement.url} onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, display: 'block', textAlign: 'center' as const, padding: '12px', background: '#9bc4b8', color: '#0a0a0a', borderRadius: '4px', fontWeight: 700, fontSize: '14px', textDecoration: 'none' }}>View Now</a>
               )}
-              <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, padding: '12px', background: '#f5f5f5', border: 'none', borderRadius: '6px', color: '#666', fontSize: '14px', cursor: 'pointer', fontFamily: BODY_FONT }}>Got it</button>
+              <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, padding: '12px', background: '#252523', border: '1px solid #333', borderRadius: '4px', color: '#888', fontSize: '14px', cursor: 'pointer', fontFamily: BODY_FONT }}>Got it</button>
             </div>
           </div>
         </div>
@@ -442,7 +444,7 @@ export default function CommunityPage() {
 
           {/* Video card - mobile only (desktop version is in aside) */}
           {isMobile && (
-            <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', marginBottom: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+            <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem', marginBottom: '1.25rem' }}>
               {renderVideoCard()}
             </div>
           )}
@@ -456,13 +458,13 @@ export default function CommunityPage() {
             const levelProgress = currentIndex === 3 ? 100 : Math.max(0, Math.min(100, ((overallProgress - levelMin) / 25) * 100))
             const fillPercent = Math.min(100, (currentIndex / 3) * 100 + (levelProgress / 3))
             return (
-              <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem 1.25rem 1.75rem', marginBottom: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+              <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem 1.25rem 1.75rem', marginBottom: '1.25rem' }}>
                 <div style={{ marginBottom: '1.75rem' }}>
-                  <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', fontWeight: 600, textTransform: 'uppercase' as const, marginBottom: '4px' }}>Your Journey</div>
-                  <div style={{ fontSize: '0.75rem', color: '#999', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
+                  <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#9bc4b8', fontWeight: 700, textTransform: 'uppercase' as const, marginBottom: '4px' }}>Your Journey</div>
+                  <div style={{ fontSize: '0.75rem', color: '#666', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
                 </div>
                 <div style={{ position: 'relative', height: '48px' }}>
-                  <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#e0e0e0', borderRadius: '1px' }} />
+                  <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#2a2a28', borderRadius: '1px' }} />
                   <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
                   {stages.map((stage, index) => {
                     const isCurrent = index === currentIndex
@@ -472,8 +474,8 @@ export default function CommunityPage() {
                     const isLast = index === 3
                     return (
                       <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
-                        <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`, position: 'relative', zIndex: 1 }} />
-                        <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
+                        <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#1a1a18', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#444'}`, position: 'relative', zIndex: 1 }} />
+                        <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#f0ede8' : isCompleted ? '#4a9e5c' : '#555', fontWeight: isCurrent ? 700 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
                       </div>
                     )
                   })}
@@ -484,12 +486,11 @@ export default function CommunityPage() {
 
           {/* Post Composer — always visible, expands on focus */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e8e8e8',
-            borderRadius: '10px',
+            background: '#1a1a18',
+            border: '1px solid #2c2c2a',
+            borderRadius: '6px',
             padding: '1.25rem',
             marginBottom: '1.25rem',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
           }}>
             <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
               <Avatar name={user?.name || ''} size={38} />
@@ -499,10 +500,10 @@ export default function CommunityPage() {
                     onClick={() => setPostFocused(true)}
                     style={{
                       padding: '0.625rem 1rem',
-                      background: '#f7f7f5',
-                      border: '1px solid #ebebeb',
-                      borderRadius: '20px',
-                      color: '#aaa',
+                      background: '#252523',
+                      border: '1px solid #333331',
+                      borderRadius: '4px',
+                      color: '#555',
                       fontSize: '0.9375rem',
                       cursor: 'text',
                       userSelect: 'none'
@@ -517,9 +518,9 @@ export default function CommunityPage() {
                         value={newPost.category}
                         onChange={(e) => setNewPost({ ...newPost, category: e.target.value })}
                         style={{
-                          padding: '0.4rem 0.75rem', background: '#f7f7f5',
-                          border: '1px solid #ebebeb', borderRadius: '6px',
-                          color: '#555', fontSize: '0.8125rem', outline: 'none'
+                          padding: '0.4rem 0.75rem', background: '#252523',
+                          border: '1px solid #333', borderRadius: '4px',
+                          color: '#c0bdb8', fontSize: '0.8125rem', outline: 'none'
                         }}
                       >
                         {categories.map((cat) => (<option key={cat} value={cat}>{cat}</option>))}
@@ -532,8 +533,8 @@ export default function CommunityPage() {
                       placeholder="Title (optional)"
                       style={{
                         width: '100%', padding: '0.5rem 0', background: 'transparent',
-                        border: 'none', borderBottom: '1px solid #ebebeb',
-                        color: '#1a1a1a', fontSize: '1rem', fontWeight: 600,
+                        border: 'none', borderBottom: '1px solid #333',
+                        color: '#f0ede8', fontSize: '1rem', fontWeight: 600,
                         outline: 'none', marginBottom: '0.5rem', fontFamily: GAMBARINO
                       }}
                     />
@@ -548,17 +549,17 @@ export default function CommunityPage() {
                       placeholder="What's on your mind?"
                       style={{
                         width: '100%', padding: '0.5rem 0', background: 'transparent',
-                        border: 'none', color: '#1a1a1a', fontSize: '0.9375rem',
+                        border: 'none', color: '#f0ede8', fontSize: '0.9375rem',
                         outline: 'none', resize: 'vertical', lineHeight: 1.6
                       }}
                     />
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #ebebeb' }}>
-                      <span style={{ fontSize: '0.75rem', color: '#ccc' }}>{newPost.content.length}/10000</span>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #2a2a28' }}>
+                      <span style={{ fontSize: '0.75rem', color: '#444' }}>{newPost.content.length}/10000</span>
                       <div style={{ display: 'flex', gap: '0.5rem' }}>
                         <button
                           type="button"
                           onClick={() => { setPostFocused(false); setNewPost({ title: '', content: '', category: 'Introductions' }) }}
-                          style={{ padding: '0.5rem 1rem', background: 'transparent', border: '1px solid #e5e5e5', borderRadius: '6px', color: '#888', fontSize: '0.8125rem', fontWeight: 600, cursor: 'pointer' }}
+                          style={{ padding: '0.5rem 1rem', background: 'transparent', border: '1px solid #333', borderRadius: '4px', color: '#666', fontSize: '0.8125rem', fontWeight: 600, cursor: 'pointer' }}
                         >
                           Cancel
                         </button>
@@ -567,9 +568,9 @@ export default function CommunityPage() {
                           disabled={posting || newPost.content.length < 10}
                           style={{
                             padding: '0.5rem 1.25rem',
-                            background: posting || newPost.content.length < 10 ? '#ddd' : '#1a1a1a',
-                            border: 'none', borderRadius: '6px', color: '#fff',
-                            fontSize: '0.8125rem', fontWeight: 600,
+                            background: posting || newPost.content.length < 10 ? '#333' : '#9bc4b8',
+                            border: 'none', borderRadius: '4px', color: posting || newPost.content.length < 10 ? '#555' : '#0a0a0a',
+                            fontSize: '0.8125rem', fontWeight: 700,
                             cursor: posting || newPost.content.length < 10 ? 'not-allowed' : 'pointer'
                           }}
                         >
@@ -591,14 +592,13 @@ export default function CommunityPage() {
                 onClick={() => setActiveCategory(cat)}
                 style={{
                   padding: '0.4375rem 0.875rem',
-                  background: activeCategory === cat ? '#1a1a1a' : '#ffffff',
-                  border: '1px solid ' + (activeCategory === cat ? '#1a1a1a' : '#e5e5e5'),
-                  borderRadius: '20px',
-                  color: activeCategory === cat ? '#ffffff' : '#666',
-                  fontSize: '0.8125rem', fontWeight: 500,
+                  background: activeCategory === cat ? '#f0ede8' : '#1a1a18',
+                  border: '1px solid ' + (activeCategory === cat ? '#f0ede8' : '#333331'),
+                  borderRadius: '3px',
+                  color: activeCategory === cat ? '#0f0f0d' : '#777',
+                  fontSize: '0.8125rem', fontWeight: activeCategory === cat ? 700 : 500,
                   cursor: 'pointer', whiteSpace: 'nowrap',
-                  transition: 'all 0.15s ease',
-                  boxShadow: activeCategory === cat ? 'none' : '0 1px 3px rgba(0,0,0,0.05)'
+                  transition: 'all 0.15s ease'
                 }}
               >
                 {cat === 'All' ? 'All Posts' : cat}
@@ -609,26 +609,27 @@ export default function CommunityPage() {
           {/* Introductions prompt */}
           {activeCategory === 'Introductions' && (
             <div style={{
-              background: '#fff8f0',
-              border: '1px solid #f0e0cc',
-              borderRadius: '10px',
+              background: '#1a1a18',
+              border: '1px solid #2c2c2a',
+              borderLeft: '3px solid #9bc4b8',
+              borderRadius: '4px',
               padding: '1.125rem 1.25rem',
               marginBottom: '1.25rem',
               fontSize: '0.9375rem',
-              color: '#6b4c2a',
+              color: '#a0a09c',
               lineHeight: 1.7
             }}>
-              <span style={{ fontWeight: 600 }}>Introduce yourself.</span> Who you are, what pulled you here, what you're wanting to shift.
+              <span style={{ fontWeight: 700, color: '#f0ede8' }}>Introduce yourself.</span> Who you are, what pulled you here, what you're wanting to shift.
             </div>
           )}
 
           {/* Posts Feed */}
           {posts.filter(p => activeCategory === 'All' || p.category === activeCategory).length === 0 ? (
-            <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '3rem 2rem', textAlign: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-              <p style={{ color: '#aaa', margin: '0 0 1rem 0', fontFamily: BODY_FONT }}>
+            <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '3rem 2rem', textAlign: 'center' }}>
+              <p style={{ color: '#555', margin: '0 0 1rem 0', fontFamily: BODY_FONT }}>
                 {activeCategory === 'All' ? 'No posts yet. Be the first to share.' : `No posts in ${activeCategory} yet.`}
               </p>
-              <button onClick={() => setPostFocused(true)} style={{ padding: '0.75rem 1.5rem', background: '#1a1a1a', border: 'none', color: '#fff', borderRadius: '6px', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer' }}>
+              <button onClick={() => setPostFocused(true)} style={{ padding: '0.75rem 1.5rem', background: '#f0ede8', border: 'none', color: '#0f0f0d', borderRadius: '4px', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer' }}>
                 Create a Post
               </button>
             </div>
@@ -638,80 +639,80 @@ export default function CommunityPage() {
                 .filter(p => activeCategory === 'All' || p.category === activeCategory)
                 .map((post) => (
                 <div key={post.id} style={{
-                  background: '#ffffff',
-                  border: '1px solid #e8e8e8',
-                  borderRadius: '10px',
+                  background: '#1a1a18',
+                  border: '1px solid #2c2c2a',
+                  borderLeft: '3px solid #2c2c2a',
+                  borderRadius: '6px',
                   overflow: 'hidden',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                  transition: 'box-shadow 0.2s ease'
+                  transition: 'border-left-color 0.2s ease'
                 }}
-                  onMouseEnter={(e) => (e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderLeftColor = '#9bc4b8')}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderLeftColor = '#2c2c2a')}
                 >
                   <div style={{ padding: '1.25rem 1.25rem 0.875rem' }}>
                     {/* Author row */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.875rem' }}>
                       <Avatar name={post.user_name} photo={post.user_photo} size={40} />
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#1a1a1a' }}>{post.user_name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#bbb' }}>
+                        <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#f0ede8' }}>{post.user_name}</div>
+                        <div style={{ fontSize: '0.75rem', color: '#555' }}>
                           {getTimeAgo(post.created_at)}
-                          {post.category && <><span style={{ margin: '0 4px', color: '#ddd' }}>·</span><span style={{ color: ORANGE, fontWeight: 500 }}>{post.category}</span></>}
+                          {post.category && <><span style={{ margin: '0 4px', color: '#444' }}>·</span><span style={{ color: ORANGE, fontWeight: 600 }}>{post.category}</span></>}
                         </div>
                       </div>
                     </div>
 
                     {/* Post content */}
                     {post.title && (
-                      <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#1a1a1a', margin: '0 0 0.375rem 0', fontFamily: GAMBARINO, lineHeight: 1.3 }}>
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#f0ede8', margin: '0 0 0.375rem 0', fontFamily: GAMBARINO, lineHeight: 1.3 }}>
                         {post.title}
                       </h3>
                     )}
-                    <p style={{ fontSize: '0.9375rem', color: '#444', lineHeight: 1.65, margin: '0 0 0.875rem 0', whiteSpace: 'pre-wrap' }}>
+                    <p style={{ fontSize: '0.9375rem', color: '#a0a09c', lineHeight: 1.65, margin: '0 0 0.875rem 0', whiteSpace: 'pre-wrap' }}>
                       {expandedPostId === post.id ? post.content : (
                         post.content.length > 280 ? post.content.substring(0, 280) + '...' : post.content
                       )}
                     </p>
 
                     {/* Action bar */}
-                    <div style={{ display: 'flex', gap: '0.25rem', borderTop: '1px solid #f2f2f2', paddingTop: '0.625rem' }}>
+                    <div style={{ display: 'flex', gap: '0.25rem', borderTop: '1px solid #242422', paddingTop: '0.625rem' }}>
                       <button
                         onClick={(e) => handleLike(e, post.id)}
                         style={{
                           flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem',
                           background: 'transparent', border: 'none', padding: '0.5rem',
-                          fontSize: '0.8125rem', fontWeight: 500,
-                          color: likedPosts.has(post.id) ? ORANGE : '#bbb',
-                          cursor: 'pointer', borderRadius: '6px', transition: 'background 0.15s ease'
+                          fontSize: '0.8125rem', fontWeight: 600,
+                          color: likedPosts.has(post.id) ? ORANGE : '#555',
+                          cursor: 'pointer', borderRadius: '4px', transition: 'background 0.15s ease'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#fafafa'}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#252523'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                       >
-                        {likedPosts.has(post.id) ? '❤️' : '🤍'} {post.like_count || ''}
+                        {likedPosts.has(post.id) ? '♥' : '♡'} {post.like_count || ''}
                       </button>
                       <button
                         onClick={() => handleToggleComments(post)}
                         style={{
                           flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem',
-                          background: expandedPostId === post.id ? '#fafafa' : 'transparent',
+                          background: expandedPostId === post.id ? '#252523' : 'transparent',
                           border: 'none', padding: '0.5rem',
-                          fontSize: '0.8125rem', fontWeight: 500,
-                          color: expandedPostId === post.id ? ORANGE : '#bbb',
-                          cursor: 'pointer', borderRadius: '6px', transition: 'background 0.15s ease'
+                          fontSize: '0.8125rem', fontWeight: 600,
+                          color: expandedPostId === post.id ? ACCENT : '#555',
+                          cursor: 'pointer', borderRadius: '4px', transition: 'background 0.15s ease'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#fafafa'}
+                        onMouseEnter={(e) => e.currentTarget.style.background = '#252523'}
                         onMouseLeave={(e) => { if (expandedPostId !== post.id) e.currentTarget.style.background = 'transparent' }}
                       >
-                        💬 {post.reply_count > 0 ? `${post.reply_count} ${post.reply_count === 1 ? 'comment' : 'comments'}` : 'Comment'}
+                        ↩ {post.reply_count > 0 ? `${post.reply_count} ${post.reply_count === 1 ? 'comment' : 'comments'}` : 'Comment'}
                       </button>
                     </div>
                   </div>
 
                   {/* Inline Comments — always visible */}
                   {((post.replies && post.replies.length > 0) || expandedPostId === post.id) && (
-                    <div style={{ borderTop: '1px solid #f2f2f2', background: '#fafaf8', padding: '1rem 1.25rem' }}>
+                    <div style={{ borderTop: '1px solid #242422', background: '#141412', padding: '1rem 1.25rem' }}>
                       {loadingReplies && expandedPostId === post.id ? (
-                        <p style={{ color: '#bbb', fontSize: '0.875rem', margin: 0 }}>Loading comments...</p>
+                        <p style={{ color: '#555', fontSize: '0.875rem', margin: 0 }}>Loading comments...</p>
                       ) : (
                         (() => {
                           const allInlineReplies = post.replies || []
@@ -724,21 +725,21 @@ export default function CommunityPage() {
                               <div key={r.id} style={{ marginLeft: depth > 0 ? '1.5rem' : '0', marginBottom: '0.5rem' }}>
                                 <div style={{
                                   padding: '0.75rem',
-                                  background: depth > 0 ? '#e2e0db' : '#eceae5',
-                                  borderRadius: '8px',
-                                  border: '1px solid ' + (depth > 0 ? '#d8d6d1' : '#dddbd6'),
-                                  borderLeft: depth > 0 ? `3px solid ${ACCENT}` : `3px solid #d0cec9`
+                                  background: depth > 0 ? '#1c1c1a' : '#1e1e1c',
+                                  borderRadius: '4px',
+                                  border: '1px solid #2a2a28',
+                                  borderLeft: depth > 0 ? `3px solid ${ACCENT}` : `3px solid #333`
                                 }}>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.375rem' }}>
                                     <Avatar name={r.user_name} photo={r.user_photo} size={26} />
-                                    <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#1a1a1a' }}>{r.user_name}</span>
-                                    <span style={{ fontSize: '0.6875rem', color: '#ccc' }}>{getTimeAgo(r.created_at)}</span>
+                                    <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#f0ede8' }}>{r.user_name}</span>
+                                    <span style={{ fontSize: '0.6875rem', color: '#444' }}>{getTimeAgo(r.created_at)}</span>
                                   </div>
-                                  <p style={{ fontSize: '0.875rem', color: '#444', lineHeight: 1.5, margin: '0 0 0.375rem 0', whiteSpace: 'pre-wrap' }}>{r.content}</p>
+                                  <p style={{ fontSize: '0.875rem', color: '#a0a09c', lineHeight: 1.5, margin: '0 0 0.375rem 0', whiteSpace: 'pre-wrap' }}>{r.content}</p>
                                   {depth < 3 && (
                                     <button
                                       onClick={() => setReplyingToId(replyingToId === r.id ? null : r.id)}
-                                      style={{ background: 'none', border: 'none', color: replyingToId === r.id ? ORANGE : '#bbb', fontSize: '0.6875rem', cursor: 'pointer', padding: 0, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}
+                                      style={{ background: 'none', border: 'none', color: replyingToId === r.id ? ORANGE : '#555', fontSize: '0.6875rem', cursor: 'pointer', padding: 0, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}
                                     >
                                       {replyingToId === r.id ? 'Cancel' : 'Reply'}
                                     </button>
@@ -750,7 +751,7 @@ export default function CommunityPage() {
                             return renderReply(reply, 0)
                           })}
                           {hasMoreReplies && (
-                            <button onClick={() => handleToggleComments(post)} style={{ background: 'none', border: 'none', color: '#888', fontSize: '0.8125rem', cursor: 'pointer', padding: '0.125rem 0', fontFamily: BODY_FONT, textAlign: 'left' as const }}>
+                            <button onClick={() => handleToggleComments(post)} style={{ background: 'none', border: 'none', color: '#9bc4b8', fontSize: '0.8125rem', cursor: 'pointer', padding: '0.125rem 0', fontFamily: BODY_FONT, textAlign: 'left' as const, fontWeight: 600 }}>
                               See all {post.reply_count} comments →
                             </button>
                           )}
@@ -776,12 +777,12 @@ export default function CommunityPage() {
                             rows={1}
                             onFocus={(e) => e.currentTarget.rows = 3}
                             onBlur={(e) => { if (!replyContent) e.currentTarget.rows = 1 }}
-                            style={{ flex: 1, padding: '0.5rem 0.75rem', background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '8px', color: '#1a1a1a', fontSize: '0.875rem', outline: 'none', resize: 'none', lineHeight: 1.5 }}
+                            style={{ flex: 1, padding: '0.5rem 0.75rem', background: '#252523', border: '1px solid #333', borderRadius: '4px', color: '#f0ede8', fontSize: '0.875rem', outline: 'none', resize: 'none', lineHeight: 1.5 }}
                           />
                           <button
                             type="submit"
                             disabled={submittingReply || !replyContent.trim()}
-                            style={{ padding: '0.5rem 0.875rem', background: submittingReply || !replyContent.trim() ? '#ddd' : '#1a1a1a', border: 'none', borderRadius: '6px', color: '#fff', fontSize: '0.8125rem', fontWeight: 600, cursor: submittingReply || !replyContent.trim() ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap' }}
+                            style={{ padding: '0.5rem 0.875rem', background: submittingReply || !replyContent.trim() ? '#252523' : '#9bc4b8', border: 'none', borderRadius: '4px', color: submittingReply || !replyContent.trim() ? '#444' : '#0a0a0a', fontSize: '0.8125rem', fontWeight: 700, cursor: submittingReply || !replyContent.trim() ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap' }}
                           >
                             {submittingReply ? '...' : 'Post'}
                           </button>
@@ -801,7 +802,7 @@ export default function CommunityPage() {
           <aside style={{ position: 'sticky', top: '5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 
             {/* Video card */}
-            <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+            <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem' }}>
               {renderVideoCard()}
             </div>
 
@@ -814,13 +815,13 @@ export default function CommunityPage() {
               const levelProgress = currentIndex === 3 ? 100 : Math.max(0, Math.min(100, ((overallProgress - levelMin) / 25) * 100))
               const fillPercent = Math.min(100, (currentIndex / 3) * 100 + (levelProgress / 3))
               return (
-                <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem 1.25rem 1.75rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+                <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem 1.25rem 1.75rem' }}>
                   <div style={{ marginBottom: '1.75rem' }}>
-                    <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', fontWeight: 600, textTransform: 'uppercase' as const, marginBottom: '4px' }}>Your Journey</div>
-                    <div style={{ fontSize: '0.75rem', color: '#999', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
+                    <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#9bc4b8', fontWeight: 700, textTransform: 'uppercase' as const, marginBottom: '4px' }}>Your Journey</div>
+                    <div style={{ fontSize: '0.75rem', color: '#666', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
                   </div>
                   <div style={{ position: 'relative', height: '48px' }}>
-                    <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#e0e0e0', borderRadius: '1px' }} />
+                    <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#2a2a28', borderRadius: '1px' }} />
                     <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
                     {stages.map((stage, index) => {
                       const isCurrent = index === currentIndex
@@ -830,8 +831,8 @@ export default function CommunityPage() {
                       const isLast = index === 3
                       return (
                         <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
-                          <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#ffffff', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#d0d0d0'}`, position: 'relative', zIndex: 1 }} />
-                          <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#1a1a1a' : isCompleted ? '#4a9e5c' : '#bbb', fontWeight: isCurrent ? 600 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
+                          <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#1a1a18', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#444'}`, position: 'relative', zIndex: 1 }} />
+                          <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#f0ede8' : isCompleted ? '#4a9e5c' : '#555', fontWeight: isCurrent ? 700 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
                         </div>
                       )
                     })}
@@ -841,11 +842,11 @@ export default function CommunityPage() {
             })()}
 
             {/* Quick links */}
-            <div style={{ background: '#ffffff', border: '1px solid #e8e8e8', borderRadius: '10px', padding: '1.25rem', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-              <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#bbb', marginBottom: '0.875rem', fontWeight: 600, textTransform: 'uppercase' }}>Quick Links</div>
+            <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem' }}>
+              <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#9bc4b8', marginBottom: '0.875rem', fontWeight: 700, textTransform: 'uppercase' }}>Quick Links</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-                <a href="/videos" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #f2f2f2', fontFamily: GAMBARINO }}>Video Library</a>
-                <a href="/calls" style={{ color: '#333', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', fontFamily: GAMBARINO }}>Live Call Calendar</a>
+                <a href="/videos" style={{ color: '#c0bdb8', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #242422', fontFamily: GAMBARINO }}>Video Library</a>
+                <a href="/calls" style={{ color: '#c0bdb8', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', fontFamily: GAMBARINO }}>Live Call Calendar</a>
               </div>
             </div>
           </aside>
@@ -863,9 +864,9 @@ export default function CommunityPage() {
             <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '6px' }}>
               <iframe src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
             </div>
-            <div style={{ background: '#fff', padding: '1.5rem', borderRadius: '0 0 6px 6px' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1a1a1a', margin: '0 0 0.5rem 0', fontFamily: GAMBARINO }}>{nextVideo?.title}</h2>
-              {nextVideo?.description && <p style={{ fontSize: '0.875rem', color: '#666', margin: 0, lineHeight: 1.6 }}>{nextVideo.description}</p>}
+            <div style={{ background: '#1a1a18', padding: '1.5rem', borderRadius: '0 0 6px 6px', border: '1px solid #2c2c2a', borderTop: 'none' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f0ede8', margin: '0 0 0.5rem 0', fontFamily: GAMBARINO }}>{nextVideo?.title}</h2>
+              {nextVideo?.description && <p style={{ fontSize: '0.875rem', color: '#a0a09c', margin: 0, lineHeight: 1.6 }}>{nextVideo.description}</p>}
             </div>
           </div>
         </div>
