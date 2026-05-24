@@ -18,7 +18,7 @@ export default function AboutCorPage() {
   const body: React.CSSProperties = {
     fontSize: '17px',
     lineHeight: 1.9,
-    color: '#444',
+    color: '#a0a09c',
     fontFamily: BODY_FONT,
     marginBottom: '20px',
   }
@@ -27,7 +27,7 @@ export default function AboutCorPage() {
     fontSize: isMobile ? '26px' : '32px',
     fontWeight: 400,
     lineHeight: 1.35,
-    color: '#1a1a1a',
+    color: '#f0ede8',
     marginBottom: '24px',
   }
 
@@ -36,12 +36,12 @@ export default function AboutCorPage() {
   )
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f4f2', fontFamily: BODY_FONT }}>
+    <div style={{ minHeight: '100vh', background: '#0f0f0d', fontFamily: BODY_FONT }}>
 
       {/* Hero strip */}
       <div style={{
-        background: '#ffffff',
-        borderBottom: '1px solid #e8e8e8',
+        background: '#111110',
+        borderBottom: '1px solid #242422',
         padding: isMobile ? '40px 20px' : '56px 24px',
       }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
@@ -55,7 +55,7 @@ export default function AboutCorPage() {
             fontSize: isMobile ? '24px' : '30px',
             fontWeight: 400,
             lineHeight: 1.45,
-            color: '#1a1a1a',
+            color: '#f0ede8',
             margin: 0,
           }}>
             This is not a product, a programme or a course. It's a journey of self-discovery.
@@ -67,7 +67,7 @@ export default function AboutCorPage() {
       <div style={{ maxWidth: '680px', margin: '0 auto', padding: isMobile ? '40px 20px 80px' : '56px 24px 100px' }}>
 
         {/* Section 1 */}
-        <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+        <div style={{ background: '#1a1a18', borderRadius: '6px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', border: '1px solid #2c2c2a' }}>
           <p style={body}>
             I built The Circle of Return because I have seen what real inner work does to a man. Not just to him, but all of his life domains.
           </p>
@@ -83,7 +83,7 @@ export default function AboutCorPage() {
         </div>
 
         {/* Section 2 */}
-        <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+        <div style={{ background: '#1a1a18', borderRadius: '6px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', border: '1px solid #2c2c2a' }}>
           <h2 style={heading}>I am thinking about tens of thousands of men.</h2>
           <p style={body}>
             Not followers or customers. I'm talking men who have done the work and carry themselves differently because of it - the ones who have sat in the discomfort, looked at the parts of themselves they would rather not see, and come out the other side more whole.
@@ -97,19 +97,19 @@ export default function AboutCorPage() {
         </div>
 
         {/* Photo */}
-        <div style={{ marginBottom: '24px', borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+        <div style={{ marginBottom: '24px', borderRadius: '10px', overflow: 'hidden', border: '1px solid #2c2c2a' }}>
           <img
             src="/serious.jpg"
             alt="True North"
             style={{ width: '100%', display: 'block', maxHeight: '480px', objectFit: 'cover', objectPosition: 'top' }}
           />
-          <div style={{ background: '#ffffff', padding: '16px 24px' }}>
-            <p style={{ margin: 0, fontSize: '13px', color: '#999', fontFamily: BODY_FONT }}>True North</p>
+          <div style={{ background: '#1a1a18', padding: '16px 24px', border: '1px solid #2c2c2a', borderTop: 'none' }}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#666', fontFamily: BODY_FONT }}>True North</p>
           </div>
         </div>
 
         {/* Section 3 */}
-        <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+        <div style={{ background: '#1a1a18', borderRadius: '6px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', border: '1px solid #2c2c2a' }}>
           <h2 style={heading}>The Circle is not a course. It is not coaching.</h2>
           <p style={body}>
             It is a living community of men committed to real transformation. The sessions are live and the conversations are real. There is no script and no performance expected.
@@ -126,7 +126,7 @@ export default function AboutCorPage() {
         </div>
 
         {/* Section 4 */}
-        <div style={{ background: '#ffffff', borderRadius: '10px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+        <div style={{ background: '#1a1a18', borderRadius: '6px', padding: isMobile ? '28px 24px' : '40px 48px', marginBottom: '24px', border: '1px solid #2c2c2a' }}>
           <p style={body}>
             Every time you show up honestly in this space, you are proof that something different is possible. You are not here to consume content. You are here to become someone. You're here to carry it out into your life. Into every interaction where a less conscious version of you would have reacted, avoided, or shut down.
           </p>
@@ -144,7 +144,7 @@ export default function AboutCorPage() {
             fontSize: isMobile ? '24px' : '30px',
             fontWeight: 400,
             lineHeight: 1.45,
-            color: '#1a1a1a',
+            color: '#f0ede8',
             margin: 0,
           }}>
             Where you are now does not have to be where you end up.
