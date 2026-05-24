@@ -104,7 +104,7 @@ export default function TheMapPage() {
       num: '01',
       label: 'Weeks 1–4',
       title: 'Self Exploration',
-      body: "We can't change every situation that triggers you. But we can change how you see it. We start by examining your self-perception — because your outer world is a reflection of your inner world. This is where you begin to understand why things impact you the way they do, where the awareness gets sharp enough that you see the pattern before it plays out.",
+      body: "We can't change every situation that triggers you. But we can change how you see it. We start by examining your self-perception,because your outer world is a reflection of your inner world. This is where you begin to understand why things impact you the way they do, where the awareness gets sharp enough that you see the pattern before it plays out.",
     },
     {
       num: '02',
@@ -116,7 +116,7 @@ export default function TheMapPage() {
       num: '03',
       label: 'Weeks 9–12',
       title: 'Personal Blueprint',
-      body: "We don't just clear the old. We build the new. Your relationships, your career, your emotional control. We work towards getting you where you actually want to be — in a way that is fully aligned with who you are, your strengths, and your areas for growth.",
+      body: "We don't just clear the old. We build the new. Your relationships, your career, your emotional control. We work towards getting you where you actually want to be,in a way that is fully aligned with who you are, your strengths, and your areas for growth.",
     },
   ]
 
@@ -127,7 +127,7 @@ export default function TheMapPage() {
     },
     {
       q: "Is this anger management?",
-      a: "No. Anger management gives you strategies to suppress or redirect anger. This goes to what the anger is protecting. The wound underneath. When that's worked with directly, the anger loses its intensity naturally — not because you've learned to bottle it better.",
+      a: "No. Anger management gives you strategies to suppress or redirect anger. This goes to what the anger is protecting. The wound underneath. When that's worked with directly, the anger loses its intensity naturally,not because you've learned to bottle it better.",
     },
     {
       q: "What does a typical session look like?",
@@ -135,7 +135,7 @@ export default function TheMapPage() {
     },
     {
       q: "£333 a month feels like a lot.",
-      a: "One session with a family solicitor costs more. A divorce costs on average £13,000. The further cost to your kids, your relationship, your own mental health — those are harder to quantify. The question isn't whether you can afford this. It's what it costs to keep going as you are.",
+      a: "One session with a family solicitor costs more. A divorce costs on average £13,000. The further cost to your kids, your relationship, your own mental health,those are harder to quantify. The question isn't whether you can afford this. It's what it costs to keep going as you are.",
     },
     {
       q: "I'm not sure I'm ready.",
@@ -143,7 +143,7 @@ export default function TheMapPage() {
     },
     {
       q: "How do I know this will work for me?",
-      a: "You don't — and I won't promise it. What I can say is that the men who do the work see results. The ones who don't aren't wrong people, they're just not ready. The call is where we figure out which is true for you.",
+      a: "You don't,and I won't promise it. What I can say is that the men who do the work see results. The ones who don't aren't wrong people, they're just not ready. The call is where we figure out which is true for you.",
     },
   ]
 
@@ -236,10 +236,10 @@ export default function TheMapPage() {
           textAlign: 'center',
         }}>
           {[
-            { value: 'Gabor Maté', label: 'Somatic therapy — trained by' },
+            { value: 'Gabor Maté', label: 'Somatic therapy,trained by' },
             { value: 'ICF + EMCC', label: 'Certified Coach' },
             { value: '12 Weeks', label: 'Structured programme' },
-            { value: '10 Men', label: 'Per cohort — no more' },
+            { value: '10 Men', label: 'Per cohort,no more' },
           ].map(({ value, label }) => (
             <div key={label}>
               <div style={{ fontSize: '0.75rem', color: C.mutedDark, fontFamily: SANS, marginBottom: '0.25rem', letterSpacing: '0.04em' }}>{label}</div>
@@ -267,7 +267,7 @@ export default function TheMapPage() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.375rem', marginBottom: '2.5rem' }}>
             {[
-              "You react to things that shouldn't bother you — and you know it in the moment but you can't stop.",
+              "You react to things that shouldn't bother you,and you know it in the moment but you can't stop.",
               "Your partner has stopped telling you when something's wrong because they know how you'll respond.",
               "Your kids go quiet around you when your mood shifts.",
               "You carry guilt after every outburst, but the apology cycle keeps repeating.",
@@ -379,7 +379,7 @@ export default function TheMapPage() {
             The breathing exercises. The counting to ten. The "just walk away." The apology and the promise that this time will be different.
           </p>
           <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.mutedLight, marginBottom: '1.25rem' }}>
-            These aren't bad ideas. They fail because they target the symptom. Your anger isn't the problem. Your anger is protection. It's a layer of armour over something older — something that got lodged in your nervous system long before you had the words for it.
+            These aren't bad ideas. They fail because they target the symptom. Your anger isn't the problem. Your anger is protection. It's a layer of armour over something older,something that got lodged in your nervous system long before you had the words for it.
           </p>
           <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.textLight, fontWeight: 500, marginBottom: 0 }}>
             Until you meet what's underneath, nothing changes permanently. That's what this programme does. And it's why most men who join have already tried everything else.
@@ -520,7 +520,7 @@ export default function TheMapPage() {
             "But none of that matters as much as this: I lived it.",
             "I came from a world where violence was the only language. Drugs, chaos, aggression. My anger used to scare people. It used to scare me. I'd kick off over nothing and the shame afterwards was crushing.",
             "What changed me wasn't learning to calm down. It was learning to meet the pain my anger was guarding. The hurt I'd been carrying since I was young. The grief I didn't know was there.",
-            "That's the work I now hold space for. And I've watched it change men's lives — their relationships, their careers, their sense of themselves.",
+            "That's the work I now hold space for. And I've watched it change men's lives,their relationships, their careers, their sense of themselves.",
             "I'm selective about who I work with. Not because I'm exclusive, but because this work requires readiness. The call is where we figure that out together.",
           ].map((para, i) => (
             <p key={i} style={{
@@ -555,7 +555,7 @@ export default function TheMapPage() {
               {[
                 "You're a man who knows his anger is a problem but has never said it out loud.",
                 "You've tried to control it on your own and it keeps coming back.",
-                "You're tired of the shame cycle — the outburst, the guilt, the promise, the repeat.",
+                "You're tired of the shame cycle,the outburst, the guilt, the promise, the repeat.",
                 "You know there's something deeper driving it and you're ready to look at it.",
                 "You want to be the man your kids, your partner, and you yourself can genuinely respect.",
               ].map((line, i) => (
@@ -609,7 +609,7 @@ export default function TheMapPage() {
             {[
               ['Duration',    '12 weeks of structured, deep work'],
               ['Format',      '1:1 sessions with Mason directly'],
-              ['Spots',       '10 men per cohort — strictly limited'],
+              ['Spots',       '10 men per cohort,strictly limited'],
               ['Investment',  '£333 per month'],
               ['Methods',     'Somatic therapy, nervous system work, breathwork, and direct coaching'],
             ].map(([label, value], i, arr) => (
@@ -652,7 +652,7 @@ export default function TheMapPage() {
           }}>
             <p style={{ fontFamily: SANS, fontSize: '0.8125rem', color: C.mutedDark, lineHeight: 1.7, margin: 0 }}>
               One session with a family solicitor costs more than a month of this programme. A divorce costs on average £13,000.
-              The cost to your children, your health, and your sense of yourself — harder to put a number on.
+              The cost to your children, your health, and your sense of yourself,harder to put a number on.
               The question is never whether you can afford to do this. It's what it costs to keep going as you are.
             </p>
           </div>
