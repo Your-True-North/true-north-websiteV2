@@ -77,7 +77,7 @@ export default function Circle() {
               letterSpacing: '0.15em',
               textTransform: 'uppercase'
             }}>
-              The Circle of Return
+              Know Your North
             </p>
             <h1 style={{
               fontSize: isMobile ? '2rem' : '2.8rem',
@@ -376,7 +376,7 @@ export default function Circle() {
                 marginTop: '2rem',
                 fontWeight: '400'
               }}>
-                When you enter The CoR, you will feel shifts within weeks. And within your first 30 days, you will identify a pattern that has been influencing your decisions for years.
+                When you enter KYN, you will feel shifts within weeks. And within your first 30 days, you will identify a pattern that has been influencing your decisions for years.
               </p>
             </div>
           </section>
@@ -550,7 +550,7 @@ export default function Circle() {
               marginBottom: '1rem',
               letterSpacing: '-0.01em'
             }}>
-              Join the Circle of Return.
+              Join Know Your North.
             </h2>
 
             <p style={{
@@ -870,7 +870,7 @@ export default function Circle() {
                   lineHeight: '1.5',
                   fontWeight: '300'
                 }}>
-                  Be first to know when the Circle of Return opens.
+                  Be first to know when Know Your North opens.
                 </p>
 
                 <form onSubmit={handleSubmit} style={{

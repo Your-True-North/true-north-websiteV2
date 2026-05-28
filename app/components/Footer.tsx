@@ -43,7 +43,7 @@ export default function Footer() {
               <h4 className="footer-heading">Work With Me</h4>
               <ul className="footer-links">
                 <li><Link href="/work">1:1 Transformation</Link></li>
-                <li><Link href="/circle">The Sacred Circle</Link></li>
+                <li><Link href="/circle">Know Your North</Link></li>
                 <li><Link href="/library">Library</Link></li>
                 <li><Link href="/contact">Discovery Call</Link></li>
               </ul>

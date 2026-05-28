@@ -126,9 +126,9 @@ export default function Work() {
       link: "/work#coaching"
     },
     circle: {
-      title: "Circle of Return Membership",
+      title: "Know Your North (KYN)",
       description: "You'd benefit from ongoing support and community. Join others on the path of authentic living.",
-      cta: "Join the Circle",
+      cta: "Join KYN",
       link: "/circle"
     },
     library: {
@@ -513,7 +513,7 @@ export default function Work() {
                 >
                   <option value="" style={{ background: '#1a1a1a', color: '#ffffff' }}>Select one...</option>
                   <option value="1:1 Coaching Program" style={{ background: '#1a1a1a', color: '#ffffff' }}>1:1 Coaching Program</option>
-                  <option value="Circle of Return Membership" style={{ background: '#1a1a1a', color: '#ffffff' }}>Circle of Return Membership</option>
+                  <option value="Circle of Return Membership" style={{ background: '#1a1a1a', color: '#ffffff' }}>Know Your North (KYN)</option>
                   <option value="Men's Container" style={{ background: '#1a1a1a', color: '#ffffff' }}>Men's Container</option>
                   <option value="Individual Sessions (Breathwork/Energy)" style={{ background: '#1a1a1a', color: '#ffffff' }}>Individual Sessions (Breathwork/Energy)</option>
                   <option value="Not sure yet - exploring options" style={{ background: '#1a1a1a', color: '#ffffff' }}>Not sure yet - exploring options</option>
@@ -1242,7 +1242,7 @@ export default function Work() {
                   color: '#ffffff', 
                   fontWeight: '700'
                 }}>
-                  The Circle of Return
+                  Know Your North
                 </h2>
                 <p style={{
                   fontSize: isMobile ? '1.1rem' : '1.3rem',

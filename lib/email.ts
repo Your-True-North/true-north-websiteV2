@@ -19,7 +19,7 @@ export async function sendEmail({ to, subject, html, text }: SendEmailOptions) {
     console.log('[Resend] API Key present:', !!process.env.RESEND_API_KEY);
 
     const fromAddress = process.env.EMAIL_FROM || 'cor@yourtruenorth.me';
-    const fromFormatted = fromAddress.includes('<') ? fromAddress : `Circle of Return <${fromAddress}>`;
+    const fromFormatted = fromAddress.includes('<') ? fromAddress : `Know Your North <${fromAddress}>`;
 
     const result = await resend.emails.send({
       from: fromFormatted,
