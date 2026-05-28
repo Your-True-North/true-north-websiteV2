@@ -67,6 +67,25 @@ export default function Circle() {
           textAlign: 'center',
           padding: isMobile ? '8rem 1.5rem 5rem' : '10rem 2rem 6rem',
         }}>
+          {/* Faint background logo */}
+          <img
+            src="/the-cor-logo.png"
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: isMobile ? '280px' : '520px',
+              height: 'auto',
+              opacity: 0.07,
+              pointerEvents: 'none',
+              userSelect: 'none',
+              zIndex: 0,
+            }}
+          />
+
           <div style={{ maxWidth: '700px', position: 'relative', zIndex: 1 }}>
             <p className="breathing-title" style={{
               fontSize: isMobile ? '1rem' : '1.1rem',
