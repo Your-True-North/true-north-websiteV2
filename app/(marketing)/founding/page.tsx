@@ -10,6 +10,18 @@ const ACCENT_HOVER = '#7da89c'
 const TEXT = '#0a0a0a'
 const MUTED = '#666666'
 const BODY_FONT = '-apple-system, BlinkMacSystemFont, sans-serif'
+const SERIF = "'Gambarino', Georgia, serif"
+const label = (text: string) => (
+  <p style={{
+    fontFamily: BODY_FONT,
+    fontSize: '0.7rem',
+    fontWeight: 700,
+    letterSpacing: '0.18em',
+    textTransform: 'uppercase' as const,
+    color: ACCENT,
+    margin: '0 0 1.25rem',
+  }}>{text}</p>
+)
 
 export default function FoundingMembersPage() {
   const [isMobile, setIsMobile] = useState(false)
@@ -267,22 +279,14 @@ export default function FoundingMembersPage() {
             }}
           />
           <div style={{ ...inner, position: 'relative', zIndex: 1 }}>
-            <p style={{
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              color: ACCENT,
-              marginBottom: '24px',
-              fontFamily: BODY_FONT,
-            }}>
-              Know Your North
-            </p>
+            {label('Know Your North')}
 
             <h1 style={{
-              fontSize: isMobile ? '48px' : '72px',
-              fontWeight: 800,
+              fontFamily: SERIF,
+              fontSize: isMobile ? '3rem' : 'clamp(3rem, 7vw, 4.75rem)',
+              fontWeight: 400,
               lineHeight: 1.1,
+              letterSpacing: '-0.02em',
               color: TEXT,
               marginBottom: '20px',
             }}>
@@ -334,6 +338,7 @@ export default function FoundingMembersPage() {
         {/* ── 3. WHO THIS IS FOR ── */}
         <section style={section('#ffffff')}>
           <div style={inner}>
+            {label('Who This Is For')}
             <p style={{ ...bodyText, marginBottom: '20px' }}>
               You already know this is you.
             </p>
@@ -375,14 +380,15 @@ export default function FoundingMembersPage() {
           boxShadow: '0 2px 24px rgba(0,0,0,0.06)',
         }}>
           <div style={inner}>
+            {label("Who Holds the Space")}
             <div style={{ borderLeft: '3px solid #9bc4b8', paddingLeft: '24px' }}>
-              <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
+              <p style={{ fontFamily: SERIF, fontSize: '1.25rem', lineHeight: 1.85, color: TEXT, marginBottom: '20px', fontStyle: 'italic' }}>
                 I'm True. And I'm not standing outside this work looking in.
               </p>
-              <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9, marginBottom: '20px' }}>
+              <p style={{ ...bodyText, lineHeight: 1.9, marginBottom: '20px' }}>
                 I spent years in the same cycle - and still have my moments. Two steps forward, one back. Building things and burning them. Knowing what I was doing and doing it anyway. The pattern expressed itself in many ways - from procrastination through to violence, addiction, and a level of self-destruction.
               </p>
-              <p style={{ ...bodyText, fontSize: '1.2rem', lineHeight: 1.9 }}>
+              <p style={{ ...bodyText, lineHeight: 1.9 }}>
                 What changed wasn't a book or a single breakthrough moment. It was sustained, structured work designed to get underneath the story you tell yourself and work with what's actually stored in the body.
               </p>
             </div>
@@ -392,12 +398,15 @@ export default function FoundingMembersPage() {
         {/* ── TESTIMONIALS ── */}
         <section style={section('#ffffff')}>
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+            {label('What Changes')}
             <h2 style={{
-              fontSize: isMobile ? '36px' : '48px',
-              fontWeight: 700,
+              fontFamily: SERIF,
+              fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.2,
               color: TEXT,
               marginBottom: '48px',
-              fontFamily: "'Gambarino', serif",
             }}>
               Real Transformations
             </h2>
@@ -443,16 +452,26 @@ export default function FoundingMembersPage() {
             <p style={{ ...bodyText, marginBottom: '20px', fontWeight: 500 }}>
               When the code is interrupted, something changes.
             </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem', marginBottom: '20px' }}>
             {[
               'You stop sabotaging the very thing you say you want.',
               'You respond instead of react.',
               'You stay steady when things don\'t go your way.',
               'You make decisions without second-guessing yourself afterwards.',
             ].map((line, i) => (
-              <div key={i} style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '20px', marginBottom: '16px' }}>
-                <p style={bodyText}>{line}</p>
+              <div key={i} style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
+                <div style={{
+                  width: '22px', height: '22px', borderRadius: '50%',
+                  background: 'rgba(155,196,184,0.12)', border: `1px solid ${ACCENT}`,
+                  flexShrink: 0, marginTop: '0.15rem',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: ACCENT }} />
+                </div>
+                <p style={{ ...bodyText, margin: 0 }}>{line}</p>
               </div>
             ))}
+            </div>
             <p style={{ ...bodyText, marginTop: '24px', marginBottom: '20px' }}>
               When you enter KYN, you will feel shifts within weeks.
             </p>
@@ -465,9 +484,13 @@ export default function FoundingMembersPage() {
         {/* ── 6. WHAT WE DO HERE ── */}
         <section style={section('#f8f8f8')}>
           <div style={inner}>
+            {label('The Method')}
             <h2 style={{
-              fontSize: isMobile ? '36px' : '48px',
-              fontWeight: 700,
+              fontFamily: SERIF,
+              fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.2,
               color: TEXT,
               marginBottom: '48px',
             }}>
@@ -513,9 +536,13 @@ export default function FoundingMembersPage() {
         {/* ── 7. INSIDE THE CIRCLE ── */}
         <section style={section('#ffffff')}>
           <div style={inner}>
+            {label('What You Get')}
             <h2 style={{
-              fontSize: isMobile ? '36px' : '48px',
-              fontWeight: 700,
+              fontFamily: SERIF,
+              fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.2,
               color: TEXT,
               marginBottom: '48px',
             }}>
