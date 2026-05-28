@@ -550,7 +550,7 @@ export default function Circle() {
               marginBottom: '1rem',
               letterSpacing: '-0.01em'
             }}>
-              Join Know Your North.
+              Join KYN.
             </h2>
 
             <p style={{
@@ -562,7 +562,7 @@ export default function Circle() {
               maxWidth: '600px',
               margin: '0 auto 3rem'
             }}>
-              You've tried other things. The pattern kept repeating. This is where it stops.
+              Find your direction. Drown out the noise. KYN is where you get clear on who you are and razor focused on where you're going.
             </p>
 
             <div style={{

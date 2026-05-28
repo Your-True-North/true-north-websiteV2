@@ -258,7 +258,7 @@ export default function FoundingMembersPage() {
               marginBottom: '24px',
               fontFamily: BODY_FONT,
             }}>
-              The Circle of Return
+              Know Your North
             </p>
 
             <h1 style={{
@@ -268,7 +268,7 @@ export default function FoundingMembersPage() {
               color: TEXT,
               marginBottom: '20px',
             }}>
-              Most men can see their self-sabotage clearly.
+              Find your direction. Drown out the noise.
             </h1>
 
             <p style={{
@@ -277,7 +277,7 @@ export default function FoundingMembersPage() {
               marginBottom: '36px',
               fontFamily: BODY_FONT,
             }}>
-              They just can't stop it alone.
+              KYN is where you get clear on who you are and razor focused on where you're going.
             </p>
 
             <button
@@ -436,7 +436,7 @@ export default function FoundingMembersPage() {
               </div>
             ))}
             <p style={{ ...bodyText, marginTop: '24px', marginBottom: '20px' }}>
-              When you enter The CoR, you will feel shifts within weeks.
+              When you enter KYN, you will feel shifts within weeks.
             </p>
             <p style={bodyText}>
               And within your first 30 days, you will identify a pattern that has been influencing your decisions for years. Once you see it clearly, you cannot unsee it. It stops running you blindly.
@@ -499,7 +499,7 @@ export default function FoundingMembersPage() {
               color: TEXT,
               marginBottom: '48px',
             }}>
-              Inside the Circle
+              Inside KYN
             </h2>
 
             <div style={{
