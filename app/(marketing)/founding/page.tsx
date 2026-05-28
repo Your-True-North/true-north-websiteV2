@@ -100,7 +100,7 @@ export default function FoundingMembersPage() {
               </p>
               <h1 style={{
                 fontSize: isMobile ? '2rem' : '2.75rem',
-                fontWeight: 500,
+                fontWeight: 700,
                 lineHeight: 1.2,
                 color: '#ffffff',
                 marginBottom: '3rem',
@@ -165,7 +165,7 @@ export default function FoundingMembersPage() {
               </p>
               <h1 style={{
                 fontSize: isMobile ? '2rem' : '2.75rem',
-                fontWeight: 500,
+                fontWeight: 700,
                 lineHeight: 1.2,
                 color: '#ffffff',
                 marginBottom: '1rem',
@@ -247,8 +247,26 @@ export default function FoundingMembersPage() {
       <div style={{ minHeight: '100vh', background: '#ffffff', color: TEXT }}>
 
         {/* ── 1. HERO ── */}
-        <section style={{ ...section('#ffffff'), textAlign: 'center', paddingTop: isMobile ? '64px' : '96px' }}>
-          <div style={inner}>
+        <section style={{ ...section('#ffffff'), textAlign: 'center', paddingTop: isMobile ? '64px' : '96px', position: 'relative', overflow: 'hidden' }}>
+          {/* Faint background logo */}
+          <img
+            src="/cor-mark-black.svg"
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: isMobile ? '260px' : '480px',
+              height: 'auto',
+              opacity: 0.05,
+              pointerEvents: 'none',
+              userSelect: 'none',
+              zIndex: 0,
+            }}
+          />
+          <div style={{ ...inner, position: 'relative', zIndex: 1 }}>
             <p style={{
               fontSize: '11px',
               fontWeight: 600,
@@ -263,7 +281,7 @@ export default function FoundingMembersPage() {
 
             <h1 style={{
               fontSize: isMobile ? '48px' : '72px',
-              fontWeight: 500,
+              fontWeight: 800,
               lineHeight: 1.1,
               color: TEXT,
               marginBottom: '20px',
@@ -376,7 +394,7 @@ export default function FoundingMembersPage() {
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
             <h2 style={{
               fontSize: isMobile ? '36px' : '48px',
-              fontWeight: 500,
+              fontWeight: 700,
               color: TEXT,
               marginBottom: '48px',
               fontFamily: "'Gambarino', serif",
@@ -449,6 +467,7 @@ export default function FoundingMembersPage() {
           <div style={inner}>
             <h2 style={{
               fontSize: isMobile ? '36px' : '48px',
+              fontWeight: 700,
               color: TEXT,
               marginBottom: '48px',
             }}>
@@ -496,6 +515,7 @@ export default function FoundingMembersPage() {
           <div style={inner}>
             <h2 style={{
               fontSize: isMobile ? '36px' : '48px',
+              fontWeight: 700,
               color: TEXT,
               marginBottom: '48px',
             }}>
