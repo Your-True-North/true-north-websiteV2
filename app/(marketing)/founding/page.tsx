@@ -16,6 +16,23 @@ const SANS    = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
 const CREAM   = '#f5f3ef'
 const BORDER  = 'rgba(10,10,10,0.10)'
 
+// Typographic scale — Perfect Fourth (×1.333)
+// xs:   0.75rem  / 12px  — labels, captions, fine print
+// sm:   1rem     / 16px  — secondary notes
+// base: 1.0625rem/ 17px  — primary body (optimal 16-18px range)
+// md:   1.333rem / 21px  — lead text, pull quotes
+// lg:   1.777rem / 28px  — small display, kicker
+// xl:   2.5rem   / 40px  — kicker display
+// h2:   clamp(2rem → 3rem)
+// h1:   clamp(3rem → 5rem)
+
+const BODY: React.CSSProperties = {
+  fontSize: '1.0625rem',
+  lineHeight: 1.75,
+  color: MUTED,
+  fontFamily: SANS,
+}
+
 const H1: React.CSSProperties = {
   fontFamily: SERIF,
   fontWeight: 400,
@@ -37,16 +54,18 @@ const H2: React.CSSProperties = {
 const H3: React.CSSProperties = {
   fontFamily: SERIF,
   fontWeight: 400,
+  lineHeight: 1.2,
   letterSpacing: '-0.01em',
   color: TEXT,
   WebkitTextStroke: '0.7px currentColor',
 }
 
+// 0.75rem / 12px — minimum readable for uppercase labels
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <p style={{
       fontFamily: SANS,
-      fontSize: '0.7rem',
+      fontSize: '0.75rem',
       fontWeight: 700,
       letterSpacing: '0.18em',
       textTransform: 'uppercase' as const,
@@ -187,37 +206,43 @@ export default function FoundingMembersPage() {
             }}
           />
           <div style={{ maxWidth: '780px', width: '100%', position: 'relative', zIndex: 1 }}>
+
+            {/* Eyebrow labels — 0.75rem / 12px */}
             <p style={{
               fontFamily: SANS,
-              fontSize: '0.8rem',
+              fontSize: '0.75rem',
               fontWeight: 800,
               letterSpacing: '0.2em',
               textTransform: 'uppercase' as const,
               color: TEXT,
-              margin: '0 0 0.4rem',
+              margin: '0 0 0.35rem',
             }}>Know Your North</p>
             <p style={{
               fontFamily: SANS,
-              fontSize: '0.7rem',
+              fontSize: '0.75rem',
               fontWeight: 700,
               letterSpacing: '0.18em',
               textTransform: 'uppercase' as const,
               color: ACCENT,
               margin: '0 0 1.5rem',
             }}>Founding Members</p>
+
             <SpotsBar />
 
+            {/* Kicker — 2.5rem / 40px italic, sits just below h1 on the scale */}
             <p style={{
               fontFamily: SERIF,
               fontSize: isMobile ? '1.75rem' : '2.5rem',
               fontStyle: 'italic',
               color: TEXT,
-              marginBottom: '0.5rem',
+              marginBottom: '0.4rem',
               letterSpacing: '-0.02em',
               lineHeight: 1.2,
             }}>
               Drown out the noise.
             </p>
+
+            {/* H1 — clamp(3rem → 5rem), 1.5px stroke for weight */}
             <h1 style={{
               ...H1,
               fontSize: isMobile ? '2.75rem' : 'clamp(3rem, 7vw, 5rem)',
@@ -226,12 +251,14 @@ export default function FoundingMembersPage() {
               Find your direction.
             </h1>
 
+            {/* Lead — 1.2rem / 19px on desktop (within the 16-21px lead text range) */}
             <p style={{
               fontSize: isMobile ? '1.0625rem' : '1.2rem',
-              lineHeight: 1.8,
+              lineHeight: 1.75,
               color: MUTED,
               maxWidth: '600px',
-              margin: '0 auto 3rem',
+              margin: '0 auto 2.5rem',
+              fontFamily: SANS,
             }}>
               KYN is where you get clear on who you are and razor focused on where you're going. This is not a programme with an end date, it is a journey you build with men who mean it.
             </p>
@@ -242,14 +269,14 @@ export default function FoundingMembersPage() {
                 display: 'inline-block',
                 background: ACCENT,
                 color: TEXT,
-                padding: '1.125rem 2.75rem',
+                padding: '0.875rem 2.5rem',
                 borderRadius: '4px',
                 fontWeight: 700,
-                fontSize: '1rem',
+                fontSize: '0.9375rem',
                 fontFamily: SANS,
                 border: 'none',
                 cursor: 'pointer',
-                letterSpacing: '0.03em',
+                letterSpacing: '0.06em',
                 textTransform: 'uppercase' as const,
               }}
               onMouseEnter={(e) => (e.currentTarget.style.background = '#7da89c')}
@@ -258,7 +285,8 @@ export default function FoundingMembersPage() {
               Secure Your Founding Spot
             </button>
 
-            <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: MUTED, fontFamily: SANS }}>
+            {/* Fine print — 0.8125rem / 13px, acceptable for legal/secondary */}
+            <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
               £25/month fixed for life. Price rises to £50 at member 21.
             </p>
           </div>
@@ -281,8 +309,8 @@ export default function FoundingMembersPage() {
               { value: 'Brotherhood', label: 'A community, not a course' },
             ].map(({ value, label }) => (
               <div key={label}>
-                <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, marginBottom: '0.25rem', letterSpacing: '0.04em' }}>{label}</div>
-                <div style={{ fontSize: isMobile ? '1rem' : '1.125rem', fontWeight: 600, color: ACCENT, fontFamily: SANS }}>{value}</div>
+                <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, marginBottom: '0.3rem', letterSpacing: '0.06em', textTransform: 'uppercase' as const }}>{label}</div>
+                <div style={{ fontSize: '1.0625rem', fontWeight: 600, color: ACCENT, fontFamily: SANS }}>{value}</div>
               </div>
             ))}
           </div>
@@ -292,7 +320,7 @@ export default function FoundingMembersPage() {
         <section style={{ padding: sec, background: '#ffffff' }}>
           <div style={inner}>
             <Label>Who This Is For</Label>
-            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
               You already know this is you.
             </h2>
 
@@ -304,15 +332,14 @@ export default function FoundingMembersPage() {
               "Maybe it's relationships. You find yourself in the same argument, creating the same distance, arriving at the same moment where you shut down when you most needed to stay open.",
               "Maybe it's the version of yourself you perform in public versus the one you live with privately. The gap between those two men is exhausting to maintain.",
             ].map((para, i) => (
-              <p key={i} style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, marginBottom: '1.25rem' }}>
-                {para}
-              </p>
+              <p key={i} style={{ ...BODY, marginBottom: '1.25rem' }}>{para}</p>
             ))}
 
+            {/* Pull quote — 1.333rem / 21px, one step up from body */}
             <div style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '1.5rem', margin: '2.5rem 0' }}>
               <p style={{
                 fontFamily: SERIF,
-                fontSize: isMobile ? '1.25rem' : '1.5rem',
+                fontSize: isMobile ? '1.2rem' : '1.333rem',
                 lineHeight: 1.6,
                 color: TEXT,
                 margin: 0,
@@ -323,7 +350,7 @@ export default function FoundingMembersPage() {
               </p>
             </div>
 
-            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: TEXT, fontWeight: 500, margin: 0 }}>
+            <p style={{ ...BODY, color: TEXT, fontWeight: 500, margin: 0 }}>
               That's the nature of what's in the blind spot. By definition, you cannot see it from inside it.
             </p>
           </div>
@@ -333,14 +360,14 @@ export default function FoundingMembersPage() {
         <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={inner}>
             <Label>Who Holds the Space</Label>
-            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
               I've been where you are.
             </h2>
 
             <div style={{
               display: 'inline-block',
               fontFamily: SANS,
-              fontSize: '0.7rem',
+              fontSize: '0.75rem',
               fontWeight: 700,
               letterSpacing: '0.15em',
               textTransform: 'uppercase' as const,
@@ -358,9 +385,7 @@ export default function FoundingMembersPage() {
               "What changed wasn't a book or a single breakthrough moment. It was sustained, structured work designed to get underneath the story you tell yourself and work with what's actually stored in the body.",
               "I created KYN because I know what it means to do this work without a real community around you. The men in here aren't here to look good. They're here to build something real.",
             ].map((para, i) => (
-              <p key={i} style={{ fontSize: '1rem', lineHeight: 1.85, color: MUTED, marginBottom: '1.25rem' }}>
-                {para}
-              </p>
+              <p key={i} style={{ ...BODY, marginBottom: '1.25rem' }}>{para}</p>
             ))}
           </div>
         </section>
@@ -369,7 +394,7 @@ export default function FoundingMembersPage() {
         <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
             <Label>What Changes</Label>
-            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
               Real Transformations
             </h2>
 
@@ -392,10 +417,10 @@ export default function FoundingMembersPage() {
         <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={inner}>
             <Label>The Journey</Label>
-            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '0.75rem' }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '0.75rem' }}>
               This is not a programme with an end date. It is a path you keep walking.
             </h2>
-            <p style={{ fontSize: '1rem', lineHeight: 1.8, color: MUTED, marginBottom: '3rem' }}>
+            <p style={{ ...BODY, marginBottom: '3rem' }}>
               There is no graduation date and no fixed moment where the work is done. This is a continuous deepening applied to what is actually happening in your life right now.
             </p>
 
@@ -407,14 +432,14 @@ export default function FoundingMembersPage() {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1.5rem' }}>
                   <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-                    <span style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 700, color: ACCENT, letterSpacing: '0.1em', marginTop: '0.6rem', flexShrink: 0 }}>
+                    <span style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 700, color: ACCENT, letterSpacing: '0.1em', marginTop: '0.5rem', flexShrink: 0 }}>
                       {pillar.num}
                     </span>
                     <div>
-                      <p style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED, margin: '0 0 0.375rem' }}>
+                      <p style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED, margin: '0 0 0.375rem' }}>
                         {pillar.label}
                       </p>
-                      <h3 style={{ ...H3, fontSize: isMobile ? '1.375rem' : '1.625rem', margin: 0 }}>
+                      <h3 style={{ ...H3, fontSize: isMobile ? '1.333rem' : '1.625rem', margin: 0 }}>
                         {pillar.title}
                       </h3>
                     </div>
@@ -423,18 +448,17 @@ export default function FoundingMembersPage() {
                     width: '28px', height: '28px', borderRadius: '50%',
                     border: `1px solid ${BORDER}`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: MUTED, fontSize: '1.1rem', flexShrink: 0, marginTop: '0.375rem',
+                    color: MUTED, fontSize: '1.125rem', flexShrink: 0, marginTop: '0.25rem',
                   }}>
                     {openPillar === i ? '−' : '+'}
                   </div>
                 </div>
                 {openPillar === i && (
                   <p style={{
+                    ...BODY,
                     marginTop: '1.25rem',
                     marginLeft: isMobile ? 0 : '2.5rem',
-                    fontSize: '1rem',
-                    lineHeight: 1.8,
-                    color: MUTED,
+                    marginBottom: 0,
                     paddingLeft: isMobile ? 0 : '1.5rem',
                     borderLeft: isMobile ? 'none' : `1px solid ${BORDER}`,
                   }}>
@@ -476,7 +500,7 @@ export default function FoundingMembersPage() {
                         <path d="M1 3.5L3.5 6L8 1" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: MUTED, margin: 0 }}>{line}</p>
+                    <p style={{ ...BODY, margin: 0 }}>{line}</p>
                   </div>
                 ))}
               </div>
@@ -492,13 +516,21 @@ export default function FoundingMembersPage() {
                 ].map((line, i) => (
                   <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                     <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `1.5px solid ${BORDER}`, flexShrink: 0, marginTop: '0.2rem' }} />
-                    <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: MUTED, margin: 0 }}>{line}</p>
+                    <p style={{ ...BODY, margin: 0 }}>{line}</p>
                   </div>
                 ))}
               </div>
 
               <div style={{ marginTop: '3rem', borderLeft: `3px solid ${ACCENT}`, paddingLeft: '1.25rem' }}>
-                <p style={{ fontFamily: SERIF, fontSize: '1.125rem', lineHeight: 1.7, color: TEXT, fontStyle: 'italic', margin: 0, WebkitTextStroke: '0.3px currentColor' }}>
+                <p style={{
+                  fontFamily: SERIF,
+                  fontSize: '1.333rem',
+                  lineHeight: 1.6,
+                  color: TEXT,
+                  fontStyle: 'italic',
+                  margin: 0,
+                  WebkitTextStroke: '0.3px currentColor',
+                }}>
                   "A brotherhood of men with purpose, not a bro club or a hype room, but a community that genuinely builds."
                 </p>
               </div>
@@ -510,7 +542,7 @@ export default function FoundingMembersPage() {
         <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <Label>What You Get</Label>
-            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
               Inside KYN
             </h2>
 
@@ -522,18 +554,17 @@ export default function FoundingMembersPage() {
                 { title: 'Exclusive supporting content', desc: 'We take a holistic approach across somatics, the psyche, and grounded spiritual perspectives, because understanding how and why you operate is one of the most powerful forms of growth.' },
                 { title: 'Private brotherhood', desc: "A private community of men doing the work properly. Not a place for big egos trying to out-perform each other, but a space where men build, challenge each other, and show up." },
               ].map((item, i) => (
-                <div key={i} style={{ background: '#ffffff', border: `1px solid ${BORDER}`, borderRadius: '6px', padding: '28px' }}>
-                  <p style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: ACCENT, marginBottom: '0.75rem' }}>
+                <div key={i} style={{ background: '#ffffff', border: `1px solid ${BORDER}`, borderRadius: '6px', padding: '1.75rem' }}>
+                  {/* Card label — 0.75rem / 12px uppercase */}
+                  <p style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: ACCENT, marginBottom: '0.625rem' }}>
                     {item.title}
                   </p>
-                  <p style={{ fontSize: '0.9375rem', lineHeight: 1.65, color: MUTED, margin: 0 }}>
-                    {item.desc}
-                  </p>
+                  <p style={{ ...BODY, margin: 0 }}>{item.desc}</p>
                 </div>
               ))}
             </div>
 
-            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, margin: 0 }}>
+            <p style={{ ...BODY, margin: 0 }}>
               You are looking at a few focused hours each month, no endless content to consume and no daily task lists, just consistent structured work applied to the life you are actually living.
             </p>
           </div>
@@ -544,18 +575,18 @@ export default function FoundingMembersPage() {
           <div style={{ maxWidth: '640px', margin: '0 auto' }}>
             <SpotsBar />
 
-            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, marginBottom: '1.5rem' }}>
+            <p style={{ ...BODY, marginBottom: '1.25rem' }}>
               You've read this far and that obviously means something. Men who aren't ready close the tab in the first two minutes.
             </p>
-            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, marginBottom: '3rem' }}>
+            <p style={{ ...BODY, marginBottom: '3rem' }}>
               You already know whether this is for you. You knew it somewhere in the first few paragraphs. What you're doing right now is checking whether it's safe to trust that knowing.
             </p>
 
-            <h2 style={{ ...H2, fontSize: isMobile ? '2.25rem' : 'clamp(2.25rem, 5vw, 3.75rem)', marginBottom: '2.5rem' }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2.25rem, 5vw, 3.75rem)', marginBottom: '2.5rem' }}>
               Where you are now does not have to be where you end up.
             </h2>
 
-            <p style={{ fontSize: '0.9375rem', color: MUTED, marginBottom: '2rem', fontFamily: SANS }}>
+            <p style={{ fontSize: '0.9375rem', lineHeight: 1.6, color: MUTED, marginBottom: '2rem', fontFamily: SANS }}>
               Founding member price: £25/month, locked in for life. Price rises to £50 at member 21.
             </p>
 
@@ -565,14 +596,14 @@ export default function FoundingMembersPage() {
                 display: 'inline-block',
                 background: ACCENT,
                 color: TEXT,
-                padding: '1.125rem 2.75rem',
+                padding: '0.875rem 2.5rem',
                 borderRadius: '4px',
                 fontWeight: 700,
-                fontSize: '1rem',
+                fontSize: '0.9375rem',
                 fontFamily: SANS,
                 border: 'none',
                 cursor: 'pointer',
-                letterSpacing: '0.03em',
+                letterSpacing: '0.06em',
                 textTransform: 'uppercase' as const,
               }}
               onMouseEnter={(e) => (e.currentTarget.style.background = '#7da89c')}
@@ -581,7 +612,7 @@ export default function FoundingMembersPage() {
               Secure Your Founding Spot
             </button>
 
-            <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: MUTED, fontFamily: SANS }}>
+            <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
               {SPOTS_REMAINING} of {SPOTS_TOTAL} founding spots remaining · £25/month fixed for life
             </p>
           </div>
