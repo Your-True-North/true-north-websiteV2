@@ -16,6 +16,32 @@ const SANS    = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
 const CREAM   = '#f5f3ef'
 const BORDER  = 'rgba(10,10,10,0.10)'
 
+const H1: React.CSSProperties = {
+  fontFamily: SERIF,
+  fontWeight: 400,
+  lineHeight: 1.1,
+  letterSpacing: '-0.02em',
+  color: TEXT,
+  WebkitTextStroke: '0.6px currentColor',
+}
+
+const H2: React.CSSProperties = {
+  fontFamily: SERIF,
+  fontWeight: 400,
+  lineHeight: 1.2,
+  letterSpacing: '-0.02em',
+  color: TEXT,
+  WebkitTextStroke: '0.5px currentColor',
+}
+
+const H3: React.CSSProperties = {
+  fontFamily: SERIF,
+  fontWeight: 400,
+  letterSpacing: '-0.01em',
+  color: TEXT,
+  WebkitTextStroke: '0.4px currentColor',
+}
+
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <p style={{
@@ -106,19 +132,19 @@ export default function FoundingMembersPage() {
       num: '01',
       label: 'The Foundation',
       title: 'See it.',
-      body: "You can't change what you can't see. The first layer is awareness — catching the pattern that's been running your decisions before it plays out, not just recognising it in the aftermath. This is where the blind spot starts to close.",
+      body: "You cannot change what you cannot see. The first layer is awareness, catching the pattern that has been running your decisions before it plays out rather than only recognising it in the aftermath. This is where the blind spot starts to close.",
     },
     {
       num: '02',
       label: 'The Work',
       title: 'Regulate it.',
-      body: "Your body still holds what the mind has already made sense of. Through somatic work, breathwork, and nervous system regulation, we release what's been stored and build real capacity — the kind that lets you hold pressure without reverting to the old pattern.",
+      body: "Your body still holds what the mind has already made sense of. Through somatic work, breathwork, and nervous system regulation, we release what has been stored and build real capacity, the kind that lets you hold pressure without reverting to the old pattern.",
     },
     {
       num: '03',
       label: 'The Becoming',
       title: 'Become it.',
-      body: "Who does your goal require you to be? We close that gap in real time, applied to your actual life. This cycle doesn't end — it deepens. Each layer removed reveals the next. That's the nature of the journey.",
+      body: "Who does your goal require you to be? We close that gap in real time, applied to your actual life. This cycle never ends, it deepens. Each layer removed reveals the next, and that is the nature of this journey.",
     },
   ]
 
@@ -135,7 +161,7 @@ export default function FoundingMembersPage() {
 
       <div style={{ fontFamily: SANS, color: TEXT, overflowX: 'hidden' }}>
 
-        {/* ── HERO ── white */}
+        {/* HERO */}
         <section style={{
           background: '#ffffff',
           display: 'flex',
@@ -146,7 +172,6 @@ export default function FoundingMembersPage() {
           position: 'relative',
           overflow: 'hidden',
         }}>
-          {/* Visible watermark logo */}
           <img
             src="/cor-mark-black.svg"
             alt=""
@@ -158,7 +183,7 @@ export default function FoundingMembersPage() {
               transform: 'translate(-50%, -50%)',
               width: isMobile ? '300px' : '540px',
               height: 'auto',
-              opacity: 0.06,
+              opacity: 0.08,
               pointerEvents: 'none',
               userSelect: 'none' as const,
               zIndex: 0,
@@ -169,13 +194,9 @@ export default function FoundingMembersPage() {
             <SpotsBar />
 
             <h1 style={{
-              fontFamily: SERIF,
+              ...H1,
               fontSize: isMobile ? '2.75rem' : 'clamp(3rem, 7vw, 5rem)',
-              fontWeight: 400,
-              lineHeight: 1.1,
-              color: TEXT,
               marginBottom: '1.75rem',
-              letterSpacing: '-0.02em',
             }}>
               Find your direction.<br />Drown out the noise.
             </h1>
@@ -187,7 +208,7 @@ export default function FoundingMembersPage() {
               maxWidth: '600px',
               margin: '0 auto 3rem',
             }}>
-              KYN is where you get clear on who you are and razor focused on where you're going. Not a programme with an end date — a journey you build, with men who mean it.
+              KYN is where you get clear on who you are and razor focused on where you're going. This is not a programme with an end date, it is a journey you build with men who mean it.
             </p>
 
             <button
@@ -209,16 +230,16 @@ export default function FoundingMembersPage() {
               onMouseEnter={(e) => (e.currentTarget.style.background = '#7da89c')}
               onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
             >
-              Secure Your Founding Spot →
+              Secure Your Founding Spot
             </button>
 
             <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: MUTED, fontFamily: SANS }}>
-              £25/month fixed for life — price rises to £50 at member 21
+              £25/month fixed for life. Price rises to £50 at member 21.
             </p>
           </div>
         </section>
 
-        {/* ── PROOF BAR ── */}
+        {/* PROOF BAR */}
         <section style={{ background: CREAM, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: '2rem 1.5rem' }}>
           <div style={{
             maxWidth: '960px',
@@ -232,7 +253,7 @@ export default function FoundingMembersPage() {
               { value: 'Gabor Maté', label: 'Somatic therapy, trained by' },
               { value: 'ICF + EMCC', label: 'Certified Coach' },
               { value: '£25/month', label: 'Founding member price' },
-              { value: 'Brotherhood', label: 'Not a course. A community.' },
+              { value: 'Brotherhood', label: 'A community, not a course' },
             ].map(({ value, label }) => (
               <div key={label}>
                 <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, marginBottom: '0.25rem', letterSpacing: '0.04em' }}>{label}</div>
@@ -242,29 +263,21 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* ── WHO THIS IS FOR ── white */}
+        {/* WHO THIS IS FOR */}
         <section style={{ padding: sec, background: '#ffffff' }}>
           <div style={inner}>
             <Label>Who This Is For</Label>
-            <h2 style={{
-              fontFamily: SERIF,
-              fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
-              fontWeight: 400,
-              lineHeight: 1.2,
-              color: TEXT,
-              marginBottom: '2.5rem',
-              letterSpacing: '-0.02em',
-            }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
               You already know this is you.
             </h2>
 
             {[
-              "You have a version of yourself you can see clearly. The man who leads with confidence and builds something real. Who doesn't run away when things get hard.",
+              "You have a version of yourself you can see clearly. The man who leads with confidence and builds something real, who doesn't run away when things get hard.",
               "And you know there's a gap between that man and where you stand right now.",
-              "Not because you lack ability or because you haven't tried. But because something underneath keeps pulling you back to where you started.",
-              "Maybe it shows up in business. You build momentum — then somehow lose the contract, delay the launch, undercharge again. You watch the opportunity pass and wonder why you let it.",
-              "Maybe it's relationships. You find yourself in the same argument, creating the same distance. The same moment where you shut down when you most needed to stay open.",
-              "Maybe it's the version of yourself you perform in public versus the one you live with privately. The gap between those two men is exhausting to keep up.",
+              "Not because you lack ability or because you haven't tried, but because something underneath keeps pulling you back to where you started.",
+              "Maybe it shows up in business. You build momentum, then somehow lose the contract, delay the launch, undercharge again. You watch the opportunity pass and wonder why you let it.",
+              "Maybe it's relationships. You find yourself in the same argument, creating the same distance, arriving at the same moment where you shut down when you most needed to stay open.",
+              "Maybe it's the version of yourself you perform in public versus the one you live with privately. The gap between those two men is exhausting to maintain.",
             ].map((para, i) => (
               <p key={i} style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, marginBottom: '1.25rem' }}>
                 {para}
@@ -279,30 +292,23 @@ export default function FoundingMembersPage() {
                 color: TEXT,
                 margin: 0,
                 fontStyle: 'italic',
+                WebkitTextStroke: '0.3px currentColor',
               }}>
-                "I know you've read the books and listened to the podcasts. You have more self-awareness than most men you know, yet still the pattern runs. That's not a failure of effort."
+                "I know you've read the books and listened to the podcasts. You have more self-awareness than most men you know, yet still the pattern runs. That is not a failure of effort."
               </p>
             </div>
 
             <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: TEXT, fontWeight: 500, margin: 0 }}>
-              That's the nature of what's in the blind spot — by definition, you cannot see it from inside it.
+              That's the nature of what's in the blind spot. By definition, you cannot see it from inside it.
             </p>
           </div>
         </section>
 
-        {/* ── MASON'S STORY ── cream */}
+        {/* MASON'S STORY */}
         <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={inner}>
             <Label>Who Holds the Space</Label>
-            <h2 style={{
-              fontFamily: SERIF,
-              fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
-              fontWeight: 400,
-              lineHeight: 1.2,
-              color: TEXT,
-              marginBottom: '2.5rem',
-              letterSpacing: '-0.02em',
-            }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
               I've been where you are.
             </h2>
 
@@ -322,8 +328,8 @@ export default function FoundingMembersPage() {
             </div>
 
             {[
-              "I'm True. And I'm not standing outside this work looking in.",
-              "I spent years in the same cycle — and still have my moments. Two steps forward, one back. Building things and burning them. Knowing what I was doing and doing it anyway. The pattern expressed itself in many ways — from procrastination through to violence, addiction, and a level of self-destruction.",
+              "I'm True, and I'm not standing outside this work looking in.",
+              "I spent years in the same cycle, and still have my moments. I took two steps forward and one back, building things and burning them, knowing exactly what I was doing and doing it anyway. The pattern expressed itself in many ways, from procrastination through to violence, addiction, and a level of self-destruction that I am not proud of.",
               "What changed wasn't a book or a single breakthrough moment. It was sustained, structured work designed to get underneath the story you tell yourself and work with what's actually stored in the body.",
               "I created KYN because I know what it means to do this work without a real community around you. The men in here aren't here to look good. They're here to build something real.",
             ].map((para, i) => (
@@ -334,19 +340,11 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* ── TESTIMONIALS ── white */}
+        {/* TESTIMONIALS */}
         <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
             <Label>What Changes</Label>
-            <h2 style={{
-              fontFamily: SERIF,
-              fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
-              fontWeight: 400,
-              lineHeight: 1.2,
-              color: TEXT,
-              marginBottom: '3rem',
-              letterSpacing: '-0.02em',
-            }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
               Real Transformations
             </h2>
 
@@ -365,23 +363,15 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* ── THE JOURNEY ── cream */}
+        {/* THE JOURNEY */}
         <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={inner}>
             <Label>The Journey</Label>
-            <h2 style={{
-              fontFamily: SERIF,
-              fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
-              fontWeight: 400,
-              lineHeight: 1.2,
-              color: TEXT,
-              marginBottom: '0.75rem',
-              letterSpacing: '-0.02em',
-            }}>
-              Not a programme. A path you keep walking.
+            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '0.75rem' }}>
+              This is not a programme with an end date. It is a path you keep walking.
             </h2>
             <p style={{ fontSize: '1rem', lineHeight: 1.8, color: MUTED, marginBottom: '3rem' }}>
-              There's no graduation date. No moment where the work is done. This is a continuous deepening — applied to what's actually happening in your life right now.
+              There is no graduation date and no fixed moment where the work is done. This is a continuous deepening applied to what is actually happening in your life right now.
             </p>
 
             {pillars.map((pillar, i) => (
@@ -399,7 +389,7 @@ export default function FoundingMembersPage() {
                       <p style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED, margin: '0 0 0.375rem' }}>
                         {pillar.label}
                       </p>
-                      <h3 style={{ fontFamily: SERIF, fontSize: isMobile ? '1.375rem' : '1.625rem', fontWeight: 400, color: TEXT, margin: 0, letterSpacing: '-0.01em' }}>
+                      <h3 style={{ ...H3, fontSize: isMobile ? '1.375rem' : '1.625rem', margin: 0 }}>
                         {pillar.title}
                       </h3>
                     </div>
@@ -432,7 +422,7 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* ── BROTHERHOOD ── white */}
+        {/* BROTHERHOOD */}
         <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
           <div style={{
             maxWidth: '900px',
@@ -446,8 +436,8 @@ export default function FoundingMembersPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem' }}>
                 {[
                   "You're done performing a version of yourself that isn't real.",
-                  "You want to be around men who are actually doing the work — not just talking about it.",
-                  "You're ready to build something, not just consume more content.",
+                  "You want to be around men who are actually doing the work, not just talking about it.",
+                  "You're ready to build something lasting rather than consume more content that goes nowhere.",
                   "You know there's a better version of you available, and you're prepared to go get it.",
                   "You want brothers who will hold you to what you said you wanted.",
                 ].map((line, i) => (
@@ -483,37 +473,29 @@ export default function FoundingMembersPage() {
               </div>
 
               <div style={{ marginTop: '3rem', borderLeft: `3px solid ${ACCENT}`, paddingLeft: '1.25rem' }}>
-                <p style={{ fontFamily: SERIF, fontSize: '1.125rem', lineHeight: 1.7, color: TEXT, fontStyle: 'italic', margin: 0 }}>
-                  "A brotherhood of men with purpose. Not a bro club. Not a hype room. A community that builds."
+                <p style={{ fontFamily: SERIF, fontSize: '1.125rem', lineHeight: 1.7, color: TEXT, fontStyle: 'italic', margin: 0, WebkitTextStroke: '0.3px currentColor' }}>
+                  "A brotherhood of men with purpose, not a bro club or a hype room, but a community that genuinely builds."
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── INSIDE KYN ── cream */}
+        {/* INSIDE KYN */}
         <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <Label>What You Get</Label>
-            <h2 style={{
-              fontFamily: SERIF,
-              fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
-              fontWeight: 400,
-              lineHeight: 1.2,
-              color: TEXT,
-              marginBottom: '3rem',
-              letterSpacing: '-0.02em',
-            }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
               Inside KYN
             </h2>
 
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem', marginBottom: '3rem' }}>
               {[
-                { title: 'Two live deep sessions each month', desc: "Built around expansion topics that reveal the pattern underneath your decisions. Applied to your real situations so the work moves you forward, not just inward." },
-                { title: 'Two somatic regulation sessions', desc: "To help release what's been stuck and weighing you down. We build actual capacity — the kind that holds under pressure." },
-                { title: 'Quarterly community goal mapping', desc: "So you know exactly where you're tightening, where you're slipping, and what the next chapter requires of you." },
-                { title: 'Exclusive supporting content', desc: 'Somatics, the psyche, grounded spiritual perspectives. Understanding how and why you operate is one of the most powerful forms of growth.' },
-                { title: 'Private brotherhood', desc: "A private community of men doing the work properly. Not a place for big egos. A place where men build, challenge each other, and show up." },
+                { title: 'Two live deep sessions each month', desc: "Built around expansion topics that reveal the pattern underneath your decisions, applied to your real situations so the work moves you forward rather than just inward." },
+                { title: 'Two somatic regulation sessions', desc: "To help release what has been stuck and weighing you down. We build actual capacity, the kind that holds under real pressure." },
+                { title: 'Quarterly community goal mapping', desc: "So you know exactly where you're tightening, where you're slipping, and what the next chapter genuinely requires of you." },
+                { title: 'Exclusive supporting content', desc: 'We take a holistic approach across somatics, the psyche, and grounded spiritual perspectives, because understanding how and why you operate is one of the most powerful forms of growth.' },
+                { title: 'Private brotherhood', desc: "A private community of men doing the work properly. Not a place for big egos trying to out-perform each other, but a space where men build, challenge each other, and show up." },
               ].map((item, i) => (
                 <div key={i} style={{ background: '#ffffff', border: `1px solid ${BORDER}`, borderRadius: '6px', padding: '28px' }}>
                   <p style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: ACCENT, marginBottom: '0.75rem' }}>
@@ -526,19 +508,13 @@ export default function FoundingMembersPage() {
               ))}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {[
-                "A few focused hours each month.",
-                "No endless content to consume. No daily tasks.",
-                "Just consistent, structured work applied to the life you're actually living.",
-              ].map((line, i) => (
-                <p key={i} style={{ fontSize: '1.0625rem', lineHeight: 1.75, color: MUTED, margin: 0 }}>{line}</p>
-              ))}
-            </div>
+            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, margin: 0 }}>
+              You are looking at a few focused hours each month, no endless content to consume and no daily task lists, just consistent structured work applied to the life you are actually living.
+            </p>
           </div>
         </section>
 
-        {/* ── CLOSING CTA ── white */}
+        {/* CLOSING CTA */}
         <section style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 1.5rem', background: '#ffffff', borderTop: `1px solid ${BORDER}`, textAlign: 'center' }}>
           <div style={{ maxWidth: '640px', margin: '0 auto' }}>
             <SpotsBar />
@@ -550,20 +526,12 @@ export default function FoundingMembersPage() {
               You already know whether this is for you. You knew it somewhere in the first few paragraphs. What you're doing right now is checking whether it's safe to trust that knowing.
             </p>
 
-            <h2 style={{
-              fontFamily: SERIF,
-              fontSize: isMobile ? '2.25rem' : 'clamp(2.25rem, 5vw, 3.75rem)',
-              fontWeight: 400,
-              lineHeight: 1.15,
-              color: TEXT,
-              marginBottom: '2.5rem',
-              letterSpacing: '-0.02em',
-            }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '2.25rem' : 'clamp(2.25rem, 5vw, 3.75rem)', marginBottom: '2.5rem' }}>
               Where you are now does not have to be where you end up.
             </h2>
 
             <p style={{ fontSize: '0.9375rem', color: MUTED, marginBottom: '2rem', fontFamily: SANS }}>
-              Founding member price: £25/month. Locked in for life — rises to £50 at member 21.
+              Founding member price: £25/month, locked in for life. Price rises to £50 at member 21.
             </p>
 
             <button
@@ -585,7 +553,7 @@ export default function FoundingMembersPage() {
               onMouseEnter={(e) => (e.currentTarget.style.background = '#7da89c')}
               onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
             >
-              Secure Your Founding Spot →
+              Secure Your Founding Spot
             </button>
 
             <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: MUTED, fontFamily: SANS }}>
