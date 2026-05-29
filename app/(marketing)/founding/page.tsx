@@ -190,7 +190,24 @@ export default function FoundingMembersPage() {
             }}
           />
           <div style={{ maxWidth: '780px', width: '100%', position: 'relative', zIndex: 1 }}>
-            <Label>Know Your North · Founding Members</Label>
+            <p style={{
+              fontFamily: SANS,
+              fontSize: '0.8rem',
+              fontWeight: 800,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase' as const,
+              color: TEXT,
+              margin: '0 0 0.4rem',
+            }}>Know Your North</p>
+            <p style={{
+              fontFamily: SANS,
+              fontSize: '0.7rem',
+              fontWeight: 700,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase' as const,
+              color: ACCENT,
+              margin: '0 0 1.5rem',
+            }}>Founding Members</p>
             <SpotsBar />
 
             <p style={{
