@@ -101,10 +101,10 @@ export default function Circle() {
             </p>
             <p style={{
               fontFamily: "'Gambarino', Georgia, serif",
-              fontSize: isMobile ? '1.5rem' : '2rem',
+              fontSize: isMobile ? '1.1rem' : '1.3rem',
               fontStyle: 'italic',
-              color: 'rgba(255,255,255,0.45)',
-              marginBottom: '0.5rem',
+              color: 'rgba(255,255,255,0.85)',
+              marginBottom: '0.75rem',
               letterSpacing: '-0.01em',
             }}>
               Drown out the noise.

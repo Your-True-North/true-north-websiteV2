@@ -195,11 +195,10 @@ export default function FoundingMembersPage() {
 
             <p style={{
               fontFamily: SERIF,
-              fontSize: isMobile ? '1.5rem' : '2rem',
+              fontSize: isMobile ? '1.1rem' : '1.3rem',
               fontStyle: 'italic',
               color: TEXT,
-              opacity: 0.4,
-              marginBottom: '0.5rem',
+              marginBottom: '0.75rem',
               letterSpacing: '-0.01em',
             }}>
               Drown out the noise.
