@@ -137,16 +137,6 @@ export default function Home() {
           }}>
             <div style={{maxWidth: isMobile ? '100%' : '800px'}}>
 
-              <p style={{
-                fontFamily: "'Gambarino', Georgia, serif",
-                fontSize: isMobile ? '1.1rem' : '1.3rem',
-                fontStyle: 'italic',
-                color: 'rgba(255,255,255,0.85)',
-                marginBottom: '0.75rem',
-                letterSpacing: '-0.01em',
-              }}>
-                Drown out the noise.
-              </p>
               <h1 className="h1 shimmer-accent" style={{
                 fontSize: isMobile ? 'clamp(2.2rem, 9vw, 3.5rem)' : 'clamp(3rem, 7vw, 5rem)',
                 marginBottom: '1.5rem',
