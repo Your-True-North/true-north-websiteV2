@@ -22,7 +22,7 @@ const H1: React.CSSProperties = {
   lineHeight: 1.1,
   letterSpacing: '-0.02em',
   color: TEXT,
-  WebkitTextStroke: '0.6px currentColor',
+  WebkitTextStroke: '1.5px currentColor',
 }
 
 const H2: React.CSSProperties = {
@@ -31,7 +31,7 @@ const H2: React.CSSProperties = {
   lineHeight: 1.2,
   letterSpacing: '-0.02em',
   color: TEXT,
-  WebkitTextStroke: '0.5px currentColor',
+  WebkitTextStroke: '1px currentColor',
 }
 
 const H3: React.CSSProperties = {
@@ -39,7 +39,7 @@ const H3: React.CSSProperties = {
   fontWeight: 400,
   letterSpacing: '-0.01em',
   color: TEXT,
-  WebkitTextStroke: '0.4px currentColor',
+  WebkitTextStroke: '0.7px currentColor',
 }
 
 function Label({ children }: { children: React.ReactNode }) {
@@ -193,12 +193,23 @@ export default function FoundingMembersPage() {
             <Label>Know Your North · Founding Members</Label>
             <SpotsBar />
 
+            <p style={{
+              fontFamily: SERIF,
+              fontSize: isMobile ? '1.5rem' : '2rem',
+              fontStyle: 'italic',
+              color: TEXT,
+              opacity: 0.4,
+              marginBottom: '0.5rem',
+              letterSpacing: '-0.01em',
+            }}>
+              Drown out the noise.
+            </p>
             <h1 style={{
               ...H1,
               fontSize: isMobile ? '2.75rem' : 'clamp(3rem, 7vw, 5rem)',
               marginBottom: '1.75rem',
             }}>
-              Find your direction.<br />Drown out the noise.
+              Find your direction.
             </h1>
 
             <p style={{

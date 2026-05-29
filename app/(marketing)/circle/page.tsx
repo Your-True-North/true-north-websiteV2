@@ -87,25 +87,39 @@ export default function Circle() {
           />
 
           <div style={{ maxWidth: '700px', position: 'relative', zIndex: 1 }}>
-            <p className="breathing-title" style={{
+            <p style={{
               fontSize: isMobile ? '1rem' : '1.1rem',
-              fontWeight: '400',
+              fontWeight: 400,
               color: 'rgba(255, 255, 255, 0.6)',
               marginBottom: '1.5rem',
               lineHeight: '1.4',
               letterSpacing: '0.15em',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
             }}>
               Know Your North
             </p>
-            <h1 style={{
-              fontSize: isMobile ? '2rem' : '2.8rem',
-              color: '#ffffff',
-              lineHeight: '1.3',
-              fontWeight: '300',
-              marginBottom: '2rem'
+            <p style={{
+              fontFamily: "'Gambarino', Georgia, serif",
+              fontSize: isMobile ? '1.5rem' : '2rem',
+              fontStyle: 'italic',
+              color: 'rgba(255,255,255,0.45)',
+              marginBottom: '0.5rem',
+              letterSpacing: '-0.01em',
             }}>
-              The work you keep putting off.<br />Done together.
+              Drown out the noise.
+            </p>
+            <h1 style={{
+              fontFamily: "'Gambarino', Georgia, serif",
+              fontSize: isMobile ? '2.75rem' : 'clamp(3rem, 7vw, 5rem)',
+              color: '#ffffff',
+              lineHeight: 1.1,
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+              marginBottom: '2rem',
+              WebkitTextStroke: '1.5px rgba(255,255,255,0.9)',
+            }}>
+              Find your direction.
             </h1>
           </div>
         </section>
