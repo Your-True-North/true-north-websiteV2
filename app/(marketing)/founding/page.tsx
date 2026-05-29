@@ -4,25 +4,17 @@ import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
+const SPOTS_TOTAL = 20
 const SPOTS_REMAINING = 10
+const SPOTS_TAKEN = SPOTS_TOTAL - SPOTS_REMAINING
 
-const C = {
-  dark:        '#0c0c0a',
-  dark2:       '#111110',
-  card:        '#1a1a18',
-  border:      '#2c2c2a',
-  cream:       '#f5f3ef',
-  textDark:    '#f0ede8',
-  mutedDark:   '#a0a09c',
-  textLight:   '#1c1a18',
-  mutedLight:  '#5a5a58',
-  sage:        '#9bc4b8',
-  sageDeep:    '#7da89c',
-  borderLight: 'rgba(28,26,24,0.08)',
-}
-
-const SERIF = "Gambarino, Georgia, serif"
-const SANS  = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+const ACCENT  = '#9bc4b8'
+const TEXT    = '#0a0a0a'
+const MUTED   = '#5a5a58'
+const SERIF   = "Gambarino, Georgia, serif"
+const SANS    = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+const CREAM   = '#f5f3ef'
+const BORDER  = 'rgba(10,10,10,0.10)'
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
@@ -32,41 +24,38 @@ function Label({ children }: { children: React.ReactNode }) {
       fontWeight: 700,
       letterSpacing: '0.18em',
       textTransform: 'uppercase' as const,
-      color: C.sage,
+      color: ACCENT,
       margin: '0 0 1.25rem',
     }}>{children}</p>
   )
 }
 
-function CTAButton({ onClick, children }: { onClick: () => void; children: React.ReactNode }) {
+function SpotsBar() {
   return (
-    <button
-      onClick={onClick}
-      style={{
-        display: 'inline-block',
-        background: `linear-gradient(135deg, ${C.sage}, ${C.sageDeep})`,
-        color: C.dark,
-        padding: '1.125rem 2.75rem',
-        borderRadius: '4px',
-        fontWeight: 700,
-        fontSize: '1rem',
-        fontFamily: SANS,
-        border: 'none',
-        cursor: 'pointer',
-        letterSpacing: '0.03em',
-        textTransform: 'uppercase' as const,
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-      onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
-    >
-      {children}
-    </button>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '2.5rem', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', gap: '6px' }}>
+        {Array.from({ length: SPOTS_TOTAL }).map((_, i) => (
+          <div
+            key={i}
+            style={{
+              width: '10px',
+              height: '10px',
+              borderRadius: '50%',
+              background: i < SPOTS_TAKEN ? ACCENT : 'transparent',
+              border: `1.5px solid ${i < SPOTS_TAKEN ? ACCENT : 'rgba(155,196,184,0.4)'}`,
+            }}
+          />
+        ))}
+      </div>
+      <span style={{ fontFamily: SANS, fontSize: '0.8rem', color: MUTED }}>
+        {SPOTS_REMAINING} of {SPOTS_TOTAL} founding spots remaining
+      </span>
+    </div>
   )
 }
 
 export default function FoundingMembersPage() {
   const [isMobile, setIsMobile] = useState(false)
-  const [gate, setGate] = useState<'question1' | 'question2' | 'open'>('question1')
   const [openPillar, setOpenPillar] = useState<number | null>(0)
 
   useEffect(() => {
@@ -110,6 +99,7 @@ export default function FoundingMembersPage() {
   }
 
   const sec = isMobile ? '4rem 1.5rem' : '6rem 1.5rem'
+  const inner = { maxWidth: '700px', margin: '0 auto' }
 
   const pillars = [
     {
@@ -132,69 +122,6 @@ export default function FoundingMembersPage() {
     },
   ]
 
-  if (gate !== 'open') {
-    return (
-      <div style={{
-        minHeight: '100vh',
-        background: C.dark,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem',
-        fontFamily: SANS,
-      }}>
-        <div style={{ maxWidth: '560px', width: '100%', textAlign: 'center' }}>
-
-          {gate === 'question1' && (
-            <>
-              <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase', color: C.sage, marginBottom: '2rem' }}>
-                Before you read this
-              </p>
-              <h1 style={{ fontSize: isMobile ? '2rem' : '2.75rem', fontWeight: 700, lineHeight: 1.2, color: '#ffffff', marginBottom: '3rem', fontFamily: SANS }}>
-                Did you click this link because you self-sabotage?
-              </h1>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <button onClick={() => setGate('question2')} style={{ padding: '1.25rem 2rem', background: C.sage, border: 'none', borderRadius: '6px', color: C.dark, fontSize: '1.1rem', fontWeight: 600, cursor: 'pointer', fontFamily: SANS }}>
-                  Yes
-                </button>
-                <button onClick={() => setGate('open')} style={{ padding: '1.25rem 2rem', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '1.1rem', fontWeight: 400, cursor: 'pointer', fontFamily: SANS }}>
-                  No
-                </button>
-              </div>
-              <p style={{ marginTop: '1.5rem', fontSize: '0.8rem', color: 'rgba(255,255,255,0.25)', fontFamily: SANS }}>
-                There is no wrong answer.
-              </p>
-            </>
-          )}
-
-          {gate === 'question2' && (
-            <>
-              <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '3px', textTransform: 'uppercase', color: C.sage, marginBottom: '2rem' }}>
-                Good. You just caught it.
-              </p>
-              <h1 style={{ fontSize: isMobile ? '2rem' : '2.75rem', fontWeight: 700, lineHeight: 1.2, color: '#ffffff', marginBottom: '1rem', fontFamily: SANS }}>
-                Will you continue to self-sabotage by ignoring what comes next?
-              </h1>
-              <p style={{ fontSize: '1.1rem', color: 'rgba(255,255,255,0.5)', marginBottom: '3rem', lineHeight: 1.7, fontFamily: SANS }}>
-                Most men will. They'll read this, feel something, and close the tab.<br />
-                That's the pattern.
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <button onClick={() => setGate('open')} style={{ padding: '1.25rem 2rem', background: C.sage, border: 'none', borderRadius: '6px', color: C.dark, fontSize: '1.1rem', fontWeight: 600, cursor: 'pointer', fontFamily: SANS }}>
-                  No — show me what this is
-                </button>
-                <button onClick={() => window.history.back()} style={{ padding: '1.25rem 2rem', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px', color: 'rgba(255,255,255,0.5)', fontSize: '1.1rem', fontWeight: 400, cursor: 'pointer', fontFamily: SANS }}>
-                  Yes — I'll leave
-                </button>
-              </div>
-            </>
-          )}
-
-        </div>
-      </div>
-    )
-  }
-
   return (
     <>
       <style jsx global>{`
@@ -203,14 +130,14 @@ export default function FoundingMembersPage() {
         [class*='footer'], [class*='Footer'] {
           display: none !important;
         }
+        body { background: #ffffff; }
       `}</style>
 
-      <div style={{ fontFamily: SANS, overflowX: 'hidden' }}>
+      <div style={{ fontFamily: SANS, color: TEXT, overflowX: 'hidden' }}>
 
-        {/* ── HERO ── dark */}
+        {/* ── HERO ── white */}
         <section style={{
-          minHeight: '100vh',
-          background: C.dark,
+          background: '#ffffff',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -219,8 +146,9 @@ export default function FoundingMembersPage() {
           position: 'relative',
           overflow: 'hidden',
         }}>
+          {/* Visible watermark logo */}
           <img
-            src="/the-cor-logo.png"
+            src="/cor-mark-black.svg"
             alt=""
             aria-hidden="true"
             style={{
@@ -228,9 +156,9 @@ export default function FoundingMembersPage() {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: isMobile ? '260px' : '480px',
+              width: isMobile ? '300px' : '540px',
               height: 'auto',
-              opacity: 0.07,
+              opacity: 0.06,
               pointerEvents: 'none',
               userSelect: 'none' as const,
               zIndex: 0,
@@ -238,13 +166,14 @@ export default function FoundingMembersPage() {
           />
           <div style={{ maxWidth: '780px', width: '100%', position: 'relative', zIndex: 1 }}>
             <Label>Know Your North · Founding Members</Label>
+            <SpotsBar />
 
             <h1 style={{
               fontFamily: SERIF,
               fontSize: isMobile ? '2.75rem' : 'clamp(3rem, 7vw, 5rem)',
               fontWeight: 400,
               lineHeight: 1.1,
-              color: C.textDark,
+              color: TEXT,
               marginBottom: '1.75rem',
               letterSpacing: '-0.02em',
             }}>
@@ -254,28 +183,43 @@ export default function FoundingMembersPage() {
             <p style={{
               fontSize: isMobile ? '1.0625rem' : '1.2rem',
               lineHeight: 1.8,
-              color: C.mutedDark,
+              color: MUTED,
               maxWidth: '600px',
               margin: '0 auto 3rem',
             }}>
               KYN is where you get clear on who you are and razor focused on where you're going. Not a programme with an end date — a journey you build, with men who mean it.
             </p>
 
-            <CTAButton onClick={handleStripeClick}>Secure Your Founding Spot →</CTAButton>
+            <button
+              onClick={handleStripeClick}
+              style={{
+                display: 'inline-block',
+                background: ACCENT,
+                color: TEXT,
+                padding: '1.125rem 2.75rem',
+                borderRadius: '4px',
+                fontWeight: 700,
+                fontSize: '1rem',
+                fontFamily: SANS,
+                border: 'none',
+                cursor: 'pointer',
+                letterSpacing: '0.03em',
+                textTransform: 'uppercase' as const,
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = '#7da89c')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
+            >
+              Secure Your Founding Spot →
+            </button>
 
-            <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: 'rgba(160,160,156,0.5)', fontFamily: SANS }}>
-              {SPOTS_REMAINING} of 20 founding spots remaining · £25/month fixed for life
+            <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: MUTED, fontFamily: SANS }}>
+              £25/month fixed for life — price rises to £50 at member 21
             </p>
           </div>
         </section>
 
         {/* ── PROOF BAR ── */}
-        <section style={{
-          background: C.card,
-          borderTop: `1px solid ${C.border}`,
-          borderBottom: `1px solid ${C.border}`,
-          padding: '2rem 1.5rem',
-        }}>
+        <section style={{ background: CREAM, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: '2rem 1.5rem' }}>
           <div style={{
             maxWidth: '960px',
             margin: '0 auto',
@@ -291,23 +235,23 @@ export default function FoundingMembersPage() {
               { value: 'Brotherhood', label: 'Not a course. A community.' },
             ].map(({ value, label }) => (
               <div key={label}>
-                <div style={{ fontSize: '0.75rem', color: C.mutedDark, fontFamily: SANS, marginBottom: '0.25rem', letterSpacing: '0.04em' }}>{label}</div>
-                <div style={{ fontSize: isMobile ? '1rem' : '1.125rem', fontWeight: 600, color: C.sage, fontFamily: SANS }}>{value}</div>
+                <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, marginBottom: '0.25rem', letterSpacing: '0.04em' }}>{label}</div>
+                <div style={{ fontSize: isMobile ? '1rem' : '1.125rem', fontWeight: 600, color: ACCENT, fontFamily: SANS }}>{value}</div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ── WHO THIS IS FOR ── cream */}
-        <section style={{ padding: sec, background: C.cream }}>
-          <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        {/* ── WHO THIS IS FOR ── white */}
+        <section style={{ padding: sec, background: '#ffffff' }}>
+          <div style={inner}>
             <Label>Who This Is For</Label>
             <h2 style={{
               fontFamily: SERIF,
               fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
               fontWeight: 400,
               lineHeight: 1.2,
-              color: C.textLight,
+              color: TEXT,
               marginBottom: '2.5rem',
               letterSpacing: '-0.02em',
             }}>
@@ -322,17 +266,17 @@ export default function FoundingMembersPage() {
               "Maybe it's relationships. You find yourself in the same argument, creating the same distance. The same moment where you shut down when you most needed to stay open.",
               "Maybe it's the version of yourself you perform in public versus the one you live with privately. The gap between those two men is exhausting to keep up.",
             ].map((para, i) => (
-              <p key={i} style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.mutedLight, marginBottom: '1.25rem' }}>
+              <p key={i} style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, marginBottom: '1.25rem' }}>
                 {para}
               </p>
             ))}
 
-            <div style={{ borderLeft: `3px solid ${C.sage}`, paddingLeft: '1.5rem', margin: '2.5rem 0' }}>
+            <div style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '1.5rem', margin: '2.5rem 0' }}>
               <p style={{
                 fontFamily: SERIF,
                 fontSize: isMobile ? '1.25rem' : '1.5rem',
                 lineHeight: 1.6,
-                color: C.textLight,
+                color: TEXT,
                 margin: 0,
                 fontStyle: 'italic',
               }}>
@@ -340,22 +284,22 @@ export default function FoundingMembersPage() {
               </p>
             </div>
 
-            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.textLight, fontWeight: 500, margin: 0 }}>
+            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: TEXT, fontWeight: 500, margin: 0 }}>
               That's the nature of what's in the blind spot — by definition, you cannot see it from inside it.
             </p>
           </div>
         </section>
 
-        {/* ── MASON'S STORY ── dark */}
-        <section style={{ padding: sec, background: C.dark2, borderTop: `1px solid ${C.border}` }}>
-          <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        {/* ── MASON'S STORY ── cream */}
+        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
+          <div style={inner}>
             <Label>Who Holds the Space</Label>
             <h2 style={{
               fontFamily: SERIF,
               fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
               fontWeight: 400,
               lineHeight: 1.2,
-              color: C.textDark,
+              color: TEXT,
               marginBottom: '2.5rem',
               letterSpacing: '-0.02em',
             }}>
@@ -369,8 +313,8 @@ export default function FoundingMembersPage() {
               fontWeight: 700,
               letterSpacing: '0.15em',
               textTransform: 'uppercase' as const,
-              color: C.sage,
-              borderBottom: `1px solid ${C.sage}`,
+              color: ACCENT,
+              borderBottom: `1px solid ${ACCENT}`,
               paddingBottom: '0.25rem',
               marginBottom: '2rem',
             }}>
@@ -383,15 +327,15 @@ export default function FoundingMembersPage() {
               "What changed wasn't a book or a single breakthrough moment. It was sustained, structured work designed to get underneath the story you tell yourself and work with what's actually stored in the body.",
               "I created KYN because I know what it means to do this work without a real community around you. The men in here aren't here to look good. They're here to build something real.",
             ].map((para, i) => (
-              <p key={i} style={{ fontSize: '1rem', lineHeight: 1.85, color: C.mutedDark, marginBottom: '1.25rem' }}>
+              <p key={i} style={{ fontSize: '1rem', lineHeight: 1.85, color: MUTED, marginBottom: '1.25rem' }}>
                 {para}
               </p>
             ))}
           </div>
         </section>
 
-        {/* ── TESTIMONIALS ── dark */}
-        <section style={{ padding: sec, background: C.dark }}>
+        {/* ── TESTIMONIALS ── white */}
+        <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
             <Label>What Changes</Label>
             <h2 style={{
@@ -399,20 +343,16 @@ export default function FoundingMembersPage() {
               fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
               fontWeight: 400,
               lineHeight: 1.2,
-              color: C.textDark,
+              color: TEXT,
               marginBottom: '3rem',
               letterSpacing: '-0.02em',
             }}>
               Real Transformations
             </h2>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-              gap: '1.5rem',
-            }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '1.5rem' }}>
               {['n8_muJ84AbU', '7Y1upKm8bZk', 'ubCK70jYQDI', 'UfbMIxlCzgM'].map((id) => (
-                <div key={id} style={{ borderRadius: '6px', overflow: 'hidden', border: `1px solid ${C.border}` }}>
+                <div key={id} style={{ borderRadius: '6px', overflow: 'hidden', border: `1px solid ${BORDER}` }}>
                   <iframe
                     src={`https://www.youtube.com/embed/${id}`}
                     style={{ width: '100%', aspectRatio: '16/9', border: 'none', display: 'block' }}
@@ -426,49 +366,49 @@ export default function FoundingMembersPage() {
         </section>
 
         {/* ── THE JOURNEY ── cream */}
-        <section style={{ padding: sec, background: C.cream }}>
-          <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
+          <div style={inner}>
             <Label>The Journey</Label>
             <h2 style={{
               fontFamily: SERIF,
               fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
               fontWeight: 400,
               lineHeight: 1.2,
-              color: C.textLight,
+              color: TEXT,
               marginBottom: '0.75rem',
               letterSpacing: '-0.02em',
             }}>
               Not a programme. A path you keep walking.
             </h2>
-            <p style={{ fontSize: '1rem', lineHeight: 1.8, color: C.mutedLight, marginBottom: '3rem' }}>
+            <p style={{ fontSize: '1rem', lineHeight: 1.8, color: MUTED, marginBottom: '3rem' }}>
               There's no graduation date. No moment where the work is done. This is a continuous deepening — applied to what's actually happening in your life right now.
             </p>
 
             {pillars.map((pillar, i) => (
               <div
                 key={i}
-                style={{ borderTop: `1px solid ${C.borderLight}`, padding: '1.75rem 0', cursor: 'pointer' }}
+                style={{ borderTop: `1px solid ${BORDER}`, padding: '1.75rem 0', cursor: 'pointer' }}
                 onClick={() => setOpenPillar(openPillar === i ? null : i)}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1.5rem' }}>
                   <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-                    <span style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 700, color: C.sage, letterSpacing: '0.1em', marginTop: '0.6rem', flexShrink: 0 }}>
+                    <span style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 700, color: ACCENT, letterSpacing: '0.1em', marginTop: '0.6rem', flexShrink: 0 }}>
                       {pillar.num}
                     </span>
                     <div>
-                      <p style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.mutedLight, margin: '0 0 0.375rem' }}>
+                      <p style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED, margin: '0 0 0.375rem' }}>
                         {pillar.label}
                       </p>
-                      <h3 style={{ fontFamily: SERIF, fontSize: isMobile ? '1.375rem' : '1.625rem', fontWeight: 400, color: C.textLight, margin: 0, letterSpacing: '-0.01em' }}>
+                      <h3 style={{ fontFamily: SERIF, fontSize: isMobile ? '1.375rem' : '1.625rem', fontWeight: 400, color: TEXT, margin: 0, letterSpacing: '-0.01em' }}>
                         {pillar.title}
                       </h3>
                     </div>
                   </div>
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    border: `1px solid ${C.borderLight}`,
+                    border: `1px solid ${BORDER}`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: C.mutedLight, fontSize: '1.1rem', flexShrink: 0, marginTop: '0.375rem',
+                    color: MUTED, fontSize: '1.1rem', flexShrink: 0, marginTop: '0.375rem',
                   }}>
                     {openPillar === i ? '−' : '+'}
                   </div>
@@ -479,21 +419,21 @@ export default function FoundingMembersPage() {
                     marginLeft: isMobile ? 0 : '2.5rem',
                     fontSize: '1rem',
                     lineHeight: 1.8,
-                    color: C.mutedLight,
+                    color: MUTED,
                     paddingLeft: isMobile ? 0 : '1.5rem',
-                    borderLeft: isMobile ? 'none' : `1px solid ${C.borderLight}`,
+                    borderLeft: isMobile ? 'none' : `1px solid ${BORDER}`,
                   }}>
                     {pillar.body}
                   </p>
                 )}
               </div>
             ))}
-            <div style={{ borderTop: `1px solid ${C.borderLight}` }} />
+            <div style={{ borderTop: `1px solid ${BORDER}` }} />
           </div>
         </section>
 
-        {/* ── BROTHERHOOD ── dark */}
-        <section style={{ padding: sec, background: C.dark }}>
+        {/* ── BROTHERHOOD ── white */}
+        <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
           <div style={{
             maxWidth: '900px',
             margin: '0 auto',
@@ -513,15 +453,15 @@ export default function FoundingMembersPage() {
                 ].map((line, i) => (
                   <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                     <div style={{
-                      width: '18px', height: '18px', borderRadius: '50%', background: C.sage,
+                      width: '18px', height: '18px', borderRadius: '50%', background: ACCENT,
                       flexShrink: 0, marginTop: '0.2rem',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
                       <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
-                        <path d="M1 3.5L3.5 6L8 1" stroke="#0c0c0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 3.5L3.5 6L8 1" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: C.mutedDark, margin: 0 }}>{line}</p>
+                    <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: MUTED, margin: 0 }}>{line}</p>
                   </div>
                 ))}
               </div>
@@ -536,14 +476,14 @@ export default function FoundingMembersPage() {
                   "You're not willing to be honest with yourself.",
                 ].map((line, i) => (
                   <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                    <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `1.5px solid ${C.mutedDark}`, flexShrink: 0, marginTop: '0.2rem' }} />
-                    <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: C.mutedDark, margin: 0 }}>{line}</p>
+                    <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `1.5px solid ${BORDER}`, flexShrink: 0, marginTop: '0.2rem' }} />
+                    <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: MUTED, margin: 0 }}>{line}</p>
                   </div>
                 ))}
               </div>
 
-              <div style={{ marginTop: '3rem', borderLeft: `3px solid ${C.border}`, paddingLeft: '1.25rem' }}>
-                <p style={{ fontFamily: SERIF, fontSize: '1.125rem', lineHeight: 1.7, color: C.mutedDark, fontStyle: 'italic', margin: 0 }}>
+              <div style={{ marginTop: '3rem', borderLeft: `3px solid ${ACCENT}`, paddingLeft: '1.25rem' }}>
+                <p style={{ fontFamily: SERIF, fontSize: '1.125rem', lineHeight: 1.7, color: TEXT, fontStyle: 'italic', margin: 0 }}>
                   "A brotherhood of men with purpose. Not a bro club. Not a hype room. A community that builds."
                 </p>
               </div>
@@ -552,7 +492,7 @@ export default function FoundingMembersPage() {
         </section>
 
         {/* ── INSIDE KYN ── cream */}
-        <section style={{ padding: sec, background: C.cream }}>
+        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <Label>What You Get</Label>
             <h2 style={{
@@ -560,7 +500,7 @@ export default function FoundingMembersPage() {
               fontSize: isMobile ? '2rem' : 'clamp(2rem, 4.5vw, 3rem)',
               fontWeight: 400,
               lineHeight: 1.2,
-              color: C.textLight,
+              color: TEXT,
               marginBottom: '3rem',
               letterSpacing: '-0.02em',
             }}>
@@ -575,11 +515,11 @@ export default function FoundingMembersPage() {
                 { title: 'Exclusive supporting content', desc: 'Somatics, the psyche, grounded spiritual perspectives. Understanding how and why you operate is one of the most powerful forms of growth.' },
                 { title: 'Private brotherhood', desc: "A private community of men doing the work properly. Not a place for big egos. A place where men build, challenge each other, and show up." },
               ].map((item, i) => (
-                <div key={i} style={{ background: '#ffffff', border: `1px solid ${C.borderLight}`, borderRadius: '6px', padding: '28px' }}>
-                  <p style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: C.sage, marginBottom: '0.75rem' }}>
+                <div key={i} style={{ background: '#ffffff', border: `1px solid ${BORDER}`, borderRadius: '6px', padding: '28px' }}>
+                  <p style={{ fontFamily: SANS, fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: ACCENT, marginBottom: '0.75rem' }}>
                     {item.title}
                   </p>
-                  <p style={{ fontSize: '0.9375rem', lineHeight: 1.65, color: C.mutedLight, margin: 0 }}>
+                  <p style={{ fontSize: '0.9375rem', lineHeight: 1.65, color: MUTED, margin: 0 }}>
                     {item.desc}
                   </p>
                 </div>
@@ -592,23 +532,21 @@ export default function FoundingMembersPage() {
                 "No endless content to consume. No daily tasks.",
                 "Just consistent, structured work applied to the life you're actually living.",
               ].map((line, i) => (
-                <p key={i} style={{ fontSize: '1.0625rem', lineHeight: 1.75, color: C.mutedLight, margin: 0 }}>{line}</p>
+                <p key={i} style={{ fontSize: '1.0625rem', lineHeight: 1.75, color: MUTED, margin: 0 }}>{line}</p>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── CLOSING CTA ── dark */}
-        <section style={{
-          padding: isMobile ? '5rem 1.5rem' : '8rem 1.5rem',
-          background: C.dark,
-          textAlign: 'center',
-        }}>
+        {/* ── CLOSING CTA ── white */}
+        <section style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 1.5rem', background: '#ffffff', borderTop: `1px solid ${BORDER}`, textAlign: 'center' }}>
           <div style={{ maxWidth: '640px', margin: '0 auto' }}>
-            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.mutedDark, marginBottom: '1.5rem' }}>
+            <SpotsBar />
+
+            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, marginBottom: '1.5rem' }}>
               You've read this far and that obviously means something. Men who aren't ready close the tab in the first two minutes.
             </p>
-            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.mutedDark, marginBottom: '3rem' }}>
+            <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: MUTED, marginBottom: '3rem' }}>
               You already know whether this is for you. You knew it somewhere in the first few paragraphs. What you're doing right now is checking whether it's safe to trust that knowing.
             </p>
 
@@ -617,21 +555,41 @@ export default function FoundingMembersPage() {
               fontSize: isMobile ? '2.25rem' : 'clamp(2.25rem, 5vw, 3.75rem)',
               fontWeight: 400,
               lineHeight: 1.15,
-              color: C.textDark,
+              color: TEXT,
               marginBottom: '2.5rem',
               letterSpacing: '-0.02em',
             }}>
               Where you are now does not have to be where you end up.
             </h2>
 
-            <p style={{ fontSize: '0.9375rem', color: C.mutedDark, marginBottom: '2rem', fontFamily: SANS }}>
+            <p style={{ fontSize: '0.9375rem', color: MUTED, marginBottom: '2rem', fontFamily: SANS }}>
               Founding member price: £25/month. Locked in for life — rises to £50 at member 21.
             </p>
 
-            <CTAButton onClick={handleStripeClick}>Secure Your Founding Spot →</CTAButton>
+            <button
+              onClick={handleStripeClick}
+              style={{
+                display: 'inline-block',
+                background: ACCENT,
+                color: TEXT,
+                padding: '1.125rem 2.75rem',
+                borderRadius: '4px',
+                fontWeight: 700,
+                fontSize: '1rem',
+                fontFamily: SANS,
+                border: 'none',
+                cursor: 'pointer',
+                letterSpacing: '0.03em',
+                textTransform: 'uppercase' as const,
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = '#7da89c')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
+            >
+              Secure Your Founding Spot →
+            </button>
 
-            <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: 'rgba(160,160,156,0.4)', fontFamily: SANS }}>
-              {SPOTS_REMAINING} of 20 founding spots remaining · £25/month fixed for life
+            <p style={{ marginTop: '1.25rem', fontSize: '0.8125rem', color: MUTED, fontFamily: SANS }}>
+              {SPOTS_REMAINING} of {SPOTS_TOTAL} founding spots remaining · £25/month fixed for life
             </p>
           </div>
         </section>
