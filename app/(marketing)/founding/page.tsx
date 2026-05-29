@@ -73,9 +73,6 @@ function SpotsBar() {
           />
         ))}
       </div>
-      <span style={{ fontFamily: SANS, fontSize: '0.8rem', color: MUTED }}>
-        {SPOTS_REMAINING} of {SPOTS_TOTAL} founding spots remaining
-      </span>
     </div>
   )
 }
@@ -212,11 +209,12 @@ export default function FoundingMembersPage() {
 
             <p style={{
               fontFamily: SERIF,
-              fontSize: isMobile ? '1.1rem' : '1.3rem',
+              fontSize: isMobile ? '1.75rem' : '2.5rem',
               fontStyle: 'italic',
               color: TEXT,
-              marginBottom: '0.75rem',
-              letterSpacing: '-0.01em',
+              marginBottom: '0.5rem',
+              letterSpacing: '-0.02em',
+              lineHeight: 1.2,
             }}>
               Drown out the noise.
             </p>
