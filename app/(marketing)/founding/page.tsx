@@ -4,9 +4,6 @@ import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
-const SPOTS_TOTAL = 20
-const SPOTS_REMAINING = 10
-const SPOTS_TAKEN = SPOTS_TOTAL - SPOTS_REMAINING
 
 const ACCENT  = '#9bc4b8'
 const TEXT    = '#0a0a0a'
@@ -75,26 +72,6 @@ function Label({ children }: { children: React.ReactNode }) {
   )
 }
 
-function SpotsBar() {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '2.5rem', justifyContent: 'center' }}>
-      <div style={{ display: 'flex', gap: '6px' }}>
-        {Array.from({ length: SPOTS_TOTAL }).map((_, i) => (
-          <div
-            key={i}
-            style={{
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              background: i < SPOTS_TAKEN ? ACCENT : 'transparent',
-              border: `1.5px solid ${i < SPOTS_TAKEN ? ACCENT : 'rgba(155,196,184,0.4)'}`,
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
 
 export default function FoundingMembersPage() {
   const [isMobile, setIsMobile] = useState(false)
@@ -227,7 +204,6 @@ export default function FoundingMembersPage() {
               margin: '0 0 1.5rem',
             }}>Founding Members</p>
 
-            <SpotsBar />
 
             {/* Kicker — 2.5rem / 40px italic, sits just below h1 on the scale */}
             <p style={{
@@ -573,7 +549,6 @@ export default function FoundingMembersPage() {
         {/* CLOSING CTA */}
         <section style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 1.5rem', background: '#ffffff', borderTop: `1px solid ${BORDER}`, textAlign: 'center' }}>
           <div style={{ maxWidth: '640px', margin: '0 auto' }}>
-            <SpotsBar />
 
             <p style={{ ...BODY, marginBottom: '1.25rem' }}>
               You've read this far and that obviously means something. Men who aren't ready close the tab in the first two minutes.
@@ -613,7 +588,7 @@ export default function FoundingMembersPage() {
             </button>
 
             <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              {SPOTS_REMAINING} of {SPOTS_TOTAL} founding spots remaining · £25/month fixed for life
+              £25/month fixed for life
             </p>
           </div>
         </section>

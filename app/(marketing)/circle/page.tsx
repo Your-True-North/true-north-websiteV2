@@ -117,7 +117,6 @@ export default function Circle() {
               fontWeight: 400,
               letterSpacing: '-0.02em',
               marginBottom: '2rem',
-              WebkitTextStroke: '1.5px rgba(255,255,255,0.9)',
             }}>
               Find your direction.
             </h1>
