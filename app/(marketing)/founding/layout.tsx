@@ -1,27 +1,27 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Circle of Return — Founding Membership',
-  description: 'A private circle for men doing the work properly. Founding membership now open.',
+  title: 'Know Your North — Founding Membership',
+  description: 'A brotherhood for men doing the work properly. Founding membership now open.',
   openGraph: {
-    title: 'Circle of Return — Founding Membership',
-    description: 'A private circle for men doing the work properly. Founding membership now open.',
+    title: 'Know Your North — Founding Membership',
+    description: 'A brotherhood for men doing the work properly. Founding membership now open.',
     url: 'https://yourtruenorth.me/founding',
     type: 'website',
     images: [
       {
-        url: 'https://yourtruenorth.me/cor-og-image.png',
+        url: 'https://yourtruenorth.me/kyn-stacked-black.png',
         width: 600,
         height: 600,
-        alt: 'Circle of Return',
+        alt: 'Know Your North',
       },
     ],
   },
   twitter: {
     card: 'summary',
-    title: 'Circle of Return — Founding Membership',
-    description: 'A private circle for men doing the work properly. Founding membership now open.',
-    images: ['https://yourtruenorth.me/cor-og-image.png'],
+    title: 'Know Your North — Founding Membership',
+    description: 'A brotherhood for men doing the work properly. Founding membership now open.',
+    images: ['https://yourtruenorth.me/kyn-stacked-black.png'],
   },
 }
 
