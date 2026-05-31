@@ -6,7 +6,7 @@ function firstName(name) {
   return (name || 'A member').split(' ')[0]
 }
 
-function replyEmailHtml({ replierName, category, snippet, unsubId }) {
+function replyEmailHtml({ replierName, category, snippet, unsubId, postId }) {
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#0f0f0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
@@ -20,9 +20,11 @@ function replyEmailHtml({ replierName, category, snippet, unsubId }) {
     <p style="color:#a0a09c;font-size:0.9375rem;line-height:1.65;margin:0 0 1.5rem;border-left:3px solid #333;padding-left:1rem;font-style:italic">${snippet}</p>
     <a href="https://yourtruenorth.me/community" style="display:inline-block;padding:0.75rem 1.5rem;background:#9bc4b8;color:#0a0a0a;text-decoration:none;border-radius:4px;font-weight:700;font-size:0.875rem">View Thread</a>
   </div>
-  <p style="text-align:center;color:#444;font-size:11px;margin-top:1.5rem;line-height:1.7">
+  <p style="text-align:center;color:#444;font-size:11px;margin-top:1.5rem;line-height:1.8">
     You're receiving this as a member of Know Your North.<br>
-    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?id=${unsubId}" style="color:#555">Unsubscribe from community emails</a>
+    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?userId=${unsubId}&postId=${postId}" style="color:#666">Unsubscribe from this thread</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?id=${unsubId}" style="color:#555">Stop all community emails</a>
   </p>
 </div>
 </body></html>`
@@ -59,15 +61,18 @@ async function notifyNewReply(postId, replierId, replierName, content) {
 
     if (!toNotifyIds.length) return
 
-    // Get emails for opted-in users
+    // Get emails for opted-in users who haven't muted this thread
     let recipients
     try {
       const result = await query(
         `SELECT id, email FROM users
          WHERE id::text = ANY($1)
            AND email IS NOT NULL
-           AND COALESCE(community_email_notifications, TRUE) = TRUE`,
-        [toNotifyIds]
+           AND COALESCE(community_email_notifications, TRUE) = TRUE
+           AND id::text NOT IN (
+             SELECT user_id FROM muted_post_notifications WHERE post_id = $2
+           )`,
+        [toNotifyIds, postId]
       )
       recipients = result.rows
     } catch {
@@ -82,7 +87,7 @@ async function notifyNewReply(postId, replierId, replierName, content) {
       sendEmail({
         to: u.email,
         subject: `${firstName(replierName)} replied in ${category || 'the community'} — Know Your North`,
-        html: replyEmailHtml({ replierName, category: category || 'Community', snippet, unsubId: u.id }),
+        html: replyEmailHtml({ replierName, category: category || 'Community', snippet, unsubId: u.id, postId }),
       })
     ))
   } catch (err) {

@@ -6,7 +6,7 @@ function firstName(name) {
   return (name || 'A member').split(' ')[0]
 }
 
-function postEmailHtml({ name, category, snippet, unsubId }) {
+function postEmailHtml({ name, category, snippet, unsubId, postId }) {
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#0f0f0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
@@ -20,9 +20,11 @@ function postEmailHtml({ name, category, snippet, unsubId }) {
     <p style="color:#a0a09c;font-size:0.9375rem;line-height:1.65;margin:0 0 1.5rem;border-left:3px solid #333;padding-left:1rem;font-style:italic">${snippet}</p>
     <a href="https://yourtruenorth.me/community" style="display:inline-block;padding:0.75rem 1.5rem;background:#9bc4b8;color:#0a0a0a;text-decoration:none;border-radius:4px;font-weight:700;font-size:0.875rem">View Post</a>
   </div>
-  <p style="text-align:center;color:#444;font-size:11px;margin-top:1.5rem;line-height:1.7">
+  <p style="text-align:center;color:#444;font-size:11px;margin-top:1.5rem;line-height:1.8">
     You're receiving this as a member of Know Your North.<br>
-    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?id=${unsubId}" style="color:#555">Unsubscribe from community emails</a>
+    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?userId=${unsubId}&postId=${postId}" style="color:#666">Unsubscribe from this thread</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?id=${unsubId}" style="color:#555">Stop all community emails</a>
   </p>
 </div>
 </body></html>`
@@ -54,7 +56,7 @@ async function notifyNewPost(postId, posterId, category, posterName, content) {
       sendEmail({
         to: u.email,
         subject: `${firstName(posterName)} posted in ${category} — Know Your North`,
-        html: postEmailHtml({ name: posterName, category, snippet, unsubId: u.id }),
+        html: postEmailHtml({ name: posterName, category, snippet, unsubId: u.id, postId }),
       })
     ))
   } catch (err) {

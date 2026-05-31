@@ -163,7 +163,7 @@ export async function GET(request) {
       steps.push('⚠️ Migration 008 error: ' + m008Error.message);
     }
 
-    // Migration 009: community email notification preferences
+    // Migration 009: community email notification preferences + muted threads
     steps.push('Running migration 009: community_email_notifications column...')
     try {
       await client.query(`
@@ -173,6 +173,21 @@ export async function GET(request) {
       steps.push('✅ community_email_notifications column added (or already exists)')
     } catch (m009Error) {
       steps.push('⚠️ Migration 009 error: ' + m009Error.message)
+    }
+
+    steps.push('Running migration 009b: muted_post_notifications table...')
+    try {
+      await client.query(`
+        CREATE TABLE IF NOT EXISTS muted_post_notifications (
+          user_id TEXT NOT NULL,
+          post_id INTEGER NOT NULL,
+          created_at TIMESTAMP DEFAULT NOW(),
+          PRIMARY KEY (user_id, post_id)
+        )
+      `)
+      steps.push('✅ muted_post_notifications table created (or already exists)')
+    } catch (m009bError) {
+      steps.push('⚠️ Migration 009b error: ' + m009bError.message)
     }
 
     return Response.json({
