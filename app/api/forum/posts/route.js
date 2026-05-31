@@ -1,5 +1,66 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
+import { sendEmail } from '@/lib/email'
+
+function firstName(name) {
+  return (name || 'A member').split(' ')[0]
+}
+
+function postEmailHtml({ name, category, snippet, unsubId }) {
+  return `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#0f0f0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<div style="max-width:560px;margin:0 auto;padding:2.5rem 1.5rem">
+  <div style="text-align:center;margin-bottom:2rem">
+    <img src="https://yourtruenorth.me/kyn-stacked-white.png" alt="KYN" style="height:60px">
+  </div>
+  <div style="background:#1a1a18;border:1px solid #2c2c2a;border-radius:8px;padding:2rem">
+    <p style="color:#9bc4b8;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin:0 0 0.75rem">${category}</p>
+    <p style="color:#f0ede8;font-size:1.0625rem;font-weight:600;margin:0 0 1rem;line-height:1.4">${firstName(name)} posted in the community</p>
+    <p style="color:#a0a09c;font-size:0.9375rem;line-height:1.65;margin:0 0 1.5rem;border-left:3px solid #333;padding-left:1rem;font-style:italic">${snippet}</p>
+    <a href="https://yourtruenorth.me/community" style="display:inline-block;padding:0.75rem 1.5rem;background:#9bc4b8;color:#0a0a0a;text-decoration:none;border-radius:4px;font-weight:700;font-size:0.875rem">View Post</a>
+  </div>
+  <p style="text-align:center;color:#444;font-size:11px;margin-top:1.5rem;line-height:1.7">
+    You're receiving this as a member of Know Your North.<br>
+    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?id=${unsubId}" style="color:#555">Unsubscribe from community emails</a>
+  </p>
+</div>
+</body></html>`
+}
+
+async function notifyNewPost(postId, posterId, category, posterName, content) {
+  try {
+    const snippet = content.length > 220 ? content.slice(0, 220).trimEnd() + '...' : content
+    let recipients
+    try {
+      const result = await query(
+        `SELECT id, email, name FROM users
+         WHERE id::text != $1
+           AND email IS NOT NULL
+           AND COALESCE(community_email_notifications, TRUE) = TRUE`,
+        [String(posterId)]
+      )
+      recipients = result.rows
+    } catch {
+      // Column not yet migrated — notify everyone except poster
+      const result = await query(
+        `SELECT id, email, name FROM users WHERE id::text != $1 AND email IS NOT NULL`,
+        [String(posterId)]
+      )
+      recipients = result.rows
+    }
+
+    await Promise.allSettled(recipients.map(u =>
+      sendEmail({
+        to: u.email,
+        subject: `${firstName(posterName)} posted in ${category} — Know Your North`,
+        html: postEmailHtml({ name: posterName, category, snippet, unsubId: u.id }),
+      })
+    ))
+  } catch (err) {
+    console.error('[Post Notifications] Error:', err)
+  }
+}
 
 export async function GET(request) {
   try {
@@ -137,7 +198,17 @@ export async function POST(request) {
       )
     }
 
-    return NextResponse.json({ post: result.rows[0], message: 'Post created' }, { status: 201 })
+    const post = result.rows[0]
+
+    // Fetch poster's name then fire emails (non-blocking)
+    query('SELECT name FROM users WHERE id::text = $1', [String(userId)])
+      .then(r => {
+        const posterName = r.rows[0]?.name || 'A member'
+        return notifyNewPost(post.id, userId, category || 'General', posterName, content)
+      })
+      .catch(err => console.error('[Post Notifications] Error:', err))
+
+    return NextResponse.json({ post, message: 'Post created' }, { status: 201 })
   } catch (error) {
     console.error('[Forum Post CREATE] Error:', error)
     return NextResponse.json({ error: error.message }, { status: 500 })

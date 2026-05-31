@@ -92,6 +92,10 @@ export default function CommunityPage() {
   // Announcement popup
   const [announcement, setAnnouncement] = useState<{ id: number; title: string; body: string; url: string } | null>(null)
 
+  // Email notification preference
+  const [emailNotifications, setEmailNotifications] = useState(true)
+  const [notifLoaded, setNotifLoaded] = useState(false)
+
   // Video state
   const [nextVideo, setNextVideo] = useState<Video | null>(null)
   const [showVideoPlayer, setShowVideoPlayer] = useState(false)
@@ -132,6 +136,33 @@ export default function CommunityPage() {
       fetchPosts()
     }
   }, [user, fetchPosts])
+
+  // Load notification preference
+  useEffect(() => {
+    if (!user) return
+    fetch(`/api/notifications/preferences?userId=${user.id}`)
+      .then(res => res.json())
+      .then(data => {
+        setEmailNotifications(data.notifications ?? true)
+        setNotifLoaded(true)
+      })
+      .catch(() => setNotifLoaded(true))
+  }, [user?.id])
+
+  const handleToggleNotifications = async () => {
+    if (!user) return
+    const newVal = !emailNotifications
+    setEmailNotifications(newVal)
+    try {
+      await fetch('/api/notifications/preferences', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id, notifications: newVal })
+      })
+    } catch {
+      setEmailNotifications(!newVal)
+    }
+  }
 
   // Announcement popup
   useEffect(() => {
@@ -849,6 +880,36 @@ export default function CommunityPage() {
                 <a href="/calls" style={{ color: '#c0bdb8', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', fontFamily: GAMBARINO }}>Live Call Calendar</a>
               </div>
             </div>
+
+            {/* Email notification toggle */}
+            {notifLoaded && (
+              <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem' }}>
+                <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#9bc4b8', marginBottom: '0.875rem', fontWeight: 700, textTransform: 'uppercase' as const }}>Notifications</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                  <div>
+                    <div style={{ fontSize: '0.875rem', color: '#c0bdb8', marginBottom: '2px' }}>Community emails</div>
+                    <div style={{ fontSize: '0.75rem', color: '#555' }}>{emailNotifications ? 'New posts and replies' : 'Off'}</div>
+                  </div>
+                  <button
+                    onClick={handleToggleNotifications}
+                    aria-label={emailNotifications ? 'Disable email notifications' : 'Enable email notifications'}
+                    style={{
+                      flexShrink: 0, width: '44px', height: '24px', borderRadius: '12px',
+                      background: emailNotifications ? '#9bc4b8' : '#333',
+                      border: 'none', cursor: 'pointer', position: 'relative',
+                      transition: 'background 0.2s ease'
+                    }}
+                  >
+                    <div style={{
+                      position: 'absolute', top: '3px',
+                      left: emailNotifications ? '23px' : '3px',
+                      width: '18px', height: '18px', borderRadius: '50%',
+                      background: '#fff', transition: 'left 0.2s ease'
+                    }} />
+                  </button>
+                </div>
+              </div>
+            )}
           </aside>
         )}
       </div>

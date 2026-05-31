@@ -163,9 +163,21 @@ export async function GET(request) {
       steps.push('⚠️ Migration 008 error: ' + m008Error.message);
     }
 
+    // Migration 009: community email notification preferences
+    steps.push('Running migration 009: community_email_notifications column...')
+    try {
+      await client.query(`
+        ALTER TABLE users
+        ADD COLUMN IF NOT EXISTS community_email_notifications BOOLEAN DEFAULT TRUE
+      `)
+      steps.push('✅ community_email_notifications column added (or already exists)')
+    } catch (m009Error) {
+      steps.push('⚠️ Migration 009 error: ' + m009Error.message)
+    }
+
     return Response.json({
       success: true,
-      message: 'Migrations 004, 005 & 008 completed',
+      message: 'Migrations 004, 005, 008 & 009 completed',
       steps
     });
 
