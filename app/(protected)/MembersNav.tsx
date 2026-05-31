@@ -54,7 +54,7 @@ export default function MembersNav() {
         {/* Logo + links - left */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           <Link href="/community" style={{ textDecoration: 'none', flexShrink: 0 }}>
-            <img src="/cor-mark-black.svg" alt="Circle of Return" style={{ height: '52px', width: 'auto', display: 'block', margin: '8px 0', filter: 'brightness(0) invert(1)' }} />
+            <img src="/kyn-stacked-white.png" alt="Know Your North" style={{ height: '56px', width: 'auto', display: 'block' }} />
           </Link>
 
           {/* Desktop links - next to logo */}

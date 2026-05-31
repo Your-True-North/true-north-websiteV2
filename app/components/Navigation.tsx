@@ -87,9 +87,7 @@ export default function Navigation() {
              <li><Link href="/about">About</Link></li>
              <li><Link href="/work">Work With Me</Link></li>
              <li>
-               <Link href="/circle" className="cor-link" style={{ display: 'flex', alignItems: 'center' }}>
-                 <Image src="/kyn-stacked-white.png" alt="KYN" width={36} height={36} style={{ objectFit: 'contain' }} />
-               </Link>
+               <Link href="/circle" className="cor-link">KYN</Link>
              </li>
              <li><Link href="/library">Library</Link></li>
              <li><Link href="/contact">Contact</Link></li>
@@ -237,9 +235,7 @@ export default function Navigation() {
          <Link href="/" onClick={() => setIsOpen(false)}>Home</Link>
          <Link href="/about" onClick={() => setIsOpen(false)}>About</Link>
          <Link href="/work" onClick={() => setIsOpen(false)}>Work With Me</Link>
-         <Link href="/circle" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center' }}>
-           <Image src="/kyn-stacked-white.png" alt="KYN" width={60} height={60} style={{ objectFit: 'contain' }} />
-         </Link>
+         <Link href="/circle" onClick={() => setIsOpen(false)}>KYN</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
          {isAdmin && (
