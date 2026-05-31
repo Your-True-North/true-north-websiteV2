@@ -69,7 +69,7 @@ export default function Circle() {
         }}>
           {/* Faint background logo */}
           <img
-            src="/the-cor-logo.png"
+            src="/kyn-stacked-white.png"
             alt=""
             aria-hidden="true"
             style={{
@@ -80,7 +80,6 @@ export default function Circle() {
               width: isMobile ? '320px' : '600px',
               height: 'auto',
               opacity: 0.12,
-              filter: 'brightness(0) invert(1)',
               pointerEvents: 'none',
               userSelect: 'none',
               zIndex: 0,
