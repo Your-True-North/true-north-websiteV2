@@ -9,6 +9,8 @@ function firstName(name) {
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
   const secret = searchParams.get('secret')
+  const sendToAll = searchParams.get('to') === 'all'
+
   if (secret !== 'test-notifications') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
@@ -33,7 +35,7 @@ export async function GET(request) {
       ? post.content.slice(0, 220).trimEnd() + '...'
       : post.content
 
-    const html = `<!DOCTYPE html>
+    const buildHtml = (unsubId) => `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#0f0f0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
 <div style="max-width:560px;margin:0 auto;padding:2.5rem 1.5rem">
@@ -48,24 +50,58 @@ export async function GET(request) {
   </div>
   <p style="text-align:center;color:#444;font-size:11px;margin-top:1.5rem;line-height:1.8">
     You're receiving this as a member of Know Your North.<br>
-    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?userId=TEST&postId=${post.id}" style="color:#666">Unsubscribe from this thread</a>
+    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?userId=${unsubId}&postId=${post.id}" style="color:#666">Unsubscribe from this thread</a>
     &nbsp;&middot;&nbsp;
-    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?id=TEST" style="color:#555">Stop all community emails</a>
+    <a href="https://yourtruenorth.me/api/notifications/unsubscribe?id=${unsubId}" style="color:#555">Stop all community emails</a>
   </p>
 </div>
 </body></html>`
 
-    await sendEmail({
-      to: 'navigate@yourtruenorth.me',
-      subject: `[TEST] ${firstName(name)} posted in ${category} — Know Your North`,
-      html,
-    })
+    if (sendToAll) {
+      let recipients
+      try {
+        const r = await query(
+          `SELECT id, email FROM users
+           WHERE email IS NOT NULL
+           AND COALESCE(community_email_notifications, TRUE) = TRUE`
+        )
+        recipients = r.rows
+      } catch {
+        const r = await query(`SELECT id, email FROM users WHERE email IS NOT NULL`)
+        recipients = r.rows
+      }
 
-    return NextResponse.json({
-      success: true,
-      sentTo: 'navigate@yourtruenorth.me',
-      post: { id: post.id, category, poster: name }
-    })
+      const results = await Promise.allSettled(recipients.map(u =>
+        sendEmail({
+          to: u.email,
+          subject: `${firstName(name)} posted in ${category} — Know Your North`,
+          html: buildHtml(u.id),
+        })
+      ))
+
+      const sent = results.filter(r => r.status === 'fulfilled').length
+      const failed = results.filter(r => r.status === 'rejected').length
+
+      return NextResponse.json({
+        success: true,
+        sentTo: recipients.map(u => u.email),
+        sent,
+        failed,
+        post: { id: post.id, category, poster: name }
+      })
+    } else {
+      await sendEmail({
+        to: 'navigate@yourtruenorth.me',
+        subject: `[TEST] ${firstName(name)} posted in ${category} — Know Your North`,
+        html: buildHtml('TEST'),
+      })
+
+      return NextResponse.json({
+        success: true,
+        sentTo: 'navigate@yourtruenorth.me',
+        post: { id: post.id, category, poster: name }
+      })
+    }
   } catch (error) {
     console.error('[Test Notification] Error:', error)
     return NextResponse.json({ error: error.message }, { status: 500 })
