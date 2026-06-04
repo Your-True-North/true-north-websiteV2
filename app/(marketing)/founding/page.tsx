@@ -165,24 +165,19 @@ export default function FoundingMembersPage() {
           position: 'relative',
           overflow: 'hidden',
         }}>
-          <img
-            src="/cor-mark-black.svg"
-            alt=""
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: isMobile ? '300px' : '540px',
-              height: 'auto',
-              opacity: 0.04,
-              pointerEvents: 'none',
-              userSelect: 'none' as const,
-              zIndex: 0,
-            }}
-          />
           <div style={{ maxWidth: '780px', width: '100%', position: 'relative', zIndex: 1 }}>
+
+            {/* Logo above text */}
+            <img
+              src="/cor-mark-black.svg"
+              alt="Know Your North"
+              style={{
+                width: isMobile ? '52px' : '64px',
+                height: 'auto',
+                marginBottom: '1.5rem',
+                opacity: 0.85,
+              }}
+            />
 
             {/* Eyebrow labels — 0.75rem / 12px */}
             <p style={{
