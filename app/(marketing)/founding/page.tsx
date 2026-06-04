@@ -268,7 +268,7 @@ export default function FoundingMembersPage() {
               { value: 'Somatic Therapy Practitioner', label: 'Trained under Dr Gabor Maté' },
               { value: 'ICF & EMCC Certified', label: 'Internationally accredited Transformational Coach' },
               { value: 'Cancel Any Time', label: 'No contracts, no pressure' },
-              { value: 'Limited Spots — £25/month', label: '£50 at member 51' },
+              { value: 'Limited Spots: £25/month', label: '£50 at member 51' },
               { value: 'Real Men, Real Work', label: 'No egos, no judgment' },
             ].map(({ value, label }) => (
               <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem' }}>
@@ -286,7 +286,7 @@ export default function FoundingMembersPage() {
 
             {[
               'A while back, I created a community called the Circle of Return.',
-              'I called it that because I believe — I feel — that our whole purpose for being here is to reconnect with our truth. The part of us that lives underneath the conditioning. Underneath everything we were told to be.',
+              'I called it that because I believe, I feel, that our whole purpose for being here is to reconnect with our truth. The part of us that lives underneath the conditioning. Underneath everything we were told to be.',
               'And that\'s real. That matters.',
               'But I\'ve come to see that there\'s something we need before that.',
             ].map((para, i) => (
@@ -307,14 +307,14 @@ export default function FoundingMembersPage() {
 
             {[
               'Knowing where we\'re going. And being able to navigate the obstacles that stand between here and there.',
-              'That\'s why the Circle of Return is shifting — in name and in focus — to Know Your North.',
+              'That\'s why the Circle of Return is shifting, in name and in focus, to Know Your North.',
               'Because here\'s what I know about men: when we have clear direction, everything changes. The overwhelm softens. The anxiety loses its grip. The uncertainty stops feeling like a threat and starts feeling like a road.',
             ].map((para, i) => (
               <p key={i} style={{ ...BODY, marginBottom: '1.25rem' }}>{para}</p>
             ))}
 
             <p style={{ ...BODY, color: ACCENT, fontWeight: 500, marginTop: '1.5rem', margin: 0 }}>
-              For finding alignment with where you're supposed to be going — and then actually going there.
+              For finding alignment with where you're supposed to be going. And then actually going there.
             </p>
           </div>
         </section>

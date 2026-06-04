@@ -134,7 +134,7 @@ export default function Circle() {
             <div style={{ maxWidth: '800px' }}>
               {[
                 'A while back, I created a community called the Circle of Return.',
-                'I called it that because I believe — I feel — that our whole purpose for being here is to reconnect with our truth. The part of us that lives underneath the conditioning. Underneath everything we were told to be.',
+                'I called it that because I believe, I feel, that our whole purpose for being here is to reconnect with our truth. The part of us that lives underneath the conditioning. Underneath everything we were told to be.',
                 'And that\'s real. That matters.',
                 'But I\'ve come to see that there\'s something we need before that.',
               ].map((para, i) => (
@@ -161,7 +161,7 @@ export default function Circle() {
 
               {[
                 'Knowing where we\'re going. And being able to navigate the obstacles that stand between here and there.',
-                'That\'s why the Circle of Return is shifting — in name and in focus — to Know Your North.',
+                'That\'s why the Circle of Return is shifting, in name and in focus, to Know Your North.',
                 'Because here\'s what I know about men: when we have clear direction, everything changes. The overwhelm softens. The anxiety loses its grip. The uncertainty stops feeling like a threat and starts feeling like a road.',
                 'Know Your North is a community built for that.',
               ].map((para, i) => (
@@ -181,7 +181,7 @@ export default function Circle() {
                 fontWeight: '300',
                 marginTop: '1rem'
               }}>
-                For finding alignment with where you're supposed to be going — and then actually going there.
+                For finding alignment with where you're supposed to be going. And then actually going there.
               </p>
             </div>
           </section>
