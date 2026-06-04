@@ -249,7 +249,7 @@ export default function FoundingMembersPage() {
 
             {/* Fine print — 0.8125rem / 13px, acceptable for legal/secondary */}
             <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              <strong>£25/month fixed for life. Price rises to £50 at member 21.</strong>
+              <strong>£25/month fixed for life. Price rises to £50 at member 51.</strong>
             </p>
           </div>
         </section>
@@ -268,7 +268,7 @@ export default function FoundingMembersPage() {
               { value: 'Somatic Therapy Practitioner', label: 'Trained under Dr Gabor Maté' },
               { value: 'ICF & EMCC Certified', label: 'Internationally accredited Transformational Coach' },
               { value: 'Cancel Any Time', label: 'No contracts, no pressure' },
-              { value: '£25/month', label: '£50 at member 51' },
+              { value: 'Limited Spots — £25/month', label: '£50 at member 51' },
               { value: 'Real Men, Real Work', label: 'No egos, no judgment' },
             ].map(({ value, label }) => (
               <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem' }}>
@@ -549,7 +549,7 @@ export default function FoundingMembersPage() {
             </h2>
 
             <p style={{ fontSize: '0.9375rem', lineHeight: 1.6, color: MUTED, marginBottom: '2rem', fontFamily: SANS }}>
-              Founding member price: £25/month, locked in for life. Price rises to £50 at member 21.
+              Founding member price: £25/month, locked in for life. Price rises to £50 at member 51.
             </p>
 
             <button
