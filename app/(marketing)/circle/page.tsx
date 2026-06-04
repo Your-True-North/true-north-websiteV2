@@ -129,91 +129,59 @@ export default function Circle() {
           padding: isMobile ? '0 1.5rem' : '0 2rem'
         }}>
 
-          {/* WHO THIS IS FOR SECTION */}
-          <section style={{
-            padding: isMobile ? '4rem 0' : '6rem 0'
-          }}>
-            <h2 style={{
-              fontSize: isMobile ? '1.8rem' : '2.5rem',
-              color: '#ffffff',
-              fontWeight: '300',
-              marginBottom: '3rem',
-              letterSpacing: '-0.01em'
-            }}>
-              Who this is for.
-            </h2>
-
-            <div style={{
-              maxWidth: '800px'
-            }}>
-              <p style={{
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
-                color: 'rgba(255, 255, 255, 0.85)',
-                lineHeight: '1.8',
-                marginBottom: '2rem',
-                fontWeight: '300'
-              }}>
-                You already know this is you.
-              </p>
+          {/* ORIGIN STORY SECTION */}
+          <section style={{ padding: isMobile ? '4rem 0' : '6rem 0' }}>
+            <div style={{ maxWidth: '800px' }}>
+              {[
+                'A while back, I created a community called the Circle of Return.',
+                'I called it that because I believe — I feel — that our whole purpose for being here is to reconnect with our truth. The part of us that lives underneath the conditioning. Underneath everything we were told to be.',
+                'And that\'s real. That matters.',
+                'But I\'ve come to see that there\'s something we need before that.',
+              ].map((para, i) => (
+                <p key={i} style={{
+                  fontSize: isMobile ? '1.1rem' : '1.2rem',
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  lineHeight: '1.8',
+                  marginBottom: '2rem',
+                  fontWeight: '300'
+                }}>{para}</p>
+              ))}
 
               <p style={{
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
-                color: 'rgba(255, 255, 255, 0.85)',
-                lineHeight: '1.8',
-                marginBottom: '2rem',
-                fontWeight: '300'
-              }}>
-                You have a version of yourself you can see clearly. The man who leads with confidence and builds something real. Who doesn't run away when things get hard.
-              </p>
-
-              <p style={{
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
-                color: 'rgba(255, 255, 255, 0.85)',
-                lineHeight: '1.8',
-                marginBottom: '2rem',
-                fontWeight: '300'
-              }}>
-                And you know there's a gap between that man and where you stand right now. Not because you lack ability or because you haven't tried. But because something underneath keeps pulling you back to where you started.
-              </p>
-
-              <p style={{
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
-                color: 'rgba(255, 255, 255, 0.85)',
-                lineHeight: '1.8',
-                marginBottom: '2rem',
-                fontWeight: '300'
-              }}>
-                Maybe it shows up in business. You build momentum, then somehow lose the contract, delay the launch, undercharge again. Maybe it's relationships. You find yourself in the same argument, the same moment where you shut down when you most needed to stay open. Maybe it's the version of yourself you perform in public versus the one you live with privately.
-              </p>
-
-              <p style={{
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
+                fontFamily: "'Gambarino', Georgia, serif",
+                fontSize: isMobile ? '2.5rem' : '3.5rem',
                 color: '#ffffff',
-                lineHeight: '1.8',
-                marginBottom: '2rem',
-                fontWeight: '400'
+                lineHeight: '1.1',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+                margin: '2.5rem 0',
               }}>
-                All these different stories have the same root.
+                Direction.
               </p>
 
-              <p style={{
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
-                color: 'rgba(255, 255, 255, 0.85)',
-                lineHeight: '1.8',
-                marginBottom: '2rem',
-                fontWeight: '300'
-              }}>
-                I know you've read the books and listened to the podcasts. Maybe you've done therapy. You have more self-awareness than most men you know, yet still the pattern runs.
-              </p>
+              {[
+                'Knowing where we\'re going. And being able to navigate the obstacles that stand between here and there.',
+                'That\'s why the Circle of Return is shifting — in name and in focus — to Know Your North.',
+                'Because here\'s what I know about men: when we have clear direction, everything changes. The overwhelm softens. The anxiety loses its grip. The uncertainty stops feeling like a threat and starts feeling like a road.',
+                'Know Your North is a community built for that.',
+              ].map((para, i) => (
+                <p key={i} style={{
+                  fontSize: isMobile ? '1.1rem' : '1.2rem',
+                  color: i === 3 ? '#ffffff' : 'rgba(255, 255, 255, 0.85)',
+                  lineHeight: '1.8',
+                  marginBottom: '2rem',
+                  fontWeight: i === 3 ? '400' : '300'
+                }}>{para}</p>
+              ))}
 
               <p style={{
-                fontSize: isMobile ? '1.3rem' : '1.5rem',
-                color: '#ffffff',
-                lineHeight: '1.6',
-                fontWeight: '400',
-                marginTop: '3rem'
+                fontSize: isMobile ? '1.2rem' : '1.4rem',
+                color: '#9bc4b8',
+                lineHeight: '1.7',
+                fontWeight: '300',
+                marginTop: '1rem'
               }}>
-                That's not a failure of effort. That's the nature of what's in the blind spot. By definition, you cannot see it from inside it.
+                For finding alignment with where you're supposed to be going — and then actually going there.
               </p>
             </div>
           </section>

@@ -2,17 +2,17 @@ import './globals.css'
 import GoogleAnalytics from './components/GoogleAnalytics'
 
 export const metadata = {
-  title: 'True North - Transformation Through Embodiment | Mason',
-  description: 'Deep transformational work for men. 1:1 coaching, breathwork, energy healing, and the Circle of Return community. Teaching regulation, not just mindset.',
-  keywords: 'masculine transformation, breathwork, energy healing, mens coaching, emotional regulation, somatic practices, Circle of Return',
+  title: 'True North | Know Your North — Mason',
+  description: 'When men have clear direction, everything changes. Know Your North is a community for men who are done circling and ready to move — built around somatic work, real brotherhood, and the clarity to go where you\'re supposed to go.',
+  keywords: 'mens transformation, know your north, masculine coaching, somatic therapy, breathwork, mens community, Circle of Return, direction, clarity, mens coaching',
   authors: [{ name: 'Mason - True North' }],
   icons: {
     icon: '/favicon.png',
     apple: '/cor-app-icon.png',
   },
   openGraph: {
-    title: 'True North - Transformation Through Embodiment',
-    description: 'Where you are now does not have to be where you end up',
+    title: 'True North | Know Your North',
+    description: 'For finding alignment with where you\'re supposed to be going — and then actually going there.',
     type: 'website',
     locale: 'en_GB',
   },
