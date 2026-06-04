@@ -266,22 +266,23 @@ export default function FoundingMembersPage() {
         {/* PROOF BAR */}
         <section style={{ background: CREAM, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: '2rem 1.5rem' }}>
           <div style={{
-            maxWidth: '960px',
+            maxWidth: '1100px',
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)',
-            gap: '1.5rem',
+            gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(5, 1fr)',
+            gap: isMobile ? '1.5rem' : '1rem',
             textAlign: 'center',
           }}>
             {[
-              { value: 'Gabor Maté', label: 'Somatic therapy, trained by' },
-              { value: 'ICF + EMCC', label: 'Certified Coach' },
-              { value: '£25/month', label: 'Founding member price' },
-              { value: 'Brotherhood', label: 'A community, not a course' },
+              { value: 'Somatic Therapy Practitioner', label: 'Trained under Dr Gabor Maté' },
+              { value: 'ICF & EMCC Certified', label: 'Internationally accredited Transformational Coach' },
+              { value: 'Cancel Any Time', label: 'No contracts, no pressure' },
+              { value: '£25/month', label: '£50 at member 51' },
+              { value: 'Real Men, Real Work', label: 'No egos, no judgment' },
             ].map(({ value, label }) => (
-              <div key={label}>
-                <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, marginBottom: '0.3rem', letterSpacing: '0.06em', textTransform: 'uppercase' as const }}>{label}</div>
-                <div style={{ fontSize: '1.0625rem', fontWeight: 600, color: ACCENT, fontFamily: SANS }}>{value}</div>
+              <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem' }}>
+                <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: TEXT, fontFamily: SANS, marginBottom: '0.3rem' }}>{value}</div>
+                <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, lineHeight: 1.5 }}>{label}</div>
               </div>
             ))}
           </div>
