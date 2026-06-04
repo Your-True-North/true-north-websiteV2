@@ -176,7 +176,7 @@ export default function FoundingMembersPage() {
               transform: 'translate(-50%, -50%)',
               width: isMobile ? '300px' : '540px',
               height: 'auto',
-              opacity: 0.08,
+              opacity: 0.04,
               pointerEvents: 'none',
               userSelect: 'none' as const,
               zIndex: 0,
