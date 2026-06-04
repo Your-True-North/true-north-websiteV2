@@ -279,8 +279,48 @@ export default function FoundingMembersPage() {
           </div>
         </section>
 
-        {/* WHO THIS IS FOR */}
+        {/* ORIGIN STORY */}
         <section style={{ padding: sec, background: '#ffffff' }}>
+          <div style={inner}>
+            <Label>Why Know Your North</Label>
+
+            {[
+              'A while back, I created a community called the Circle of Return.',
+              'I called it that because I believe — I feel — that our whole purpose for being here is to reconnect with our truth. The part of us that lives underneath the conditioning. Underneath everything we were told to be.',
+              'And that\'s real. That matters.',
+              'But I\'ve come to see that there\'s something we need before that.',
+            ].map((para, i) => (
+              <p key={i} style={{ ...BODY, marginBottom: '1.25rem' }}>{para}</p>
+            ))}
+
+            <p style={{
+              fontFamily: SERIF,
+              fontSize: isMobile ? '2.5rem' : '3.5rem',
+              color: TEXT,
+              lineHeight: 1.1,
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+              margin: '2rem 0',
+            }}>
+              Direction.
+            </p>
+
+            {[
+              'Knowing where we\'re going. And being able to navigate the obstacles that stand between here and there.',
+              'That\'s why the Circle of Return is shifting — in name and in focus — to Know Your North.',
+              'Because here\'s what I know about men: when we have clear direction, everything changes. The overwhelm softens. The anxiety loses its grip. The uncertainty stops feeling like a threat and starts feeling like a road.',
+            ].map((para, i) => (
+              <p key={i} style={{ ...BODY, marginBottom: '1.25rem' }}>{para}</p>
+            ))}
+
+            <p style={{ ...BODY, color: ACCENT, fontWeight: 500, marginTop: '1.5rem', margin: 0 }}>
+              For finding alignment with where you're supposed to be going — and then actually going there.
+            </p>
+          </div>
+        </section>
+
+        {/* WHO THIS IS FOR */}
+        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={inner}>
             <Label>Who This Is For</Label>
             <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
