@@ -189,15 +189,6 @@ export default function FoundingMembersPage() {
               color: TEXT,
               margin: '0 0 0.35rem',
             }}>Know Your North</p>
-            <p style={{
-              fontFamily: SANS,
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase' as const,
-              color: ACCENT,
-              margin: '0 0 1.5rem',
-            }}>Founding Members</p>
 
 
             {/* Kicker — 2.5rem / 40px italic, sits just below h1 on the scale */}
