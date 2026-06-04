@@ -236,7 +236,7 @@ export default function FoundingMembersPage() {
               margin: '0 auto 2.5rem',
               fontFamily: SANS,
             }}>
-              KYN is where you get clear on who you are and razor focused on where you're going. This is not a programme with an end date, it is a journey you build with men who mean it.
+              KYN is where you get clear on who you are and razor focused on where you're going.
             </p>
 
             <button
@@ -263,7 +263,7 @@ export default function FoundingMembersPage() {
 
             {/* Fine print — 0.8125rem / 13px, acceptable for legal/secondary */}
             <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              £25/month fixed for life. Price rises to £50 at member 21.
+              <strong>£25/month fixed for life. Price rises to £50 at member 21.</strong>
             </p>
           </div>
         </section>
