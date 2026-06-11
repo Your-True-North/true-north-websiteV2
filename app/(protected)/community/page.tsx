@@ -54,11 +54,6 @@ const categories = [
   'Integration Practices'
 ]
 
-const GAMBARINO = "'Gambarino', serif"
-const BODY_FONT = "'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif"
-const ACCENT = '#9bc4b8'
-const ORANGE = '#e67e22'
-
 export default function CommunityPage() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
@@ -67,18 +62,14 @@ export default function CommunityPage() {
   const [isMobile, setIsMobile] = useState(false)
   const [continueHovered, setContinueHovered] = useState(false)
 
-  // Inline post creation state - always visible, no dropdown
   const [newPost, setNewPost] = useState({ title: '', content: '', category: 'Introductions' })
   const [posting, setPosting] = useState(false)
   const [postFocused, setPostFocused] = useState(false)
 
-  // Category filter
   const [activeCategory, setActiveCategory] = useState('All')
 
-  // Like tracking
   const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set())
 
-  // Inline comment expansion state
   const [expandedPostId, setExpandedPostId] = useState<number | null>(null)
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
   const [replies, setReplies] = useState<Reply[]>([])
@@ -86,17 +77,13 @@ export default function CommunityPage() {
   const [replyContent, setReplyContent] = useState('')
   const [submittingReply, setSubmittingReply] = useState(false)
 
-  // Nested reply state
   const [replyingToId, setReplyingToId] = useState<number | null>(null)
 
-  // Announcement popup
   const [announcement, setAnnouncement] = useState<{ id: number; title: string; body: string; url: string } | null>(null)
 
-  // Email notification preference
   const [emailNotifications, setEmailNotifications] = useState(true)
   const [notifLoaded, setNotifLoaded] = useState(false)
 
-  // Video state
   const [nextVideo, setNextVideo] = useState<Video | null>(null)
   const [showVideoPlayer, setShowVideoPlayer] = useState(false)
   const [isVideoExpanded, setIsVideoExpanded] = useState(false)
@@ -178,11 +165,9 @@ export default function CommunityPage() {
       .catch(() => {})
   }, [])
 
-  // Responsive check
+  // Responsive
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
@@ -366,15 +351,15 @@ export default function CommunityPage() {
     return new Date(date).toLocaleDateString()
   }
 
-  const Avatar = ({ name, photo, size = 40 }: { name: string, photo?: string | null, size?: number }) => (
+  const Avatar = ({ name, photo, size = 32 }: { name: string, photo?: string | null, size?: number }) => (
     <div style={{
       width: `${size}px`, height: `${size}px`, borderRadius: '50%',
-      background: photo ? `url(${photo})` : ACCENT,
-      border: '1px solid #e8e8e8',
+      background: photo ? `url(${photo})` : 'var(--kyn-blue-bg)',
       backgroundSize: 'cover', backgroundPosition: 'center',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      color: '#555', fontSize: `${size * 0.35}px`, fontWeight: 600,
-      flexShrink: 0, fontFamily: BODY_FONT
+      color: 'var(--kyn-blue)', fontSize: `${size * 0.34}px`, fontWeight: 700,
+      flexShrink: 0, fontFamily: 'var(--kyn-font-serif)',
+      border: '1px solid var(--kyn-border)'
     }}>
       {!photo && name?.charAt(0).toUpperCase()}
     </div>
@@ -382,8 +367,8 @@ export default function CommunityPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#555', fontFamily: BODY_FONT }}>Loading...</div>
+      <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'var(--kyn-ink3)', fontFamily: 'var(--kyn-font-sans)', fontSize: '14px' }}>Loading…</div>
       </div>
     )
   }
@@ -394,8 +379,8 @@ export default function CommunityPage() {
   const renderVideoCard = () => (
     <>
       {showVideoPlayer && youtubeId ? (
-        <div style={{ marginBottom: '1rem' }}>
-          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '6px', background: '#000' }}>
+        <div style={{ marginBottom: '12px' }}>
+          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--kyn-r)', background: '#000' }}>
             <iframe
               src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
               style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
@@ -403,27 +388,27 @@ export default function CommunityPage() {
               allowFullScreen
             />
           </div>
-          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <button onClick={() => setIsVideoExpanded(true)} style={{ flex: 1, padding: '0.5rem', background: '#333', border: 'none', borderRadius: '4px', color: '#fff', fontSize: '0.8125rem', cursor: 'pointer', fontFamily: BODY_FONT }}>↗ Expand</button>
-            <button onClick={() => { setShowVideoPlayer(false); setIsVideoExpanded(false) }} style={{ padding: '0.5rem 1rem', background: '#e8e8e8', border: 'none', borderRadius: '4px', color: '#333', fontSize: '0.8125rem', cursor: 'pointer', fontFamily: BODY_FONT }}>✕</button>
+          <div style={{ display: 'flex', gap: '6px', marginTop: '6px' }}>
+            <button onClick={() => setIsVideoExpanded(true)} style={{ flex: 1, padding: '6px', background: 'var(--kyn-surface-raised)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r)', color: 'var(--kyn-ink2)', fontSize: '12px', cursor: 'pointer', fontFamily: 'var(--kyn-font-sans)' }}>↗ Expand</button>
+            <button onClick={() => { setShowVideoPlayer(false); setIsVideoExpanded(false) }} style={{ padding: '6px 12px', background: 'var(--kyn-surface-raised)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r)', color: 'var(--kyn-ink3)', fontSize: '12px', cursor: 'pointer', fontFamily: 'var(--kyn-font-sans)' }}>✕</button>
           </div>
         </div>
       ) : thumbnailUrl ? (
-        <div onClick={() => youtubeId && setShowVideoPlayer(true)} style={{ width: '100%', height: '140px', borderRadius: '6px', marginBottom: '1rem', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}>
+        <div onClick={() => youtubeId && setShowVideoPlayer(true)} style={{ width: '100%', height: '130px', borderRadius: 'var(--kyn-r)', marginBottom: '12px', cursor: 'pointer', position: 'relative', overflow: 'hidden', border: '1px solid var(--kyn-border)' }}>
           <img src={thumbnailUrl} alt={nextVideo?.title || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.25)' }}>
-            <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'rgba(255,255,255,0.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', paddingLeft: '3px' }}>▶</div>
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.18)' }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(255,255,255,0.94)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', paddingLeft: '3px' }}>▶</div>
           </div>
         </div>
       ) : null}
-      <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.15em', color: '#9bc4b8', marginBottom: '4px', fontFamily: BODY_FONT }}>Continue Your Journey</div>
-      <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#f0ede8', margin: '0 0 4px 0', fontFamily: GAMBARINO, lineHeight: 1.3 }}>
+      <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.12em', color: 'var(--kyn-green)', marginBottom: '3px', fontFamily: 'var(--kyn-font-sans)' }}>Continue Your Journey</div>
+      <h3 style={{ fontSize: '14px', fontWeight: 600, color: 'var(--kyn-ink)', margin: '0 0 3px 0', fontFamily: 'var(--kyn-font-serif)', lineHeight: 1.35 }}>
         {nextVideo?.title || 'Start Here'}
       </h3>
-      {nextVideo?.duration && <div style={{ fontSize: '0.75rem', color: '#666', marginBottom: '0.75rem', fontFamily: BODY_FONT }}>{nextVideo.duration} min</div>}
+      {nextVideo?.duration && <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', marginBottom: '10px', fontFamily: 'var(--kyn-font-sans)' }}>{nextVideo.duration} min</div>}
       <button
         onClick={() => router.push(nextVideo ? `/videos/${nextVideo.id}` : '/videos')}
-        style={{ padding: '0.625rem 1.25rem', background: continueHovered ? '#000' : '#1a1a1a', border: 'none', color: '#fff', fontSize: '0.8125rem', fontWeight: 600, borderRadius: '6px', cursor: 'pointer', transition: 'background 0.15s ease', fontFamily: BODY_FONT }}
+        style={{ padding: '7px 14px', background: continueHovered ? 'var(--kyn-green)' : 'var(--kyn-green-bg)', border: '1px solid var(--kyn-border-green)', color: continueHovered ? '#fff' : 'var(--kyn-green)', fontSize: '12px', fontWeight: 600, borderRadius: 'var(--kyn-r)', cursor: 'pointer', transition: 'all 0.15s ease', fontFamily: 'var(--kyn-font-sans)' }}
         onMouseEnter={() => setContinueHovered(true)}
         onMouseLeave={() => setContinueHovered(false)}
       >
@@ -432,30 +417,70 @@ export default function CommunityPage() {
     </>
   )
 
+  const renderJourneyWidget = () => {
+    const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
+    const currentIndex = Math.max(0, stages.indexOf(user?.level || 'Seeker'))
+    const overallProgress = (user as any)?.progress ?? 0
+    const levelMin = currentIndex * 25
+    const levelProgress = currentIndex === 3 ? 100 : Math.max(0, Math.min(100, ((overallProgress - levelMin) / 25) * 100))
+    const fillPercent = Math.min(100, (currentIndex / 3) * 100 + (levelProgress / 3))
+    return (
+      <div>
+        <div style={{ marginBottom: '16px' }}>
+          <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-green)', fontWeight: 700, textTransform: 'uppercase' as const, marginBottom: '3px', fontFamily: 'var(--kyn-font-sans)' }}>Your Journey</div>
+          <div style={{ fontSize: '11.5px', color: 'var(--kyn-ink3)', lineHeight: 1.5, fontFamily: 'var(--kyn-font-sans)' }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
+        </div>
+        <div style={{ position: 'relative', height: '48px' }}>
+          <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: 'var(--kyn-border)', borderRadius: '1px' }} />
+          <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, var(--kyn-green), var(--kyn-green-hi))', borderRadius: '1px', transition: 'width 0.8s ease' }} />
+          {stages.map((stage, index) => {
+            const isCurrent = index === currentIndex
+            const isCompleted = index < currentIndex
+            const posPercent = (index / 3) * 100
+            const isFirst = index === 0
+            const isLast = index === 3
+            return (
+              <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
+                <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{
+                  width: '11px', height: '11px', borderRadius: '50%',
+                  background: isCurrent ? 'var(--kyn-green)' : isCompleted ? 'var(--kyn-green)' : 'var(--kyn-surface-raised)',
+                  border: `2px solid ${isCurrent || isCompleted ? 'var(--kyn-green)' : 'var(--kyn-border-mid)'}`,
+                  boxShadow: isCurrent ? '0 0 0 3px var(--kyn-green-mid)' : 'none',
+                  position: 'relative', zIndex: 1
+                }} />
+                <div style={{ marginTop: '7px', fontSize: '0.67rem', color: isCurrent ? 'var(--kyn-green)' : isCompleted ? 'var(--kyn-green)' : 'var(--kyn-ink3)', fontWeight: isCurrent ? 700 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em', fontFamily: 'var(--kyn-font-sans)' }}>{stage}</div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div style={{ minHeight: '100vh', background: '#0f0f0d', fontFamily: BODY_FONT }}>
+    <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', fontFamily: 'var(--kyn-font-sans)' }}>
       <style>{`
         * { box-sizing: border-box; }
-        textarea { font-family: inherit; }
-        select { font-family: inherit; }
-        textarea::placeholder { color: #555 !important; }
-        input::placeholder { color: #555 !important; }
-        select option { background: #1a1a18; color: #f0ede8; }
+        textarea { font-family: var(--kyn-font-sans); }
+        select { font-family: var(--kyn-font-sans); }
+        textarea::placeholder { color: var(--kyn-ink3) !important; }
+        input::placeholder { color: var(--kyn-ink3) !important; }
+        select option { background: #fff; color: var(--kyn-ink); }
       `}</style>
 
       {/* Announcement popup */}
       {announcement && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
-          <div style={{ background: '#1a1a18', borderRadius: '6px', maxWidth: '480px', width: '100%', padding: '2rem', border: '1px solid #2e2e2c', position: 'relative' }}>
-            <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', fontSize: '1.25rem', color: '#666', cursor: 'pointer', lineHeight: 1 }}>×</button>
-            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: '#9bc4b8', marginBottom: '12px' }}>From Mason</div>
-            <h2 style={{ fontSize: '20px', fontWeight: 600, color: '#f0ede8', marginBottom: '12px', lineHeight: 1.4 }}>{announcement.title}</h2>
-            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#a0a09c', marginBottom: '1.5rem' }}>{announcement.body}</p>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
+          <div style={{ background: 'var(--kyn-surface)', borderRadius: 'var(--kyn-r-lg)', maxWidth: '480px', width: '100%', padding: '2rem', border: '1px solid var(--kyn-border)', boxShadow: '0 20px 60px rgba(0,0,0,0.15)', position: 'relative' }}>
+            <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', fontSize: '1.25rem', color: 'var(--kyn-ink3)', cursor: 'pointer', lineHeight: 1 }}>×</button>
+            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: 'var(--kyn-green)', marginBottom: '12px', fontFamily: 'var(--kyn-font-sans)' }}>From Mason</div>
+            <h2 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--kyn-ink)', marginBottom: '12px', lineHeight: 1.4, fontFamily: 'var(--kyn-font-serif)' }}>{announcement.title}</h2>
+            <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'var(--kyn-ink2)', marginBottom: '1.5rem', fontFamily: 'var(--kyn-font-sans)' }}>{announcement.body}</p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               {announcement.url && announcement.url !== '/members' && (
-                <a href={announcement.url} onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, display: 'block', textAlign: 'center' as const, padding: '12px', background: '#9bc4b8', color: '#0a0a0a', borderRadius: '4px', fontWeight: 700, fontSize: '14px', textDecoration: 'none' }}>View Now</a>
+                <a href={announcement.url} onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, display: 'block', textAlign: 'center' as const, padding: '11px', background: 'var(--kyn-green)', color: '#fff', borderRadius: 'var(--kyn-r)', fontWeight: 700, fontSize: '14px', textDecoration: 'none', fontFamily: 'var(--kyn-font-sans)' }}>View Now</a>
               )}
-              <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, padding: '12px', background: '#252523', border: '1px solid #333', borderRadius: '4px', color: '#888', fontSize: '14px', cursor: 'pointer', fontFamily: BODY_FONT }}>Got it</button>
+              <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ flex: 1, padding: '11px', background: 'var(--kyn-surface-raised)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r)', color: 'var(--kyn-ink2)', fontSize: '14px', cursor: 'pointer', fontFamily: 'var(--kyn-font-sans)' }}>Got it</button>
             </div>
           </div>
         </div>
@@ -463,79 +488,56 @@ export default function CommunityPage() {
 
       <div style={{
         maxWidth: '1160px', margin: '0 auto',
-        padding: isMobile ? '1.25rem 1rem 3rem' : '2rem 1.5rem 3rem',
+        padding: isMobile ? '16px 14px 24px' : '28px 32px',
         display: isMobile ? 'block' : 'grid',
-        gridTemplateColumns: '1fr 300px',
-        gap: '1.5rem',
+        gridTemplateColumns: '1fr 288px',
+        gap: '20px',
         alignItems: 'start'
       }}>
 
         {/* LEFT COLUMN */}
         <div>
+          {/* Page heading */}
+          <h1 style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '22px', fontWeight: 400, color: 'var(--kyn-ink)', marginBottom: '20px', lineHeight: 1.3 }}>
+            Brotherhood
+          </h1>
 
-          {/* Video card - mobile only (desktop version is in aside) */}
+          {/* Video card - mobile only */}
           {isMobile && (
-            <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem', marginBottom: '1.25rem' }}>
+            <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '14px', marginBottom: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
               {renderVideoCard()}
             </div>
           )}
 
           {/* Journey progress - mobile only */}
-          {isMobile && (() => {
-            const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
-            const currentIndex = Math.max(0, stages.indexOf(user?.level || 'Seeker'))
-            const overallProgress = user?.progress ?? 0
-            const levelMin = currentIndex * 25
-            const levelProgress = currentIndex === 3 ? 100 : Math.max(0, Math.min(100, ((overallProgress - levelMin) / 25) * 100))
-            const fillPercent = Math.min(100, (currentIndex / 3) * 100 + (levelProgress / 3))
-            return (
-              <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem 1.25rem 1.75rem', marginBottom: '1.25rem' }}>
-                <div style={{ marginBottom: '1.75rem' }}>
-                  <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#9bc4b8', fontWeight: 700, textTransform: 'uppercase' as const, marginBottom: '4px' }}>Your Journey</div>
-                  <div style={{ fontSize: '0.75rem', color: '#666', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
-                </div>
-                <div style={{ position: 'relative', height: '48px' }}>
-                  <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#2a2a28', borderRadius: '1px' }} />
-                  <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
-                  {stages.map((stage, index) => {
-                    const isCurrent = index === currentIndex
-                    const isCompleted = index < currentIndex
-                    const posPercent = (index / 3) * 100
-                    const isFirst = index === 0
-                    const isLast = index === 3
-                    return (
-                      <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
-                        <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#1a1a18', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#444'}`, position: 'relative', zIndex: 1 }} />
-                        <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#f0ede8' : isCompleted ? '#4a9e5c' : '#555', fontWeight: isCurrent ? 700 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )
-          })()}
+          {isMobile && (
+            <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '14px 14px 18px', marginBottom: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+              {renderJourneyWidget()}
+            </div>
+          )}
 
-          {/* Post Composer — always visible, expands on focus */}
+          {/* Post Composer */}
           <div style={{
-            background: '#1a1a18',
-            border: '1px solid #2c2c2a',
-            borderRadius: '6px',
-            padding: '1.25rem',
-            marginBottom: '1.25rem',
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
+            borderRadius: 'var(--kyn-r-lg)',
+            padding: '14px',
+            marginBottom: '14px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
           }}>
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-              <Avatar name={user?.name || ''} size={38} />
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <Avatar name={user?.name || ''} size={34} />
               <div style={{ flex: 1 }}>
                 {!postFocused ? (
                   <div
                     onClick={() => setPostFocused(true)}
                     style={{
-                      padding: '0.625rem 1rem',
-                      background: '#252523',
-                      border: '1px solid #333331',
-                      borderRadius: '4px',
-                      color: '#555',
-                      fontSize: '0.9375rem',
+                      padding: '8px 12px',
+                      background: 'var(--kyn-surface-raised)',
+                      border: '1px solid var(--kyn-border)',
+                      borderRadius: 'var(--kyn-r)',
+                      color: 'var(--kyn-ink3)',
+                      fontSize: '14px',
                       cursor: 'text',
                       userSelect: 'none'
                     }}
@@ -544,14 +546,14 @@ export default function CommunityPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleCreatePost}>
-                    <div style={{ marginBottom: '0.625rem' }}>
+                    <div style={{ marginBottom: '8px' }}>
                       <select
                         value={newPost.category}
                         onChange={(e) => setNewPost({ ...newPost, category: e.target.value })}
                         style={{
-                          padding: '0.4rem 0.75rem', background: '#252523',
-                          border: '1px solid #333', borderRadius: '4px',
-                          color: '#c0bdb8', fontSize: '0.8125rem', outline: 'none'
+                          padding: '5px 10px', background: 'var(--kyn-surface-raised)',
+                          border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r)',
+                          color: 'var(--kyn-ink2)', fontSize: '12.5px', outline: 'none'
                         }}
                       >
                         {categories.map((cat) => (<option key={cat} value={cat}>{cat}</option>))}
@@ -563,10 +565,10 @@ export default function CommunityPage() {
                       onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
                       placeholder="Title (optional)"
                       style={{
-                        width: '100%', padding: '0.5rem 0', background: 'transparent',
-                        border: 'none', borderBottom: '1px solid #333',
-                        color: '#f0ede8', fontSize: '1rem', fontWeight: 600,
-                        outline: 'none', marginBottom: '0.5rem', fontFamily: GAMBARINO
+                        width: '100%', padding: '6px 0', background: 'transparent',
+                        border: 'none', borderBottom: '1px solid var(--kyn-border)',
+                        color: 'var(--kyn-ink)', fontSize: '15px', fontWeight: 600,
+                        outline: 'none', marginBottom: '8px', fontFamily: 'var(--kyn-font-serif)'
                       }}
                     />
                     <textarea
@@ -579,18 +581,18 @@ export default function CommunityPage() {
                       autoFocus
                       placeholder="What's on your mind?"
                       style={{
-                        width: '100%', padding: '0.5rem 0', background: 'transparent',
-                        border: 'none', color: '#f0ede8', fontSize: '0.9375rem',
+                        width: '100%', padding: '6px 0', background: 'transparent',
+                        border: 'none', color: 'var(--kyn-ink)', fontSize: '14px',
                         outline: 'none', resize: 'vertical', lineHeight: 1.6
                       }}
                     />
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #2a2a28' }}>
-                      <span style={{ fontSize: '0.75rem', color: '#444' }}>{newPost.content.length}/10000</span>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid var(--kyn-border)' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{newPost.content.length}/10000</span>
+                      <div style={{ display: 'flex', gap: '6px' }}>
                         <button
                           type="button"
                           onClick={() => { setPostFocused(false); setNewPost({ title: '', content: '', category: 'Introductions' }) }}
-                          style={{ padding: '0.5rem 1rem', background: 'transparent', border: '1px solid #333', borderRadius: '4px', color: '#666', fontSize: '0.8125rem', fontWeight: 600, cursor: 'pointer' }}
+                          style={{ padding: '6px 12px', background: 'transparent', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r)', color: 'var(--kyn-ink3)', fontSize: '12.5px', fontWeight: 500, cursor: 'pointer' }}
                         >
                           Cancel
                         </button>
@@ -598,14 +600,15 @@ export default function CommunityPage() {
                           type="submit"
                           disabled={posting || newPost.content.length < 10}
                           style={{
-                            padding: '0.5rem 1.25rem',
-                            background: posting || newPost.content.length < 10 ? '#333' : '#9bc4b8',
-                            border: 'none', borderRadius: '4px', color: posting || newPost.content.length < 10 ? '#555' : '#0a0a0a',
-                            fontSize: '0.8125rem', fontWeight: 700,
+                            padding: '6px 16px', minHeight: '36px',
+                            background: posting || newPost.content.length < 10 ? 'var(--kyn-border)' : 'var(--kyn-green)',
+                            border: 'none', borderRadius: 'var(--kyn-r)',
+                            color: posting || newPost.content.length < 10 ? 'var(--kyn-ink3)' : '#fff',
+                            fontSize: '12.5px', fontWeight: 700,
                             cursor: posting || newPost.content.length < 10 ? 'not-allowed' : 'pointer'
                           }}
                         >
-                          {posting ? 'Posting...' : 'Post'}
+                          {posting ? 'Posting…' : 'Post'}
                         </button>
                       </div>
                     </div>
@@ -616,18 +619,18 @@ export default function CommunityPage() {
           </div>
 
           {/* Category Filter */}
-          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.25rem', overflowX: 'auto', paddingBottom: '0.25rem', WebkitOverflowScrolling: 'touch' as any }}>
+          <div style={{ display: 'flex', gap: '6px', marginBottom: '14px', overflowX: 'auto', paddingBottom: '4px', WebkitOverflowScrolling: 'touch' as any }}>
             {['All', ...categories].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 style={{
-                  padding: '0.4375rem 0.875rem',
-                  background: activeCategory === cat ? '#f0ede8' : '#1a1a18',
-                  border: '1px solid ' + (activeCategory === cat ? '#f0ede8' : '#333331'),
-                  borderRadius: '3px',
-                  color: activeCategory === cat ? '#0f0f0d' : '#777',
-                  fontSize: '0.8125rem', fontWeight: activeCategory === cat ? 700 : 500,
+                  padding: '5px 13px',
+                  background: activeCategory === cat ? 'var(--kyn-green-bg)' : 'var(--kyn-surface)',
+                  border: `1px solid ${activeCategory === cat ? 'var(--kyn-border-green)' : 'var(--kyn-border)'}`,
+                  borderRadius: '20px',
+                  color: activeCategory === cat ? 'var(--kyn-green)' : 'var(--kyn-ink2)',
+                  fontSize: '12.5px', fontWeight: activeCategory === cat ? 600 : 400,
                   cursor: 'pointer', whiteSpace: 'nowrap',
                   transition: 'all 0.15s ease'
                 }}
@@ -640,83 +643,91 @@ export default function CommunityPage() {
           {/* Introductions prompt */}
           {activeCategory === 'Introductions' && (
             <div style={{
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
-              borderLeft: '3px solid #9bc4b8',
-              borderRadius: '4px',
-              padding: '1.125rem 1.25rem',
-              marginBottom: '1.25rem',
-              fontSize: '0.9375rem',
-              color: '#a0a09c',
-              lineHeight: 1.7
+              background: 'var(--kyn-green-bg)',
+              border: '1px solid var(--kyn-border-green)',
+              borderLeft: '3px solid var(--kyn-green)',
+              borderRadius: 'var(--kyn-r)',
+              padding: '12px 14px',
+              marginBottom: '14px',
+              fontSize: '13.5px',
+              color: 'var(--kyn-ink2)',
+              lineHeight: 1.6,
+              fontFamily: 'var(--kyn-font-sans)'
             }}>
-              <span style={{ fontWeight: 700, color: '#f0ede8' }}>Introduce yourself.</span> Who you are, what pulled you here, what you're wanting to shift.
+              <span style={{ fontWeight: 700, color: 'var(--kyn-ink)' }}>Introduce yourself.</span> Who you are, what pulled you here, what you're wanting to shift.
             </div>
           )}
 
           {/* Posts Feed */}
           {posts.filter(p => activeCategory === 'All' || p.category === activeCategory).length === 0 ? (
-            <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '3rem 2rem', textAlign: 'center' }}>
-              <p style={{ color: '#555', margin: '0 0 1rem 0', fontFamily: BODY_FONT }}>
+            <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '3rem 2rem', textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+              <p style={{ color: 'var(--kyn-ink3)', margin: '0 0 1rem 0', fontFamily: 'var(--kyn-font-sans)', fontSize: '14px' }}>
                 {activeCategory === 'All' ? 'No posts yet. Be the first to share.' : `No posts in ${activeCategory} yet.`}
               </p>
-              <button onClick={() => setPostFocused(true)} style={{ padding: '0.75rem 1.5rem', background: '#f0ede8', border: 'none', color: '#0f0f0d', borderRadius: '4px', fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer' }}>
+              <button onClick={() => setPostFocused(true)} style={{ padding: '8px 20px', background: 'var(--kyn-green)', border: 'none', color: '#fff', borderRadius: 'var(--kyn-r)', fontWeight: 600, fontSize: '13px', cursor: 'pointer' }}>
                 Create a Post
               </button>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {posts
                 .filter(p => activeCategory === 'All' || p.category === activeCategory)
                 .map((post) => (
-                <div key={post.id} style={{
-                  background: '#1a1a18',
-                  border: '1px solid #2c2c2a',
-                  borderLeft: '3px solid #2c2c2a',
-                  borderRadius: '6px',
-                  overflow: 'hidden',
-                  transition: 'border-left-color 0.2s ease'
-                }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderLeftColor = '#9bc4b8')}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderLeftColor = '#2c2c2a')}
+                <div
+                  key={post.id}
+                  style={{
+                    background: 'var(--kyn-surface)',
+                    border: '1px solid var(--kyn-border)',
+                    borderRadius: 'var(--kyn-r-lg)',
+                    overflow: 'hidden',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.04), 0 4px 10px rgba(0,0,0,0.02)',
+                    transition: 'box-shadow 0.15s ease'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04), 0 4px 10px rgba(0,0,0,0.02)')}
                 >
-                  <div style={{ padding: '1.25rem 1.25rem 0.875rem' }}>
+                  <div style={{ padding: '16px 18px 12px' }}>
                     {/* Author row */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.875rem' }}>
-                      <Avatar name={post.user_name} photo={post.user_photo} size={40} />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                      <Avatar name={post.user_name} photo={post.user_photo} size={32} />
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#f0ede8' }}>{post.user_name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#555' }}>
+                        <div style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--kyn-ink)' }}>{post.user_name}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', display: 'flex', alignItems: 'center', gap: '4px' }}>
                           {getTimeAgo(post.created_at)}
-                          {post.category && <><span style={{ margin: '0 4px', color: '#444' }}>·</span><span style={{ color: ORANGE, fontWeight: 600 }}>{post.category}</span></>}
+                          {post.category && (
+                            <>
+                              <span style={{ color: 'var(--kyn-border-mid)' }}>·</span>
+                              <span style={{ color: 'var(--kyn-green)', fontWeight: 600 }}>{post.category}</span>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
 
                     {/* Post content */}
                     {post.title && (
-                      <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#f0ede8', margin: '0 0 0.375rem 0', fontFamily: GAMBARINO, lineHeight: 1.3 }}>
+                      <h3 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--kyn-ink)', margin: '0 0 5px 0', fontFamily: 'var(--kyn-font-serif)', lineHeight: 1.35 }}>
                         {post.title}
                       </h3>
                     )}
-                    <p style={{ fontSize: '0.9375rem', color: '#a0a09c', lineHeight: 1.65, margin: '0 0 0.875rem 0', whiteSpace: 'pre-wrap' }}>
+                    <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink2)', lineHeight: 1.6, margin: '0 0 10px 0', whiteSpace: 'pre-wrap' }}>
                       {expandedPostId === post.id ? post.content : (
-                        post.content.length > 280 ? post.content.substring(0, 280) + '...' : post.content
+                        post.content.length > 280 ? post.content.substring(0, 280) + '…' : post.content
                       )}
                     </p>
 
                     {/* Action bar */}
-                    <div style={{ display: 'flex', gap: '0.25rem', borderTop: '1px solid #242422', paddingTop: '0.625rem' }}>
+                    <div style={{ display: 'flex', gap: '4px', borderTop: '1px solid var(--kyn-border)', paddingTop: '8px' }}>
                       <button
                         onClick={(e) => handleLike(e, post.id)}
                         style={{
-                          flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem',
-                          background: 'transparent', border: 'none', padding: '0.5rem',
-                          fontSize: '0.8125rem', fontWeight: 600,
-                          color: likedPosts.has(post.id) ? ORANGE : '#555',
-                          cursor: 'pointer', borderRadius: '4px', transition: 'background 0.15s ease'
+                          flex: 1, minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px',
+                          background: 'transparent', border: 'none', padding: '6px',
+                          fontSize: '12.5px', fontWeight: 500,
+                          color: likedPosts.has(post.id) ? 'var(--kyn-green)' : 'var(--kyn-ink3)',
+                          cursor: 'pointer', borderRadius: 'var(--kyn-r)', transition: 'background 0.15s ease'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#252523'}
+                        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--kyn-green-bg)'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                       >
                         {likedPosts.has(post.id) ? '♥' : '♡'} {post.like_count || ''}
@@ -724,14 +735,14 @@ export default function CommunityPage() {
                       <button
                         onClick={() => handleToggleComments(post)}
                         style={{
-                          flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem',
-                          background: expandedPostId === post.id ? '#252523' : 'transparent',
-                          border: 'none', padding: '0.5rem',
-                          fontSize: '0.8125rem', fontWeight: 600,
-                          color: expandedPostId === post.id ? ACCENT : '#555',
-                          cursor: 'pointer', borderRadius: '4px', transition: 'background 0.15s ease'
+                          flex: 1, minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px',
+                          background: expandedPostId === post.id ? 'var(--kyn-blue-bg)' : 'transparent',
+                          border: 'none', padding: '6px',
+                          fontSize: '12.5px', fontWeight: 500,
+                          color: expandedPostId === post.id ? 'var(--kyn-blue)' : 'var(--kyn-blue)',
+                          cursor: 'pointer', borderRadius: 'var(--kyn-r)', transition: 'background 0.15s ease'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.background = '#252523'}
+                        onMouseEnter={(e) => e.currentTarget.style.background = 'var(--kyn-blue-bg)'}
                         onMouseLeave={(e) => { if (expandedPostId !== post.id) e.currentTarget.style.background = 'transparent' }}
                       >
                         ↩ {post.reply_count > 0 ? `${post.reply_count} ${post.reply_count === 1 ? 'comment' : 'comments'}` : 'Comment'}
@@ -739,87 +750,88 @@ export default function CommunityPage() {
                     </div>
                   </div>
 
-                  {/* Inline Comments — always visible */}
+                  {/* Inline Comments */}
                   {((post.replies && post.replies.length > 0) || expandedPostId === post.id) && (
-                    <div style={{ borderTop: '1px solid #242422', background: '#141412', padding: '1rem 1.25rem' }}>
+                    <div style={{ borderTop: '1px solid var(--kyn-border)', background: 'var(--kyn-surface-raised)', padding: '12px 18px' }}>
                       {loadingReplies && expandedPostId === post.id ? (
-                        <p style={{ color: '#555', fontSize: '0.875rem', margin: 0 }}>Loading comments...</p>
+                        <p style={{ color: 'var(--kyn-ink3)', fontSize: '13px', margin: 0 }}>Loading comments…</p>
                       ) : (
                         (() => {
                           const allInlineReplies = post.replies || []
                           const displayReplies = expandedPostId === post.id ? replies : allInlineReplies.slice(0, 3)
                           const hasMoreReplies = expandedPostId !== post.id && allInlineReplies.length > 3
                           return displayReplies.length === 0 ? null : (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem' }}>
-                          {buildReplyTree(displayReplies).map((reply) => {
-                            const renderReply = (r: Reply, depth: number) => (
-                              <div key={r.id} style={{ marginLeft: depth > 0 ? '1.5rem' : '0', marginBottom: '0.5rem' }}>
-                                <div style={{
-                                  padding: '0.75rem',
-                                  background: depth > 0 ? '#1c1c1a' : '#1e1e1c',
-                                  borderRadius: '4px',
-                                  border: '1px solid #2a2a28',
-                                  borderLeft: depth > 0 ? `3px solid ${ACCENT}` : `3px solid #333`
-                                }}>
-                                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.375rem' }}>
-                                    <Avatar name={r.user_name} photo={r.user_photo} size={26} />
-                                    <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#f0ede8' }}>{r.user_name}</span>
-                                    <span style={{ fontSize: '0.6875rem', color: '#444' }}>{getTimeAgo(r.created_at)}</span>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '12px' }}>
+                              {buildReplyTree(displayReplies).map((reply) => {
+                                const renderReply = (r: Reply, depth: number) => (
+                                  <div key={r.id} style={{ marginLeft: depth > 0 ? '24px' : '0', marginBottom: '4px' }}>
+                                    <div style={{
+                                      padding: '10px 12px',
+                                      background: 'var(--kyn-surface)',
+                                      borderRadius: 'var(--kyn-r)',
+                                      border: '1px solid var(--kyn-border)',
+                                      borderLeft: depth > 0 ? '2px solid var(--kyn-border-mid)' : '2px solid var(--kyn-border)'
+                                    }}>
+                                      <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '5px' }}>
+                                        <Avatar name={r.user_name} photo={r.user_photo} size={24} />
+                                        <span style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--kyn-ink)' }}>{r.user_name}</span>
+                                        <span style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{getTimeAgo(r.created_at)}</span>
+                                      </div>
+                                      <p style={{ fontSize: '13px', color: 'var(--kyn-ink2)', lineHeight: 1.55, margin: '0 0 5px 0', whiteSpace: 'pre-wrap' }}>{r.content}</p>
+                                      {depth < 3 && (
+                                        <button
+                                          onClick={() => setReplyingToId(replyingToId === r.id ? null : r.id)}
+                                          style={{ background: 'none', border: 'none', color: replyingToId === r.id ? 'var(--kyn-green)' : 'var(--kyn-ink3)', fontSize: '11px', cursor: 'pointer', padding: 0, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}
+                                        >
+                                          {replyingToId === r.id ? 'Cancel' : 'Reply'}
+                                        </button>
+                                      )}
+                                    </div>
+                                    {r.replies?.map(nested => renderReply(nested, depth + 1))}
                                   </div>
-                                  <p style={{ fontSize: '0.875rem', color: '#a0a09c', lineHeight: 1.5, margin: '0 0 0.375rem 0', whiteSpace: 'pre-wrap' }}>{r.content}</p>
-                                  {depth < 3 && (
-                                    <button
-                                      onClick={() => setReplyingToId(replyingToId === r.id ? null : r.id)}
-                                      style={{ background: 'none', border: 'none', color: replyingToId === r.id ? ORANGE : '#555', fontSize: '0.6875rem', cursor: 'pointer', padding: 0, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.05em' }}
-                                    >
-                                      {replyingToId === r.id ? 'Cancel' : 'Reply'}
-                                    </button>
-                                  )}
-                                </div>
-                                {r.replies?.map(nested => renderReply(nested, depth + 1))}
-                              </div>
-                            )
-                            return renderReply(reply, 0)
-                          })}
-                          {hasMoreReplies && (
-                            <button onClick={() => handleToggleComments(post)} style={{ background: 'none', border: 'none', color: '#9bc4b8', fontSize: '0.8125rem', cursor: 'pointer', padding: '0.125rem 0', fontFamily: BODY_FONT, textAlign: 'left' as const, fontWeight: 600 }}>
-                              See all {post.reply_count} comments →
-                            </button>
-                          )}
-                        </div>
-                        )
+                                )
+                                return renderReply(reply, 0)
+                              })}
+                              {hasMoreReplies && (
+                                <button onClick={() => handleToggleComments(post)} style={{ background: 'none', border: 'none', color: 'var(--kyn-blue)', fontSize: '12.5px', cursor: 'pointer', padding: '2px 0', fontFamily: 'var(--kyn-font-sans)', textAlign: 'left' as const, fontWeight: 600 }}>
+                                  See all {post.reply_count} comments →
+                                </button>
+                              )}
+                            </div>
+                          )
                         })()
                       )}
 
-                      {/* Reply form — only show when post is expanded */}
-                      {expandedPostId === post.id && <form onSubmit={handleReply}>
-                        {replyingToId && (
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.375rem 0.625rem', background: 'rgba(155,196,184,0.1)', borderRadius: '4px', marginBottom: '0.5rem', fontSize: '0.75rem', color: ACCENT }}>
-                            <span>Replying to {replies.find(r => r.id === replyingToId)?.user_name || 'comment'}</span>
-                            <button type="button" onClick={() => setReplyingToId(null)} style={{ background: 'none', border: 'none', color: ACCENT, cursor: 'pointer', fontSize: '0.875rem', padding: 0 }}>✕</button>
+                      {/* Reply form */}
+                      {expandedPostId === post.id && (
+                        <form onSubmit={handleReply}>
+                          {replyingToId && (
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 10px', background: 'var(--kyn-green-bg)', border: '1px solid var(--kyn-border-green)', borderRadius: 'var(--kyn-r)', marginBottom: '8px', fontSize: '11.5px', color: 'var(--kyn-green)' }}>
+                              <span>Replying to {replies.find(r => r.id === replyingToId)?.user_name || 'comment'}</span>
+                              <button type="button" onClick={() => setReplyingToId(null)} style={{ background: 'none', border: 'none', color: 'var(--kyn-green)', cursor: 'pointer', fontSize: '14px', padding: 0 }}>✕</button>
+                            </div>
+                          )}
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end' }}>
+                            <Avatar name={user?.name || ''} size={26} />
+                            <textarea
+                              value={replyContent}
+                              onChange={(e) => setReplyContent(e.target.value)}
+                              placeholder={replyingToId ? 'Write a reply…' : 'Write a comment…'}
+                              rows={1}
+                              onFocus={(e) => e.currentTarget.rows = 3}
+                              onBlur={(e) => { if (!replyContent) e.currentTarget.rows = 1 }}
+                              style={{ flex: 1, padding: '7px 10px', background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r)', color: 'var(--kyn-ink)', fontSize: '13px', outline: 'none', resize: 'none', lineHeight: 1.5 }}
+                            />
+                            <button
+                              type="submit"
+                              disabled={submittingReply || !replyContent.trim()}
+                              style={{ padding: '7px 12px', background: submittingReply || !replyContent.trim() ? 'var(--kyn-border)' : 'var(--kyn-green)', border: 'none', borderRadius: 'var(--kyn-r)', color: submittingReply || !replyContent.trim() ? 'var(--kyn-ink3)' : '#fff', fontSize: '12.5px', fontWeight: 700, cursor: submittingReply || !replyContent.trim() ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap', minHeight: '36px' }}
+                            >
+                              {submittingReply ? '…' : 'Post'}
+                            </button>
                           </div>
-                        )}
-                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-end' }}>
-                          <Avatar name={user?.name || ''} size={28} />
-                          <textarea
-                            value={replyContent}
-                            onChange={(e) => setReplyContent(e.target.value)}
-                            placeholder={replyingToId ? 'Write a reply...' : 'Write a comment...'}
-                            rows={1}
-                            onFocus={(e) => e.currentTarget.rows = 3}
-                            onBlur={(e) => { if (!replyContent) e.currentTarget.rows = 1 }}
-                            style={{ flex: 1, padding: '0.5rem 0.75rem', background: '#252523', border: '1px solid #333', borderRadius: '4px', color: '#f0ede8', fontSize: '0.875rem', outline: 'none', resize: 'none', lineHeight: 1.5 }}
-                          />
-                          <button
-                            type="submit"
-                            disabled={submittingReply || !replyContent.trim()}
-                            style={{ padding: '0.5rem 0.875rem', background: submittingReply || !replyContent.trim() ? '#252523' : '#9bc4b8', border: 'none', borderRadius: '4px', color: submittingReply || !replyContent.trim() ? '#444' : '#0a0a0a', fontSize: '0.8125rem', fontWeight: 700, cursor: submittingReply || !replyContent.trim() ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap' }}
-                          >
-                            {submittingReply ? '...' : 'Post'}
-                          </button>
-                        </div>
-                      </form>}
-
+                        </form>
+                      )}
                     </div>
                   )}
                 </div>
@@ -828,83 +840,54 @@ export default function CommunityPage() {
           )}
         </div>
 
-        {/* SIDEBAR */}
+        {/* SIDEBAR — desktop only */}
         {!isMobile && (
-          <aside style={{ position: 'sticky', top: '5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <aside style={{ position: 'sticky', top: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
             {/* Video card */}
-            <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem' }}>
+            <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
               {renderVideoCard()}
             </div>
 
             {/* Journey progress */}
-            {(() => {
-              const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
-              const currentIndex = Math.max(0, stages.indexOf(user?.level || 'Seeker'))
-              const overallProgress = user?.progress ?? 0
-              const levelMin = currentIndex * 25
-              const levelProgress = currentIndex === 3 ? 100 : Math.max(0, Math.min(100, ((overallProgress - levelMin) / 25) * 100))
-              const fillPercent = Math.min(100, (currentIndex / 3) * 100 + (levelProgress / 3))
-              return (
-                <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem 1.25rem 1.75rem' }}>
-                  <div style={{ marginBottom: '1.75rem' }}>
-                    <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#9bc4b8', fontWeight: 700, textTransform: 'uppercase' as const, marginBottom: '4px' }}>Your Journey</div>
-                    <div style={{ fontSize: '0.75rem', color: '#666', lineHeight: 1.5 }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
-                  </div>
-                  <div style={{ position: 'relative', height: '48px' }}>
-                    <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '2px', background: '#2a2a28', borderRadius: '1px' }} />
-                    <div style={{ position: 'absolute', top: '9px', left: 0, height: '2px', width: `${fillPercent}%`, background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)', borderRadius: '1px', transition: 'width 0.8s ease' }} />
-                    {stages.map((stage, index) => {
-                      const isCurrent = index === currentIndex
-                      const isCompleted = index < currentIndex
-                      const posPercent = (index / 3) * 100
-                      const isFirst = index === 0
-                      const isLast = index === 3
-                      return (
-                        <div key={stage} style={{ position: 'absolute', left: `${posPercent}%`, top: 0, transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center' }}>
-                          <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{ width: '11px', height: '11px', borderRadius: '50%', background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#1a1a18', border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#444'}`, position: 'relative', zIndex: 1 }} />
-                          <div style={{ marginTop: '8px', fontSize: '0.68rem', color: isCurrent ? '#f0ede8' : isCompleted ? '#4a9e5c' : '#555', fontWeight: isCurrent ? 700 : 400, whiteSpace: 'nowrap', letterSpacing: '0.02em' }}>{stage}</div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              )
-            })()}
+            <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '14px 14px 18px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+              {renderJourneyWidget()}
+            </div>
 
             {/* Quick links */}
-            <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem' }}>
-              <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#9bc4b8', marginBottom: '0.875rem', fontWeight: 700, textTransform: 'uppercase' }}>Quick Links</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-                <a href="/videos" style={{ color: '#c0bdb8', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', borderBottom: '1px solid #242422', fontFamily: GAMBARINO }}>Video Library</a>
-                <a href="/calls" style={{ color: '#c0bdb8', fontSize: '0.875rem', textDecoration: 'none', padding: '0.5rem 0', fontFamily: GAMBARINO }}>Live Call Calendar</a>
+            <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+              <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-green)', marginBottom: '10px', fontWeight: 700, textTransform: 'uppercase', fontFamily: 'var(--kyn-font-sans)' }}>Quick Links</div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <a href="/videos" style={{ color: 'var(--kyn-ink2)', fontSize: '13.5px', textDecoration: 'none', padding: '7px 0', borderBottom: '1px solid var(--kyn-border)', fontFamily: 'var(--kyn-font-sans)' }}>Video Library</a>
+                <a href="/calls" style={{ color: 'var(--kyn-ink2)', fontSize: '13.5px', textDecoration: 'none', padding: '7px 0', fontFamily: 'var(--kyn-font-sans)' }}>Live Call Calendar</a>
               </div>
             </div>
 
             {/* Email notification toggle */}
             {notifLoaded && (
-              <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', padding: '1.25rem' }}>
-                <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: '#9bc4b8', marginBottom: '0.875rem', fontWeight: 700, textTransform: 'uppercase' as const }}>Notifications</div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+              <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-green)', marginBottom: '10px', fontWeight: 700, textTransform: 'uppercase' as const, fontFamily: 'var(--kyn-font-sans)' }}>Notifications</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
                   <div>
-                    <div style={{ fontSize: '0.875rem', color: '#c0bdb8', marginBottom: '2px' }}>Community emails</div>
-                    <div style={{ fontSize: '0.75rem', color: '#555' }}>{emailNotifications ? 'New posts and replies' : 'Off'}</div>
+                    <div style={{ fontSize: '13px', color: 'var(--kyn-ink2)', marginBottom: '2px', fontFamily: 'var(--kyn-font-sans)' }}>Community emails</div>
+                    <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', fontFamily: 'var(--kyn-font-sans)' }}>{emailNotifications ? 'New posts and replies' : 'Off'}</div>
                   </div>
                   <button
                     onClick={handleToggleNotifications}
                     aria-label={emailNotifications ? 'Disable email notifications' : 'Enable email notifications'}
                     style={{
-                      flexShrink: 0, width: '44px', height: '24px', borderRadius: '12px',
-                      background: emailNotifications ? '#9bc4b8' : '#333',
+                      flexShrink: 0, width: '40px', height: '22px', borderRadius: '11px',
+                      background: emailNotifications ? 'var(--kyn-green)' : 'var(--kyn-border-mid)',
                       border: 'none', cursor: 'pointer', position: 'relative',
                       transition: 'background 0.2s ease'
                     }}
                   >
                     <div style={{
                       position: 'absolute', top: '3px',
-                      left: emailNotifications ? '23px' : '3px',
-                      width: '18px', height: '18px', borderRadius: '50%',
-                      background: '#fff', transition: 'left 0.2s ease'
+                      left: emailNotifications ? '21px' : '3px',
+                      width: '16px', height: '16px', borderRadius: '50%',
+                      background: '#fff', transition: 'left 0.2s ease',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.15)'
                     }} />
                   </button>
                 </div>
@@ -916,18 +899,18 @@ export default function CommunityPage() {
 
       {/* Expanded video modal */}
       {isVideoExpanded && youtubeId && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.9)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: isMobile ? '1rem' : '2rem' }} onClick={() => setIsVideoExpanded(false)}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: isMobile ? '1rem' : '2rem' }} onClick={() => setIsVideoExpanded(false)}>
           <div style={{ maxWidth: '1200px', width: '100%', position: 'relative' }} onClick={(e) => e.stopPropagation()}>
-            <div style={{ position: 'absolute', top: '-3rem', right: 0, display: 'flex', gap: '0.75rem' }}>
-              <button onClick={() => setIsVideoExpanded(false)} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', fontSize: '0.8125rem', cursor: 'pointer', padding: '0.5rem 1rem', borderRadius: '4px' }}>↙ Back</button>
-              <button onClick={() => { setShowVideoPlayer(false); setIsVideoExpanded(false) }} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', fontSize: '0.8125rem', cursor: 'pointer', padding: '0.5rem 1rem', borderRadius: '4px' }}>✕ Close</button>
+            <div style={{ position: 'absolute', top: '-3rem', right: 0, display: 'flex', gap: '8px' }}>
+              <button onClick={() => setIsVideoExpanded(false)} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', fontSize: '12.5px', cursor: 'pointer', padding: '6px 14px', borderRadius: 'var(--kyn-r)' }}>↙ Back</button>
+              <button onClick={() => { setShowVideoPlayer(false); setIsVideoExpanded(false) }} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', fontSize: '12.5px', cursor: 'pointer', padding: '6px 14px', borderRadius: 'var(--kyn-r)' }}>✕ Close</button>
             </div>
-            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '6px' }}>
+            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 'var(--kyn-r-lg)' }}>
               <iframe src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
             </div>
-            <div style={{ background: '#1a1a18', padding: '1.5rem', borderRadius: '0 0 6px 6px', border: '1px solid #2c2c2a', borderTop: 'none' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f0ede8', margin: '0 0 0.5rem 0', fontFamily: GAMBARINO }}>{nextVideo?.title}</h2>
-              {nextVideo?.description && <p style={{ fontSize: '0.875rem', color: '#a0a09c', margin: 0, lineHeight: 1.6 }}>{nextVideo.description}</p>}
+            <div style={{ background: 'var(--kyn-surface)', padding: '1.25rem', borderRadius: '0 0 var(--kyn-r-lg) var(--kyn-r-lg)', border: '1px solid var(--kyn-border)', borderTop: 'none' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--kyn-ink)', margin: '0 0 6px 0', fontFamily: 'var(--kyn-font-serif)' }}>{nextVideo?.title}</h2>
+              {nextVideo?.description && <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink2)', margin: 0, lineHeight: 1.6 }}>{nextVideo.description}</p>}
             </div>
           </div>
         </div>
