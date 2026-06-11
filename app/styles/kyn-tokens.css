@@ -1,0 +1,47 @@
+:root {
+  /* ── SURFACES ── */
+  --kyn-sidebar:       #0d1f14;
+  --kyn-sidebar2:      #172b1e;
+  --kyn-bg:            #f5f5f3;
+  --kyn-surface:       #ffffff;
+  --kyn-surface-raised:#f0f0ee;
+
+  /* ── BORDERS ── */
+  --kyn-border:        #e2e2de;
+  --kyn-border-mid:    #c8c8c2;
+  --kyn-border-green:  rgba(45,106,79,0.2);
+  --kyn-border-blue:   rgba(59,130,200,0.2);
+
+  /* ── TYPE ── */
+  --kyn-ink:           #141410;
+  --kyn-ink2:          #52524a;
+  --kyn-ink3:          #96968e;
+
+  /* ── FOREST GREEN — structure, journey, growth ── */
+  --kyn-green:         #2d6a4f;
+  --kyn-green-hi:      #52b788;
+  --kyn-green-bg:      #e8f4ee;
+  --kyn-green-mid:     rgba(45,106,79,0.12);
+  --kyn-green-glow:    rgba(45,106,79,0.07);
+
+  /* ── BLUE — community, belonging, social ── */
+  --kyn-blue:          #3b82c8;
+  --kyn-blue-hi:       #60a5f0;
+  --kyn-blue-bg:       #e8f0fb;
+  --kyn-blue-mid:      rgba(59,130,200,0.12);
+
+  /* ── TYPOGRAPHY ── */
+  --kyn-font-sans:     -apple-system,'SF Pro Text','Inter','Segoe UI',sans-serif;
+  --kyn-font-serif:    Georgia,'Times New Roman',serif;
+
+  /* ── RADIUS ── */
+  --kyn-r:             4px;
+  --kyn-r-lg:          7px;
+
+  /* ── SPACING ── */
+  --kyn-space-xs:      4px;
+  --kyn-space-sm:      8px;
+  --kyn-space-md:      16px;
+  --kyn-space-lg:      24px;
+  --kyn-space-xl:      32px;
+}
