@@ -83,7 +83,7 @@ export default function MembersPage() {
         setProfilePhoto(parsedUser.profile_photo)
       }
       setLoading(false)
-      
+
       // Fetch stats
       fetch('/api/user/stats', {
         headers: { 'x-user-id': parsedUser.id.toString() }
@@ -309,7 +309,12 @@ export default function MembersPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--kyn-sidebar)', color: 'var(--kyn-ink)', paddingTop: '2rem' }}>
+    <div style={{
+      minHeight: '100vh',
+      background: 'var(--kyn-bg)',
+      color: 'var(--kyn-ink)',
+      fontFamily: 'var(--kyn-font-sans)'
+    }}>
 
       {/* Announcement popup */}
       {announcement && (
@@ -370,423 +375,594 @@ export default function MembersPage() {
         <InstallAppBanner />
         <PushNotificationPrompt userId={user?.id} />
       </div>
-      {/* Animated Background */}
-      <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
-        <div style={{
-          position: 'absolute',
-          top: '25%',
-          left: '-12rem',
-          width: isMobile ? '18rem' : '24rem',
-          height: isMobile ? '18rem' : '24rem',
-          background: 'radial-gradient(circle, rgba(155, 196, 184, 0.1) 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(100px)',
-          animation: 'pulse 4s ease-in-out infinite'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          bottom: '25%',
-          right: '-12rem',
-          width: isMobile ? '18rem' : '24rem',
-          height: isMobile ? '18rem' : '24rem',
-          background: 'radial-gradient(circle, rgba(127, 176, 105, 0.1) 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(100px)',
-          animation: 'pulse 4s ease-in-out infinite 1s'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: isMobile ? '80vw' : '600px',
-          height: isMobile ? '80vw' : '600px',
-          background: 'radial-gradient(circle, rgba(106, 153, 78, 0.05) 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(120px)',
-          animation: 'pulse 4s ease-in-out infinite 2s'
-        }}></div>
-      </div>
 
-      <div style={{ maxWidth: '80rem', margin: '0 auto', padding: '2rem 1.5rem 2rem' }}>
-        {/* Hero Section */}
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <div style={{ display: 'inline-block', marginBottom: '1.5rem', position: 'relative' }}>
-            <div
-              onClick={() => setShowProfileModal(true)}
-              style={{
-                width: '5rem',
-                height: '5rem',
-                borderRadius: '50%',
-                background: profilePhoto ? `url(${profilePhoto})` : `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                border: '1px solid var(--kyn-border)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backdropFilter: 'blur(20px)',
-                cursor: 'pointer'
-              }}
-            >
-              {!profilePhoto && (
-                <svg style={{ width: '2.5rem', height: '2.5rem', color: '#555' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              )}
-            </div>
-            <div
-              onClick={() => setShowProfileModal(true)}
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                width: '1.5rem',
-                height: '1.5rem',
-                borderRadius: '50%',
-                background: 'var(--kyn-green-hi)',
-                border: '2px solid var(--kyn-sidebar)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer'
-              }}
-            >
-              <svg style={{ width: '0.75rem', height: '0.75rem', color: '#ffffff' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.232 5.232l3.536 3.536M9 11l6.364-6.364a2 2 0 112.828 2.828L11.828 13.828a4 4 0 01-1.414.707l-2.828.707.707-2.828a4 4 0 01.707-1.414z" />
-              </svg>
-            </div>
-          </div>
-          <h1 style={{
-            fontSize: 'clamp(2rem, 6vw, 3.75rem)',
-            fontWeight: 300,
-            marginBottom: '1rem',
-            letterSpacing: '-0.02em',
-            color: 'var(--kyn-ink)'
-          }}>
-            <span style={{ color: 'rgba(240, 237, 232, 0.5)' }}>Welcome back,</span> <span style={{ color: 'var(--kyn-ink)' }}>{user.name}</span>
-          </h1>
-          <p style={{ color: '#a0a09c', fontSize: 'clamp(1rem, 2vw, 1.125rem)', fontWeight: 300 }}>
-            Your transformation journey continues
-          </p>
-        </div>
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: isMobile ? '16px 14px 72px' : '28px 32px 52px'
+      }}>
 
-        {/* Journey Progress — horizontal timeline */}
-        <div style={{ background: 'var(--kyn-sidebar2)', border: '1px solid var(--kyn-border)', borderRadius: '12px', padding: '1.25rem 1.5rem 1.75rem', marginBottom: '2rem' }}>
-          <div style={{ marginBottom: '1.75rem' }}>
-            <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#555', fontWeight: 400, marginBottom: '4px' }}>YOUR JOURNEY</div>
-            <div style={{ fontSize: '0.8rem', color: '#a0a09c', lineHeight: 1.5 }}>
-              Track your progress here and compare it to your life elevation outside the Circle. As you move through the stages, notice where things shift.
-            </div>
-          </div>
-
-          <div style={{ position: 'relative', height: '48px' }}>
-            {/* Grey track */}
+        {/* TOPBAR */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          marginBottom: '18px',
+          paddingBottom: '17px',
+          borderBottom: '1px solid var(--kyn-border)'
+        }}>
+          <div>
             <div style={{
-              position: 'absolute',
-              top: '9px',
-              left: 0,
-              right: 0,
-              height: '2px',
-              background: 'var(--kyn-border)',
-              borderRadius: '1px'
-            }} />
-
-            {/* Filled track */}
+              fontFamily: 'var(--kyn-font-serif)',
+              fontSize: isMobile ? '18px' : '22px',
+              fontWeight: 400,
+              color: 'var(--kyn-ink)',
+              letterSpacing: '-0.01em',
+              lineHeight: 1.2
+            }}>
+              Welcome back,{' '}
+              <span style={{ color: 'var(--kyn-green)' }}>{user.name}</span>
+            </div>
             <div style={{
-              position: 'absolute',
-              top: '9px',
-              left: 0,
-              height: '2px',
-              width: `${Math.min(100, (currentStageIndex / 3) * 100 + (getLevelProgress() / 3))}%`,
-              background: 'linear-gradient(90deg, #5a9e6e, #3d7a52)',
-              borderRadius: '1px',
-              transition: 'width 0.8s ease'
-            }} />
-
-            {/* Level dots */}
-            {levelStages.map((stage, index) => {
-              const isCurrent = index === currentStageIndex
-              const isCompleted = index < currentStageIndex
-              const posPercent = (index / 3) * 100
-              const isFirst = index === 0
-              const isLast = index === 3
-
-              return (
-                <div key={stage} style={{
-                  position: 'absolute',
-                  left: `${posPercent}%`,
-                  top: 0,
-                  transform: isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center'
-                }}>
-                  {/* Dot */}
-                  <div className={isCurrent ? 'journey-pulse-dot' : ''} style={{
-                    width: '11px',
-                    height: '11px',
-                    borderRadius: '50%',
-                    background: isCurrent ? '#4a9e5c' : isCompleted ? '#4a9e5c' : '#252523',
-                    border: `2px solid ${isCurrent || isCompleted ? '#4a9e5c' : '#3a3a38'}`,
-                    position: 'relative',
-                    zIndex: 1
-                  }} />
-
-                  {/* Label */}
-                  <div style={{
-                    marginTop: '8px',
-                    fontSize: '0.68rem',
-                    color: isCurrent ? 'var(--kyn-ink)' : isCompleted ? '#4a9e5c' : '#444',
-                    fontWeight: isCurrent ? 600 : 400,
-                    whiteSpace: 'nowrap',
-                    letterSpacing: '0.02em'
-                  }}>
-                    {stage}
-                  </div>
-                </div>
-              )
-            })}
+              fontSize: '12px',
+              color: 'var(--kyn-ink3)',
+              marginTop: '4px',
+              fontStyle: 'italic'
+            }}>
+              Keep going. The path reveals itself.
+            </div>
           </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div style={{ marginBottom: '2rem' }}>
           <div style={{
-            backdropFilter: 'blur(20px)',
-            background: 'var(--kyn-sidebar2)',
-            border: '1px solid var(--kyn-border)',
-            borderRadius: '12px',
-            padding: '2rem',
-            transition: 'border 0.3s ease',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.borderColor = '#3a3a38'}
-          onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--kyn-border)'}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '1.5rem' }}>
-              <div style={{
-                width: '2.5rem',
-                height: '2.5rem',
-                borderRadius: '50%',
-                background: '#252523',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300, color: 'var(--kyn-ink)' }}>Quick Access</h3>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-              {[
-                { title: 'Teachings', desc: 'Browse full video library & guided practices', href: '/videos', icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
-                { title: 'Weekly Teaching Videos', desc: 'Latest teachings & spiritual guidance', href: '/videos?category=Live%20Teachings', icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z' },
-                { title: 'Live Session Replays', desc: 'Watch past community calls & sessions', href: '/replays', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
-                { title: 'Live Call Calendar', desc: 'View upcoming sessions & add to calendar', href: '/calls', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
-                { title: 'Community', desc: 'Connect with fellow members', href: '/community', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' }
-              ].map((action, i) => (
-                <Link
-                  key={i}
-                  href={action.href}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem',
-                    padding: '1rem',
-                    background: '#141412',
-                    border: '1px solid var(--kyn-border)',
-                    borderRadius: '8px',
-                    textDecoration: 'none',
-                    color: 'var(--kyn-ink)',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#1e1e1c'
-                    e.currentTarget.style.borderColor = 'var(--kyn-green-hi)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#141412'
-                    e.currentTarget.style.borderColor = 'var(--kyn-border)'
-                  }}
-                >
-                  <div style={{
-                    width: '3rem',
-                    height: '3rem',
-                    borderRadius: '50%',
-                    background: '#252523',
-                    border: '1px solid #333',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                    transition: 'all 0.3s ease'
-                  }}>
-                    <svg style={{ width: '1.5rem', height: '1.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={action.icon} />
-                    </svg>
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 300, transition: 'color 0.3s ease', color: 'var(--kyn-ink)' }}>{action.title}</div>
-                    <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>{action.desc}</div>
-                  </div>
-                  <svg style={{ width: '1.25rem', height: '1.25rem', color: '#555', flexShrink: 0, transition: 'all 0.3s ease' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <NextSessionCard />
-        {/* Progress Stats */}
-        <div style={{
-          marginBottom: '2rem',
-          backdropFilter: 'blur(20px)',
-          background: 'var(--kyn-sidebar2)',
-          border: '1px solid var(--kyn-border)',
-          borderRadius: '12px',
-          padding: '2rem',
-          transition: 'border 0.3s ease'
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.borderColor = '#3a3a38'}
-        onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--kyn-border)'}>
-          <h3 style={{
-            fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
-            fontWeight: 300,
-            marginBottom: '1.5rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0',
-            color: 'var(--kyn-ink)'
+            gap: '6px',
+            padding: '6px 12px',
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
+            borderRadius: '20px',
+            fontSize: '12px',
+            color: 'var(--kyn-ink2)',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+            whiteSpace: 'nowrap',
+            flexShrink: 0
           }}>
-Your Progress
-          </h3>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isTablet ? '1fr' : 'repeat(3, 1fr)',
-            gap: '1.5rem'
-          }}>
             <div style={{
-              padding: '1.5rem',
-              background: 'rgba(155, 196, 184, 0.05)',
-              border: '1px solid var(--kyn-border)',
-              borderRadius: '8px',
-              transition: 'all 0.3s ease'
-            }}>
-              <div style={{ fontSize: '2rem', fontWeight: 300, color: 'var(--kyn-green-hi)', marginBottom: '0.5rem' }}>
-                {stats.videosWatched || 0}
-              </div>
-              <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>
-                Videos Watched
-              </div>
-            </div>
-            
-            <div style={{
-              padding: '1.5rem',
-              background: 'rgba(127, 176, 105, 0.05)',
-              border: '1px solid #e5e5e5',
-              borderRadius: '8px',
-              transition: 'all 0.3s ease'
-            }}>
-              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#7fb069', marginBottom: '0.5rem' }}>
-                {Math.round((stats.totalWatchTime || 0) / 60)}m
-              </div>
-              <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>
-                Watch Time
-              </div>
-            </div>
-            
-            <div style={{
-              padding: '1.5rem',
-              background: 'rgba(106, 153, 78, 0.05)',
-              border: '1px solid #e5e5e5',
-              borderRadius: '8px',
-              transition: 'all 0.3s ease'
-            }}>
-              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#6a994e', marginBottom: '0.5rem' }}>
-                {stats.completionRate || 0}%
-              </div>
-              <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>
-                Completion Rate
-              </div>
-            </div>
+              width: '7px',
+              height: '7px',
+              borderRadius: '50%',
+              background: '#4aad6a',
+              animation: 'breathe 2.4s ease-in-out infinite'
+            }} />
+            Next call Thursday
           </div>
         </div>
 
-
-        {/* Account Info */}
-        <div style={{
-          backdropFilter: 'blur(20px)',
-          background: 'var(--kyn-sidebar2)',
-          border: '1px solid var(--kyn-border)',
-          borderRadius: '12px',
-          padding: '2rem'
-        }}>
-          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0', color: 'var(--kyn-ink)' }}>
-            <svg style={{ width: '1.25rem', height: '1.25rem', color: '#555' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            Account Details
-          </h3>
+        {/* ANNOUNCEMENT BANNER — inline, not modal */}
+        {announcement && (
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: isTablet ? '1fr' : 'repeat(2, 1fr)',
-            gap: '2rem'
+            display: 'flex',
+            alignItems: 'stretch',
+            borderRadius: 'var(--kyn-r-lg)',
+            marginBottom: '16px',
+            overflow: 'hidden',
+            background: '#1e2d26',
+            border: '1px solid rgba(82,183,136,0.18)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.14)'
           }}>
-            <div>
-              <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#555', marginBottom: '0.5rem', fontWeight: 300 }}>
-                EMAIL ADDRESS
+            <div style={{
+              width: '3px',
+              background: 'linear-gradient(180deg, var(--kyn-green-hi), var(--kyn-green))',
+              flexShrink: 0
+            }} />
+            <div style={{ padding: '13px 16px', flex: 1 }}>
+              <div style={{
+                fontSize: '9.5px',
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: 'var(--kyn-green-hi)',
+                marginBottom: '4px'
+              }}>
+                From True North
               </div>
-              <div style={{ fontWeight: 300, color: 'var(--kyn-ink)' }}>{user.email}</div>
+              <div style={{
+                fontSize: '13px',
+                color: 'rgba(255,255,255,0.82)',
+                lineHeight: 1.55,
+                fontWeight: 300
+              }}>
+                {announcement.body}
+              </div>
+              {announcement.url && announcement.url !== '/members' && (
+                <a
+                  href={announcement.url}
+                  onClick={() => {
+                    localStorage.setItem('dismissed_announcement', String(announcement.id))
+                    setAnnouncement(null)
+                  }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    marginTop: '10px',
+                    padding: '6px 13px',
+                    background: 'rgba(82,183,136,0.14)',
+                    border: '1px solid rgba(82,183,136,0.28)',
+                    borderRadius: 'var(--kyn-r)',
+                    color: 'var(--kyn-green-hi)',
+                    fontSize: '11.5px',
+                    textDecoration: 'none'
+                  }}>
+                  Book your spot
+                </a>
+              )}
             </div>
-            <div>
-              <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#555', marginBottom: '0.5rem', fontWeight: 300 }}>
-                MEMBER SINCE
-              </div>
-              <div style={{ fontWeight: 300, color: 'var(--kyn-ink)' }}>
-                {new Date(user.joinDate).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric'
+            <button
+              onClick={() => {
+                localStorage.setItem('dismissed_announcement', String(announcement.id))
+                setAnnouncement(null)
+              }}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'rgba(255,255,255,0.22)',
+                fontSize: '15px',
+                cursor: 'pointer',
+                padding: '12px 14px',
+                alignSelf: 'flex-start'
+              }}>
+              ×
+            </button>
+          </div>
+        )}
+
+        {/* BENTO ROW 1 — Journey + Next Session */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '1.6fr 1fr',
+          gap: '11px',
+          marginBottom: '11px'
+        }}>
+
+          {/* Journey card */}
+          <div style={{
+            background: 'var(--kyn-surface)',
+            borderRadius: 'var(--kyn-r-lg)',
+            padding: '18px 22px 20px',
+            boxShadow: '0 0 0 1px var(--kyn-border), 0 2px 6px rgba(0,0,0,0.05)',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              fontSize: '9.5px',
+              fontWeight: 600,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: 'var(--kyn-ink3)',
+              marginBottom: '14px'
+            }}>
+              Your Path
+            </div>
+
+            <div style={{ position: 'relative', height: '46px' }}>
+              {/* Track background */}
+              <div style={{
+                position: 'absolute',
+                top: '7px', left: 0, right: 0,
+                height: '1px',
+                background: 'var(--kyn-border)'
+              }} />
+              {/* Track fill */}
+              <div style={{
+                position: 'absolute',
+                top: '7px', left: 0,
+                height: '1px',
+                width: `${Math.min(100, (levelStages.indexOf(user.level) / 3) * 100 + (getLevelProgress() / 3))}%`,
+                background: 'linear-gradient(90deg, var(--kyn-green), var(--kyn-green-hi))',
+                transition: 'width 0.8s ease'
+              }} />
+              {/* Stage dots */}
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {levelStages.map((stage, index) => {
+                  const currentIndex = levelStages.indexOf(user.level)
+                  const isCompleted = index < currentIndex
+                  const isCurrent = index === currentIndex
+                  const isFirst = index === 0
+                  const isLast = index === levelStages.length - 1
+                  return (
+                    <div key={stage} style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: isFirst ? 'flex-start' : isLast ? 'flex-end' : 'center',
+                      gap: '10px'
+                    }}>
+                      <div style={{
+                        width: '12px',
+                        height: '12px',
+                        borderRadius: '50%',
+                        background: isCompleted ? 'var(--kyn-green)' : 'var(--kyn-surface)',
+                        border: `1.5px solid ${isCompleted || isCurrent ? 'var(--kyn-green)' : 'var(--kyn-border-mid)'}`,
+                        boxShadow: isCurrent ? '0 0 0 3px var(--kyn-green-mid)' : 'none',
+                        position: 'relative',
+                        zIndex: 1
+                      }} />
+                      <div style={{
+                        fontSize: '10px',
+                        color: isCompleted || isCurrent ? 'var(--kyn-green)' : 'var(--kyn-ink3)',
+                        fontWeight: isCurrent ? 600 : 400,
+                        whiteSpace: 'nowrap'
+                      }}>
+                        {stage}
+                      </div>
+                    </div>
+                  )
                 })}
               </div>
             </div>
           </div>
 
-          <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--kyn-border)' }}>
-            <button
-              onClick={handleManageBilling}
-              disabled={billingLoading}
-              style={{
-                padding: '0.75rem 1.5rem',
-                background: '#252523',
-                border: '1px solid #333',
-                borderRadius: '8px',
-                color: '#a0a09c',
-                fontSize: '0.875rem',
-                fontWeight: 400,
-                cursor: billingLoading ? 'not-allowed' : 'pointer',
-                opacity: billingLoading ? 0.6 : 1,
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => { if (!billingLoading) e.currentTarget.style.borderColor = 'var(--kyn-green-hi)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#333' }}
-            >
-              {billingLoading ? 'Loading...' : 'Manage payment details'}
-            </button>
-            {billingError && (
-              <p style={{ marginTop: '0.75rem', fontSize: '0.875rem', color: '#ef4444' }}>{billingError}</p>
-            )}
+          {/* Next Session card */}
+          <div style={{
+            borderRadius: 'var(--kyn-r-lg)',
+            overflow: 'hidden',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.16)',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <div style={{
+              height: '3px',
+              flexShrink: 0,
+              background: 'linear-gradient(90deg, var(--kyn-green), var(--kyn-green-hi), transparent)'
+            }} />
+            <div style={{
+              background: 'var(--kyn-sidebar2)',
+              flex: 1,
+              minHeight: '120px'
+            }}>
+              <NextSessionCard />
+            </div>
+          </div>
+
+        </div>
+
+        {/* STATS ROW */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '11px',
+          marginBottom: '18px'
+        }}>
+          {[
+            {
+              label: 'Videos watched',
+              value: stats.videosWatched || 0,
+              sub: 'total',
+              accent: 'var(--kyn-green)'
+            },
+            {
+              label: 'Time invested',
+              value: `${Math.round((stats.totalWatchTime || 0) / 60)}m`,
+              sub: 'watch time',
+              accent: 'var(--kyn-ink2)'
+            },
+            {
+              label: 'Completion',
+              value: `${stats.completionRate || 0}%`,
+              sub: 'across all content',
+              accent: 'var(--kyn-green-hi)'
+            }
+          ].map((stat, i) => (
+            <div key={i} style={{
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
+              borderRadius: 'var(--kyn-r-lg)',
+              padding: isMobile ? '12px 13px' : '15px 18px',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                fontSize: '10.5px',
+                color: 'var(--kyn-ink3)',
+                marginBottom: '9px'
+              }}>
+                {stat.label}
+              </div>
+              <div style={{
+                fontSize: isMobile ? '22px' : '26px',
+                fontWeight: 300,
+                letterSpacing: '-0.02em',
+                lineHeight: 1,
+                color: stat.accent
+              }}>
+                {stat.value}
+              </div>
+              <div style={{
+                fontSize: '10.5px',
+                color: 'var(--kyn-ink3)',
+                marginTop: '7px'
+              }}>
+                {stat.sub}
+              </div>
+              <div style={{
+                position: 'absolute',
+                bottom: 0, left: 0, right: 0,
+                height: '2px',
+                background: `linear-gradient(90deg, ${stat.accent}, transparent)`
+              }} />
+            </div>
+          ))}
+        </div>
+
+        {/* LOWER GRID */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '1.45fr 1fr',
+          gap: '11px'
+        }}>
+
+          {/* Spaces panel */}
+          <div style={{
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
+            borderRadius: 'var(--kyn-r-lg)',
+            overflow: 'hidden',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+          }}>
+            <div style={{
+              padding: '12px 17px',
+              borderBottom: '1px solid var(--kyn-border)',
+              fontSize: '12px',
+              fontWeight: 600,
+              color: 'var(--kyn-ink)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              Spaces
+              <a href="/community" style={{
+                fontSize: '11px',
+                color: 'var(--kyn-green)',
+                textDecoration: 'none'
+              }}>
+                View all
+              </a>
+            </div>
+            {[
+              {
+                name: 'Brotherhood',
+                desc: 'Discussion · questions · wins',
+                href: '/community',
+                badge: '3 new',
+                badgeColor: 'var(--kyn-blue)',
+                badgeBg: 'var(--kyn-blue-bg)'
+              },
+              {
+                name: 'Teachings',
+                desc: 'Video library · guided practices',
+                href: '/videos',
+                badge: null,
+                badgeColor: '',
+                badgeBg: ''
+              },
+              {
+                name: 'Session Replays',
+                desc: 'Past calls · recordings',
+                href: '/replays',
+                badge: '1 new',
+                badgeColor: 'var(--kyn-green)',
+                badgeBg: 'var(--kyn-green-bg)'
+              },
+              {
+                name: 'Resources',
+                desc: 'Guides · practices · tools',
+                href: '/resources',
+                badge: null,
+                badgeColor: '',
+                badgeBg: ''
+              }
+            ].map((space, i, arr) => (
+              <a
+                key={i}
+                href={space.href}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '10px 17px',
+                  borderBottom: i < arr.length - 1 ? '1px solid var(--kyn-border)' : 'none',
+                  textDecoration: 'none',
+                  background: 'transparent',
+                  transition: 'background 0.1s'
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'var(--kyn-surface-raised)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+              >
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '13px', color: 'var(--kyn-ink)' }}>{space.name}</div>
+                  <div style={{ fontSize: '10.5px', color: 'var(--kyn-ink3)', marginTop: '1px' }}>{space.desc}</div>
+                </div>
+                {space.badge && (
+                  <span style={{
+                    padding: '2px 7px',
+                    background: space.badgeBg,
+                    color: space.badgeColor,
+                    borderRadius: '8px',
+                    fontSize: '9.5px',
+                    fontWeight: 700
+                  }}>
+                    {space.badge}
+                  </span>
+                )}
+              </a>
+            ))}
+          </div>
+
+          {/* Right column */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
+
+            {/* Active now */}
+            <div style={{
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
+              borderRadius: 'var(--kyn-r-lg)',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+            }}>
+              <div style={{
+                padding: '12px 17px 10px',
+                borderBottom: '1px solid var(--kyn-border)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '7px'
+              }}>
+                <div style={{
+                  width: '7px',
+                  height: '7px',
+                  borderRadius: '50%',
+                  background: '#4aad6a',
+                  animation: 'breathe 2.5s ease-in-out infinite',
+                  flexShrink: 0
+                }} />
+                <div style={{
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  color: 'var(--kyn-ink)'
+                }}>
+                  Active now
+                </div>
+                <div style={{
+                  marginLeft: 'auto',
+                  fontSize: '11px',
+                  color: 'var(--kyn-blue)',
+                  fontWeight: 500
+                }}>
+                  7 online
+                </div>
+              </div>
+              <div style={{
+                padding: '12px 17px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px'
+              }}>
+                {['JK', 'MT', 'AL', 'RB', 'DS'].map((initials, i) => (
+                  <div key={i} style={{
+                    width: '26px',
+                    height: '26px',
+                    borderRadius: '50%',
+                    background: 'var(--kyn-blue-bg)',
+                    border: '2px solid var(--kyn-surface)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '9px',
+                    fontWeight: 700,
+                    color: 'var(--kyn-blue)',
+                    marginLeft: i === 0 ? 0 : '-6px'
+                  }}>
+                    {initials}
+                  </div>
+                ))}
+                <div style={{
+                  fontSize: '11.5px',
+                  color: 'var(--kyn-ink3)',
+                  marginLeft: '7px'
+                }}>
+                  brothers online
+                </div>
+              </div>
+            </div>
+
+            {/* Account */}
+            <div style={{
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
+              borderRadius: 'var(--kyn-r-lg)',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+            }}>
+              <div style={{
+                padding: '12px 17px',
+                borderBottom: '1px solid var(--kyn-border)',
+                fontSize: '12px',
+                fontWeight: 600,
+                color: 'var(--kyn-ink)'
+              }}>
+                Account
+              </div>
+              <div style={{ padding: '0 17px' }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '9px 0',
+                  borderBottom: '1px solid var(--kyn-border)',
+                  fontSize: '12.5px'
+                }}>
+                  <span style={{ color: 'var(--kyn-ink3)' }}>Email</span>
+                  <span style={{ color: 'var(--kyn-ink)' }}>{user.email}</span>
+                </div>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '9px 0',
+                  borderBottom: '1px solid var(--kyn-border)',
+                  fontSize: '12.5px'
+                }}>
+                  <span style={{ color: 'var(--kyn-ink3)' }}>Member since</span>
+                  <span style={{ color: 'var(--kyn-ink)' }}>
+                    {new Date(user.joinDate).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
+                  </span>
+                </div>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '9px 0',
+                  fontSize: '12.5px'
+                }}>
+                  <span style={{ color: 'var(--kyn-ink3)' }}>Billing</span>
+                  <button
+                    onClick={handleManageBilling}
+                    disabled={billingLoading}
+                    style={{
+                      padding: '5px 11px',
+                      background: 'transparent',
+                      border: '1px solid var(--kyn-border-mid)',
+                      borderRadius: 'var(--kyn-r)',
+                      color: 'var(--kyn-ink2)',
+                      fontSize: '11.5px',
+                      cursor: billingLoading ? 'not-allowed' : 'pointer',
+                      opacity: billingLoading ? 0.6 : 1
+                    }}>
+                    {billingLoading ? 'Loading...' : 'Manage'}
+                  </button>
+                </div>
+                {billingError && (
+                  <p style={{
+                    color: '#ef4444',
+                    fontSize: '12px',
+                    paddingBottom: '9px'
+                  }}>
+                    {billingError}
+                  </p>
+                )}
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
 
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes breathe {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+          }
+        `}} />
+
+      </div>
 
       {/* Profile Settings Modal */}
       {showProfileModal && (
@@ -1025,18 +1201,6 @@ Your Progress
         </div>
       )}
 
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes pulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.5; }
-        }
-        @keyframes ping {
-          75%, 100% {
-            transform: scale(2);
-            opacity: 0;
-          }
-        }
-      `}} />
     </div>
   )
 }
