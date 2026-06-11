@@ -19,10 +19,16 @@ export default function ProtectedLayout({
         nav.nav, nav.site-nav, .mobile-nav, .desktop-nav, #site-nav, #site-navigation, .site-navigation {
           display: none !important;
         }
-        body { background: #0f0f0d !important; }
+        body { background: var(--kyn-bg) !important; }
+        @media (min-width: 769px) {
+          .protected-main { padding-left: 214px; padding-top: 0; }
+        }
+        @media (max-width: 768px) {
+          .protected-main { padding-left: 0; padding-top: 54px; padding-bottom: 72px; }
+        }
       `}</style>
       <MembersNav />
-      <main style={{ paddingTop: '90px', minHeight: '100vh', background: '#0f0f0d' }}>
+      <main className="protected-main" style={{ minHeight: '100vh', background: 'var(--kyn-bg)' }}>
         {children}
       </main>
     </>
