@@ -14,7 +14,7 @@ export default function ProtectedLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
+    <div className="kyn-protected">
       <style>{`
         nav.nav, nav.site-nav, .mobile-nav, .desktop-nav, #site-nav, #site-navigation, .site-navigation {
           display: none !important;
@@ -31,6 +31,6 @@ export default function ProtectedLayout({
       <main className="protected-main" style={{ minHeight: '100vh', background: 'var(--kyn-bg)' }}>
         {children}
       </main>
-    </>
+    </div>
   )
 }

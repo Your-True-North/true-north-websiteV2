@@ -54,9 +54,12 @@ html {
 body {
   font-family: 'Crimson Text', serif;
   line-height: 1.6;
-  background-color: var(--bg-primary);
   color: var(--text-primary);
   cursor: url('/white-star-only.png') 16 16, auto;
+}
+
+body:not(.kyn-protected) {
+  background-color: var(--bg-primary);
 }
 
 /* Layout */
