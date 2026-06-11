@@ -283,7 +283,7 @@ export default function MembersPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ minHeight: '100vh', background: 'var(--kyn-sidebar)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ color: '#666', fontWeight: 300 }}>Entering portal...</div>
       </div>
     )
@@ -309,7 +309,7 @@ export default function MembersPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8', paddingTop: '2rem' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--kyn-sidebar)', color: 'var(--kyn-ink)', paddingTop: '2rem' }}>
 
       {/* Announcement popup */}
       {announcement && (
@@ -318,8 +318,8 @@ export default function MembersPage() {
           display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem'
         }}>
           <div style={{
-            background: '#1a1a18', borderRadius: '12px', maxWidth: '480px', width: '100%',
-            padding: '2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.6)', border: '1px solid #2c2c2a', position: 'relative'
+            background: 'var(--kyn-sidebar2)', borderRadius: '12px', maxWidth: '480px', width: '100%',
+            padding: '2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.6)', border: '1px solid var(--kyn-border)', position: 'relative'
           }}>
             <button
               onClick={() => {
@@ -330,10 +330,10 @@ export default function MembersPage() {
             >
               ×
             </button>
-            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: '#9bc4b8', marginBottom: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--kyn-green-hi)', marginBottom: '12px' }}>
               From Mason
             </div>
-            <h2 style={{ fontSize: '20px', fontWeight: 500, color: '#f0ede8', marginBottom: '12px', lineHeight: 1.4 }}>
+            <h2 style={{ fontSize: '20px', fontWeight: 500, color: 'var(--kyn-ink)', marginBottom: '12px', lineHeight: 1.4 }}>
               {announcement.title}
             </h2>
             <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#a0a09c', marginBottom: '1.5rem' }}>
@@ -347,7 +347,7 @@ export default function MembersPage() {
                     localStorage.setItem('dismissed_announcement', String(announcement.id))
                     setAnnouncement(null)
                   }}
-                  style={{ flex: 1, display: 'block', textAlign: 'center', padding: '12px', background: '#9bc4b8', color: '#0a0a0a', borderRadius: '6px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
+                  style={{ flex: 1, display: 'block', textAlign: 'center', padding: '12px', background: 'var(--kyn-green-hi)', color: '#0a0a0a', borderRadius: '6px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
                 >
                   View Now
                 </a>
@@ -421,7 +421,7 @@ export default function MembersPage() {
                 background: profilePhoto ? `url(${profilePhoto})` : `linear-gradient(135deg, ${levelColors[user.level]}20, ${levelColors[user.level]}10)`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                border: '1px solid #2c2c2a',
+                border: '1px solid var(--kyn-border)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -444,8 +444,8 @@ export default function MembersPage() {
                 width: '1.5rem',
                 height: '1.5rem',
                 borderRadius: '50%',
-                background: '#9bc4b8',
-                border: '2px solid #0f0f0d',
+                background: 'var(--kyn-green-hi)',
+                border: '2px solid var(--kyn-sidebar)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -462,9 +462,9 @@ export default function MembersPage() {
             fontWeight: 300,
             marginBottom: '1rem',
             letterSpacing: '-0.02em',
-            color: '#f0ede8'
+            color: 'var(--kyn-ink)'
           }}>
-            <span style={{ color: 'rgba(240, 237, 232, 0.5)' }}>Welcome back,</span> <span style={{ color: '#f0ede8' }}>{user.name}</span>
+            <span style={{ color: 'rgba(240, 237, 232, 0.5)' }}>Welcome back,</span> <span style={{ color: 'var(--kyn-ink)' }}>{user.name}</span>
           </h1>
           <p style={{ color: '#a0a09c', fontSize: 'clamp(1rem, 2vw, 1.125rem)', fontWeight: 300 }}>
             Your transformation journey continues
@@ -472,7 +472,7 @@ export default function MembersPage() {
         </div>
 
         {/* Journey Progress — horizontal timeline */}
-        <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '12px', padding: '1.25rem 1.5rem 1.75rem', marginBottom: '2rem' }}>
+        <div style={{ background: 'var(--kyn-sidebar2)', border: '1px solid var(--kyn-border)', borderRadius: '12px', padding: '1.25rem 1.5rem 1.75rem', marginBottom: '2rem' }}>
           <div style={{ marginBottom: '1.75rem' }}>
             <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: '#555', fontWeight: 400, marginBottom: '4px' }}>YOUR JOURNEY</div>
             <div style={{ fontSize: '0.8rem', color: '#a0a09c', lineHeight: 1.5 }}>
@@ -488,7 +488,7 @@ export default function MembersPage() {
               left: 0,
               right: 0,
               height: '2px',
-              background: '#2c2c2a',
+              background: 'var(--kyn-border)',
               borderRadius: '1px'
             }} />
 
@@ -537,7 +537,7 @@ export default function MembersPage() {
                   <div style={{
                     marginTop: '8px',
                     fontSize: '0.68rem',
-                    color: isCurrent ? '#f0ede8' : isCompleted ? '#4a9e5c' : '#444',
+                    color: isCurrent ? 'var(--kyn-ink)' : isCompleted ? '#4a9e5c' : '#444',
                     fontWeight: isCurrent ? 600 : 400,
                     whiteSpace: 'nowrap',
                     letterSpacing: '0.02em'
@@ -554,8 +554,8 @@ export default function MembersPage() {
         <div style={{ marginBottom: '2rem' }}>
           <div style={{
             backdropFilter: 'blur(20px)',
-            background: '#1a1a18',
-            border: '1px solid #2c2c2a',
+            background: 'var(--kyn-sidebar2)',
+            border: '1px solid var(--kyn-border)',
             borderRadius: '12px',
             padding: '2rem',
             transition: 'border 0.3s ease',
@@ -564,7 +564,7 @@ export default function MembersPage() {
             flexDirection: 'column'
           }}
           onMouseEnter={(e) => e.currentTarget.style.borderColor = '#3a3a38'}
-          onMouseLeave={(e) => e.currentTarget.style.borderColor = '#2c2c2a'}>
+          onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--kyn-border)'}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '1.5rem' }}>
               <div style={{
                 width: '2.5rem',
@@ -579,7 +579,7 @@ export default function MembersPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300, color: '#f0ede8' }}>Quick Access</h3>
+              <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: 300, color: 'var(--kyn-ink)' }}>Quick Access</h3>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {[
@@ -598,19 +598,19 @@ export default function MembersPage() {
                     gap: '1rem',
                     padding: '1rem',
                     background: '#141412',
-                    border: '1px solid #2c2c2a',
+                    border: '1px solid var(--kyn-border)',
                     borderRadius: '8px',
                     textDecoration: 'none',
-                    color: '#f0ede8',
+                    color: 'var(--kyn-ink)',
                     transition: 'all 0.2s ease'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = '#1e1e1c'
-                    e.currentTarget.style.borderColor = '#9bc4b8'
+                    e.currentTarget.style.borderColor = 'var(--kyn-green-hi)'
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = '#141412'
-                    e.currentTarget.style.borderColor = '#2c2c2a'
+                    e.currentTarget.style.borderColor = 'var(--kyn-border)'
                   }}
                 >
                   <div style={{
@@ -630,7 +630,7 @@ export default function MembersPage() {
                     </svg>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 300, transition: 'color 0.3s ease', color: '#f0ede8' }}>{action.title}</div>
+                    <div style={{ fontWeight: 300, transition: 'color 0.3s ease', color: 'var(--kyn-ink)' }}>{action.title}</div>
                     <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>{action.desc}</div>
                   </div>
                   <svg style={{ width: '1.25rem', height: '1.25rem', color: '#555', flexShrink: 0, transition: 'all 0.3s ease' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -647,14 +647,14 @@ export default function MembersPage() {
         <div style={{
           marginBottom: '2rem',
           backdropFilter: 'blur(20px)',
-          background: '#1a1a18',
-          border: '1px solid #2c2c2a',
+          background: 'var(--kyn-sidebar2)',
+          border: '1px solid var(--kyn-border)',
           borderRadius: '12px',
           padding: '2rem',
           transition: 'border 0.3s ease'
         }}
         onMouseEnter={(e) => e.currentTarget.style.borderColor = '#3a3a38'}
-        onMouseLeave={(e) => e.currentTarget.style.borderColor = '#2c2c2a'}>
+        onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--kyn-border)'}>
           <h3 style={{
             fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
             fontWeight: 300,
@@ -662,7 +662,7 @@ export default function MembersPage() {
             display: 'flex',
             alignItems: 'center',
             gap: '0',
-            color: '#f0ede8'
+            color: 'var(--kyn-ink)'
           }}>
 Your Progress
           </h3>
@@ -675,11 +675,11 @@ Your Progress
             <div style={{
               padding: '1.5rem',
               background: 'rgba(155, 196, 184, 0.05)',
-              border: '1px solid #2c2c2a',
+              border: '1px solid var(--kyn-border)',
               borderRadius: '8px',
               transition: 'all 0.3s ease'
             }}>
-              <div style={{ fontSize: '2rem', fontWeight: 300, color: '#9bc4b8', marginBottom: '0.5rem' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 300, color: 'var(--kyn-green-hi)', marginBottom: '0.5rem' }}>
                 {stats.videosWatched || 0}
               </div>
               <div style={{ fontSize: '0.875rem', color: '#666', fontWeight: 300 }}>
@@ -723,12 +723,12 @@ Your Progress
         {/* Account Info */}
         <div style={{
           backdropFilter: 'blur(20px)',
-          background: '#1a1a18',
-          border: '1px solid #2c2c2a',
+          background: 'var(--kyn-sidebar2)',
+          border: '1px solid var(--kyn-border)',
           borderRadius: '12px',
           padding: '2rem'
         }}>
-          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0', color: '#f0ede8' }}>
+          <h3 style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 300, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0', color: 'var(--kyn-ink)' }}>
             <svg style={{ width: '1.25rem', height: '1.25rem', color: '#555' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
@@ -743,13 +743,13 @@ Your Progress
               <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#555', marginBottom: '0.5rem', fontWeight: 300 }}>
                 EMAIL ADDRESS
               </div>
-              <div style={{ fontWeight: 300, color: '#f0ede8' }}>{user.email}</div>
+              <div style={{ fontWeight: 300, color: 'var(--kyn-ink)' }}>{user.email}</div>
             </div>
             <div>
               <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#555', marginBottom: '0.5rem', fontWeight: 300 }}>
                 MEMBER SINCE
               </div>
-              <div style={{ fontWeight: 300, color: '#f0ede8' }}>
+              <div style={{ fontWeight: 300, color: 'var(--kyn-ink)' }}>
                 {new Date(user.joinDate).toLocaleDateString('en-US', {
                   month: 'long',
                   day: 'numeric',
@@ -759,7 +759,7 @@ Your Progress
             </div>
           </div>
 
-          <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #2c2c2a' }}>
+          <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--kyn-border)' }}>
             <button
               onClick={handleManageBilling}
               disabled={billingLoading}
@@ -775,7 +775,7 @@ Your Progress
                 opacity: billingLoading ? 0.6 : 1,
                 transition: 'all 0.2s ease'
               }}
-              onMouseEnter={(e) => { if (!billingLoading) e.currentTarget.style.borderColor = '#9bc4b8' }}
+              onMouseEnter={(e) => { if (!billingLoading) e.currentTarget.style.borderColor = 'var(--kyn-green-hi)' }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#333' }}
             >
               {billingLoading ? 'Loading...' : 'Manage payment details'}
@@ -806,9 +806,9 @@ Your Progress
         >
           <div
             style={{
-              background: '#1a1a18',
+              background: 'var(--kyn-sidebar2)',
               borderRadius: '12px',
-              border: '1px solid #2c2c2a',
+              border: '1px solid var(--kyn-border)',
               maxWidth: '32rem',
               width: '100%',
               maxHeight: '90vh',
@@ -821,9 +821,9 @@ Your Progress
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '1.5rem',
-              borderBottom: '1px solid #2c2c2a'
+              borderBottom: '1px solid var(--kyn-border)'
             }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 300, color: '#f0ede8' }}>Profile Settings</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 300, color: 'var(--kyn-ink)' }}>Profile Settings</h2>
               <button
                 onClick={() => setShowProfileModal(false)}
                 style={{
@@ -849,7 +849,7 @@ Your Progress
                   background: profilePhoto ? `url(${profilePhoto})` : 'linear-gradient(135deg, rgba(155, 196, 184, 0.2), rgba(127, 176, 105, 0.1))',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
-                  border: '2px solid #9bc4b8',
+                  border: '2px solid var(--kyn-green-hi)',
                   margin: '0 auto 1rem',
                   display: 'flex',
                   alignItems: 'center',
@@ -865,9 +865,9 @@ Your Progress
                   display: 'inline-block',
                   padding: '0.5rem 1rem',
                   background: 'transparent',
-                  border: '1px solid #9bc4b8',
+                  border: '1px solid var(--kyn-green-hi)',
                   borderRadius: '8px',
-                  color: '#9bc4b8',
+                  color: 'var(--kyn-green-hi)',
                   fontSize: '0.875rem',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
@@ -921,7 +921,7 @@ Your Progress
                     background: '#252523',
                     border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#f0ede8',
+                    color: 'var(--kyn-ink)',
                     fontSize: '1rem',
                     outline: 'none'
                   }}
@@ -945,7 +945,7 @@ Your Progress
                     background: '#252523',
                     border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#f0ede8',
+                    color: 'var(--kyn-ink)',
                     fontSize: '1rem',
                     outline: 'none'
                   }}
@@ -970,7 +970,7 @@ Your Progress
                     background: '#252523',
                     border: '1px solid #333',
                     borderRadius: '8px',
-                    color: '#f0ede8',
+                    color: 'var(--kyn-ink)',
                     fontSize: '1rem',
                     outline: 'none',
                     resize: 'vertical',
@@ -990,8 +990,8 @@ Your Progress
                   style={{
                     flex: 1,
                     padding: '0.875rem',
-                    background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                    color: '#0f0f0d',
+                    background: 'linear-gradient(135deg, var(--kyn-green-hi), var(--kyn-green))',
+                    color: 'var(--kyn-sidebar)',
                     fontWeight: 600,
                     fontSize: '1rem',
                     borderRadius: '8px',
