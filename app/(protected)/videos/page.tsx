@@ -82,7 +82,7 @@ export default function LibraryPage() {
 
       if (res.ok) {
         setVideos(data.videos)
-        
+
         // Fetch continue watching
         fetch('/api/user/stats', {
           headers: { 'x-user-id': JSON.parse(localStorage.getItem('user') || '{}').id }
@@ -113,16 +113,19 @@ export default function LibraryPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed':
-        return '#7fb069'
-      case 'in_progress':
-        return '#9bc4b8'
-      default:
-        return '#2c2c2a'
+      case 'completed': return 'var(--kyn-green-bg)'
+      case 'in_progress': return 'var(--kyn-blue-bg)'
+      default: return 'var(--kyn-surface-raised)'
     }
   }
 
-  const getStatusTextColor = (status: string) => status === 'new' ? '#a0a09c' : '#0f0f0d'
+  const getStatusTextColor = (status: string) => {
+    switch (status) {
+      case 'completed': return 'var(--kyn-green)'
+      case 'in_progress': return 'var(--kyn-blue)'
+      default: return 'var(--kyn-ink3)'
+    }
+  }
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -162,149 +165,126 @@ export default function LibraryPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#666', fontWeight: 300 }}>Loading library...</div>
+      <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'var(--kyn-ink3)', fontFamily: 'var(--kyn-font-sans)', fontWeight: 300 }}>Loading library...</div>
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8' }}>
-      {/* Animated Background */}
-      <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
-        <div style={{
-          position: 'absolute',
-          top: '25%',
-          left: '-12rem',
-          width: isMobile ? '18rem' : '24rem',
-          height: isMobile ? '18rem' : '24rem',
-          background: 'radial-gradient(circle, rgba(155, 196, 184, 0.1) 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(100px)'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          bottom: '25%',
-          right: '-12rem',
-          width: isMobile ? '18rem' : '24rem',
-          height: isMobile ? '18rem' : '24rem',
-          background: 'radial-gradient(circle, rgba(127, 176, 105, 0.1) 0%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(100px)'
-        }}></div>
-      </div>
+    <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
 
-<div style={{ position: 'sticky',
-        top: 0, zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '1rem 1.5rem' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '16px 14px 72px' : '28px 32px 52px' }}>
+
         {/* Header */}
-        <div style={{ marginBottom: '2rem' }}>
+        <div style={{ marginBottom: '24px' }}>
           <Link
             href="/members"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              color: '#9bc4b8',
+              color: 'var(--kyn-green)',
               textDecoration: 'none',
-              fontSize: '0.875rem',
-              marginBottom: '1rem',
-              transition: 'color 0.3s ease'
+              fontSize: '13px',
+              marginBottom: '16px',
+              transition: 'color 0.15s ease'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#7fb069'}
-            onMouseLeave={(e) => e.currentTarget.style.color = '#9bc4b8'}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--kyn-green)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--kyn-green)'}
           >
             ← Back to Dashboard
           </Link>
-          
-        {/* Continue Watching */}
-        {continueWatching.length > 0 && (
-          <div style={{ marginBottom: '3rem' }}>
-            <h2 style={{
-              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-              fontWeight: 300,
-              marginBottom: '1.5rem',
-              color: '#9bc4b8'
-            }}>
-              Continue Watching
-            </h2>
-            
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: '1.5rem'
-            }}>
-              {continueWatching.map((video: any) => (
-                <Link
-                  key={video.id}
-                  href={`/videos/${video.id}`}
-                  style={{
-                    position: 'relative',
-                    display: 'block',
-                    background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.05), rgba(127, 176, 105, 0.05))',
-                    border: '1px solid rgba(155, 196, 184, 0.2)',
-                    borderRadius: '8px',
-                    padding: '1.5rem',
-                    textDecoration: 'none',
-                    color: '#f0ede8',
-                    transition: 'all 0.3s ease',
-                    overflow: 'hidden'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.5)'
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.2)'
-                    e.currentTarget.style.transform = 'translateY(0)'
-                  }}
-                >
-                  <div style={{ marginBottom: '1rem' }}>
-                    <div style={{
-                      fontSize: '1.125rem',
-                      fontWeight: 600,
-                      marginBottom: '0.5rem',
-                      color: '#f0ede8'
-                    }}>
-                      {video.title || 'Video'}
-                    </div>
-                    <div style={{
-                      fontSize: '0.75rem',
-                      color: '#666'
-                    }}>
-                      {Math.round(video.percentage)}% complete
-                    </div>
-                  </div>
 
-                  {/* Progress Bar */}
-                  <div style={{
-                    width: '100%',
-                    height: '4px',
-                    background: '#2c2c2a',
-                    borderRadius: '2px',
-                    overflow: 'hidden'
-                  }}>
+          {/* Continue Watching */}
+          {continueWatching.length > 0 && (
+            <div style={{ marginBottom: '28px' }}>
+              <h2 style={{
+                fontSize: isMobile ? '16px' : '18px',
+                fontWeight: 400,
+                marginBottom: '14px',
+                color: 'var(--kyn-ink)',
+                fontFamily: 'var(--kyn-font-serif)'
+              }}>
+                Continue Watching
+              </h2>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
+                gap: '11px'
+              }}>
+                {continueWatching.map((video: any) => (
+                  <Link
+                    key={video.id}
+                    href={`/videos/${video.id}`}
+                    style={{
+                      position: 'relative',
+                      display: 'block',
+                      background: 'var(--kyn-surface)',
+                      border: '1px solid var(--kyn-border)',
+                      borderRadius: 'var(--kyn-r-lg)',
+                      padding: '14px 16px',
+                      textDecoration: 'none',
+                      color: 'var(--kyn-ink)',
+                      transition: 'box-shadow 0.15s ease',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                      overflow: 'hidden'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'
+                    }}
+                  >
+                    <div style={{ marginBottom: '10px' }}>
+                      <div style={{
+                        fontSize: '13.5px',
+                        fontWeight: 600,
+                        marginBottom: '4px',
+                        color: 'var(--kyn-ink)'
+                      }}>
+                        {video.title || 'Video'}
+                      </div>
+                      <div style={{
+                        fontSize: '11px',
+                        color: 'var(--kyn-ink3)'
+                      }}>
+                        {Math.round(video.percentage)}% complete
+                      </div>
+                    </div>
+
+                    {/* Progress Bar */}
                     <div style={{
-                      height: '100%',
-                      width: `${video.percentage}%`,
-                      background: 'linear-gradient(90deg, #9bc4b8, #7fb069)',
-                      transition: 'width 0.3s ease'
-                    }}></div>
-                  </div>
-                </Link>
-              ))}
+                      width: '100%',
+                      height: '3px',
+                      background: 'var(--kyn-border)',
+                      borderRadius: '2px',
+                      overflow: 'hidden'
+                    }}>
+                      <div style={{
+                        height: '100%',
+                        width: `${video.percentage}%`,
+                        background: 'var(--kyn-green)',
+                        transition: 'width 0.3s ease'
+                      }}></div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <h1 style={{
-            fontSize: isMobile ? '2rem' : '3rem',
-            fontWeight: 300,
-            marginBottom: '0.5rem',
-            letterSpacing: '-0.02em',
-            color: '#f0ede8'
+          <h1 style={{
+            fontSize: isMobile ? '20px' : '22px',
+            fontWeight: 400,
+            marginBottom: '6px',
+            fontFamily: 'var(--kyn-font-serif)',
+            color: 'var(--kyn-ink)'
           }}>
             {activeSection === 'teachings' ? 'Teachings' : 'Live Call Replays'}
           </h1>
-          <p style={{ color: '#a0a09c', fontSize: '1rem', fontWeight: 300, marginBottom: '1.5rem' }}>
+          <p style={{ color: 'var(--kyn-ink2)', fontSize: '13.5px', fontWeight: 300, marginBottom: '18px', lineHeight: 1.6 }}>
             {activeSection === 'teachings'
               ? 'The sessions, practices, and foundation work. Work through these at your own pace between live calls.'
               : 'Every live call is recorded and uploaded here. If you missed one, catch up before the next session.'
@@ -312,20 +292,18 @@ export default function LibraryPage() {
           </p>
 
           {/* Section toggle */}
-          <div style={{ display: 'flex', gap: '0', marginBottom: '0.5rem', border: '1px solid #2c2c2a', borderRadius: '6px', overflow: 'hidden', width: 'fit-content' }}>
+          <div style={{ display: 'flex', gap: '0', marginBottom: '6px', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', overflow: 'hidden', width: 'fit-content' }}>
             {(['teachings', 'replays'] as const).map(section => (
               <button
                 key={section}
                 onClick={() => { setActiveSection(section); setSelectedCategory('all') }}
                 style={{
-                  padding: '0.75rem 1.75rem',
-                  background: activeSection === section
-                    ? section === 'replays' ? 'linear-gradient(135deg, #9bc4b8, #7fb069)' : '#f0ede8'
-                    : '#1a1a18',
+                  padding: '8px 18px',
+                  background: activeSection === section ? 'var(--kyn-green-bg)' : 'var(--kyn-surface)',
                   border: 'none',
-                  borderRight: section === 'teachings' ? '1px solid #2c2c2a' : 'none',
-                  color: activeSection === section ? (section === 'replays' ? '#fff' : '#0f0f0d') : '#666',
-                  fontSize: '0.9rem',
+                  borderRight: section === 'teachings' ? '1px solid var(--kyn-border)' : 'none',
+                  color: activeSection === section ? 'var(--kyn-green)' : 'var(--kyn-ink3)',
+                  fontSize: '13px',
                   fontWeight: activeSection === section ? 600 : 400,
                   cursor: 'pointer',
                   transition: 'all 0.15s',
@@ -335,13 +313,13 @@ export default function LibraryPage() {
                 {section === 'teachings' ? 'Teachings' : 'Live Replays'}
                 {section === 'replays' && replayVideos.length > 0 && (
                   <span style={{
-                    marginLeft: '8px',
-                    fontSize: '0.7rem',
+                    marginLeft: '7px',
+                    fontSize: '9.5px',
                     fontWeight: 700,
-                    background: activeSection === 'replays' ? 'rgba(255,255,255,0.3)' : '#9bc4b8',
-                    color: '#fff',
+                    background: activeSection === 'replays' ? 'var(--kyn-green)' : 'var(--kyn-green-bg)',
+                    color: activeSection === 'replays' ? '#fff' : 'var(--kyn-green)',
                     padding: '1px 6px',
-                    borderRadius: '10px'
+                    borderRadius: '8px'
                   }}>{replayVideos.length}</span>
                 )}
               </button>
@@ -352,21 +330,23 @@ export default function LibraryPage() {
         {/* Stats — compact strip */}
         <div style={{
           display: 'flex',
-          gap: '1.5rem',
-          marginBottom: '2rem',
-          padding: '0.75rem 1rem',
-          background: '#1a1a18',
-          borderRadius: '6px',
+          gap: '20px',
+          marginBottom: '20px',
+          padding: '12px 16px',
+          background: 'var(--kyn-surface)',
+          borderRadius: 'var(--kyn-r-lg)',
+          border: '1px solid var(--kyn-border)',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
           flexWrap: 'wrap'
         }}>
           {[
-            { value: stats.completedVideos, label: 'Completed', color: '#9bc4b8' },
-            { value: stats.videosWatched, label: 'Watched', color: '#7fb069' },
-            { value: `${Math.floor(stats.totalWatchTime / 60)}h`, label: 'Practice', color: '#6a994e' },
+            { value: stats.completedVideos, label: 'Completed', color: 'var(--kyn-green)' },
+            { value: stats.videosWatched, label: 'Watched', color: 'var(--kyn-green-hi)' },
+            { value: `${Math.floor(stats.totalWatchTime / 60)}h`, label: 'Practice', color: 'var(--kyn-ink2)' },
           ].map(({ value, label, color }) => (
-            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontSize: '1.1rem', fontWeight: 600, color }}>{value}</span>
-              <span style={{ fontSize: '0.8rem', color: '#999' }}>{label}</span>
+            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ fontSize: '15px', fontWeight: 600, color }}>{value}</span>
+              <span style={{ fontSize: '12px', color: 'var(--kyn-ink3)' }}>{label}</span>
             </div>
           ))}
         </div>
@@ -375,8 +355,8 @@ export default function LibraryPage() {
         <div style={{
           display: 'flex',
           flexDirection: isMobile ? 'column' : 'row',
-          gap: '1rem',
-          marginBottom: '2rem'
+          gap: '10px',
+          marginBottom: '18px'
         }}>
           <input
             type="text"
@@ -385,27 +365,29 @@ export default function LibraryPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               flex: 1,
-              padding: '0.875rem 1rem',
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
-              borderRadius: '3px',
-              color: '#f0ede8',
-              fontSize: '1rem',
-              outline: 'none'
+              padding: '9px 12px',
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
+              borderRadius: 'var(--kyn-r)',
+              color: 'var(--kyn-ink)',
+              fontSize: '13.5px',
+              outline: 'none',
+              fontFamily: 'var(--kyn-font-sans)'
             }}
           />
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             style={{
-              padding: '0.875rem 1rem',
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
-              borderRadius: '3px',
-              color: '#f0ede8',
-              fontSize: '1rem',
+              padding: '9px 12px',
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
+              borderRadius: 'var(--kyn-r)',
+              color: 'var(--kyn-ink2)',
+              fontSize: '13.5px',
               outline: 'none',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontFamily: 'var(--kyn-font-sans)'
             }}
           >
             <option value="newest">Newest First</option>
@@ -419,8 +401,8 @@ export default function LibraryPage() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : `repeat(${TOPICS.length + 1}, 1fr)`,
-            gap: '0.75rem',
-            marginBottom: '2.5rem',
+            gap: '8px',
+            marginBottom: '24px',
           }}>
             {(['all', ...TOPICS] as const).map((key) => {
               const isActive = selectedCategory === key
@@ -429,29 +411,29 @@ export default function LibraryPage() {
                   key={key}
                   onClick={() => setSelectedCategory(key)}
                   style={{
-                    padding: '1rem 0.5rem',
-                    background: isActive ? '#f0ede8' : '#1a1a18',
-                    border: isActive ? '2px solid #f0ede8' : '2px solid #2c2c2a',
-                    borderRadius: '8px',
-                    color: isActive ? '#0f0f0d' : '#666',
-                    fontSize: isMobile ? '0.8rem' : '0.95rem',
+                    padding: '8px 6px',
+                    background: isActive ? 'var(--kyn-green-bg)' : 'var(--kyn-surface)',
+                    border: `1px solid ${isActive ? 'var(--kyn-border-green)' : 'var(--kyn-border)'}`,
+                    borderRadius: 'var(--kyn-r-lg)',
+                    color: isActive ? 'var(--kyn-green)' : 'var(--kyn-ink3)',
+                    fontSize: isMobile ? '11.5px' : '12.5px',
                     fontWeight: isActive ? 600 : 400,
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
-                    transition: 'all 0.2s ease',
+                    transition: 'all 0.15s ease',
                     textAlign: 'center',
                     letterSpacing: '0.01em',
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive) {
-                      e.currentTarget.style.borderColor = '#9bc4b8'
-                      e.currentTarget.style.color = '#f0ede8'
+                      e.currentTarget.style.borderColor = 'var(--kyn-border-green)'
+                      e.currentTarget.style.color = 'var(--kyn-green)'
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) {
-                      e.currentTarget.style.borderColor = '#2c2c2a'
-                      e.currentTarget.style.color = '#666'
+                      e.currentTarget.style.borderColor = 'var(--kyn-border)'
+                      e.currentTarget.style.color = 'var(--kyn-ink3)'
                     }
                   }}
                 >
@@ -465,13 +447,13 @@ export default function LibraryPage() {
         {/* Replays catch-up notice */}
         {activeSection === 'replays' && replayVideos.length > 0 && (
           <div style={{
-            padding: '1rem 1.25rem',
-            background: 'rgba(155,196,184,0.08)',
-            border: '1px solid rgba(155,196,184,0.25)',
-            borderRadius: '6px',
-            marginBottom: '1.5rem',
-            fontSize: '0.9rem',
-            color: '#a0a09c',
+            padding: '12px 14px',
+            background: 'var(--kyn-green-bg)',
+            border: '1px solid var(--kyn-border-green)',
+            borderRadius: 'var(--kyn-r)',
+            marginBottom: '16px',
+            fontSize: '13px',
+            color: 'var(--kyn-ink2)',
             lineHeight: 1.6
           }}>
             Missed a call? Every session is recorded and posted here, usually within 48 hours. Watch it before the next live call so you stay with the group and do not fall behind on the work.
@@ -481,10 +463,10 @@ export default function LibraryPage() {
         {/* Video Grid */}
         {displayVideos.length === 0 ? (
           <div style={{
-            padding: '4rem 2rem',
+            padding: '3rem 2rem',
             textAlign: 'center',
-            color: '#999',
-            fontSize: '0.95rem'
+            color: 'var(--kyn-ink3)',
+            fontSize: '13.5px'
           }}>
             {activeSection === 'replays'
               ? 'No replays posted yet. Check back after the next live call.'
@@ -492,41 +474,41 @@ export default function LibraryPage() {
           </div>
         ) : activeSection === 'teachings' && selectedCategory === 'all' ? (
           // Grouped by topic
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {TOPICS.map(topic => {
               const topicVideos = displayVideos.filter(v => v.category === topic)
               if (topicVideos.length === 0) return null
               return (
                 <div key={topic}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem' }}>
-                    <h2 style={{ fontSize: '1.25rem', fontWeight: 500, color: '#f0ede8', margin: 0 }}>{topic}</h2>
-                    <div style={{ flex: 1, height: '1px', background: '#2c2c2a' }} />
-                    <span style={{ fontSize: '0.8rem', color: '#999' }}>{topicVideos.length} video{topicVideos.length !== 1 ? 's' : ''}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+                    <h2 style={{ fontSize: '15px', fontWeight: 500, color: 'var(--kyn-ink)', margin: 0, fontFamily: 'var(--kyn-font-serif)' }}>{topic}</h2>
+                    <div style={{ flex: 1, height: '1px', background: 'var(--kyn-border)' }} />
+                    <span style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{topicVideos.length} video{topicVideos.length !== 1 ? 's' : ''}</span>
                   </div>
                   <div style={{
                     display: 'grid',
-                    gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
-                    gap: '1.5rem'
+                    gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
+                    gap: '11px'
                   }}>
                     {topicVideos.map(video => {
                       const youtubeId = getYouTubeId(video.youtube_url)
                       const thumbnailUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : null
                       return (
                         <Link key={video.id} href={`/videos/${video.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                          <div style={{ background: '#1a1a18', border: '1px solid #2c2c2a', borderRadius: '6px', overflow: 'hidden', transition: 'all 0.2s ease', cursor: 'pointer', height: '100%', display: 'flex', flexDirection: 'column' }}
-                            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#9bc4b8'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-                            onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#2c2c2a'; e.currentTarget.style.transform = 'translateY(0)' }}
+                          <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', overflow: 'hidden', transition: 'box-shadow 0.15s ease', cursor: 'pointer', height: '100%', display: 'flex', flexDirection: 'column', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)' }}
+                            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)' }}
                           >
-                            <div style={{ width: '100%', paddingTop: '56.25%', background: thumbnailUrl ? `url(${thumbnailUrl}) center/cover` : 'rgba(0,0,0,0.5)', position: 'relative' }}>
-                              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(155, 196, 184, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <svg style={{ width: '24px', height: '24px', color: '#9bc4b8' }} fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
+                            <div style={{ width: '100%', paddingTop: '56.25%', background: thumbnailUrl ? `url(${thumbnailUrl}) center/cover` : 'var(--kyn-surface-raised)', position: 'relative', borderRadius: 'var(--kyn-r-lg) var(--kyn-r-lg) 0 0', overflow: 'hidden' }}>
+                              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '44px', height: '44px', borderRadius: '50%', background: 'var(--kyn-green)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <svg style={{ width: '20px', height: '20px', color: '#fff' }} fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
                               </div>
-                              <div style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', padding: '0.25rem 0.75rem', background: getStatusColor(video.status), borderRadius: '20px', fontSize: '0.75rem', fontWeight: 600, color: getStatusTextColor(video.status) }}>{getStatusLabel(video.status)}</div>
+                              <div style={{ position: 'absolute', top: '8px', right: '8px', padding: '2px 8px', background: getStatusColor(video.status), borderRadius: '8px', fontSize: '9.5px', fontWeight: 700, color: getStatusTextColor(video.status) }}>{getStatusLabel(video.status)}</div>
                             </div>
-                            <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                              <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem', lineHeight: 1.4, color: '#f0ede8' }}>{video.title}</h3>
-                              <p style={{ fontSize: '0.875rem', color: '#a0a09c', lineHeight: 1.6, marginBottom: '1rem', flex: 1 }}>{video.description?.substring(0, 100)}{video.description?.length > 100 ? '...' : ''}</p>
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.875rem', color: '#999' }}>
+                            <div style={{ padding: '14px 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                              <h3 style={{ fontSize: '13.5px', fontWeight: 600, marginBottom: '5px', lineHeight: 1.4, color: 'var(--kyn-ink)' }}>{video.title}</h3>
+                              <p style={{ fontSize: '12.5px', color: 'var(--kyn-ink2)', lineHeight: 1.6, marginBottom: '10px', flex: 1 }}>{video.description?.substring(0, 100)}{video.description?.length > 100 ? '...' : ''}</p>
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '11px', color: 'var(--kyn-ink3)' }}>
                                 <span>{video.duration || 'Video'}</span>
                                 <span>{new Date(video.upload_date).toLocaleDateString()}</span>
                               </div>
@@ -543,8 +525,8 @@ export default function LibraryPage() {
         ) : (
           <div style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
-            gap: '1.5rem'
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
+            gap: '11px'
           }}>
             {displayVideos.map(video => {
               const youtubeId = getYouTubeId(video.youtube_url)
@@ -558,23 +540,22 @@ export default function LibraryPage() {
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div style={{
-                  background: '#1a1a18',
-                  border: '1px solid #2c2c2a',
-                  borderRadius: '6px',
+                  background: 'var(--kyn-surface)',
+                  border: '1px solid var(--kyn-border)',
+                  borderRadius: 'var(--kyn-r-lg)',
                   overflow: 'hidden',
-                  transition: 'all 0.2s ease',
+                  transition: 'box-shadow 0.15s ease',
                   cursor: 'pointer',
                   height: '100%',
                   display: 'flex',
-                  flexDirection: 'column'
+                  flexDirection: 'column',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#9bc4b8'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#2c2c2a'
-                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'
                 }}
                 >
                   {/* Thumbnail */}
@@ -583,67 +564,70 @@ export default function LibraryPage() {
                     paddingTop: '56.25%',
                     background: thumbnailUrl
                       ? `url(${thumbnailUrl}) center/cover`
-                      : 'rgba(0, 0, 0, 0.5)',
-                    position: 'relative'
+                      : 'var(--kyn-surface-raised)',
+                    position: 'relative',
+                    borderRadius: 'var(--kyn-r-lg) var(--kyn-r-lg) 0 0',
+                    overflow: 'hidden'
                   }}>
                     <div style={{
                       position: 'absolute',
                       top: '50%',
                       left: '50%',
                       transform: 'translate(-50%, -50%)',
-                      width: '48px',
-                      height: '48px',
+                      width: '44px',
+                      height: '44px',
                       borderRadius: '50%',
-                      background: 'rgba(155, 196, 184, 0.15)',
+                      background: 'var(--kyn-green)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}>
-                      <svg style={{ width: '24px', height: '24px', color: '#9bc4b8' }} fill="currentColor" viewBox="0 0 20 20">
+                      <svg style={{ width: '20px', height: '20px', color: '#fff' }} fill="currentColor" viewBox="0 0 20 20">
                         <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                       </svg>
                     </div>
                     {/* Status Badge */}
                     <div style={{
                       position: 'absolute',
-                      top: '0.75rem',
-                      right: '0.75rem',
-                      padding: '0.25rem 0.75rem',
+                      top: '8px',
+                      right: '8px',
+                      padding: '2px 8px',
                       background: getStatusColor(video.status),
-                      borderRadius: '20px',
-                      fontSize: '0.75rem',
-                      fontWeight: 600,
-                      color: '#0f0f0d'
+                      borderRadius: '8px',
+                      fontSize: '9.5px',
+                      fontWeight: 700,
+                      color: getStatusTextColor(video.status)
                     }}>
                       {getStatusLabel(video.status)}
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ padding: '14px 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <div style={{
-                      fontSize: '0.75rem',
-                      color: '#9bc4b8',
-                      marginBottom: '0.5rem',
+                      fontSize: '9.5px',
+                      color: 'var(--kyn-green)',
+                      marginBottom: '5px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.05em'
+                      letterSpacing: '0.1em',
+                      fontWeight: 600
                     }}>
                       {video.category}
                     </div>
                     <h3 style={{
-                      fontSize: '1.125rem',
+                      fontSize: '13.5px',
                       fontWeight: 600,
-                      marginBottom: '0.5rem',
+                      marginBottom: '5px',
                       lineHeight: 1.4,
-                      color: '#f0ede8'
+                      color: 'var(--kyn-ink)'
                     }}>
                       {video.title}
                     </h3>
                     <p style={{
-                      fontSize: '0.875rem',
-                      color: '#a0a09c',
+                      fontSize: '12.5px',
+                      color: 'var(--kyn-ink2)',
                       lineHeight: 1.6,
-                      marginBottom: '1rem',
+                      marginBottom: '10px',
                       flex: 1
                     }}>
                       {video.description?.substring(0, 100)}{video.description?.length > 100 ? '...' : ''}
@@ -652,8 +636,8 @@ export default function LibraryPage() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      fontSize: '0.875rem',
-                      color: '#999'
+                      fontSize: '11px',
+                      color: 'var(--kyn-ink3)'
                     }}>
                       <span>{video.duration || 'Video'}</span>
                       <span>{new Date(video.upload_date).toLocaleDateString()}</span>
