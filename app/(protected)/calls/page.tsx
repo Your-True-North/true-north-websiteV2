@@ -70,7 +70,6 @@ export default function CallsPage() {
 
   const stripHtml = (html: string) => {
     if (!html) return ''
-    // Remove HTML tags, CSS styles, and extra whitespace
     return html
       .replace(/<style[^>]*>.*?<\/style>/gi, '')
       .replace(/<script[^>]*>.*?<\/script>/gi, '')
@@ -109,7 +108,7 @@ export default function CallsPage() {
 
   const generateGoogleCalendarUrl = (event: CalendarEvent) => {
     const eventDate = new Date(event.date)
-    const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000) // 2 hours later
+    const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000)
 
     const formatDate = (date: Date) => {
       return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
@@ -127,27 +126,19 @@ export default function CallsPage() {
     const year = currentMonth.getFullYear()
     const month = currentMonth.getMonth()
 
-    // Get first day of month
     const firstDay = new Date(year, month, 1)
     const lastDay = new Date(year, month + 1, 0)
-
-    // Get day of week for first day (0 = Sunday)
     const startDayOfWeek = firstDay.getDay()
-
-    // Create array of calendar days
     const days: CalendarDay[] = []
 
-    // Add empty days for previous month
     for (let i = 0; i < startDayOfWeek; i++) {
       const date = new Date(year, month, -startDayOfWeek + i + 1)
       days.push({ date, hasCall: false })
     }
 
-    // Add days of current month
     for (let i = 1; i <= lastDay.getDate(); i++) {
       const date = new Date(year, month, i)
 
-      // Check if there's a calendar event on this day
       const dayEvent = calendarEvents.find(event => {
         const eventDate = new Date(event.date)
         return (
@@ -196,11 +187,12 @@ export default function CallsPage() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0f0f0d',
+        background: 'var(--kyn-bg)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#666'
+        color: 'var(--kyn-ink3)',
+        fontFamily: 'var(--kyn-font-sans)'
       }}>
         Loading...
       </div>
@@ -208,16 +200,17 @@ export default function CallsPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8', paddingTop: '6rem' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 16px' : '40px 20px' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '16px 14px 72px' : '28px 32px 52px' }}>
+
         {/* Header */}
-        <div style={{ marginBottom: '40px' }}>
+        <div style={{ marginBottom: '28px' }}>
           <Link
             href="/members"
             style={{
-              color: '#9bc4b8',
+              color: 'var(--kyn-green)',
               textDecoration: 'none',
-              fontSize: '14px',
+              fontSize: '13px',
               marginBottom: '12px',
               display: 'inline-block'
             }}
@@ -225,61 +218,65 @@ export default function CallsPage() {
             ← Back to Dashboard
           </Link>
           <h1 style={{
-            fontSize: isMobile ? '24px' : '32px',
-            fontWeight: 300,
-            marginBottom: '12px',
-            color: '#f0ede8'
+            fontSize: isMobile ? '20px' : '22px',
+            fontWeight: 400,
+            marginBottom: '8px',
+            color: 'var(--kyn-ink)',
+            fontFamily: 'var(--kyn-font-serif)'
           }}>
             Live Calls Calendar
           </h1>
           <p style={{
-            fontSize: '16px',
-            color: '#a0a09c'
+            fontSize: '13.5px',
+            color: 'var(--kyn-ink2)',
+            lineHeight: 1.6
           }}>
             Join monthly live sessions with True and guest experts
           </p>
         </div>
 
         {/* Upcoming Events List */}
-        <div style={{ marginBottom: '40px' }}>
+        <div style={{ marginBottom: '28px' }}>
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '20px',
+              marginBottom: '14px',
               cursor: 'pointer',
-              padding: '12px',
-              background: 'rgba(155, 196, 184, 0.05)',
-              borderRadius: '3px',
-              border: '1px solid rgba(155, 196, 184, 0.2)',
-              transition: 'all 0.3s ease'
+              padding: '12px 16px',
+              background: 'var(--kyn-surface)',
+              borderRadius: 'var(--kyn-r-lg)',
+              border: '1px solid var(--kyn-border)',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+              transition: 'box-shadow 0.15s ease'
             }}
             onClick={() => setIsEventsExpanded(!isEventsExpanded)}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(155, 196, 184, 0.1)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(155, 196, 184, 0.05)'}
+            onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)'}
+            onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'}
           >
             <h2 style={{
-              fontSize: isMobile ? '20px' : '24px',
+              fontSize: isMobile ? '15px' : '16px',
               fontWeight: 600,
-              color: '#9bc4b8',
-              margin: 0
+              color: 'var(--kyn-ink)',
+              margin: 0,
+              fontFamily: 'var(--kyn-font-serif)'
             }}>
               Upcoming Sessions {calendarEvents.length > 0 && `(${calendarEvents.filter(e => new Date(e.date) >= new Date()).length})`}
             </h2>
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              color: '#e67e22'
+              gap: '6px',
+              color: 'var(--kyn-green)'
             }}>
-              <span style={{ fontSize: '14px', fontWeight: 500 }}>
+              <span style={{ fontSize: '12px', fontWeight: 500 }}>
                 {isEventsExpanded ? 'Collapse' : 'Expand'}
               </span>
               <svg
                 style={{
-                  width: '20px',
-                  height: '20px',
+                  width: '16px',
+                  height: '16px',
                   transform: isEventsExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
                   transition: 'transform 0.3s ease'
                 }}
@@ -294,38 +291,26 @@ export default function CallsPage() {
 
           {calendarEvents.length === 0 ? (
             <div style={{
-              padding: '32px',
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
-              borderRadius: '6px',
-              textAlign: 'center'
+              padding: '28px',
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
+              borderRadius: 'var(--kyn-r-lg)',
+              textAlign: 'center',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
             }}>
-              <div style={{
-                fontSize: '48px',
-                marginBottom: '16px'
-              }}>
-                📅
-              </div>
-              <p style={{
-                fontSize: '16px',
-                color: '#666'
-              }}>
+              <div style={{ fontSize: '40px', marginBottom: '12px' }}>📅</div>
+              <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink3)' }}>
                 No upcoming sessions scheduled yet. Check back soon!
               </p>
             </div>
           ) : (
             <>
-              {/* Compact View - Always Visible */}
+              {/* Compact View */}
               {!isEventsExpanded && (
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '8px'
-                }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {calendarEvents.slice(0, 5).map((event, idx) => {
                     const eventDate = new Date(event.date)
                     const isUpcoming = eventDate >= new Date()
-
                     if (!isUpcoming) return null
 
                     const month = eventDate.toLocaleDateString('en-US', { month: 'short' })
@@ -342,60 +327,37 @@ export default function CallsPage() {
                         style={{
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '16px',
-                          padding: '12px 16px',
-                          background: '#1a1a18',
-                          border: '1px solid #2c2c2a',
-                          borderRadius: '6px',
-                          transition: 'all 0.3s ease',
+                          gap: '14px',
+                          padding: '11px 16px',
+                          background: 'var(--kyn-surface)',
+                          border: '1px solid var(--kyn-border)',
+                          borderLeft: '3px solid var(--kyn-green)',
+                          borderRadius: 'var(--kyn-r-lg)',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                          transition: 'box-shadow 0.15s ease',
                           cursor: 'pointer'
                         }}
-                        onClick={() => {
-                          window.open(generateGoogleCalendarUrl(event), '_blank')
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'rgba(155, 196, 184, 0.08)'
-                          e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.3)'
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = '#1a1a18'
-                          e.currentTarget.style.borderColor = '#2c2c2a'
-                        }}
+                        onClick={() => { window.open(generateGoogleCalendarUrl(event), '_blank') }}
+                        onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)' }}
+                        onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)' }}
                       >
-                        {/* Compact Date */}
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
                           gap: '8px',
-                          minWidth: isMobile ? '80px' : '120px'
+                          minWidth: isMobile ? '70px' : '110px'
                         }}>
-                          <div style={{
-                            fontSize: '14px',
-                            fontWeight: 600,
-                            color: '#7fb069'
-                          }}>
+                          <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--kyn-green)' }}>
                             {month} {day}
                           </div>
-                          <div style={{
-                            fontSize: '12px',
-                            color: '#a0a09c'
-                          }}>
+                          <div style={{ fontSize: '11.5px', color: 'var(--kyn-ink3)' }}>
                             {time}
                           </div>
                         </div>
-
-                        {/* Event Title */}
-                        <div style={{
-                          flex: 1,
-                          fontSize: '15px',
-                          fontWeight: 500,
-                          color: '#f0ede8'
-                        }}>
+                        <div style={{ flex: 1, fontSize: '13.5px', fontWeight: 500, color: 'var(--kyn-ink)' }}>
                           {event.title}
                         </div>
-
-                        {/* Arrow */}
-                        <svg style={{ width: '16px', height: '16px', color: '#666' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg style={{ width: '14px', height: '14px', color: 'var(--kyn-ink3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
@@ -404,17 +366,12 @@ export default function CallsPage() {
                 </div>
               )}
 
-              {/* Expanded View - Full Details */}
+              {/* Expanded View */}
               {isEventsExpanded && (
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '16px'
-                }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
                   {calendarEvents.slice(0, 5).map((event, idx) => {
                     const eventDate = new Date(event.date)
                     const isUpcoming = eventDate >= new Date()
-
                     if (!isUpcoming) return null
 
                     const dayOfWeek = eventDate.toLocaleDateString('en-US', { weekday: 'short' })
@@ -433,27 +390,19 @@ export default function CallsPage() {
                         style={{
                           display: 'flex',
                           flexDirection: isMobile ? 'column' : 'row',
-                          gap: isMobile ? '16px' : '24px',
-                          padding: isMobile ? '20px' : '24px',
-                          background: 'linear-gradient(135deg, rgba(155, 196, 184, 0.08), rgba(127, 176, 105, 0.08))',
-                          border: '1px solid rgba(155, 196, 184, 0.2)',
-                          borderRadius: '3px',
-                          transition: 'all 0.3s ease',
+                          gap: isMobile ? '14px' : '20px',
+                          padding: isMobile ? '16px' : '18px 20px',
+                          background: 'var(--kyn-surface)',
+                          border: '1px solid var(--kyn-border)',
+                          borderLeft: '3px solid var(--kyn-green)',
+                          borderRadius: 'var(--kyn-r-lg)',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                          transition: 'box-shadow 0.15s ease',
                           cursor: 'pointer'
                         }}
-                        onClick={() => {
-                          window.open(generateGoogleCalendarUrl(event), '_blank')
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(155, 196, 184, 0.15), rgba(127, 176, 105, 0.15))'
-                          e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.4)'
-                          e.currentTarget.style.transform = 'translateX(4px)'
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'linear-gradient(135deg, rgba(155, 196, 184, 0.08), rgba(127, 176, 105, 0.08))'
-                          e.currentTarget.style.borderColor = 'rgba(155, 196, 184, 0.2)'
-                          e.currentTarget.style.transform = 'translateX(0)'
-                        }}
+                        onClick={() => { window.open(generateGoogleCalendarUrl(event), '_blank') }}
+                        onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)' }}
+                        onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)' }}
                       >
                         {/* Date Badge */}
                         <div style={{
@@ -462,70 +411,59 @@ export default function CallsPage() {
                           flexDirection: 'column',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          width: isMobile ? '100%' : '100px',
-                          padding: '16px',
-                          background: 'rgba(155, 196, 184, 0.15)',
-                          border: '1px solid rgba(155, 196, 184, 0.3)',
-                          borderRadius: '3px'
+                          width: isMobile ? '100%' : '88px',
+                          padding: '12px',
+                          background: 'var(--kyn-green-bg)',
+                          border: '1px solid var(--kyn-border-green)',
+                          borderRadius: 'var(--kyn-r)'
                         }}>
                           <div style={{
-                            fontSize: '12px',
-                            fontWeight: 600,
-                            color: '#7fb069',
+                            fontSize: '9.5px',
+                            fontWeight: 700,
+                            color: 'var(--kyn-green)',
                             textTransform: 'uppercase',
-                            letterSpacing: '0.5px',
-                            marginBottom: '4px'
+                            letterSpacing: '0.1em',
+                            marginBottom: '3px'
                           }}>
                             {month}
                           </div>
                           <div style={{
-                            fontSize: '32px',
-                            fontWeight: 700,
-                            color: '#9bc4b8',
-                            lineHeight: 1
+                            fontSize: '28px',
+                            fontWeight: 300,
+                            color: 'var(--kyn-green)',
+                            lineHeight: 1,
+                            fontFamily: 'var(--kyn-font-serif)'
                           }}>
                             {day}
                           </div>
-                          <div style={{
-                            fontSize: '12px',
-                            color: '#666',
-                            marginTop: '4px'
-                          }}>
+                          <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', marginTop: '3px' }}>
                             {year}
                           </div>
                         </div>
 
                         {/* Event Details */}
-                        <div style={{
-                          flex: 1,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '8px'
-                        }}>
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '12px',
-                            flexWrap: 'wrap'
-                          }}>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                             <h3 style={{
-                              fontSize: isMobile ? '18px' : '20px',
+                              fontSize: isMobile ? '15px' : '16px',
                               fontWeight: 600,
-                              color: '#f0ede8',
-                              margin: 0
+                              color: 'var(--kyn-ink)',
+                              margin: 0,
+                              fontFamily: 'var(--kyn-font-serif)'
                             }}>
                               {event.title}
                             </h3>
                             <div style={{
                               display: 'flex',
                               alignItems: 'center',
-                              gap: '6px',
-                              padding: '4px 12px',
-                              background: 'rgba(127, 176, 105, 0.2)',
-                              borderRadius: '3px',
-                              fontSize: '13px',
+                              gap: '5px',
+                              padding: '3px 10px',
+                              background: 'var(--kyn-green-bg)',
+                              border: '1px solid var(--kyn-border-green)',
+                              borderRadius: 'var(--kyn-r)',
+                              fontSize: '12px',
                               fontWeight: 500,
-                              color: '#7fb069'
+                              color: 'var(--kyn-green)'
                             }}>
                               <span>🕒</span>
                               <span>{time}</span>
@@ -533,27 +471,15 @@ export default function CallsPage() {
                           </div>
 
                           {event.description && (
-                            <p style={{
-                              fontSize: '14px',
-                              color: '#a0a09c',
-                              lineHeight: 1.6,
-                              margin: 0
-                            }}>
+                            <p style={{ fontSize: '13px', color: 'var(--kyn-ink2)', lineHeight: 1.6, margin: 0 }}>
                               {stripHtml(event.description)}
                             </p>
                           )}
 
-                          <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            marginTop: '4px',
-                            fontSize: '13px',
-                            color: '#666'
-                          }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px', fontSize: '11.5px', color: 'var(--kyn-ink3)' }}>
                             <span>{dayOfWeek}</span>
-                            <span>•</span>
-                            <span>Click to add to your calendar</span>
+                            <span>·</span>
+                            <span style={{ color: 'var(--kyn-green)' }}>Click to add to calendar</span>
                           </div>
                         </div>
                       </div>
@@ -567,37 +493,39 @@ export default function CallsPage() {
 
         {/* Monthly Calendar */}
         <div style={{
-          padding: isMobile ? '24px' : '32px',
-          background: '#1a1a18',
-          border: '1px solid #2c2c2a',
-          borderRadius: '6px',
-          marginBottom: '40px'
+          padding: isMobile ? '18px' : '24px',
+          background: 'var(--kyn-surface)',
+          border: '1px solid var(--kyn-border)',
+          borderRadius: 'var(--kyn-r-lg)',
+          marginBottom: '28px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
         }}>
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '24px'
+            marginBottom: '20px'
           }}>
             <h2 style={{
-              fontSize: isMobile ? '20px' : '24px',
-              fontWeight: 600,
-              color: '#9bc4b8',
-              margin: 0
+              fontSize: isMobile ? '16px' : '18px',
+              fontWeight: 400,
+              color: 'var(--kyn-ink)',
+              margin: 0,
+              fontFamily: 'var(--kyn-font-serif)'
             }}>
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
             </h2>
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '6px' }}>
               <button
                 onClick={goToPreviousMonth}
                 style={{
-                  padding: '8px 16px',
-                  background: '#252523',
-                  border: '1px solid #333',
-                  borderRadius: '3px',
-                  color: '#9bc4b8',
+                  padding: '6px 14px',
+                  background: 'transparent',
+                  border: '1px solid var(--kyn-border-mid)',
+                  borderRadius: 'var(--kyn-r)',
+                  color: 'var(--kyn-ink2)',
                   cursor: 'pointer',
-                  fontSize: '14px'
+                  fontSize: '13px'
                 }}
               >
                 ←
@@ -605,13 +533,13 @@ export default function CallsPage() {
               <button
                 onClick={goToNextMonth}
                 style={{
-                  padding: '8px 16px',
-                  background: '#252523',
-                  border: '1px solid #333',
-                  borderRadius: '3px',
-                  color: '#9bc4b8',
+                  padding: '6px 14px',
+                  background: 'transparent',
+                  border: '1px solid var(--kyn-border-mid)',
+                  borderRadius: 'var(--kyn-r)',
+                  color: 'var(--kyn-ink2)',
                   cursor: 'pointer',
-                  fontSize: '14px'
+                  fontSize: '13px'
                 }}
               >
                 →
@@ -623,17 +551,17 @@ export default function CallsPage() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(7, 1fr)',
-            gap: isMobile ? '4px' : '8px'
+            gap: isMobile ? '3px' : '6px'
           }}>
             {/* Day headers */}
             {dayNames.map(day => (
               <div key={day} style={{
-                padding: isMobile ? '8px 4px' : '12px 8px',
+                padding: isMobile ? '7px 3px' : '10px 6px',
                 textAlign: 'center',
-                fontSize: isMobile ? '12px' : '14px',
+                fontSize: isMobile ? '11px' : '12px',
                 fontWeight: 600,
-                color: '#666',
-                borderBottom: '2px solid #2c2c2a'
+                color: 'var(--kyn-ink3)',
+                borderBottom: '1px solid var(--kyn-border)'
               }}>
                 {isMobile ? day.charAt(0) : day}
               </div>
@@ -651,24 +579,22 @@ export default function CallsPage() {
                 <div
                   key={idx}
                   style={{
-                    padding: isMobile ? '8px 4px' : '16px 8px',
-                    background: day.hasCall
-                      ? 'linear-gradient(135deg, rgba(155, 196, 184, 0.2), rgba(127, 176, 105, 0.2))'
-                      : 'transparent',
+                    padding: isMobile ? '6px 3px' : '12px 6px',
+                    background: day.hasCall ? 'var(--kyn-green-bg)' : 'transparent',
                     border: isToday
-                      ? '2px solid #9bc4b8'
-                      : '1px solid #2c2c2a',
-                    borderRadius: '3px',
+                      ? '2px solid var(--kyn-green)'
+                      : '1px solid var(--kyn-border)',
+                    borderRadius: 'var(--kyn-r)',
                     textAlign: 'center',
                     opacity: isCurrentMonth ? 1 : 0.3,
                     cursor: day.hasCall ? 'pointer' : 'default',
                     position: 'relative',
-                    minHeight: isMobile ? '40px' : '80px',
+                    minHeight: isMobile ? '36px' : '70px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'flex-start',
-                    transition: 'all 0.2s ease'
+                    transition: 'box-shadow 0.15s ease'
                   }}
                   onClick={() => {
                     if (day.hasCall && day.callDetails) {
@@ -676,41 +602,27 @@ export default function CallsPage() {
                     }
                   }}
                   onMouseEnter={(e) => {
-                    if (day.hasCall) {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(155, 196, 184, 0.3), rgba(127, 176, 105, 0.3))'
-                      e.currentTarget.style.transform = 'scale(1.02)'
-                    }
+                    if (day.hasCall) e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)'
                   }}
                   onMouseLeave={(e) => {
-                    if (day.hasCall) {
-                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(155, 196, 184, 0.2), rgba(127, 176, 105, 0.2))'
-                      e.currentTarget.style.transform = 'scale(1)'
-                    }
+                    if (day.hasCall) e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
                   <div style={{
-                    fontSize: isMobile ? '14px' : '16px',
-                    fontWeight: isToday ? 600 : 400,
-                    color: day.hasCall ? '#9bc4b8' : '#a0a09c',
-                    marginBottom: isMobile ? '2px' : '4px'
+                    fontSize: isMobile ? '13px' : '14px',
+                    fontWeight: isToday ? 700 : 400,
+                    color: day.hasCall ? 'var(--kyn-green)' : 'var(--kyn-ink2)',
+                    marginBottom: isMobile ? '1px' : '3px'
                   }}>
                     {day.date.getDate()}
                   </div>
                   {day.hasCall && !isMobile && (
-                    <div style={{
-                      fontSize: '10px',
-                      color: '#7fb069',
-                      fontWeight: 500
-                    }}>
+                    <div style={{ fontSize: '10px', color: 'var(--kyn-green)', fontWeight: 500 }}>
                       {day.callDetails?.time}
                     </div>
                   )}
                   {day.hasCall && (
-                    <div style={{
-                      fontSize: isMobile ? '8px' : '11px',
-                      color: '#666',
-                      marginTop: '2px'
-                    }}>
+                    <div style={{ fontSize: isMobile ? '8px' : '11px', color: 'var(--kyn-green)', marginTop: '1px' }}>
                       📞
                     </div>
                   )}
@@ -720,19 +632,14 @@ export default function CallsPage() {
           </div>
 
           <div style={{
-            marginTop: '24px',
-            padding: '16px',
-            background: 'rgba(155, 196, 184, 0.1)',
-            borderRadius: '3px',
-            border: '1px solid rgba(155, 196, 184, 0.2)'
+            marginTop: '18px',
+            padding: '12px 14px',
+            background: 'var(--kyn-green-bg)',
+            borderRadius: 'var(--kyn-r)',
+            border: '1px solid var(--kyn-border-green)'
           }}>
-            <p style={{
-              fontSize: '14px',
-              color: '#a0a09c',
-              margin: 0,
-              lineHeight: 1.5
-            }}>
-              <strong style={{ color: '#e67e22' }}>Live calls are synced from Google Calendar.</strong> Click on a date with a call to add it to your calendar.
+            <p style={{ fontSize: '13px', color: 'var(--kyn-ink2)', margin: 0, lineHeight: 1.5 }}>
+              <strong style={{ color: 'var(--kyn-green)' }}>Live calls are synced from Google Calendar.</strong> Click on a date with a call to add it to your calendar.
             </p>
           </div>
         </div>
@@ -740,66 +647,52 @@ export default function CallsPage() {
         {/* Call Replays Section */}
         <div id="replays">
           <h2 style={{
-            fontSize: isMobile ? '20px' : '24px',
-            fontWeight: 600,
-            marginBottom: '24px',
-            color: '#f0ede8'
+            fontSize: isMobile ? '18px' : '20px',
+            fontWeight: 400,
+            marginBottom: '18px',
+            color: 'var(--kyn-ink)',
+            fontFamily: 'var(--kyn-font-serif)'
           }}>
             Call Replays
           </h2>
 
           {replays.length === 0 ? (
             <div style={{
-              padding: '32px',
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
-              borderRadius: '6px',
-              textAlign: 'center'
+              padding: '28px',
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
+              borderRadius: 'var(--kyn-r-lg)',
+              textAlign: 'center',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
             }}>
-              <div style={{
-                fontSize: '48px',
-                marginBottom: '16px'
-              }}>
-                🎥
-              </div>
-              <p style={{
-                fontSize: '16px',
-                color: '#666'
-              }}>
+              <div style={{ fontSize: '40px', marginBottom: '12px' }}>🎥</div>
+              <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink3)' }}>
                 No replays available yet. Join your first live call and replays will appear here.
               </p>
             </div>
           ) : (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: '24px'
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: '11px'
             }}>
               {replays.map(video => (
                 <Link
                   key={video.id}
                   href={`/videos/${video.id}`}
-                  style={{
-                    textDecoration: 'none',
-                    color: 'inherit'
-                  }}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                   <div style={{
-                    background: '#1a1a18',
-                    border: '1px solid #2c2c2a',
-                    borderRadius: '6px',
+                    background: 'var(--kyn-surface)',
+                    border: '1px solid var(--kyn-border)',
+                    borderRadius: 'var(--kyn-r-lg)',
                     overflow: 'hidden',
-                    transition: 'all 0.2s ease',
-                    cursor: 'pointer'
+                    transition: 'box-shadow 0.15s ease',
+                    cursor: 'pointer',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#9bc4b8'
-                    e.currentTarget.style.transform = 'translateY(-2px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = '#2c2c2a'
-                    e.currentTarget.style.transform = 'translateY(0)'
-                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)' }}
                   >
                     {/* Video Thumbnail */}
                     <div style={{
@@ -807,43 +700,43 @@ export default function CallsPage() {
                       paddingTop: '56.25%',
                       background: video.youtubeId
                         ? `url(https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg)`
-                        : 'rgba(0, 0, 0, 0.5)',
+                        : 'var(--kyn-surface-raised)',
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
-                      position: 'relative'
+                      position: 'relative',
+                      borderRadius: 'var(--kyn-r-lg) var(--kyn-r-lg) 0 0',
+                      overflow: 'hidden'
                     }}>
-                      {/* Play Button Overlay */}
                       <div style={{
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: '64px',
-                        height: '64px',
+                        width: '52px',
+                        height: '52px',
                         borderRadius: '50%',
-                        background: 'rgba(155, 196, 184, 0.15)',
+                        background: 'var(--kyn-green)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                       }}>
-                        <svg style={{ width: '32px', height: '32px', color: '#9bc4b8', marginLeft: '4px' }} fill="currentColor" viewBox="0 0 20 20">
+                        <svg style={{ width: '22px', height: '22px', color: '#fff', marginLeft: '3px' }} fill="currentColor" viewBox="0 0 20 20">
                           <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                         </svg>
                       </div>
 
-                      {/* Duration Badge */}
                       {video.duration && (
                         <div style={{
                           position: 'absolute',
                           bottom: '8px',
                           right: '8px',
-                          padding: '4px 8px',
-                          background: 'rgba(0, 0, 0, 0.8)',
-                          borderRadius: '3px',
-                          fontSize: '12px',
+                          padding: '3px 7px',
+                          background: 'rgba(0,0,0,0.75)',
+                          borderRadius: 'var(--kyn-r)',
+                          fontSize: '11px',
                           fontWeight: 600,
-                          color: '#ffffff'
+                          color: '#fff'
                         }}>
                           {video.duration}
                         </div>
@@ -851,28 +744,25 @@ export default function CallsPage() {
                     </div>
 
                     {/* Video Info */}
-                    <div style={{ padding: '20px' }}>
+                    <div style={{ padding: '14px 16px' }}>
                       <h3 style={{
-                        fontSize: '18px',
-                        fontWeight: 500,
-                        marginBottom: '8px',
-                        color: '#f0ede8',
+                        fontSize: '13.5px',
+                        fontWeight: 600,
+                        marginBottom: '6px',
+                        color: 'var(--kyn-ink)',
                         lineHeight: 1.4
                       }}>
                         {video.title}
                       </h3>
                       <p style={{
-                        fontSize: '14px',
-                        color: '#a0a09c',
+                        fontSize: '12.5px',
+                        color: 'var(--kyn-ink2)',
                         lineHeight: 1.6,
-                        marginBottom: '12px'
+                        marginBottom: '10px'
                       }}>
                         {video.description?.substring(0, 120)}{video.description?.length > 120 ? '...' : ''}
                       </p>
-                      <div style={{
-                        fontSize: '12px',
-                        color: '#666'
-                      }}>
+                      <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>
                         {new Date(video.upload_date).toLocaleDateString('en-US', {
                           month: 'long',
                           day: 'numeric',
@@ -890,4 +780,3 @@ export default function CallsPage() {
     </div>
   )
 }
-
