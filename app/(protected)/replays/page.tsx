@@ -64,7 +64,6 @@ export default function ReplaysPage() {
   const filterAndSortReplays = () => {
     let filtered = [...replays]
 
-    // Filter by search query
     if (searchQuery) {
       filtered = filtered.filter(video =>
         video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -72,7 +71,6 @@ export default function ReplaysPage() {
       )
     }
 
-    // Sort by date
     filtered.sort((a, b) => {
       const dateA = new Date(a.upload_date).getTime()
       const dateB = new Date(b.upload_date).getTime()
@@ -86,11 +84,12 @@ export default function ReplaysPage() {
     return (
       <div style={{
         minHeight: '100vh',
-        background: '#0f0f0d',
+        background: 'var(--kyn-bg)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#a0a09c'
+        color: 'var(--kyn-ink3)',
+        fontFamily: 'var(--kyn-font-sans)'
       }}>
         Loading...
       </div>
@@ -98,16 +97,17 @@ export default function ReplaysPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8', paddingTop: '6rem' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '20px 16px' : '40px 20px' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '16px 14px 72px' : '28px 32px 52px' }}>
+
         {/* Header */}
-        <div style={{ marginBottom: '40px' }}>
+        <div style={{ marginBottom: '28px' }}>
           <Link
             href="/members"
             style={{
-              color: '#9bc4b8',
+              color: 'var(--kyn-green)',
               textDecoration: 'none',
-              fontSize: '14px',
+              fontSize: '13px',
               marginBottom: '12px',
               display: 'inline-block'
             }}
@@ -115,17 +115,15 @@ export default function ReplaysPage() {
             ← Back to Dashboard
           </Link>
           <h1 style={{
-            fontSize: isMobile ? '24px' : '32px',
-            fontWeight: 600,
-            marginBottom: '12px',
-            color: '#f0ede8'
+            fontSize: isMobile ? '20px' : '22px',
+            fontWeight: 400,
+            marginBottom: '8px',
+            color: 'var(--kyn-ink)',
+            fontFamily: 'var(--kyn-font-serif)'
           }}>
             Live Session Replays
           </h1>
-          <p style={{
-            fontSize: '16px',
-            color: '#a0a09c'
-          }}>
+          <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink2)', lineHeight: 1.6 }}>
             Catch up on past live teaching sessions and community calls
           </p>
         </div>
@@ -134,10 +132,9 @@ export default function ReplaysPage() {
         <div style={{
           display: 'flex',
           flexDirection: isMobile ? 'column' : 'row',
-          gap: '16px',
-          marginBottom: '32px'
+          gap: '10px',
+          marginBottom: '18px'
         }}>
-          {/* Search Input */}
           <div style={{ flex: 1 }}>
             <input
               type="text"
@@ -146,32 +143,33 @@ export default function ReplaysPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 width: '100%',
-                padding: '12px 16px',
-                background: '#1a1a18',
-                border: '1px solid #2c2c2a',
-                borderRadius: '3px',
-                color: '#f0ede8',
-                fontSize: '14px',
-                outline: 'none'
+                padding: '9px 12px',
+                background: 'var(--kyn-surface)',
+                border: '1px solid var(--kyn-border)',
+                borderRadius: 'var(--kyn-r)',
+                color: 'var(--kyn-ink)',
+                fontSize: '13.5px',
+                outline: 'none',
+                fontFamily: 'var(--kyn-font-sans)'
               }}
-              onFocus={(e) => e.currentTarget.style.borderColor = '#9bc4b8'}
-              onBlur={(e) => e.currentTarget.style.borderColor = '#2c2c2a'}
+              onFocus={(e) => e.currentTarget.style.borderColor = 'var(--kyn-border-green)'}
+              onBlur={(e) => e.currentTarget.style.borderColor = 'var(--kyn-border)'}
             />
           </div>
 
-          {/* Sort Dropdown */}
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest')}
             style={{
-              padding: '12px 16px',
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
-              borderRadius: '3px',
-              color: '#f0ede8',
-              fontSize: '14px',
+              padding: '9px 12px',
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
+              borderRadius: 'var(--kyn-r)',
+              color: 'var(--kyn-ink2)',
+              fontSize: '13.5px',
               outline: 'none',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontFamily: 'var(--kyn-font-sans)'
             }}
           >
             <option value="newest">Newest First</option>
@@ -180,42 +178,36 @@ export default function ReplaysPage() {
         </div>
 
         {/* Results Count */}
-        <div style={{
-          marginBottom: '24px',
-          fontSize: '14px',
-          color: '#666'
-        }}>
+        <div style={{ marginBottom: '18px', fontSize: '12px', color: 'var(--kyn-ink3)' }}>
           {filteredReplays.length} {filteredReplays.length === 1 ? 'replay' : 'replays'} found
         </div>
 
         {/* Replays Grid */}
         {filteredReplays.length === 0 ? (
           <div style={{
-            padding: '64px 32px',
-            background: '#1a1a18',
-            border: '1px solid #2c2c2a',
-            borderRadius: '3px',
-            textAlign: 'center'
+            padding: '48px 28px',
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
+            borderRadius: 'var(--kyn-r-lg)',
+            textAlign: 'center',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
           }}>
-            <p style={{
-              fontSize: '16px',
-              color: '#666',
-              marginBottom: '8px'
-            }}>
+            <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink3)', marginBottom: '8px' }}>
               {searchQuery ? 'No replays match your search' : 'No replays available yet'}
             </p>
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
                 style={{
-                  marginTop: '16px',
-                  padding: '8px 16px',
+                  marginTop: '14px',
+                  padding: '7px 16px',
                   background: 'transparent',
-                  border: '1px solid #9bc4b8',
-                  borderRadius: '3px',
-                  color: '#9bc4b8',
+                  border: '1px solid var(--kyn-border-mid)',
+                  borderRadius: 'var(--kyn-r)',
+                  color: 'var(--kyn-ink2)',
                   cursor: 'pointer',
-                  fontSize: '14px'
+                  fontSize: '13px',
+                  fontFamily: 'var(--kyn-font-sans)'
                 }}
               >
                 Clear search
@@ -225,37 +217,29 @@ export default function ReplaysPage() {
         ) : (
           <div style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
-            gap: '24px'
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
+            gap: '11px'
           }}>
             {filteredReplays.map(video => (
               <Link
                 key={video.id}
                 href={`/videos/${video.id}`}
-                style={{
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}
+                style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div style={{
-                  background: '#1a1a18',
-                  border: '1px solid #2c2c2a',
-                  borderRadius: '6px',
+                  background: 'var(--kyn-surface)',
+                  border: '1px solid var(--kyn-border)',
+                  borderRadius: 'var(--kyn-r-lg)',
                   overflow: 'hidden',
-                  transition: 'all 0.2s ease',
+                  transition: 'box-shadow 0.15s ease',
                   cursor: 'pointer',
                   height: '100%',
                   display: 'flex',
-                  flexDirection: 'column'
+                  flexDirection: 'column',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#9bc4b8'
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#2c2c2a'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)' }}
                 >
                   {/* Video Thumbnail */}
                   <div style={{
@@ -263,43 +247,60 @@ export default function ReplaysPage() {
                     paddingTop: '56.25%',
                     background: video.youtubeId
                       ? `url(https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg)`
-                      : 'rgba(0, 0, 0, 0.5)',
+                      : 'var(--kyn-surface-raised)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    position: 'relative'
+                    position: 'relative',
+                    borderRadius: 'var(--kyn-r-lg) var(--kyn-r-lg) 0 0',
+                    overflow: 'hidden'
                   }}>
-                    {/* Play Button Overlay */}
+                    {/* Play Button */}
                     <div style={{
                       position: 'absolute',
                       top: '50%',
                       left: '50%',
                       transform: 'translate(-50%, -50%)',
-                      width: '64px',
-                      height: '64px',
+                      width: '52px',
+                      height: '52px',
                       borderRadius: '50%',
-                      background: 'rgba(155, 196, 184, 0.15)',
+                      background: 'var(--kyn-green)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                     }}>
-                      <svg style={{ width: '32px', height: '32px', color: '#9bc4b8', marginLeft: '4px' }} fill="currentColor" viewBox="0 0 20 20">
+                      <svg style={{ width: '22px', height: '22px', color: '#fff', marginLeft: '3px' }} fill="currentColor" viewBox="0 0 20 20">
                         <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                       </svg>
                     </div>
 
-                    {/* Duration Badge */}
+                    {/* Live badge */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '8px',
+                      left: '8px',
+                      padding: '2px 7px',
+                      background: 'var(--kyn-blue-bg)',
+                      border: '1px solid var(--kyn-border-blue)',
+                      borderRadius: '8px',
+                      fontSize: '9.5px',
+                      fontWeight: 700,
+                      color: 'var(--kyn-blue)'
+                    }}>
+                      RECORDED
+                    </div>
+
                     {video.duration && (
                       <div style={{
                         position: 'absolute',
                         bottom: '8px',
                         right: '8px',
-                        padding: '4px 8px',
-                        background: 'rgba(0, 0, 0, 0.8)',
-                        borderRadius: '3px',
-                        fontSize: '12px',
+                        padding: '3px 7px',
+                        background: 'rgba(0,0,0,0.75)',
+                        borderRadius: 'var(--kyn-r)',
+                        fontSize: '11px',
                         fontWeight: 600,
-                        color: '#ffffff'
+                        color: '#fff'
                       }}>
                         {video.duration}
                       </div>
@@ -307,29 +308,26 @@ export default function ReplaysPage() {
                   </div>
 
                   {/* Video Info */}
-                  <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ padding: '14px 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <h3 style={{
-                      fontSize: '18px',
-                      fontWeight: 500,
-                      marginBottom: '8px',
-                      color: '#f0ede8',
+                      fontSize: '13.5px',
+                      fontWeight: 600,
+                      marginBottom: '6px',
+                      color: 'var(--kyn-ink)',
                       lineHeight: 1.4
                     }}>
                       {video.title}
                     </h3>
                     <p style={{
-                      fontSize: '14px',
-                      color: '#a0a09c',
+                      fontSize: '12.5px',
+                      color: 'var(--kyn-ink2)',
                       lineHeight: 1.6,
-                      marginBottom: '12px',
+                      marginBottom: '10px',
                       flex: 1
                     }}>
                       {video.description?.substring(0, 120)}{video.description?.length > 120 ? '...' : ''}
                     </p>
-                    <div style={{
-                      fontSize: '12px',
-                      color: '#666'
-                    }}>
+                    <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>
                       {new Date(video.upload_date).toLocaleDateString('en-US', {
                         month: 'long',
                         day: 'numeric',
