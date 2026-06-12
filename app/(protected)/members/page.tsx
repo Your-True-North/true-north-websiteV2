@@ -519,9 +519,9 @@ export default function MembersPage() {
         {/* BENTO ROW 1 — Journey + Next Session */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1.6fr 1fr',
+          gridTemplateColumns: isMobile ? '1fr' : '1.8fr 1fr',
           gap: '11px',
-          marginBottom: '11px'
+          marginBottom: '18px'
         }}>
 
           {/* Journey card */}
@@ -539,9 +539,17 @@ export default function MembersPage() {
               letterSpacing: '0.12em',
               textTransform: 'uppercase',
               color: 'var(--kyn-ink3)',
-              marginBottom: '14px'
+              marginBottom: '4px'
             }}>
-              Your Path
+              Your Dedication Path
+            </div>
+            <div style={{
+              fontSize: '11.5px',
+              color: 'var(--kyn-ink3)',
+              marginBottom: '14px',
+              fontStyle: 'italic'
+            }}>
+              The work only counts when you show up for it.
             </div>
 
             <div style={{ position: 'relative', height: '46px' }}>
@@ -599,6 +607,27 @@ export default function MembersPage() {
                 })}
               </div>
             </div>
+
+            {/* Stats merged into journey card */}
+            <div style={{
+              marginTop: '16px',
+              paddingTop: '14px',
+              borderTop: '1px solid var(--kyn-border)',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '8px'
+            }}>
+              {[
+                { label: 'Videos watched', value: stats.videosWatched || 0, accent: 'var(--kyn-green)' },
+                { label: 'Watch time', value: `${Math.round((stats.totalWatchTime || 0) / 60)}m`, accent: 'var(--kyn-ink2)' },
+                { label: 'Completion', value: `${stats.completionRate || 0}%`, accent: 'var(--kyn-green-hi)' }
+              ].map((stat, i) => (
+                <div key={i} style={{ textAlign: i === 0 ? 'left' : i === 1 ? 'center' : 'right' }}>
+                  <div style={{ fontSize: '10px', color: 'var(--kyn-ink3)', marginBottom: '4px' }}>{stat.label}</div>
+                  <div style={{ fontSize: '18px', fontWeight: 300, letterSpacing: '-0.02em', color: stat.accent, lineHeight: 1 }}>{stat.value}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Next Session card */}
@@ -623,75 +652,6 @@ export default function MembersPage() {
             </div>
           </div>
 
-        </div>
-
-        {/* STATS ROW */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '11px',
-          marginBottom: '18px'
-        }}>
-          {[
-            {
-              label: 'Videos watched',
-              value: stats.videosWatched || 0,
-              sub: 'total',
-              accent: 'var(--kyn-green)'
-            },
-            {
-              label: 'Time invested',
-              value: `${Math.round((stats.totalWatchTime || 0) / 60)}m`,
-              sub: 'watch time',
-              accent: 'var(--kyn-ink2)'
-            },
-            {
-              label: 'Completion',
-              value: `${stats.completionRate || 0}%`,
-              sub: 'across all content',
-              accent: 'var(--kyn-green-hi)'
-            }
-          ].map((stat, i) => (
-            <div key={i} style={{
-              background: 'var(--kyn-surface)',
-              border: '1px solid var(--kyn-border)',
-              borderRadius: 'var(--kyn-r-lg)',
-              padding: isMobile ? '12px 13px' : '15px 18px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-              position: 'relative',
-              overflow: 'hidden'
-            }}>
-              <div style={{
-                fontSize: '10.5px',
-                color: 'var(--kyn-ink3)',
-                marginBottom: '9px'
-              }}>
-                {stat.label}
-              </div>
-              <div style={{
-                fontSize: isMobile ? '22px' : '26px',
-                fontWeight: 300,
-                letterSpacing: '-0.02em',
-                lineHeight: 1,
-                color: stat.accent
-              }}>
-                {stat.value}
-              </div>
-              <div style={{
-                fontSize: '10.5px',
-                color: 'var(--kyn-ink3)',
-                marginTop: '7px'
-              }}>
-                {stat.sub}
-              </div>
-              <div style={{
-                position: 'absolute',
-                bottom: 0, left: 0, right: 0,
-                height: '2px',
-                background: `linear-gradient(90deg, ${stat.accent}, transparent)`
-              }} />
-            </div>
-          ))}
         </div>
 
         {/* LOWER GRID */}
