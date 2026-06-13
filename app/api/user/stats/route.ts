@@ -35,6 +35,18 @@ export async function GET(request: NextRequest) {
     )
     const totalWatchTime = parseInt(watchTimeResult.rows[0]?.total || '0')
 
+    const continueWatchingResult = await client.query(
+      `SELECT v.id, v.title, v.youtube_url, v.category, v.duration,
+              CASE WHEN v.duration > 0 THEN LEAST(ROUND((uvp.watch_time::float / v.duration) * 100), 99) ELSE 0 END AS percentage
+       FROM user_video_progress uvp
+       JOIN videos v ON v.id = uvp.video_id
+       WHERE uvp.user_id = $1 AND uvp.completed = false AND uvp.watch_time > 0
+       ORDER BY uvp.last_watched DESC
+       LIMIT 10`,
+      [userId]
+    )
+    const continueWatching = continueWatchingResult.rows
+
     await client.end()
 
     return NextResponse.json({
@@ -42,6 +54,7 @@ export async function GET(request: NextRequest) {
         videosWatched,
         totalWatchTime,
         completionRate: totalVideos > 0 ? Math.round((videosWatched / totalVideos) * 100) : 0,
+        continueWatching,
       }
     })
 
