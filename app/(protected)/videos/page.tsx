@@ -141,36 +141,16 @@ export default function LibraryPage() {
     return map[cat] ?? cat
   }
 
-  const REPLAY_CATEGORY = 'Live Replays'
-
-  const teachingsVideos = videos
-    .filter(v => v.category !== REPLAY_CATEGORY)
-    .map(v => ({ ...v, category: normaliseCategory(v.category) }))
-
-  const replayVideos = videos.filter(v => v.category === REPLAY_CATEGORY)
-
-  const displayVideos = activeSection === 'teachings'
-    ? teachingsVideos.filter(v => selectedCategory === 'all' || v.category === selectedCategory)
-    : replayVideos
-
-  // Derived for new layout
-  const FILTER_PILLS = ['All', ...TOPICS, 'Live Replays']
   const isReplaysActive = selectedCategory === 'Live Replays'
-  const filteredTeachings = isReplaysActive
-    ? []
-    : teachingsVideos.filter(v => selectedCategory === 'all' || v.category === selectedCategory)
+  const teachingsVideos = (isReplaysActive
+    ? videos
+    : selectedCategory === 'all'
+      ? videos
+      : videos.filter(v => normaliseCategory(v.category) === selectedCategory)
+  ).filter(v => normaliseCategory(v.category) !== 'Live Replays')
+   .filter(v => !searchQuery || v.title.toLowerCase().includes(searchQuery.toLowerCase()))
 
-  const inProgressWatching = continueWatching.filter((v: any) => v.percentage > 0 && v.percentage < 100)
-
-  const isNewVideo = (uploadDate: string) => {
-    return new Date(uploadDate).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000
-  }
-
-  const parseDurationMins = (duration: string): number => {
-    if (!duration) return 0
-    const match = duration.match(/(\d+)/)
-    return match ? parseInt(match[1]) : 0
-  }
+  const replayVideos = videos.filter(v => normaliseCategory(v.category) === 'Live Replays')
 
   if (loading) {
     return (
@@ -182,342 +162,157 @@ export default function LibraryPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
-      <style>{`
-        .kyn-no-scroll::-webkit-scrollbar { display: none; }
-        .kyn-no-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
+      <style>{`.kyn-no-scroll::-webkit-scrollbar{display:none;}.kyn-no-scroll{-ms-overflow-style:none;scrollbar-width:none;}`}</style>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '16px 14px 72px' : '28px 32px 52px' }}>
 
-        {/* 1. Page title block */}
-        <div style={{
-          paddingBottom: '17px',
-          borderBottom: '1px solid var(--kyn-border)',
-          marginBottom: '20px'
-        }}>
-          <h1 style={{
-            fontFamily: 'var(--kyn-font-serif)',
-            fontSize: '22px',
-            fontWeight: 400,
-            color: 'var(--kyn-ink)',
-            margin: '0 0 4px 0',
-            lineHeight: 1.2
-          }}>
-            Teachings
-          </h1>
-          <p style={{
-            fontSize: '12px',
-            fontStyle: 'italic',
-            color: 'var(--kyn-ink3)',
-            margin: 0
-          }}>
-            Videos, guides and live session replays
-          </p>
+        {/* 1. PAGE TITLE */}
+        <div style={{ paddingBottom: '17px', borderBottom: '1px solid var(--kyn-border)', marginBottom: '20px' }}>
+          <h1 style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '22px', fontWeight: 400, color: 'var(--kyn-ink)', margin: '0 0 4px 0', lineHeight: 1.2 }}>Teachings</h1>
+          <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'var(--kyn-ink3)', margin: 0 }}>Videos, guides and live session replays</p>
         </div>
 
-        {/* 2. Search bar */}
+        {/* 2. SEARCH BAR */}
         <div style={{ position: 'relative', marginBottom: '16px' }}>
-          <svg
-            style={{ position: 'absolute', left: '11px', top: '50%', transform: 'translateY(-50%)', width: '15px', height: '15px', color: 'var(--kyn-ink3)', pointerEvents: 'none' }}
-            fill="none" stroke="currentColor" viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <svg style={{ position: 'absolute', left: '11px', top: '50%', transform: 'translateY(-50%)', width: '15px', height: '15px', color: 'var(--kyn-ink3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
           <input
             type="text"
-            placeholder="Search videos..."
+            placeholder="Search teachings..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '9px 12px 9px 36px',
-              background: 'var(--kyn-surface-raised)',
-              border: '1px solid var(--kyn-border)',
-              borderRadius: 'var(--kyn-r-lg)',
-              color: 'var(--kyn-ink)',
-              fontSize: '13.5px',
-              outline: 'none',
-              fontFamily: 'var(--kyn-font-sans)',
-              boxSizing: 'border-box'
-            }}
+            onChange={e => setSearchQuery(e.target.value)}
+            style={{ width: '100%', padding: '9px 12px 9px 36px', background: 'var(--kyn-surface-raised)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', fontSize: '13px', color: 'var(--kyn-ink)', outline: 'none', fontFamily: 'var(--kyn-font-sans)' }}
           />
         </div>
 
-        {/* 3. Topic filter pills */}
-        <div
-          className="kyn-no-scroll"
-          style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '4px', marginBottom: '20px' }}
-        >
-          {FILTER_PILLS.map(pill => {
-            const key = pill === 'All' ? 'all' : pill
-            const isActive = selectedCategory === key
+        {/* 3. TOPIC FILTER PILLS */}
+        <div className="kyn-no-scroll" style={{ display: 'flex', gap: '6px', overflowX: 'auto', marginBottom: '20px', paddingBottom: '4px' }}>
+          {['All', ...TOPICS, 'Live Replays'].map(topic => {
+            const val = topic === 'All' ? 'all' : topic
+            const isActive = selectedCategory === val
             return (
               <button
-                key={pill}
-                onClick={() => setSelectedCategory(key)}
+                key={topic}
+                onClick={() => setSelectedCategory(val)}
                 style={{
                   padding: '6px 14px',
-                  background: isActive ? 'var(--kyn-green-bg)' : 'var(--kyn-surface)',
-                  border: `1px solid ${isActive ? 'var(--kyn-border-green)' : 'var(--kyn-border)'}`,
                   borderRadius: '20px',
+                  border: `1px solid ${isActive ? 'rgba(45,106,79,0.2)' : 'var(--kyn-border)'}`,
+                  background: isActive ? 'var(--kyn-green-bg)' : 'var(--kyn-surface)',
                   color: isActive ? 'var(--kyn-green)' : 'var(--kyn-ink2)',
-                  fontSize: '12px',
                   fontWeight: isActive ? 500 : 400,
+                  fontSize: '12px',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
                   flexShrink: 0,
                   fontFamily: 'var(--kyn-font-sans)',
-                  transition: 'all 0.1s ease'
+                  transition: 'all 0.12s'
                 }}
               >
-                {pill}
+                {topic}
               </button>
             )
           })}
         </div>
 
-        {/* 4. Continue watching — only if in-progress videos exist */}
-        {inProgressWatching.length > 0 && (
-          <div style={{ marginBottom: '28px' }}>
-            <div style={{
-              fontSize: '10px',
-              fontWeight: 600,
-              letterSpacing: '0.11em',
-              textTransform: 'uppercase',
-              color: 'var(--kyn-ink3)',
-              marginBottom: '10px'
-            }}>
-              Continue Watching
+        {/* 4. CONTINUE WATCHING */}
+        {!isReplaysActive && continueWatching.length > 0 && (
+          <div style={{ marginBottom: '24px' }}>
+            <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)', marginBottom: '12px' }}>
+              Continue watching
             </div>
-            <div
-              className="kyn-no-scroll"
-              style={{ display: 'flex', gap: '10px', overflowX: 'auto' }}
-            >
-              {inProgressWatching.map((video: any) => {
-                const youtubeId = getYouTubeId(video.youtube_url)
-                const thumbUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : null
-                const totalMins = parseDurationMins(video.duration)
-                const remainingMins = totalMins > 0 ? Math.round(totalMins * (1 - video.percentage / 100)) : null
+            <div className="kyn-no-scroll" style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '4px' }}>
+              {continueWatching.map((video: any) => {
+                const pct = video.percentage || 0
+                const durMins = parseInt(video.duration || '0')
+                const remaining = durMins > 0 ? Math.round(durMins * (1 - pct / 100)) : null
                 return (
-                  <Link
-                    key={video.id}
-                    href={`/videos/${video.id}`}
-                    style={{
-                      flexShrink: 0,
-                      width: isMobile ? '240px' : '220px',
-                      background: 'var(--kyn-surface)',
-                      border: '1px solid var(--kyn-border)',
-                      borderRadius: 'var(--kyn-r-lg)',
-                      overflow: 'hidden',
-                      textDecoration: 'none',
-                      color: 'inherit',
-                      display: 'block'
-                    }}
-                  >
-                    <div style={{
-                      width: '100%', height: '130px',
-                      background: thumbUrl ? `url(${thumbUrl}) center/cover` : 'var(--kyn-sidebar)',
-                      position: 'relative', overflow: 'hidden'
-                    }}>
-                      <div style={{
-                        position: 'absolute', top: '50%', left: '50%',
-                        transform: 'translate(-50%,-50%)',
-                        width: '40px', height: '40px', borderRadius: '50%',
-                        background: 'rgba(45,106,79,0.3)',
-                        border: '1.5px solid rgba(82,183,136,0.45)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center'
-                      }}>
-                        <svg style={{ width: '14px', height: '14px', color: '#fff', marginLeft: '2px' }} fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                        </svg>
+                  <a key={video.id} href={`/videos/${video.id}`} style={{ flexShrink: 0, width: isMobile ? '240px' : '260px', background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ width: '100%', height: '130px', backgroundImage: `url(https://img.youtube.com/vi/${getYouTubeId(video.youtube_url)}/mqdefault.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(45,106,79,0.35)', border: '1.5px solid rgba(82,183,136,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg style={{ width: '16px', height: '16px', color: '#52b788', marginLeft: '2px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
                       </div>
-                      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.1)' }}>
-                        <div style={{ height: '100%', width: `${video.percentage}%`, background: 'var(--kyn-green-hi)' }} />
+                      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.15)' }}>
+                        <div style={{ height: '100%', width: `${pct}%`, background: '#52b788' }} />
                       </div>
                     </div>
                     <div style={{ padding: '10px 12px 12px' }}>
-                      <div style={{ fontSize: '9.5px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '4px' }}>
-                        {normaliseCategory(video.category || '')}
-                      </div>
-                      <div style={{
-                        fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '5px',
-                        overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'
-                      }}>
-                        {video.title}
-                      </div>
-                      <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>
-                        {Math.round(video.percentage)}%{remainingMins ? ` · ${remainingMins} min remaining` : ''}
-                      </div>
+                      <div style={{ fontSize: '9.5px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
+                      <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '4px' }}>{video.title}</div>
+                      <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{pct}%{remaining ? ` · ${remaining} min remaining` : ' · In progress'}</div>
                     </div>
-                  </Link>
+                  </a>
                 )
               })}
             </div>
           </div>
         )}
 
-        {/* 5. All teachings — hidden when Live Replays pill is active */}
+        {/* 5. ALL TEACHINGS */}
         {!isReplaysActive && (
-          <div style={{ marginBottom: '32px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-              <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)' }}>
-                All Teachings
-              </div>
-              <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>
-                {filteredTeachings.length} video{filteredTeachings.length !== 1 ? 's' : ''}
-              </div>
+          <div style={{ marginBottom: '24px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)' }}>All teachings</div>
+              <span style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{teachingsVideos.length} videos</span>
             </div>
 
-            {filteredTeachings.length === 0 ? (
-              <div style={{ padding: '48px 24px', textAlign: 'center', color: 'var(--kyn-ink3)', fontSize: '13.5px' }}>
-                {searchQuery ? `No videos found for "${searchQuery}"` : 'No videos in this category yet.'}
-              </div>
-            ) : !isMobile ? (
-              /* Desktop 3-col grid */
+            {/* DESKTOP: 3-col grid */}
+            {!isMobile && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
-                {filteredTeachings.map(video => {
-                  const youtubeId = getYouTubeId(video.youtube_url)
-                  const thumbUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : null
-                  const isNew = isNewVideo(video.upload_date)
-                  const progress = (video as any).percentage || 0
+                {teachingsVideos.map(video => {
+                  const isNew = Date.now() - new Date(video.upload_date).getTime() < 7 * 24 * 60 * 60 * 1000
+                  const pct = (video as any).percentage || 0
                   return (
-                    <Link key={video.id} href={`/videos/${video.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                      <div
-                        style={{
-                          background: 'var(--kyn-surface)',
-                          border: '1px solid var(--kyn-border)',
-                          borderRadius: 'var(--kyn-r-lg)',
-                          overflow: 'hidden',
-                          boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                          transition: 'transform 0.15s ease, box-shadow 0.15s ease',
-                          cursor: 'pointer'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-2px)'
-                          e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)'
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateY(0)'
-                          e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'
-                        }}
-                      >
-                        <div style={{
-                          aspectRatio: '16/9',
-                          background: thumbUrl ? `url(${thumbUrl}) center/cover` : 'var(--kyn-sidebar)',
-                          position: 'relative', overflow: 'hidden'
-                        }}>
-                          <div style={{
-                            position: 'absolute', top: '50%', left: '50%',
-                            transform: 'translate(-50%,-50%)',
-                            width: '36px', height: '36px', borderRadius: '50%',
-                            background: 'rgba(45,106,79,0.3)',
-                            border: '1.5px solid rgba(82,183,136,0.4)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center'
-                          }}>
-                            <svg style={{ width: '12px', height: '12px', color: '#fff', marginLeft: '2px' }} fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                            </svg>
-                          </div>
-                          {video.duration && (
-                            <div style={{
-                              position: 'absolute', bottom: '6px', right: '6px',
-                              background: 'rgba(0,0,0,0.65)', color: '#fff',
-                              fontSize: '10px', padding: '2px 6px', borderRadius: '3px', fontWeight: 500
-                            }}>{video.duration}</div>
-                          )}
-                          {isNew && (
-                            <div style={{
-                              position: 'absolute', top: '6px', left: '6px',
-                              background: 'var(--kyn-green)', color: '#fff',
-                              fontSize: '9px', padding: '2px 6px', borderRadius: '3px',
-                              fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase'
-                            }}>New</div>
-                          )}
-                          {progress > 0 && (
-                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.1)' }}>
-                              <div style={{ height: '100%', width: `${progress}%`, background: 'var(--kyn-green-hi)' }} />
-                            </div>
-                          )}
+                    <a key={video.id} href={`/videos/${video.id}`} style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', textDecoration: 'none', display: 'flex', flexDirection: 'column', transition: 'box-shadow 0.15s, transform 0.15s' }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)' }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)' }}
+                    >
+                      <div style={{ width: '100%', aspectRatio: '16/9', backgroundImage: `url(https://img.youtube.com/vi/${getYouTubeId(video.youtube_url)}/mqdefault.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {isNew && <div style={{ position: 'absolute', top: '8px', left: '8px', background: 'var(--kyn-green)', color: '#fff', fontSize: '9px', fontWeight: 700, padding: '2px 7px', borderRadius: '3px', letterSpacing: '0.04em' }}>NEW</div>}
+                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'rgba(45,106,79,0.3)', border: '1.5px solid rgba(82,183,136,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <svg style={{ width: '14px', height: '14px', color: '#52b788', marginLeft: '2px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
                         </div>
-                        <div style={{ padding: '12px 13px 13px' }}>
-                          <div style={{ fontSize: '9.5px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--kyn-green)', marginBottom: '4px' }}>
-                            {video.category}
-                          </div>
-                          <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '6px' }}>
-                            {video.title}
-                          </div>
-                          <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <span>{video.duration || '—'}</span>
-                            <span>·</span>
-                            <span>{new Date(video.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                          </div>
+                        {video.duration && <div style={{ position: 'absolute', bottom: '7px', right: '8px', background: 'rgba(0,0,0,0.65)', color: '#fff', fontSize: '10px', fontWeight: 500, padding: '2px 6px', borderRadius: '3px' }}>{video.duration}</div>}
+                        {pct > 0 && <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.1)' }}><div style={{ height: '100%', width: `${pct}%`, background: '#52b788' }} /></div>}
+                      </div>
+                      <div style={{ padding: '12px 13px 13px' }}>
+                        <div style={{ fontSize: '9.5px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '4px' }}>{normaliseCategory(video.category)}</div>
+                        <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '5px' }}>{video.title}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          {video.duration && <span>{video.duration}</span>}
+                          {pct === 100 && <><span style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--kyn-ink3)', display: 'inline-block' }} /><span>Watched</span></>}
+                          {pct > 0 && pct < 100 && <><span style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--kyn-ink3)', display: 'inline-block' }} /><span>In progress</span></>}
                         </div>
                       </div>
-                    </Link>
+                    </a>
                   )
                 })}
               </div>
-            ) : (
-              /* Mobile single-column list */
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {filteredTeachings.map((video, idx) => {
-                  const youtubeId = getYouTubeId(video.youtube_url)
-                  const thumbUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : null
-                  const progress = (video as any).percentage || 0
-                  const isLast = idx === filteredTeachings.length - 1
+            )}
+
+            {/* MOBILE: single column list */}
+            {isMobile && (
+              <div>
+                {teachingsVideos.map(video => {
+                  const isNew = Date.now() - new Date(video.upload_date).getTime() < 7 * 24 * 60 * 60 * 1000
+                  const pct = (video as any).percentage || 0
                   return (
-                    <Link key={video.id} href={`/videos/${video.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <div style={{
-                        display: 'flex', gap: '12px', padding: '11px 0',
-                        borderBottom: isLast ? 'none' : '1px solid var(--kyn-border)'
-                      }}>
-                        <div style={{
-                          width: '88px', height: '52px', flexShrink: 0,
-                          borderRadius: 'var(--kyn-r)',
-                          background: thumbUrl ? `url(${thumbUrl}) center/cover` : 'var(--kyn-sidebar)',
-                          position: 'relative', overflow: 'hidden'
-                        }}>
-                          <div style={{
-                            position: 'absolute', top: '50%', left: '50%',
-                            transform: 'translate(-50%,-50%)',
-                            width: '22px', height: '22px', borderRadius: '50%',
-                            background: 'rgba(45,106,79,0.3)',
-                            border: '1.5px solid rgba(82,183,136,0.4)',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center'
-                          }}>
-                            <svg style={{ width: '8px', height: '8px', color: '#fff', marginLeft: '1px' }} fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                            </svg>
-                          </div>
-                          {video.duration && (
-                            <div style={{
-                              position: 'absolute', bottom: '3px', right: '3px',
-                              background: 'rgba(0,0,0,0.65)', color: '#fff',
-                              fontSize: '9px', padding: '1px 4px', borderRadius: '2px', fontWeight: 500
-                            }}>{video.duration}</div>
-                          )}
-                          {progress > 0 && (
-                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.1)' }}>
-                              <div style={{ height: '100%', width: `${progress}%`, background: 'var(--kyn-green-hi)' }} />
-                            </div>
-                          )}
+                    <a key={video.id} href={`/videos/${video.id}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '11px 0', borderBottom: '1px solid var(--kyn-border)', textDecoration: 'none' }}>
+                      <div style={{ width: '88px', height: '52px', borderRadius: 'var(--kyn-r)', flexShrink: 0, backgroundImage: `url(https://img.youtube.com/vi/${getYouTubeId(video.youtube_url)}/mqdefault.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                        {isNew && <div style={{ position: 'absolute', top: '4px', left: '4px', background: 'var(--kyn-green)', color: '#fff', fontSize: '8px', fontWeight: 700, padding: '1.5px 5px', borderRadius: '2px' }}>NEW</div>}
+                        <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgba(45,106,79,0.25)', border: '1px solid rgba(82,183,136,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <svg style={{ width: '9px', height: '9px', color: '#52b788', marginLeft: '1px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
                         </div>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: '9.5px', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--kyn-green)', marginBottom: '3px', fontWeight: 600 }}>
-                            {video.category}
-                          </div>
-                          <div style={{
-                            fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4,
-                            overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'
-                          }}>
-                            {video.title}
-                          </div>
-                          <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', marginTop: '3px' }}>
-                            {video.duration || '—'} · {new Date(video.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
-                          </div>
-                        </div>
+                        {video.duration && <div style={{ position: 'absolute', bottom: '4px', right: '4px', background: 'rgba(0,0,0,0.65)', color: '#fff', fontSize: '9px', fontWeight: 500, padding: '1.5px 5px', borderRadius: '2px' }}>{video.duration}</div>}
+                        {pct > 0 && <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.1)' }}><div style={{ height: '100%', width: `${pct}%`, background: '#52b788' }} /></div>}
                       </div>
-                    </Link>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: '9.5px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
+                        <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.35, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{video.title}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{video.duration}{pct === 100 ? ' · Watched' : pct > 0 ? ' · In progress' : ''}</div>
+                      </div>
+                    </a>
                   )
                 })}
               </div>
@@ -525,113 +320,54 @@ export default function LibraryPage() {
           </div>
         )}
 
-        {/* 6. Live replays section — shown when Live Replays pill active */}
-        {isReplaysActive && (
+        {/* 6. LIVE REPLAYS */}
+        {(isReplaysActive || (!isReplaysActive && replayVideos.length > 0)) && (
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-              <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)' }}>
-                Live Call Replays
-              </div>
-              <Link href="/replays" style={{ fontSize: '12px', color: 'var(--kyn-green)', textDecoration: 'none' }}>
-                View all
-              </Link>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)' }}>Live call replays</div>
+              {!isReplaysActive && <span style={{ fontSize: '11px', color: 'var(--kyn-green)', cursor: 'pointer' }} onClick={() => setSelectedCategory('Live Replays')}>View all</span>}
             </div>
 
-            {replayVideos.length === 0 ? (
-              <div style={{ padding: '48px 24px', textAlign: 'center', color: 'var(--kyn-ink3)', fontSize: '13.5px' }}>
-                No replays posted yet. Check back after the next live call.
-              </div>
-            ) : !isMobile ? (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '11px' }}>
-                {replayVideos.map(video => {
-                  const youtubeId = getYouTubeId(video.youtube_url)
-                  const thumbUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : null
-                  return (
-                    <Link key={video.id} href={`/videos/${video.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          background: 'var(--kyn-surface)',
-                          border: '1px solid var(--kyn-border)',
-                          borderRadius: 'var(--kyn-r-lg)',
-                          overflow: 'hidden',
-                          transition: 'box-shadow 0.15s ease'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)'}
-                        onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}
-                      >
-                        <div style={{
-                          width: '100px', height: '70px', flexShrink: 0,
-                          background: thumbUrl ? `url(${thumbUrl}) center/cover` : 'var(--kyn-sidebar)',
-                          position: 'relative', overflow: 'hidden'
-                        }}>
-                          <div style={{
-                            position: 'absolute', bottom: '4px', left: '4px',
-                            background: 'var(--kyn-blue)', color: '#fff',
-                            fontSize: '8.5px', padding: '2px 5px', borderRadius: '2px',
-                            fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase'
-                          }}>Recorded</div>
-                        </div>
-                        <div style={{ padding: '10px 13px', flex: 1, minWidth: 0 }}>
-                          <div style={{
-                            fontSize: '12.5px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4,
-                            marginBottom: '5px',
-                            overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'
-                          }}>
-                            {video.title}
-                          </div>
-                          <div style={{ fontSize: '10.5px', color: 'var(--kyn-ink3)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <span>{new Date(video.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                            {video.duration && <><span>·</span><span>{video.duration}</span></>}
-                          </div>
-                        </div>
+            {/* DESKTOP: 2-col grid */}
+            {!isMobile && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
+                {replayVideos.map(video => (
+                  <a key={video.id} href={`/videos/${video.id}`} style={{ display: 'flex', background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', textDecoration: 'none', transition: 'box-shadow 0.15s' }}
+                    onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.08)'}
+                    onMouseLeave={e => e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)'}
+                  >
+                    <div style={{ width: '100px', height: '70px', flexShrink: 0, backgroundImage: `url(https://img.youtube.com/vi/${getYouTubeId(video.youtube_url)}/mqdefault.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(45,106,79,0.25)', border: '1px solid rgba(82,183,136,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg style={{ width: '10px', height: '10px', color: '#52b788', marginLeft: '1px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
                       </div>
-                    </Link>
-                  )
-                })}
+                      <div style={{ position: 'absolute', bottom: '5px', left: '5px', background: 'var(--kyn-blue)', color: '#fff', fontSize: '8.5px', fontWeight: 700, padding: '1.5px 5px', borderRadius: '3px', letterSpacing: '0.03em' }}>RECORDED</div>
+                    </div>
+                    <div style={{ padding: '10px 13px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                      <div style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '4px' }}>{video.title}</div>
+                      <div style={{ fontSize: '10.5px', color: 'var(--kyn-ink3)' }}>{video.duration || ''}</div>
+                    </div>
+                  </a>
+                ))}
               </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {replayVideos.map((video, idx) => {
-                  const youtubeId = getYouTubeId(video.youtube_url)
-                  const thumbUrl = youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : null
-                  const isLast = idx === replayVideos.length - 1
-                  return (
-                    <Link key={video.id} href={`/videos/${video.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <div style={{
-                        display: 'flex', gap: '12px', padding: '11px 0',
-                        borderBottom: isLast ? 'none' : '1px solid var(--kyn-border)'
-                      }}>
-                        <div style={{
-                          width: '88px', height: '52px', flexShrink: 0,
-                          borderRadius: 'var(--kyn-r)',
-                          background: thumbUrl ? `url(${thumbUrl}) center/cover` : 'var(--kyn-sidebar)',
-                          position: 'relative', overflow: 'hidden'
-                        }}>
-                          <div style={{
-                            position: 'absolute', bottom: '3px', left: '3px',
-                            background: 'var(--kyn-blue)', color: '#fff',
-                            fontSize: '8px', padding: '1px 4px', borderRadius: '2px',
-                            fontWeight: 700, textTransform: 'uppercase'
-                          }}>Rec</div>
-                        </div>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{
-                            fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4,
-                            overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
-                            marginBottom: '3px'
-                          }}>
-                            {video.title}
-                          </div>
-                          <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>
-                            {new Date(video.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
-                            {video.duration && ` · ${video.duration}`}
-                          </div>
-                        </div>
+            )}
+
+            {/* MOBILE: single column list */}
+            {isMobile && (
+              <div>
+                {replayVideos.map(video => (
+                  <a key={video.id} href={`/videos/${video.id}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '11px 0', borderBottom: '1px solid var(--kyn-border)', textDecoration: 'none' }}>
+                    <div style={{ width: '88px', height: '52px', borderRadius: 'var(--kyn-r)', flexShrink: 0, backgroundImage: `url(https://img.youtube.com/vi/${getYouTubeId(video.youtube_url)}/mqdefault.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                      <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: 'rgba(45,106,79,0.25)', border: '1px solid rgba(82,183,136,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg style={{ width: '9px', height: '9px', color: '#52b788', marginLeft: '1px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
                       </div>
-                    </Link>
-                  )
-                })}
+                      <div style={{ position: 'absolute', bottom: '4px', left: '4px', background: 'var(--kyn-blue)', color: '#fff', fontSize: '8px', fontWeight: 700, padding: '1.5px 5px', borderRadius: '2px', letterSpacing: '0.03em' }}>RECORDED</div>
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.35, marginBottom: '3px' }}>{video.title}</div>
+                      <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{video.duration || ''}</div>
+                    </div>
+                  </a>
+                ))}
               </div>
             )}
           </div>
