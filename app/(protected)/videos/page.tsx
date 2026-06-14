@@ -186,25 +186,31 @@ export default function LibraryPage() {
         {/* CONTINUE WATCHING */}
         {!isReplaysActive && continueWatching.length > 0 && (
           <div style={{ marginBottom: '24px' }}>
-            <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)', marginBottom: '12px' }}>Continue watching</div>
-            <div className="kyn-no-scroll" style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '4px' }}>
-              {continueWatching.map((video: any) => (
-                <a key={video.id} href={`/videos/${video.id}`} style={{ flexShrink: 0, width: '260px', background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', textDecoration: 'none', display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ width: '100%', height: '130px', backgroundImage: `url(https://img.youtube.com/vi/${getYouTubeId(video.youtube_url)}/mqdefault.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(45,106,79,0.35)', border: '1.5px solid rgba(82,183,136,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg style={{ width: '16px', height: '16px', color: '#52b788', marginLeft: '2px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+            <div style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Continue watching</div>
+            <div>
+              {continueWatching.map((video: any) => {
+                const pct = video.percentage || 0
+                const durationMin = parseInt(video.duration)
+                const remaining = !isNaN(durationMin) && durationMin > 0 ? Math.round(durationMin * (1 - pct / 100)) : null
+                return (
+                  <a key={video.id} href={`/videos/${video.id}`} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '14px 16px', background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', marginBottom: '6px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', textDecoration: 'none' }}>
+                    <div style={{ width: '96px', height: '54px', flexShrink: 0, borderRadius: 'var(--kyn-r)', backgroundImage: `url(https://img.youtube.com/vi/${getYouTubeId(video.youtube_url)}/mqdefault.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                      <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(45,106,79,0.35)', border: '1.5px solid rgba(82,183,136,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg style={{ width: '10px', height: '10px', color: '#52b788', marginLeft: '1px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+                      </div>
+                      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.15)' }}>
+                        <div style={{ height: '100%', width: `${pct}%`, background: '#52b788' }} />
+                      </div>
                     </div>
-                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.15)' }}>
-                      <div style={{ height: '100%', width: `${video.percentage}%`, background: '#52b788' }} />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: '9.5px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
+                      <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{video.title}</div>
+                      <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{pct}% complete{remaining ? ` · ${remaining} min remaining` : ''}</div>
                     </div>
-                  </div>
-                  <div style={{ padding: '10px 12px 12px' }}>
-                    <div style={{ fontSize: '9.5px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
-                    <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '4px' }}>{video.title}</div>
-                    <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{video.percentage}% complete</div>
-                  </div>
-                </a>
-              ))}
+                    <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 600, color: '#3b82f6', background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.15)', borderRadius: '20px', padding: '3px 10px', whiteSpace: 'nowrap' }}>In progress</span>
+                  </a>
+                )
+              })}
             </div>
           </div>
         )}
