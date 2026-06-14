@@ -123,9 +123,7 @@ export default function MembersNav() {
           padding: '0 16px', borderBottom: '1px solid rgba(255,255,255,0.07)'
         }}>
           <Link href="/members">
-            <div style={{ background: 'rgba(255,255,255,0.95)', borderRadius: '6px', padding: '4px 7px', display: 'inline-block' }}>
-              <img src="/cor-logo.png" alt="Circle of Return" style={{ height: '24px', width: 'auto', display: 'block' }} />
-            </div>
+            <img src="/kyn-stacked-white-1200.png" alt="Know Your North" style={{ height: '28px', width: 'auto', display: 'block', opacity: 0.92 }} />
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {/* Bell */}
@@ -247,17 +245,15 @@ export default function MembersNav() {
     }}>
       {/* Logo */}
       <div style={{
-        padding: '18px 0 14px', display: 'flex', justifyContent: 'center',
+        padding: '22px 0 18px', display: 'flex', justifyContent: 'center',
         borderBottom: '1px solid rgba(255,255,255,0.07)', flexShrink: 0
       }}>
         <Link href="/members">
-          <div style={{ background: 'rgba(255,255,255,0.95)', borderRadius: '8px', padding: '8px 10px', display: 'inline-block' }}>
-            <img
-              src="/cor-logo.png"
-              alt="Circle of Return"
-              style={{ width: '96px', height: 'auto', display: 'block' }}
-            />
-          </div>
+          <img
+            src="/kyn-stacked-white-1200.png"
+            alt="Know Your North"
+            style={{ width: '80px', height: 'auto', display: 'block', opacity: 0.92 }}
+          />
         </Link>
       </div>
 
