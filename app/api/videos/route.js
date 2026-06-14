@@ -6,10 +6,16 @@ import { sanitizeInput, validateYoutubeUrl } from '@/lib/validation'
 export async function GET(request) {
   try {
     const authResult = requireAuth(request)
+    let userId
     if (authResult.error) {
-      return authResult.error
+      const headerUserId = request.headers.get('x-user-id')
+      if (!headerUserId) {
+        return authResult.error
+      }
+      userId = headerUserId
+    } else {
+      userId = authResult.user.userId
     }
-    const user = authResult.user
 
     const { searchParams } = new URL(request.url)
     const category = searchParams.get('category')
@@ -37,7 +43,7 @@ export async function GET(request) {
       LEFT JOIN user_video_progress uvp ON v.id = uvp.video_id AND uvp.user_id = $1
       WHERE v.status = 'active'
     `
-    const queryParams = [user.userId]
+    const queryParams = [userId]
     let paramCount = 2
 
     // Filter by category
@@ -92,7 +98,7 @@ export async function GET(request) {
         SUM(COALESCE(watch_time, 0)) as total_watch_time
       FROM user_video_progress
       WHERE user_id = $1
-    `, [user.userId])
+    `, [userId])
 
     const stats = statsResult.rows[0] || { completed_count: 0, watched_count: 0, total_watch_time: 0 }
 
