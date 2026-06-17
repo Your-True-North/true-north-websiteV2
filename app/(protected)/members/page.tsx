@@ -38,26 +38,29 @@ export default function MembersPage() {
 
   useEffect(() => {
     const DEFAULT_ANNOUNCEMENT = {
-      id: 0,
+      id: 9001,
       title: 'Group Coaching · Addiction',
       body: 'A focused session on addiction, the patterns underneath it, and the work of breaking the loop. Limited spots. This is real work, not a lecture.',
       url: 'https://calendly.com/callwithmason/kyn-enclosed'
     }
+    const showDefault = () => {
+      if (localStorage.getItem('dismissed_announcement') !== '9001') {
+        setAnnouncement(DEFAULT_ANNOUNCEMENT)
+      }
+    }
     fetch('/api/announcements/latest')
       .then(res => res.json())
       .then(data => {
-        const ann = data.announcement || DEFAULT_ANNOUNCEMENT
-        const dismissed = localStorage.getItem('dismissed_announcement')
-        if (dismissed !== String(ann.id)) {
-          setAnnouncement(ann)
+        if (data.announcement) {
+          const dismissed = localStorage.getItem('dismissed_announcement')
+          if (dismissed !== String(data.announcement.id)) {
+            setAnnouncement(data.announcement)
+            return
+          }
         }
+        showDefault()
       })
-      .catch(() => {
-        const dismissed = localStorage.getItem('dismissed_announcement')
-        if (dismissed !== String(DEFAULT_ANNOUNCEMENT.id)) {
-          setAnnouncement(DEFAULT_ANNOUNCEMENT)
-        }
-      })
+      .catch(() => showDefault())
   }, [])
 
   useEffect(() => {
@@ -587,7 +590,7 @@ export default function MembersPage() {
               {/* Stage dots */}
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {levelStages.map((stage, index) => {
-                  const currentIndex = levelStages.indexOf(user.level)
+                  const currentIndex = currentStageIndex
                   const isCompleted = index < currentIndex
                   const isCurrent = index === currentIndex
                   const isFirst = index === 0

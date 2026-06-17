@@ -14,7 +14,6 @@ export default function NextSessionCard() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCalendarOptions, setShowCalendarOptions] = useState(false);
-  const [showUpcomingOptions, setShowUpcomingOptions] = useState<number | null>(null);
   const [countdown, setCountdown] = useState('');
 
   useEffect(() => {
@@ -156,7 +155,6 @@ END:VCALENDAR`;
   }
 
   const nextSession = sessions[0];
-  const upcomingSessions = sessions.slice(1, 4);
 
   return (
     <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem', marginBottom: '3rem' }}>
@@ -312,124 +310,6 @@ END:VCALENDAR`;
         </div>
       </div>
 
-      {upcomingSessions.length > 0 && (
-        <div style={{
-          marginTop: '1.5rem',
-          background: '#1a1a18',
-          border: '1px solid #2c2c2a',
-          borderRadius: '6px',
-          padding: '1.5rem'
-        }}>
-          <div style={{
-            fontSize: '0.7rem',
-            color: '#9bc4b8',
-            textTransform: 'uppercase',
-            letterSpacing: '0.12em',
-            marginBottom: '1rem',
-            fontWeight: 600
-          }}>
-            Upcoming
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {upcomingSessions.map((session, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '0.75rem 0',
-                  borderBottom: index < upcomingSessions.length - 1 ? '1px solid #2c2c2a' : 'none'
-                }}
-              >
-                <div>
-                  <div style={{ color: '#f0ede8', fontSize: '0.9rem', fontWeight: 400, marginBottom: '0.25rem' }}>
-                    {session.title}
-                  </div>
-                  <div style={{ color: '#9bc4b8', fontSize: '0.8rem', fontWeight: 400 }}>
-                    {session.date} • {session.time}
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowUpcomingOptions(showUpcomingOptions === index ? null : index)}
-                  style={{
-                    padding: '0.5rem 1rem',
-                    background: 'transparent',
-                    border: '1px solid #333',
-                    borderRadius: '6px',
-                    color: '#666',
-                    fontSize: '0.8rem',
-                    fontWeight: 400,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    position: 'relative'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#9bc4b8';
-                    e.currentTarget.style.color = '#f0ede8';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = '#333';
-                    e.currentTarget.style.color = '#666';
-                  }}
-                >
-                  Add
-                  {showUpcomingOptions === index && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '100%',
-                      right: 0,
-                      marginTop: '0.5rem',
-                      background: '#1a1a18',
-                      border: '1px solid #2c2c2a',
-                      borderRadius: '6px',
-                      overflow: 'hidden',
-                      zIndex: 10,
-                      minWidth: '180px',
-                      boxShadow: '0 4px 16px rgba(0,0,0,0.4)'
-                    }}>
-                      {['google', 'apple', 'outlook', 'ical'].map((provider) => (
-                        <button
-                          key={provider}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCalendar(provider, session);
-                          }}
-                          style={{
-                            width: '100%',
-                            padding: '0.75rem 1rem',
-                            background: 'transparent',
-                            border: 'none',
-                            borderBottom: '1px solid #2c2c2a',
-                            color: '#a0a09c',
-                            fontSize: '0.8rem',
-                            fontWeight: 400,
-                            cursor: 'pointer',
-                            textAlign: 'left',
-                            transition: 'all 0.2s ease'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.background = '#1e1e1c';
-                            e.currentTarget.style.color = '#f0ede8';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.background = 'transparent';
-                            e.currentTarget.style.color = '#a0a09c';
-                          }}
-                        >
-                          {provider === 'google' ? 'Google' :
-                           provider === 'apple' ? 'Apple' :
-                           provider === 'outlook' ? 'Outlook' : '.ics'}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
