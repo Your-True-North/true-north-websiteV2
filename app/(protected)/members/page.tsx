@@ -34,34 +34,6 @@ export default function MembersPage() {
   const [billingLoading, setBillingLoading] = useState(false)
   const [billingError, setBillingError] = useState('')
   const [stats, setStats] = useState({ videosWatched: 0, totalWatchTime: 0, completionRate: 0 })
-  const [announcement, setAnnouncement] = useState<{ id: number; title: string; body: string; url: string } | null>(null)
-
-  useEffect(() => {
-    const DEFAULT_ANNOUNCEMENT = {
-      id: 9001,
-      title: 'Group Coaching · Addiction',
-      body: 'A focused session on addiction, the patterns underneath it, and the work of breaking the loop. Limited spots. This is real work, not a lecture.',
-      url: 'https://calendly.com/callwithmason/kyn-enclosed'
-    }
-    const showDefault = () => {
-      if (localStorage.getItem('dismissed_announcement') !== '9001') {
-        setAnnouncement(DEFAULT_ANNOUNCEMENT)
-      }
-    }
-    fetch('/api/announcements/latest')
-      .then(res => res.json())
-      .then(data => {
-        if (data.announcement) {
-          const dismissed = localStorage.getItem('dismissed_announcement')
-          if (dismissed !== String(data.announcement.id)) {
-            setAnnouncement(data.announcement)
-            return
-          }
-        }
-        showDefault()
-      })
-      .catch(() => showDefault())
-  }, [])
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
@@ -397,86 +369,62 @@ export default function MembersPage() {
           </div>
         </div>
 
-        {/* ANNOUNCEMENT BANNER — inline, not modal */}
-        {announcement && (
+        {/* GROUP COACHING CARD — always rendered, no state, no dismiss */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'stretch',
+          borderRadius: 'var(--kyn-r-lg)',
+          marginBottom: '16px',
+          overflow: 'hidden',
+          background: '#1e2d26',
+          border: '1px solid rgba(82,183,136,0.18)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.14)'
+        }}>
           <div style={{
-            display: 'flex',
-            alignItems: 'stretch',
-            borderRadius: 'var(--kyn-r-lg)',
-            marginBottom: '16px',
-            overflow: 'hidden',
-            background: '#1e2d26',
-            border: '1px solid rgba(82,183,136,0.18)',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.14)'
-          }}>
+            width: '3px',
+            background: 'linear-gradient(180deg, var(--kyn-green-hi), var(--kyn-green))',
+            flexShrink: 0
+          }} />
+          <div style={{ padding: '13px 16px', flex: 1 }}>
             <div style={{
-              width: '3px',
-              background: 'linear-gradient(180deg, var(--kyn-green-hi), var(--kyn-green))',
-              flexShrink: 0
-            }} />
-            <div style={{ padding: '13px 16px', flex: 1 }}>
-              <div style={{
-                fontSize: '9.5px',
-                fontWeight: 700,
-                letterSpacing: '0.11em',
-                textTransform: 'uppercase',
-                color: 'var(--kyn-green-hi)',
-                marginBottom: '4px'
-              }}>
-                From True North
-              </div>
-              <div style={{
-                fontSize: '13px',
-                color: 'rgba(255,255,255,0.82)',
-                lineHeight: 1.55,
-                fontWeight: 300
-              }}>
-                {announcement.body}
-              </div>
-              {announcement.url && announcement.url !== '/members' && (
-                <a
-                  href={announcement.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    localStorage.setItem('dismissed_announcement', String(announcement.id))
-                    setAnnouncement(null)
-                  }}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    marginTop: '10px',
-                    padding: '6px 13px',
-                    background: 'rgba(82,183,136,0.14)',
-                    border: '1px solid rgba(82,183,136,0.28)',
-                    borderRadius: 'var(--kyn-r)',
-                    color: 'var(--kyn-green-hi)',
-                    fontSize: '11.5px',
-                    textDecoration: 'none'
-                  }}>
-                  Reserve your spot
-                </a>
-              )}
+              fontSize: '9.5px',
+              fontWeight: 700,
+              letterSpacing: '0.11em',
+              textTransform: 'uppercase',
+              color: 'var(--kyn-green-hi)',
+              marginBottom: '4px'
+            }}>
+              Group Coaching · Addiction
             </div>
-            <button
-              onClick={() => {
-                localStorage.setItem('dismissed_announcement', String(announcement.id))
-                setAnnouncement(null)
-              }}
+            <div style={{
+              fontSize: '13px',
+              color: 'rgba(255,255,255,0.82)',
+              lineHeight: 1.55,
+              fontWeight: 300
+            }}>
+              A focused session on addiction, the patterns underneath it, and the work of breaking the loop. Limited spots. This is real work, not a lecture.
+            </div>
+            <a
+              href="https://calendly.com/callwithmason/kyn-enclosed"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
-                background: 'none',
-                border: 'none',
-                color: 'rgba(255,255,255,0.22)',
-                fontSize: '15px',
-                cursor: 'pointer',
-                padding: '12px 14px',
-                alignSelf: 'flex-start'
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                marginTop: '10px',
+                padding: '6px 13px',
+                background: 'rgba(82,183,136,0.14)',
+                border: '1px solid rgba(82,183,136,0.28)',
+                borderRadius: 'var(--kyn-r)',
+                color: 'var(--kyn-green-hi)',
+                fontSize: '11.5px',
+                textDecoration: 'none'
               }}>
-              ×
-            </button>
+              Reserve your spot
+            </a>
           </div>
-        )}
+        </div>
 
         {/* BENTO ROW 1 — Journey + Next Session */}
         <div style={{
