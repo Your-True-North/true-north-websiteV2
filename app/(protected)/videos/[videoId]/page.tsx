@@ -323,7 +323,7 @@ export default function VideoPlayerPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
       <div style={{
-        maxWidth: '90rem',
+        maxWidth: '1200px',
         margin: '0 auto',
         padding: isMobile ? '16px 14px 72px' : '28px 32px 52px'
       }}>
