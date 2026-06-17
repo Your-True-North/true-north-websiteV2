@@ -330,62 +330,6 @@ export default function MembersPage() {
       fontFamily: 'var(--kyn-font-sans)'
     }}>
 
-      {/* Announcement popup */}
-      {announcement && (
-        <div style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 200,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem'
-        }}>
-          <div style={{
-            background: 'var(--kyn-sidebar2)', borderRadius: '12px', maxWidth: '480px', width: '100%',
-            padding: '2rem', boxShadow: '0 20px 60px rgba(0,0,0,0.6)', border: '1px solid var(--kyn-border)', position: 'relative'
-          }}>
-            <button
-              onClick={() => {
-                localStorage.setItem('dismissed_announcement', String(announcement.id))
-                setAnnouncement(null)
-              }}
-              style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', fontSize: '1.25rem', color: '#aaa', cursor: 'pointer', lineHeight: 1 }}
-            >
-              ×
-            </button>
-            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-green-hi)', marginBottom: '12px' }}>
-              From Mason
-            </div>
-            <h2 style={{ fontSize: '20px', fontWeight: 500, color: 'var(--kyn-ink)', marginBottom: '12px', lineHeight: 1.4 }}>
-              {announcement.title}
-            </h2>
-            <p style={{ fontSize: '15px', lineHeight: 1.7, color: '#a0a09c', marginBottom: '1.5rem' }}>
-              {announcement.body}
-            </p>
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              {announcement.url && announcement.url !== '/members' && (
-                <a
-                  href={announcement.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    localStorage.setItem('dismissed_announcement', String(announcement.id))
-                    setAnnouncement(null)
-                  }}
-                  style={{ flex: 1, display: 'block', textAlign: 'center', padding: '12px', background: 'var(--kyn-green-hi)', color: '#0a0a0a', borderRadius: '6px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
-                >
-                  Reserve your spot
-                </a>
-              )}
-              <button
-                onClick={() => {
-                  localStorage.setItem('dismissed_announcement', String(announcement.id))
-                  setAnnouncement(null)
-                }}
-                style={{ flex: 1, padding: '12px', background: '#252523', border: '1px solid #333', borderRadius: '6px', color: '#888', fontSize: '14px', cursor: 'pointer' }}
-              >
-                Got it
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1.5rem' }}>
         <InstallAppBanner />
@@ -538,7 +482,7 @@ export default function MembersPage() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : '1.8fr 1fr',
-          gap: '11px',
+          gap: '16px',
           marginBottom: '18px'
         }}>
 
@@ -652,22 +596,10 @@ export default function MembersPage() {
           <div style={{
             borderRadius: 'var(--kyn-r-lg)',
             overflow: 'hidden',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.16)',
-            display: 'flex',
-            flexDirection: 'column'
+            background: '#1e2d26',
+            boxShadow: '0 0 0 1px var(--kyn-border-green), 0 2px 8px rgba(0,0,0,0.12)'
           }}>
-            <div style={{
-              height: '3px',
-              flexShrink: 0,
-              background: 'linear-gradient(90deg, var(--kyn-green), var(--kyn-green-hi), transparent)'
-            }} />
-            <div style={{
-              background: 'var(--kyn-sidebar2)',
-              flex: 1,
-              minHeight: '120px'
-            }}>
-              <NextSessionCard />
-            </div>
+            <NextSessionCard />
           </div>
 
         </div>
