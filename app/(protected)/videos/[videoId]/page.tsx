@@ -293,21 +293,21 @@ export default function VideoPlayerPage() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#666', fontWeight: 300 }}>Loading video...</div>
+      <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'var(--kyn-ink3)', fontWeight: 300 }}>Loading video...</div>
       </div>
     )
   }
 
   if (!video) {
     return (
-      <div style={{ minHeight: '100vh', background: '#0f0f0d', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ color: '#666', fontWeight: 300 }}>Video not found</div>
+      <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ color: 'var(--kyn-ink3)', fontWeight: 300 }}>Video not found</div>
         <Link href="/videos" style={{
           padding: '0.75rem 1.5rem',
-          background: 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-          color: '#000',
-          borderRadius: '3px',
+          background: 'var(--kyn-green)',
+          color: '#fff',
+          borderRadius: 'var(--kyn-r)',
           textDecoration: 'none',
           fontWeight: 600
         }}>
@@ -321,51 +321,18 @@ export default function VideoPlayerPage() {
   const youtubeId = video.youtubeId || extractYouTubeId(video.youtubeUrl)
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f0f0d', color: '#f0ede8' }}>
-      {/* Navigation */}
-      <nav style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 20,
-        borderBottom: '1px solid #242422',
-        background: '#111110'
-      }}>
-        <div style={{
-          maxWidth: '90rem',
-          margin: '0 auto',
-          padding: '1.25rem 1.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <Link href="/videos" style={{
-            fontSize: isMobile ? '1rem' : '1.5rem',
-            fontWeight: 300,
-            letterSpacing: '0.2em',
-            color: '#f0ede8',
-            textDecoration: 'none'
-          }}>
-            CIRCLE OF RETURN
-          </Link>
-          <Link href="/videos" style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontWeight: 300,
-            border: '1px solid #9bc4b8',
-            borderRadius: '3px',
-            color: '#9bc4b8',
-            textDecoration: 'none'
-          }}>
-            ← Back to Library
-          </Link>
-        </div>
-      </nav>
-
+    <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
       <div style={{
         maxWidth: '90rem',
         margin: '0 auto',
-        padding: '1rem 1.5rem'
+        padding: isMobile ? '16px 14px 72px' : '28px 32px 52px'
       }}>
+        {/* Breadcrumb */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '16px', borderBottom: '1px solid var(--kyn-border)', marginBottom: '20px' }}>
+          <Link href="/videos" style={{ fontSize: '12px', color: 'var(--kyn-ink3)', textDecoration: 'none' }}>Teachings</Link>
+          <span style={{ fontSize: '12px', color: 'var(--kyn-border-mid)' }}>/</span>
+          <span style={{ fontSize: '12px', color: 'var(--kyn-ink)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{video.title}</span>
+        </div>
         <div style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : '1fr 350px',
@@ -402,8 +369,8 @@ export default function VideoPlayerPage() {
 
             {/* Video Info */}
             <div style={{
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
               borderRadius: '6px',
               padding: '1.5rem',
               marginBottom: '1.5rem',
@@ -422,7 +389,7 @@ export default function VideoPlayerPage() {
                 <div style={{ flex: 1 }}>
                   <div style={{
                     fontSize: '0.875rem',
-                    color: '#9bc4b8',
+                    color: 'var(--kyn-green-hi)',
                     marginBottom: '0.5rem',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em'
@@ -433,7 +400,7 @@ export default function VideoPlayerPage() {
                     fontSize: isMobile ? '1.5rem' : '2rem',
                     fontWeight: 400,
                     marginBottom: '0.5rem',
-                    color: '#f0ede8'
+                    color: 'var(--kyn-ink)'
                   }}>
                     {video.title}
                   </h1>
@@ -442,7 +409,7 @@ export default function VideoPlayerPage() {
                     alignItems: 'center',
                     gap: '1rem',
                     fontSize: '0.875rem',
-                    color: '#999'
+                    color: 'var(--kyn-ink3)'
                   }}>
                     <span>{video.duration}</span>
                     <span>•</span>
@@ -455,10 +422,10 @@ export default function VideoPlayerPage() {
                   disabled={markingComplete}
                   style={{
                     padding: '0.875rem 1.5rem',
-                    background: video.completed ? 'rgba(127, 176, 105, 0.2)' : 'linear-gradient(135deg, #9bc4b8, #7fb069)',
-                    border: video.completed ? '1px solid #7fb069' : 'none',
-                    borderRadius: '3px',
-                    color: video.completed ? '#7fb069' : '#000',
+                    background: video.completed ? 'var(--kyn-green-mid)' : 'var(--kyn-green)',
+                    border: video.completed ? '1px solid var(--kyn-green)' : 'none',
+                    borderRadius: 'var(--kyn-r)',
+                    color: video.completed ? 'var(--kyn-green)' : '#fff',
                     fontSize: '1rem',
                     fontWeight: 600,
                     cursor: markingComplete ? 'not-allowed' : 'pointer',
@@ -473,7 +440,7 @@ export default function VideoPlayerPage() {
               <p style={{
                 fontSize: '1rem',
                 lineHeight: 1.7,
-                color: '#a0a09c',
+                color: 'var(--kyn-ink2)',
                 marginBottom: '1.5rem'
               }}>
                 {video.description}
@@ -485,7 +452,7 @@ export default function VideoPlayerPage() {
                 alignItems: 'center',
                 gap: '1.5rem',
                 paddingTop: '1rem',
-                borderTop: '1px solid #2c2c2a'
+                borderTop: '1px solid var(--kyn-border)'
               }}>
                 <button
                   onClick={handleReaction}
@@ -495,9 +462,9 @@ export default function VideoPlayerPage() {
                     gap: '0.5rem',
                     padding: '0.5rem 1rem',
                     background: video.hasReacted ? 'rgba(239, 68, 68, 0.1)' : 'transparent',
-                    border: '1px solid #2c2c2a',
+                    border: '1px solid var(--kyn-border)',
                     borderRadius: '3px',
-                    color: video.hasReacted ? '#ef4444' : '#666',
+                    color: video.hasReacted ? '#ef4444' : 'var(--kyn-ink3)',
                     fontSize: '0.875rem',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
@@ -511,7 +478,7 @@ export default function VideoPlayerPage() {
                   alignItems: 'center',
                   gap: '0.5rem',
                   fontSize: '0.875rem',
-                  color: '#666'
+                  color: 'var(--kyn-ink3)'
                 }}>
                   <svg style={{ width: '18px', height: '18px' }} fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
@@ -523,8 +490,8 @@ export default function VideoPlayerPage() {
 
             {/* Comments Section */}
             <div style={{
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
               borderRadius: '6px',
               padding: '1.5rem'
             }}>
@@ -532,7 +499,7 @@ export default function VideoPlayerPage() {
                 fontSize: '1.25rem',
                 fontWeight: 400,
                 marginBottom: '1.5rem',
-                color: '#f0ede8'
+                color: 'var(--kyn-ink)'
               }}>
                 Comments ({comments.length})
               </h2>
@@ -548,10 +515,10 @@ export default function VideoPlayerPage() {
                     width: '100%',
                     minHeight: '100px',
                     padding: '1rem',
-                    background: '#252523',
-                    border: '1px solid #333',
+                    background: 'var(--kyn-surface-raised)',
+                    border: '1px solid var(--kyn-border)',
                     borderRadius: '3px',
-                    color: '#f0ede8',
+                    color: 'var(--kyn-ink)',
                     fontSize: '1rem',
                     resize: 'vertical',
                     fontFamily: 'inherit',
@@ -564,10 +531,10 @@ export default function VideoPlayerPage() {
                   disabled={!newComment.trim() || submittingComment}
                   style={{
                     padding: '0.75rem 1.5rem',
-                    background: (!newComment.trim() || submittingComment) ? 'rgba(155, 196, 184, 0.3)' : 'linear-gradient(135deg, #9bc4b8, #7fb069)',
+                    background: (!newComment.trim() || submittingComment) ? 'var(--kyn-green-mid)' : 'var(--kyn-green)',
                     border: 'none',
-                    borderRadius: '3px',
-                    color: '#000',
+                    borderRadius: 'var(--kyn-r)',
+                    color: '#fff',
                     fontSize: '1rem',
                     fontWeight: 600,
                     cursor: (!newComment.trim() || submittingComment) ? 'not-allowed' : 'pointer'
@@ -580,16 +547,16 @@ export default function VideoPlayerPage() {
               {/* Comments List */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {comments.length === 0 ? (
-                  <div style={{ padding: '2rem', textAlign: 'center', color: '#999' }}>
+                  <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--kyn-ink3)' }}>
                     No comments yet. Be the first to share your thoughts!
                   </div>
                 ) : (() => {
                   const renderComment = (comment: Comment, depth: number): React.ReactNode => (
                     <div key={comment.id} style={{ marginLeft: depth > 0 ? '2rem' : '0' }}>
                       <div style={{
-                        background: depth > 0 ? '#1e1e1c' : '#252523',
-                        border: '1px solid ' + (depth > 0 ? '#2c2c2a' : '#333'),
-                        borderLeft: depth > 0 ? '3px solid #9bc4b8' : '3px solid #3a3a38',
+                        background: depth > 0 ? 'var(--kyn-surface)' : 'var(--kyn-surface-raised)',
+                        border: '1px solid var(--kyn-border)',
+                        borderLeft: depth > 0 ? '3px solid var(--kyn-green-hi)' : '3px solid var(--kyn-border)',
                         borderRadius: '8px',
                         padding: '0.875rem 1rem',
                         marginBottom: '0.5rem'
@@ -600,16 +567,16 @@ export default function VideoPlayerPage() {
                             background: comment.profile_photo ? `url(${comment.profile_photo}) center/cover` : 'linear-gradient(135deg, rgba(155,196,184,0.5), rgba(127,176,105,0.3))',
                             display: 'flex', alignItems: 'center', justifyContent: 'center'
                           }}>
-                            {!comment.profile_photo && <svg style={{ width: '14px', height: '14px', color: '#999' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>}
+                            {!comment.profile_photo && <svg style={{ width: '14px', height: '14px', color: 'var(--kyn-ink3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>}
                           </div>
-                          <span style={{ fontWeight: 600, fontSize: '0.875rem', color: '#f0ede8' }}>{comment.user_name}</span>
-                          <span style={{ fontSize: '0.75rem', color: '#555' }}>{new Date(comment.created_at).toLocaleDateString()}</span>
+                          <span style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--kyn-ink)' }}>{comment.user_name}</span>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--kyn-ink3)' }}>{new Date(comment.created_at).toLocaleDateString()}</span>
                         </div>
-                        <p style={{ color: '#a0a09c', lineHeight: 1.6, fontSize: '0.9375rem', margin: '0 0 0.5rem 0' }}>{comment.content}</p>
+                        <p style={{ color: 'var(--kyn-ink2)', lineHeight: 1.6, fontSize: '0.9375rem', margin: '0 0 0.5rem 0' }}>{comment.content}</p>
                         {depth < 3 && (
                           <button
                             onClick={() => setReplyingToId(replyingToId === comment.id ? null : comment.id)}
-                            style={{ background: 'none', border: 'none', color: replyingToId === comment.id ? '#9bc4b8' : '#aaa', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', padding: 0, letterSpacing: '0.04em', textTransform: 'uppercase' as const }}
+                            style={{ background: 'none', border: 'none', color: replyingToId === comment.id ? 'var(--kyn-green-hi)' : 'var(--kyn-ink3)', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', padding: 0, letterSpacing: '0.04em', textTransform: 'uppercase' as const }}
                           >
                             {replyingToId === comment.id ? 'Cancel' : 'Reply'}
                           </button>
@@ -624,12 +591,12 @@ export default function VideoPlayerPage() {
                               placeholder="Write a reply..."
                               autoFocus
                               rows={2}
-                              style={{ flex: 1, padding: '0.625rem 0.75rem', background: '#252523', border: '1px solid #333', borderRadius: '6px', color: '#f0ede8', fontSize: '0.875rem', outline: 'none', resize: 'none', fontFamily: 'inherit' }}
+                              style={{ flex: 1, padding: '0.625rem 0.75rem', background: 'var(--kyn-surface-raised)', border: '1px solid var(--kyn-border)', borderRadius: '6px', color: 'var(--kyn-ink)', fontSize: '0.875rem', outline: 'none', resize: 'none', fontFamily: 'inherit' }}
                             />
                             <button
                               onClick={() => handleSubmitReply(comment.id)}
                               disabled={submittingComment || !replyContent.trim()}
-                              style={{ padding: '0.625rem 1rem', background: submittingComment || !replyContent.trim() ? '#2c2c2a' : 'linear-gradient(135deg, #9bc4b8, #7fb069)', border: 'none', borderRadius: '6px', color: submittingComment || !replyContent.trim() ? '#555' : '#000', fontSize: '0.8125rem', fontWeight: 600, cursor: submittingComment || !replyContent.trim() ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap' }}
+                              style={{ padding: '0.625rem 1rem', background: submittingComment || !replyContent.trim() ? 'var(--kyn-border)' : 'var(--kyn-green)', border: 'none', borderRadius: '6px', color: submittingComment || !replyContent.trim() ? 'var(--kyn-ink3)' : '#fff', fontSize: '0.8125rem', fontWeight: 600, cursor: submittingComment || !replyContent.trim() ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap' }}
                             >
                               {submittingComment ? '...' : 'Post'}
                             </button>
@@ -650,8 +617,8 @@ export default function VideoPlayerPage() {
           {/* Sidebar - Related Videos */}
           <div>
             <div style={{
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
+              background: 'var(--kyn-surface)',
+              border: '1px solid var(--kyn-border)',
               borderRadius: '6px',
               padding: '1.5rem',
               position: isMobile ? 'static' : 'sticky',
@@ -661,7 +628,7 @@ export default function VideoPlayerPage() {
                 fontSize: '1.25rem',
                 fontWeight: 400,
                 marginBottom: '1.5rem',
-                color: '#f0ede8'
+                color: 'var(--kyn-ink)'
               }}>
                 Up Next
               </h2>
@@ -671,7 +638,7 @@ export default function VideoPlayerPage() {
                   <div style={{
                     padding: '1rem',
                     textAlign: 'center',
-                    color: '#999',
+                    color: 'var(--kyn-ink3)',
                     fontSize: '0.875rem'
                   }}>
                     No related videos
@@ -690,17 +657,17 @@ export default function VideoPlayerPage() {
                           gap: '0.75rem',
                           padding: '0.75rem',
                           borderRadius: '3px',
-                          border: '1px solid #2c2c2a',
+                          border: '1px solid var(--kyn-border)',
                           cursor: 'pointer',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.background = '#252523'
-                          e.currentTarget.style.borderColor = '#9bc4b8'
+                          e.currentTarget.style.background = 'var(--kyn-surface-raised)'
+                          e.currentTarget.style.borderColor = 'var(--kyn-green)'
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.background = 'transparent'
-                          e.currentTarget.style.borderColor = '#2c2c2a'
+                          e.currentTarget.style.borderColor = 'var(--kyn-border)'
                         }}
                         >
                           {/* Thumbnail */}
@@ -737,13 +704,13 @@ export default function VideoPlayerPage() {
                               display: '-webkit-box',
                               WebkitLineClamp: 2,
                               WebkitBoxOrient: 'vertical',
-                              color: '#f0ede8'
+                              color: 'var(--kyn-ink)'
                             }}>
                               {related.title}
                             </h3>
                             <div style={{
                               fontSize: '0.75rem',
-                              color: '#999'
+                              color: 'var(--kyn-ink3)'
                             }}>
                               {related.duration}
                             </div>
