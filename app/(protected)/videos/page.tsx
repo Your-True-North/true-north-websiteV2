@@ -207,7 +207,7 @@ export default function LibraryPage() {
                       <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{video.title}</div>
                       <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>{pct}% complete{remaining ? ` · ${remaining} min remaining` : ''}</div>
                     </div>
-                    <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 600, color: '#3b82f6', background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.15)', borderRadius: '20px', padding: '3px 10px', whiteSpace: 'nowrap' }}>In progress</span>
+                    <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 600, color: 'var(--kyn-blue)', background: 'var(--kyn-blue-mid)', border: '1px solid var(--kyn-border-blue)', borderRadius: '20px', padding: '3px 10px', whiteSpace: 'nowrap' }}>In progress</span>
                   </a>
                 )
               })}
