@@ -124,32 +124,16 @@ END:VCALENDAR`;
 
   if (loading) {
     return (
-      <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem' }}>
-        <div style={{
-          background: '#1a1a18',
-          border: '1px solid #2c2c2a',
-          borderRadius: '6px',
-          padding: '2rem',
-          textAlign: 'center'
-        }}>
-          <div style={{ color: '#666', fontSize: '0.9rem' }}>Loading sessions...</div>
-        </div>
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <div style={{ color: '#666', fontSize: '0.9rem' }}>Loading sessions...</div>
       </div>
     );
   }
 
   if (sessions.length === 0) {
     return (
-      <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem' }}>
-        <div style={{
-          background: '#1a1a18',
-          border: '1px solid #2c2c2a',
-          borderRadius: '6px',
-          padding: '2rem',
-          textAlign: 'center'
-        }}>
-          <div style={{ color: '#666', fontSize: '0.9rem' }}>No upcoming sessions</div>
-        </div>
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <div style={{ color: '#666', fontSize: '0.9rem' }}>No upcoming sessions</div>
       </div>
     );
   }
@@ -157,14 +141,7 @@ END:VCALENDAR`;
   const nextSession = sessions[0];
 
   return (
-    <div style={{ maxWidth: '56rem', margin: '0 auto', padding: '0 1.5rem', marginBottom: '3rem' }}>
-      <div style={{
-        background: '#1a1a18',
-        border: '1px solid #2c2c2a',
-        borderRadius: '6px',
-        padding: '2rem',
-        position: 'relative'
-      }}>
+    <div style={{ padding: '2rem', position: 'relative' }}>
         <div style={{
           fontSize: '0.7rem',
           color: '#9bc4b8',
@@ -309,7 +286,5 @@ END:VCALENDAR`;
           )}
         </div>
       </div>
-
-    </div>
   );
 }
