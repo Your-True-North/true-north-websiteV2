@@ -542,53 +542,53 @@ export default function MembersPage() {
         }}>
           {/* Videos watched */}
           <div style={{
-            background: '#1a2420',
-            border: '1px solid rgba(255,255,255,0.07)',
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
             borderRadius: 'var(--kyn-r-lg)',
             padding: '18px 20px',
             position: 'relative',
             overflow: 'hidden'
           }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-green)' }} />
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '10px' }}>Videos watched</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'rgba(255,255,255,0.88)' }}>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink)', marginBottom: '10px' }}>Videos watched</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-ink)' }}>
               {stats.videosWatched || 0}
             </div>
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '8px' }}>of 24 available</div>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>of 24 available</div>
           </div>
 
           {/* Time invested */}
           <div style={{
-            background: '#1a2420',
-            border: '1px solid rgba(255,255,255,0.07)',
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
             borderRadius: 'var(--kyn-r-lg)',
             padding: '18px 20px',
             position: 'relative',
             overflow: 'hidden'
           }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.2)' }} />
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '10px' }}>Time invested</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'rgba(255,255,255,0.88)' }}>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink)', marginBottom: '10px' }}>Time invested</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-ink)' }}>
               {Math.round((stats.totalWatchTime || 0) / 60)}m
             </div>
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '8px' }}>this month</div>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>this month</div>
           </div>
 
           {/* Completion */}
           <div style={{
-            background: '#1a2420',
-            border: '1px solid rgba(255,255,255,0.07)',
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
             borderRadius: 'var(--kyn-r-lg)',
             padding: '18px 20px',
             position: 'relative',
             overflow: 'hidden'
           }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-green-hi)' }} />
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '10px' }}>Completion</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-green-hi)' }}>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink)', marginBottom: '10px' }}>Completion</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-green)' }}>
               {stats.completionRate || 0}%
             </div>
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '8px' }}>across all content</div>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>across all content</div>
           </div>
         </div>
 

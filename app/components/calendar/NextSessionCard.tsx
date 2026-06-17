@@ -119,21 +119,20 @@ END:VCALENDAR`;
     }
 
     setShowCalendarOptions(false);
-    setShowUpcomingOptions(null);
   };
 
   if (loading) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <div style={{ color: '#666', fontSize: '0.9rem' }}>Loading sessions...</div>
+      <div style={{ padding: '16px 20px', textAlign: 'center' }}>
+        <div style={{ color: '#9bc4b8', fontSize: '12px' }}>Loading sessions...</div>
       </div>
     );
   }
 
   if (sessions.length === 0) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <div style={{ color: '#666', fontSize: '0.9rem' }}>No upcoming sessions</div>
+      <div style={{ padding: '16px 20px', textAlign: 'center' }}>
+        <div style={{ color: '#9bc4b8', fontSize: '12px' }}>No upcoming sessions</div>
       </div>
     );
   }
@@ -141,127 +140,128 @@ END:VCALENDAR`;
   const nextSession = sessions[0];
 
   return (
-    <div style={{ padding: '2rem', position: 'relative' }}>
+    <div style={{ padding: '16px 20px 18px', position: 'relative' }}>
+      <div style={{
+        fontSize: '9.5px',
+        color: '#9bc4b8',
+        textTransform: 'uppercase',
+        letterSpacing: '0.11em',
+        marginBottom: '6px',
+        fontWeight: 700
+      }}>
+        Next Session
+      </div>
+
+      <h3 style={{
+        fontSize: '15px',
+        color: '#f0ede8',
+        fontWeight: 500,
+        marginBottom: '8px',
+        letterSpacing: '-0.01em',
+        lineHeight: 1.3
+      }}>
+        {nextSession.title}
+      </h3>
+
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        marginBottom: '12px',
+        flexWrap: 'wrap'
+      }}>
         <div style={{
-          fontSize: '0.7rem',
           color: '#9bc4b8',
-          textTransform: 'uppercase',
-          letterSpacing: '0.12em',
-          marginBottom: '1rem',
-          fontWeight: 600
+          fontSize: '12px',
+          fontWeight: 500
         }}>
-          Next Session
+          {nextSession.date}
         </div>
-
-        <h3 style={{
-          fontSize: '1.5rem',
-          color: '#f0ede8',
-          fontWeight: 500,
-          marginBottom: '1rem',
-          letterSpacing: '-0.01em'
-        }}>
-          {nextSession.title}
-        </h3>
-
         <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-          marginBottom: '1rem',
-          flexWrap: 'wrap'
+          color: '#a0a09c',
+          fontSize: '12px',
+          fontWeight: 400
         }}>
-          <div style={{
-            color: '#9bc4b8',
-            fontSize: '0.95rem',
-            fontWeight: 500
-          }}>
-            {nextSession.date}
-          </div>
-          <div style={{
-            color: '#a0a09c',
-            fontSize: '0.95rem',
-            fontWeight: 400
-          }}>
-            {nextSession.time}
-          </div>
-        </div>
-
-        <div style={{ position: 'relative' }}>
-          <button
-            onClick={() => setShowCalendarOptions(!showCalendarOptions)}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: '#252523',
-              border: '1px solid #333',
-              borderRadius: '6px',
-              color: '#a0a09c',
-              fontSize: '0.9rem',
-              fontWeight: 500,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#1e1e1c';
-              e.currentTarget.style.borderColor = '#9bc4b8';
-              e.currentTarget.style.color = '#f0ede8';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#252523';
-              e.currentTarget.style.borderColor = '#333';
-              e.currentTarget.style.color = '#a0a09c';
-            }}
-          >
-            Add to Calendar
-          </button>
-
-          {showCalendarOptions && (
-            <div style={{
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              marginTop: '0.5rem',
-              background: '#1a1a18',
-              border: '1px solid #2c2c2a',
-              borderRadius: '6px',
-              overflow: 'hidden',
-              zIndex: 10,
-              minWidth: '200px',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.4)'
-            }}>
-              {['google', 'apple', 'outlook', 'ical'].map((provider) => (
-                <button
-                  key={provider}
-                  onClick={() => handleAddToCalendar(provider, nextSession)}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1rem',
-                    background: 'transparent',
-                    border: 'none',
-                    borderBottom: '1px solid #2c2c2a',
-                    color: '#a0a09c',
-                    fontSize: '0.85rem',
-                    fontWeight: 400,
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#1e1e1c';
-                    e.currentTarget.style.color = '#f0ede8';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.color = '#a0a09c';
-                  }}
-                >
-                  {provider === 'google' ? 'Google Calendar' :
-                   provider === 'apple' ? 'Apple Calendar' :
-                   provider === 'outlook' ? 'Outlook' : 'Download .ics'}
-                </button>
-              ))}
-            </div>
-          )}
+          {nextSession.time}
         </div>
       </div>
+
+      <div style={{ position: 'relative' }}>
+        <button
+          onClick={() => setShowCalendarOptions(!showCalendarOptions)}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '5px',
+            padding: '6px 13px',
+            background: 'rgba(82,183,136,0.14)',
+            border: '1px solid rgba(82,183,136,0.28)',
+            borderRadius: '4px',
+            color: '#9bc4b8',
+            fontSize: '11.5px',
+            fontWeight: 500,
+            cursor: 'pointer',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(82,183,136,0.22)';
+            e.currentTarget.style.color = '#f0ede8';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(82,183,136,0.14)';
+            e.currentTarget.style.color = '#9bc4b8';
+          }}
+        >
+          Add to Calendar
+        </button>
+
+        {showCalendarOptions && (
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            marginTop: '0.5rem',
+            background: '#1a1a18',
+            border: '1px solid #2c2c2a',
+            borderRadius: '6px',
+            overflow: 'hidden',
+            zIndex: 10,
+            minWidth: '180px',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.4)'
+          }}>
+            {['google', 'apple', 'outlook', 'ical'].map((provider) => (
+              <button
+                key={provider}
+                onClick={() => handleAddToCalendar(provider, nextSession)}
+                style={{
+                  width: '100%',
+                  padding: '0.65rem 1rem',
+                  background: 'transparent',
+                  border: 'none',
+                  borderBottom: '1px solid #2c2c2a',
+                  color: '#a0a09c',
+                  fontSize: '0.82rem',
+                  fontWeight: 400,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#1e1e1c';
+                  e.currentTarget.style.color = '#f0ede8';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.color = '#a0a09c';
+                }}
+              >
+                {provider === 'google' ? 'Google Calendar' :
+                 provider === 'apple' ? 'Apple Calendar' :
+                 provider === 'outlook' ? 'Outlook' : 'Download .ics'}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
