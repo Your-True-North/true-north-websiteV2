@@ -218,7 +218,7 @@ export default function CallsPage() {
             ← Back to Dashboard
           </Link>
           <h1 style={{
-            fontSize: isMobile ? '20px' : '22px',
+            fontSize: '22px',
             fontWeight: 400,
             marginBottom: '8px',
             color: 'var(--kyn-ink)',
