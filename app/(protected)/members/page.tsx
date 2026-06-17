@@ -475,8 +475,8 @@ export default function MembersPage() {
                 position: 'absolute',
                 top: '7px', left: 0,
                 height: '1px',
-                width: `${Math.min(100, (levelStages.indexOf(user.level) / 3) * 100 + (getLevelProgress() / 3))}%`,
-                background: 'linear-gradient(90deg, var(--kyn-green), var(--kyn-green-hi))',
+                width: `${(currentStageIndex / 3) * 100}%`,
+                background: 'var(--kyn-green)',
                 transition: 'width 0.8s ease'
               }} />
               {/* Stage dots */}
@@ -505,9 +505,9 @@ export default function MembersPage() {
                         zIndex: 1
                       }} />
                       <div style={{
-                        fontSize: '10px',
+                        fontSize: '12px',
                         color: isCompleted || isCurrent ? 'var(--kyn-green)' : 'var(--kyn-ink3)',
-                        fontWeight: isCurrent ? 600 : 400,
+                        fontWeight: isCurrent ? 600 : isCompleted ? 500 : 400,
                         whiteSpace: 'nowrap'
                       }}>
                         {stage}
@@ -518,26 +518,6 @@ export default function MembersPage() {
               </div>
             </div>
 
-            {/* Stats merged into journey card */}
-            <div style={{
-              marginTop: '12px',
-              paddingTop: '12px',
-              borderTop: '1px solid var(--kyn-border)',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '8px'
-            }}>
-              {[
-                { label: 'Videos watched', value: stats.videosWatched || 0, accent: 'var(--kyn-green)' },
-                { label: 'Watch time', value: `${Math.round((stats.totalWatchTime || 0) / 60)}m`, accent: 'var(--kyn-ink2)' },
-                { label: 'Completion', value: `${stats.completionRate || 0}%`, accent: 'var(--kyn-green-hi)' }
-              ].map((stat, i) => (
-                <div key={i} style={{ textAlign: i === 0 ? 'left' : i === 1 ? 'center' : 'right' }}>
-                  <div style={{ fontSize: '10px', color: 'var(--kyn-ink3)', marginBottom: '4px' }}>{stat.label}</div>
-                  <div style={{ fontSize: '18px', fontWeight: 300, letterSpacing: '-0.02em', color: stat.accent, lineHeight: 1 }}>{stat.value}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Next Session card */}
@@ -550,6 +530,65 @@ export default function MembersPage() {
             <NextSessionCard />
           </div>
 
+        </div>
+
+        {/* STATS ROW */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '11px',
+          marginTop: '11px'
+        }}>
+          {/* Videos watched */}
+          <div style={{
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
+            borderRadius: 'var(--kyn-r-lg)',
+            padding: '18px 20px',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-green)' }} />
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Videos watched</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-ink)' }}>
+              {stats.videosWatched || 0}
+            </div>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>of 24 available</div>
+          </div>
+
+          {/* Time invested */}
+          <div style={{
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
+            borderRadius: 'var(--kyn-r-lg)',
+            padding: '18px 20px',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-ink2)', opacity: 0.35 }} />
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Time invested</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-ink)' }}>
+              {Math.round((stats.totalWatchTime || 0) / 60)}m
+            </div>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>this month</div>
+          </div>
+
+          {/* Completion */}
+          <div style={{
+            background: 'var(--kyn-surface)',
+            border: '1px solid var(--kyn-border)',
+            borderRadius: 'var(--kyn-r-lg)',
+            padding: '18px 20px',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-green-hi)' }} />
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Completion</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-green)' }}>
+              {stats.completionRate || 0}%
+            </div>
+            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>across all content</div>
+          </div>
         </div>
 
         {/* LOWER GRID */}
