@@ -438,7 +438,7 @@ export default function MembersPage() {
           <div style={{
             background: 'var(--kyn-surface)',
             borderRadius: 'var(--kyn-r-lg)',
-            padding: '18px 22px 20px',
+            padding: '16px 20px 18px',
             boxShadow: '0 0 0 1px var(--kyn-border), 0 2px 6px rgba(0,0,0,0.05)',
             position: 'relative',
             overflow: 'hidden'
@@ -456,7 +456,7 @@ export default function MembersPage() {
             <div style={{
               fontSize: '11.5px',
               color: 'var(--kyn-ink3)',
-              marginBottom: '14px',
+              marginBottom: '10px',
               fontStyle: 'italic'
             }}>
               The work only counts when you show up for it.
@@ -520,8 +520,8 @@ export default function MembersPage() {
 
             {/* Stats merged into journey card */}
             <div style={{
-              marginTop: '16px',
-              paddingTop: '14px',
+              marginTop: '12px',
+              paddingTop: '12px',
               borderTop: '1px solid var(--kyn-border)',
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
