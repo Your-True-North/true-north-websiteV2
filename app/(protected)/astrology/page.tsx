@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 interface Planet {
@@ -258,6 +258,13 @@ export default function AstrologyPage() {
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState<'planets' | 'houses' | 'aspects'>('planets')
   const [expandedPlanet, setExpandedPlanet] = useState<string | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -302,7 +309,7 @@ export default function AstrologyPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
-      <div style={{ maxWidth: '760px', margin: '0 auto', padding: '2rem 1.5rem 4rem' }}>
+      <div style={{ maxWidth: '760px', margin: '0 auto', padding: isMobile ? '16px 14px 72px' : '28px 32px 52px' }}>
 
         <Link
           href="/members"
@@ -313,13 +320,15 @@ export default function AstrologyPage() {
           ← Back to Dashboard
         </Link>
 
+        {/* ─── Page title ─── */}
+        <div style={{ paddingBottom: '17px', borderBottom: '1px solid var(--kyn-border)', marginBottom: '20px' }}>
+          <h1 style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '22px', fontWeight: 400, color: 'var(--kyn-ink)', margin: '0 0 4px 0', lineHeight: 1.2 }}>Your Astrology</h1>
+          <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'var(--kyn-ink3)', margin: 0 }}>Planets, wounds, and how the chart reflects who you are</p>
+        </div>
+
         {/* ─── Why astrology? ─── */}
         <div style={{ marginBottom: '2.5rem' }}>
-          <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 300, letterSpacing: '-0.02em', color: 'var(--kyn-ink)', marginBottom: '1.5rem' }}>
-            Your Astrology
-          </h1>
-
-          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '1.25rem' }}>WHY IS THIS IN HERE?</div>
+          <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '1.25rem' }}>WHY IS THIS IN HERE?</div>
           <p style={{ fontWeight: 300, lineHeight: 1.8, color: 'var(--kyn-ink2)', marginBottom: '1rem', fontSize: '0.9375rem' }}>
             I was sceptical of astrology for years. It felt like something people used to avoid responsibility, so I didn't take it seriously. My mind changed when I opened to the idea that I am factually a complex formulation of energy, as is everything in our universe, including the planets. So why couldn't they affect me? If my ex-girlfriend coming into the room I was sitting in could change the way I felt without any words said, why couldn't these huge balls of energy influence how I felt and, in response, how I behaved?
           </p>
@@ -336,7 +345,7 @@ export default function AstrologyPage() {
 
         {/* ─── Form ─── */}
         <div style={card}>
-          <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '1.25rem' }}>YOUR BIRTH DETAILS</div>
+          <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '1.25rem' }}>YOUR BIRTH DETAILS</div>
           <form onSubmit={handleSubmit}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <div>
@@ -383,7 +392,7 @@ export default function AstrologyPage() {
 
             {/* Big Three */}
             <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '0.7rem', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '0.875rem' }}>YOUR BIG THREE</div>
+              <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '0.875rem' }}>YOUR BIG THREE</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
                 {[
                   { label: 'Sun Sign', sub: 'Who you are', planet: chart.planets.find(p => p.name === 'sun') },
@@ -391,7 +400,7 @@ export default function AstrologyPage() {
                   { label: 'Rising Sign', sub: 'How you appear', planet: { sign: chart.ascendant.sign, signDegree: chart.ascendant.signDegree } as any }
                 ].map(({ label, sub, planet }) => planet ? (
                   <div key={label} style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: '10px', padding: '1.25rem', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--kyn-ink3)', marginBottom: '0.5rem' }}>{label.toUpperCase()}</div>
+                    <div style={{ fontSize: '9.5px', letterSpacing: '0.1em', color: 'var(--kyn-ink3)', marginBottom: '0.5rem' }}>{label.toUpperCase()}</div>
                     <div style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--kyn-ink)', marginBottom: '0.25rem' }}>{planet.sign}</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--kyn-ink3)' }}>{sub}</div>
                   </div>
@@ -468,7 +477,7 @@ export default function AstrologyPage() {
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                               <span style={{ fontWeight: 500, fontSize: '0.9375rem' }}>{info?.title || PLANET_DISPLAY[p.name]}</span>
                               <span style={{ color: 'var(--kyn-ink2)', fontSize: '0.9375rem' }}>in {p.sign}</span>
-                              {p.isRetrograde && <span style={{ fontSize: '0.7rem', color: '#c0392b', border: '1px solid rgba(192,57,43,0.3)', borderRadius: '4px', padding: '0 4px' }}>Rx</span>}
+                              {p.isRetrograde && <span style={{ fontSize: '10px', color: '#c0392b', border: '1px solid rgba(192,57,43,0.3)', borderRadius: '4px', padding: '0 4px' }}>Rx</span>}
                               <span style={{ fontSize: '0.75rem', color: 'var(--kyn-ink3)' }}>H{p.house}</span>
                             </div>
                             <div style={{ fontSize: '0.8125rem', color: 'var(--kyn-ink3)', marginTop: '0.1rem' }}>{info?.meaning}</div>
@@ -515,7 +524,7 @@ export default function AstrologyPage() {
                         }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
-                          <span style={{ fontSize: '0.7rem', color: 'var(--kyn-ink3)', fontWeight: 600, minWidth: '2rem' }}>H{h.house}</span>
+                          <span style={{ fontSize: '10px', color: 'var(--kyn-ink3)', fontWeight: 600, minWidth: '2rem' }}>H{h.house}</span>
                           <div>
                             <div style={{ fontSize: '0.875rem', color: 'var(--kyn-ink)', fontWeight: isAngular ? 500 : 400 }}>{HOUSE_MEANING[h.house]}</div>
                             <div style={{ fontSize: '0.775rem', color: 'var(--kyn-ink2)' }}>{h.sign}</div>
