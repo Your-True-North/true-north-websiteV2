@@ -286,7 +286,8 @@ export default function MembersPage() {
   }
 
   const levelStages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
-  const currentStageIndex = Math.max(0, levelStages.indexOf(user.level))
+  const completionRate = stats.completionRate || 0
+  const currentStageIndex = completionRate >= 75 ? 3 : completionRate >= 50 ? 2 : completionRate >= 25 ? 1 : 0
   const levelColors: { [key: string]: string } = {
     'Seeker': '#e67e22',
     'Explorer': '#7fb069',
@@ -475,7 +476,7 @@ export default function MembersPage() {
                 position: 'absolute',
                 top: '7px', left: 0,
                 height: '1px',
-                width: `${(currentStageIndex / 3) * 100}%`,
+                width: `${Math.min(100, (completionRate * 4) / 3)}%`,
                 background: 'var(--kyn-green)',
                 transition: 'width 0.8s ease'
               }} />
@@ -541,53 +542,53 @@ export default function MembersPage() {
         }}>
           {/* Videos watched */}
           <div style={{
-            background: 'var(--kyn-surface)',
-            border: '1px solid var(--kyn-border)',
+            background: '#1a2420',
+            border: '1px solid rgba(255,255,255,0.07)',
             borderRadius: 'var(--kyn-r-lg)',
             padding: '18px 20px',
             position: 'relative',
             overflow: 'hidden'
           }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-green)' }} />
-            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Videos watched</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-ink)' }}>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '10px' }}>Videos watched</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'rgba(255,255,255,0.88)' }}>
               {stats.videosWatched || 0}
             </div>
-            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>of 24 available</div>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '8px' }}>of 24 available</div>
           </div>
 
           {/* Time invested */}
           <div style={{
-            background: 'var(--kyn-surface)',
-            border: '1px solid var(--kyn-border)',
+            background: '#1a2420',
+            border: '1px solid rgba(255,255,255,0.07)',
             borderRadius: 'var(--kyn-r-lg)',
             padding: '18px 20px',
             position: 'relative',
             overflow: 'hidden'
           }}>
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-ink2)', opacity: 0.35 }} />
-            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Time invested</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-ink)' }}>
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.2)' }} />
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '10px' }}>Time invested</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'rgba(255,255,255,0.88)' }}>
               {Math.round((stats.totalWatchTime || 0) / 60)}m
             </div>
-            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>this month</div>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '8px' }}>this month</div>
           </div>
 
           {/* Completion */}
           <div style={{
-            background: 'var(--kyn-surface)',
-            border: '1px solid var(--kyn-border)',
+            background: '#1a2420',
+            border: '1px solid rgba(255,255,255,0.07)',
             borderRadius: 'var(--kyn-r-lg)',
             padding: '18px 20px',
             position: 'relative',
             overflow: 'hidden'
           }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-green-hi)' }} />
-            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Completion</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-green)' }}>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginBottom: '10px' }}>Completion</div>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '32px', fontWeight: 300, lineHeight: 1, color: 'var(--kyn-green-hi)' }}>
               {stats.completionRate || 0}%
             </div>
-            <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>across all content</div>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '8px' }}>across all content</div>
           </div>
         </div>
 
