@@ -153,16 +153,6 @@ END:VCALENDAR`;
           Next Session
         </div>
 
-        <h3 style={{
-          fontSize: '1.5rem',
-          color: '#f0ede8',
-          fontWeight: 500,
-          marginBottom: '1rem',
-          letterSpacing: '-0.01em'
-        }}>
-          {nextSession.title}
-        </h3>
-
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -183,17 +173,6 @@ END:VCALENDAR`;
             fontWeight: 400
           }}>
             {nextSession.time}
-          </div>
-          <div style={{
-            background: 'rgba(155, 196, 184, 0.1)',
-            border: '1px solid rgba(155, 196, 184, 0.25)',
-            borderRadius: '4px',
-            padding: '0.25rem 0.75rem',
-            fontSize: '0.8rem',
-            color: '#9bc4b8',
-            fontWeight: 500
-          }}>
-            {countdown}
           </div>
         </div>
 
