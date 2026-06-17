@@ -153,6 +153,16 @@ END:VCALENDAR`;
           Next Session
         </div>
 
+        <h3 style={{
+          fontSize: '1.5rem',
+          color: '#f0ede8',
+          fontWeight: 500,
+          marginBottom: '1rem',
+          letterSpacing: '-0.01em'
+        }}>
+          {nextSession.title}
+        </h3>
+
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -175,18 +185,6 @@ END:VCALENDAR`;
             {nextSession.time}
           </div>
         </div>
-
-        {nextSession.description && (
-          <p style={{
-            color: '#a0a09c',
-            fontSize: '0.9rem',
-            lineHeight: '1.6',
-            marginBottom: '1.5rem',
-            fontWeight: 400
-          }}>
-            {nextSession.description?.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()}
-          </p>
-        )}
 
         <div style={{ position: 'relative' }}>
           <button
