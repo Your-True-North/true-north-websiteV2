@@ -499,7 +499,7 @@ export default function CommunityPage() {
         <div>
           {/* Page heading */}
           <h1 style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '22px', fontWeight: 400, color: 'var(--kyn-ink)', marginBottom: '20px', lineHeight: 1.3 }}>
-            Brotherhood
+            Our Circle
           </h1>
 
           {/* Video card - mobile only */}

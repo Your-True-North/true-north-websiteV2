@@ -20,7 +20,7 @@ const NAV_LINKS = [
     ),
   },
   {
-    label: 'Brotherhood',
+    label: 'Our Circle',
     href: '/community',
     badge: 'blue',
     icon: (
@@ -70,7 +70,7 @@ const NAV_LINKS = [
 
 const BOTTOM_NAV = [
   { label: 'Home', href: '/members', icon: NAV_LINKS[0].icon },
-  { label: 'Brotherhood', href: '/community', icon: NAV_LINKS[1].icon, blueDot: true },
+  { label: 'Our Circle', href: '/community', icon: NAV_LINKS[1].icon, blueDot: true },
   { label: 'Teachings', href: '/videos', icon: NAV_LINKS[2].icon },
   { label: 'Calendar', href: '/calls', icon: NAV_LINKS[3].icon },
 ]

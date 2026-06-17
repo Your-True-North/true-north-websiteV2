@@ -37,16 +37,27 @@ export default function MembersPage() {
   const [announcement, setAnnouncement] = useState<{ id: number; title: string; body: string; url: string } | null>(null)
 
   useEffect(() => {
+    const DEFAULT_ANNOUNCEMENT = {
+      id: 0,
+      title: 'Group Coaching · Addiction',
+      body: 'A focused session on addiction, the patterns underneath it, and the work of breaking the loop. Limited spots. This is real work, not a lecture.',
+      url: 'https://calendly.com/callwithmason/kyn-enclosed'
+    }
     fetch('/api/announcements/latest')
       .then(res => res.json())
       .then(data => {
-        if (!data.announcement) return
+        const ann = data.announcement || DEFAULT_ANNOUNCEMENT
         const dismissed = localStorage.getItem('dismissed_announcement')
-        if (dismissed !== String(data.announcement.id)) {
-          setAnnouncement(data.announcement)
+        if (dismissed !== String(ann.id)) {
+          setAnnouncement(ann)
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        const dismissed = localStorage.getItem('dismissed_announcement')
+        if (dismissed !== String(DEFAULT_ANNOUNCEMENT.id)) {
+          setAnnouncement(DEFAULT_ANNOUNCEMENT)
+        }
+      })
   }, [])
 
   useEffect(() => {
@@ -348,13 +359,15 @@ export default function MembersPage() {
               {announcement.url && announcement.url !== '/members' && (
                 <a
                   href={announcement.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => {
                     localStorage.setItem('dismissed_announcement', String(announcement.id))
                     setAnnouncement(null)
                   }}
                   style={{ flex: 1, display: 'block', textAlign: 'center', padding: '12px', background: 'var(--kyn-green-hi)', color: '#0a0a0a', borderRadius: '6px', fontWeight: 600, fontSize: '14px', textDecoration: 'none' }}
                 >
-                  View Now
+                  Reserve your spot
                 </a>
               )}
               <button
@@ -476,6 +489,8 @@ export default function MembersPage() {
               {announcement.url && announcement.url !== '/members' && (
                 <a
                   href={announcement.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => {
                     localStorage.setItem('dismissed_announcement', String(announcement.id))
                     setAnnouncement(null)
@@ -493,7 +508,7 @@ export default function MembersPage() {
                     fontSize: '11.5px',
                     textDecoration: 'none'
                   }}>
-                  Book your spot
+                  Reserve your spot
                 </a>
               )}
             </div>
@@ -690,7 +705,7 @@ export default function MembersPage() {
             </div>
             {[
               {
-                name: 'Brotherhood',
+                name: 'Our Circle',
                 desc: 'Discussion · questions · wins',
                 href: '/community',
                 badge: '3 new',
