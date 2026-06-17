@@ -422,7 +422,7 @@ export default function CallsPage() {
                             fontWeight: 700,
                             color: 'var(--kyn-green)',
                             textTransform: 'uppercase',
-                            letterSpacing: '0.1em',
+                            letterSpacing: '0.11em',
                             marginBottom: '3px'
                           }}>
                             {month}

@@ -40,7 +40,7 @@ export default function AboutCorPage() {
       }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
           <p style={{
-            fontSize: '9.5px', fontWeight: 700, letterSpacing: '0.12em',
+            fontSize: '9.5px', fontWeight: 700, letterSpacing: '0.11em',
             textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '12px',
             fontFamily: 'var(--kyn-font-sans)'
           }}>

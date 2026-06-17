@@ -328,7 +328,7 @@ export default function AstrologyPage() {
 
         {/* ─── Why astrology? ─── */}
         <div style={{ marginBottom: '2.5rem' }}>
-          <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '1.25rem' }}>WHY IS THIS IN HERE?</div>
+          <div style={{ fontSize: '10px', letterSpacing: '0.11em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '1.25rem' }}>WHY IS THIS IN HERE?</div>
           <p style={{ fontWeight: 300, lineHeight: 1.8, color: 'var(--kyn-ink2)', marginBottom: '1rem', fontSize: '0.9375rem' }}>
             I was sceptical of astrology for years. It felt like something people used to avoid responsibility, so I didn't take it seriously. My mind changed when I opened to the idea that I am factually a complex formulation of energy, as is everything in our universe, including the planets. So why couldn't they affect me? If my ex-girlfriend coming into the room I was sitting in could change the way I felt without any words said, why couldn't these huge balls of energy influence how I felt and, in response, how I behaved?
           </p>
@@ -345,7 +345,7 @@ export default function AstrologyPage() {
 
         {/* ─── Form ─── */}
         <div style={card}>
-          <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '1.25rem' }}>YOUR BIRTH DETAILS</div>
+          <div style={{ fontSize: '10px', letterSpacing: '0.11em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '1.25rem' }}>YOUR BIRTH DETAILS</div>
           <form onSubmit={handleSubmit}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <div>
@@ -392,7 +392,7 @@ export default function AstrologyPage() {
 
             {/* Big Three */}
             <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '0.875rem' }}>YOUR BIG THREE</div>
+              <div style={{ fontSize: '10px', letterSpacing: '0.11em', color: 'var(--kyn-ink3)', fontWeight: 600, marginBottom: '0.875rem' }}>YOUR BIG THREE</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
                 {[
                   { label: 'Sun Sign', sub: 'Who you are', planet: chart.planets.find(p => p.name === 'sun') },
@@ -400,7 +400,7 @@ export default function AstrologyPage() {
                   { label: 'Rising Sign', sub: 'How you appear', planet: { sign: chart.ascendant.sign, signDegree: chart.ascendant.signDegree } as any }
                 ].map(({ label, sub, planet }) => planet ? (
                   <div key={label} style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: '10px', padding: '1.25rem', textAlign: 'center' }}>
-                    <div style={{ fontSize: '9.5px', letterSpacing: '0.1em', color: 'var(--kyn-ink3)', marginBottom: '0.5rem' }}>{label.toUpperCase()}</div>
+                    <div style={{ fontSize: '9.5px', letterSpacing: '0.11em', color: 'var(--kyn-ink3)', marginBottom: '0.5rem' }}>{label.toUpperCase()}</div>
                     <div style={{ fontSize: '1.25rem', fontWeight: 400, color: 'var(--kyn-ink)', marginBottom: '0.25rem' }}>{planet.sign}</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--kyn-ink3)' }}>{sub}</div>
                   </div>

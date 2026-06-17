@@ -290,7 +290,7 @@ export default function JourneyPage() {
                   fontWeight: 600,
                   color: 'var(--kyn-ink3)',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.12em',
+                  letterSpacing: '0.11em',
                   marginBottom: '12px'
                 }}>Categories</h3>
 
@@ -378,7 +378,7 @@ export default function JourneyPage() {
 
               {/* Journey progress widget */}
               <div style={{ background: 'var(--kyn-surface-raised)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r)', padding: '14px 14px 18px' }}>
-                <div style={{ fontSize: '9.5px', letterSpacing: '0.12em', color: 'var(--kyn-ink3)', marginBottom: '14px', fontWeight: 600, textTransform: 'uppercase' as const }}>Your Journey</div>
+                <div style={{ fontSize: '9.5px', letterSpacing: '0.11em', color: 'var(--kyn-ink3)', marginBottom: '14px', fontWeight: 600, textTransform: 'uppercase' as const }}>Your Journey</div>
                 {(() => {
                   const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
                   const currentIndex = Math.max(0, stages.indexOf(user?.level || 'Seeker'))

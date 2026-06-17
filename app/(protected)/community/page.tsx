@@ -401,7 +401,7 @@ export default function CommunityPage() {
           </div>
         </div>
       ) : null}
-      <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.12em', color: 'var(--kyn-green)', marginBottom: '3px', fontFamily: 'var(--kyn-font-sans)' }}>Continue Your Journey</div>
+      <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.11em', color: 'var(--kyn-green)', marginBottom: '3px', fontFamily: 'var(--kyn-font-sans)' }}>Continue Your Journey</div>
       <h3 style={{ fontSize: '14px', fontWeight: 600, color: 'var(--kyn-ink)', margin: '0 0 3px 0', fontFamily: 'var(--kyn-font-serif)', lineHeight: 1.35 }}>
         {nextVideo?.title || 'Start Here'}
       </h3>
@@ -427,7 +427,7 @@ export default function CommunityPage() {
     return (
       <div>
         <div style={{ marginBottom: '16px' }}>
-          <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-green)', fontWeight: 700, textTransform: 'uppercase' as const, marginBottom: '3px', fontFamily: 'var(--kyn-font-sans)' }}>Your Journey</div>
+          <div style={{ fontSize: '10px', letterSpacing: '0.11em', color: 'var(--kyn-green)', fontWeight: 700, textTransform: 'uppercase' as const, marginBottom: '3px', fontFamily: 'var(--kyn-font-sans)' }}>Your Journey</div>
           <div style={{ fontSize: '11.5px', color: 'var(--kyn-ink3)', lineHeight: 1.5, fontFamily: 'var(--kyn-font-sans)' }}>Track your progress here and compare it to your life elevation outside the Circle.</div>
         </div>
         <div style={{ position: 'relative', height: '48px' }}>
@@ -473,7 +473,7 @@ export default function CommunityPage() {
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
           <div style={{ background: 'var(--kyn-surface)', borderRadius: 'var(--kyn-r-lg)', maxWidth: '480px', width: '100%', padding: '2rem', border: '1px solid var(--kyn-border)', boxShadow: '0 20px 60px rgba(0,0,0,0.15)', position: 'relative' }}>
             <button onClick={() => { localStorage.setItem('dismissed_announcement', String(announcement.id)); setAnnouncement(null) }} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', fontSize: '1.25rem', color: 'var(--kyn-ink3)', cursor: 'pointer', lineHeight: 1 }}>×</button>
-            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase' as const, color: 'var(--kyn-green)', marginBottom: '12px', fontFamily: 'var(--kyn-font-sans)' }}>From Mason</div>
+            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.11em', textTransform: 'uppercase' as const, color: 'var(--kyn-green)', marginBottom: '12px', fontFamily: 'var(--kyn-font-sans)' }}>From Mason</div>
             <h2 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--kyn-ink)', marginBottom: '12px', lineHeight: 1.4, fontFamily: 'var(--kyn-font-serif)' }}>{announcement.title}</h2>
             <p style={{ fontSize: '15px', lineHeight: 1.7, color: 'var(--kyn-ink2)', marginBottom: '1.5rem', fontFamily: 'var(--kyn-font-sans)' }}>{announcement.body}</p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -856,7 +856,7 @@ export default function CommunityPage() {
 
             {/* Quick links */}
             <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-              <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-green)', marginBottom: '10px', fontWeight: 700, textTransform: 'uppercase', fontFamily: 'var(--kyn-font-sans)' }}>Quick Links</div>
+              <div style={{ fontSize: '10px', letterSpacing: '0.11em', color: 'var(--kyn-green)', marginBottom: '10px', fontWeight: 700, textTransform: 'uppercase', fontFamily: 'var(--kyn-font-sans)' }}>Quick Links</div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <a href="/videos" style={{ color: 'var(--kyn-ink2)', fontSize: '13.5px', textDecoration: 'none', padding: '7px 0', borderBottom: '1px solid var(--kyn-border)', fontFamily: 'var(--kyn-font-sans)' }}>Video Library</a>
                 <a href="/calls" style={{ color: 'var(--kyn-ink2)', fontSize: '13.5px', textDecoration: 'none', padding: '7px 0', fontFamily: 'var(--kyn-font-sans)' }}>Live Call Calendar</a>
@@ -866,7 +866,7 @@ export default function CommunityPage() {
             {/* Email notification toggle */}
             {notifLoaded && (
               <div style={{ background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', padding: '14px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-                <div style={{ fontSize: '10px', letterSpacing: '0.12em', color: 'var(--kyn-green)', marginBottom: '10px', fontWeight: 700, textTransform: 'uppercase' as const, fontFamily: 'var(--kyn-font-sans)' }}>Notifications</div>
+                <div style={{ fontSize: '10px', letterSpacing: '0.11em', color: 'var(--kyn-green)', marginBottom: '10px', fontWeight: 700, textTransform: 'uppercase' as const, fontFamily: 'var(--kyn-font-sans)' }}>Notifications</div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
                   <div>
                     <div style={{ fontSize: '13px', color: 'var(--kyn-ink2)', marginBottom: '2px', fontFamily: 'var(--kyn-font-sans)' }}>Community emails</div>

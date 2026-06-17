@@ -335,7 +335,7 @@ export default function MembersPage() {
             >
               ×
             </button>
-            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--kyn-green-hi)', marginBottom: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-green-hi)', marginBottom: '12px' }}>
               From Mason
             </div>
             <h2 style={{ fontSize: '20px', fontWeight: 500, color: 'var(--kyn-ink)', marginBottom: '12px', lineHeight: 1.4 }}>
@@ -458,7 +458,7 @@ export default function MembersPage() {
               <div style={{
                 fontSize: '9.5px',
                 fontWeight: 700,
-                letterSpacing: '0.1em',
+                letterSpacing: '0.11em',
                 textTransform: 'uppercase',
                 color: 'var(--kyn-green-hi)',
                 marginBottom: '4px'
@@ -536,7 +536,7 @@ export default function MembersPage() {
             <div style={{
               fontSize: '9.5px',
               fontWeight: 600,
-              letterSpacing: '0.12em',
+              letterSpacing: '0.11em',
               textTransform: 'uppercase',
               color: 'var(--kyn-ink3)',
               marginBottom: '4px'
