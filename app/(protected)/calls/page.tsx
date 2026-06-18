@@ -227,7 +227,7 @@ export default function CallsPage() {
             Live Calls Calendar
           </h1>
           <p style={{
-            fontSize: '13.5px',
+            fontSize: isMobile ? '14px' : '13.5px',
             color: 'var(--kyn-ink2)',
             lineHeight: 1.6
           }}>
@@ -347,14 +347,14 @@ export default function CallsPage() {
                           gap: '8px',
                           minWidth: isMobile ? '70px' : '110px'
                         }}>
-                          <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--kyn-green)' }}>
+                          <div style={{ fontSize: isMobile ? '14px' : '13px', fontWeight: 600, color: 'var(--kyn-green)' }}>
                             {month} {day}
                           </div>
-                          <div style={{ fontSize: '11.5px', color: 'var(--kyn-ink3)' }}>
+                          <div style={{ fontSize: isMobile ? '12px' : '11.5px', color: 'var(--kyn-ink3)' }}>
                             {time}
                           </div>
                         </div>
-                        <div style={{ flex: 1, fontSize: '13.5px', fontWeight: 500, color: 'var(--kyn-ink)' }}>
+                        <div style={{ flex: 1, fontSize: isMobile ? '15px' : '13.5px', fontWeight: 500, color: 'var(--kyn-ink)' }}>
                           {event.title}
                         </div>
                         <svg style={{ width: '14px', height: '14px', color: 'var(--kyn-ink3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -418,7 +418,7 @@ export default function CallsPage() {
                           borderRadius: 'var(--kyn-r)'
                         }}>
                           <div style={{
-                            fontSize: '9.5px',
+                            fontSize: isMobile ? '11px' : '9.5px',
                             fontWeight: 700,
                             color: 'var(--kyn-green)',
                             textTransform: 'uppercase',
@@ -471,12 +471,12 @@ export default function CallsPage() {
                           </div>
 
                           {event.description && (
-                            <p style={{ fontSize: '13px', color: 'var(--kyn-ink2)', lineHeight: 1.6, margin: 0 }}>
+                            <p style={{ fontSize: isMobile ? '14px' : '13px', color: 'var(--kyn-ink2)', lineHeight: 1.6, margin: 0 }}>
                               {stripHtml(event.description)}
                             </p>
                           )}
 
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px', fontSize: '11.5px', color: 'var(--kyn-ink3)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px', fontSize: isMobile ? '12px' : '11.5px', color: 'var(--kyn-ink3)' }}>
                             <span>{dayOfWeek}</span>
                             <span>·</span>
                             <span style={{ color: 'var(--kyn-green)' }}>Click to add to calendar</span>

@@ -15,13 +15,13 @@ export default function AboutCorPage() {
   const body: React.CSSProperties = {
     fontSize: '14px',
     lineHeight: 1.8,
-    color: 'var(--kyn-ink2)',
+    color: isMobile ? '#3a3a32' : 'var(--kyn-ink2)',
     fontFamily: 'var(--kyn-font-sans)',
     marginBottom: '16px',
   }
 
   const heading: React.CSSProperties = {
-    fontSize: isMobile ? '18px' : '22px',
+    fontSize: '22px',
     fontWeight: 400,
     lineHeight: 1.35,
     color: 'var(--kyn-ink)',
@@ -40,7 +40,7 @@ export default function AboutCorPage() {
       }}>
         <div style={{ maxWidth: '680px', margin: '0 auto' }}>
           <p style={{
-            fontSize: '9.5px', fontWeight: 700, letterSpacing: '0.11em',
+            fontSize: isMobile ? '11px' : '9.5px', fontWeight: 700, letterSpacing: '0.1em',
             textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '12px',
             fontFamily: 'var(--kyn-font-sans)'
           }}>

@@ -691,8 +691,8 @@ export default function CommunityPage() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                       <Avatar name={post.user_name} photo={post.user_photo} size={32} />
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '13.5px', fontWeight: 600, color: 'var(--kyn-ink)' }}>{post.user_name}</div>
-                        <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <div style={{ fontSize: isMobile ? '15px' : '13.5px', fontWeight: 600, color: 'var(--kyn-ink)' }}>{post.user_name}</div>
+                        <div style={{ fontSize: isMobile ? '12px' : '11px', color: 'var(--kyn-ink3)', display: 'flex', alignItems: 'center', gap: '4px' }}>
                           {getTimeAgo(post.created_at)}
                           {post.category && (
                             <>
@@ -710,7 +710,7 @@ export default function CommunityPage() {
                         {post.title}
                       </h3>
                     )}
-                    <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink2)', lineHeight: 1.6, margin: '0 0 10px 0', whiteSpace: 'pre-wrap' }}>
+                    <p style={{ fontSize: isMobile ? '14px' : '13.5px', color: isMobile ? '#3a3a32' : 'var(--kyn-ink2)', lineHeight: isMobile ? 1.65 : 1.6, margin: '0 0 10px 0', whiteSpace: 'pre-wrap' }}>
                       {expandedPostId === post.id ? post.content : (
                         post.content.length > 280 ? post.content.substring(0, 280) + '…' : post.content
                       )}

@@ -123,7 +123,7 @@ export default function ReplaysPage() {
           }}>
             Live Session Replays
           </h1>
-          <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink2)', lineHeight: 1.6 }}>
+          <p style={{ fontSize: isMobile ? '14px' : '13.5px', color: 'var(--kyn-ink2)', lineHeight: 1.6 }}>
             Catch up on past live teaching sessions and community calls
           </p>
         </div>
@@ -148,7 +148,7 @@ export default function ReplaysPage() {
                 border: '1px solid var(--kyn-border)',
                 borderRadius: 'var(--kyn-r)',
                 color: 'var(--kyn-ink)',
-                fontSize: '13.5px',
+                fontSize: isMobile ? '14px' : '13.5px',
                 outline: 'none',
                 fontFamily: 'var(--kyn-font-sans)'
               }}
@@ -166,7 +166,7 @@ export default function ReplaysPage() {
               border: '1px solid var(--kyn-border)',
               borderRadius: 'var(--kyn-r)',
               color: 'var(--kyn-ink2)',
-              fontSize: '13.5px',
+              fontSize: isMobile ? '14px' : '13.5px',
               outline: 'none',
               cursor: 'pointer',
               fontFamily: 'var(--kyn-font-sans)'
@@ -192,7 +192,7 @@ export default function ReplaysPage() {
             textAlign: 'center',
             boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
           }}>
-            <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink3)', marginBottom: '8px' }}>
+            <p style={{ fontSize: isMobile ? '14px' : '13.5px', color: 'var(--kyn-ink3)', marginBottom: '8px' }}>
               {searchQuery ? 'No replays match your search' : 'No replays available yet'}
             </p>
             {searchQuery && (
@@ -310,7 +310,7 @@ export default function ReplaysPage() {
                   {/* Video Info */}
                   <div style={{ padding: '14px 16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <h3 style={{
-                      fontSize: '13.5px',
+                      fontSize: isMobile ? '15px' : '13.5px',
                       fontWeight: 600,
                       marginBottom: '6px',
                       color: 'var(--kyn-ink)',
@@ -319,7 +319,7 @@ export default function ReplaysPage() {
                       {video.title}
                     </h3>
                     <p style={{
-                      fontSize: '12.5px',
+                      fontSize: isMobile ? '14px' : '12.5px',
                       color: 'var(--kyn-ink2)',
                       lineHeight: 1.6,
                       marginBottom: '10px',
@@ -327,7 +327,7 @@ export default function ReplaysPage() {
                     }}>
                       {video.description?.substring(0, 120)}{video.description?.length > 120 ? '...' : ''}
                     </p>
-                    <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>
+                    <div style={{ fontSize: isMobile ? '12px' : '11px', color: 'var(--kyn-ink3)' }}>
                       {new Date(video.upload_date).toLocaleDateString('en-US', {
                         month: 'long',
                         day: 'numeric',

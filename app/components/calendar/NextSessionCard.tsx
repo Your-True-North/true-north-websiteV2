@@ -142,10 +142,10 @@ END:VCALENDAR`;
   return (
     <div style={{ padding: '16px 20px 18px', position: 'relative' }}>
       <div style={{
-        fontSize: '9.5px',
+        fontSize: '11px',
         color: '#9bc4b8',
         textTransform: 'uppercase',
-        letterSpacing: '0.11em',
+        letterSpacing: '0.1em',
         marginBottom: '6px',
         fontWeight: 700
       }}>
@@ -198,8 +198,9 @@ END:VCALENDAR`;
             border: '1px solid rgba(82,183,136,0.28)',
             borderRadius: '4px',
             color: '#9bc4b8',
-            fontSize: '11.5px',
+            fontSize: '14px',
             fontWeight: 500,
+            minHeight: '44px',
             cursor: 'pointer',
           }}
           onMouseEnter={(e) => {

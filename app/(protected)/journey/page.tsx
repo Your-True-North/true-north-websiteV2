@@ -286,7 +286,7 @@ export default function JourneyPage() {
 
               <div style={{ marginBottom: '20px' }}>
                 <h3 style={{
-                  fontSize: '9.5px',
+                  fontSize: isMobile ? '11px' : '9.5px',
                   fontWeight: 600,
                   color: 'var(--kyn-ink3)',
                   textTransform: 'uppercase',
@@ -378,7 +378,7 @@ export default function JourneyPage() {
 
               {/* Journey progress widget */}
               <div style={{ background: 'var(--kyn-surface-raised)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r)', padding: '14px 14px 18px' }}>
-                <div style={{ fontSize: '9.5px', letterSpacing: '0.11em', color: 'var(--kyn-ink3)', marginBottom: '14px', fontWeight: 600, textTransform: 'uppercase' as const }}>Your Journey</div>
+                <div style={{ fontSize: isMobile ? '11px' : '9.5px', letterSpacing: '0.11em', color: 'var(--kyn-ink3)', marginBottom: '14px', fontWeight: 600, textTransform: 'uppercase' as const }}>Your Journey</div>
                 {(() => {
                   const stages = ['Seeker', 'Explorer', 'Pathfinder', 'Guide']
                   const currentIndex = Math.max(0, stages.indexOf(user?.level || 'Seeker'))
@@ -428,10 +428,10 @@ export default function JourneyPage() {
             }}>
 
               <div style={{ padding: '16px 18px', borderBottom: '1px solid var(--kyn-border)' }}>
-                <h1 style={{ fontSize: isMobile ? '18px' : '20px', fontWeight: 400, marginBottom: '4px', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-serif)' }}>
+                <h1 style={{ fontSize: '22px', fontWeight: 400, marginBottom: '4px', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-serif)' }}>
                   {selectedCategory === "All" ? "All Videos" : selectedCategory}
                 </h1>
-                <p style={{ color: 'var(--kyn-ink2)', fontSize: '13px' }}>
+                <p style={{ color: 'var(--kyn-ink2)', fontSize: isMobile ? '14px' : '13px' }}>
                   {selectedCategory === "All"
                     ? "Your complete transformation journey"
                     : `${filteredVideos.length} videos in this category`}
@@ -502,7 +502,7 @@ export default function JourneyPage() {
                         <h3 style={{
                           fontWeight: 600,
                           marginBottom: '5px',
-                          fontSize: '13.5px',
+                          fontSize: isMobile ? '15px' : '13.5px',
                           color: 'var(--kyn-ink)',
                           display: '-webkit-box',
                           WebkitLineClamp: 2,
@@ -515,7 +515,7 @@ export default function JourneyPage() {
                           alignItems: 'center',
                           gap: '10px',
                           color: 'var(--kyn-ink3)',
-                          fontSize: '11.5px',
+                          fontSize: isMobile ? '12px' : '11.5px',
                           marginBottom: '8px',
                           flexWrap: 'wrap'
                         }}>
@@ -561,9 +561,9 @@ export default function JourneyPage() {
                       border: '1px solid var(--kyn-border)',
                       borderLeft: '2px solid var(--kyn-border-green)'
                     }}>
-                      <div style={{ color: 'var(--kyn-green)', fontWeight: 600, fontSize: '12.5px', marginBottom: '2px' }}>{activity.user}</div>
-                      <div style={{ color: 'var(--kyn-ink2)', fontSize: '12px', marginBottom: '4px' }}>{activity.action}</div>
-                      <div style={{ color: 'var(--kyn-ink3)', fontSize: '11px' }}>{activity.time}</div>
+                      <div style={{ color: 'var(--kyn-green)', fontWeight: 600, fontSize: '14px', marginBottom: '2px' }}>{activity.user}</div>
+                      <div style={{ color: 'var(--kyn-ink2)', fontSize: '14px', marginBottom: '4px' }}>{activity.action}</div>
+                      <div style={{ color: 'var(--kyn-ink3)', fontSize: '12px' }}>{activity.time}</div>
                     </div>
                   ))}
                 </div>
@@ -593,9 +593,9 @@ export default function JourneyPage() {
                       border: '1px solid var(--kyn-border)',
                       borderLeft: '2px solid var(--kyn-border-green)'
                     }}>
-                      <div style={{ color: 'var(--kyn-green)', fontWeight: 600, fontSize: '12.5px', marginBottom: '2px' }}>{activity.user}</div>
-                      <div style={{ color: 'var(--kyn-ink2)', fontSize: '12px', marginBottom: '4px' }}>{activity.action}</div>
-                      <div style={{ color: 'var(--kyn-ink3)', fontSize: '11px' }}>{activity.time}</div>
+                      <div style={{ color: 'var(--kyn-green)', fontWeight: 600, fontSize: '14px', marginBottom: '2px' }}>{activity.user}</div>
+                      <div style={{ color: 'var(--kyn-ink2)', fontSize: '14px', marginBottom: '4px' }}>{activity.action}</div>
+                      <div style={{ color: 'var(--kyn-ink3)', fontSize: '12px' }}>{activity.time}</div>
                     </div>
                   ))}
                 </div>

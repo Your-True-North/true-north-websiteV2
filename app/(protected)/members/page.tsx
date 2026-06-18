@@ -327,7 +327,7 @@ export default function MembersPage() {
           <div>
             <div style={{
               fontFamily: 'var(--kyn-font-serif)',
-              fontSize: isMobile ? '18px' : '22px',
+              fontSize: '22px',
               fontWeight: 400,
               color: 'var(--kyn-ink)',
               letterSpacing: '-0.01em',
