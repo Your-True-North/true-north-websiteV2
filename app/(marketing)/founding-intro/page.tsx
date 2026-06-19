@@ -249,7 +249,7 @@ export default function FoundingMembersPage() {
 
             {/* Fine print — 0.8125rem / 13px, acceptable for legal/secondary */}
             <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              <strong>£10/month fixed for life. Price rises to £50 at member 51.</strong>
+              <strong>Introductory rate of £10</strong>
             </p>
             <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginTop: '6px', fontWeight: 400 }}>First month only. Standard price of £25/month applies from month two.</p>
           </div>
@@ -269,7 +269,7 @@ export default function FoundingMembersPage() {
               { value: 'Somatic Therapy Practitioner', label: 'Trained under Dr Gabor Maté' },
               { value: 'ICF & EMCC Certified', label: 'Internationally accredited Transformational Coach' },
               { value: 'Cancel Any Time', label: 'No contracts, no pressure' },
-              { value: 'Limited Spots: £10/month', label: '£50 at member 51' },
+              { value: 'Introductory rate of £10', label: 'First month offer' },
               { value: 'Real Men, Real Work', label: 'No egos, no judgment' },
             ].map(({ value, label }) => (
               <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem' }}>
@@ -295,12 +295,9 @@ export default function FoundingMembersPage() {
             ))}
 
             <p style={{
-              fontFamily: SERIF,
+              ...H2,
               fontSize: isMobile ? '2.5rem' : '3.5rem',
-              color: TEXT,
               lineHeight: 1.1,
-              fontWeight: 400,
-              letterSpacing: '-0.02em',
               margin: '2rem 0',
             }}>
               Direction.
@@ -590,7 +587,7 @@ export default function FoundingMembersPage() {
             </h2>
 
             <p style={{ fontSize: '0.9375rem', lineHeight: 1.6, color: MUTED, marginBottom: '2rem', fontFamily: SANS }}>
-              Founding member price: £10/month, locked in for life. Price rises to £50 at member 51.
+              Introductory rate of £10
             </p>
 
             <button
@@ -616,7 +613,7 @@ export default function FoundingMembersPage() {
             </button>
 
             <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              £10/month fixed for life
+              Introductory rate of £10
             </p>
           </div>
         </section>
