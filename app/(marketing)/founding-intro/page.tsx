@@ -158,14 +158,18 @@ export default function FoundingMembersPage() {
         <section style={{
           background: '#ffffff',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: isMobile ? '6rem 1.5rem 5rem' : '8rem 1.5rem 6rem',
+          minHeight: '100svh',
+          padding: isMobile ? '0 24px 48px' : '8rem 1.5rem 6rem',
           textAlign: 'center',
           position: 'relative',
           overflow: 'hidden',
+          width: '100%',
+          boxSizing: 'border-box',
         }}>
-          <div style={{ maxWidth: '780px', width: '100%', position: 'relative', zIndex: 1 }}>
+          <div style={{ maxWidth: isMobile ? 'none' : '780px', width: '100%', position: 'relative', zIndex: 1 }}>
 
             {/* Logo above text */}
             <img
@@ -270,8 +274,8 @@ export default function FoundingMembersPage() {
               { value: 'Cancel Any Time', label: 'No contracts, no pressure' },
               { value: 'Introductory rate of £10', label: 'First month offer' },
               { value: 'Real Men, Real Work', label: 'No egos, no judgment' },
-            ].map(({ value, label }) => (
-              <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem' }}>
+            ].map(({ value, label }, i) => (
+              <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem', ...(isMobile && i === 4 ? { gridColumn: '1 / -1' } : {}) }}>
                 <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: TEXT, fontFamily: SANS, marginBottom: '0.3rem' }}>{value}</div>
                 <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, lineHeight: 1.5 }}>{label}</div>
               </div>
