@@ -33,7 +33,7 @@ export default function LoginPage() {
             return
           }
           // Redirect admin to admin dashboard, others to community
-          const redirectUrl = user.email === 'cor@yourtruenorth.me' ? '/admin/dashboard' : '/community'
+          const redirectUrl = user.email === 'kyn@yourtruenorth.me' ? '/admin/dashboard' : '/community'
           console.log('[LOGIN] User already logged in, redirecting to', redirectUrl)
           window.location.replace(redirectUrl)
           return
@@ -85,7 +85,7 @@ export default function LoginPage() {
       await new Promise(resolve => setTimeout(resolve, 100))
 
       // Redirect admin to admin dashboard, others to community
-      const redirectUrl = data.user.email === 'cor@yourtruenorth.me' ? '/admin/dashboard' : '/community'
+      const redirectUrl = data.user.email === 'kyn@yourtruenorth.me' ? '/admin/dashboard' : '/community'
       window.location.replace(redirectUrl)
     } catch (err) {
       console.error('[Login] Error:', err)

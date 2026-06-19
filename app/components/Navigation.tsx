@@ -18,8 +18,8 @@ export default function Navigation() {
   const membersAreaPaths = ['/members', '/videos', '/forum', '/calls', '/journey', '/community'];
   const isInMembersArea = membersAreaPaths.some(path => pathname?.startsWith(path));
 
-  // Check if user is admin (cor@yourtruenorth.me)
-  const ADMIN_EMAIL = 'cor@yourtruenorth.me';
+  // Check if user is admin (kyn@yourtruenorth.me)
+  const ADMIN_EMAIL = 'kyn@yourtruenorth.me';
   const isAdmin = user && (user as any).email?.toLowerCase() === ADMIN_EMAIL;
 
   useEffect(() => {

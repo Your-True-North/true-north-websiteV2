@@ -21,7 +21,7 @@ const COR_PRICE_ID = 'price_1SN63oIEGgnmE0KKEM0Ihkvt'
 const COR_TAG_ID = '8362450'
 const COR_ABANDONED_TAG_ID = '17879543'
 const FOUNDING_INTRO_PRICE_ID = 'price_1Tk0rYIEGgnmE0KKiTp4lq9a' // £10 founding-intro first month
-const CIRCLE_PRICE_IDS = [COR_PRICE_ID, FOUNDING_INTRO_PRICE_ID]
+const CIRCLE_PRICE_IDS = [COR_PRICE_ID]
 
 // ConvertKit
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
@@ -32,7 +32,7 @@ const ENERGY_HEALING_SEQUENCE_ID = '17656427'
 // Resend
 const resend = new Resend(process.env.RESEND_API_KEY)
 const PATTERN_AUDIT_PAGE_URL = process.env.NEXT_PUBLIC_PATTERN_AUDIT_PAGE_URL || 'https://yourtruenorth.me/library/pattern-audit'
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Mason <mason@yourtruenorth.me>'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'KYN <kyn@yourtruenorth.me>'
 
 function sendGA4Purchase(transactionId: string, value: number) {
   if (!GA_API_SECRET) return
@@ -263,7 +263,7 @@ export async function POST(req: NextRequest) {
           console.error('[Stripe Webhook] ❌ founding-intro user insert failed:', err)
         }
         resend.emails.send({
-          from: 'cor@yourtruenorth.me',
+          from: 'kyn@yourtruenorth.me',
           to: email,
           subject: "You're in. Welcome to KYN.",
           html: `

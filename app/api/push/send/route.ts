@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 import { query } from '@/lib/db'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Mason <mason@yourtruenorth.me>'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'KYN <kyn@yourtruenorth.me>'
 
 export async function POST(req: NextRequest) {
   const adminKey = req.headers.get('x-admin-key')
