@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
-const STRIPE_URL = 'https://buy.stripe.com/REPLACE_WITH_NEW_LINK'
+const STRIPE_URL = 'https://buy.stripe.com/aFa5kEdTh9Uxes8bPV9IQ0o'
 
 const ACCENT  = '#9bc4b8'
 const TEXT    = '#0a0a0a'
