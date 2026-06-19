@@ -203,9 +203,9 @@ export default function LibraryPage() {
                       </div>
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: isMobile ? '11px' : '9.5px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
-                      <div style={{ fontSize: isMobile ? '15px' : '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{video.title}</div>
-                      <div style={{ fontSize: isMobile ? '12px' : '11px', color: 'var(--kyn-ink3)' }}>{pct}% complete{remaining ? ` · ${remaining} min remaining` : ''}</div>
+                      <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
+                      <div style={{ fontSize: isMobile ? '14.5px' : '14px', fontWeight: 600, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{video.title}</div>
+                      <div style={{ fontSize: '12px', color: '#5a5a52' }}>{pct}% complete{remaining ? ` · ${remaining} min remaining` : ''}</div>
                     </div>
                     <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 600, color: 'var(--kyn-blue)', background: 'var(--kyn-blue-mid)', border: '1px solid var(--kyn-border-blue)', borderRadius: '20px', padding: '3px 10px', whiteSpace: 'nowrap' }}>In progress</span>
                   </a>
@@ -238,9 +238,9 @@ export default function LibraryPage() {
                       {pct > 0 && <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.1)' }}><div style={{ height: '100%', width: `${pct}%`, background: '#52b788' }} /></div>}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
-                      <div style={{ fontSize: '15px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.35, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{video.title}</div>
-                      <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)' }}>{video.duration && `${video.duration} min`}{pct === 100 ? ' · Watched' : pct > 0 ? ' · In progress' : ''}</div>
+                      <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
+                      <div style={{ fontSize: '14.5px', fontWeight: 600, color: 'var(--kyn-ink)', lineHeight: 1.35, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{video.title}</div>
+                      <div style={{ fontSize: '12px', color: '#5a5a52' }}>{video.duration && `${video.duration} min`}{pct === 100 ? ' · Watched' : pct > 0 ? ' · In progress' : ''}</div>
                     </div>
                   </a>
                 )
@@ -258,9 +258,9 @@ export default function LibraryPage() {
                       {pct > 0 && <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.1)' }}><div style={{ height: '100%', width: `${pct}%`, background: '#52b788' }} /></div>}
                     </div>
                     <div style={{ padding: '12px 13px 13px' }}>
-                      <div style={{ fontSize: '9.5px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '4px' }}>{normaliseCategory(video.category)}</div>
-                      <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '5px' }}>{video.title}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '4px' }}>{normaliseCategory(video.category)}</div>
+                      <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '5px' }}>{video.title}</div>
+                      <div style={{ fontSize: '12px', color: '#5a5a52', display: 'flex', alignItems: 'center', gap: '6px' }}>
                         {video.duration && <span>{video.duration} min</span>}
                         {pct === 100 && <><span style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--kyn-ink3)', display: 'inline-block' }} /><span>Watched</span></>}
                         {pct > 0 && pct < 100 && <><span style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--kyn-ink3)', display: 'inline-block' }} /><span>In progress</span></>}
@@ -292,8 +292,8 @@ export default function LibraryPage() {
                       <div style={{ position: 'absolute', bottom: '4px', left: '4px', background: '#3b82c8', color: '#fff', fontSize: '8px', fontWeight: 700, padding: '1.5px 5px', borderRadius: '2px' }}>RECORDED</div>
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '15px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.35, marginBottom: '3px' }}>{video.title}</div>
-                      <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)' }}>{video.duration && `${video.duration} min`}</div>
+                      <div style={{ fontSize: '14.5px', fontWeight: 600, color: 'var(--kyn-ink)', lineHeight: 1.35, marginBottom: '3px' }}>{video.title}</div>
+                      <div style={{ fontSize: '12px', color: '#5a5a52' }}>{video.duration && `${video.duration} min`}</div>
                     </div>
                   </a>
                 )
@@ -309,8 +309,8 @@ export default function LibraryPage() {
                       <div style={{ position: 'absolute', bottom: '5px', left: '5px', background: '#3b82c8', color: '#fff', fontSize: '8.5px', fontWeight: 700, padding: '1.5px 5px', borderRadius: '3px' }}>RECORDED</div>
                     </div>
                     <div style={{ padding: '10px 13px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                      <div style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '4px' }}>{video.title}</div>
-                      <div style={{ fontSize: '10.5px', color: 'var(--kyn-ink3)' }}>{video.duration && `${video.duration} min`}</div>
+                      <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '4px' }}>{video.title}</div>
+                      <div style={{ fontSize: '12px', color: '#5a5a52' }}>{video.duration && `${video.duration} min`}</div>
                     </div>
                   </a>
                 )

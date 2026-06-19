@@ -227,7 +227,7 @@ export default function CallsPage() {
             Live Calls Calendar
           </h1>
           <p style={{
-            fontSize: isMobile ? '14px' : '13.5px',
+            fontSize: isMobile ? '15px' : '13.5px',
             color: 'var(--kyn-ink2)',
             lineHeight: 1.6
           }}>
@@ -354,7 +354,7 @@ export default function CallsPage() {
                             {time}
                           </div>
                         </div>
-                        <div style={{ flex: 1, fontSize: isMobile ? '15px' : '13.5px', fontWeight: 500, color: 'var(--kyn-ink)' }}>
+                        <div style={{ flex: 1, fontSize: isMobile ? '14.5px' : '13.5px', fontWeight: 600, color: 'var(--kyn-ink)' }}>
                           {event.title}
                         </div>
                         <svg style={{ width: '14px', height: '14px', color: 'var(--kyn-ink3)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -471,7 +471,7 @@ export default function CallsPage() {
                           </div>
 
                           {event.description && (
-                            <p style={{ fontSize: isMobile ? '14px' : '13px', color: 'var(--kyn-ink2)', lineHeight: 1.6, margin: 0 }}>
+                            <p style={{ fontSize: isMobile ? '15px' : '13px', color: 'var(--kyn-ink2)', lineHeight: 1.6, margin: 0 }}>
                               {stripHtml(event.description)}
                             </p>
                           )}

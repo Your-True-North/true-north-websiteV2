@@ -710,7 +710,7 @@ export default function CommunityPage() {
                         {post.title}
                       </h3>
                     )}
-                    <p style={{ fontSize: isMobile ? '14px' : '13.5px', color: isMobile ? '#3a3a32' : 'var(--kyn-ink2)', lineHeight: isMobile ? 1.65 : 1.6, margin: '0 0 10px 0', whiteSpace: 'pre-wrap' }}>
+                    <p style={{ fontSize: isMobile ? '15px' : '13.5px', color: 'var(--kyn-ink2)', lineHeight: isMobile ? 1.65 : 1.6, margin: '0 0 10px 0', whiteSpace: 'pre-wrap' }}>
                       {expandedPostId === post.id ? post.content : (
                         post.content.length > 280 ? post.content.substring(0, 280) + '…' : post.content
                       )}

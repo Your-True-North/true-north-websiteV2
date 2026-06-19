@@ -70,22 +70,22 @@ const NAV_LINKS = [
 
 const BOTTOM_NAV = [
   { label: 'Home', href: '/members', icon: (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
     </svg>
   )},
   { label: 'Our Circle', href: '/community', blueDot: true, icon: (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
     </svg>
   )},
   { label: 'Teachings', href: '/videos', icon: (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
     </svg>
   )},
   { label: 'Calendar', href: '/calls', icon: (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
     </svg>
   )},
@@ -163,10 +163,11 @@ export default function MembersNav() {
         {/* Mobile bottom nav */}
         <div style={{
           position: 'fixed', bottom: 0, left: 0, right: 0,
-          background: 'var(--kyn-sidebar)', zIndex: 200,
-          borderTop: '1px solid rgba(255,255,255,0.07)',
+          background: '#0a1a0f', zIndex: 200,
+          borderTop: '1px solid rgba(255,255,255,0.15)',
           paddingBottom: 'env(safe-area-inset-bottom)',
-          display: 'flex', alignItems: 'stretch'
+          display: 'flex', alignItems: 'stretch',
+          minHeight: '62px'
         }}>
           {BOTTOM_NAV.map((item) => {
             const active = isActive(item.href)
@@ -175,22 +176,23 @@ export default function MembersNav() {
                 key={item.href}
                 href={item.href}
                 style={{
-                  flex: 1, minHeight: '56px', minWidth: '44px',
+                  flex: 1, minHeight: '62px', minWidth: '44px',
                   display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  gap: '3px', textDecoration: 'none', position: 'relative',
-                  color: active ? 'var(--kyn-green-hi)' : 'rgba(255,255,255,0.32)',
-                  borderTop: active ? '2px solid var(--kyn-green-hi)' : '2px solid transparent',
+                  gap: '5px', padding: '10px 4px', textDecoration: 'none', position: 'relative',
+                  color: active ? 'var(--kyn-green-hi)' : 'rgba(255,255,255,0.6)',
+                  borderTop: active ? '2.5px solid var(--kyn-green-hi)' : '2.5px solid transparent',
+                  transition: 'color 0.12s',
                 }}
               >
                 {'blueDot' in item && item.blueDot && (
                   <span style={{
                     position: 'absolute', top: '8px', right: 'calc(50% - 14px)',
-                    width: '6px', height: '6px', borderRadius: '50%',
-                    background: 'var(--kyn-blue)', border: '1px solid var(--kyn-sidebar)'
+                    width: '9px', height: '9px', borderRadius: '50%',
+                    background: 'var(--kyn-blue)', border: '2px solid #0a1a0f'
                   }} />
                 )}
-                <span style={{ opacity: active ? 1 : 0.7 }}>{item.icon}</span>
-                <span style={{ fontSize: '11px', fontWeight: active ? 500 : 400 }}>{item.label}</span>
+                {item.icon}
+                <span style={{ fontSize: '11px', fontWeight: active ? 600 : 500, letterSpacing: '0.01em' }}>{item.label}</span>
               </Link>
             )
           })}
@@ -199,16 +201,17 @@ export default function MembersNav() {
           <button
             onClick={() => setMoreOpen(!moreOpen)}
             style={{
-              flex: 1, minHeight: '56px', minWidth: '44px',
+              flex: 1, minHeight: '62px', minWidth: '44px',
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              gap: '3px', background: 'none', border: 'none', cursor: 'pointer',
-              color: 'rgba(255,255,255,0.32)', borderTop: '2px solid transparent',
+              gap: '5px', padding: '10px 4px', background: 'none', border: 'none', cursor: 'pointer',
+              color: 'rgba(255,255,255,0.6)', borderTop: '2.5px solid transparent',
+              transition: 'color 0.12s',
             }}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="5" r="1" fill="currentColor" /><circle cx="12" cy="12" r="1" fill="currentColor" /><circle cx="12" cy="19" r="1" fill="currentColor" />
             </svg>
-            <span style={{ fontSize: '11px' }}>More</span>
+            <span style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.01em' }}>More</span>
           </button>
 
           {/* More sheet */}

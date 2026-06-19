@@ -15,7 +15,7 @@ export default function AboutCorPage() {
   const body: React.CSSProperties = {
     fontSize: '14px',
     lineHeight: 1.8,
-    color: isMobile ? '#3a3a32' : 'var(--kyn-ink2)',
+    color: 'var(--kyn-ink2)',
     fontFamily: 'var(--kyn-font-sans)',
     marginBottom: '16px',
   }

@@ -45,3 +45,12 @@
   --kyn-space-lg:      24px;
   --kyn-space-xl:      32px;
 }
+
+/* ── MOBILE — darker type for contrast on small screens ── */
+@media (max-width: 768px) {
+  :root {
+    --kyn-ink:  #0d0d0a;
+    --kyn-ink2: #2e2e28;
+    --kyn-ink3: #5a5a52;
+  }
+}
