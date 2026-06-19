@@ -294,12 +294,9 @@ export default function FoundingMembersPage() {
             ))}
 
             <p style={{
-              fontFamily: SERIF,
+              ...H2,
               fontSize: isMobile ? '2.5rem' : '3.5rem',
-              color: TEXT,
               lineHeight: 1.1,
-              fontWeight: 400,
-              letterSpacing: '-0.02em',
               margin: '2rem 0',
             }}>
               Direction.
