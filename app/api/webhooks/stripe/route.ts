@@ -20,6 +20,8 @@ const ENERGY_HEALING_PRICE_ID = 'price_1TCaPRIEGgnmE0KKY7gBuwzF'
 const COR_PRICE_ID = 'price_1SN63oIEGgnmE0KKEM0Ihkvt'
 const COR_TAG_ID = '8362450'
 const COR_ABANDONED_TAG_ID = '17879543'
+const FOUNDING_INTRO_PRICE_ID = 'price_1Tk0rYIEGgnmE0KKiTp4lq9a' // £10 founding-intro first month
+const CIRCLE_PRICE_IDS = [COR_PRICE_ID, FOUNDING_INTRO_PRICE_ID]
 
 // ConvertKit
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
@@ -225,7 +227,7 @@ export async function POST(req: NextRequest) {
       }
 
       const isCorPurchase =
-        priceIds.includes(COR_PRICE_ID) ||
+        priceIds.some(id => CIRCLE_PRICE_IDS.includes(id)) ||
         (priceIds.length === 0 && session.mode === 'subscription' && (session.amount_total === 2500 || session.amount_subtotal === 2500))
 
       if (isCorPurchase) {
@@ -235,10 +237,45 @@ export async function POST(req: NextRequest) {
         console.log('[Stripe Webhook] ✅ CoR ConvertKit tags applied for:', email)
         subscribeToConvertKitSequence(email, firstName, '2539333')
         console.log('[Stripe Webhook] ✅ CoR ConvertKit sequence enrolled for:', email)
-        const tempPassword = await createCorMember(email, firstName, session.customer as string)
-        if (tempPassword) {
-          sendCorWelcomeEmail(email, firstName, tempPassword)
+        // founding-intro has its own account creation and welcome email below
+        if (!priceIds.includes(FOUNDING_INTRO_PRICE_ID)) {
+          const tempPassword = await createCorMember(email, firstName, session.customer as string)
+          if (tempPassword) {
+            sendCorWelcomeEmail(email, firstName, tempPassword)
+          }
         }
+      }
+
+      if (priceIds.includes(FOUNDING_INTRO_PRICE_ID)) {
+        console.log('[Stripe Webhook] founding-intro £10 purchase detected for:', email)
+        const name = session.customer_details?.name || ''
+        const tempPassword = Math.random().toString(36).slice(-8) + 'Tn1!'
+        const hashed = await bcrypt.hash(tempPassword, 10)
+        try {
+          await query(
+            `INSERT INTO users (email, name, password, role, subscription_status, subscription_type, created_at)
+             VALUES ($1, $2, $3, 'member', 'active', 'founding_intro', NOW())
+             ON CONFLICT (email) DO UPDATE SET subscription_status = 'active', subscription_type = 'founding_intro'`,
+            [email, name, hashed]
+          )
+          console.log('[Stripe Webhook] ✅ founding-intro account created/updated for:', email)
+        } catch (err) {
+          console.error('[Stripe Webhook] ❌ founding-intro user insert failed:', err)
+        }
+        resend.emails.send({
+          from: 'cor@yourtruenorth.me',
+          to: email,
+          subject: "You're in. Welcome to KYN.",
+          html: `
+            <div style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
+              <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Welcome ${name || firstName}. Your account is ready.</p>
+              <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Login here: <a href="https://yourtruenorth.me/members" style="color: #9bc4b8;">https://yourtruenorth.me/members</a></p>
+              <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Your temporary password: <strong>${tempPassword}</strong></p>
+              <p style="font-size: 15px; line-height: 1.7; margin-bottom: 24px;">Change your password after first login.</p>
+              <p style="font-size: 15px; line-height: 1.7;">Mason<br>True North</p>
+            </div>
+          `,
+        }).catch((err) => console.error('[Stripe Webhook] ❌ founding-intro welcome email failed:', err))
       }
 
       if (priceIds.includes(BREATHWORK_PRICE_ID)) {
