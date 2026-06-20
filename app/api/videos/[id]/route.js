@@ -18,7 +18,7 @@ export async function GET(request, { params }) {
         v.id,
         v.title,
         v.description,
-        v."youtubeUrl" as youtube_url,
+        v."youtubeUrl",
         v."youtubeId",
         v.category,
         v.duration,

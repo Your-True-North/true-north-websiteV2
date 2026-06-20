@@ -202,7 +202,7 @@ export default function VideoPlayerPage() {
         const adminData = await adminRes.json()
         console.log('[DEBUG] Admin API response:', { ok: adminRes.ok, videoCount: adminData.videos?.length, firstVideo: adminData.videos?.[0] })
         if (adminData.videos) {
-          const foundVideo = adminData.videos.find((v: any) => v.id === parseInt(videoId))
+          const foundVideo = adminData.videos.find((v: any) => String(v.id) === String(videoId))
           console.log('[DEBUG] Looking for videoId:', videoId, 'parseInt:', parseInt(videoId))
           console.log('[DEBUG] Found video:', foundVideo)
           console.log('[DEBUG] Video youtubeId field:', foundVideo?.youtubeId, 'youtubeUrl field:', foundVideo?.youtubeUrl)
