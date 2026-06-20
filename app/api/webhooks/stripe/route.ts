@@ -251,31 +251,42 @@ export async function POST(req: NextRequest) {
         const name = session.customer_details?.name || ''
         const tempPassword = Math.random().toString(36).slice(-8) + 'Tn1!'
         const hashed = await bcrypt.hash(tempPassword, 10)
+        const userId = (session.customer as string) || `fi_${Date.now()}`
+        let accountCreated = false
         try {
-          await query(
-            `INSERT INTO users (email, name, password, role, subscription_status, subscription_type, created_at)
-             VALUES ($1, $2, $3, 'member', 'active', 'founding_intro', NOW())
-             ON CONFLICT (email) DO UPDATE SET subscription_status = 'active', subscription_type = 'founding_intro'`,
-            [email, name, hashed]
+          const result = await query(
+            `INSERT INTO users (id, email, name, password, role, "isActive", "createdAt", "updatedAt")
+             VALUES ($1, $2, $3, $4, 'member', true, NOW(), NOW())
+             ON CONFLICT (email) DO UPDATE SET "isActive" = true, "updatedAt" = NOW()
+             RETURNING (xmax = 0) AS inserted`,
+            [userId, email, name || email.split('@')[0], hashed]
           )
-          console.log('[Stripe Webhook] ✅ founding-intro account created/updated for:', email)
+          accountCreated = true
+          const wasInserted = result.rows[0]?.inserted
+          console.log(`[Stripe Webhook] ✅ founding-intro account ${wasInserted ? 'created' : 'reactivated'} for:`, email)
         } catch (err) {
-          console.error('[Stripe Webhook] ❌ founding-intro user insert failed:', err)
+          console.error('[Stripe Webhook] ❌ founding-intro user insert failed — columns or constraint error:', err)
+          console.error('[Stripe Webhook] ❌ email:', email, 'userId:', userId)
         }
-        resend.emails.send({
-          from: 'kyn@yourtruenorth.me',
-          to: email,
-          subject: "You're in. Welcome to KYN.",
-          html: `
-            <div style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
-              <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Welcome ${name || firstName}. Your account is ready.</p>
-              <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Login here: <a href="https://yourtruenorth.me/members" style="color: #9bc4b8;">https://yourtruenorth.me/members</a></p>
-              <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Your temporary password: <strong>${tempPassword}</strong></p>
-              <p style="font-size: 15px; line-height: 1.7; margin-bottom: 24px;">Change your password after first login.</p>
-              <p style="font-size: 15px; line-height: 1.7;">Mason<br>True North</p>
-            </div>
-          `,
-        }).catch((err) => console.error('[Stripe Webhook] ❌ founding-intro welcome email failed:', err))
+        if (accountCreated) {
+          resend.emails.send({
+            from: FROM_EMAIL,
+            to: email,
+            subject: "You're in. Welcome to KYN.",
+            html: `
+              <div style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 560px; margin: 0 auto; color: #1a1a1a;">
+                <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Welcome ${name || firstName}. Your account is ready.</p>
+                <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Login here: <a href="https://yourtruenorth.me/members" style="color: #9bc4b8;">https://yourtruenorth.me/members</a></p>
+                <p style="font-size: 15px; line-height: 1.7; margin-bottom: 4px;">Email: ${email}</p>
+                <p style="font-size: 15px; line-height: 1.7; margin-bottom: 24px;">Temporary password: <strong>${tempPassword}</strong></p>
+                <p style="font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Please change your password after first login.</p>
+                <p style="font-size: 15px; line-height: 1.7;">Mason<br>True North</p>
+              </div>
+            `,
+          }).catch((err) => console.error('[Stripe Webhook] ❌ founding-intro welcome email failed:', err))
+        } else {
+          console.error('[Stripe Webhook] ❌ Skipping welcome email — account creation failed for:', email)
+        }
       }
 
       if (priceIds.includes(BREATHWORK_PRICE_ID)) {
