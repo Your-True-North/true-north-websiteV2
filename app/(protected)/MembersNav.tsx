@@ -139,7 +139,7 @@ export default function MembersNav() {
           padding: '0 16px', borderBottom: '1px solid rgba(255,255,255,0.07)'
         }}>
           <Link href="/members">
-            <img src="/kyn-stacked-white-1200.png" alt="Know Your North" style={{ height: '28px', width: 'auto', display: 'block', opacity: 0.92 }} />
+            <img src="/kyn-compass-white.png" alt="Know Your North" style={{ height: '36px', width: '36px', display: 'block', opacity: 0.92 }} />
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {/* Bell */}
