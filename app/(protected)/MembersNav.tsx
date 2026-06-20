@@ -1,6 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 
@@ -98,7 +100,7 @@ export default function MembersNav() {
   const [navUser, setNavUser] = useState<NavUser | null>(null)
   const [moreOpen, setMoreOpen] = useState(false)
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768)
     handleResize()
     window.addEventListener('resize', handleResize)

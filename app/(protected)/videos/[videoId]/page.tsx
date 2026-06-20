@@ -139,7 +139,9 @@ export default function VideoPlayerPage() {
       }
       playerRef.current = new (window as any).YT.Player(`yt-player-${videoId}`, {
         videoId: ytId,
-        playerVars: { rel: 0, modestbranding: 1 },
+        width: '100%',
+        height: '100%',
+        playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
         events: {
           onStateChange: (e: any) => {
             const STATE = (window as any).YT.PlayerState
