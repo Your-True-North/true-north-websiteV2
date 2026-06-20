@@ -498,7 +498,7 @@ export default function CommunityPage() {
         {/* LEFT COLUMN */}
         <div>
           {/* Page heading */}
-          <h1 style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '22px', fontWeight: isMobile ? 700 : 400, color: 'var(--kyn-ink)', marginBottom: '20px', lineHeight: 1.3 }}>
+          <h1 style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '22px', fontWeight: 700, color: 'var(--kyn-ink)', marginBottom: '20px', lineHeight: 1.3 }}>
             Our Circle
           </h1>
 

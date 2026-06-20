@@ -22,7 +22,7 @@ export default function AboutCorPage() {
 
   const heading: React.CSSProperties = {
     fontSize: isMobile ? '20px' : '22px',
-    fontWeight: isMobile ? 700 : 400,
+    fontWeight: 700,
     lineHeight: 1.35,
     color: 'var(--kyn-ink)',
     marginBottom: '18px',
@@ -48,7 +48,7 @@ export default function AboutCorPage() {
           </p>
           <h2 style={{
             fontSize: isMobile ? '20px' : '24px',
-            fontWeight: isMobile ? 700 : 400,
+            fontWeight: 700,
             lineHeight: 1.45,
             color: 'var(--kyn-ink)',
             margin: 0,
@@ -138,7 +138,7 @@ export default function AboutCorPage() {
         <div style={{ padding: isMobile ? '20px 18px' : '28px 32px', textAlign: 'center' }}>
           <h2 style={{
             fontSize: isMobile ? '20px' : '24px',
-            fontWeight: isMobile ? 700 : 400,
+            fontWeight: 700,
             lineHeight: 1.45,
             color: 'var(--kyn-ink)',
             margin: 0,

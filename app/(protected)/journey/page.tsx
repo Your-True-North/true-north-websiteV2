@@ -428,7 +428,7 @@ export default function JourneyPage() {
             }}>
 
               <div style={{ padding: '16px 18px', borderBottom: '1px solid var(--kyn-border)' }}>
-                <h1 style={{ fontSize: '22px', fontWeight: isMobile ? 700 : 400, marginBottom: '4px', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-serif)' }}>
+                <h1 style={{ fontSize: '22px', fontWeight: 700, marginBottom: '4px', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-serif)' }}>
                   {selectedCategory === "All" ? "All Videos" : selectedCategory}
                 </h1>
                 <p style={{ color: 'var(--kyn-ink2)', fontSize: isMobile ? '15px' : '13px' }}>

@@ -116,7 +116,7 @@ export default function ReplaysPage() {
           </Link>
           <h1 style={{
             fontSize: '22px',
-            fontWeight: isMobile ? 700 : 400,
+            fontWeight: 700,
             marginBottom: '8px',
             color: 'var(--kyn-ink)',
             fontFamily: 'var(--kyn-font-serif)'

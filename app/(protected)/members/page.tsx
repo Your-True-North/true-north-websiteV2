@@ -328,7 +328,7 @@ export default function MembersPage() {
             <div style={{
               fontFamily: 'var(--kyn-font-serif)',
               fontSize: '22px',
-              fontWeight: isMobile ? 700 : 400,
+              fontWeight: 700,
               color: 'var(--kyn-ink)',
               letterSpacing: '-0.01em',
               lineHeight: 1.2
@@ -551,7 +551,7 @@ export default function MembersPage() {
           }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-green)' }} />
             <div style={{ fontSize: '12px', color: 'var(--kyn-ink)', marginBottom: '10px' }}>Videos watched</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: isMobile ? '28px' : '32px', fontWeight: isMobile ? 600 : 300, lineHeight: 1, color: 'var(--kyn-ink)' }}>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: isMobile ? '28px' : '32px', fontWeight: 600, lineHeight: 1, color: 'var(--kyn-ink)' }}>
               {stats.videosWatched || 0}
             </div>
             <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>of 24 available</div>
@@ -568,7 +568,7 @@ export default function MembersPage() {
           }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.2)' }} />
             <div style={{ fontSize: '12px', color: 'var(--kyn-ink)', marginBottom: '10px' }}>Time invested</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: isMobile ? '28px' : '32px', fontWeight: isMobile ? 600 : 300, lineHeight: 1, color: 'var(--kyn-ink)' }}>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: isMobile ? '28px' : '32px', fontWeight: 600, lineHeight: 1, color: 'var(--kyn-ink)' }}>
               {Math.round((stats.totalWatchTime || 0) / 60)}m
             </div>
             <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>this month</div>
@@ -585,7 +585,7 @@ export default function MembersPage() {
           }}>
             <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-green-hi)' }} />
             <div style={{ fontSize: '12px', color: 'var(--kyn-ink)', marginBottom: '10px' }}>Completion</div>
-            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: isMobile ? '28px' : '32px', fontWeight: isMobile ? 600 : 300, lineHeight: 1, color: 'var(--kyn-green)' }}>
+            <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: isMobile ? '28px' : '32px', fontWeight: 600, lineHeight: 1, color: 'var(--kyn-green)' }}>
               {stats.completionRate || 0}%
             </div>
             <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>across all content</div>
