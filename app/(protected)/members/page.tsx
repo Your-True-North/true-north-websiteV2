@@ -445,8 +445,8 @@ export default function MembersPage() {
             overflow: 'hidden'
           }}>
             <div style={{
-              fontSize: '9.5px',
-              fontWeight: 600,
+              fontSize: '11px',
+              fontWeight: 700,
               letterSpacing: '0.11em',
               textTransform: 'uppercase',
               color: 'var(--kyn-ink3)',
@@ -467,15 +467,17 @@ export default function MembersPage() {
               {/* Track background */}
               <div style={{
                 position: 'absolute',
-                top: '7px', left: 0, right: 0,
-                height: '1px',
+                top: '6px', left: 0, right: 0,
+                height: '3px',
+                borderRadius: '2px',
                 background: 'var(--kyn-border)'
               }} />
               {/* Track fill */}
               <div style={{
                 position: 'absolute',
-                top: '7px', left: 0,
-                height: '1px',
+                top: '6px', left: 0,
+                height: '3px',
+                borderRadius: '2px',
                 width: `${Math.min(100, (completionRate * 4) / 3)}%`,
                 background: 'var(--kyn-green)',
                 transition: 'width 0.8s ease'
@@ -496,11 +498,11 @@ export default function MembersPage() {
                       gap: '10px'
                     }}>
                       <div style={{
-                        width: '12px',
-                        height: '12px',
+                        width: '14px',
+                        height: '14px',
                         borderRadius: '50%',
                         background: isCompleted ? 'var(--kyn-green)' : 'var(--kyn-surface)',
-                        border: `1.5px solid ${isCompleted || isCurrent ? 'var(--kyn-green)' : 'var(--kyn-border-mid)'}`,
+                        border: `2px solid ${isCompleted || isCurrent ? 'var(--kyn-green)' : 'var(--kyn-border-mid)'}`,
                         boxShadow: isCurrent ? '0 0 0 3px var(--kyn-green-mid)' : 'none',
                         position: 'relative',
                         zIndex: 1
@@ -508,7 +510,7 @@ export default function MembersPage() {
                       <div style={{
                         fontSize: '12px',
                         color: isCompleted || isCurrent ? 'var(--kyn-green)' : 'var(--kyn-ink3)',
-                        fontWeight: isCurrent ? 600 : isCompleted ? 500 : 400,
+                        fontWeight: isCurrent ? 700 : isCompleted ? 600 : 500,
                         whiteSpace: 'nowrap'
                       }}>
                         {stage}
