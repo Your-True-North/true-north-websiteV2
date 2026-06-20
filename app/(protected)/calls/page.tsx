@@ -219,7 +219,7 @@ export default function CallsPage() {
           </Link>
           <h1 style={{
             fontSize: '22px',
-            fontWeight: 400,
+            fontWeight: isMobile ? 700 : 400,
             marginBottom: '8px',
             color: 'var(--kyn-ink)',
             fontFamily: 'var(--kyn-font-serif)'
