@@ -137,11 +137,8 @@ export default function VideoPlayerPage() {
         try { playerRef.current.destroy() } catch {}
         playerRef.current = null
       }
+      // Attach to the existing iframe (rendered directly in JSX)
       playerRef.current = new (window as any).YT.Player(`yt-player-${videoId}`, {
-        videoId: ytId,
-        width: '100%',
-        height: '100%',
-        playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
         events: {
           onStateChange: (e: any) => {
             const STATE = (window as any).YT.PlayerState
@@ -459,9 +456,12 @@ export default function VideoPlayerPage() {
               marginBottom: '1.5rem'
             }}>
               {youtubeId && (
-                <div
+                <iframe
                   id={`yt-player-${videoId}`}
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  src={`https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1`}
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
                 />
               )}
             </div>
