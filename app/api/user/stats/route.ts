@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     const totalWatchTime = parseInt(watchTimeResult.rows[0]?.total || '0')
 
     const continueWatchingResult = await client.query(
-      `SELECT v.id, v.title, v.youtube_url, v.category, v.duration,
+      `SELECT v.id, v.title, v."youtubeUrl" as youtube_url, v.category, v.duration,
               CASE WHEN v.duration > 0 THEN LEAST(ROUND((uvp.watch_time::float / (v.duration * 60)) * 100), 99) ELSE 0 END AS percentage
        FROM user_video_progress uvp
        JOIN videos v ON v.id = uvp.video_id
