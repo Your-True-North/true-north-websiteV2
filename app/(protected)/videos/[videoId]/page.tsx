@@ -221,7 +221,7 @@ export default function VideoPlayerPage() {
               youtubeUrl: foundVideo.youtubeUrl || '',
               youtubeId: foundVideo.youtubeId,
               category: foundVideo.category,
-              duration: foundVideo.duration ? `${foundVideo.duration} min` : 'N/A',
+              duration: foundVideo.duration || '',
               upload_date: foundVideo.uploaddate,
               completed: false,
               commentsCount: parseInt(foundVideo.comment_count) || 0,
