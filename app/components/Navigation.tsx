@@ -91,6 +91,7 @@ export default function Navigation() {
              </li>
              <li><Link href="/library">Library</Link></li>
              <li><Link href="/contact">Contact</Link></li>
+             <li><Link href="/organisations">For Organisations</Link></li>
              {isAdmin && (
                <li>
                  <Link href="/admin/dashboard" style={{
@@ -238,6 +239,7 @@ export default function Navigation() {
          <Link href="/circle" onClick={() => setIsOpen(false)}>KYN</Link>
          <Link href="/library" onClick={() => setIsOpen(false)}>Library</Link>
          <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+         <Link href="/organisations" onClick={() => setIsOpen(false)}>For Organisations</Link>
          {isAdmin && (
            <Link href="/admin/dashboard" onClick={() => setIsOpen(false)} style={{
              color: '#7fb069',
