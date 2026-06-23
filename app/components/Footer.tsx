@@ -12,9 +12,7 @@ export default function Footer() {
 
   return (
     <footer className="footer" style={{
-      opacity: shouldHideFooter ? 0 : 1,
-      pointerEvents: shouldHideFooter ? 'none' : 'auto',
-      transition: 'opacity 0.15s ease-out'
+      display: shouldHideFooter ? 'none' : undefined,
     }}>
       <div className="footer-container">
         {/* Main Footer Content */}
