@@ -203,7 +203,7 @@ export default function LibraryPage() {
                 <div style={{ fontSize: isMobile ? '14.5px' : '14px', fontWeight: 600, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{teachingsVideos[0].title}</div>
                 <div style={{ fontSize: '12px', color: '#5a5a52' }}>{teachingsVideos[0].duration && `${teachingsVideos[0].duration} min`}</div>
               </div>
-              <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 600, color: 'var(--kyn-green)', background: 'var(--kyn-green-bg)', border: '1px solid var(--kyn-border-green)', borderRadius: '20px', padding: '3px 10px', whiteSpace: 'nowrap' }}>Start here</span>
+              <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 600, color: 'var(--kyn-green)', background: 'var(--kyn-green-bg)', border: '1px solid var(--kyn-border-green)', borderRadius: '20px', padding: '3px 10px', whiteSpace: 'nowrap' }}>▶ Play</span>
             </a>
           </div>
         )}

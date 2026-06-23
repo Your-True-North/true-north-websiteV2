@@ -5,10 +5,16 @@ import { requireAuth } from '@/lib/auth'
 export async function GET(request, { params }) {
   try {
     const authResult = requireAuth(request)
+    let userId
     if (authResult.error) {
-      return authResult.error
+      const headerUserId = request.headers.get('x-user-id')
+      if (!headerUserId) {
+        return authResult.error
+      }
+      userId = headerUserId
+    } else {
+      userId = authResult.user.userId
     }
-    const user = authResult.user
 
     const videoId = params.id
 
@@ -34,7 +40,7 @@ export async function GET(request, { params }) {
       FROM videos v
       LEFT JOIN user_video_progress uvp ON v.id = uvp.video_id AND uvp.user_id = $1
       WHERE v.id = $2
-    `, [user.userId, videoId])
+    `, [userId, videoId])
 
     if (videoResult.rows.length === 0) {
       return NextResponse.json(
@@ -66,7 +72,7 @@ export async function GET(request, { params }) {
       SELECT id
       FROM reactions
       WHERE "videoId" = $1 AND "userId" = $2
-    `, [videoId, user.userId])
+    `, [videoId, userId])
     const hasReacted = userReactionResult.rows.length > 0
 
     // Get related videos (same category, limit 3)

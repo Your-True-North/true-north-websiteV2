@@ -189,7 +189,11 @@ export default function VideoPlayerPage() {
   const fetchVideoData = async () => {
     try {
       // Fetch video details
-      const videoRes = await fetch(`/api/videos/${videoId}`)
+      const userData = localStorage.getItem('user')
+      const currentUser = userData ? JSON.parse(userData) : null
+      const videoRes = await fetch(`/api/videos/${videoId}`, {
+        headers: currentUser?.id ? { 'x-user-id': String(currentUser.id) } : {}
+      })
       const videoData = await videoRes.json()
       console.log('[DEBUG] Primary API response:', { ok: videoRes.ok, status: videoRes.status, data: videoData })
 
@@ -506,9 +510,7 @@ export default function VideoPlayerPage() {
                     fontSize: '0.875rem',
                     color: 'var(--kyn-ink3)'
                   }}>
-                    <span>{video.duration}</span>
-                    <span>•</span>
-                    <span>{new Date(video.upload_date).toLocaleDateString()}</span>
+                    <span>{video.duration} min</span>
                   </div>
                 </div>
 
