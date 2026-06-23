@@ -184,6 +184,24 @@ export default function LibraryPage() {
         </div>
 
         {/* CONTINUE WATCHING */}
+        {!isReplaysActive && continueWatching.length === 0 && videos.length > 0 && (
+          <div style={{ marginBottom: '24px' }}>
+            <div style={{ fontSize: isMobile ? '11px' : '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Recommended</div>
+            <a href={`/videos/${videos[0].id}`} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '14px 16px', background: 'var(--kyn-surface)', border: '1px solid var(--kyn-border)', borderRadius: 'var(--kyn-r-lg)', marginBottom: '6px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', textDecoration: 'none' }}>
+              <div style={{ width: '96px', height: '54px', flexShrink: 0, borderRadius: 'var(--kyn-r)', backgroundImage: `url(https://img.youtube.com/vi/${getYouTubeId(videos[0].youtube_url)}/mqdefault.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(45,106,79,0.35)', border: '1.5px solid rgba(82,183,136,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg style={{ width: '10px', height: '10px', color: '#52b788', marginLeft: '1px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(videos[0].category)}</div>
+                <div style={{ fontSize: isMobile ? '14.5px' : '14px', fontWeight: 600, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{videos[0].title}</div>
+                <div style={{ fontSize: '12px', color: '#5a5a52' }}>{videos[0].duration && `${videos[0].duration} min`}</div>
+              </div>
+              <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 600, color: 'var(--kyn-green)', background: 'var(--kyn-green-bg)', border: '1px solid var(--kyn-border-green)', borderRadius: '20px', padding: '3px 10px', whiteSpace: 'nowrap' }}>Start here</span>
+            </a>
+          </div>
+        )}
         {!isReplaysActive && continueWatching.length > 0 && (
           <div style={{ marginBottom: '24px' }}>
             <div style={{ fontSize: isMobile ? '11px' : '10px', fontWeight: 600, letterSpacing: '0.11em', textTransform: 'uppercase', color: 'var(--kyn-ink3)', marginBottom: '10px' }}>Continue watching</div>

@@ -253,7 +253,7 @@ export default function FoundingMembersPage() {
 
             {/* Fine print — 0.8125rem / 13px, acceptable for legal/secondary */}
             <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              <strong>Introductory rate of £10 per month</strong>
+              <strong>Introductory rate of £10 per month.</strong> First month only. Standard price of £25/month applies from month two.
             </p>
           </div>
         </section>
@@ -615,7 +615,7 @@ export default function FoundingMembersPage() {
             </button>
 
             <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              Introductory rate of £10 per month
+              <strong>Introductory rate of £10 per month.</strong> First month only. Standard price of £25/month applies from month two.
             </p>
           </div>
         </section>

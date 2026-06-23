@@ -568,7 +568,7 @@ export default function MembersPage() {
             position: 'relative',
             overflow: 'hidden'
           }}>
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.2)' }} />
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--kyn-blue)' }} />
             <div style={{ fontSize: '12px', color: 'var(--kyn-ink)', marginBottom: '10px' }}>Time invested</div>
             <div style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: isMobile ? '28px' : '32px', fontWeight: 600, lineHeight: 1, color: 'var(--kyn-ink)' }}>
               {Math.round((stats.totalWatchTime || 0) / 60)}m
