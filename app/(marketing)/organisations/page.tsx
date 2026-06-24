@@ -125,7 +125,7 @@ function ContactDrawer({ open, onClose }: { open: boolean; onClose: () => void }
             Let's have a conversation
           </h2>
           <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.55)', marginBottom: '32px', lineHeight: 1.7 }}>
-            Tell us about your organisation and what you're looking to achieve. Every enquiry is read personally by Mason.
+            Tell us about your organisation and what you're looking to achieve. I read every enquiry personally.
           </p>
 
           {/* Contact links */}
@@ -198,7 +198,7 @@ function ContactDrawer({ open, onClose }: { open: boolean; onClose: () => void }
                 {submitting ? 'Sending…' : 'Send a message'}
               </button>
               <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', textAlign: 'center', marginTop: '12px' }}>
-                Every enquiry is read personally by Mason.
+                I read every enquiry personally.
               </p>
             </form>
           )}
@@ -485,7 +485,7 @@ export default function OrganisationsPage() {
           <div style={{ maxWidth: '460px' }}>
             <p style={{ fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: '16px' }}>Who you'll work with</p>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: isMobile ? '28px' : '34px', fontWeight: 400, color: '#fff', marginBottom: '8px', lineHeight: 1.25 }}>Mason Roberts</h2>
-            <p style={{ fontSize: '13px', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: '24px' }}>Founder & Lead Practitioner</p>
+            <p style={{ fontSize: '13px', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: '24px' }}>Founder · Somatic Therapy Practitioner</p>
             <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.8)', lineHeight: 1.8, marginBottom: '24px' }}>
               Mason is a leadership coach, breathwork facilitator and somatic practitioner with over a decade of experience working with executives, founders and high-performance teams across Europe and the US.
             </p>
@@ -514,7 +514,7 @@ export default function OrganisationsPage() {
             Support your people.<br />Strengthen performance.
           </h2>
           <p style={{ fontSize: '16px', color: '#666', lineHeight: 1.75, marginBottom: '40px', maxWidth: '480px', margin: '0 auto 40px' }}>
-            Every enquiry is read personally by Mason. If we're a good fit, we'll schedule a no-commitment conversation about what's possible for your organisation.
+            I read every enquiry personally. If we're a good fit, we'll schedule a no-commitment conversation about what's possible for your organisation.
           </p>
           <button
             onClick={() => setDrawerOpen(true)}
