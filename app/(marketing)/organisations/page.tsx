@@ -260,9 +260,9 @@ export default function OrganisationsPage() {
   ]
 
   const pillars = [
-    { title: 'Somatic', body: 'We work with the body, not just the mind. Nervous system regulation is the foundation of sustainable leadership — not a nice-to-have.' },
-    { title: 'Systemic', body: 'Individual change ripples outward. We look at the person, the team, and the organisational field together to create lasting impact.' },
-    { title: 'Sustained', body: 'We build internal capacity, not dependency. Our work is designed to outlast the engagement and compound over time.' },
+    { title: 'Somatic', body: 'I work with the body, not just the mind. Nervous system regulation is the foundation of sustainable leadership — not a nice-to-have.' },
+    { title: 'Systemic', body: 'Individual change ripples outward. I look at the person, the team, and the organisational field together to create lasting impact.' },
+    { title: 'Sustained', body: 'I build internal capacity, not dependency. My work is designed to outlast the engagement and compound over time.' },
   ]
 
   const checklist = [
@@ -343,7 +343,7 @@ export default function OrganisationsPage() {
                 onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }) }}
                 style={{ padding: '14px 28px', background: 'transparent', color: '#2d6a4f', border: '1px solid #2d6a4f', borderRadius: '6px', fontSize: '14px', fontWeight: 500, cursor: 'pointer', letterSpacing: '0.02em', textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
               >
-                View our services
+                View my services
               </a>
             </div>
           </div>
@@ -389,7 +389,7 @@ export default function OrganisationsPage() {
         {/* Right */}
         <div style={{ background: '#f5f5f3', padding: isMobile ? '64px 28px' : '96px 72px', display: 'flex', alignItems: 'center' }}>
           <div style={{ maxWidth: '440px' }}>
-            <p style={{ ...eyebrow }}>What we see</p>
+            <p style={{ ...eyebrow }}>What I see</p>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {[
                 'Leaders who can\'t regulate themselves can\'t lead others effectively',
@@ -410,7 +410,7 @@ export default function OrganisationsPage() {
       {/* ── SERVICES ─────────────────────────────────────────────────────── */}
       <section id="services" style={{ background: '#ffffff' }}>
         <div style={sectionPad}>
-          <p style={eyebrow}>What we offer</p>
+          <p style={eyebrow}>What I offer</p>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: isMobile ? '28px' : '36px', fontWeight: 400, color: '#0d0d0d', marginBottom: '52px', maxWidth: '520px', lineHeight: 1.3 }}>
             Programmes tailored to what your organisation actually needs
           </h2>
@@ -436,9 +436,9 @@ export default function OrganisationsPage() {
         <div style={{ ...sectionPad, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '56px' : '96px', alignItems: 'start' }}>
           {/* Left — pillars */}
           <div>
-            <p style={eyebrow}>Our approach</p>
+            <p style={eyebrow}>My approach</p>
             <h2 style={{ fontFamily: 'Georgia, serif', fontSize: isMobile ? '28px' : '34px', fontWeight: 400, color: '#0d0d0d', marginBottom: '44px', lineHeight: 1.3 }}>
-              Three principles that guide everything we do
+              Three principles that guide everything I do
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               {pillars.map(p => (
