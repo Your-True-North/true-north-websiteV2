@@ -1,41 +1,27 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import pkg from 'pg'
-const { Client } = pkg
-
-const FALLBACK_DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
+import { query } from '@/lib/db'
 
 export async function POST(request) {
-  const client = new Client({
-    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || FALLBACK_DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-    connectionTimeoutMillis: 5000
-  })
-
   try {
-    await client.connect()
-    
     const body = await request.json()
     const { email, password } = body
 
     if (!email || !password) {
-      await client.end()
       return NextResponse.json({ error: 'Email and password required' }, { status: 400 })
     }
 
-    const result = await client.query('SELECT * FROM users WHERE email = $1', [email])
+    const result = await query('SELECT * FROM users WHERE email = $1', [email])
     const user = result.rows[0]
-    
+
     if (!user) {
-      await client.end()
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password)
-    
+
     if (!isValidPassword) {
-      await client.end()
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
@@ -44,8 +30,6 @@ export async function POST(request) {
       process.env.NEXTAUTH_SECRET,
       { expiresIn: '30d' }
     )
-
-    await client.end()
 
     const response = NextResponse.json({
       success: true,
@@ -74,7 +58,6 @@ export async function POST(request) {
     return response
 
   } catch (error) {
-    try { await client.end() } catch {}
     return NextResponse.json({ error: 'Login failed', details: error.message }, { status: 500 })
   }
 }

@@ -1,18 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import pkg from 'pg'
-const { Client } = pkg
-
-const FALLBACK_DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
-
-async function getClient() {
-  const client = new Client({
-    connectionString: process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || FALLBACK_DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-    connectionTimeoutMillis: 5000,
-  })
-  await client.connect()
-  return client
-}
+import { query } from '@/lib/db'
 
 export async function POST(
   request: NextRequest,
@@ -28,20 +15,15 @@ export async function POST(
       return NextResponse.json({ error: 'userId required' }, { status: 400 })
     }
 
-    const client = await getClient()
-    try {
-      await client.query(`
-        INSERT INTO user_video_progress (user_id, video_id, completed, last_watched, completion_date, watch_time)
-        VALUES ($1, $2, $3, NOW(), CASE WHEN $3 = true THEN NOW() ELSE NULL END, $4)
-        ON CONFLICT (user_id, video_id) DO UPDATE
-        SET completed = CASE WHEN $3 = true THEN true ELSE user_video_progress.completed END,
-            last_watched = NOW(),
-            completion_date = CASE WHEN $3 = true AND user_video_progress.completion_date IS NULL THEN NOW() ELSE user_video_progress.completion_date END,
-            watch_time = GREATEST($4, user_video_progress.watch_time)
-      `, [userId, videoId, completed, watchTime])
-    } finally {
-      await client.end()
-    }
+    await query(`
+      INSERT INTO user_video_progress (user_id, video_id, completed, last_watched, completion_date, watch_time)
+      VALUES ($1, $2, $3, NOW(), CASE WHEN $3 = true THEN NOW() ELSE NULL END, $4)
+      ON CONFLICT (user_id, video_id) DO UPDATE
+      SET completed = CASE WHEN $3 = true THEN true ELSE user_video_progress.completed END,
+          last_watched = NOW(),
+          completion_date = CASE WHEN $3 = true AND user_video_progress.completion_date IS NULL THEN NOW() ELSE user_video_progress.completion_date END,
+          watch_time = GREATEST($4, user_video_progress.watch_time)
+    `, [userId, videoId, completed, watchTime])
 
     return NextResponse.json({ success: true, progress: { completed } })
 
@@ -61,16 +43,11 @@ export async function GET(
 
     if (!userId) return NextResponse.json({ progress: null })
 
-    const client = await getClient()
-    try {
-      const result = await client.query(
-        'SELECT completed FROM user_video_progress WHERE user_id = $1 AND video_id = $2',
-        [userId, params.id]
-      )
-      return NextResponse.json({ progress: result.rows[0] || null })
-    } finally {
-      await client.end()
-    }
+    const result = await query(
+      'SELECT completed FROM user_video_progress WHERE user_id = $1 AND video_id = $2',
+      [userId, params.id]
+    )
+    return NextResponse.json({ progress: result.rows[0] || null })
 
   } catch (error) {
     console.error('[Progress] Error:', error)
