@@ -140,9 +140,19 @@ export default function VideoPlayerPage() {
       // Attach to the existing iframe (rendered directly in JSX)
       playerRef.current = new (window as any).YT.Player(`yt-player-${videoId}`, {
         events: {
+          onReady: () => {
+            // If the iframe was already playing when we attached, start tracking now
+            const STATE = (window as any).YT.PlayerState
+            if (playerRef.current?.getPlayerState?.() === STATE.PLAYING) {
+              postProgress(Math.round(playerRef.current?.getCurrentTime?.() || 0), false)
+              startInterval()
+            }
+          },
           onStateChange: (e: any) => {
             const STATE = (window as any).YT.PlayerState
             if (e.data === STATE.PLAYING) {
+              // Save immediately on play so the video appears in Continue Watching right away
+              postProgress(Math.round(playerRef.current?.getCurrentTime?.() || 0), false)
               startInterval()
             } else if (e.data === STATE.ENDED) {
               stopInterval()
