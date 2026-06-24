@@ -79,22 +79,20 @@ export default function LibraryPage() {
       const data = await res.json()
       if (res.ok) {
         setVideos(data.videos)
-        fetch('/api/user/stats', {
-          headers: { 'x-user-id': JSON.parse(localStorage.getItem('user') || '{}').id }
-        })
-          .then(r => r.json())
-          .then(d => {
-            if (d.stats?.continueWatching) {
-              setContinueWatching(d.stats.continueWatching)
-            }
-            setStatsLoaded(true)
-          })
-          .catch(e => {
-            console.error('Failed to fetch continue watching:', e)
-            setStatsLoaded(true)
-          })
         setCategories(data.categories)
         setStats(data.stats)
+        // Build continue watching directly from the videos response (already has progress data)
+        const inProgress = (data.videos as any[])
+          .filter(v => v.progress_status === 'in_progress')
+          .sort((a, b) => new Date(b.last_watched).getTime() - new Date(a.last_watched).getTime())
+          .map(v => {
+            const dur = parseInt(v.duration) || 0
+            const wt = parseInt(v.watch_time) || 0
+            const pct = dur > 0 ? Math.min(99, Math.round((wt / (dur * 60)) * 100)) : 0
+            return { ...v, percentage: pct }
+          })
+        setContinueWatching(inProgress)
+        setStatsLoaded(true)
       }
     } catch (error) {
       console.error('[Library] Error fetching videos:', error)
