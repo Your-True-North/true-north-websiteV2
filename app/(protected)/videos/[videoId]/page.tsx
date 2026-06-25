@@ -198,27 +198,32 @@ export default function VideoPlayerPage() {
       // Fetch video details
       const userData = localStorage.getItem('user')
       const currentUser = userData ? JSON.parse(userData) : null
+
+      const saveInitialProgress = (vid: any) => {
+        if (!currentUser?.id) return
+        const watchedId = vid?.id || videoId
+        fetch(`/api/videos/${watchedId}/progress`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: currentUser.id, watch_time: 0, completed: false })
+        }).catch(() => {})
+      }
+
       const videoRes = await fetch(`/api/videos/${videoId}`, {
         headers: currentUser?.id ? { 'x-user-id': String(currentUser.id) } : {}
       })
       const videoData = await videoRes.json()
-      console.log('[DEBUG] Primary API response:', { ok: videoRes.ok, status: videoRes.status, data: videoData })
 
       if (videoRes.ok && videoData.video) {
-        console.log('[DEBUG] Primary API succeeded, video:', videoData.video)
         setVideo(videoData.video)
         setRelatedVideos(videoData.relatedVideos || [])
+        saveInitialProgress(videoData.video)
       } else {
         // Fallback: fetch from admin videos API and find by ID
-        console.log('[DEBUG] Primary API failed, trying fallback to admin API...')
         const adminRes = await fetch('/api/admin/videos')
         const adminData = await adminRes.json()
-        console.log('[DEBUG] Admin API response:', { ok: adminRes.ok, videoCount: adminData.videos?.length, firstVideo: adminData.videos?.[0] })
         if (adminData.videos) {
           const foundVideo = adminData.videos.find((v: any) => String(v.id) === String(videoId))
-          console.log('[DEBUG] Looking for videoId:', videoId, 'parseInt:', parseInt(videoId))
-          console.log('[DEBUG] Found video:', foundVideo)
-          console.log('[DEBUG] Video youtubeId field:', foundVideo?.youtubeId, 'youtubeUrl field:', foundVideo?.youtubeUrl)
           if (foundVideo) {
             // Map database fields to expected interface
             setVideo({
@@ -236,6 +241,7 @@ export default function VideoPlayerPage() {
               hasReacted: false,
               status: 'new'
             })
+            saveInitialProgress(foundVideo)
             // Get related videos from same category
             const related = adminData.videos
               .filter((v: any) => v.category === foundVideo.category && v.id !== foundVideo.id)
