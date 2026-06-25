@@ -219,14 +219,14 @@ export default function LibraryPage() {
                       <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(45,106,79,0.35)', border: '1.5px solid rgba(82,183,136,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <svg style={{ width: '10px', height: '10px', color: '#52b788', marginLeft: '1px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/></svg>
                       </div>
-                      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.15)' }}>
+                      {pct > 0 && <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: 'rgba(255,255,255,0.15)' }}>
                         <div style={{ height: '100%', width: `${pct}%`, background: '#52b788' }} />
-                      </div>
+                      </div>}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--kyn-green)', marginBottom: '3px' }}>{normaliseCategory(video.category)}</div>
                       <div style={{ fontSize: isMobile ? '14.5px' : '14px', fontWeight: 600, color: 'var(--kyn-ink)', lineHeight: 1.4, marginBottom: '3px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{video.title}</div>
-                      <div style={{ fontSize: '12px', color: '#5a5a52' }}>{pct}% complete{remaining ? ` · ${remaining} min remaining` : ''}</div>
+                      <div style={{ fontSize: '12px', color: '#5a5a52' }}>{pct > 0 ? `${pct}% complete${remaining ? ` · ${remaining} min remaining` : ''}` : video.duration ? `${video.duration} min` : ''}</div>
                     </div>
                     <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 600, color: 'var(--kyn-blue)', background: 'var(--kyn-blue-mid)', border: '1px solid var(--kyn-border-blue)', borderRadius: '20px', padding: '3px 10px', whiteSpace: 'nowrap' }}>In progress</span>
                   </a>
