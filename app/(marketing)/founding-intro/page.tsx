@@ -125,7 +125,7 @@ export default function FoundingMembersPage() {
       num: '01',
       label: 'The Foundation',
       title: 'See it.',
-      body: "You cannot change what you cannot see. The first layer is awareness, catching the pattern that has been running your decisions before it plays out rather than only recognising it in the aftermath. This is where the blind spot starts to close.",
+      body: "You cannot change what you cannot see. The first layer is self-awareness, catching the pattern that has been running your decisions. This is where the blind spot comes into your vision. Followed by a sense of relief… Then more work to remove it.",
     },
     {
       num: '02',
@@ -290,9 +290,8 @@ export default function FoundingMembersPage() {
 
             {[
               'A while back, I created a community called the Circle of Return.',
-              'I called it that because I believe, I feel, that our whole purpose for being here is to reconnect with our truth. The part of us that lives underneath the conditioning. Underneath everything we were told to be.',
-              'And that\'s real. That matters.',
-              'But I\'ve come to see that there\'s something we need before that.',
+              'I called it that because I believe, no, I feel down to my core, that our whole purpose for being here is to reconnect with our truth. The part of us that lives underneath the conditioning of everything we were told to be.',
+              'But I came to see that there\'s something we need before that.',
             ].map((para, i) => (
               <p key={i} style={{ ...BODY, marginBottom: '1.25rem' }}>{para}</p>
             ))}
@@ -306,19 +305,19 @@ export default function FoundingMembersPage() {
               letterSpacing: '-0.02em',
               margin: '2rem 0',
             }}>
-              Direction.
+              We need Direction.
             </p>
 
             {[
-              'Knowing where we\'re going. And being able to navigate the obstacles that stand between here and there.',
-              'That\'s why the Circle of Return is shifting, in name and in focus, to Know Your North.',
-              'Because here\'s what I know about men: when we have clear direction, everything changes. The overwhelm softens. The anxiety loses its grip. The uncertainty stops feeling like a threat and starts feeling like a road.',
+              'Knowing where we\'re going, and being able to navigate the obstacles that stand between here and there.',
+              'That\'s why the Circle of Return shifted, in name and in focus, to Know Your North.',
+              'I learned some stuff working with men for nearly a decade: When we have clear direction, everything changes. The overwhelm eases, the anxiety loses its grip. The uncertainty stops feeling like a threat and starts feeling like a path to follow.',
             ].map((para, i) => (
               <p key={i} style={{ ...BODY, marginBottom: '1.25rem' }}>{para}</p>
             ))}
 
             <p style={{ ...BODY, color: ACCENT, fontWeight: 500, marginTop: '1.5rem', margin: 0 }}>
-              For finding alignment with where you're supposed to be going. And then actually going there.
+              Men that find alignment with where they're supposed to be going, actually get there.
             </p>
           </div>
         </section>
@@ -328,15 +327,15 @@ export default function FoundingMembersPage() {
           <div style={inner}>
             <Label>Who This Is For</Label>
             <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
-              You already know this is you.
+              You already know this is for you.
             </h2>
 
             {[
-              "You have a version of yourself you can see clearly. The man who leads with confidence and builds something real, who doesn't run away when things get hard.",
+              "You have a version of yourself you can see clearly. The man who leads with confidence and builds something, he's a man who doesn't run away when things get hard.",
               "And you know there's a gap between that man and where you stand right now.",
-              "Not because you lack ability or because you haven't tried, but because something underneath keeps pulling you back to where you started.",
-              "Maybe it shows up in business. You build momentum, then somehow lose the contract, delay the launch, undercharge again. You watch the opportunity pass and wonder why you let it.",
-              "Maybe it's relationships. You find yourself in the same argument, creating the same distance, arriving at the same moment where you shut down when you most needed to stay open.",
+              "You also know that this isn't because you lack the ability or because you haven't tried, but because something underneath keeps pulling you back to where you started.",
+              "Maybe it shows up in business. You build momentum, then somehow lose the contract, delay the launch, undercharge again. You watch yet another opportunity pass you by.",
+              "Maybe it's relationships. You find yourself in the same argument, creating the same distance, arriving at the same moment where you shut down or kick off when you most needed to stay open and calm.",
               "Maybe it's the version of yourself you perform in public versus the one you live with privately. The gap between those two men is exhausting to maintain.",
             ].map((para, i) => (
               <p key={i} style={{ ...BODY, marginBottom: '1.25rem' }}>{para}</p>
@@ -353,7 +352,7 @@ export default function FoundingMembersPage() {
                 fontStyle: 'italic',
                 WebkitTextStroke: '0.3px currentColor',
               }}>
-                "I know you've read the books and listened to the podcasts. You have more self-awareness than most men you know, yet still the pattern runs. That is not a failure of effort."
+                "I know you've read the books and listened to the podcasts. You have more self-awareness than most men you know, yet still the pattern repeats. You're not failing my man, you're navigating."
               </p>
             </div>
 
@@ -387,8 +386,8 @@ export default function FoundingMembersPage() {
             </div>
 
             {[
-              "I'm True, and I'm not standing outside this work looking in.",
-              "I spent years in the same cycle, and still have my moments. I took two steps forward and one back, building things and burning them, knowing exactly what I was doing and doing it anyway. The pattern expressed itself in many ways, from procrastination through to violence, addiction, and a level of self-destruction that I am not proud of.",
+              "I'm True, and I'm not one of those standing outside this work looking in.",
+              "I spent years in the same cycle, and still have my moments. I took two steps forward and one back, building things and subconsciously sabotaging them, in the back of my mind I could see what I was doing and doing it anyway. The pattern expressed itself in many ways, from procrastination through to violence, addiction, and a level of self-destruction that I am not proud of.",
               "What changed wasn't a book or a single breakthrough moment. It was sustained, structured work designed to get underneath the story you tell yourself and work with what's actually stored in the body.",
               "I created KYN because I know what it means to do this work without a real community around you. The men in here aren't here to look good. They're here to build something real.",
             ].map((para, i) => (
@@ -491,11 +490,11 @@ export default function FoundingMembersPage() {
               <Label>This is for you if</Label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem' }}>
                 {[
-                  "You're done performing a version of yourself that isn't real.",
+                  "You're done wearing a mask and being a version of yourself that isn't real.",
                   "You want to be around men who are actually doing the work, not just talking about it.",
-                  "You're ready to build something lasting rather than consume more content that goes nowhere.",
+                  "You're ready to build something lasting, rather than half-arsing something that goes nowhere.",
                   "You know there's a better version of you available, and you're prepared to go get it.",
-                  "You want brothers who will hold you to what you said you wanted.",
+                  "You want to get close to other brothers who will root for you and hold you to what you said you wanted.",
                 ].map((line, i) => (
                   <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                     <div style={{
@@ -556,9 +555,9 @@ export default function FoundingMembersPage() {
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem', marginBottom: '3rem' }}>
               {[
                 { title: 'Two live deep sessions each month', desc: "Built around expansion topics that reveal the pattern underneath your decisions, applied to your real situations so the work moves you forward rather than just inward." },
-                { title: 'Two somatic regulation sessions', desc: "To help release what has been stuck and weighing you down. We build actual capacity, the kind that holds under real pressure." },
+                { title: 'Two somatic regulation sessions', desc: "To help release what has been stuck and weighing you down. We build actual capacity, the kind that holds it together under real pressure." },
                 { title: 'Quarterly community goal mapping', desc: "So you know exactly where you're tightening, where you're slipping, and what the next chapter genuinely requires of you." },
-                { title: 'Exclusive supporting content', desc: 'We take a holistic approach across somatics, the psyche, and grounded spiritual perspectives, because understanding how and why you operate is one of the most powerful forms of growth.' },
+                { title: 'Exclusive supporting content', desc: 'We take a holistic approach across somatic experiencing, the psyche, and grounded spiritual perspectives, because understanding how and why you operate is one of the most powerful forms of growth.' },
                 { title: 'Private brotherhood', desc: "A private community of men doing the work properly. Not a place for big egos trying to out-perform each other, but a space where men build, challenge each other, and show up." },
               ].map((item, i) => (
                 <div key={i} style={{ background: '#ffffff', border: `1px solid ${BORDER}`, borderRadius: '6px', padding: '1.75rem' }}>
