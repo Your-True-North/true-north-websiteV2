@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 import { requireAuth, rateLimit } from '@/lib/auth'
 import { sanitizeInput, validateYoutubeUrl } from '@/lib/validation'
+import { Resend } from 'resend'
 
 export async function GET(request) {
   try {
@@ -176,6 +177,42 @@ export async function POST(request) {
     )
 
     const video = result.rows[0]
+
+    // Send new video notification to all members (fire-and-forget)
+    ;(async () => {
+      try {
+        const membersResult = await query('SELECT email, name FROM users WHERE role IN (\'member\', \'admin\')')
+        const members = membersResult.rows
+        if (members.length === 0) return
+
+        const resend = new Resend(process.env.RESEND_API_KEY)
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourtruenorth.me'
+        const videoUrl = `${siteUrl}/videos/${video.id}`
+
+        await Promise.all(members.map(member =>
+          resend.emails.send({
+            from: 'KYN <kyn@yourtruenorth.me>',
+            to: member.email,
+            subject: `New teaching: ${video.title}`,
+            html: `
+              <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;padding:40px;border-radius:8px;">
+                <p style="font-size:12px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#9bc4b8;margin:0 0 24px;">Know Your North</p>
+                <h1 style="font-family:Georgia,serif;font-size:28px;font-weight:400;color:#0a0a0a;margin:0 0 16px;line-height:1.2;">${video.title}</h1>
+                ${video.description ? `<p style="font-size:16px;line-height:1.7;color:#5a5a58;margin:0 0 24px;">${video.description}</p>` : ''}
+                ${video.duration ? `<p style="font-size:13px;color:#9bc4b8;margin:0 0 32px;">${video.duration} min · ${video.category}</p>` : `<p style="font-size:13px;color:#9bc4b8;margin:0 0 32px;">${video.category}</p>`}
+                <a href="${videoUrl}" style="display:inline-block;background:#9bc4b8;color:#0a0a0a;padding:14px 32px;border-radius:4px;text-decoration:none;font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;">Watch now →</a>
+                <hr style="border:none;border-top:1px solid rgba(10,10,10,0.1);margin:40px 0 24px;" />
+                <p style="font-size:12px;color:#9a9a96;margin:0;">You're receiving this because you're a KYN member. <a href="${siteUrl}/members" style="color:#9bc4b8;">Manage your account</a></p>
+              </div>
+            `
+          }).catch(err => console.error(`[Video notify] Failed to email ${member.email}:`, err))
+        ))
+
+        console.log(`[Video notify] Sent to ${members.length} members for video: ${video.title}`)
+      } catch (err) {
+        console.error('[Video notify] Error sending notifications:', err)
+      }
+    })()
 
     return NextResponse.json({
       success: true,
