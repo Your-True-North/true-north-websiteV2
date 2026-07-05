@@ -4,15 +4,6 @@ import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 import { STRIPE_URL, hero, whyKYN, whoThisIsFor, whoThisIsNotFor, whoHoldsSpace, pillars, whatsInside, closing } from './content'
 
-export const metadata = {
-  title: 'You\'re Not an Angry Man | Know Your North',
-  description: 'Find where your anger is actually coming from, and put it down for good. KYN is somatic, real, and built for men who are done with the guilt cycle.',
-  openGraph: {
-    title: 'You\'re not an angry man. You\'re carrying anger.',
-    description: 'Find where it\'s actually coming from, so you can put it down for good.',
-  },
-}
-
 const ACCENT = '#9bc4b8'
 const TEXT   = '#0a0a0a'
 const MUTED  = '#5a5a58'
