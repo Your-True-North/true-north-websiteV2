@@ -60,7 +60,6 @@ function Label({ children }: { children: React.ReactNode }) {
   )
 }
 
-// Renders a multi-paragraph string (paragraphs separated by \n\n) as <p> elements
 function Paras({ text, style }: { text: string, style?: React.CSSProperties }) {
   return (
     <>
@@ -71,7 +70,6 @@ function Paras({ text, style }: { text: string, style?: React.CSSProperties }) {
   )
 }
 
-// Splits a journey stage string "Title. Body text." into { title, body }
 function parseStage(stage: string): { title: string; body: string } {
   const dot = stage.indexOf('. ')
   return { title: stage.slice(0, dot + 1), body: stage.slice(dot + 2) }
@@ -171,7 +169,7 @@ function HeroVideo({ videoUrl, posterImageUrl }: { videoUrl?: string | null, pos
   )
 }
 
-export default function AngerPage() {
+export default function AddictionPage() {
   const [isMobile, setIsMobile] = useState(false)
   const [openPillar, setOpenPillar] = useState<number | null>(0)
 
@@ -185,7 +183,7 @@ export default function AngerPage() {
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
       ;(window as any).fbq('track', 'ViewContent', {
-        content_name: 'Anger Page',
+        content_name: 'Addiction Page',
         content_category: 'Membership',
       })
     }
@@ -202,10 +200,10 @@ export default function AngerPage() {
   }, [])
 
   const handleStripeClick = () => {
-    trackEvent('begin_checkout', { service: 'anger_founding', value: 25 })
+    trackEvent('begin_checkout', { service: 'addiction_founding', value: 25 })
     if (typeof window !== 'undefined' && (window as any).fbq) {
       ;(window as any).fbq('track', 'InitiateCheckout', {
-        content_name: 'Anger Founding Membership',
+        content_name: 'Addiction Founding Membership',
         value: 25.0,
         currency: 'GBP',
       })
@@ -291,7 +289,7 @@ export default function AngerPage() {
               fontSize: isMobile ? '2.25rem' : 'clamp(2.5rem, 6vw, 4rem)',
               marginBottom: '1rem',
             }}>
-              {isMobile ? <>You're not an angry man.<br />You're carrying anger.</> : hero.headline}
+              {hero.headline}
             </h1>
 
             <p style={{
@@ -305,7 +303,7 @@ export default function AngerPage() {
               {hero.subheadline}
             </p>
 
-            {/* HeroVideo — videoUrl left empty, posterImageUrl for anger page */}
+            {/* HeroVideo — videoUrl left empty, posterImageUrl for addiction page */}
             <HeroVideo videoUrl={null} posterImageUrl={null} />
 
             <CTAButton label={hero.ctaLabel} />
@@ -376,7 +374,7 @@ export default function AngerPage() {
           </div>
         </section>
 
-        {/* TODO: swap in anger-specific testimonial videos once recorded, currently reusing founding page testimonials */}
+        {/* TODO: swap in addiction-specific testimonial videos once recorded, currently reusing founding page testimonials */}
         <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
             <Label>What Changes</Label>
