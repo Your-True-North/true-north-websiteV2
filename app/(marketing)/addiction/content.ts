@@ -62,9 +62,7 @@ You'll be supported by a private group of men who are doing this work alongside 
 And you'll have exclusive supporting content to lean on in between every session.`
 
 export const closing = {
-  text: `Where you are now does not have to be where you end up.
-
-And I'll be honest, sometimes the truth is hard to hear but you already knew it before it was said.`,
+  text: `And I'll be honest, sometimes the truth is hard to hear but you already knew it before it was said.`,
   pricingNote: "Your founding member price is £25 a month, locked in for life, and it rises to £50 once we reach our fifty first member.",
   ctaLabel: "Secure Your Founding Spot",
 }
