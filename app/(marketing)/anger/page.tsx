@@ -403,7 +403,7 @@ export default function AngerPage() {
           <div style={inner}>
             <Label>The Journey</Label>
             <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '0.75rem' }}>
-              This is not a programme with an end date. It is a path you keep walking.
+              This work is a path you keep walking.
             </h2>
             <p style={{ ...BODY, marginBottom: '3rem' }}>
               There is no graduation date and no fixed moment where the work is done. This is a continuous deepening applied to what is actually happening in your life right now.
