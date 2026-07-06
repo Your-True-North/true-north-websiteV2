@@ -270,7 +270,7 @@ export default function AngerPage() {
               fontSize: isMobile ? '2.25rem' : 'clamp(2.5rem, 6vw, 4rem)',
               marginBottom: '1rem',
             }}>
-              {hero.headline}
+              {isMobile ? <>You're not an angry man.<br />You're carrying anger.</> : hero.headline}
             </h1>
 
             <p style={{
