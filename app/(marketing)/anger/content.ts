@@ -1,12 +1,11 @@
 export const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
 
 export const hero = {
-  headline: "You're not an angry man. You're carrying anger.",
+  kicker: "You're not an angry man.",
+  headline: "You're carrying anger.",
   subheadline: "Find where it's actually coming from, so you can put it down for good.",
   ctaLabel: "Secure Your Founding Spot",
-  pricingNote: "Your founding member price is £25 a month, fixed for life, and it rises to £50 once we reach our fifty first member.",
-  credentialsLine: "I'm a somatic therapy practitioner trained under Dr Gabor Maté, a Reiki Master, and an internationally accredited transformational coach through the ICF and EMCC.",
-  cancelLine: "There's no contract and no pressure to stay, you can cancel any time it doesn't feel right for you.",
+  pricingNote: "£25/month fixed for life. Price rises to £50 at member 51.",
 }
 
 export const whyKnowYourNorth = `I spent years being the angry one, often snapping over very little and having to apologise afterwards to the people I loved.
