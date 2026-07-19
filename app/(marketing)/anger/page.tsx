@@ -70,6 +70,100 @@ function Paras({ text, style }: { text: string; style?: React.CSSProperties }) {
   )
 }
 
+function HeroVideo({ videoUrl, posterImageUrl }: { videoUrl?: string | null; posterImageUrl?: string | null }) {
+  const [playing, setPlaying] = useState(false)
+
+  if (!videoUrl) {
+    return (
+      <div style={{ width: '100%', margin: '2rem 0' }}>
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          paddingTop: '56.25%',
+          background: '#1a2e22',
+          borderRadius: '6px',
+          overflow: 'hidden',
+          border: `1px solid ${BORDER}`,
+        }}>
+          <div style={{
+            position: 'absolute', inset: 0,
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center', gap: '1rem',
+          }}>
+            <div style={{
+              width: '60px', height: '60px', borderRadius: '50%',
+              background: 'rgba(155,196,184,0.15)',
+              border: `1.5px solid rgba(155,196,184,0.35)`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M6 4l14 8-14 8V4z" fill={ACCENT} />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <p style={{
+          fontFamily: SANS, fontSize: '0.75rem', color: MUTED,
+          textAlign: 'center', marginTop: '0.625rem', letterSpacing: '0.04em',
+        }}>Video coming soon</p>
+      </div>
+    )
+  }
+
+  const ytMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#\s]{11})/)
+  const ytId = ytMatch ? ytMatch[1] : null
+
+  return (
+    <div style={{ width: '100%', margin: '2rem 0' }}>
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        paddingTop: '56.25%',
+        background: '#000',
+        borderRadius: '6px',
+        overflow: 'hidden',
+        border: `1px solid ${BORDER}`,
+      }}>
+        {ytId && !playing ? (
+          <div
+            onClick={() => setPlaying(true)}
+            style={{
+              position: 'absolute', inset: 0, cursor: 'pointer',
+              backgroundImage: posterImageUrl ? `url(${posterImageUrl})` : `url(https://img.youtube.com/vi/${ytId}/maxresdefault.jpg)`,
+              backgroundSize: 'cover', backgroundPosition: 'center',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <div style={{
+              width: '72px', height: '72px', borderRadius: '50%',
+              background: 'rgba(0,0,0,0.55)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M6 4l14 8-14 8V4z" fill="#fff" />
+              </svg>
+            </div>
+          </div>
+        ) : ytId && playing ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          <video
+            src={videoUrl}
+            poster={posterImageUrl || undefined}
+            controls
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+          />
+        )}
+      </div>
+    </div>
+  )
+}
+
 function parseStage(stage: string): { title: string; body: string } {
   const dot = stage.indexOf('. ')
   return { title: stage.slice(0, dot + 1), body: stage.slice(dot + 2) }
@@ -204,11 +298,13 @@ export default function AngerPage() {
               lineHeight: 1.75,
               color: MUTED,
               maxWidth: '600px',
-              margin: '0 auto 2.5rem',
+              margin: '0 auto',
               fontFamily: SANS,
             }}>
               {hero.subheadline}
             </p>
+
+            <HeroVideo videoUrl={null} posterImageUrl={null} />
 
             <button
               onClick={handleStripeClick}

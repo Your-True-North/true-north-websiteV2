@@ -1,8 +1,8 @@
 export const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
 
 export const hero = {
-  kicker: "You're not an angry man.",
-  headline: "You're carrying anger.",
+  kicker: "Your anger is something you're carrying.",
+  headline: "This is where you finally put it down.",
   subheadline: "Find where it's actually coming from, so you can put it down for good.",
   ctaLabel: "Secure Your Founding Spot",
   pricingNote: "£25/month fixed for life. Price rises to £50 at member 51.",
