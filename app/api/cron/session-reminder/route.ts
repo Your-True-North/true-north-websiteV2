@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   }
 
   const dueResult = await query(
-    `SELECT id, title, description, scheduled_date, loop_index
+    `SELECT id, title, description, scheduled_date AT TIME ZONE 'UTC' AS scheduled_date, loop_index
      FROM live_calls
      WHERE reminder_sent_at IS NULL
        AND scheduled_date BETWEEN NOW() + INTERVAL '47 hours' AND NOW() + INTERVAL '49 hours'`
