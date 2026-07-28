@@ -109,22 +109,26 @@ export function buildKynReminderEmail(input: KynReminderSessionInput): KynRemind
   ].join('\n')
 
   const html = `
-<div style="font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.6; color: #1a1a1a; max-width: 560px; margin: 0 auto; padding: 24px 20px;">
-  <h2 style="font-size: 20px; font-weight: 700; margin: 0 0 14px; color: #1a1a1a;">${escapeHtml(input.title)}</h2>
-  <p style="margin: 0 0 20px;">${escapeHtml(emailDescription)}</p>
-  <p style="margin: 0 0 4px;"><strong>${escapeHtml(detailsLine)}</strong></p>
-  <p style="margin: 0 0 20px; color: #555;">${escapeHtml(meetingLine)}</p>
+<div style="font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.6; color: #141410; max-width: 560px; margin: 0 auto; padding: 28px 22px;">
+  <p style="margin: 0 0 8px; font-family: Arial, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #2d6a4f;">Next session</p>
+  <h2 style="font-size: 21px; font-weight: 700; margin: 0 0 16px; color: #141410;">${escapeHtml(input.title)}</h2>
+  <p style="margin: 0 0 22px;">${escapeHtml(emailDescription)}</p>
+  <div style="background: #e8f4ee; border-radius: 8px; padding: 14px 16px; margin: 0 0 24px;">
+    <p style="margin: 0 0 6px; font-family: Arial, sans-serif; font-size: 14px; font-weight: 600; color: #141410;">${escapeHtml(weekday)} at 8am ${escapeHtml(zoneLabel)}</p>
+    <p style="margin: 0 0 6px;"><a href="${JOIN_URL}" style="font-family: Arial, sans-serif; font-size: 13px; color: #2d6a4f; text-decoration: none; font-weight: 600;">Join on Zoom</a></p>
+    <p style="margin: 0; font-family: Arial, sans-serif; font-size: 11.5px; color: #52524a;">${escapeHtml(meetingLine)}</p>
+  </div>
   <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 0 24px;">
     <tr>
       <td style="padding-right: 10px;">
-        <a href="${googleUrl}" style="display: inline-block; padding: 10px 18px; background: #2f5233; color: #ffffff; text-decoration: none; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px;">Add to Google Calendar</a>
+        <a href="${googleUrl}" style="display: inline-block; padding: 10px 18px; background: #2d6a4f; color: #ffffff; text-decoration: none; border-radius: 5px; font-family: Arial, sans-serif; font-size: 13px; font-weight: 600;">Add to Google Calendar</a>
       </td>
       <td>
-        <a href="${appleDataUrl}" download="kyn-session.ics" style="display: inline-block; padding: 10px 18px; background: #2f5233; color: #ffffff; text-decoration: none; border-radius: 4px; font-family: Arial, sans-serif; font-size: 14px;">Add to Apple Calendar</a>
+        <a href="${appleDataUrl}" download="kyn-session.ics" style="display: inline-block; padding: 10px 18px; background: #2d6a4f; color: #ffffff; text-decoration: none; border-radius: 5px; font-family: Arial, sans-serif; font-size: 13px; font-weight: 600;">Add to Apple Calendar</a>
       </td>
     </tr>
   </table>
-  <p style="margin: 0;">${escapeHtml(closingLine)}</p>
+  <p style="margin: 0; padding-top: 16px; border-top: 1px solid #e2e2de;">${escapeHtml(closingLine)}</p>
 </div>
 `.trim()
 
