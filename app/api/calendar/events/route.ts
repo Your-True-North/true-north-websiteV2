@@ -1,43 +1,34 @@
 import { NextResponse } from 'next/server'
-import { google } from 'googleapis'
+import { query } from '@/lib/db'
 
 export async function GET() {
   try {
-    const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
-    const calendarId = process.env.GOOGLE_CALENDAR_ID
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+    const result = await query(
+      `SELECT id, title, description, scheduled_date, zoom_link, duration,
+              theme_number, theme_name, week_number, session_type, delivery, camera_note
+       FROM live_calls
+       WHERE scheduled_date >= NOW()
+       ORDER BY scheduled_date ASC
+       LIMIT 10`
+    )
 
-    if (!serviceAccountEmail || !calendarId || !privateKey) {
-      return NextResponse.json({ error: 'Missing Google Calendar credentials' }, { status: 500 })
-    }
-
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: serviceAccountEmail,
-        private_key: privateKey,
-      },
-      scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
-    })
-
-    const calendar = google.calendar({ version: 'v3', auth })
-
-    const response = await calendar.events.list({
-      calendarId: calendarId,
-      timeMin: new Date().toISOString(),
-      maxResults: 10,
-      singleEvents: true,
-      orderBy: 'startTime',
-    })
-
-    const events = response.data.items?.map(event => ({
-      title: event.summary || 'Untitled Event',
-      date: event.start?.dateTime || event.start?.date || '',
-      description: event.description || '',
-    })) || []
+    const events = result.rows.map((row: any) => ({
+      title: row.title,
+      date: new Date(row.scheduled_date).toISOString(),
+      description: row.description || '',
+      join_url: row.zoom_link,
+      duration_minutes: row.duration,
+      theme_number: row.theme_number,
+      theme_name: row.theme_name,
+      week_number: row.week_number,
+      session_type: row.session_type,
+      delivery: row.delivery,
+      camera_note: row.camera_note,
+    }))
 
     return NextResponse.json({ events })
   } catch (error) {
-    console.error('Calendar API Error:', error)
+    console.error('Calendar events error:', error)
     return NextResponse.json({ error: 'Failed to fetch calendar events' }, { status: 500 })
   }
 }
