@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
   }
 
   const membersResult = await query(
-    `SELECT email, name FROM users WHERE "isActive" = true AND role = 'member' ORDER BY "createdAt" ASC`
+    `SELECT email, name FROM users WHERE "isActive" = true AND role IN ('member', 'founding_member') ORDER BY "createdAt" ASC`
   )
   const members = membersResult.rows as { email: string; name: string }[]
 
