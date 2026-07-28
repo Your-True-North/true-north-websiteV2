@@ -19,7 +19,13 @@ interface CalendarEvent {
   title: string
   date: string
   description: string
+  join_url?: string
+  session_type?: string
+  camera_note?: string
 }
+
+const ZOOM_MEETING_ID = '875 3611 9646'
+const ZOOM_PASSCODE = '2121'
 
 interface CalendarDay {
   date: Date
@@ -29,6 +35,7 @@ interface CalendarDay {
     title: string
     description: string
     googleCalendarUrl: string
+    joinUrl?: string
   }
 }
 
@@ -157,7 +164,8 @@ export default function CallsPage() {
             time: eventDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }),
             title: dayEvent.title,
             description: dayEvent.description,
-            googleCalendarUrl: generateGoogleCalendarUrl(dayEvent)
+            googleCalendarUrl: generateGoogleCalendarUrl(dayEvent),
+            joinUrl: dayEvent.join_url
           }
         })
       } else {
@@ -231,7 +239,7 @@ export default function CallsPage() {
             color: 'var(--kyn-ink2)',
             lineHeight: 1.6
           }}>
-            Join monthly live sessions with True and guest experts
+            One live session every Thursday at 8am London time. Come as you are, nothing here is gated.
           </p>
         </div>
 
@@ -476,6 +484,33 @@ export default function CallsPage() {
                             </p>
                           )}
 
+                          {event.join_url && (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginTop: '4px' }}>
+                              <a
+                                href={event.join_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  padding: '6px 14px',
+                                  background: 'var(--kyn-green)',
+                                  color: '#fff',
+                                  borderRadius: 'var(--kyn-r)',
+                                  fontSize: '12.5px',
+                                  fontWeight: 600,
+                                  textDecoration: 'none'
+                                }}
+                              >
+                                Join on Zoom
+                              </a>
+                              <span style={{ fontSize: '11.5px', color: 'var(--kyn-ink3)' }}>
+                                Meeting ID {ZOOM_MEETING_ID} · Passcode {ZOOM_PASSCODE}
+                              </span>
+                            </div>
+                          )}
+
                           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px', fontSize: isMobile ? '12px' : '11.5px', color: 'var(--kyn-ink3)' }}>
                             <span>{dayOfWeek}</span>
                             <span>·</span>
@@ -639,7 +674,7 @@ export default function CallsPage() {
             border: '1px solid var(--kyn-border-green)'
           }}>
             <p style={{ fontSize: '13px', color: 'var(--kyn-ink2)', margin: 0, lineHeight: 1.5 }}>
-              <strong style={{ color: 'var(--kyn-green)' }}>Live calls are synced from Google Calendar.</strong> Click on a date with a call to add it to your calendar.
+              <strong style={{ color: 'var(--kyn-green)' }}>One live call a week, same time, same room.</strong> Click on a date to add it to your calendar.
             </p>
           </div>
         </div>
