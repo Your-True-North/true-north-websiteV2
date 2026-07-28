@@ -98,6 +98,8 @@ export function buildKynReminderEmail(input: KynReminderSessionInput): KynRemind
   const meetingLine = `Meeting ID ${MEETING_ID}. Passcode ${PASSCODE}.`
 
   const text = [
+    input.title,
+    '',
     emailDescription,
     '',
     detailsLine,
@@ -108,6 +110,7 @@ export function buildKynReminderEmail(input: KynReminderSessionInput): KynRemind
 
   const html = `
 <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.6; color: #1a1a1a; max-width: 560px; margin: 0 auto; padding: 24px 20px;">
+  <h2 style="font-size: 20px; font-weight: 700; margin: 0 0 14px; color: #1a1a1a;">${escapeHtml(input.title)}</h2>
   <p style="margin: 0 0 20px;">${escapeHtml(emailDescription)}</p>
   <p style="margin: 0 0 4px;"><strong>${escapeHtml(detailsLine)}</strong></p>
   <p style="margin: 0 0 20px; color: #555;">${escapeHtml(meetingLine)}</p>
