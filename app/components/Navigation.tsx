@@ -11,7 +11,7 @@ export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const protectedPaths = ['/members', '/videos', '/forum', '/calls', '/journey', '/community', '/admin', '/auth', '/organisations'];
+  const protectedPaths = ['/members', '/videos', '/forum', '/calls', '/journey', '/community', '/admin', '/auth', '/organisations', '/anger'];
   const shouldHideNav = protectedPaths.some(path => pathname?.startsWith(path));
 
   // Check if user is in members area (for contextual Dashboard/Logout display)
