@@ -304,7 +304,7 @@ export default function AngerPage() {
               {hero.subheadline}
             </p>
 
-            <HeroVideo videoUrl={null} posterImageUrl={null} />
+            <HeroVideo videoUrl="https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/video-output-EC063BB2-3076-489F-A381-796AED08945C-1.mov" posterImageUrl={null} />
 
             <button
               onClick={handleStripeClick}
