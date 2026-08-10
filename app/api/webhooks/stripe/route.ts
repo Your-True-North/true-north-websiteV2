@@ -21,7 +21,15 @@ const COR_PRICE_ID = 'price_1SN63oIEGgnmE0KKEM0Ihkvt'
 const COR_TAG_ID = '8362450'
 const COR_ABANDONED_TAG_ID = '17879543'
 const FOUNDING_INTRO_PRICE_ID = 'price_1Tk0rYIEGgnmE0KKiTp4lq9a' // £10 founding-intro first month
-const CIRCLE_PRICE_IDS = [COR_PRICE_ID]
+// Any of these prices grants membership. COR_PRICE_ID is the original live
+// price. The monthly and yearly prices come from the same environment variables
+// the checkout route uses, so whatever is set in Vercel is recognised here with
+// no second place to update. Unset values are dropped.
+const CIRCLE_PRICE_IDS = [
+  COR_PRICE_ID,
+  process.env.STRIPE_PRICE_MONTHLY,
+  process.env.STRIPE_PRICE_YEARLY,
+].filter(Boolean) as string[]
 
 // ConvertKit
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
