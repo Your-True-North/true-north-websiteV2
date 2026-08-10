@@ -106,16 +106,11 @@ export default function FoundingMembersPage() {
     setTimeout(hide, 100)
   }, [])
 
+  // Sends people to the pricing block so they choose monthly or yearly there.
+  // Checkout itself, and the InitiateCheckout event, now fire inside PricingToggle.
   const handleStripeClick = () => {
-    trackEvent('begin_checkout', { service: 'circle_founding', value: 25 })
-    if (typeof window !== 'undefined' && (window as any).fbq) {
-      ;(window as any).fbq('track', 'InitiateCheckout', {
-        content_name: 'Founding Membership',
-        value: 25.0,
-        currency: 'GBP',
-      })
-    }
-    window.location.href = STRIPE_URL
+    trackEvent('view_pricing', { service: 'circle_founding' })
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
   const sec = isMobile ? '4rem 1.5rem' : '6rem 1.5rem'

@@ -165,6 +165,7 @@ export default function PricingToggle({ ctaLabel, trackingId }: PricingTogglePro
 
   return (
     <div
+      id="pricing"
       style={{
         background: GREEN,
         borderRadius: '10px',
@@ -172,6 +173,8 @@ export default function PricingToggle({ ctaLabel, trackingId }: PricingTogglePro
         margin: '0 0 2rem',
         textAlign: 'center',
         fontFamily: SANS,
+        // Keeps the block clear of the fixed nav when scrolled to from the hero.
+        scrollMarginTop: '80px',
       }}
     >
       <style>{`
