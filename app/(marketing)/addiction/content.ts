@@ -4,7 +4,8 @@ export const hero = {
   headline: "What are you drowning out?",
   subheadline: "Rehab treats the behaviour. This finds what's underneath it, so you can actually put it down.",
   ctaLabel: "Secure Your Founding Spot",
-  pricingNote: "Your founding member price is £25 a month, fixed for life, and it rises to £50 once we reach our fifty first member.",
+  // Hero note only. Prices live in PricingToggle further down the page.
+  pricingNote: "Founding rate, and the rate you join on is the rate you keep.",
   credentialsLine: "I'm a somatic therapy practitioner trained under Dr Gabor Maté, a Reiki Master, and an internationally accredited transformational coach through the ICF and EMCC.",
   cancelLine: "There's no contract and no pressure to stay, you can cancel any time it doesn't feel right for you.",
 }
@@ -63,6 +64,8 @@ And you'll have exclusive supporting content to lean on in between every session
 
 export const closing = {
   text: `And I'll be honest, sometimes the truth is hard to hear but you already knew it before it was said.`,
-  pricingNote: "Your founding member price is £25 a month, locked in for life, and it rises to £50 once we reach our fifty first member.",
+  // Sits directly above PricingToggle, which states the prices and the founding
+  // rate. Keep this as framing only, with no figures, so the two do not repeat.
+  pricingNote: "Choose whichever way of joining suits you.",
   ctaLabel: "Secure Your Founding Spot",
 }

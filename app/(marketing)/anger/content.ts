@@ -5,7 +5,8 @@ export const hero = {
   headline: "This is where you finally put it down.",
   subheadline: "Find where it's actually coming from, so you can put it down for good.",
   ctaLabel: "Secure Your Founding Spot",
-  pricingNote: "£25/month fixed for life. Price rises to £50 at member 51.",
+  // Hero note only. Prices live in PricingToggle further down the page.
+  pricingNote: "Founding rate, and the rate you join on is the rate you keep.",
 }
 
 export const whyKnowYourNorth = `I spent years being the angry one, often snapping over very little and having to apologise afterwards to the people I loved.
@@ -62,6 +63,8 @@ And you'll have exclusive supporting content to lean on in between every session
 
 export const closing = {
   text: `And I'll be honest, sometimes the truth is hard to hear but you already knew it before it was said.`,
-  pricingNote: "Your founding member price is £25 a month, locked in for life, and it rises to £50 once we reach our fifty first member.",
+  // Sits directly above PricingToggle, which states the prices and the founding
+  // rate. Keep this as framing only, with no figures, so the two do not repeat.
+  pricingNote: "Choose whichever way of joining suits you.",
   ctaLabel: "Secure Your Founding Spot",
 }

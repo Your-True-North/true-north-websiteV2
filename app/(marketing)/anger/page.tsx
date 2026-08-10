@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
+import PricingToggle from '@/components/PricingToggle'
 import { STRIPE_URL, hero, whyKnowYourNorth, whoThisIsFor, whoThisIsNotFor, whoHoldsThisSpace, theJourney, whatsInside, closing } from './content'
 
 const ACCENT  = '#9bc4b8'
@@ -618,31 +619,7 @@ export default function AngerPage() {
               {closing.pricingNote}
             </p>
 
-            <button
-              onClick={handleStripeClick}
-              style={{
-                display: 'inline-block',
-                background: ACCENT,
-                color: TEXT,
-                padding: '0.875rem 2.5rem',
-                borderRadius: '4px',
-                fontWeight: 700,
-                fontSize: '0.9375rem',
-                fontFamily: SANS,
-                border: 'none',
-                cursor: 'pointer',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase' as const,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = '#7da89c')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
-            >
-              {closing.ctaLabel}
-            </button>
-
-            <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              £25/month fixed for life
-            </p>
+            <PricingToggle ctaLabel={closing.ctaLabel} trackingId="anger_founding" />
           </div>
         </section>
 

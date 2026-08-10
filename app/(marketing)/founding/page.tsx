@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
+import PricingToggle from '@/components/PricingToggle'
 
 const STRIPE_URL = 'https://buy.stripe.com/28E8wQaH55Ehes807d9IQ0j'
 
@@ -591,35 +592,7 @@ export default function FoundingMembersPage() {
               Where you are now does not have to be where you end up.
             </h2>
 
-            <p style={{ fontSize: '0.9375rem', lineHeight: 1.6, color: MUTED, marginBottom: '2rem', fontFamily: SANS }}>
-              Founding member price: £25/month, locked in for life. Price rises to £50 at member 51.
-            </p>
-
-            <button
-              onClick={handleStripeClick}
-              style={{
-                display: 'inline-block',
-                background: ACCENT,
-                color: TEXT,
-                padding: '0.875rem 2.5rem',
-                borderRadius: '4px',
-                fontWeight: 700,
-                fontSize: '0.9375rem',
-                fontFamily: SANS,
-                border: 'none',
-                cursor: 'pointer',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase' as const,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = '#7da89c')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = ACCENT)}
-            >
-              Secure Your Founding Spot
-            </button>
-
-            <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              £25/month fixed for life
-            </p>
+            <PricingToggle ctaLabel="Secure Your Founding Spot" trackingId="founding" />
           </div>
         </section>
 

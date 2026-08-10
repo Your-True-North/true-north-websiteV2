@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
+import PricingToggle from '@/components/PricingToggle'
 import { STRIPE_URL, hero, whyKnowYourNorth, whoThisIsFor, whoThisIsNotFor, whoHoldsThisSpace, theJourney, whatsInside, closing } from './content'
 
 const ACCENT = '#9bc4b8'
@@ -478,11 +479,7 @@ export default function AddictionPage() {
               {closing.pricingNote}
             </p>
 
-            <CTAButton label={closing.ctaLabel} />
-
-            <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              {hero.cancelLine}
-            </p>
+            <PricingToggle ctaLabel={closing.ctaLabel} trackingId="addiction_founding" />
           </div>
         </section>
 
