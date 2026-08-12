@@ -76,7 +76,7 @@ export async function POST(request) {
     console.log('[Password Reset] Step 7: Preparing to send email...')
     console.log('[Password Reset] Step 7: Email config:')
     console.log('[Password Reset]   - To:', email)
-    console.log('[Password Reset]   - From:', process.env.EMAIL_FROM || 'cor@yourtruenorth.me')
+    console.log('[Password Reset]   - From:', process.env.EMAIL_FROM || 'kyn@yourtruenorth.me')
     console.log('[Password Reset]   - Subject: Your New Password - Circle of Return')
 
     await sendEmail({
