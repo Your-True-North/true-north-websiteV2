@@ -3,134 +3,6 @@ import { useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 const GOALS = {
-  money: {
-    stages: [
-      {
-        title: 'Inner work',
-        sub: 'Face the wound underneath the pattern',
-        mechanism: 'Most men who undercharge, stay stuck, or sabotage success are not lacking skill. They are carrying identity wounds. Shame, unworthiness, inherited scarcity. The breathwork and somatic work surfaces what the mind has spent years avoiding.',
-        outcome: 'You meet what has been running the show from the basement.',
-      },
-      {
-        title: 'Regulated nervous system',
-        sub: 'Cortisol drops. Capacity opens.',
-        mechanism: 'When the body is no longer in low-grade survival mode, energy that was reserved for threat management becomes available. Decisions slow down. Reactivity drops. You stop operating from a place of quiet desperation.',
-        outcome: 'You can finally think straight. Not just in your head, in your body.',
-      },
-      {
-        title: 'Clarity and presence',
-        sub: 'You stop underselling yourself',
-        mechanism: 'Identity wounds make men negotiate from a place of scarcity. When those heal, you hold your ground in a room. You price your work at what it is worth. You walk away from things that do not serve. Presence is the actual currency and now you have it.',
-        outcome: 'Same skills. Different internal operating system. Dramatically different results.',
-      },
-      {
-        title: 'External results compound',
-        sub: 'The man changes so does the income',
-        mechanism: 'This is not manifesting. It is physics. A man who shows up differently, who decides from clarity, leads from presence, and no longer self-sabotages, builds different results. And it compounds. Month by month. The principal is you.',
-        outcome: 'Health, income, relationships and inner peace all compound because they share the same root.',
-      },
-    ],
-    result: {
-      heading: 'Same man. Same skills. Different operating system.',
-      body: 'The ceiling is not out there. It never was. No one can do the pushups for you, but no one can do this inner work and not see it show up in the numbers.',
-    }
-  },
-  relationships: {
-    stages: [
-      {
-        title: 'Inner work',
-        sub: 'Trace the pattern back to its root',
-        mechanism: 'Every relational pattern, the shutting down, the overreacting, the choosing wrong, the settling, started somewhere. Not because you are broken. Because the body learned to protect. The work begins by meeting what is actually there.',
-        outcome: 'The wound gets a name. Once named, it stops steering in the dark.',
-      },
-      {
-        title: 'Regulated nervous system',
-        sub: 'Reactivity decreases. Presence increases.',
-        mechanism: 'A dysregulated nervous system cannot safely attach. It scans for threat, reads neutral expressions as hostile, withdraws when closeness gets too real. When regulation improves, connection becomes biologically possible, not just intellectually desired.',
-        outcome: 'You stop punishing people for wounds they did not cause.',
-      },
-      {
-        title: 'Clarity and presence',
-        sub: 'You show up differently',
-        mechanism: 'Presence, genuine and undefended, is what people actually respond to. Not strategies, not lines. When you are no longer performing or protecting, you become someone worth being around. That changes the relational field.',
-        outcome: 'Your relationships start to reflect a man who has done the work.',
-      },
-      {
-        title: 'External results compound',
-        sub: 'Deeper bonds. Cleaner conflict. Real intimacy.',
-        mechanism: 'The man who has met his own darkness no longer needs to outsource his emotional regulation to the people closest to him. He becomes safe, to a partner, to children, to men around him. That ripples.',
-        outcome: 'The compound interest here is legacy. The work you do changes what your children inherit.',
-      },
-    ],
-    result: {
-      heading: 'The work you do on yourself is the work you do on every relationship you carry.',
-      body: 'Every relationship you want has the same prerequisite: a man who has been honest with himself.',
-    }
-  },
-  health: {
-    stages: [
-      {
-        title: 'Inner work',
-        sub: 'The body holds what the mind avoids',
-        mechanism: 'Chronic stress, suppressed emotion, unprocessed grief, all of it lives in the body. Somatic work, breathwork, and energy healing are not alternatives to medicine. They are access points to the nervous system that medicine does not reach.',
-        outcome: 'The body begins to speak. You begin to listen.',
-      },
-      {
-        title: 'Regulated nervous system',
-        sub: 'Cortisol drops. Biology shifts.',
-        mechanism: 'Sustained cortisol elevations suppress immune function, disrupt sleep, drive inflammation, and accelerate aging. A regulated nervous system reverses this cascade, not overnight, but consistently. Sleep deepens. Energy returns. The body stops fighting itself.',
-        outcome: 'Physical symptoms that had no apparent cause begin to resolve.',
-      },
-      {
-        title: 'Clarity and presence',
-        sub: 'You make different decisions from here',
-        mechanism: 'When a man is regulated, he no longer numbs with food, alcohol, screens, or overwork. He exercises because he is connected to his body, not because he is punishing it. The relationship with the body becomes one of care rather than war.',
-        outcome: 'Discipline stops being a battle. It becomes an expression of self-respect.',
-      },
-      {
-        title: 'External results compound',
-        sub: 'The body reflects the internal shift',
-        mechanism: 'A man who has dealt with the root, the emotional drivers beneath the physical habits, will change his body because the driver changed. And it compounds: better sleep, more energy, cleaner decisions, physical vitality. The body follows the man.',
-        outcome: 'The best investment in your physical health is the work you are avoiding.',
-      },
-    ],
-    result: {
-      heading: 'The body has been asking for your attention. This is how you give it.',
-      body: 'Where you are now does not have to be where you end up. The work is not separate from the result. It is the result.',
-    }
-  },
-  purpose: {
-    stages: [
-      {
-        title: 'Inner work',
-        sub: 'Clear the noise to hear the signal',
-        mechanism: 'Most men are not confused about purpose. They are overwhelmed by obligation, fear of judgment, unresolved wounds, and voices that are not theirs. The inner work clears the interference so the actual signal can be heard.',
-        outcome: 'You start to distinguish what is truly yours from what you were handed.',
-      },
-      {
-        title: 'Regulated nervous system',
-        sub: 'The fog lifts',
-        mechanism: 'A nervous system in survival mode cannot access the prefrontal cortex reliably. The part of the brain responsible for long-range thinking, values-based decisions, and creative meaning-making goes offline under chronic stress. Regulation turns it back on.',
-        outcome: 'You can think further forward than next week.',
-      },
-      {
-        title: 'Clarity and presence',
-        sub: 'Directed energy becomes force',
-        mechanism: 'A man whose energy is no longer scattered across suppression, reactivity, and anxiety has enormous capacity available. That capacity, aimed at something real, becomes force. Not hustle. Force. The difference is that it is sustainable and it is true.',
-        outcome: 'You stop dabbling. You commit because you finally know what to commit to.',
-      },
-      {
-        title: 'External results compound',
-        sub: 'The work aligns with the man',
-        mechanism: 'Purpose is not discovered, it is revealed as the obscuring layers are removed. When a mans work reflects who he actually is, not who he thought he should be, the quality of that work shifts. And the world responds to it differently.',
-        outcome: 'Meaning compounds. So does impact. So does fulfilment.',
-      },
-    ],
-    result: {
-      heading: 'Purpose does not hide. It waits beneath the noise you have not yet been willing to face.',
-      body: 'Stop with the halfhearted living. The work is not preparation for purpose. It is purpose in motion.',
-    }
-  },
   anger: {
     stages: [
       {
@@ -162,6 +34,70 @@ const GOALS = {
       heading: 'Anger is a choice once you have done the work to make it one.',
       body: 'This is not anger management. This is transformation. The two are not the same thing.',
     }
+  },
+  addiction: {
+    stages: [
+      {
+        title: 'Inner work',
+        sub: 'Find out what the reaching is for',
+        mechanism: 'The drink, the scrolling, the porn, the work, the food. The substance is not the point. It is doing a job, and the job is usually regulating something you have never been able to sit with. The breathwork and somatic work brings you into contact with what you have been leaving.',
+        outcome: 'You stop fighting the behaviour and start meeting what it was managing.',
+      },
+      {
+        title: 'Regulated nervous system',
+        sub: 'The urge stops being an emergency',
+        mechanism: 'Craving is a nervous system in distress looking for the fastest available exit. When the baseline comes down, the urge still arrives, but it arrives smaller and it passes on its own. You are no longer negotiating with something that feels like survival.',
+        outcome: 'The gap between the urge and the reach gets wide enough to stand in.',
+      },
+      {
+        title: 'Clarity and presence',
+        sub: 'You stop needing to leave',
+        mechanism: 'Every compulsion is a way of not being here. When a man can tolerate his own internal state, staying becomes possible. Not through willpower, which runs out, but through capacity, which builds. Presence is the thing the substance was standing in for.',
+        outcome: 'You can be in your own company without needing to alter it.',
+      },
+      {
+        title: 'External results compound',
+        sub: 'The reaching stops on its own',
+        mechanism: 'A man who has dealt with the driver does not white knuckle the habit. It loosens because the thing it was holding has been held properly. Sleep returns. Money stops leaking. The people around you stop bracing. And each of those makes the next one easier.',
+        outcome: 'You did not beat it. You made it unnecessary.',
+      },
+    ],
+    result: {
+      heading: 'Nobody gets sober from the behaviour. They get free from what was underneath it.',
+      body: 'Willpower is a bridge, not a destination. This work goes to the thing the reaching was for, which is the only version that holds.',
+    }
+  },
+  direction: {
+    stages: [
+      {
+        title: 'Inner work',
+        sub: 'Separate your voice from the ones you inherited',
+        mechanism: 'Most men who feel lost are not short of options. They are carrying obligations, other people I should be, and a fear of getting it wrong that was installed early. The inner work clears the interference so you can hear which of it is actually yours.',
+        outcome: 'You start telling the difference between what you want and what you were handed.',
+      },
+      {
+        title: 'Regulated nervous system',
+        sub: 'The fog lifts',
+        mechanism: 'A nervous system in survival mode cannot think past the next week. The part of the brain that handles long range decisions and meaning goes quiet under chronic stress. That is why the drift feels like a character flaw when it is actually physiology.',
+        outcome: 'You can think further forward than the end of the month.',
+      },
+      {
+        title: 'Clarity and presence',
+        sub: 'You stop keeping every door open',
+        mechanism: 'Drifting is not indecision. It is the safest available position when committing has cost you before. When the body no longer reads commitment as danger, you can choose one thing and close the others, which is the only way anything gets built.',
+        outcome: 'You commit, because you finally know what you are committing to.',
+      },
+      {
+        title: 'External results compound',
+        sub: 'Momentum does the rest',
+        mechanism: 'Direction is not found, it is revealed once the noise is gone. A man aiming his energy at one real thing gets further in a year than a man hedging for ten. And it compounds, because each step tells you more about the next one.',
+        outcome: 'The path appears by walking it, not by staring at the map.',
+      },
+    ],
+    result: {
+      heading: 'You are not lost. You have been listening to the wrong voices, and they were loud.',
+      body: 'Direction is what is left when the noise stops. The work is not preparation for it. The work is it.',
+    }
   }
 }
 
@@ -173,11 +109,9 @@ export default function CompoundGrowthModel() {
   const [openStage, setOpenStage] = useState<number | null>(null)
 
   const goals: { key: GoalKey; label: string }[] = [
-    { key: 'money', label: 'Money' },
-    { key: 'relationships', label: 'Relationships' },
-    { key: 'health', label: 'Health' },
-    { key: 'purpose', label: 'Purpose' },
     { key: 'anger', label: 'Anger' },
+    { key: 'addiction', label: 'Addiction' },
+    { key: 'direction', label: 'Loss of Direction' },
   ]
 
   function selectGoal(key: GoalKey) {
@@ -211,7 +145,7 @@ export default function CompoundGrowthModel() {
   return (
     <div style={{ marginBottom: '4rem' }}>
       <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, marginBottom: '28px', maxWidth: '560px' }}>
-        Most men arrive here through one door - money, relationships, health, anger, or a loss of purpose. The work is the same regardless. Select what brought you here and follow it through.
+        Most men arrive here through one of three doors. Anger. Addiction. Loss of direction. They look different from the outside. Underneath, they are the same nervous system running an old protection pattern. Select what brought you here and follow it through.
       </p>
 
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '2.5rem' }}>

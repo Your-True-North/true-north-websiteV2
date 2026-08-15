@@ -142,7 +142,7 @@ export default function Home() {
                 marginBottom: '1.5rem',
                 lineHeight: '1.1'
               }}>
-                Your patterns aren't the problem. They're the <span className="accent-text">signal</span>.
+                Your patterns aren't the problem. They're the <span className="accent-text">symptom</span>.
               </h1>
 
               <p className="body-large" style={{
@@ -151,7 +151,7 @@ export default function Home() {
                 fontSize: isMobile ? '1.05rem' : '1.2rem',
                 lineHeight: '1.7'
               }}>
-                The anger, the numbness, the cycles you can't seem to break - they're not flaws, they're your nervous system telling you something needs to shift. This work gets you to the root.
+                Anger. Addiction. Loss of direction. Different faces of the same thing. Your body is still reacting to threats that no longer exist. This work goes to the root.
               </p>
 
               <div style={{
@@ -200,20 +200,20 @@ export default function Home() {
                   color: 'rgba(246, 246, 246, 0.9)',
                   fontSize: isMobile ? '1rem' : '1.1rem'
                 }}>
-                  You don't need fixing. You need access to what's been buried.
+                  You don't need fixing. You need to find out who you are underneath the armour and the behaviours.
                 </p>
                 <p className="body" style={{
                   color: 'rgba(246, 246, 246, 0.8)',
                   fontSize: isMobile ? '0.9rem' : '1rem',
                   marginBottom: '1.5rem'
                 }}>
-                  The version of you before the armour went on. Before you learnt to shut down, push through, or disappear. That man is still in there.
+                  That's the work. Strip back what was built for survival and meet what's been there the whole time.
                 </p>
                 <p className="body" style={{
                   color: 'rgba(246, 246, 246, 0.8)',
                   fontSize: isMobile ? '0.9rem' : '1rem'
                 }}>
-                  This work clears what's in the way so you can feel him again. Think from him. Move from him. Live from him.
+                  Feel him. Think from him. Move from him. Live from him.
                 </p>
               </div>
 
