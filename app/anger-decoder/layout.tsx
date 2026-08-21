@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: PROMISE,
     description: SUB_LINE,
-    images: ['/grey-face-green-star.png'],
   },
 }
 

@@ -14,7 +14,6 @@ export const metadata: Metadata = {
     url: 'https://yourtruenorth.me/retreat',
     siteName: 'True North',
     type: 'website',
-    images: ['/retreat-og.png'],
   },
   twitter: {
     card: 'summary_large_image',
