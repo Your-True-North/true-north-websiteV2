@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "What are you drowning out?",
     description: "Rehab treats the behaviour. This finds what's underneath it, so you can actually put it down.",
+    images: ['/grey-face-green-star.png'],
   },
 }
 

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "You're not an angry man. You're carrying anger.",
     description: "Find where it's actually coming from, so you can put it down for good.",
+    images: ['/grey-face-green-star.png'],
   },
 }
 

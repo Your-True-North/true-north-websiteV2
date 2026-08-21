@@ -10,11 +10,30 @@ export const metadata = {
     icon: '/favicon.png',
     apple: '/cor-app-icon.png',
   },
+  // Required. Without it Next emits a relative og:image URL, which most
+  // crawlers cannot resolve, so no share image appears.
+  metadataBase: new URL('https://yourtruenorth.me'),
   openGraph: {
     title: 'True North | Know Your North',
     description: 'For finding alignment with where you\'re supposed to be going — and then actually going there.',
     type: 'website',
     locale: 'en_GB',
+    url: 'https://yourtruenorth.me',
+    siteName: 'Know Your North',
+    images: [
+      {
+        url: '/grey-face-green-star.png',
+        width: 1200,
+        height: 630,
+        alt: 'Know Your North',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'True North | Know Your North',
+    description: 'For finding alignment with where you\'re supposed to be going — and then actually going there.',
+    images: ['/grey-face-green-star.png'],
   },
   viewport: {
     width: 'device-width',
