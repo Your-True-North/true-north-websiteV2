@@ -22,7 +22,7 @@ export const metadata = {
     siteName: 'Know Your North',
     images: [
       {
-        url: '/grey-face-green-star.png',
+        url: '/white-green-star.jpg',
         width: 1200,
         height: 630,
         alt: 'Know Your North',
@@ -33,7 +33,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'True North | Know Your North',
     description: 'For finding alignment with where you\'re supposed to be going — and then actually going there.',
-    images: ['/grey-face-green-star.png'],
+    images: ['/white-green-star.jpg'],
   },
   viewport: {
     width: 'device-width',
