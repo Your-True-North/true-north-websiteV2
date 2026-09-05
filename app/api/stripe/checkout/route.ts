@@ -7,9 +7,9 @@ import { NextResponse } from 'next/server'
 // monthly or yearly price is selected server side.
 //
 // Required environment variables:
-//   STRIPE_SECRET_KEY     already set
-//   STRIPE_PRICE_MONTHLY  price ID for the monthly plan
-//   STRIPE_PRICE_YEARLY   price ID for the yearly plan
+//   STRIPE_SECRET_KEY      already set
+//   STRIPE_CIRCLE_PRICE_ID price ID for the monthly plan (pre-existing var, reused here)
+//   STRIPE_PRICE_YEARLY    price ID for the yearly plan
 
 export async function POST(request: Request) {
   try {
@@ -22,11 +22,11 @@ export async function POST(request: Request) {
     const priceId =
       interval === 'yearly'
         ? process.env.STRIPE_PRICE_YEARLY
-        : process.env.STRIPE_PRICE_MONTHLY
+        : process.env.STRIPE_CIRCLE_PRICE_ID
 
     if (!priceId) {
       console.error(
-        `[checkout] Missing ${interval === 'yearly' ? 'STRIPE_PRICE_YEARLY' : 'STRIPE_PRICE_MONTHLY'}`
+        `[checkout] Missing ${interval === 'yearly' ? 'STRIPE_PRICE_YEARLY' : 'STRIPE_CIRCLE_PRICE_ID'}`
       )
       return NextResponse.json({ error: 'Pricing is not configured' }, { status: 500 })
     }
