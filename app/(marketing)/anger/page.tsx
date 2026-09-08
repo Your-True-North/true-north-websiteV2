@@ -157,7 +157,7 @@ function HeroVideo({ videoUrl, posterImageUrl }: { videoUrl?: string | null; pos
             src={videoUrl}
             poster={posterImageUrl || undefined}
             controls
-            preload="none"
+            preload="metadata"
             playsInline
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
           />
@@ -302,7 +302,7 @@ export default function AngerPage() {
               {hero.subheadline}
             </p>
 
-            <HeroVideo videoUrl="https://pub-19417e24742e4c93bb0466196037eeea.r2.dev/video-output-EC063BB2-3076-489F-A381-796AED08945C-1.mov" posterImageUrl="/anger-hero-poster.jpg" />
+            <HeroVideo videoUrl="/anger-hero.mp4" posterImageUrl="/anger-hero-poster.jpg" />
 
             <button
               onClick={handleStripeClick}
