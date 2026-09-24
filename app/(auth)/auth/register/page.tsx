@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { logger } from '@/lib/logger'
 
@@ -13,6 +13,24 @@ export default function RegisterPage() {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  // Fires the Meta Purchase pixel once, when arriving here straight from a
+  // completed Stripe Checkout (?checkout=success&value=..&currency=..). Read
+  // from window.location rather than useSearchParams so this page doesn't
+  // need a Suspense boundary.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('checkout') !== 'success') return
+    const value = parseFloat(params.get('value') || '')
+    const currency = params.get('currency') || 'GBP'
+    if ((window as any).fbq) {
+      ;(window as any).fbq('track', 'Purchase', {
+        value: Number.isFinite(value) ? value : undefined,
+        currency,
+      })
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

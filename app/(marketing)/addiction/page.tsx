@@ -474,7 +474,7 @@ export default function AddictionPage() {
               {closing.pricingNote}
             </p>
 
-            <PricingToggle ctaLabel={closing.ctaLabel} trackingId="addiction_founding" />
+            <PricingToggle ctaLabel={closing.ctaLabel} trackingId="addiction_founding" sourcePage="addiction" />
           </div>
         </section>
 

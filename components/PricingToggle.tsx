@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { trackEvent } from '@/app/components/GoogleAnalytics'
 
 /* ────────────────────────────────────────────────────────────────
    CONFIG
@@ -89,9 +90,11 @@ export interface PricingToggleProps {
   ctaLabel: string
   /** Used for analytics only, for example 'anger_founding'. */
   trackingId?: string
+  /** Which landing page this checkout started from: 'anger' | 'addiction' | 'founding'. Stored on the Stripe metadata. */
+  sourcePage: string
 }
 
-export default function PricingToggle({ ctaLabel, trackingId }: PricingToggleProps) {
+export default function PricingToggle({ ctaLabel, trackingId, sourcePage }: PricingToggleProps) {
   const [interval, setInterval] = useState<Interval>(DEFAULT_INTERVAL)
   const [shown, setShown] = useState<Interval>(DEFAULT_INTERVAL)
   const [visible, setVisible] = useState(true)
@@ -141,18 +144,26 @@ export default function PricingToggle({ ctaLabel, trackingId }: PricingTogglePro
     setError(null)
 
     try {
+      const value = interval === 'yearly' ? YEARLY_PRICE : MONTHLY_PRICE
+
       if (typeof window !== 'undefined' && (window as any).fbq) {
         ;(window as any).fbq('track', 'InitiateCheckout', {
           content_name: trackingId || 'Founding Membership',
-          value: interval === 'yearly' ? YEARLY_PRICE : MONTHLY_PRICE,
+          value,
           currency: 'GBP',
         })
       }
 
+      trackEvent('begin_checkout', {
+        currency: 'GBP',
+        value,
+        items: [{ item_name: trackingId || 'Founding Membership' }],
+      })
+
       const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ interval }),
+        body: JSON.stringify({ interval, source: sourcePage, value }),
       })
       const data = await res.json()
       if (!res.ok || !data.url) throw new Error(data.error || 'Checkout could not start')

@@ -13,7 +13,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   try {
-    const { interval } = await request.json()
+    const { interval, source, value } = await request.json()
 
     if (interval !== 'monthly' && interval !== 'yearly') {
       return NextResponse.json({ error: 'Invalid interval' }, { status: 400 })
@@ -43,13 +43,20 @@ export async function POST(request: Request) {
       process.env.NEXT_PUBLIC_SITE_URL ||
       'https://yourtruenorth.me'
 
+    // value/currency are echoed into success_url so the register page can fire a
+    // Meta Purchase pixel without a second Stripe lookup. They're client-declared
+    // (not re-verified against the actual charge), which is fine for an ad signal.
+    const successParams = new URLSearchParams({ checkout: 'success', session_id: '{CHECKOUT_SESSION_ID}' })
+    if (value) successParams.set('value', String(value))
+    successParams.set('currency', 'GBP')
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
       allow_promotion_codes: true,
-      success_url: `${origin}/auth/register?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${origin}/auth/register?${successParams.toString().replace('%7BCHECKOUT_SESSION_ID%7D', '{CHECKOUT_SESSION_ID}')}`,
       cancel_url: `${origin}/founding?checkout=cancelled`,
-      metadata: { interval },
+      metadata: { interval, source: source || 'unknown' },
     })
 
     return NextResponse.json({ url: session.url })

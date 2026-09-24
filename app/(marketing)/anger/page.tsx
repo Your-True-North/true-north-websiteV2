@@ -1,9 +1,22 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 import PricingToggle from '@/components/PricingToggle'
-import { STRIPE_URL, hero, whyKnowYourNorth, whoThisIsFor, whoThisIsNotFor, whoHoldsThisSpace, theJourney, whatsInside, closing } from './content'
+import {
+  hero,
+  heroBelowVideo,
+  theDifference,
+  whoHoldsThisSpace,
+  whatCouldBe,
+  transformations,
+  testimonialVideos,
+  theJourney,
+  brotherhood,
+  whatsInside,
+  credentialsStrip,
+  closing,
+} from './content'
 
 const ACCENT  = '#9bc4b8'
 const TEXT    = '#0a0a0a'
@@ -71,48 +84,22 @@ function Paras({ text, style }: { text: string; style?: React.CSSProperties }) {
   )
 }
 
-function HeroVideo({ videoUrl, posterImageUrl }: { videoUrl?: string | null; posterImageUrl?: string | null }) {
-  const [playing, setPlaying] = useState(false)
-
-  if (!videoUrl) {
-    return (
-      <div style={{ width: '100%', margin: '2rem 0' }}>
-        <div style={{
-          position: 'relative',
-          width: '100%',
-          paddingTop: '56.25%',
-          background: '#1a2e22',
-          borderRadius: '6px',
-          overflow: 'hidden',
-          border: `1px solid ${BORDER}`,
-        }}>
-          <div style={{
-            position: 'absolute', inset: 0,
-            display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'center', gap: '1rem',
-          }}>
-            <div style={{
-              width: '60px', height: '60px', borderRadius: '50%',
-              background: 'rgba(155,196,184,0.15)',
-              border: `1.5px solid rgba(155,196,184,0.35)`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M6 4l14 8-14 8V4z" fill={ACCENT} />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <p style={{
-          fontFamily: SANS, fontSize: '0.75rem', color: MUTED,
-          textAlign: 'center', marginTop: '0.625rem', letterSpacing: '0.04em',
-        }}>Video coming soon</p>
-      </div>
-    )
-  }
-
-  const ytMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#\s]{11})/)
-  const ytId = ytMatch ? ytMatch[1] : null
+// Autoplays muted (browser-required for autoplay), keeps a poster for the
+// first paint, and shows a "Tap for sound" button until the visitor unmutes.
+// Captions load from the .vtt track and are shown by default. Fires GA4
+// events for play, unmute and completion.
+function HeroVideo({
+  videoUrl,
+  posterImageUrl,
+  captionsUrl,
+}: {
+  videoUrl: string
+  posterImageUrl?: string
+  captionsUrl?: string
+}) {
+  const [muted, setMuted] = useState(true)
+  const playFired = useRef(false)
+  const completeFired = useRef(false)
 
   return (
     <div style={{ width: '100%', margin: '2rem 0' }}>
@@ -125,56 +112,70 @@ function HeroVideo({ videoUrl, posterImageUrl }: { videoUrl?: string | null; pos
         overflow: 'hidden',
         border: `1px solid ${BORDER}`,
       }}>
-        {ytId && !playing ? (
-          <div
-            onClick={() => setPlaying(true)}
+        <video
+          autoPlay
+          muted={muted}
+          loop={false}
+          playsInline
+          preload="auto"
+          controls
+          poster={posterImageUrl}
+          onPlay={() => {
+            if (!playFired.current) {
+              playFired.current = true
+              trackEvent('hero_video_play')
+            }
+          }}
+          onEnded={() => {
+            if (!completeFired.current) {
+              completeFired.current = true
+              trackEvent('hero_video_complete')
+            }
+          }}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        >
+          <source src={videoUrl} type="video/mp4" />
+          {captionsUrl && (
+            <track kind="captions" src={captionsUrl} srcLang="en" label="English" default />
+          )}
+        </video>
+
+        {muted && (
+          <button
+            type="button"
+            onClick={() => {
+              setMuted(false)
+              trackEvent('hero_video_unmute')
+            }}
             style={{
-              position: 'absolute', inset: 0, cursor: 'pointer',
-              backgroundImage: posterImageUrl ? `url(${posterImageUrl})` : `url(https://img.youtube.com/vi/${ytId}/maxresdefault.jpg)`,
-              backgroundSize: 'cover', backgroundPosition: 'center',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              position: 'absolute',
+              bottom: '14px',
+              right: '14px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.5rem 0.9rem',
+              borderRadius: '999px',
+              border: 'none',
+              background: 'rgba(10,10,10,0.72)',
+              color: '#fff',
+              fontFamily: SANS,
+              fontSize: '0.8125rem',
+              fontWeight: 600,
+              letterSpacing: '0.02em',
+              cursor: 'pointer',
             }}
           >
-            <div style={{
-              width: '72px', height: '72px', borderRadius: '50%',
-              background: 'rgba(0,0,0,0.55)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <path d="M6 4l14 8-14 8V4z" fill="#fff" />
-              </svg>
-            </div>
-          </div>
-        ) : ytId && playing ? (
-          <iframe
-            src={`https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        ) : (
-          <video
-            src={videoUrl}
-            poster={posterImageUrl || undefined}
-            controls
-            preload="metadata"
-            playsInline
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
-          />
+            🔊 Tap for sound
+          </button>
         )}
       </div>
     </div>
   )
 }
 
-function parseStage(stage: string): { title: string; body: string } {
-  const dot = stage.indexOf('. ')
-  return { title: stage.slice(0, dot + 1), body: stage.slice(dot + 2) }
-}
-
 export default function AngerPage() {
   const [isMobile, setIsMobile] = useState(false)
-  const [openPillar, setOpenPillar] = useState<number | null>(0)
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
@@ -204,21 +205,34 @@ export default function AngerPage() {
     setTimeout(hide, 100)
   }, [])
 
-  // Sends people to the pricing block so they choose monthly or yearly there.
-  // Checkout itself, and the InitiateCheckout event, now fire inside PricingToggle.
-  const handleStripeClick = () => {
-    trackEvent('view_pricing', { service: 'anger_founding' })
-    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  // Fires once per threshold as the visitor scrolls down the page.
+  useEffect(() => {
+    const fired = new Set<number>()
+    const thresholds = [25, 50, 75, 100]
+    const onScroll = () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      if (docHeight <= 0) return
+      const pct = Math.min(100, Math.round((window.scrollY / docHeight) * 100))
+      thresholds.forEach((t) => {
+        if (pct >= t && !fired.has(t)) {
+          fired.add(t)
+          trackEvent('scroll_depth', { percent: t })
+        }
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Scrolls to "The Difference" instead of straight to pricing.
+  const handleHeroCta = () => {
+    trackEvent('hero_cta_click', { service: 'anger_founding' })
+    document.getElementById('the-difference')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const sec = isMobile ? '4rem 1.5rem' : '6rem 1.5rem'
   const inner = { maxWidth: '700px', margin: '0 auto' }
-
-  const stages = [
-    { num: '01', label: 'The Foundation', ...parseStage(theJourney.stage1) },
-    { num: '02', label: 'The Work',       ...parseStage(theJourney.stage2) },
-    { num: '03', label: 'The Becoming',   ...parseStage(theJourney.stage3) },
-  ]
 
   return (
     <>
@@ -233,7 +247,7 @@ export default function AngerPage() {
 
       <div style={{ fontFamily: SANS, color: TEXT, overflowX: 'hidden' }}>
 
-        {/* HERO */}
+        {/* 1. HERO */}
         <section style={{
           background: '#ffffff',
           display: 'flex',
@@ -271,18 +285,6 @@ export default function AngerPage() {
               margin: '0 0 0.35rem',
             }}>Know Your North</p>
 
-            <p style={{
-              fontFamily: SERIF,
-              fontSize: isMobile ? '1.75rem' : '2.5rem',
-              fontStyle: 'italic',
-              color: TEXT,
-              marginBottom: '0.4rem',
-              letterSpacing: '-0.02em',
-              lineHeight: 1.2,
-            }}>
-              {hero.kicker}
-            </p>
-
             <h1 style={{
               ...H1,
               fontSize: isMobile ? '2.75rem' : 'clamp(3rem, 7vw, 5rem)',
@@ -302,10 +304,18 @@ export default function AngerPage() {
               {hero.subheadline}
             </p>
 
-            <HeroVideo videoUrl="/anger-hero.mp4" posterImageUrl="/anger-hero-poster.jpg" />
+            {/* This video has captions burned in already, so no captionsUrl/<track> here. */}
+            <HeroVideo
+              videoUrl="/anger-hero.mp4"
+              posterImageUrl="/anger-hero-poster.jpg"
+            />
+
+            <div style={{ maxWidth: '520px', margin: '0 auto 2rem' }}>
+              <Paras text={heroBelowVideo} style={{ marginBottom: '0.9rem' }} />
+            </div>
 
             <button
-              onClick={handleStripeClick}
+              onClick={handleHeroCta}
               style={{
                 display: 'inline-block',
                 background: ACCENT,
@@ -325,77 +335,21 @@ export default function AngerPage() {
             >
               {hero.ctaLabel}
             </button>
-
-            <p style={{ marginTop: '1rem', fontSize: '0.8125rem', lineHeight: 1.6, color: MUTED, fontFamily: SANS }}>
-              <strong>{hero.pricingNote}</strong>
-            </p>
           </div>
         </section>
 
-        {/* PROOF BAR */}
-        <section style={{ background: CREAM, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: '2rem 1.5rem' }}>
-          <div style={{
-            maxWidth: '1100px',
-            margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(5, 1fr)',
-            gap: isMobile ? '1.5rem' : '1rem',
-            textAlign: 'center',
-          }}>
-            {[
-              { value: 'Somatic Therapy Practitioner', label: 'Trained under Dr Gabor Maté' },
-              { value: 'ICF & EMCC Certified', label: 'Internationally accredited Transformational Coach' },
-              { value: 'Cancel Any Time', label: 'No contracts, no pressure' },
-              { value: 'Limited Spots: £25/month', label: '£50 at member 51' },
-              { value: 'Real Men, Real Work', label: 'No egos, no judgment' },
-            ].map(({ value, label }, i) => (
-              <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem', ...(isMobile && i === 4 ? { gridColumn: '1 / -1' } : {}) }}>
-                <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: TEXT, fontFamily: SANS, marginBottom: '0.3rem' }}>{value}</div>
-                <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, lineHeight: 1.5 }}>{label}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* WHY KNOW YOUR NORTH */}
-        <section style={{ padding: sec, background: '#ffffff' }}>
+        {/* 2. THE DIFFERENCE */}
+        <section id="the-difference" style={{ padding: sec, background: '#ffffff', scrollMarginTop: '2rem' }}>
           <div style={inner}>
-            <Label>Why Know Your North</Label>
-            <Paras text={whyKnowYourNorth} />
-          </div>
-        </section>
-
-        {/* WHO THIS IS FOR */}
-        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
-          <div style={inner}>
-            <Label>Who This Is For</Label>
+            <Label>{theDifference.label}</Label>
             <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
-              You already know this is for you.
+              {theDifference.heading}
             </h2>
-
-            <Paras text={whoThisIsFor} />
-
-            <div style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: '1.5rem', margin: '2.5rem 0' }}>
-              <p style={{
-                fontFamily: SERIF,
-                fontSize: isMobile ? '1.2rem' : '1.333rem',
-                lineHeight: 1.6,
-                color: TEXT,
-                margin: 0,
-                fontStyle: 'italic',
-                WebkitTextStroke: '0.3px currentColor',
-              }}>
-                "Maybe you've read the anger management advice, taken the deep breath, counted to ten more times than you can remember. None of it has ever touched what's actually running underneath."
-              </p>
-            </div>
-
-            <p style={{ ...BODY, color: TEXT, fontWeight: 500, margin: 0 }}>
-              That's because the anger itself was never the pattern. It's the signal telling you something else is happening.
-            </p>
+            <Paras text={theDifference.body} />
           </div>
         </section>
 
-        {/* WHO HOLDS THIS SPACE */}
+        {/* 3. WHO HOLDS THE SPACE */}
         <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={inner}>
             <Label>Who Holds the Space</Label>
@@ -422,167 +376,162 @@ export default function AngerPage() {
           </div>
         </section>
 
-        {/* TESTIMONIALS */}
+        {/* 4. WHAT COULD BE */}
         <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
+          <div style={inner}>
+            <Label>{whatCouldBe.label}</Label>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
+              {whatCouldBe.heading}
+            </h2>
+            <Paras text={whatCouldBe.body} />
+          </div>
+        </section>
+
+        {/* 5. TRANSFORMATIONS */}
+        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '960px', margin: '0 auto' }}>
-            <Label>What Changes</Label>
+            <Label>{transformations.label}</Label>
             <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
-              Real Transformations
+              {transformations.heading}
             </h2>
 
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '1.5rem' }}>
-              {['n8_muJ84AbU', '7Y1upKm8bZk', 'ubCK70jYQDI', 'UfbMIxlCzgM'].map((id) => (
-                <div key={id} style={{ borderRadius: '6px', overflow: 'hidden', border: `1px solid ${BORDER}` }}>
-                  <iframe
-                    src={`https://www.youtube.com/embed/${id}`}
-                    style={{ width: '100%', aspectRatio: '16/9', border: 'none', display: 'block' }}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+              {testimonialVideos.map(({ id, name, quote }) => (
+                <div key={id}>
+                  <div style={{ borderRadius: '6px', overflow: 'hidden', border: `1px solid ${BORDER}` }}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${id}`}
+                      style={{ width: '100%', aspectRatio: '16/9', border: 'none', display: 'block' }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                  {/* Caption slot stays hidden until a real name is supplied in content.ts */}
+                  {name && (
+                    <div style={{ padding: '0.75rem 0.25rem 0' }}>
+                      <p style={{ fontFamily: SANS, fontSize: '0.8125rem', fontWeight: 700, color: TEXT, margin: '0 0 0.2rem' }}>
+                        {name}
+                      </p>
+                      {quote && (
+                        <p style={{ fontFamily: SERIF, fontSize: '0.9375rem', fontStyle: 'italic', color: MUTED, margin: 0 }}>
+                          "{quote}"
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* THE JOURNEY */}
-        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
+        {/* 6. THE JOURNEY */}
+        <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
           <div style={inner}>
-            <Label>The Journey</Label>
+            <Label>{theJourney.label}</Label>
             <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '0.75rem' }}>
-              This work is a path you keep walking.
+              {theJourney.heading}
             </h2>
-            <p style={{ ...BODY, marginBottom: '3rem' }}>
-              There is no graduation date and no fixed moment where the work is done. This is a continuous deepening applied to what is actually happening in your life right now.
-            </p>
+            <div style={{ marginBottom: '1rem' }}>
+              <Paras text={theJourney.intro} style={{ marginBottom: '1rem' }} />
+            </div>
 
-            {stages.map((stage, i) => (
-              <div
-                key={i}
-                style={{ borderTop: `1px solid ${BORDER}`, padding: '1.75rem 0', cursor: 'pointer' }}
-                onClick={() => setOpenPillar(openPillar === i ? null : i)}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1.5rem' }}>
-                  <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
-                    <span style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 700, color: ACCENT, letterSpacing: '0.1em', marginTop: '0.5rem', flexShrink: 0 }}>
-                      {stage.num}
-                    </span>
-                    <div>
-                      <p style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED, margin: '0 0 0.375rem' }}>
-                        {stage.label}
-                      </p>
-                      <h3 style={{ ...H3, fontSize: isMobile ? '1.333rem' : '1.625rem', margin: 0 }}>
-                        {stage.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <div style={{
-                    width: '28px', height: '28px', borderRadius: '50%',
-                    border: `1px solid ${BORDER}`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: MUTED, fontSize: '1.125rem', flexShrink: 0, marginTop: '0.25rem',
-                  }}>
-                    {openPillar === i ? '−' : '+'}
+            {theJourney.steps.map((stage, i) => (
+              <div key={i} style={{ borderTop: `1px solid ${BORDER}`, padding: '1.75rem 0' }}>
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                  <span style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 700, color: ACCENT, letterSpacing: '0.1em', marginTop: '0.5rem', flexShrink: 0 }}>
+                    {stage.num}
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED, margin: '0 0 0.375rem' }}>
+                      {stage.label}
+                    </p>
+                    <h3 style={{ ...H3, fontSize: isMobile ? '1.333rem' : '1.625rem', margin: '0 0 0.75rem' }}>
+                      {stage.title}
+                    </h3>
+                    <p style={{ ...BODY, margin: 0 }}>
+                      {stage.body}
+                    </p>
                   </div>
                 </div>
-                {openPillar === i && (
-                  <p style={{
-                    ...BODY,
-                    marginTop: '1.25rem',
-                    marginLeft: isMobile ? 0 : '2.5rem',
-                    marginBottom: 0,
-                    paddingLeft: isMobile ? 0 : '1.5rem',
-                    borderLeft: isMobile ? 'none' : `1px solid ${BORDER}`,
-                  }}>
-                    {stage.body}
-                  </p>
-                )}
               </div>
             ))}
             <div style={{ borderTop: `1px solid ${BORDER}` }} />
           </div>
         </section>
 
-        {/* BROTHERHOOD */}
-        <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
-          <div style={{
-            maxWidth: '900px',
-            margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: isMobile ? '3rem' : '5rem',
-          }}>
-            <div>
-              <Label>This is for you if</Label>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem' }}>
-                {[
-                  "You're short tempered and sick of the guilt that follows every time you lose it.",
-                  "The irritation sits underneath everything you do and never quite switches off.",
-                  "You've tried the advice, the deep breaths, the counting to ten, and none of it has touched what's underneath.",
-                  "You're ready to stop managing the pattern and find out what the anger has actually been protecting you from.",
-                  "You want to be around men who are doing this work properly, not performing progress at each other.",
-                ].map((line, i) => (
-                  <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                    <div style={{
-                      width: '18px', height: '18px', borderRadius: '50%', background: ACCENT,
-                      flexShrink: 0, marginTop: '0.2rem',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
-                        <path d="M1 3.5L3.5 6L8 1" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+        {/* 7. THE BROTHERHOOD */}
+        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem', maxWidth: '700px' }}>
+              {brotherhood.heading}
+            </h2>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: isMobile ? '3rem' : '5rem',
+            }}>
+              <div>
+                <Label>This is for you if</Label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem' }}>
+                  {brotherhood.forYou.map((line, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                      <div style={{
+                        width: '18px', height: '18px', borderRadius: '50%', background: ACCENT,
+                        flexShrink: 0, marginTop: '0.2rem',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}>
+                        <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+                          <path d="M1 3.5L3.5 6L8 1" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      <p style={{ ...BODY, margin: 0 }}>{line}</p>
                     </div>
-                    <p style={{ ...BODY, margin: 0 }}>{line}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <Label>This is not for you if</Label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem' }}>
+                  {brotherhood.notForYou.map((line, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                      <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `1.5px solid ${BORDER}`, flexShrink: 0, marginTop: '0.2rem' }} />
+                      <p style={{ ...BODY, margin: 0 }}>{line}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <div>
-              <Label>This is not for you if</Label>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem' }}>
-                {whoThisIsNotFor.split('\n\n').map((line, i) => (
-                  <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                    <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `1.5px solid ${BORDER}`, flexShrink: 0, marginTop: '0.2rem' }} />
-                    <p style={{ ...BODY, margin: 0 }}>{line}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div style={{ marginTop: '3rem', borderLeft: `3px solid ${ACCENT}`, paddingLeft: '1.25rem' }}>
-                <p style={{
-                  fontFamily: SERIF,
-                  fontSize: '1.333rem',
-                  lineHeight: 1.6,
-                  color: TEXT,
-                  fontStyle: 'italic',
-                  margin: 0,
-                  WebkitTextStroke: '0.3px currentColor',
-                }}>
-                  "When you stop managing the anger and start getting curious about it, you stop being a man who has anger and start being a man who understands himself."
-                </p>
-              </div>
+            <div style={{ marginTop: '3rem', borderLeft: `3px solid ${ACCENT}`, paddingLeft: '1.5rem' }}>
+              <p style={{
+                fontFamily: SERIF,
+                fontSize: isMobile ? '1.2rem' : '1.333rem',
+                lineHeight: 1.6,
+                color: TEXT,
+                fontStyle: 'italic',
+                margin: 0,
+                WebkitTextStroke: '0.3px currentColor',
+              }}>
+                {brotherhood.closingLine}
+              </p>
             </div>
           </div>
         </section>
 
-        {/* INSIDE KYN */}
-        <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
+        {/* 8. INSIDE KYN */}
+        <section style={{ padding: sec, background: '#ffffff', borderTop: `1px solid ${BORDER}` }}>
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <Label>What You Get</Label>
             <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
-              Inside KYN
+              {whatsInside.heading}
             </h2>
 
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem', marginBottom: '3rem' }}>
-              {[
-                { title: 'Three live deep sessions each month', desc: 'Built around the monthly theme, going into what is actually running underneath and applying the work directly to your real situations so it moves you forward.' },
-                { title: 'Nervous system regulation sessions', desc: 'To build real capacity to let the anger move instead of erupting outward or getting swallowed back down. We work with what is stored in the body.' },
-                { title: 'Quarterly community goal mapping', desc: 'So the inner work you are doing connects to a real direction in your outer life, and you know exactly what the next chapter genuinely requires of you.' },
-                { title: 'Exclusive supporting content', desc: 'A holistic approach across somatic experiencing, the psyche, and grounded spiritual perspectives, because understanding how and why you operate is one of the most powerful forms of growth.' },
-                { title: 'Private brotherhood', desc: 'A group of men doing this work alongside you. Not here to fake progress or impress each other, but actually in it, showing up, and building something real.' },
-              ].map((item, i) => (
-                <div key={i} style={{ background: '#ffffff', border: `1px solid ${BORDER}`, borderRadius: '6px', padding: '1.75rem' }}>
+              {whatsInside.cards.map((item, i) => (
+                <div key={i} style={{ background: CREAM, border: `1px solid ${BORDER}`, borderRadius: '6px', padding: '1.75rem' }}>
                   <p style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: ACCENT, marginBottom: '0.625rem' }}>
                     {item.title}
                   </p>
@@ -592,23 +541,37 @@ export default function AngerPage() {
             </div>
 
             <p style={{ ...BODY, margin: 0 }}>
-              You are looking at a few focused hours each month, no endless content to consume and no daily task lists, just consistent structured work applied to the life you are actually living.
+              {whatsInside.closingLine}
             </p>
           </div>
         </section>
 
-        {/* CLOSING CTA */}
-        <section style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 1.5rem', background: '#ffffff', borderTop: `1px solid ${BORDER}`, textAlign: 'center' }}>
+        {/* 9. CREDENTIALS STRIP — moved here from under the hero */}
+        <section style={{ background: CREAM, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: '2rem 1.5rem' }}>
+          <div style={{
+            maxWidth: '900px',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)',
+            gap: isMobile ? '1.5rem' : '1rem',
+            textAlign: 'center',
+          }}>
+            {credentialsStrip.map(({ value, label }) => (
+              <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem' }}>
+                <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: TEXT, fontFamily: SANS, marginBottom: '0.3rem' }}>{value}</div>
+                <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, lineHeight: 1.5 }}>{label}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 10. CLOSING CTA */}
+        <section style={{ padding: isMobile ? '5rem 1.5rem' : '8rem 1.5rem', background: '#ffffff', textAlign: 'center' }}>
           <div style={{ maxWidth: '640px', margin: '0 auto' }}>
 
-            <p style={{ ...BODY, marginBottom: '1.25rem' }}>
-              You've read this far and that obviously means something. Men who aren't ready close the tab in the first two minutes.
-            </p>
-            <p style={{ ...BODY, marginBottom: '3rem' }}>
-              You already know whether this is for you. You knew it somewhere in the first few paragraphs. What you're doing right now is checking whether it's safe to trust that knowing.
-            </p>
+            <Paras text={closing.text} style={{ marginBottom: '1.25rem' }} />
 
-            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2.25rem, 5vw, 3.75rem)', marginBottom: '2.5rem' }}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2.25rem, 5vw, 3.75rem)', margin: '2.5rem 0' }}>
               Where you are now does not have to be where you end up.
             </h2>
 
@@ -616,7 +579,7 @@ export default function AngerPage() {
               {closing.pricingNote}
             </p>
 
-            <PricingToggle ctaLabel={closing.ctaLabel} trackingId="anger_founding" />
+            <PricingToggle ctaLabel={closing.ctaLabel} trackingId="anger_founding" sourcePage="anger" />
           </div>
         </section>
 

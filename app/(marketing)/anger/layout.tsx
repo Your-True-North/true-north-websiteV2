@@ -1,11 +1,18 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "You're Not an Angry Man. You're Carrying Anger. | Know Your North",
-  description: "Find where your anger is actually coming from, so you can put it down for good. KYN goes underneath the pattern your nervous system learned, not anger management.",
+  title: 'Anger Is Something You Do. Not Something You Are. | Know Your North',
+  description: "Most men think anger is rage. Underneath it there's something real. KYN is a room of men going into the body to find it.",
+  alternates: {
+    canonical: 'https://yourtruenorth.me/anger',
+  },
   openGraph: {
-    title: "You're not an angry man. You're carrying anger.",
-    description: "Find where it's actually coming from, so you can put it down for good.",
+    title: 'Anger is something you do. Not something you are.',
+    description: 'Let me explain.',
+  },
+  twitter: {
+    title: 'Anger is something you do. Not something you are.',
+    description: 'Let me explain.',
   },
 }
 

@@ -587,7 +587,7 @@ export default function FoundingMembersPage() {
               Where you are now does not have to be where you end up.
             </h2>
 
-            <PricingToggle ctaLabel="Secure Your Founding Spot" trackingId="founding" />
+            <PricingToggle ctaLabel="Secure Your Founding Spot" trackingId="founding" sourcePage="founding" />
           </div>
         </section>
 
