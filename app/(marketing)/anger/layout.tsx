@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Anger Is Something You Do. Not Something You Are. | Know Your North',
-  description: "Most men think anger is rage. Underneath it there's something real. KYN is a room of men going into the body to find it.",
+  description: "Trying to fix your anger is a waste of time. KYN helps you understand what's really behind it, so you can choose how you respond.",
   alternates: {
     canonical: 'https://yourtruenorth.me/anger',
   },

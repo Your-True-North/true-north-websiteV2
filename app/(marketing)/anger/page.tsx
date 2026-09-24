@@ -354,7 +354,7 @@ export default function AngerPage() {
           <div style={inner}>
             <Label>Who Holds the Space</Label>
             <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2.5rem' }}>
-              I've been where you are.
+              I didn't just learn this in a classroom.
             </h2>
 
             <div style={{
