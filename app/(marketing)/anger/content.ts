@@ -66,7 +66,7 @@ export const testimonialVideos = [
 export const theJourney = {
   label: 'The Work',
   heading: 'How the work goes.',
-  intro: `This isn't a course you finish. It's something you keep doing, and it works on whatever is actually going on in your life right now.`,
+  intro: `This isn't a course you finish. You can go as slow or as fast as you like. But when you look back in a year, you and everyone around you will notice you're a different person.`,
   steps: [
     {
       num: '01',
@@ -131,7 +131,11 @@ export const whatsInside = {
       desc: 'A private group of men doing this work alongside you. No egos, no faking progress. Just men putting the work in together.',
     },
   ],
-  closingLine: 'A few focused hours a month. No endless content, no daily task lists. Just steady work applied to your actual life.',
+  closingLine: `You don't need to overhaul your life to do this.
+
+Turn up to most of the calls. Do the small task that comes out of each one. Tell the group how it went.
+
+That's it. Small steps, every month, that add up.`,
 }
 
 // No price in this list on purpose — the only prices on the page live in PricingToggle.
@@ -153,3 +157,28 @@ No one can do the pushups for you my friend.`,
   pricingNote: 'Choose whichever way of joining suits you.',
   ctaLabel: 'Secure Your Founding Spot',
 }
+
+// New section between the closing copy and the pricing card. Steps stay
+// empty and the whole section stays hidden until real copy is supplied here.
+export const afterYouJoin = {
+  heading: '',
+  steps: [
+    { num: '01', title: '', body: '' },
+    { num: '02', title: '', body: '' },
+    { num: '03', title: '', body: '' },
+  ],
+}
+
+// FAQ accordion under the pricing card. Stays hidden until real questions
+// and answers are supplied here.
+export const faq: { question: string; answer: string }[] = [
+  {
+    question: 'How much time does this take?',
+    answer: 'A few hours a month. Come to most of the calls, do one small task after each one, and report back to the group. You go at your own pace. The change comes from doing it steadily, not from doing it all at once.',
+  },
+  { question: '', answer: '' },
+  { question: '', answer: '' },
+  { question: '', answer: '' },
+  { question: '', answer: '' },
+  { question: '', answer: '' },
+]

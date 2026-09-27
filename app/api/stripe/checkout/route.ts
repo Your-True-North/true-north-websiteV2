@@ -50,12 +50,15 @@ export async function POST(request: Request) {
     if (value) successParams.set('value', String(value))
     successParams.set('currency', 'GBP')
 
+    // Cancelling from /anger returns to its own pricing block rather than /founding.
+    const cancelUrl = source === 'anger' ? `${origin}/anger#pricing` : `${origin}/founding?checkout=cancelled`
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
       allow_promotion_codes: true,
       success_url: `${origin}/auth/register?${successParams.toString().replace('%7BCHECKOUT_SESSION_ID%7D', '{CHECKOUT_SESSION_ID}')}`,
-      cancel_url: `${origin}/founding?checkout=cancelled`,
+      cancel_url: cancelUrl,
       metadata: { interval, source: source || 'unknown' },
     })
 
