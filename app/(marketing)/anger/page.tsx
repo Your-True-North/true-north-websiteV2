@@ -16,9 +16,16 @@ import {
   whatsInside,
   credentialsStrip,
   closing,
+  foundingNote,
+  offerClarity,
   afterYouJoin,
+  faqHeading,
   faq,
 } from './content'
+
+// Any line still holding [square bracket] placeholder text is hidden rather
+// than shown half-finished.
+const hasBrackets = (s: string) => /[[\]]/.test(s)
 
 const ACCENT  = '#9bc4b8'
 const TEXT    = '#0a0a0a'
@@ -387,9 +394,10 @@ function StickyJoinBar() {
             letterSpacing: '0.04em',
             textTransform: 'uppercase' as const,
             cursor: 'pointer',
+            whiteSpace: 'nowrap' as const,
           }}
         >
-          Join
+          Join Know Your North
         </button>
       </div>
     </div>
@@ -421,6 +429,42 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
         <p style={{ ...bodyStyle(false), margin: '0 0 1.25rem' }}>{answer}</p>
       )}
     </div>
+  )
+}
+
+// Live "X of 50 founding spots left" line. Fetches the real count from
+// Stripe (via an endpoint cached for 10 minutes) and renders nothing at all
+// if that number can't be worked out reliably, rather than guessing.
+function FoundingSpotsNote() {
+  const [spotsLeft, setSpotsLeft] = useState<number | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/stripe/founding-spots')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled && typeof data.spotsLeft === 'number') setSpotsLeft(data.spotsLeft)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  if (spotsLeft === null) return null
+
+  return (
+    <p style={{
+      fontFamily: SANS,
+      fontSize: '0.8125rem',
+      fontWeight: 700,
+      letterSpacing: '0.05em',
+      textTransform: 'uppercase' as const,
+      color: ACCENT,
+      margin: '0 0 1.25rem',
+    }}>
+      {spotsLeft} of 50 founding spots left.
+    </p>
   )
 }
 
@@ -489,9 +533,12 @@ export default function AngerPage() {
   const sec = isMobile ? '4rem 1.5rem' : '6rem 1.5rem'
   const inner = { maxWidth: '640px', margin: '0 auto' }
 
-  const hasAfterYouJoin = Boolean(afterYouJoin.heading) || afterYouJoin.steps.some((s) => s.title || s.body)
-  // Stays hidden until every slot has real copy, not just the first one.
-  const hasFaq = faq.every((f) => f.question && f.answer)
+  // Each step/question hides itself if it still has bracket placeholder
+  // text; the section shows as soon as at least one item is ready.
+  const visibleJoinSteps = afterYouJoin.steps.filter((s) => s.body && !hasBrackets(s.body) && !hasBrackets(s.title))
+  const hasAfterYouJoin = Boolean(afterYouJoin.heading) && visibleJoinSteps.length > 0
+  const visibleFaq = faq.filter((f) => f.question && f.answer && !hasBrackets(f.question) && !hasBrackets(f.answer))
+  const hasFaq = visibleFaq.length > 0
 
   return (
     <>
@@ -824,16 +871,18 @@ export default function AngerPage() {
               )}
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+                gridTemplateColumns: isMobile ? '1fr' : `repeat(${Math.min(visibleJoinSteps.length, 3)}, 1fr)`,
                 gap: '2.5rem',
+                maxWidth: visibleJoinSteps.length === 1 ? '360px' : undefined,
+                margin: visibleJoinSteps.length === 1 ? '0 auto' : undefined,
                 textAlign: isMobile ? 'left' : 'center',
               }}>
-                {afterYouJoin.steps.map((step) => (
+                {visibleJoinSteps.map((step) => (
                   <div key={step.num}>
                     <div style={{ fontFamily: SERIF, fontSize: '2.5rem', color: ACCENT, marginBottom: '0.5rem', WebkitTextStroke: '1px currentColor' }}>
                       {step.num}
                     </div>
-                    <h3 style={{ ...H3, fontSize: '1.333rem', margin: '0 0 0.75rem' }}>{step.title}</h3>
+                    {step.title && <h3 style={{ ...H3, fontSize: '1.333rem', margin: '0 0 0.75rem' }}>{step.title}</h3>}
                     <p style={{ ...bodyStyle(isMobile), margin: 0 }}>{step.body}</p>
                   </div>
                 ))}
@@ -841,6 +890,26 @@ export default function AngerPage() {
             </div>
           </section>
         )}
+
+        {/* 10c. OFFER CLARITY — directly above the pricing card */}
+        <section style={{ padding: sec, background: '#ffffff' }}>
+          <div style={inner}>
+            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '2rem', textAlign: 'center' }}>
+              {offerClarity.heading}
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem', marginBottom: '1.75rem' }}>
+              {offerClarity.rows.map((row, i) => (
+                <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <CheckMark />
+                  <p style={{ ...bodyStyle(isMobile), margin: 0 }}>{row}</p>
+                </div>
+              ))}
+            </div>
+            <p style={{ ...bodyStyle(isMobile), textAlign: 'center', fontWeight: 600, color: TEXT, margin: 0 }}>
+              {offerClarity.closingLine}
+            </p>
+          </div>
+        </section>
 
         {/* 10b. PRICING CARD — price, toggle, founding note and button as one boxed card */}
         <section style={{ padding: sec, background: '#ffffff' }}>
@@ -857,20 +926,27 @@ export default function AngerPage() {
             <p style={{ fontSize: '0.9375rem', lineHeight: 1.6, color: MUTED, marginBottom: '1.5rem', fontFamily: SANS }}>
               {closing.pricingNote}
             </p>
-            <PricingToggle ctaLabel={closing.ctaLabel} trackingId="anger_founding" sourcePage="anger" />
+            <PricingToggle
+              ctaLabel={closing.ctaLabel}
+              trackingId="anger_founding"
+              sourcePage="anger"
+              hideFoundingNote
+              noteAbovePrice={<FoundingSpotsNote />}
+            />
+            <Paras text={foundingNote} mobile={isMobile} style={{ fontSize: '0.8125rem', color: MUTED, marginBottom: '0.5rem' }} />
           </div>
         </section>
 
-        {/* 12. FAQ — hidden until real questions are supplied */}
+        {/* 12. FAQ — hidden until at least one question is ready */}
         {hasFaq && (
           <section style={{ padding: sec, background: CREAM, borderTop: `1px solid ${BORDER}` }}>
             <div style={inner}>
               <Label>Questions</Label>
               <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '1rem' }}>
-                Before you join
+                {faqHeading}
               </h2>
               <div>
-                {faq.filter((f) => f.question || f.answer).map((f, i) => (
+                {visibleFaq.map((f, i) => (
                   <FaqItem key={i} question={f.question} answer={f.answer} />
                 ))}
                 <div style={{ borderTop: `1px solid ${BORDER}` }} />

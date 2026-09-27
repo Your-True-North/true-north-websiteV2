@@ -142,8 +142,8 @@ That's it. Small steps, every month, that add up.`,
 export const credentialsStrip = [
   { value: 'Somatic Therapy Practitioner', label: 'Trained under Dr Gabor Maté' },
   { value: 'ICF & EMCC Certified', label: 'Internationally accredited Transformational Coach' },
-  { value: 'Cancel any time', label: 'No contracts, no pressure' },
-  { value: 'Real Men, Real Work', label: 'No egos, no judgment' },
+  { value: 'MCC', label: 'Master Certified Coach, the highest ICF level' },
+  { value: 'IBF Certified', label: 'Breathwork Facilitator' },
 ]
 
 export const closing = {
@@ -155,30 +155,82 @@ No one can do the pushups for you my friend.`,
   // Sits directly above PricingToggle, which states the prices and the founding
   // rate. Keep this as framing only, with no figures, so the two do not repeat.
   pricingNote: 'Choose whichever way of joining suits you.',
-  ctaLabel: 'Secure Your Founding Spot',
+  ctaLabel: 'Join Know Your North',
 }
 
-// New section between the closing copy and the pricing card. Steps stay
-// empty and the whole section stays hidden until real copy is supplied here.
+// Replaces PricingToggle's own founding note on this page only (passed in
+// with hideFoundingNote so the shared component's default stays untouched
+// for /founding and /addiction).
+export const foundingNote = `Founding rate: £25 a month for the first 50 men.
+
+After that it goes up to £50 a month.
+
+Whatever rate you join on is the rate you keep, for as long as you stay.`
+
+// New block directly above the pricing card.
+export const offerClarity = {
+  heading: "Here's what you get for £25 a month.",
+  rows: [
+    'Three live sessions every month',
+    'Nervous system regulation sessions',
+    'A goal setting session with the group every three months',
+    'Videos and resources to use in your own time',
+    'A private group of men doing the work with you',
+  ],
+  closingLine: "That's less than a pound a day.",
+}
+
+// Between the closing copy and the offer block. Each step is hidden on its
+// own if it still has square-bracket placeholder text, rather than gating
+// the whole section on every step being finished.
 export const afterYouJoin = {
-  heading: '',
+  heading: 'What happens after you join.',
   steps: [
-    { num: '01', title: '', body: '' },
-    { num: '02', title: '', body: '' },
-    { num: '03', title: '', body: '' },
+    { num: '01', title: '', body: 'You pay securely through Stripe. It takes two minutes.' },
+    { num: '02', title: '', body: 'You create your account and get access to [the private group / members area].' },
+    { num: '03', title: '', body: '[You get the dates for the next live calls and join your first one on ...]' },
   ],
 }
 
-// FAQ accordion under the pricing card. Stays hidden until real questions
-// and answers are supplied here.
+// FAQ accordion under the pricing card. Each item is hidden on its own if
+// its question or answer still has square-bracket placeholder text.
+export const faqHeading = 'Questions men usually ask.'
+
 export const faq: { question: string; answer: string }[] = [
   {
     question: 'How much time does this take?',
     answer: 'A few hours a month. Come to most of the calls, do one small task after each one, and report back to the group. You go at your own pace. The change comes from doing it steadily, not from doing it all at once.',
   },
-  { question: '', answer: '' },
-  { question: '', answer: '' },
-  { question: '', answer: '' },
-  { question: '', answer: '' },
-  { question: '', answer: '' },
+  {
+    question: "I've tried things before and nothing worked. Why would this?",
+    answer: "Most of what you've tried was about controlling the anger. This is about finding out what's causing it, in your body, not just your head. That's why it works differently.",
+  },
+  {
+    question: 'Is this therapy?',
+    answer: "No. This is coaching and body based work in a group, led by me. It isn't a replacement for therapy. If you're already seeing a therapist, this can sit alongside it.",
+  },
+  {
+    question: 'Do I have to talk?',
+    answer: "No. Plenty of men just listen at first. You speak when you're ready.",
+  },
+  {
+    question: 'Do I have to have my camera on?',
+    answer: '[Your answer]',
+  },
+  {
+    question: 'When are the calls?',
+    answer: '[Days and times, UK time. Say if other time zones are covered.]',
+  },
+  {
+    question: 'What if I miss a call?',
+    answer: '[Are calls recorded? Where do members watch them?]',
+  },
+  {
+    question: 'Is what I say kept private?',
+    answer: "[Your answer, e.g. what's said in the group stays in the group.]",
+  },
+  {
+    question: "What if it's not for me?",
+    answer: 'Cancel any time from [where they cancel]. No contract, no questions, no hard feelings.',
+  },
 ]

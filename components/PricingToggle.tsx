@@ -92,9 +92,13 @@ export interface PricingToggleProps {
   trackingId?: string
   /** Which landing page this checkout started from: 'anger' | 'addiction' | 'founding'. Stored on the Stripe metadata. */
   sourcePage: string
+  /** Skips the built-in founding note, for a page that renders its own replacement instead. */
+  hideFoundingNote?: boolean
+  /** Optional content rendered between the toggle and the price, e.g. a live spots-left line. */
+  noteAbovePrice?: React.ReactNode
 }
 
-export default function PricingToggle({ ctaLabel, trackingId, sourcePage }: PricingToggleProps) {
+export default function PricingToggle({ ctaLabel, trackingId, sourcePage, hideFoundingNote, noteAbovePrice }: PricingToggleProps) {
   const [interval, setInterval] = useState<Interval>(DEFAULT_INTERVAL)
   const [shown, setShown] = useState<Interval>(DEFAULT_INTERVAL)
   const [visible, setVisible] = useState(true)
@@ -262,6 +266,8 @@ export default function PricingToggle({ ctaLabel, trackingId, sourcePage }: Pric
         })}
       </div>
 
+      {noteAbovePrice}
+
       {/* Price */}
       <div
         style={{
@@ -362,18 +368,20 @@ export default function PricingToggle({ ctaLabel, trackingId, sourcePage }: Pric
       )}
 
       {/* Founding note, shown in both states */}
-      <p
-        style={{
-          fontFamily: SANS,
-          fontSize: '0.8125rem',
-          lineHeight: 1.6,
-          color: 'rgba(245,243,239,0.62)',
-          margin: '1.25rem auto 0',
-          maxWidth: '32rem',
-        }}
-      >
-        {FOUNDING_NOTE}
-      </p>
+      {!hideFoundingNote && (
+        <p
+          style={{
+            fontFamily: SANS,
+            fontSize: '0.8125rem',
+            lineHeight: 1.6,
+            color: 'rgba(245,243,239,0.62)',
+            margin: '1.25rem auto 0',
+            maxWidth: '32rem',
+          }}
+        >
+          {FOUNDING_NOTE}
+        </p>
+      )}
     </div>
   )
 }
