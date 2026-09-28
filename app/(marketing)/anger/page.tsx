@@ -27,7 +27,8 @@ import {
 // than shown half-finished.
 const hasBrackets = (s: string) => /[[\]]/.test(s)
 
-const ACCENT  = '#9bc4b8'
+const ACCENT  = '#9bc4b8' // brand mint — kept on buttons/fills, where dark text on top already reads at 10:1+
+const ACCENT_TEXT = '#427063' // darkened for anywhere this green IS the text/mark, to pass WCAG AA on white and cream
 const TEXT    = '#0a0a0a'
 const MUTED   = '#5a5a58'
 const SERIF   = "Gambarino, Georgia, serif"
@@ -82,7 +83,7 @@ function Label({ children }: { children: React.ReactNode }) {
       fontWeight: 700,
       letterSpacing: '0.18em',
       textTransform: 'uppercase' as const,
-      color: ACCENT,
+      color: ACCENT_TEXT,
       margin: '0 0 1.25rem',
     }}>{children}</p>
   )
@@ -99,24 +100,37 @@ function Paras({ text, mobile, style }: { text: string; mobile: boolean; style?:
   )
 }
 
-// Small accent-filled check mark, reused anywhere a line needs a brand mark
-// instead of a plain paragraph (What Changes, This is for you if).
+// Small filled mark, reused anywhere a line needs a brand mark instead of a
+// plain paragraph (What Changes, This is for you if). Fill uses ACCENT_TEXT
+// (not the brighter brand mint) with a white mark inside, so the icon itself
+// reads clearly against white/cream, not just the checkmark within it.
 function CheckMark() {
   return (
     <div style={{
-      width: '18px', height: '18px', borderRadius: '50%', background: ACCENT,
+      width: '18px', height: '18px', borderRadius: '50%', background: ACCENT_TEXT,
       flexShrink: 0, marginTop: '0.2rem',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
     }}>
       <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
-        <path d="M1 3.5L3.5 6L8 1" stroke="#0a0a0a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M1 3.5L3.5 6L8 1" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     </div>
   )
 }
 
-function OpenCircle() {
-  return <div style={{ width: '18px', height: '18px', borderRadius: '50%', border: `1.5px solid ${BORDER}`, flexShrink: 0, marginTop: '0.2rem' }} />
+// Same treatment as CheckMark, for "this is not for you if" rows.
+function XMark() {
+  return (
+    <div style={{
+      width: '18px', height: '18px', borderRadius: '50%', background: ACCENT_TEXT,
+      flexShrink: 0, marginTop: '0.2rem',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+      <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+        <path d="M1 1L7 7M7 1L1 7" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </div>
+  )
 }
 
 // Autoplays muted (browser-required for autoplay), keeps a poster for the
@@ -397,7 +411,7 @@ function StickyJoinBar() {
             whiteSpace: 'nowrap' as const,
           }}
         >
-          Join Know Your North
+          Join
         </button>
       </div>
     </div>
@@ -570,6 +584,7 @@ export default function AngerPage() {
           font-size: clamp(1.9rem, 8vw, 2.5rem); margin-bottom: 0.6rem; max-width: 100%; overflow-wrap: break-word;
         }
         .hero-subhead { font-size: 1rem; line-height: 1.5; color: ${MUTED}; max-width: 600px; margin: 0 auto; font-family: ${SANS}; }
+        .hero-above-video { font-size: 0.9375rem; color: ${MUTED}; margin: 0.75rem 0 0; font-family: ${SANS}; }
         .hero-cta {
           display: inline-block; background: ${ACCENT}; color: ${TEXT}; padding: 0.75rem 2rem;
           border-radius: 4px; font-weight: 700; font-size: 0.875rem; font-family: ${SANS};
@@ -590,6 +605,7 @@ export default function AngerPage() {
           .hero-eyebrow { font-size: 0.75rem; }
           .hero-h1 { font-size: clamp(3rem, 7vw, 5rem); margin-bottom: 1.75rem; }
           .hero-subhead { font-size: 1.2rem; }
+          .hero-above-video { font-size: 1.0625rem; margin-top: 1rem; }
           .hero-cta { padding: 0.875rem 2.5rem; font-size: 0.9375rem; }
           .hero-below { margin: 2rem auto 0; }
         }
@@ -615,6 +631,8 @@ export default function AngerPage() {
             <h1 className="hero-h1">{hero.headline}</h1>
 
             <p className="hero-subhead">{hero.subheadline}</p>
+
+            <p className="hero-above-video">{hero.aboveVideo}</p>
 
             <HeroVideo
               videoUrl="/anger-hero.mp4"
@@ -664,8 +682,8 @@ export default function AngerPage() {
               fontWeight: 700,
               letterSpacing: '0.15em',
               textTransform: 'uppercase' as const,
-              color: ACCENT,
-              borderBottom: `1px solid ${ACCENT}`,
+              color: ACCENT_TEXT,
+              borderBottom: `1px solid ${ACCENT_TEXT}`,
               paddingBottom: '0.25rem',
               marginBottom: '2rem',
             }}>
@@ -708,7 +726,7 @@ export default function AngerPage() {
               ))}
             </div>
 
-            <JoinButton placement="after_transformations" />
+            <JoinButton placement="after_testimonials" />
           </div>
         </section>
 
@@ -733,7 +751,7 @@ export default function AngerPage() {
               {theJourney.steps.map((stage, i) => (
                 <div key={i}>
                   <div style={{
-                    fontFamily: SERIF, fontSize: '3rem', lineHeight: 1, color: ACCENT,
+                    fontFamily: SERIF, fontSize: '3rem', lineHeight: 1, color: ACCENT_TEXT,
                     WebkitTextStroke: '1px currentColor', marginBottom: '0.75rem',
                   }}>
                     {stage.num}
@@ -782,7 +800,7 @@ export default function AngerPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.125rem' }}>
                   {brotherhood.notForYou.map((line, i) => (
                     <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                      <OpenCircle />
+                      <XMark />
                       <p style={{ ...bodyStyle(isMobile), margin: 0 }}>{line}</p>
                     </div>
                   ))}
@@ -817,7 +835,7 @@ export default function AngerPage() {
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '1.5rem', marginBottom: '3rem' }}>
               {whatsInside.cards.map((item, i) => (
                 <div key={i} style={{ background: CREAM, border: `1px solid ${BORDER}`, borderRadius: '6px', padding: '1.75rem' }}>
-                  <p style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: ACCENT, marginBottom: '0.625rem' }}>
+                  <p style={{ fontFamily: SANS, fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: ACCENT_TEXT, marginBottom: '0.625rem' }}>
                     {item.title}
                   </p>
                   <p style={{ ...bodyStyle(isMobile), margin: 0 }}>{item.desc}</p>
@@ -837,33 +855,30 @@ export default function AngerPage() {
             maxWidth: '900px',
             margin: '0 auto',
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)',
-            gap: isMobile ? '1.5rem' : '1rem',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: isMobile ? '0.5rem' : '1rem',
             textAlign: 'center',
           }}>
             {credentialsStrip.map(({ value, label }) => (
               <div key={value} style={{ padding: isMobile ? '0' : '0 0.5rem' }}>
-                <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: TEXT, fontFamily: SANS, marginBottom: '0.3rem' }}>{value}</div>
-                <div style={{ fontSize: '0.75rem', color: MUTED, fontFamily: SANS, lineHeight: 1.5 }}>{label}</div>
+                <div style={{ fontSize: isMobile ? '0.6875rem' : '0.8125rem', fontWeight: 700, color: TEXT, fontFamily: SANS, marginBottom: '0.3rem', lineHeight: 1.3 }}>{value}</div>
+                <div style={{ fontSize: isMobile ? '0.625rem' : '0.75rem', color: MUTED, fontFamily: SANS, lineHeight: 1.4 }}>{label}</div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* 10. CLOSING COPY */}
-        <section style={{ padding: isMobile ? '4rem 1.5rem 0' : '6rem 1.5rem 0', background: '#ffffff', textAlign: 'center' }}>
+        {/* 10. CLOSE — no heading by design, this flows straight into
+            "What happens after you join" below in the same section, with
+            no visual break between them. */}
+        <section style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 1.5rem', background: '#ffffff', textAlign: 'center' }}>
           <div style={{ maxWidth: '640px', margin: '0 auto' }}>
             <Paras text={closing.text} mobile={isMobile} style={{ marginBottom: '1.25rem' }} />
-            <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2.25rem, 5vw, 3.75rem)', margin: '2.5rem 0 0' }}>
-              Where you are now does not have to be where you end up.
-            </h2>
           </div>
-        </section>
 
-        {/* 11. WHAT HAPPENS AFTER YOU JOIN — hidden until real copy is supplied */}
-        {hasAfterYouJoin && (
-          <section style={{ padding: sec, background: '#ffffff', textAlign: 'center' }}>
-            <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          {/* 11. WHAT HAPPENS AFTER YOU JOIN — hidden until real copy is supplied */}
+          {hasAfterYouJoin && (
+            <div style={{ maxWidth: '1000px', margin: isMobile ? '2.5rem auto 0' : '3.5rem auto 0' }}>
               {afterYouJoin.heading && (
                 <h2 style={{ ...H2, fontSize: isMobile ? '1.777rem' : 'clamp(2rem, 4.5vw, 3rem)', marginBottom: '3rem' }}>
                   {afterYouJoin.heading}
@@ -879,7 +894,7 @@ export default function AngerPage() {
               }}>
                 {visibleJoinSteps.map((step) => (
                   <div key={step.num}>
-                    <div style={{ fontFamily: SERIF, fontSize: '2.5rem', color: ACCENT, marginBottom: '0.5rem', WebkitTextStroke: '1px currentColor' }}>
+                    <div style={{ fontFamily: SERIF, fontSize: '2.5rem', color: ACCENT_TEXT, marginBottom: '0.5rem', WebkitTextStroke: '1px currentColor' }}>
                       {step.num}
                     </div>
                     {step.title && <h3 style={{ ...H3, fontSize: '1.333rem', margin: '0 0 0.75rem' }}>{step.title}</h3>}
@@ -888,8 +903,8 @@ export default function AngerPage() {
                 ))}
               </div>
             </div>
-          </section>
-        )}
+          )}
+        </section>
 
         {/* 10c. OFFER CLARITY — directly above the pricing card */}
         <section style={{ padding: sec, background: '#ffffff' }}>
