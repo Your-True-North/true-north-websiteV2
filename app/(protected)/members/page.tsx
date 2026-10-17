@@ -656,7 +656,7 @@ export default function MembersPage() {
               {
                 name: 'Resources',
                 desc: 'Guides · practices · tools',
-                href: '/resources',
+                href: '/library',
                 badge: null,
                 badgeColor: '',
                 badgeBg: ''
