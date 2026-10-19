@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { query } from '@/lib/db'
-import { buildKynReminderEmail } from '@/lib/kyn-reminder-email'
+import { buildKynReminderEmail, buildKynRsvpReminderEmail } from '@/lib/kyn-reminder-email'
+import { features } from '../../../../lib/features'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'KYN <kyn@yourtruenorth.me>'
@@ -13,6 +14,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  // RSVP reminders: the day before and the hour before, only to men who said they'd be there
+  const rsvp = await sendRsvpReminders()
+
+  // The old 48 hour reminder to every member stays off unless switched back on
+  if (!features.allMemberReminder48h) {
+    return NextResponse.json({ sessions: 0, sent: 0, failed: 0, rsvp })
+  }
+
   const dueResult = await query(
     `SELECT id, title, description, scheduled_date AT TIME ZONE 'UTC' AS scheduled_date, loop_index
      FROM live_calls
@@ -22,7 +31,7 @@ export async function GET(req: NextRequest) {
   const dueSessions = dueResult.rows
 
   if (dueSessions.length === 0) {
-    return NextResponse.json({ sessions: 0, sent: 0, failed: 0 })
+    return NextResponse.json({ sessions: 0, sent: 0, failed: 0, rsvp })
   }
 
   const membersResult = await query(
@@ -83,5 +92,73 @@ export async function GET(req: NextRequest) {
     totalFailed += failed
   }
 
-  return NextResponse.json({ sessions: dueSessions.length, sent: totalSent, failed: totalFailed })
+  return NextResponse.json({ sessions: dueSessions.length, sent: totalSent, failed: totalFailed, rsvp })
+}
+
+// When EMAIL_TEST_ONLY holds an address (Preview only), every RSVP reminder goes to
+// that address, and only that member's own RSVPs are picked up. Preview shares the
+// live database, so this keeps a test run from marking real members' reminders as sent.
+const EMAIL_TEST_ONLY = process.env.EMAIL_TEST_ONLY || ''
+
+const RSVP_WINDOWS = {
+  // "Tomorrow" email: session starts between 20 and 24 hours from now
+  day: { column: 'reminder_day_sent_at', from: '20 hours', to: '24 hours' },
+  // "We start in an hour": session starts within the next hour
+  hour: { column: 'reminder_hour_sent_at', from: '0 minutes', to: '60 minutes' },
+} as const
+
+async function sendRsvpReminders() {
+  const totals = { day: { sent: 0, failed: 0 }, hour: { sent: 0, failed: 0 } }
+
+  for (const kind of ['day', 'hour'] as const) {
+    const w = RSVP_WINDOWS[kind]
+
+    // Claim the due rows first, so two overlapping runs can't send the same reminder twice
+    const claimed = await query(
+      `UPDATE session_rsvps r
+       SET ${w.column} = NOW()
+       FROM live_calls c, users u
+       WHERE c.id = r.live_call_id
+         AND u.id = r.user_id
+         AND r.cancelled_at IS NULL
+         AND r.${w.column} IS NULL
+         AND u."isActive" = true
+         AND c.scheduled_date AT TIME ZONE 'UTC' > NOW() + INTERVAL '${w.from}'
+         AND c.scheduled_date AT TIME ZONE 'UTC' <= NOW() + INTERVAL '${w.to}'
+         AND ($1 = '' OR LOWER(u.email) = LOWER($1))
+       RETURNING r.id, r.timezone, u.email, u.name, c.title, c.zoom_link,
+                 c.scheduled_date AT TIME ZONE 'UTC' AS starts_at`,
+      [EMAIL_TEST_ONLY]
+    )
+
+    for (const row of claimed.rows) {
+      try {
+        if (!row.zoom_link) throw new Error('Session has no join link')
+        const email = buildKynRsvpReminderEmail({
+          kind,
+          name: row.name,
+          title: row.title,
+          scheduledAtUtc: new Date(row.starts_at),
+          timeZone: row.timezone,
+          joinUrl: row.zoom_link,
+        })
+        const { error } = await resend.emails.send({
+          from: FROM_EMAIL,
+          to: EMAIL_TEST_ONLY || row.email,
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
+        })
+        if (error) throw error
+        totals[kind].sent++
+      } catch (err) {
+        // Release the claim so the next run tries again
+        await query(`UPDATE session_rsvps SET ${w.column} = NULL WHERE id = $1`, [row.id])
+        console.error(`[Cron] RSVP ${kind} reminder failed for ${row.email}:`, err)
+        totals[kind].failed++
+      }
+    }
+  }
+
+  return totals
 }

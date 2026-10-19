@@ -22,6 +22,9 @@ export const features = {
   legacyLive: false,         // the old header and upcoming events list
   liveMonthCalendar: false,  // the month view
 
+  // Emails
+  allMemberReminder48h: false, // the old reminder to every member 48 hours before each session
+
   // Video player
   videoComments: false,
   videoReactions: false,

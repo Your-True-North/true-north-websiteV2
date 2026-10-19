@@ -148,3 +148,62 @@ function escapeHtml(text: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
 }
+
+// RSVP reminders: sent only to members who said "I'll be there", one the day
+// before and one an hour before. The copy is fixed. Only the brackets are filled.
+export interface KynRsvpReminderInput {
+  kind: 'day' | 'hour'
+  name: string | null
+  title: string
+  scheduledAtUtc: Date
+  timeZone: string
+  joinUrl: string
+}
+
+export function buildKynRsvpReminderEmail(input: KynRsvpReminderInput): { subject: string; html: string; text: string } {
+  const local = DateTime.fromJSDate(input.scheduledAtUtc, { zone: 'utc' }).setZone(input.timeZone)
+  const day = local.toFormat('cccc')
+  const time = local.toFormat('h:mm a').toLowerCase()
+  const firstName = (input.name || '').trim().split(/\s+/)[0]
+  // Titles are stored as sentences ("Pulling back right before it matters."), so the
+  // closing full stop is dropped where the title sits inside a line
+  const title = input.title.trim().replace(/\.+$/, '')
+
+  // With no name, the opening line starts without one
+  const opening = (withName: string, without: string) => (firstName ? `${firstName}, ${withName}` : without)
+
+  const lines =
+    input.kind === 'day'
+      ? [
+          opening("you said you'd be there tomorrow.", "You said you'd be there tomorrow."),
+          `${title}, ${day} at ${time} your time.`,
+          'Find somewhere quiet, bring headphones, and give yourself a little space either side of it.',
+          `Join here when it's time: ${input.joinUrl}`,
+        ]
+      : [
+          opening('we start in an hour.', 'We start in an hour.'),
+          "Get yourself somewhere you won't be disturbed, and once you're in, put your phone face down.",
+          `Join here: ${input.joinUrl}`,
+        ]
+  const signOff = input.kind === 'day' ? 'True' : 'See you shortly, True'
+  const subject = input.kind === 'day' ? `Tomorrow, ${title}` : 'We start in an hour'
+
+  const text = [...lines, signOff].join('\n\n')
+
+  const linkify = (line: string) =>
+    escapeHtml(line).replace(
+      escapeHtml(input.joinUrl),
+      `<a href="${escapeHtml(input.joinUrl)}" style="color: #2d6a4f; font-weight: 600;">${escapeHtml(input.joinUrl)}</a>`
+    )
+
+  const html = `
+<div style="display: none; max-height: 0; overflow: hidden;">${escapeHtml(lines[0])}</div>
+<div style="font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.6; color: #141410; max-width: 560px; margin: 0 auto; padding: 28px 22px;">
+  <p style="margin: 0 0 16px; font-family: Arial, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #2d6a4f;">KYN</p>
+  ${lines.map(line => `<p style="margin: 0 0 16px; word-break: break-word;">${linkify(line)}</p>`).join('\n  ')}
+  <p style="margin: 8px 0 0; padding-top: 16px; border-top: 1px solid #e2e2de;">${escapeHtml(signOff)}</p>
+</div>
+`.trim()
+
+  return { subject, html, text }
+}
