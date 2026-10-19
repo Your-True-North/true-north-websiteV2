@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import { features } from '../../../../lib/features'
 
 interface Video {
   id: number
@@ -259,11 +260,13 @@ export default function VideoPlayerPage() {
       }
 
       // Fetch comments
-      const commentsRes = await fetch(`/api/videos/${videoId}/comments`)
-      const commentsData = await commentsRes.json()
+      if (features.videoComments) {
+        const commentsRes = await fetch(`/api/videos/${videoId}/comments`)
+        const commentsData = await commentsRes.json()
 
-      if (commentsRes.ok) {
-        setComments(commentsData.comments)
+        if (commentsRes.ok) {
+          setComments(commentsData.comments)
+        }
       }
     } catch (error) {
       console.error('[Video Player] Error:', error)
@@ -457,7 +460,7 @@ export default function VideoPlayerPage() {
         </div>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1fr 350px',
+          gridTemplateColumns: '1fr',
           gap: '2rem'
         }}>
           {/* Main Content */}
@@ -560,6 +563,7 @@ export default function VideoPlayerPage() {
               </p>
 
               {/* Reactions */}
+              {features.videoReactions && (
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -599,9 +603,11 @@ export default function VideoPlayerPage() {
                   <span>{video.commentsCount} comments</span>
                 </div>
               </div>
+              )}
             </div>
 
             {/* Comments Section */}
+            {features.videoComments && (
             <div style={{
               background: 'var(--kyn-surface)',
               border: '1px solid var(--kyn-border)',
@@ -725,6 +731,7 @@ export default function VideoPlayerPage() {
                 })()}
               </div>
             </div>
+            )}
           </div>
 
           {/* Sidebar - Related Videos */}

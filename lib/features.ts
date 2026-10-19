@@ -25,6 +25,9 @@ export const features = {
   // Emails
   allMemberReminder48h: false, // the old reminder to every member 48 hours before each session
 
+  // Library (/videos)
+  legacyLibrary: false, // the old layout: topic pills, continue watching, grid cards and the Live Replays tab
+
   // Video player
   videoComments: false,
   videoReactions: false,

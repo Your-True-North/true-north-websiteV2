@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { logger } from '@/lib/logger'
 import Breadcrumb from '../../components/Breadcrumb'
+import { features } from '../../../lib/features'
 
 interface Video {
   id: number
@@ -131,6 +132,17 @@ export default function LibraryPage() {
     }
   }
 
+  // Library chips in this order. Any other category (Start Here, Live Teachings) shows under All only.
+  const LIBRARY_CHIPS = [
+    { label: 'All', value: 'all' },
+    { label: 'Somatic Work', value: 'Somatic Work' },
+    { label: 'The Psyche', value: 'The Psyche' },
+    { label: 'Spirituality', value: 'Spirituality' },
+    { label: 'Foundation', value: 'Foundation Work' },
+  ]
+  // The API already filters by category and search; the title check keeps typing responsive
+  const libraryVideos = videos.filter(v => !searchQuery || v.title.toLowerCase().includes(searchQuery.toLowerCase()) || (v.description || '').toLowerCase().includes(searchQuery.toLowerCase()))
+
   const TOPICS = ['The Psyche', 'Somatic Experiencing', 'Anger', 'Addiction', 'Spirituality', 'Masculinity']
 
   const normaliseCategory = (cat: string): string => {
@@ -159,8 +171,86 @@ export default function LibraryPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
       <style>{`.kyn-no-scroll::-webkit-scrollbar{display:none;}.kyn-no-scroll{-ms-overflow-style:none;scrollbar-width:none;}`}</style>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '16px 14px 72px' : '28px 32px 52px' }}>
+      <div>
 
+        <h1 style={{ fontSize: '30px', color: 'var(--kyn-ink)', margin: '8px 0 16px' }}>Library</h1>
+
+        {/* Search */}
+        <input
+          type="search"
+          placeholder="Search the library"
+          aria-label="Search the library"
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          style={{
+            width: '100%', minHeight: '48px', padding: '12px 16px', marginBottom: '12px',
+            background: '#1B1E1B', border: '1px solid rgba(236,230,218,0.16)', borderRadius: '12px',
+            color: 'var(--kyn-ink)', fontSize: '16px', fontFamily: 'inherit', outline: 'none'
+          }}
+        />
+
+        {/* Category chips: the exact category names from the videos table */}
+        <div className="kyn-no-scroll" style={{ display: 'flex', gap: '8px', overflowX: 'auto', marginBottom: '16px', paddingBottom: '4px' }}>
+          {LIBRARY_CHIPS.map(chip => {
+            const isActive = selectedCategory === chip.value
+            return (
+              <button
+                key={chip.value}
+                onClick={() => setSelectedCategory(chip.value)}
+                aria-pressed={isActive}
+                style={{
+                  minHeight: '44px', padding: '0 16px', borderRadius: '22px', flexShrink: 0, whiteSpace: 'nowrap',
+                  border: `1px solid ${isActive ? 'var(--kyn-ink)' : 'rgba(236,230,218,0.16)'}`,
+                  background: isActive ? 'var(--kyn-ink)' : 'transparent',
+                  color: isActive ? '#111311' : 'var(--kyn-ink)',
+                  fontSize: '15px', fontWeight: isActive ? 600 : 400, cursor: 'pointer', fontFamily: 'inherit'
+                }}
+              >
+                {chip.label}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Videos: thumbnail, title, category, length */}
+        {libraryVideos.length === 0 ? (
+          <div style={{ padding: '20px', background: '#1B1E1B', border: '1px solid var(--kyn-border)', borderRadius: '16px', fontSize: '15px', color: 'var(--kyn-ink2)' }}>
+            Nothing here matches that.
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingBottom: '24px' }}>
+            {libraryVideos.map(video => {
+              const ytId = getYouTubeId(video.youtube_url)
+              const minutes = parseInt(video.duration)
+              return (
+                <Link
+                  key={video.id}
+                  href={`/videos/${video.id}`}
+                  style={{
+                    display: 'flex', gap: '16px', alignItems: 'center', padding: '12px',
+                    background: '#1B1E1B', border: '1px solid var(--kyn-border)', borderRadius: '16px',
+                    textDecoration: 'none', color: 'var(--kyn-ink)'
+                  }}
+                >
+                  <div style={{
+                    width: '128px', flexShrink: 0, aspectRatio: '16 / 9', borderRadius: '8px', background: '#2A2E2A',
+                    backgroundImage: ytId ? `url(https://img.youtube.com/vi/${ytId}/mqdefault.jpg)` : undefined,
+                    backgroundSize: 'cover', backgroundPosition: 'center'
+                  }} />
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: '16px', lineHeight: 1.35, marginBottom: '4px' }}>{video.title}</div>
+                    <div style={{ fontSize: '15px' }}>
+                      <span style={{ color: '#9BC4B8' }}>{video.category}</span>
+                      {minutes > 0 && <span style={{ color: 'var(--kyn-ink2)' }}> · {minutes} min</span>}
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        )}
+
+        {features.legacyLibrary && (<>
         {/* PAGE TITLE */}
         <div style={{ paddingBottom: '17px', borderBottom: '1px solid var(--kyn-border)', marginBottom: '20px' }}>
           <h1 style={{ fontFamily: 'var(--kyn-font-serif)', fontSize: '22px', fontWeight: 700, color: 'var(--kyn-ink)', margin: '0 0 4px 0', lineHeight: 1.2 }}>Teachings</h1>
@@ -340,6 +430,7 @@ export default function LibraryPage() {
           </div>
         )}
 
+        </>)}
       </div>
     </div>
   )
