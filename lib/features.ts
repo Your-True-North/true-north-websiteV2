@@ -9,6 +9,7 @@ export const features = {
   replaysPage: false,     // /replays (replays live inside /calls)
 
   // Home (/members)
+  legacyHome: false,         // the old home: welcome header, coaching card, bento grid, account panel
   homeJourneyTracker: false, // dedication path tracker
   homeStats: false,          // videos watched, time invested, completion
   homeSpacesPanel: false,

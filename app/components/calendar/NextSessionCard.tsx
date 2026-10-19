@@ -7,13 +7,44 @@ interface Session {
   date: string;
   time?: string;
   description?: string;
-  isoDate?: string;
+  isoDate: string;
+  durationMinutes: number;
 }
+
+const TEXT = '#ECE6DA';
+const TEXT_2 = 'rgba(236,230,218,0.8)';
+const SAGE = '#9BC4B8';
+const LINE = 'rgba(236,230,218,0.08)';
+
+const cardStyle: React.CSSProperties = {
+  background: '#1B1E1B',
+  border: `1px solid ${LINE}`,
+  borderRadius: '16px',
+  padding: '20px',
+  position: 'relative',
+};
+
+const secondaryButton: React.CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  minHeight: '44px',
+  padding: '0 16px',
+  background: 'transparent',
+  border: '1px solid rgba(236,230,218,0.16)',
+  borderRadius: '12px',
+  color: TEXT,
+  fontSize: '15px',
+  fontWeight: 500,
+  cursor: 'pointer',
+};
+
+const stripHtml = (html: string) => html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
 export default function NextSessionCard() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCalendarOptions, setShowCalendarOptions] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
   const [countdown, setCountdown] = useState('');
 
   useEffect(() => {
@@ -21,14 +52,16 @@ export default function NextSessionCard() {
       .then(res => res.json())
       .then(data => {
         if (data.events) {
+          // No timeZone option, so dates and times show in the member's own time zone
           const formatted = data.events.map((e: any) => {
             const eventDate = new Date(e.date);
             return {
               title: e.title,
-              date: eventDate.toLocaleDateString('en-GB', { weekday: 'long', month: 'short', day: 'numeric' }),
-              time: eventDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }),
+              date: eventDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }),
+              time: eventDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }),
               description: e.description,
-              isoDate: e.date
+              isoDate: e.date,
+              durationMinutes: e.duration_minutes || 60
             };
           });
           setSessions(formatted);
@@ -65,7 +98,7 @@ export default function NextSessionCard() {
 
   const generateICS = (session: any) => {
     const eventDate = new Date(session.isoDate);
-    const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
+    const endDate = new Date(eventDate.getTime() + session.durationMinutes * 60 * 1000);
 
     const formatDate = (date: Date) => {
       return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
@@ -94,7 +127,7 @@ END:VCALENDAR`;
 
   const handleAddToCalendar = (provider: string, session: any) => {
     const eventDate = new Date(session.isoDate);
-    const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000);
+    const endDate = new Date(eventDate.getTime() + session.durationMinutes * 60 * 1000);
 
     const formatDate = (date: Date) => {
       return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
@@ -123,136 +156,80 @@ END:VCALENDAR`;
 
   if (loading) {
     return (
-      <div style={{ padding: '16px 20px', textAlign: 'center' }}>
-        <div style={{ color: '#9bc4b8', fontSize: '12px' }}>Loading sessions...</div>
+      <div style={cardStyle}>
+        <div style={{ color: TEXT_2, fontSize: '15px' }}>Loading the next session...</div>
       </div>
     );
   }
 
   if (sessions.length === 0) {
     return (
-      <div style={{ padding: '16px 20px', textAlign: 'center' }}>
-        <div style={{ color: '#9bc4b8', fontSize: '12px' }}>No upcoming sessions</div>
+      <div style={cardStyle}>
+        <div style={{ color: TEXT_2, fontSize: '15px' }}>No upcoming sessions</div>
       </div>
     );
   }
 
   const nextSession = sessions[0];
+  const description = stripHtml(nextSession.description || '');
 
   return (
-    <div style={{ padding: '16px 20px 18px', position: 'relative' }}>
-      <div style={{
-        fontSize: '11px',
-        color: '#9bc4b8',
-        textTransform: 'uppercase',
-        letterSpacing: '0.1em',
-        marginBottom: '6px',
-        fontWeight: 700
-      }}>
-        Next Session
+    <div style={cardStyle}>
+      <div style={{ fontSize: '15px', color: SAGE, marginBottom: '8px' }}>
+        Next session
       </div>
 
-      <h3 style={{
-        fontSize: '15px',
-        color: '#f0ede8',
-        fontWeight: 500,
-        marginBottom: '8px',
-        letterSpacing: '-0.01em',
-        lineHeight: 1.3
-      }}>
+      <h2 style={{ fontSize: '26px', lineHeight: 1.2, color: TEXT, margin: '0 0 8px' }}>
         {nextSession.title}
-      </h3>
+      </h2>
 
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        marginBottom: '12px',
-        flexWrap: 'wrap'
-      }}>
-        <div style={{
-          color: '#9bc4b8',
-          fontSize: '12px',
-          fontWeight: 500
-        }}>
-          {nextSession.date}
-        </div>
-        <div style={{
-          color: '#a0a09c',
-          fontSize: '12px',
-          fontWeight: 400
-        }}>
-          {nextSession.time}
-        </div>
+      <div style={{ fontSize: '16px', color: TEXT_2, marginBottom: '16px' }}>
+        {nextSession.date} at {nextSession.time}
       </div>
 
-      <div style={{ position: 'relative' }}>
-        <button
-          onClick={() => setShowCalendarOptions(!showCalendarOptions)}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '5px',
-            padding: '6px 13px',
-            background: 'rgba(82,183,136,0.14)',
-            border: '1px solid rgba(82,183,136,0.28)',
-            borderRadius: '4px',
-            color: '#9bc4b8',
-            fontSize: '14px',
-            fontWeight: 500,
-            minHeight: '44px',
-            cursor: 'pointer',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(82,183,136,0.22)';
-            e.currentTarget.style.color = '#f0ede8';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(82,183,136,0.14)';
-            e.currentTarget.style.color = '#9bc4b8';
-          }}
-        >
-          Add to Calendar
+      {/* What happens in this session: one level only */}
+      <button
+        onClick={() => setShowDetails(!showDetails)}
+        aria-expanded={showDetails}
+        style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%',
+          minHeight: '44px', padding: 0, background: 'none', border: 'none',
+          borderTop: `1px solid ${LINE}`, color: TEXT, fontSize: '15px', cursor: 'pointer', textAlign: 'left',
+        }}
+      >
+        What happens in this session
+        <span aria-hidden="true" style={{ color: TEXT_2, transform: showDetails ? 'rotate(180deg)' : 'none', transition: 'transform 0.15s' }}>⌄</span>
+      </button>
+
+      {showDetails && (
+        <div style={{ fontSize: '16px', lineHeight: 1.55, color: TEXT_2, padding: '4px 0 12px' }}>
+          {description && <p style={{ margin: '0 0 12px', color: TEXT }}>{description}</p>}
+          <p style={{ margin: '0 0 6px' }}>Have ready: somewhere quiet, headphones, and space to lie down.</p>
+          <p style={{ margin: '0 0 6px' }}>{nextSession.durationMinutes} minutes.</p>
+          <p style={{ margin: 0 }}>Camera on or off, your call.</p>
+        </div>
+      )}
+
+      {/* The attendance button arrives in step 5 */}
+      <div style={{ position: 'relative', marginTop: '12px' }}>
+        <button onClick={() => setShowCalendarOptions(!showCalendarOptions)} style={secondaryButton}>
+          Add to calendar
         </button>
 
         {showCalendarOptions && (
           <div style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            marginTop: '0.5rem',
-            background: '#1a1a18',
-            border: '1px solid #2c2c2a',
-            borderRadius: '6px',
-            overflow: 'hidden',
-            zIndex: 10,
-            minWidth: '180px',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.4)'
+            position: 'absolute', top: '100%', left: 0, marginTop: '8px', zIndex: 10, minWidth: '200px',
+            background: '#1B1E1B', border: `1px solid ${LINE}`, borderRadius: '12px', overflow: 'hidden',
+            boxShadow: '0 12px 32px rgba(0,0,0,0.4)'
           }}>
             {['google', 'apple', 'outlook', 'ical'].map((provider) => (
               <button
                 key={provider}
                 onClick={() => handleAddToCalendar(provider, nextSession)}
                 style={{
-                  width: '100%',
-                  padding: '0.65rem 1rem',
-                  background: 'transparent',
-                  border: 'none',
-                  borderBottom: '1px solid #2c2c2a',
-                  color: '#a0a09c',
-                  fontSize: '0.82rem',
-                  fontWeight: 400,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#1e1e1c';
-                  e.currentTarget.style.color = '#f0ede8';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.color = '#a0a09c';
+                  width: '100%', minHeight: '44px', padding: '0 16px', background: 'transparent',
+                  border: 'none', borderBottom: `1px solid ${LINE}`, color: TEXT,
+                  fontSize: '15px', cursor: 'pointer', textAlign: 'left',
                 }}
               >
                 {provider === 'google' ? 'Google Calendar' :

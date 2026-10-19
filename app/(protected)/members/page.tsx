@@ -38,6 +38,7 @@ export default function MembersPage() {
   const [billingLoading, setBillingLoading] = useState(false)
   const [billingError, setBillingError] = useState('')
   const [stats, setStats] = useState({ videosWatched: 0, totalWatchTime: 0, completionRate: 0 })
+  const [carryOn, setCarryOn] = useState<any>(null)
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
@@ -75,16 +76,31 @@ export default function MembersPage() {
       setLoading(false)
 
       // Fetch stats
-      fetch('/api/user/stats', {
+      if (features.homeStats) {
+        fetch('/api/user/stats', {
+          headers: { 'x-user-id': parsedUser.id.toString() }
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.stats) {
+              setStats(data.stats)
+            }
+          })
+          .catch(err => console.error('Failed to fetch stats:', err))
+      }
+
+      // Carry on watching: the Library's continue watching, most recent first
+      fetch('/api/videos?category=all&sort=newest', {
         headers: { 'x-user-id': parsedUser.id.toString() }
       })
         .then(res => res.json())
         .then(data => {
-          if (data.stats) {
-            setStats(data.stats)
-          }
+          const latest = (data.videos || [])
+            .filter((v: any) => v.progress_status === 'in_progress')
+            .sort((a: any, b: any) => new Date(b.last_watched).getTime() - new Date(a.last_watched).getTime())[0]
+          if (latest) setCarryOn(latest)
         })
-        .catch(err => console.error('Failed to fetch stats:', err))
+        .catch(err => console.error('Failed to fetch carry on watching:', err))
 
       // Fetch real progress and level
       if (features.progressLevels) {
@@ -301,6 +317,13 @@ export default function MembersPage() {
     'Guide': '#8db4a8'
   }
 
+  // Carry on watching: same maths as the Library's continue watching
+  const carryOnDuration = parseInt(carryOn?.duration) || 0
+  const carryOnWatched = (parseInt(carryOn?.watch_time) || 0) / 60
+  const carryOnPct = carryOnDuration > 0 ? Math.min(99, Math.round((carryOnWatched / carryOnDuration) * 100)) : 0
+  const carryOnLeft = carryOnDuration > 0 ? Math.max(1, Math.round(carryOnDuration - carryOnWatched)) : null
+  const carryOnYtId = (carryOn?.youtube_url || '').match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)?.[1]
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -315,6 +338,41 @@ export default function MembersPage() {
         {features.pushPrompt && <PushNotificationPrompt userId={user?.id} />}
       </div>
 
+      {/* HOME: the next session, then carry on watching */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingBottom: '24px' }}>
+        <NextSessionCard />
+
+        {carryOn && (
+          <Link
+            href={`/videos/${carryOn.id}`}
+            style={{
+              display: 'flex', gap: '16px', alignItems: 'center', padding: '16px',
+              background: '#1B1E1B', border: '1px solid rgba(236,230,218,0.08)', borderRadius: '16px',
+              textDecoration: 'none', color: '#ECE6DA'
+            }}
+          >
+            <div style={{ width: '128px', flexShrink: 0 }}>
+              <div style={{
+                aspectRatio: '16 / 9', borderRadius: '8px', background: '#2A2E2A',
+                backgroundImage: carryOnYtId ? `url(https://img.youtube.com/vi/${carryOnYtId}/mqdefault.jpg)` : undefined,
+                backgroundSize: 'cover', backgroundPosition: 'center'
+              }} />
+              <div style={{ height: '3px', marginTop: '8px', borderRadius: '2px', background: 'rgba(236,230,218,0.12)' }}>
+                <div style={{ height: '100%', width: `${carryOnPct}%`, borderRadius: '2px', background: '#9BC4B8' }} />
+              </div>
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: '15px', color: '#9BC4B8', marginBottom: '4px' }}>Carry on watching</div>
+              <div style={{ fontSize: '16px', lineHeight: 1.35, marginBottom: '4px' }}>{carryOn.title}</div>
+              <div style={{ fontSize: '15px', color: 'rgba(236,230,218,0.8)' }}>
+                {carryOn.category}{carryOnLeft !== null ? ` · ${carryOnLeft} min left` : ''}
+              </div>
+            </div>
+          </Link>
+        )}
+      </div>
+
+      {features.legacyHome && (
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
@@ -877,6 +935,7 @@ export default function MembersPage() {
         `}} />
 
       </div>
+      )}
 
       {/* Profile Settings Modal */}
       {showProfileModal && (
