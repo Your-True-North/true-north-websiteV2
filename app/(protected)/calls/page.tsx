@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import NextSessionCard from '../../components/calendar/NextSessionCard'
+import { features } from '../../../lib/features'
 
 interface Video {
   id: number
@@ -22,10 +24,18 @@ interface CalendarEvent {
   join_url?: string
   session_type?: string
   camera_note?: string
+  duration_minutes?: number
 }
 
 const ZOOM_MEETING_ID = '875 3611 9646'
 const ZOOM_PASSCODE = '2121'
+const ADDICTION_COACHING_URL = 'https://calendly.com/callwithmason/kyn-enclosed'
+
+const card: React.CSSProperties = {
+  background: 'var(--kyn-surface)',
+  border: '1px solid var(--kyn-border)',
+  borderRadius: '16px'
+}
 
 interface CalendarDay {
   date: Date
@@ -115,7 +125,7 @@ export default function CallsPage() {
 
   const generateGoogleCalendarUrl = (event: CalendarEvent) => {
     const eventDate = new Date(event.date)
-    const endDate = new Date(eventDate.getTime() + 2 * 60 * 60 * 1000)
+    const endDate = new Date(eventDate.getTime() + (event.duration_minutes || 60) * 60 * 1000)
 
     const formatDate = (date: Date) => {
       return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
@@ -191,6 +201,14 @@ export default function CallsPage() {
 
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+  const comingUp = calendarEvents.slice(1, 4)
+
+  const getYouTubeId = (url: string) => {
+    if (!url) return null
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)
+    return match ? match[1] : null
+  }
+
   if (loading) {
     return (
       <div style={{
@@ -209,8 +227,62 @@ export default function CallsPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: isMobile ? '16px 14px 72px' : '28px 32px 52px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingBottom: '24px' }}>
 
+        <NextSessionCard />
+
+        {/* Coming up: the three sessions after the next one */}
+        {comingUp.length > 0 && (
+          <section>
+            <h2 style={{ fontSize: '22px', color: 'var(--kyn-ink)', margin: '8px 0 12px' }}>Coming up</h2>
+            <div style={{ ...card, overflow: 'hidden' }}>
+              {comingUp.map((event, i) => {
+                const eventDate = new Date(event.date)
+                return (
+                  <a
+                    key={event.date}
+                    href={generateGoogleCalendarUrl(event)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px',
+                      minHeight: '64px', padding: '12px 16px', textDecoration: 'none', color: 'var(--kyn-ink)',
+                      borderTop: i === 0 ? 'none' : '1px solid var(--kyn-border)'
+                    }}
+                  >
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontSize: '16px', lineHeight: 1.35, marginBottom: '2px' }}>{event.title}</div>
+                      <div style={{ fontSize: '15px', color: 'var(--kyn-ink2)' }}>
+                        {eventDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })} at{' '}
+                        {eventDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })}
+                      </div>
+                    </div>
+                    <span style={{ fontSize: '15px', color: '#9BC4B8', flexShrink: 0 }}>Add to calendar</span>
+                  </a>
+                )
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* Addiction group coaching: booked separately on Calendly */}
+        <a
+          href={ADDICTION_COACHING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            ...card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px',
+            minHeight: '64px', padding: '12px 16px', textDecoration: 'none', color: 'var(--kyn-ink)'
+          }}
+        >
+          <div>
+            <div style={{ fontSize: '16px', marginBottom: '2px' }}>Addiction group coaching</div>
+            <div style={{ fontSize: '15px', color: 'var(--kyn-ink2)' }}>Limited spots, booked separately</div>
+          </div>
+          <span aria-hidden="true" style={{ fontSize: '20px', color: 'var(--kyn-ink2)' }}>›</span>
+        </a>
+
+        {features.legacyLive && (<>
         {/* Header */}
         <div style={{ marginBottom: '28px' }}>
           <Link
@@ -525,8 +597,10 @@ export default function CallsPage() {
             </>
           )}
         </div>
+        </>)}
 
         {/* Monthly Calendar */}
+        {features.liveMonthCalendar && (
         <div style={{
           padding: isMobile ? '18px' : '24px',
           background: 'var(--kyn-surface)',
@@ -678,139 +752,45 @@ export default function CallsPage() {
             </p>
           </div>
         </div>
+        )}
 
-        {/* Call Replays Section */}
-        <div id="replays">
-          <h2 style={{
-            fontSize: isMobile ? '18px' : '20px',
-            fontWeight: 400,
-            marginBottom: '18px',
-            color: 'var(--kyn-ink)',
-            fontFamily: 'var(--kyn-font-serif)'
-          }}>
-            Call Replays
-          </h2>
+        {/* Replays: the existing list, newest first */}
+        <section id="replays">
+          <h2 style={{ fontSize: '22px', color: 'var(--kyn-ink)', margin: '8px 0 12px' }}>Replays</h2>
 
           {replays.length === 0 ? (
-            <div style={{
-              padding: '28px',
-              background: 'var(--kyn-surface)',
-              border: '1px solid var(--kyn-border)',
-              borderRadius: 'var(--kyn-r-lg)',
-              textAlign: 'center',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
-            }}>
-              <div style={{ fontSize: '40px', marginBottom: '12px' }}>🎥</div>
-              <p style={{ fontSize: '13.5px', color: 'var(--kyn-ink3)' }}>
-                No replays available yet. Join your first live call and replays will appear here.
-              </p>
+            <div style={{ ...card, padding: '20px', fontSize: '15px', color: 'var(--kyn-ink2)' }}>
+              No replays yet. They appear here after each live session.
             </div>
           ) : (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
-              gap: '11px'
-            }}>
-              {replays.map(video => (
-                <Link
-                  key={video.id}
-                  href={`/videos/${video.id}`}
-                  style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  <div style={{
-                    background: 'var(--kyn-surface)',
-                    border: '1px solid var(--kyn-border)',
-                    borderRadius: 'var(--kyn-r-lg)',
-                    overflow: 'hidden',
-                    transition: 'box-shadow 0.15s ease',
-                    cursor: 'pointer',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 3px 10px rgba(0,0,0,0.08)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.04)' }}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {replays.map(video => {
+                const ytId = getYouTubeId(video.youtube_url)
+                return (
+                  <Link
+                    key={video.id}
+                    href={`/videos/${video.id}`}
+                    style={{ ...card, display: 'flex', gap: '16px', alignItems: 'center', padding: '12px', textDecoration: 'none', color: 'var(--kyn-ink)' }}
                   >
-                    {/* Video Thumbnail */}
                     <div style={{
-                      width: '100%',
-                      paddingTop: '56.25%',
-                      background: video.youtubeId
-                        ? `url(https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg)`
-                        : 'var(--kyn-surface-raised)',
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      position: 'relative',
-                      borderRadius: 'var(--kyn-r-lg) var(--kyn-r-lg) 0 0',
-                      overflow: 'hidden'
-                    }}>
-                      <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '52px',
-                        height: '52px',
-                        borderRadius: '50%',
-                        background: 'var(--kyn-green)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
-                      }}>
-                        <svg style={{ width: '22px', height: '22px', color: '#fff', marginLeft: '3px' }} fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                        </svg>
-                      </div>
-
-                      {video.duration && (
-                        <div style={{
-                          position: 'absolute',
-                          bottom: '8px',
-                          right: '8px',
-                          padding: '3px 7px',
-                          background: 'rgba(0,0,0,0.75)',
-                          borderRadius: 'var(--kyn-r)',
-                          fontSize: '11px',
-                          fontWeight: 600,
-                          color: '#fff'
-                        }}>
-                          {video.duration}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Video Info */}
-                    <div style={{ padding: '14px 16px' }}>
-                      <h3 style={{
-                        fontSize: '13.5px',
-                        fontWeight: 600,
-                        marginBottom: '6px',
-                        color: 'var(--kyn-ink)',
-                        lineHeight: 1.4
-                      }}>
-                        {video.title}
-                      </h3>
-                      <p style={{
-                        fontSize: '12.5px',
-                        color: 'var(--kyn-ink2)',
-                        lineHeight: 1.6,
-                        marginBottom: '10px'
-                      }}>
-                        {video.description?.substring(0, 120)}{video.description?.length > 120 ? '...' : ''}
-                      </p>
-                      <div style={{ fontSize: '11px', color: 'var(--kyn-ink3)' }}>
-                        {new Date(video.upload_date).toLocaleDateString('en-US', {
-                          month: 'long',
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
+                      width: '128px', flexShrink: 0, aspectRatio: '16 / 9', borderRadius: '8px',
+                      background: '#2A2E2A',
+                      backgroundImage: ytId ? `url(https://img.youtube.com/vi/${ytId}/mqdefault.jpg)` : undefined,
+                      backgroundSize: 'cover', backgroundPosition: 'center'
+                    }} />
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontSize: '16px', lineHeight: 1.35, marginBottom: '4px' }}>{video.title}</div>
+                      <div style={{ fontSize: '15px', color: 'var(--kyn-ink2)' }}>
+                        {new Date(video.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        {parseInt(video.duration) > 0 ? ` · ${parseInt(video.duration)} min` : ''}
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                )
+              })}
             </div>
           )}
-        </div>
+        </section>
       </div>
     </div>
   )

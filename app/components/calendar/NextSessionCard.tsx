@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react';
 
 interface Session {
+  id: number;
   title: string;
   date: string;
   time?: string;
   description?: string;
   isoDate: string;
   durationMinutes: number;
+  joinUrl?: string;
 }
 
 const TEXT = '#ECE6DA';
@@ -38,6 +40,22 @@ const secondaryButton: React.CSSProperties = {
   cursor: 'pointer',
 };
 
+const mainButton: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: '54px',
+  background: TEXT,
+  color: '#111311',
+  border: 'none',
+  borderRadius: '12px',
+  fontSize: '16px',
+  fontWeight: 600,
+  textDecoration: 'none',
+  cursor: 'pointer',
+};
+
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
 export default function NextSessionCard() {
@@ -46,6 +64,7 @@ export default function NextSessionCard() {
   const [showCalendarOptions, setShowCalendarOptions] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [countdown, setCountdown] = useState('');
+  const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
     fetch('/api/calendar/events')
@@ -56,12 +75,14 @@ export default function NextSessionCard() {
           const formatted = data.events.map((e: any) => {
             const eventDate = new Date(e.date);
             return {
+              id: e.id,
               title: e.title,
               date: eventDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }),
               time: eventDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }),
               description: e.description,
               isoDate: e.date,
-              durationMinutes: e.duration_minutes || 60
+              durationMinutes: e.duration_minutes || 60,
+              joinUrl: e.join_url
             };
           });
           setSessions(formatted);
@@ -78,6 +99,7 @@ export default function NextSessionCard() {
     if (sessions.length === 0) return;
 
     const updateCountdown = () => {
+      setNow(Date.now());
       const targetDate = new Date(sessions[0].isoDate);
       const now = new Date();
       const diff = targetDate.getTime() - now.getTime();
@@ -92,7 +114,7 @@ export default function NextSessionCard() {
     };
 
     updateCountdown();
-    const interval = setInterval(updateCountdown, 60000);
+    const interval = setInterval(updateCountdown, 30000);
     return () => clearInterval(interval);
   }, [sessions]);
 
@@ -173,6 +195,12 @@ END:VCALENDAR`;
   const nextSession = sessions[0];
   const description = stripHtml(nextSession.description || '');
 
+  // Join shows from 10 minutes before the start until the session ends
+  const startMs = new Date(nextSession.isoDate).getTime();
+  const isJoinTime = !!nextSession.joinUrl
+    && now >= startMs - 10 * 60 * 1000
+    && now < startMs + nextSession.durationMinutes * 60 * 1000;
+
   return (
     <div style={cardStyle}>
       <div style={{ fontSize: '15px', color: SAGE, marginBottom: '8px' }}>
@@ -210,7 +238,12 @@ END:VCALENDAR`;
         </div>
       )}
 
-      {/* The attendance button arrives in step 5 */}
+      {isJoinTime ? (
+        <a href={nextSession.joinUrl} target="_blank" rel="noopener noreferrer" style={{ ...mainButton, marginTop: '12px' }}>
+          Join on Zoom
+        </a>
+      ) : (
+      /* The attendance button arrives in step 5 */
       <div style={{ position: 'relative', marginTop: '12px' }}>
         <button onClick={() => setShowCalendarOptions(!showCalendarOptions)} style={secondaryButton}>
           Add to calendar
@@ -240,6 +273,7 @@ END:VCALENDAR`;
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }

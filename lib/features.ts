@@ -18,6 +18,10 @@ export const features = {
   installBanner: false,
   progressLevels: false,     // calls to /api/progress/calculate and /api/milestones
 
+  // Live (/calls)
+  legacyLive: false,         // the old header and upcoming events list
+  liveMonthCalendar: false,  // the month view
+
   // Video player
   videoComments: false,
   videoReactions: false,
