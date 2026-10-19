@@ -95,10 +95,12 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ sessions: dueSessions.length, sent: totalSent, failed: totalFailed, rsvp })
 }
 
-// When EMAIL_TEST_ONLY holds an address (Preview only), every RSVP reminder goes to
-// that address, and only that member's own RSVPs are picked up. Preview shares the
-// live database, so this keeps a test run from marking real members' reminders as sent.
+// When EMAIL_TEST_ONLY holds an address, every RSVP reminder goes to that address
+// instead of the member. Production: every member's reminder is redirected there.
+// Preview: only that account's own RSVPs are picked up, because Preview shares the
+// live database and a test run must not mark real members' reminders as sent.
 const EMAIL_TEST_ONLY = process.env.EMAIL_TEST_ONLY || ''
+const ONLY_TEST_ACCOUNT_RSVPS = process.env.VERCEL_ENV === 'production' ? '' : EMAIL_TEST_ONLY
 
 const RSVP_WINDOWS = {
   // "Tomorrow" email: session starts between 20 and 24 hours from now
@@ -128,7 +130,7 @@ async function sendRsvpReminders() {
          AND ($1 = '' OR LOWER(u.email) = LOWER($1))
        RETURNING r.id, r.timezone, u.email, u.name, c.title, c.zoom_link,
                  c.scheduled_date AT TIME ZONE 'UTC' AS starts_at`,
-      [EMAIL_TEST_ONLY]
+      [ONLY_TEST_ACCOUNT_RSVPS]
     )
 
     for (const row of claimed.rows) {
