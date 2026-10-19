@@ -75,9 +75,9 @@ export default function RegisterPage() {
       // Auto-login after successful registration
       localStorage.removeItem('user')
       localStorage.setItem('user', JSON.stringify(data.user))
-      logger.debug('Register', 'Redirecting to /community...')
+      logger.debug('Register', 'Redirecting to /members...')
 
-      window.location.replace('/community')
+      window.location.replace('/members')
     } catch (err) {
       console.error('[Register] Error:', err)
       setError('Something went wrong. Try again.')

@@ -1,121 +1,81 @@
 'use client'
 
-import { useState, useEffect, useLayoutEffect } from 'react'
-
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
+import { useState, useEffect, useRef } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 interface NavUser {
   name: string
-  level?: string
+  role?: string
 }
+
+const BG = '#111311'
+const TEXT = '#ECE6DA'
+const TEXT_2 = 'rgba(236,230,218,0.8)'
+const SAGE = '#9BC4B8'
+const LINE = 'rgba(236,230,218,0.08)'
 
 const NAV_LINKS = [
   {
     label: 'Home',
     href: '/members',
     icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
       </svg>
     ),
   },
   {
-    label: 'Our Circle',
-    href: '/community',
-    badge: 'blue',
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Teachings',
-    href: '/videos',
-    badge: 'green',
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Calendar',
+    label: 'Live',
     href: '/calls',
     icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
       </svg>
     ),
   },
   {
-    label: 'Resources',
-    href: '/library',
+    label: 'Library',
+    href: '/videos',
     icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
       </svg>
     ),
   },
-  {
-    label: 'About',
-    href: '/about-cor',
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
-      </svg>
-    ),
-  },
-]
-
-const BOTTOM_NAV = [
-  { label: 'Home', href: '/members', icon: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  )},
-  { label: 'Our Circle', href: '/community', blueDot: true, icon: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
-    </svg>
-  )},
-  { label: 'Teachings', href: '/videos', icon: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-    </svg>
-  )},
-  { label: 'Calendar', href: '/calls', icon: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
-  )},
 ]
 
 export default function MembersNav() {
   const router = useRouter()
   const pathname = usePathname()
-  const [isMobile, setIsMobile] = useState(false)
   const [navUser, setNavUser] = useState<NavUser | null>(null)
-  const [moreOpen, setMoreOpen] = useState(false)
-
-  useIsomorphicLayoutEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768)
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem('user')
       if (raw) {
         const parsed = JSON.parse(raw)
-        setNavUser({ name: parsed.name, level: parsed.level })
+        setNavUser({ name: parsed.name, role: parsed.role })
       }
     } catch {}
   }, [])
+
+  // Close the avatar menu on navigation and on a tap outside it
+  useEffect(() => { setMenuOpen(false) }, [pathname])
+  useEffect(() => {
+    if (!menuOpen) return
+    const close = (e: MouseEvent | TouchEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false)
+    }
+    document.addEventListener('mousedown', close)
+    document.addEventListener('touchstart', close)
+    return () => {
+      document.removeEventListener('mousedown', close)
+      document.removeEventListener('touchstart', close)
+    }
+  }, [menuOpen])
 
   const handleLogout = () => {
     localStorage.removeItem('user')
@@ -128,256 +88,114 @@ export default function MembersNav() {
     router.push('/')
   }
 
-  const isActive = (href: string) => pathname === href
+  // A tab stays active on its sub pages (a video counts as Library), but
+  // /members/account doesn't light up Home.
+  const isActive = (href: string) =>
+    href === '/members' ? pathname === href : pathname === href || pathname?.startsWith(href + '/')
 
-  if (isMobile) {
-    return (
-      <>
-        {/* Mobile top bar */}
-        <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, height: '54px',
-          background: 'var(--kyn-sidebar)', zIndex: 200,
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 16px', borderBottom: '1px solid rgba(255,255,255,0.07)'
-        }}>
-          <Link href="/members">
-            <img src="/kyn-compass-white.png" alt="Know Your North" style={{ height: '36px', width: '36px', display: 'block', opacity: 0.92 }} />
-          </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {/* Bell */}
-            <div style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.55)', cursor: 'pointer' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 01-3.46 0" />
-              </svg>
-            </div>
-            {/* Avatar */}
-            <div style={{
-              width: '28px', height: '28px', borderRadius: '50%',
-              background: 'rgba(45,106,79,0.35)', border: '1px solid rgba(82,183,136,0.35)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '11px', fontWeight: 700, color: '#fff'
-            }}>
-              {navUser?.name?.charAt(0).toUpperCase() || '?'}
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile bottom nav */}
-        <div style={{
-          position: 'fixed', bottom: 0, left: 0, right: 0,
-          background: '#0a1a0f', zIndex: 200,
-          borderTop: '1px solid rgba(255,255,255,0.15)',
-          paddingBottom: 'env(safe-area-inset-bottom)',
-          display: 'flex', alignItems: 'stretch',
-          minHeight: '62px'
-        }}>
-          {BOTTOM_NAV.map((item) => {
-            const active = isActive(item.href)
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                style={{
-                  flex: 1, minHeight: '62px', minWidth: '44px',
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  gap: '5px', padding: '10px 4px', textDecoration: 'none', position: 'relative',
-                  color: active ? 'var(--kyn-green-hi)' : 'rgba(255,255,255,0.6)',
-                  borderTop: active ? '2.5px solid var(--kyn-green-hi)' : '2.5px solid transparent',
-                  transition: 'color 0.12s',
-                }}
-              >
-                {'blueDot' in item && item.blueDot && (
-                  <span style={{
-                    position: 'absolute', top: '8px', right: 'calc(50% - 14px)',
-                    width: '9px', height: '9px', borderRadius: '50%',
-                    background: 'var(--kyn-blue)', border: '2px solid #0a1a0f'
-                  }} />
-                )}
-                {item.icon}
-                <span style={{ fontSize: '11px', fontWeight: active ? 600 : 500, letterSpacing: '0.01em' }}>{item.label}</span>
-              </Link>
-            )
-          })}
-
-          {/* More */}
-          <button
-            onClick={() => setMoreOpen(!moreOpen)}
-            style={{
-              flex: 1, minHeight: '62px', minWidth: '44px',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              gap: '5px', padding: '10px 4px', background: 'none', border: 'none', cursor: 'pointer',
-              color: 'rgba(255,255,255,0.6)', borderTop: '2.5px solid transparent',
-              transition: 'color 0.12s',
-            }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="5" r="1" fill="currentColor" /><circle cx="12" cy="12" r="1" fill="currentColor" /><circle cx="12" cy="19" r="1" fill="currentColor" />
-            </svg>
-            <span style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.01em' }}>More</span>
-          </button>
-
-          {/* More sheet */}
-          {moreOpen && (
-            <div style={{
-              position: 'absolute', bottom: '100%', left: 0, right: 0,
-              background: 'var(--kyn-sidebar)', borderTop: '1px solid rgba(255,255,255,0.1)',
-              padding: '8px 0'
-            }}>
-              {[{ label: 'Resources', href: '/library' }, { label: 'About', href: '/about-cor' }].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMoreOpen(false)}
-                  style={{
-                    display: 'block', padding: '13px 20px',
-                    color: isActive(item.href) ? 'var(--kyn-green-hi)' : 'rgba(255,255,255,0.72)',
-                    textDecoration: 'none', fontSize: '15px',
-                    fontWeight: isActive(item.href) ? 600 : 400,
-                    borderBottom: '1px solid rgba(255,255,255,0.06)'
-                  }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <button
-                onClick={handleLogout}
-                style={{
-                  width: '100%', padding: '13px 20px', background: 'none', border: 'none',
-                  color: 'rgba(255,255,255,0.4)', fontSize: '15px', cursor: 'pointer',
-                  textAlign: 'left'
-                }}
-              >
-                Sign Out
-              </button>
-            </div>
-          )}
-        </div>
-      </>
-    )
+  const menuItem: React.CSSProperties = {
+    display: 'flex', alignItems: 'center', width: '100%', minHeight: '48px', padding: '0 16px',
+    background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer',
+    color: TEXT, fontSize: '16px', textDecoration: 'none', fontFamily: 'inherit',
   }
 
-  // Desktop sidebar
   return (
-    <nav style={{
-      position: 'fixed', top: 0, left: 0, bottom: 0, width: '214px',
-      background: 'var(--kyn-sidebar)', zIndex: 100,
-      display: 'flex', flexDirection: 'column',
-      borderRight: '1px solid rgba(255,255,255,0.06)'
-    }}>
-      {/* Logo */}
-      <div style={{
-        padding: '22px 0 18px', display: 'flex', justifyContent: 'center',
-        borderBottom: '1px solid rgba(255,255,255,0.07)', flexShrink: 0
-      }}>
-        <Link href="/members">
-          <img
-            src="/kyn-stacked-white-1200.png"
-            alt="Know Your North"
-            style={{ width: '80px', height: 'auto', display: 'block', opacity: 0.92 }}
-          />
-        </Link>
-      </div>
+    <>
+      <style>{`
+        .kyn-topbar {
+          position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+          padding-top: env(safe-area-inset-top, 0px);
+          background: ${BG}; border-bottom: 1px solid ${LINE};
+        }
+        .kyn-topbar-inner {
+          height: 64px; padding: 0 24px;
+          display: flex; align-items: center; justify-content: space-between;
+        }
+        .kyn-toptabs { display: flex; gap: 8px; }
+        .kyn-toptab {
+          display: flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 12px;
+          font-size: 15px; font-weight: 500; text-decoration: none; color: ${TEXT_2};
+        }
+        .kyn-toptab:hover { color: ${TEXT}; }
+        .kyn-toptab[data-active="true"] { color: ${TEXT}; background: rgba(236,230,218,0.08); }
+        .kyn-bottombar { display: none; }
+        @media (max-width: 768px) {
+          .kyn-topbar-inner { height: 56px; padding: 0 16px; }
+          .kyn-toptabs { display: none; }
+          .kyn-bottombar {
+            display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+            background: ${BG}; border-top: 1px solid ${LINE};
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+          }
+          .kyn-bottomtab {
+            flex: 1; min-height: 64px; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 4px; text-decoration: none;
+            color: ${TEXT_2}; font-size: 13px; font-weight: 500;
+          }
+          .kyn-bottomtab[data-active="true"] { color: ${SAGE}; }
+        }
+      `}</style>
 
-      {/* Nav links */}
-      <div style={{ flex: 1, padding: '10px 10px 0', overflowY: 'auto' }}>
-        {NAV_LINKS.map((link) => {
-          const active = isActive(link.href)
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
+      <header className="kyn-topbar">
+        <div className="kyn-topbar-inner">
+          <Link href="/members" aria-label="Home" style={{ display: 'flex', alignItems: 'center', minHeight: '44px' }}>
+            <img src="/kyn-compass-white.png" alt="Know Your North" style={{ height: '36px', width: '36px', display: 'block', opacity: 0.92 }} />
+          </Link>
+
+          <nav className="kyn-toptabs" aria-label="Members">
+            {NAV_LINKS.map((link) => (
+              <Link key={link.href} href={link.href} className="kyn-toptab" data-active={isActive(link.href)}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Avatar menu */}
+          <div ref={menuRef} style={{ position: 'relative' }}>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Account menu"
+              aria-expanded={menuOpen}
               style={{
-                display: 'flex', alignItems: 'center', gap: '9px',
-                padding: '7px 9px', marginBottom: '2px',
-                borderRadius: 'var(--kyn-r)', textDecoration: 'none',
-                color: active ? '#ffffff' : 'rgba(255,255,255,0.62)',
-                background: active ? 'rgba(45,106,79,0.22)' : 'transparent',
-                fontWeight: active ? 500 : 400,
-                fontSize: '13.5px', transition: 'all 0.15s ease',
-                position: 'relative'
-              }}
-              onMouseEnter={(e) => {
-                if (!active) {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
-                  e.currentTarget.style.color = 'rgba(255,255,255,0.88)'
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!active) {
-                  e.currentTarget.style.background = 'transparent'
-                  e.currentTarget.style.color = 'rgba(255,255,255,0.62)'
-                }
+                width: '44px', height: '44px', padding: 0, background: 'none', border: 'none',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
               }}
             >
-              <span style={{ opacity: active ? 1 : 0.38, flexShrink: 0 }}>{link.icon}</span>
-              <span style={{ flex: 1 }}>{link.label}</span>
-              {link.badge === 'blue' && (
-                <span style={{
-                  minWidth: '16px', height: '16px', padding: '0 4px',
-                  background: 'var(--kyn-blue)', borderRadius: '8px',
-                  fontSize: '10px', fontWeight: 700, color: '#fff',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}>0</span>
-              )}
-              {link.badge === 'green' && (
-                <span style={{
-                  minWidth: '16px', height: '16px', padding: '0 4px',
-                  background: 'var(--kyn-green)', borderRadius: '8px',
-                  fontSize: '10px', fontWeight: 700, color: '#fff',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}>0</span>
-              )}
-            </Link>
-          )
-        })}
-      </div>
+              <span style={{
+                width: '36px', height: '36px', borderRadius: '50%',
+                background: '#1B1E1B', border: `1px solid ${LINE}`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '15px', fontWeight: 600, color: TEXT,
+              }}>
+                {navUser?.name?.charAt(0).toUpperCase() || '?'}
+              </span>
+            </button>
 
-      {/* Footer chip */}
-      <div style={{
-        padding: '12px 10px 14px',
-        borderTop: '1px solid rgba(255,255,255,0.07)',
-        flexShrink: 0
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '9px', marginBottom: '10px' }}>
-          <div style={{
-            width: '26px', height: '26px', borderRadius: '50%', flexShrink: 0,
-            background: 'rgba(45,106,79,0.25)', border: '1px solid rgba(82,183,136,0.3)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '10px', fontWeight: 700, color: '#fff'
-          }}>
-            {navUser?.name?.charAt(0).toUpperCase() || '?'}
-          </div>
-          <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.82)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {navUser?.name || '—'}
-            </div>
-            {navUser?.level && (
-              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.38)', marginTop: '1px' }}>
-                {navUser.level}
+            {menuOpen && (
+              <div style={{
+                position: 'absolute', top: '52px', right: 0, minWidth: '200px',
+                background: '#1B1E1B', border: `1px solid ${LINE}`, borderRadius: '16px',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.4)', overflow: 'hidden', padding: '6px 0',
+              }}>
+                <Link href="/members/account" style={menuItem}>Account</Link>
+                {navUser?.role === 'admin' && (
+                  <Link href="/admin" style={menuItem}>Admin</Link>
+                )}
+                <button onClick={handleLogout} style={{ ...menuItem, color: TEXT_2 }}>Sign out</button>
               </div>
             )}
           </div>
         </div>
-        <button
-          onClick={handleLogout}
-          style={{
-            width: '100%', padding: '6px 8px', background: 'none',
-            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 'var(--kyn-r)',
-            color: 'rgba(255,255,255,0.38)', fontSize: '11.5px', cursor: 'pointer',
-            textAlign: 'center', transition: 'all 0.15s ease'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.22)'
-            e.currentTarget.style.color = 'rgba(255,255,255,0.62)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
-            e.currentTarget.style.color = 'rgba(255,255,255,0.38)'
-          }}
-        >
-          Sign Out
-        </button>
-      </div>
-    </nav>
+      </header>
+
+      <nav className="kyn-bottombar" aria-label="Members">
+        {NAV_LINKS.map((link) => (
+          <Link key={link.href} href={link.href} className="kyn-bottomtab" data-active={isActive(link.href)}>
+            {link.icon}
+            <span>{link.label}</span>
+          </Link>
+        ))}
+      </nav>
+    </>
   )
 }

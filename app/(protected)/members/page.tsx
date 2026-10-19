@@ -7,6 +7,7 @@ import { logger } from '@/lib/logger'
 import NextSessionCard from '../../components/calendar/NextSessionCard'
 import PushNotificationPrompt from '../../components/PushNotificationPrompt'
 import InstallAppBanner from '../../components/InstallAppBanner'
+import { features } from '../../../lib/features'
 
 interface User {
   id: number
@@ -17,6 +18,9 @@ interface User {
   daysUntilNext: number
   nextLevel: string | null
   joinDate: string
+  profile_photo?: string
+  bio?: string
+  progress?: number
 }
 
 export default function MembersPage() {
@@ -83,25 +87,27 @@ export default function MembersPage() {
         .catch(err => console.error('Failed to fetch stats:', err))
 
       // Fetch real progress and level
-      fetch('/api/progress/calculate', {
-        credentials: 'include',
-        headers: { 'Authorization': `Bearer ${document.cookie.match(/auth_token=([^;]+)/)?.[1]}` }
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.level) {
-            const updatedUser = {
-              ...parsedUser,
-              level: data.level,
-              nextLevel: data.nextLevel,
-              daysUntilNext: data.daysUntilNext,
-              progress: data.progress
-            }
-            setUser(updatedUser)
-            localStorage.setItem('user', JSON.stringify(updatedUser))
-          }
+      if (features.progressLevels) {
+        fetch('/api/progress/calculate', {
+          credentials: 'include',
+          headers: { 'Authorization': `Bearer ${document.cookie.match(/auth_token=([^;]+)/)?.[1]}` }
         })
-        .catch(err => console.error('Failed to fetch progress:', err))
+          .then(res => res.json())
+          .then(data => {
+            if (data.level) {
+              const updatedUser = {
+                ...parsedUser,
+                level: data.level,
+                nextLevel: data.nextLevel,
+                daysUntilNext: data.daysUntilNext,
+                progress: data.progress
+              }
+              setUser(updatedUser)
+              localStorage.setItem('user', JSON.stringify(updatedUser))
+            }
+          })
+          .catch(err => console.error('Failed to fetch progress:', err))
+      }
     } catch (err) {
       console.error('[Members] Failed to parse user data:', err)
       localStorage.removeItem('user')
@@ -177,7 +183,7 @@ export default function MembersPage() {
 
       // Update local storage with all user data from server
       const updatedUser = {
-        ...user,
+        ...(user as User),
         name: data.user.name,
         email: data.user.email,
         profile_photo: data.user.profile_photo,
@@ -305,8 +311,8 @@ export default function MembersPage() {
 
 
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1.5rem' }}>
-        <InstallAppBanner />
-        <PushNotificationPrompt userId={user?.id} />
+        {features.installBanner && <InstallAppBanner />}
+        {features.pushPrompt && <PushNotificationPrompt userId={user?.id} />}
       </div>
 
       <div style={{
@@ -436,6 +442,7 @@ export default function MembersPage() {
         }}>
 
           {/* Journey card */}
+          {features.homeJourneyTracker && (
           <div style={{
             background: 'var(--kyn-surface)',
             borderRadius: 'var(--kyn-r-lg)',
@@ -522,6 +529,7 @@ export default function MembersPage() {
             </div>
 
           </div>
+          )}
 
           {/* Next Session card */}
           <div style={{
@@ -536,6 +544,7 @@ export default function MembersPage() {
         </div>
 
         {/* STATS ROW */}
+        {features.homeStats && (
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
@@ -593,6 +602,7 @@ export default function MembersPage() {
             <div style={{ fontSize: '12px', color: 'var(--kyn-ink3)', marginTop: '8px' }}>across all content</div>
           </div>
         </div>
+        )}
 
         {/* LOWER GRID */}
         <div style={{
@@ -602,6 +612,7 @@ export default function MembersPage() {
         }}>
 
           {/* Spaces panel */}
+          {features.homeSpacesPanel && (
           <div style={{
             background: 'var(--kyn-surface)',
             border: '1px solid var(--kyn-border)',
@@ -697,11 +708,13 @@ export default function MembersPage() {
               </a>
             ))}
           </div>
+          )}
 
           {/* Right column */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
 
             {/* Active now */}
+            {features.homeActiveNowPanel && (
             <div style={{
               background: 'var(--kyn-surface)',
               border: '1px solid var(--kyn-border)',
@@ -773,6 +786,7 @@ export default function MembersPage() {
                 </div>
               </div>
             </div>
+            )}
 
             {/* Account */}
             <div style={{
