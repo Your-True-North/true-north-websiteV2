@@ -454,9 +454,9 @@ export default function VideoPlayerPage() {
       }}>
         {/* Breadcrumb */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '16px', borderBottom: '1px solid var(--kyn-border)', marginBottom: '20px' }}>
-          <Link href="/videos" style={{ fontSize: '12px', color: 'var(--kyn-ink3)', textDecoration: 'none' }}>Teachings</Link>
-          <span style={{ fontSize: '12px', color: 'var(--kyn-border-mid)' }}>/</span>
-          <span style={{ fontSize: '12px', color: 'var(--kyn-ink)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{video.title}</span>
+          <Link href="/videos" style={{ fontSize: '15px', color: 'var(--kyn-ink3)', textDecoration: 'none' }}>Library</Link>
+          <span style={{ fontSize: '15px', color: 'var(--kyn-border-mid)' }}>/</span>
+          <span style={{ fontSize: '15px', color: 'var(--kyn-ink)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{video.title}</span>
         </div>
         <div style={{
           display: 'grid',
@@ -506,11 +506,9 @@ export default function VideoPlayerPage() {
               }}>
                 <div style={{ flex: 1 }}>
                   <div style={{
-                    fontSize: '0.875rem',
+                    fontSize: '15px',
                     color: 'var(--kyn-green-hi)',
-                    marginBottom: '0.5rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em'
+                    marginBottom: '0.5rem'
                   }}>
                     {video.category}
                   </div>
@@ -526,7 +524,7 @@ export default function VideoPlayerPage() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '1rem',
-                    fontSize: '0.875rem',
+                    fontSize: '15px',
                     color: 'var(--kyn-ink3)'
                   }}>
                     <span>{video.duration} min</span>
@@ -537,12 +535,13 @@ export default function VideoPlayerPage() {
                   onClick={handleMarkComplete}
                   disabled={markingComplete}
                   style={{
-                    padding: '0.875rem 1.5rem',
-                    background: video.completed ? 'var(--kyn-green-mid)' : 'var(--kyn-green)',
-                    border: video.completed ? '1px solid var(--kyn-green)' : 'none',
-                    borderRadius: 'var(--kyn-r)',
-                    color: video.completed ? 'var(--kyn-green)' : '#fff',
-                    fontSize: '1rem',
+                    height: '54px',
+                    padding: '0 1.5rem',
+                    background: video.completed ? 'transparent' : '#ECE6DA',
+                    border: video.completed ? '1px solid rgba(236,230,218,0.16)' : 'none',
+                    borderRadius: '12px',
+                    color: video.completed ? 'var(--kyn-ink)' : '#111311',
+                    fontSize: '16px',
                     fontWeight: 600,
                     cursor: markingComplete ? 'not-allowed' : 'pointer',
                     whiteSpace: 'nowrap',
@@ -815,7 +814,7 @@ export default function VideoPlayerPage() {
                           {/* Info */}
                           <div style={{ flex: 1, minWidth: 0 }}>
                             <h3 style={{
-                              fontSize: '0.875rem',
+                              fontSize: '16px',
                               fontWeight: 400,
                               marginBottom: '0.25rem',
                               lineHeight: 1.4,
@@ -829,10 +828,10 @@ export default function VideoPlayerPage() {
                               {related.title}
                             </h3>
                             <div style={{
-                              fontSize: '0.75rem',
+                              fontSize: '15px',
                               color: 'var(--kyn-ink3)'
                             }}>
-                              {related.duration}
+                              {related.duration ? `${related.duration} min` : ''}
                             </div>
                           </div>
                         </div>
