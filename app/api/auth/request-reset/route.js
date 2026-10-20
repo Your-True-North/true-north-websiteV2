@@ -81,64 +81,45 @@ export async function POST(request) {
     console.log('[Password Reset] Step 7: Email config:')
     console.log('[Password Reset]   - To:', email)
     console.log('[Password Reset]   - From:', process.env.EMAIL_FROM || 'kyn@yourtruenorth.me')
-    console.log('[Password Reset]   - Subject: Your New Password - Circle of Return')
+    console.log('[Password Reset]   - Subject: Your new KYN password')
+
+    const LOGIN_URL = `${process.env.NEXT_PUBLIC_APP_URL || 'https://yourtruenorth.me'}/auth/login`
 
     const sent = await sendEmail({
       to: user.email,
-      subject: 'Your New Password - Circle of Return',
+      subject: 'Your new KYN password',
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0a0a0b; color: #fff;">
-          <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #9bc4b8; font-weight: 300; letter-spacing: 0.1em;">Circle of Return</h1>
-          </div>
-
-          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 30px;">
-            <h2 style="color: #fff; font-weight: 300; margin-bottom: 20px;">Password Reset</h2>
-
-            <p style="color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 20px;">
-              You requested a password reset for your Circle of Return member portal account.
-            </p>
-
-            <p style="color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 10px;">
-              Your new temporary password is:
-            </p>
-
-            <div style="background: rgba(155, 196, 184, 0.15); border: 1px solid rgba(155, 196, 184, 0.4); border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center;">
-              <code style="font-size: 1.5rem; color: #9bc4b8; font-weight: 600; letter-spacing: 0.05em;">${newPassword}</code>
-            </div>
-
-            <p style="color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 20px;">
-              Use this password to log in, then change it to something memorable in your account settings.
-            </p>
-
-            <div style="text-align: center; margin-top: 30px;">
-              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://truenorthwithin.com'}/auth/login"
-                 style="display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #9bc4b8, #7fb069); color: #000; text-decoration: none; border-radius: 8px; font-weight: 600;">
-                Log In Now
-              </a>
-            </div>
-          </div>
-
-          <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-            <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.875rem;">
-              If you didn't request this reset, please contact support immediately.
-            </p>
-          </div>
-        </div>
+<div style="display: none; max-height: 0; overflow: hidden;">Your new password to log in to KYN.</div>
+<div style="font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.6; color: #141410; max-width: 560px; margin: 0 auto; padding: 28px 22px;">
+  <p style="margin: 0 0 8px; font-family: Arial, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #2d6a4f;">KYN</p>
+  <h2 style="font-size: 21px; font-weight: 700; margin: 0 0 16px; color: #141410;">Your new password</h2>
+  <p style="margin: 0 0 16px;">You asked to reset your password. Here is your new one:</p>
+  <div style="background: #e8f4ee; border-radius: 8px; padding: 14px 16px; margin: 0 0 22px;">
+    <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 20px; font-weight: 700; letter-spacing: 0.05em; color: #141410;">${newPassword}</p>
+  </div>
+  <p style="margin: 0 0 22px;">Log in with ${user.email} and this password.</p>
+  <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 0 24px;">
+    <tr>
+      <td>
+        <a href="${LOGIN_URL}" style="display: inline-block; padding: 10px 18px; background: #2d6a4f; color: #ffffff; text-decoration: none; border-radius: 5px; font-family: Arial, sans-serif; font-size: 13px; font-weight: 600;">Log in</a>
+      </td>
+    </tr>
+  </table>
+  <p style="margin: 0 0 16px; font-size: 14px; color: #52524a;">If you didn't ask for this, email kyn@yourtruenorth.me and let me know.</p>
+  <p style="margin: 0; padding-top: 16px; border-top: 1px solid #e2e2de;">True</p>
+</div>
       `,
-      text: `
-Circle of Return - Password Reset
+      text: `Your new KYN password
 
-You requested a password reset for your Circle of Return member portal account.
+You asked to reset your password. Here is your new one:
 
-Your new temporary password is: ${newPassword}
+${newPassword}
 
-Use this password to log in at ${process.env.NEXT_PUBLIC_APP_URL || 'https://truenorthwithin.com'}/auth/login
+Log in with ${user.email} and this password: ${LOGIN_URL}
 
-Then change it to something memorable in your account settings.
+If you didn't ask for this, email kyn@yourtruenorth.me and let me know.
 
-If you didn't request this reset, please contact support immediately.
-      `
+True`
     })
 
     // Resend reports a failed send in its result rather than throwing
