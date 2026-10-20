@@ -3,10 +3,10 @@
 -- (which lists status 'active' only) doesn't show them. Inserted directly, so no member email goes out.
 BEGIN;
 INSERT INTO videos (id, title, description, "youtubeUrl", "youtubeId", category, duration, status, "updatedAt")
-VALUES ('course-short-fuse-01', $kyn$Short Fuse Day 1: Your Realistic Anger Management Programme$kyn$, NULL, 'https://youtu.be/zgzAaGmFInA', 'zgzAaGmFInA', 'Short Fuse', NULL, 'course', NOW())
+VALUES ('course-short-fuse-01', $kyn$Short Fuse Day 1: Acknowledge Your Anger$kyn$, NULL, 'https://youtu.be/zgzAaGmFInA', 'zgzAaGmFInA', 'Short Fuse', NULL, 'course', NOW())
 ON CONFLICT (id) DO NOTHING;
 INSERT INTO course_days (course, day, title, body, video_id, pdf_url)
-VALUES ('short-fuse', 1, $kyn$Your Realistic Anger Management Programme$kyn$, $kyn$Nice to meet you 😃
+VALUES ('short-fuse', 1, $kyn$Acknowledge Your Anger$kyn$, $kyn$Nice to meet you 😃
 Welcome to a life beyond anger.
 You may not know it yet, but you have just started a truly long-lasting, life-changing journey.
 Thank you for trusting me with your time and energy.
