@@ -41,7 +41,8 @@ export async function POST(request) {
 
     console.log('[Password Reset] Step 2: Parsing request body...')
     const body = await request.json()
-    const { email } = body
+    // Emails are stored in lower case, so match however he typed it
+    const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : ''
     console.log('[Password Reset] Step 2: ✅ Email received:', email ? `${email.substring(0, 3)}***` : 'NONE')
 
     if (!email) {
@@ -51,7 +52,7 @@ export async function POST(request) {
     }
 
     console.log('[Password Reset] Step 3: Querying database for user...')
-    const result = await client.query('SELECT * FROM users WHERE email = $1', [email])
+    const result = await client.query('SELECT * FROM users WHERE LOWER(email) = $1', [email])
     const user = result.rows[0]
     console.log('[Password Reset] Step 3: ✅ Query complete - User found:', !!user)
 
@@ -69,9 +70,12 @@ export async function POST(request) {
     const hashedPassword = await bcrypt.hash(newPassword, 10)
     console.log('[Password Reset] Step 5: ✅ Password hashed')
 
+    // The new password is only kept if the email goes out. Otherwise it is rolled
+    // back, so a failed send can't lock him out of his old password.
     console.log('[Password Reset] Step 6: Updating database...')
-    await client.query('UPDATE users SET password = $1 WHERE email = $2', [hashedPassword, email])
-    console.log('[Password Reset] Step 6: ✅ Database updated')
+    await client.query('BEGIN')
+    await client.query('UPDATE users SET password = $1 WHERE id = $2', [hashedPassword, user.id])
+    console.log('[Password Reset] Step 6: ✅ Database updated (not yet committed)')
 
     console.log('[Password Reset] Step 7: Preparing to send email...')
     console.log('[Password Reset] Step 7: Email config:')
@@ -79,8 +83,8 @@ export async function POST(request) {
     console.log('[Password Reset]   - From:', process.env.EMAIL_FROM || 'kyn@yourtruenorth.me')
     console.log('[Password Reset]   - Subject: Your New Password - Circle of Return')
 
-    await sendEmail({
-      to: email,
+    const sent = await sendEmail({
+      to: user.email,
       subject: 'Your New Password - Circle of Return',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #0a0a0b; color: #fff;">
@@ -137,6 +141,12 @@ If you didn't request this reset, please contact support immediately.
       `
     })
 
+    // Resend reports a failed send in its result rather than throwing
+    if (sent?.data?.error) {
+      throw new Error(`Failed to send email: ${sent.data.error.message || sent.data.error.name}`)
+    }
+    await client.query('COMMIT')
+
     const elapsedTime = Date.now() - startTime
     console.log('[Password Reset] Step 7: ✅ Email sent successfully via Resend to:', email)
     console.log('[Password Reset] ========== SUCCESS ==========')
@@ -168,6 +178,10 @@ If you didn't request this reset, please contact support immediately.
       console.error('[Password Reset] Database error code:', error.code)
       console.error('[Password Reset] Database error detail:', error.detail)
     }
+
+    try {
+      await client.query('ROLLBACK')
+    } catch {}
 
     try {
       await client.end()
