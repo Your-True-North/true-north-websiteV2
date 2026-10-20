@@ -17,7 +17,18 @@ interface VideoOption {
   status: string
 }
 
+interface PullPreview {
+  sequence: string
+  changes: { day: number; title: string; body: string; subject: string; oldTitle: string | null; oldBody: string | null }[]
+  unchanged: number[]
+  missing: number[]
+  duplicates: { day: number; subjects: string[] }[]
+  filled: number
+  fingerprint: string
+}
+
 const blank = (day: number): Day => ({ day, title: '', body: '', video_id: null, pdf_url: null })
+const listDays = (days: number[]) => days.length === 1 ? `Day ${days[0]}` : `Days ${days.slice(0, -1).join(', ')} and ${days[days.length - 1]}`
 
 // Admin only (the API checks the role): edit each course day's title, text, video and worksheet link.
 export default function AdminCoursesPage() {
@@ -28,9 +39,15 @@ export default function AdminCoursesPage() {
   const [form, setForm] = useState<Day>(blank(1))
   const [status, setStatus] = useState('')
   const [saving, setSaving] = useState(false)
+  const [preview, setPreview] = useState<PullPreview | null>(null)
+  const [pulling, setPulling] = useState(false)
+  const [pullStatus, setPullStatus] = useState('')
+  const [reload, setReload] = useState(0)
 
   useEffect(() => {
     setStatus('')
+    setPreview(null)
+    setPullStatus('')
     fetch(`/api/admin/course-days?course=${course}`)
       .then(async res => {
         if (!res.ok) throw new Error(res.status === 403 ? 'Admin access required.' : 'Could not load.')
@@ -41,7 +58,34 @@ export default function AdminCoursesPage() {
         setVideos(data.videos)
       })
       .catch(err => setStatus(err.message))
-  }, [course])
+  }, [course, reload])
+
+  // Pull from ConvertKit: first a preview, then Save applies exactly that preview.
+  const pull = async (savePreview?: PullPreview) => {
+    setPulling(true)
+    setPullStatus('')
+    try {
+      const res = await fetch('/api/admin/course-days/pull', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(savePreview ? { course, save: true, fingerprint: savePreview.fingerprint } : { course }),
+      })
+      const data = await res.json()
+      if (res.status === 409) { setPreview(data); throw new Error(data.error) }
+      if (!res.ok) throw new Error(data.error || "That didn't work. Try again.")
+      if (savePreview) {
+        setPreview(null)
+        setPullStatus(data.saved.length ? `${listDays(data.saved)} saved. The old text is backed up.` : 'Nothing to save.')
+        setReload(n => n + 1)
+      } else {
+        setPreview(data)
+      }
+    } catch (err: any) {
+      setPullStatus(err.message)
+    } finally {
+      setPulling(false)
+    }
+  }
 
   useEffect(() => {
     setForm(days.find(d => d.day === selectedDay) || blank(selectedDay))
@@ -91,6 +135,75 @@ export default function AdminCoursesPage() {
         ))}
       </div>
 
+      <section className="kyn-card" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div>
+          <h2 className="kyn-section-title" style={{ margin: 0 }}>Pull from ConvertKit</h2>
+          <p className="kyn-secondary" style={{ margin: '8px 0 0' }}>
+            Titles and text come from the sequence emails with subjects starting &quot;Day 1:&quot; to &quot;Day 14:&quot;. You see what changes before anything is saved.
+          </p>
+        </div>
+        {!preview && (
+          <button onClick={() => pull()} disabled={pulling} className="kyn-btn kyn-btn-secondary kyn-btn-block">
+            {pulling ? 'Pulling...' : 'Pull from ConvertKit'}
+          </button>
+        )}
+
+        {preview && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <p className="kyn-label" style={{ margin: 0 }}>From &quot;{preview.sequence}&quot;</p>
+
+            {preview.missing.length > 0 && (
+              <p style={{ margin: 0 }}>
+                No &quot;Day N:&quot; email for {listDays(preview.missing)}. {preview.missing.length === 1 ? 'That day stays' : 'Those days stay'} as {preview.missing.length === 1 ? 'it is' : 'they are'}.
+              </p>
+            )}
+            {preview.duplicates.map(d => (
+              <p key={d.day} style={{ margin: 0 }}>
+                More than one email for Day {d.day} ({d.subjects.map(s => `"${s}"`).join(', ')}). Day {d.day} stays as it is.
+              </p>
+            ))}
+            {preview.unchanged.length > 0 && (
+              <p className="kyn-secondary" style={{ margin: 0 }}>No change: {listDays(preview.unchanged)}.</p>
+            )}
+
+            {preview.changes.length === 0 ? (
+              <p style={{ margin: 0 }}>Nothing has changed.</p>
+            ) : (
+              <div className="kyn-rows">
+                {preview.changes.map(c => (
+                  <div key={c.day} className="kyn-row" style={{ display: 'block' }}>
+                    <p className="kyn-label" style={{ margin: 0 }}>Day {c.day}{c.oldTitle === null ? ' (new)' : ''}</p>
+                    <p className="kyn-session-title" style={{ margin: '8px 0 0' }}>{c.title}</p>
+                    {c.oldTitle !== null && c.oldTitle !== c.title && (
+                      <p className="kyn-secondary" style={{ margin: '4px 0 0' }}>Was: {c.oldTitle || '(empty)'}</p>
+                    )}
+                    <p style={{ margin: '12px 0 0', whiteSpace: 'pre-wrap', lineHeight: 1.5 }}>{c.body || '(no text)'}</p>
+                    {c.oldBody !== null && c.oldBody !== c.body && (
+                      <details style={{ marginTop: '12px' }}>
+                        <summary className="kyn-secondary" style={{ cursor: 'pointer' }}>Current text</summary>
+                        <p className="kyn-secondary" style={{ margin: '8px 0 0', whiteSpace: 'pre-wrap', lineHeight: 1.5 }}>{c.oldBody || '(empty)'}</p>
+                      </details>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              {preview.changes.length > 0 && (
+                <button onClick={() => pull(preview)} disabled={pulling} className="kyn-btn kyn-btn-main">
+                  {pulling ? 'Saving...' : `Save ${preview.changes.length} ${preview.changes.length === 1 ? 'day' : 'days'}`}
+                </button>
+              )}
+              <button onClick={() => { setPreview(null); setPullStatus('') }} disabled={pulling} className="kyn-btn kyn-btn-secondary">
+                {preview.changes.length > 0 ? 'Cancel' : 'Close'}
+              </button>
+            </div>
+          </div>
+        )}
+        {pullStatus && <p className="kyn-label" style={{ margin: 0 }}>{pullStatus}</p>}
+      </section>
+
       <div>
         <label htmlFor="course-day" className="kyn-label" style={{ display: 'block', marginBottom: '8px' }}>Day</label>
         <select
@@ -109,8 +222,7 @@ export default function AdminCoursesPage() {
       <form onSubmit={save} className="kyn-card" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
           <label htmlFor="day-title" className="kyn-label" style={{ display: 'block', marginBottom: '8px' }}>Title</label>
-          <input id="day-title" className="kyn-input" value={form.title} maxLength={200}
-            onChange={e => setForm({ ...form, title: e.target.value })} />
+          <input id="day-title" className="kyn-input" value={form.title} readOnly />
         </div>
         <div>
           <label htmlFor="day-video" className="kyn-label" style={{ display: 'block', marginBottom: '8px' }}>Video</label>
@@ -127,9 +239,8 @@ export default function AdminCoursesPage() {
         </div>
         <div>
           <label htmlFor="day-body" className="kyn-label" style={{ display: 'block', marginBottom: '8px' }}>Text</label>
-          <textarea id="day-body" className="kyn-input" rows={12} value={form.body} style={{ resize: 'vertical', lineHeight: 1.5 }}
-            onChange={e => setForm({ ...form, body: e.target.value })} />
-          <p className="kyn-secondary" style={{ margin: '8px 0 0' }}>One paragraph per line. Start a line with • for a bullet.</p>
+          <textarea id="day-body" className="kyn-input" rows={12} value={form.body} readOnly style={{ resize: 'vertical', lineHeight: 1.5 }} />
+          <p className="kyn-secondary" style={{ margin: '8px 0 0' }}>Title and text come from ConvertKit. Edit the email, then Pull from ConvertKit.</p>
         </div>
         <div>
           <label htmlFor="day-pdf" className="kyn-label" style={{ display: 'block', marginBottom: '8px' }}>Worksheet link (optional)</label>
