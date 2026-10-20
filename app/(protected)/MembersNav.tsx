@@ -35,6 +35,15 @@ const NAV_LINKS = [
     ),
   },
   {
+    label: 'Courses',
+    href: '/courses',
+    icon: (
+      <svg className="kyn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 4h7a3 3 0 013 3v13a2 2 0 00-2-2H2z" /><path d="M22 4h-7a3 3 0 00-3 3v13a2 2 0 012-2h8z" />
+      </svg>
+    ),
+  },
+  {
     label: 'Library',
     href: '/videos',
     icon: (
@@ -184,7 +193,10 @@ export default function MembersNav() {
               }}>
                 <Link href="/members/account" className="kyn-menu-item" style={menuItem}>Account</Link>
                 {navUser?.role === 'admin' && (
-                  <Link href="/admin" className="kyn-menu-item" style={menuItem}>Admin</Link>
+                  <>
+                    <Link href="/admin" className="kyn-menu-item" style={menuItem}>Admin</Link>
+                    <Link href="/admin/courses" className="kyn-menu-item" style={menuItem}>Edit courses</Link>
+                  </>
                 )}
                 <button onClick={handleLogout} className="kyn-menu-item" style={{ ...menuItem, color: TEXT_2 }}>Sign out</button>
               </div>

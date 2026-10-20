@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { hiddenRoutes } from './lib/features'
 
-const MEMBER_PATHS = ['/members', '/journey', '/community', '/videos', '/calls']
+const MEMBER_PATHS = ['/members', '/journey', '/community', '/videos', '/calls', '/courses']
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -29,7 +29,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/members/:path*', '/auth/:path*', '/journey/:path*', '/community/:path*',
-    '/videos/:path*', '/calls/:path*',
+    '/videos/:path*', '/calls/:path*', '/courses/:path*',
     '/about-cor/:path*', '/astrology/:path*', '/replays/:path*',
   ]
 }

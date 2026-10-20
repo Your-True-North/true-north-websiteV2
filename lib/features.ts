@@ -22,6 +22,9 @@ export const features = {
   legacyLive: false,         // the old header and upcoming events list
   liveMonthCalendar: false,  // the month view
 
+  // Courses (/courses)
+  courseSpace: false,  // SPACE, built but not yet released to members
+
   // Emails
   allMemberReminder48h: false, // the old reminder to every member 48 hours before each session
 

@@ -16,3 +16,18 @@ export function formatSessionTime(date: Date, timeZone?: string): string {
 
   return minute === '00' ? `${hour12}${suffix}` : `${hour12}:${minute}${suffix}`
 }
+
+// When a locked course day opens, from his side of the clock:
+// "today at 3pm your time", "tomorrow at 8am your time", "Thursday at 8am your time"
+export function describeOpening(iso: string): string {
+  const when = new Date(iso)
+  const now = new Date()
+  const dayKey = (d: Date) => d.toLocaleDateString('en-GB')
+  const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000)
+  const time = `${formatSessionTime(when)} your time`
+  if (dayKey(when) === dayKey(now)) return `today at ${time}`
+  if (dayKey(when) === dayKey(tomorrow)) return `tomorrow at ${time}`
+  const weekAway = when.getTime() - now.getTime() > 6 * 24 * 60 * 60 * 1000
+  const day = when.toLocaleDateString('en-GB', weekAway ? { weekday: 'long', day: 'numeric', month: 'long' } : { weekday: 'long' })
+  return `${day} at ${time}`
+}
