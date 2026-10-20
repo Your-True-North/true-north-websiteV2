@@ -9,18 +9,18 @@ interface NavUser {
   role?: string
 }
 
-const BG = '#111311'
-const TEXT = '#ECE6DA'
-const TEXT_2 = 'rgba(236,230,218,0.8)'
-const SAGE = '#9BC4B8'
-const LINE = 'rgba(236,230,218,0.08)'
+// Colours come from the tokens in app/(protected)/layout.tsx
+const BG = 'var(--kyn-bg)'
+const TEXT = 'var(--kyn-ink)'
+const TEXT_2 = 'var(--kyn-ink2)'
+const LINE = 'var(--kyn-border)'
 
 const NAV_LINKS = [
   {
     label: 'Home',
     href: '/members',
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg className="kyn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
       </svg>
     ),
@@ -29,7 +29,7 @@ const NAV_LINKS = [
     label: 'Live',
     href: '/calls',
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg className="kyn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
       </svg>
     ),
@@ -38,7 +38,7 @@ const NAV_LINKS = [
     label: 'Library',
     href: '/videos',
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg className="kyn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
       </svg>
     ),
@@ -113,14 +113,17 @@ export default function MembersNav() {
         }
         .kyn-toptabs { display: flex; gap: 8px; }
         .kyn-toptab {
-          display: flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 12px;
-          font-size: 15px; font-weight: 500; text-decoration: none; color: ${TEXT_2};
+          display: flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--kyn-r);
+          font-size: 15px; font-weight: 500; text-decoration: none; color: var(--kyn-tab-inactive);
+          transition: color 150ms ease, background-color 150ms ease;
         }
         .kyn-toptab:hover { color: ${TEXT}; }
-        .kyn-toptab[data-active="true"] { color: ${TEXT}; background: rgba(236,230,218,0.08); }
+        .kyn-toptab[data-active="true"] { color: ${TEXT}; font-weight: 600; background: var(--kyn-hover); }
+        .kyn-menu-item { transition: background-color 150ms ease; }
+        .kyn-menu-item:hover { background: var(--kyn-hover) !important; }
         .kyn-bottombar { display: none; }
         @media (max-width: 768px) {
-          .kyn-topbar-inner { height: 56px; padding: 0 16px; }
+          .kyn-topbar-inner { height: 56px; padding: 0 var(--kyn-side-pad); }
           .kyn-toptabs { display: none; }
           .kyn-bottombar {
             display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
@@ -130,16 +133,18 @@ export default function MembersNav() {
           .kyn-bottomtab {
             flex: 1; min-height: 64px; display: flex; flex-direction: column; align-items: center;
             justify-content: center; gap: 4px; text-decoration: none;
-            color: ${TEXT_2}; font-size: 13px; font-weight: 500;
+            color: var(--kyn-tab-inactive); font-size: 13px; font-weight: 500;
+            transition: color 150ms ease;
           }
-          .kyn-bottomtab[data-active="true"] { color: ${SAGE}; }
+          .kyn-bottomtab[data-active="true"] { color: ${TEXT}; font-weight: 600; }
         }
       `}</style>
 
       <header className="kyn-topbar">
         <div className="kyn-topbar-inner">
           <Link href="/members" aria-label="Home" style={{ display: 'flex', alignItems: 'center', minHeight: '44px' }}>
-            <img src="/kyn-compass-white.png" alt="Know Your North" style={{ height: '36px', width: '36px', display: 'block', opacity: 0.92 }} />
+            {/* The compass mark is white, so it's inverted to sit dark on bone */}
+            <img src="/kyn-compass-white.png" alt="Know Your North" style={{ height: '36px', width: '36px', display: 'block', filter: 'invert(1)' }} />
           </Link>
 
           <nav className="kyn-toptabs" aria-label="Members">
@@ -163,7 +168,7 @@ export default function MembersNav() {
             >
               <span style={{
                 width: '36px', height: '36px', borderRadius: '50%',
-                background: '#1B1E1B', border: `1px solid ${LINE}`,
+                background: 'var(--kyn-surface)', border: `1px solid ${LINE}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: '15px', fontWeight: 600, color: TEXT,
               }}>
@@ -174,14 +179,14 @@ export default function MembersNav() {
             {menuOpen && (
               <div style={{
                 position: 'absolute', top: '52px', right: 0, minWidth: '200px',
-                background: '#1B1E1B', border: `1px solid ${LINE}`, borderRadius: '16px',
-                boxShadow: '0 12px 32px rgba(0,0,0,0.4)', overflow: 'hidden', padding: '6px 0',
+                background: 'var(--kyn-surface)', border: `1px solid ${LINE}`, borderRadius: 'var(--kyn-r)',
+                overflow: 'hidden', padding: '6px 0',
               }}>
-                <Link href="/members/account" style={menuItem}>Account</Link>
+                <Link href="/members/account" className="kyn-menu-item" style={menuItem}>Account</Link>
                 {navUser?.role === 'admin' && (
-                  <Link href="/admin" style={menuItem}>Admin</Link>
+                  <Link href="/admin" className="kyn-menu-item" style={menuItem}>Admin</Link>
                 )}
-                <button onClick={handleLogout} style={{ ...menuItem, color: TEXT_2 }}>Sign out</button>
+                <button onClick={handleLogout} className="kyn-menu-item" style={{ ...menuItem, color: TEXT_2 }}>Sign out</button>
               </div>
             )}
           </div>

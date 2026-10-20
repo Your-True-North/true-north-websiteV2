@@ -13,48 +13,11 @@ interface Session {
   joinUrl?: string;
 }
 
-const TEXT = '#ECE6DA';
-const TEXT_2 = 'rgba(236,230,218,0.8)';
-const SAGE = '#9BC4B8';
-const LINE = 'rgba(236,230,218,0.08)';
-
-const cardStyle: React.CSSProperties = {
-  background: '#1B1E1B',
-  border: `1px solid ${LINE}`,
-  borderRadius: '16px',
-  padding: '20px',
-  position: 'relative',
-};
-
-const secondaryButton: React.CSSProperties = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  minHeight: '44px',
-  padding: '0 16px',
-  background: 'transparent',
-  border: '1px solid rgba(236,230,218,0.16)',
-  borderRadius: '12px',
-  color: TEXT,
-  fontSize: '15px',
-  fontWeight: 500,
-  cursor: 'pointer',
-};
-
-const mainButton: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  height: '54px',
-  background: TEXT,
-  color: '#111311',
-  border: 'none',
-  borderRadius: '12px',
-  fontSize: '16px',
-  fontWeight: 600,
-  textDecoration: 'none',
-  cursor: 'pointer',
-};
+// Colours, sizes and buttons come from the shared classes and tokens in
+// app/(protected)/layout.tsx
+const TEXT = 'var(--kyn-ink)';
+const TEXT_2 = 'var(--kyn-ink2)';
+const LINE = 'var(--kyn-border)';
 
 const PLACES = [
   { value: 'home', label: 'Home', seeYou: 'at home' },
@@ -65,7 +28,8 @@ const PLACES = [
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 
-export default function NextSessionCard() {
+// Live shows the usual day and time once above the card, so it hides them here
+export default function NextSessionCard({ showDateTime = true }: { showDateTime?: boolean }) {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCalendarOptions, setShowCalendarOptions] = useState(false);
@@ -248,16 +212,16 @@ END:VCALENDAR`;
 
   if (loading) {
     return (
-      <div style={cardStyle}>
-        <div style={{ color: TEXT_2, fontSize: '15px' }}>Loading the next session...</div>
+      <div className="kyn-card">
+        <div className="kyn-secondary">Loading the next session...</div>
       </div>
     );
   }
 
   if (sessions.length === 0) {
     return (
-      <div style={cardStyle}>
-        <div style={{ color: TEXT_2, fontSize: '15px' }}>No upcoming sessions</div>
+      <div className="kyn-card">
+        <div className="kyn-secondary">No upcoming sessions</div>
       </div>
     );
   }
@@ -274,25 +238,25 @@ END:VCALENDAR`;
   const seeYou = PLACES.find(p => p.value === rsvpPlace)?.seeYou || 'wherever you are';
 
   const addToCalendar = (
-    <div style={{ position: 'relative', marginTop: '12px' }}>
-      <button onClick={() => setShowCalendarOptions(!showCalendarOptions)} style={secondaryButton}>
+    <div style={{ position: 'relative', marginTop: '24px' }}>
+      <button onClick={() => setShowCalendarOptions(!showCalendarOptions)} className="kyn-btn kyn-btn-secondary">
         Add to calendar
       </button>
 
       {showCalendarOptions && (
-        <div style={{
-          position: 'absolute', top: '100%', left: 0, marginTop: '8px', zIndex: 10, minWidth: '200px',
-          background: '#1B1E1B', border: `1px solid ${LINE}`, borderRadius: '12px', overflow: 'hidden',
-          boxShadow: '0 12px 32px rgba(0,0,0,0.4)'
+        <div className="kyn-rows" style={{
+          position: 'absolute', top: '100%', left: 0, marginTop: '8px', zIndex: 10, minWidth: '220px',
+          background: 'var(--kyn-surface)', border: `1px solid ${LINE}`, borderRadius: 'var(--kyn-r)', overflow: 'hidden',
         }}>
           {['google', 'apple', 'outlook', 'ical'].map((provider) => (
             <button
               key={provider}
               onClick={() => handleAddToCalendar(provider, nextSession)}
+              className="kyn-menu-row"
               style={{
-                width: '100%', minHeight: '44px', padding: '0 16px', background: 'transparent',
-                border: 'none', borderBottom: `1px solid ${LINE}`, color: TEXT,
-                fontSize: '15px', cursor: 'pointer', textAlign: 'left',
+                display: 'block', width: '100%', minHeight: '48px', padding: '0 16px', background: 'transparent',
+                border: 'none', color: TEXT, fontFamily: 'inherit',
+                fontSize: '16px', cursor: 'pointer', textAlign: 'left',
               }}
             >
               {provider === 'google' ? 'Google Calendar' :
@@ -306,58 +270,66 @@ END:VCALENDAR`;
   );
 
   return (
-    <div style={cardStyle}>
-      <div style={{ fontSize: '15px', color: SAGE, marginBottom: '8px' }}>
+    <div className="kyn-card">
+      <div className="kyn-label" style={{ marginBottom: '12px' }}>
         Next session
       </div>
 
-      <h2 style={{ fontSize: '26px', lineHeight: 1.2, color: TEXT, margin: '0 0 8px' }}>
+      <h2 className="kyn-session-title">
         {nextSession.title}
       </h2>
 
-      <div style={{ fontSize: '16px', color: TEXT_2, marginBottom: '16px' }}>
-        {nextSession.date} at {nextSession.time}
-      </div>
+      {showDateTime && (
+        <div style={{ fontSize: '16px', color: TEXT_2, marginTop: '12px' }}>
+          {nextSession.date} at {nextSession.time}
+        </div>
+      )}
 
       {/* What happens in this session: one level only */}
       <button
         onClick={() => setShowDetails(!showDetails)}
         aria-expanded={showDetails}
+        aria-controls="session-details"
         style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%',
-          minHeight: '44px', padding: 0, background: 'none', border: 'none',
-          borderTop: `1px solid ${LINE}`, color: TEXT, fontSize: '15px', cursor: 'pointer', textAlign: 'left',
+          minHeight: '52px', padding: 0, marginTop: '24px', background: 'none', border: 'none',
+          borderTop: `1px solid ${LINE}`, color: TEXT, fontSize: '16px', fontFamily: 'inherit',
+          cursor: 'pointer', textAlign: 'left',
         }}
       >
         What happens in this session
-        <span aria-hidden="true" style={{ color: TEXT_2, transform: showDetails ? 'rotate(180deg)' : 'none', transition: 'transform 0.15s' }}>⌄</span>
+        <svg className="kyn-icon kyn-chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
       </button>
 
-      {showDetails && (
-        <div style={{ fontSize: '16px', lineHeight: 1.55, color: TEXT_2, padding: '4px 0 12px' }}>
-          {description && <p style={{ margin: '0 0 12px', color: TEXT }}>{description}</p>}
-          <p style={{ margin: '0 0 6px' }}>Have ready: somewhere quiet, headphones, and space to lie down.</p>
-          <p style={{ margin: '0 0 6px' }}>{nextSession.durationMinutes} minutes.</p>
-          <p style={{ margin: 0 }}>Camera on or off, your call.</p>
+      <div id="session-details" className="kyn-collapse" data-open={showDetails} aria-hidden={!showDetails}>
+        <div>
+          <div style={{ fontSize: '16px', lineHeight: 1.55, color: TEXT_2, padding: '4px 0 8px' }}>
+            {description && <p style={{ margin: '0 0 16px', color: TEXT }}>{description}</p>}
+            <p style={{ margin: '0 0 8px' }}>Have ready: somewhere quiet, headphones, and space to lie down.</p>
+            <p style={{ margin: '0 0 8px' }}>{nextSession.durationMinutes} minutes.</p>
+            <p style={{ margin: 0 }}>Camera on or off, your call.</p>
+          </div>
         </div>
-      )}
+      </div>
 
       {isJoinTime ? (
-        <a href={nextSession.joinUrl} target="_blank" rel="noopener noreferrer" style={{ ...mainButton, marginTop: '12px' }}>
+        <a href={nextSession.joinUrl} target="_blank" rel="noopener noreferrer" className="kyn-btn kyn-btn-main kyn-btn-block" style={{ marginTop: '24px' }}>
           Join on Zoom
         </a>
       ) : hasStarted ? null : (
         /* Attendance: "I'll be there" */
-        <div style={{ marginTop: '12px' }}>
+        <div style={{ marginTop: '24px' }}>
           {rsvpState === 'none' && (
-            <button onClick={() => setRsvpState('asking')} style={mainButton}>
+            <button onClick={() => setRsvpState('asking')} className="kyn-btn kyn-btn-main kyn-btn-block">
               I&apos;ll be there
             </button>
           )}
 
           {rsvpState === 'asking' && (
             <div>
-              <div style={{ fontSize: '16px', color: TEXT, marginBottom: '12px' }}>
+              <div style={{ fontSize: '16px', color: TEXT, marginBottom: '16px' }}>
                 Where will you be when it starts?
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
@@ -366,7 +338,7 @@ END:VCALENDAR`;
                     key={p.value}
                     onClick={() => saveRsvp(p.value)}
                     disabled={rsvpBusy}
-                    style={{ ...secondaryButton, justifyContent: 'center', minHeight: '54px', opacity: rsvpBusy ? 0.6 : 1 }}
+                    className="kyn-btn kyn-btn-secondary"
                   >
                     {p.label}
                   </button>
@@ -381,17 +353,10 @@ END:VCALENDAR`;
                 You&apos;re in, and I&apos;ll see you {seeYou}.
               </div>
               {addToCalendar}
-              <p style={{ fontSize: '15px', color: TEXT_2, margin: '12px 0 0', lineHeight: 1.5 }}>
+              <p className="kyn-secondary" style={{ margin: '16px 0 0', lineHeight: 1.5 }}>
                 A reminder with the join link lands the day before and an hour before.
               </p>
-              <button
-                onClick={cancelRsvp}
-                disabled={rsvpBusy}
-                style={{
-                  minHeight: '44px', padding: 0, background: 'none', border: 'none',
-                  color: TEXT_2, fontSize: '15px', textDecoration: 'underline', cursor: 'pointer',
-                }}
-              >
+              <button onClick={cancelRsvp} disabled={rsvpBusy} className="kyn-link-btn" style={{ marginTop: '8px' }}>
                 Change my answer
               </button>
             </div>

@@ -16,56 +16,13 @@ interface User {
   bio?: string
 }
 
-const TEXT = '#ECE6DA'
-const TEXT_2 = 'rgba(236,230,218,0.8)'
-const SAGE = '#9BC4B8'
-const LINE = 'rgba(236,230,218,0.08)'
+// Colours, buttons and inputs come from the tokens and shared classes in
+// app/(protected)/layout.tsx
+const TEXT = 'var(--kyn-ink)'
+const TEXT_2 = 'var(--kyn-ink2)'
+const LINE = 'var(--kyn-border)'
 
-const card: React.CSSProperties = {
-  background: '#1B1E1B',
-  border: `1px solid ${LINE}`,
-  borderRadius: '16px',
-  padding: '20px',
-}
-
-const label: React.CSSProperties = { display: 'block', fontSize: '15px', color: SAGE, marginBottom: '8px' }
-
-const input: React.CSSProperties = {
-  width: '100%',
-  minHeight: '48px',
-  padding: '12px 14px',
-  background: '#111311',
-  border: '1px solid rgba(236,230,218,0.16)',
-  borderRadius: '12px',
-  color: TEXT,
-  fontSize: '16px',
-  fontFamily: 'inherit',
-  outline: 'none',
-}
-
-const mainButton: React.CSSProperties = {
-  width: '100%',
-  height: '54px',
-  background: TEXT,
-  color: '#111311',
-  border: 'none',
-  borderRadius: '12px',
-  fontSize: '16px',
-  fontWeight: 600,
-  cursor: 'pointer',
-}
-
-const secondaryButton: React.CSSProperties = {
-  width: '100%',
-  minHeight: '48px',
-  padding: '0 16px',
-  background: 'transparent',
-  border: '1px solid rgba(236,230,218,0.16)',
-  borderRadius: '12px',
-  color: TEXT,
-  fontSize: '16px',
-  cursor: 'pointer',
-}
+const label: React.CSSProperties = { display: 'block', marginBottom: '8px' }
 
 const MESSAGE_MAX = 2000
 
@@ -247,11 +204,11 @@ export default function AccountPage() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingBottom: '24px', color: TEXT }}>
-      <h1 style={{ fontSize: '30px', margin: '8px 0 0', color: TEXT }}>Account</h1>
+    <div className="kyn-stack" style={{ paddingBottom: '24px', color: TEXT }}>
+      <h1 className="kyn-title">Account</h1>
 
       {/* Membership */}
-      <section style={card}>
+      <section className="kyn-card">
         <div style={row}>
           <span style={{ color: TEXT_2 }}>Email</span>
           <span style={{ wordBreak: 'break-all' }}>{user.email}</span>
@@ -262,99 +219,100 @@ export default function AccountPage() {
             {user.joinDate ? new Date(user.joinDate).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) : ''}
           </span>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-          <button onClick={handleManageBilling} disabled={billingLoading} style={{ ...secondaryButton, opacity: billingLoading ? 0.6 : 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
+          <button onClick={handleManageBilling} disabled={billingLoading} className="kyn-btn kyn-btn-secondary kyn-btn-block">
             {billingLoading ? 'Opening...' : 'Manage billing'}
           </button>
-          <button onClick={handleManageBilling} disabled={billingLoading} style={{ ...secondaryButton, color: TEXT_2, opacity: billingLoading ? 0.6 : 1 }}>
+          <button onClick={handleManageBilling} disabled={billingLoading} className="kyn-btn kyn-btn-secondary kyn-btn-block">
             Cancel membership
           </button>
         </div>
-        {billingError && <p style={{ fontSize: '15px', color: TEXT, margin: '12px 0 0' }}>{billingError}</p>}
+        {billingError && <p style={{ fontSize: '15px', color: TEXT, margin: '16px 0 0' }}>{billingError}</p>}
       </section>
 
       {/* Message True */}
-      <section style={card}>
-        <h2 style={{ fontSize: '22px', margin: '0 0 12px', color: TEXT }}>Message True</h2>
+      <section className="kyn-card">
+        <h2 className="kyn-section-title">Message True</h2>
         <form onSubmit={handleSendMessage}>
-          <label htmlFor="message-true" style={label}>What&apos;s on your mind?</label>
+          <label htmlFor="message-true" className="kyn-label" style={label}>What&apos;s on your mind?</label>
           <textarea
             id="message-true"
+            className="kyn-input"
             value={message}
             onChange={(e) => { setMessage(e.target.value); if (messageStatus === 'sent') setMessageStatus('') }}
             maxLength={MESSAGE_MAX}
             rows={5}
             disabled={messageSending}
-            style={{ ...input, resize: 'vertical', lineHeight: 1.5 }}
+            style={{ resize: 'vertical', lineHeight: 1.5 }}
           />
-          <div style={{ textAlign: 'right', fontSize: '15px', color: TEXT_2, margin: '4px 0 12px' }}>
+          <div className="kyn-secondary" style={{ textAlign: 'right', margin: '8px 0 16px' }}>
             {message.length}/{MESSAGE_MAX}
           </div>
           <button
             type="submit"
             disabled={messageSending || !message.trim()}
-            style={{ ...secondaryButton, opacity: messageSending || !message.trim() ? 0.6 : 1 }}
+            className="kyn-btn kyn-btn-secondary kyn-btn-block"
           >
             {messageSending ? 'Sending...' : 'Send'}
           </button>
-          <p style={{ fontSize: '15px', color: TEXT_2, margin: '12px 0 0', lineHeight: 1.5 }}>
+          <p className="kyn-secondary" style={{ margin: '16px 0 0', lineHeight: 1.5 }}>
             This goes straight to me. I&apos;ll reply to your email.
           </p>
           {messageStatus === 'sent' && (
-            <p style={{ fontSize: '15px', color: SAGE, margin: '12px 0 0' }}>Sent. I&apos;ll reply to your email.</p>
+            <p className="kyn-label" style={{ margin: '16px 0 0' }}>Sent. I&apos;ll reply to your email.</p>
           )}
           {messageStatus === 'failed' && (
-            <p style={{ fontSize: '15px', color: TEXT, margin: '12px 0 0' }}>That didn&apos;t send. Try again in a minute.</p>
+            <p style={{ fontSize: '15px', color: TEXT, margin: '16px 0 0' }}>That didn&apos;t send. Try again in a minute.</p>
           )}
         </form>
       </section>
 
       {/* Profile Settings */}
-      <section style={card}>
-        <h2 style={{ fontSize: '22px', margin: '0 0 16px', color: TEXT }}>Profile</h2>
+      <section className="kyn-card">
+        <h2 className="kyn-section-title">Profile</h2>
         <form onSubmit={handleProfileUpdate}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
             <div style={{
               width: '72px', height: '72px', borderRadius: '50%', flexShrink: 0,
-              background: profilePhoto ? `url(${profilePhoto})` : '#2A2E2A',
+              background: profilePhoto ? `url(${profilePhoto})` : 'var(--kyn-thumb)',
               backgroundSize: 'cover', backgroundPosition: 'center',
               border: `1px solid ${LINE}`,
             }} />
-            <label style={{ ...secondaryButton, width: 'auto', display: 'inline-flex', alignItems: 'center' }}>
+            <label className="kyn-btn kyn-btn-secondary">
               Upload photo
               <input type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
             </label>
           </div>
 
           <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="profile-name" style={label}>Name</label>
-            <input id="profile-name" type="text" value={profileForm.name} required disabled={saving}
-              onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })} style={input} />
+            <label htmlFor="profile-name" className="kyn-label" style={label}>Name</label>
+            <input id="profile-name" type="text" className="kyn-input" value={profileForm.name} required disabled={saving}
+              onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })} />
           </div>
 
           <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="profile-email" style={label}>Email</label>
-            <input id="profile-email" type="email" value={profileForm.email} required disabled={saving}
-              onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })} style={input} />
+            <label htmlFor="profile-email" className="kyn-label" style={label}>Email</label>
+            <input id="profile-email" type="email" className="kyn-input" value={profileForm.email} required disabled={saving}
+              onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })} />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label htmlFor="profile-bio" style={label}>Bio (optional)</label>
-            <textarea id="profile-bio" value={profileForm.bio} maxLength={500} rows={3} disabled={saving}
+          <div style={{ marginBottom: '24px' }}>
+            <label htmlFor="profile-bio" className="kyn-label" style={label}>Bio (optional)</label>
+            <textarea id="profile-bio" className="kyn-input" value={profileForm.bio} maxLength={500} rows={3} disabled={saving}
               onChange={(e) => setProfileForm({ ...profileForm, bio: e.target.value })}
-              style={{ ...input, resize: 'vertical', lineHeight: 1.5 }} />
+              style={{ resize: 'vertical', lineHeight: 1.5 }} />
           </div>
 
-          {profileError && <p style={{ fontSize: '15px', color: TEXT, margin: '0 0 12px' }}>{profileError}</p>}
-          {profileSuccess && <p style={{ fontSize: '15px', color: SAGE, margin: '0 0 12px' }}>{profileSuccess}</p>}
+          {profileError && <p style={{ fontSize: '15px', color: TEXT, margin: '0 0 16px' }}>{profileError}</p>}
+          {profileSuccess && <p className="kyn-label" style={{ margin: '0 0 16px' }}>{profileSuccess}</p>}
 
-          <button type="submit" disabled={saving} style={{ ...mainButton, opacity: saving ? 0.6 : 1 }}>
+          <button type="submit" disabled={saving} className="kyn-btn kyn-btn-main kyn-btn-block">
             {saving ? 'Saving...' : 'Save changes'}
           </button>
         </form>
       </section>
 
-      <button onClick={handleLogout} style={{ ...secondaryButton, color: TEXT_2 }}>Sign out</button>
+      <button onClick={handleLogout} className="kyn-btn kyn-btn-secondary kyn-btn-block">Sign out</button>
     </div>
   )
 }

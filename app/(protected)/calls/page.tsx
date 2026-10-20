@@ -203,6 +203,14 @@ export default function CallsPage() {
 
   const comingUp = calendarEvents.slice(1, 4)
 
+  // The usual day and time, taken from the next session in his own time zone.
+  // A Coming up row only shows its own date when it's off that day or time.
+  const weekdayOf = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { weekday: 'long' })
+  const timeOf = (iso: string) => new Date(iso).toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' })
+  const usualDay = calendarEvents[0] ? weekdayOf(calendarEvents[0].date) : ''
+  const usualTime = calendarEvents[0] ? timeOf(calendarEvents[0].date) : ''
+  const isUsualSlot = (iso: string) => weekdayOf(iso) === usualDay && timeOf(iso) === usualTime
+
   const getYouTubeId = (url: string) => {
     if (!url) return null
     const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)
@@ -227,16 +235,25 @@ export default function CallsPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', color: 'var(--kyn-ink)', fontFamily: 'var(--kyn-font-sans)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingBottom: '24px' }}>
+      <div className="kyn-stack" style={{ paddingBottom: '24px' }}>
 
-        <NextSessionCard />
+        <header>
+          <h1 className="kyn-title">Live</h1>
+          {usualDay && (
+            <p style={{ fontSize: '16px', color: 'var(--kyn-ink2)', margin: '12px 0 0' }}>
+              Every {usualDay} at {usualTime} your time.
+            </p>
+          )}
+        </header>
+
+        <NextSessionCard showDateTime={false} />
 
         {/* Coming up: the three sessions after the next one */}
         {comingUp.length > 0 && (
           <section>
-            <h2 style={{ fontSize: '22px', color: 'var(--kyn-ink)', margin: '8px 0 12px' }}>Coming up</h2>
-            <div style={{ ...card, overflow: 'hidden' }}>
-              {comingUp.map((event, i) => {
+            <h2 className="kyn-section-title">Coming up</h2>
+            <div className="kyn-rows" style={{ borderTop: '1px solid var(--kyn-border)', borderBottom: '1px solid var(--kyn-border)' }}>
+              {comingUp.map((event) => {
                 const eventDate = new Date(event.date)
                 return (
                   <a
@@ -244,20 +261,19 @@ export default function CallsPage() {
                     href={generateGoogleCalendarUrl(event)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{
-                      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px',
-                      minHeight: '64px', padding: '12px 16px', textDecoration: 'none', color: 'var(--kyn-ink)',
-                      borderTop: i === 0 ? 'none' : '1px solid var(--kyn-border)'
-                    }}
+                    className="kyn-row kyn-row-link"
+                    style={{ justifyContent: 'space-between', minHeight: '64px' }}
                   >
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: '16px', lineHeight: 1.35, marginBottom: '2px' }}>{event.title}</div>
-                      <div style={{ fontSize: '15px', color: 'var(--kyn-ink2)' }}>
-                        {eventDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })} at{' '}
-                        {eventDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' })}
-                      </div>
+                      <div style={{ fontSize: '16px', lineHeight: 1.35 }}>{event.title}</div>
+                      {!isUsualSlot(event.date) && (
+                        <div className="kyn-label" style={{ marginTop: '4px' }}>
+                          {eventDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })} at{' '}
+                          {eventDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' })}
+                        </div>
+                      )}
                     </div>
-                    <span style={{ fontSize: '15px', color: '#9BC4B8', flexShrink: 0 }}>Add to calendar</span>
+                    <span className="kyn-secondary" style={{ flexShrink: 0 }}>Add to calendar</span>
                   </a>
                 )
               })}
@@ -270,16 +286,19 @@ export default function CallsPage() {
           href={ADDICTION_COACHING_URL}
           target="_blank"
           rel="noopener noreferrer"
+          className="kyn-row kyn-row-link"
           style={{
-            ...card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px',
-            minHeight: '64px', padding: '12px 16px', textDecoration: 'none', color: 'var(--kyn-ink)'
+            justifyContent: 'space-between', minHeight: '64px',
+            borderTop: '1px solid var(--kyn-border)', borderBottom: '1px solid var(--kyn-border)'
           }}
         >
           <div>
             <div style={{ fontSize: '16px', marginBottom: '2px' }}>Addiction group coaching</div>
-            <div style={{ fontSize: '15px', color: 'var(--kyn-ink2)' }}>Limited spots, booked separately</div>
+            <div className="kyn-secondary">Limited spots, booked separately</div>
           </div>
-          <span aria-hidden="true" style={{ fontSize: '20px', color: 'var(--kyn-ink2)' }}>›</span>
+          <svg className="kyn-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 6 15 12 9 18" />
+          </svg>
         </a>
 
         {features.legacyLive && (<>
@@ -756,31 +775,24 @@ export default function CallsPage() {
 
         {/* Replays: the existing list, newest first */}
         <section id="replays">
-          <h2 style={{ fontSize: '22px', color: 'var(--kyn-ink)', margin: '8px 0 12px' }}>Replays</h2>
+          <h2 className="kyn-section-title">Replays</h2>
 
           {replays.length === 0 ? (
-            <div style={{ ...card, padding: '20px', fontSize: '15px', color: 'var(--kyn-ink2)' }}>
+            <div className="kyn-secondary">
               No replays yet. They appear here after each live session.
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div className="kyn-rows" style={{ borderTop: '1px solid var(--kyn-border)', borderBottom: '1px solid var(--kyn-border)' }}>
               {replays.map(video => {
                 const ytId = getYouTubeId(video.youtube_url)
                 return (
-                  <Link
-                    key={video.id}
-                    href={`/videos/${video.id}`}
-                    style={{ ...card, display: 'flex', gap: '16px', alignItems: 'center', padding: '12px', textDecoration: 'none', color: 'var(--kyn-ink)' }}
-                  >
-                    <div style={{
-                      width: '128px', flexShrink: 0, aspectRatio: '16 / 9', borderRadius: '8px',
-                      background: '#2A2E2A',
-                      backgroundImage: ytId ? `url(https://img.youtube.com/vi/${ytId}/mqdefault.jpg)` : undefined,
-                      backgroundSize: 'cover', backgroundPosition: 'center'
-                    }} />
+                  <Link key={video.id} href={`/videos/${video.id}`} className="kyn-row kyn-row-link">
+                    <div className="kyn-thumb" style={{ width: '144px' }}>
+                      {ytId && <img src={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`} alt="" loading="lazy" />}
+                    </div>
                     <div style={{ minWidth: 0 }}>
                       <div style={{ fontSize: '16px', lineHeight: 1.35, marginBottom: '4px' }}>{video.title}</div>
-                      <div style={{ fontSize: '15px', color: 'var(--kyn-ink2)' }}>
+                      <div className="kyn-secondary">
                         {new Date(video.upload_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                         {parseInt(video.duration) > 0 ? ` · ${parseInt(video.duration)} min` : ''}
                       </div>

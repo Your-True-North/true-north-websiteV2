@@ -428,14 +428,7 @@ export default function VideoPlayerPage() {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--kyn-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ color: 'var(--kyn-ink3)', fontWeight: 300 }}>Video not found</div>
-        <Link href="/videos" style={{
-          padding: '0.75rem 1.5rem',
-          background: 'var(--kyn-green)',
-          color: '#fff',
-          borderRadius: 'var(--kyn-r)',
-          textDecoration: 'none',
-          fontWeight: 600
-        }}>
+        <Link href="/videos" className="kyn-btn kyn-btn-main">
           Back to Library
         </Link>
       </div>
@@ -450,7 +443,7 @@ export default function VideoPlayerPage() {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: isMobile ? '16px 14px 72px' : '28px 32px 52px'
+        padding: '0 0 24px'
       }}>
         {/* Breadcrumb */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '16px', borderBottom: '1px solid var(--kyn-border)', marginBottom: '20px' }}>
@@ -469,8 +462,8 @@ export default function VideoPlayerPage() {
             <div style={{
               position: 'relative',
               paddingTop: '56.25%',
-              background: '#000',
-              borderRadius: '3px',
+              background: 'var(--kyn-thumb)',
+              borderRadius: 'var(--kyn-r-thumb)',
               overflow: 'hidden',
               marginBottom: '1.5rem'
             }}>
@@ -489,8 +482,8 @@ export default function VideoPlayerPage() {
             <div style={{
               background: 'var(--kyn-surface)',
               border: '1px solid var(--kyn-border)',
-              borderRadius: '6px',
-              padding: '1.5rem',
+              borderRadius: 'var(--kyn-r)',
+              padding: 'var(--kyn-card-pad)',
               marginBottom: '1.5rem',
               position: isMobile ? 'static' : 'sticky',
               top: isMobile ? 'auto' : '4.5rem',
@@ -505,19 +498,10 @@ export default function VideoPlayerPage() {
                 gap: '1rem'
               }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{
-                    fontSize: '15px',
-                    color: 'var(--kyn-green-hi)',
-                    marginBottom: '0.5rem'
-                  }}>
+                  <div className="kyn-label" style={{ marginBottom: '12px' }}>
                     {video.category}
                   </div>
-                  <h1 style={{
-                    fontSize: isMobile ? '1.5rem' : '2rem',
-                    fontWeight: 400,
-                    marginBottom: '0.5rem',
-                    color: 'var(--kyn-ink)'
-                  }}>
+                  <h1 className="kyn-session-title" style={{ marginBottom: '12px' }}>
                     {video.title}
                   </h1>
                   <div style={{
@@ -534,19 +518,8 @@ export default function VideoPlayerPage() {
                 <button
                   onClick={handleMarkComplete}
                   disabled={markingComplete}
-                  style={{
-                    height: '54px',
-                    padding: '0 1.5rem',
-                    background: video.completed ? 'transparent' : '#ECE6DA',
-                    border: video.completed ? '1px solid rgba(236,230,218,0.16)' : 'none',
-                    borderRadius: '12px',
-                    color: video.completed ? 'var(--kyn-ink)' : '#111311',
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    cursor: markingComplete ? 'not-allowed' : 'pointer',
-                    whiteSpace: 'nowrap',
-                    opacity: markingComplete ? 0.7 : 1
-                  }}
+                  className={video.completed ? 'kyn-btn kyn-btn-secondary' : 'kyn-btn kyn-btn-main'}
+                  style={{ whiteSpace: 'nowrap' }}
                 >
                   {markingComplete ? '...' : video.completed ? '✓ Completed' : 'Mark Complete'}
                 </button>
@@ -735,31 +708,14 @@ export default function VideoPlayerPage() {
 
           {/* Sidebar - Related Videos */}
           <div>
-            <div style={{
-              background: 'var(--kyn-surface)',
-              border: '1px solid var(--kyn-border)',
-              borderRadius: '6px',
-              padding: '1.5rem',
-              position: isMobile ? 'static' : 'sticky',
-              top: '2rem'
-            }}>
-              <h2 style={{
-                fontSize: '1.25rem',
-                fontWeight: 400,
-                marginBottom: '1.5rem',
-                color: 'var(--kyn-ink)'
-              }}>
+            <div style={{ marginTop: '24px' }}>
+              <h2 className="kyn-section-title">
                 Up Next
               </h2>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div className="kyn-rows" style={{ borderTop: '1px solid var(--kyn-border)', borderBottom: '1px solid var(--kyn-border)' }}>
                 {relatedVideos.length === 0 ? (
-                  <div style={{
-                    padding: '1rem',
-                    textAlign: 'center',
-                    color: 'var(--kyn-ink3)',
-                    fontSize: '0.875rem'
-                  }}>
+                  <div className="kyn-secondary" style={{ padding: '16px 0' }}>
                     No related videos
                   </div>
                 ) : (
@@ -769,44 +725,17 @@ export default function VideoPlayerPage() {
                       <Link
                         key={related.id}
                         href={`/videos/${related.id}`}
-                        style={{ textDecoration: 'none', color: 'inherit' }}
+                        className="kyn-row-link"
+                        style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
                       >
-                        <div style={{
-                          display: 'flex',
-                          gap: '0.75rem',
-                          padding: '0.75rem',
-                          borderRadius: '3px',
-                          border: '1px solid var(--kyn-border)',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'var(--kyn-surface-raised)'
-                          e.currentTarget.style.borderColor = 'var(--kyn-green)'
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'transparent'
-                          e.currentTarget.style.borderColor = 'var(--kyn-border)'
-                        }}
-                        >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px 0' }}>
                           {/* Thumbnail */}
-                          <div style={{
-                            width: '120px',
-                            height: '68px',
-                            borderRadius: '4px',
-                            background: '#000',
-                            flexShrink: 0,
-                            overflow: 'hidden'
-                          }}>
+                          <div className="kyn-thumb" style={{ width: '144px' }}>
                             {relatedYoutubeId && (
                               <img
-                                src={`https://img.youtube.com/vi/${relatedYoutubeId}/mqdefault.jpg`}
-                                alt={related.title}
-                                style={{
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'cover'
-                                }}
+                                src={`https://i.ytimg.com/vi/${relatedYoutubeId}/hqdefault.jpg`}
+                                alt=""
+                                loading="lazy"
                               />
                             )}
                           </div>

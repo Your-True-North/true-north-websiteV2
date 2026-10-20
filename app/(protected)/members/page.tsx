@@ -339,36 +339,31 @@ export default function MembersPage() {
       </div>
 
       {/* HOME: the next session, then carry on watching */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingBottom: '24px' }}>
+      <div className="kyn-stack" style={{ paddingBottom: '24px' }}>
         <NextSessionCard />
 
         {carryOn && (
-          <Link
-            href={`/videos/${carryOn.id}`}
-            style={{
-              display: 'flex', gap: '16px', alignItems: 'center', padding: '16px',
-              background: '#1B1E1B', border: '1px solid rgba(236,230,218,0.08)', borderRadius: '16px',
-              textDecoration: 'none', color: '#ECE6DA'
-            }}
-          >
-            <div style={{ width: '128px', flexShrink: 0 }}>
-              <div style={{
-                aspectRatio: '16 / 9', borderRadius: '8px', background: '#2A2E2A',
-                backgroundImage: carryOnYtId ? `url(https://img.youtube.com/vi/${carryOnYtId}/mqdefault.jpg)` : undefined,
-                backgroundSize: 'cover', backgroundPosition: 'center'
-              }} />
-              <div style={{ height: '3px', marginTop: '8px', borderRadius: '2px', background: 'rgba(236,230,218,0.12)' }}>
-                <div style={{ height: '100%', width: `${carryOnPct}%`, borderRadius: '2px', background: '#9BC4B8' }} />
+          <section>
+            <div className="kyn-label" style={{ marginBottom: '8px' }}>Carry on watching</div>
+            <Link href={`/videos/${carryOn.id}`} className="kyn-row kyn-row-link" style={{ paddingTop: '8px' }}>
+              <div style={{ width: '144px', flexShrink: 0 }}>
+                <div className="kyn-thumb">
+                  {carryOnYtId && (
+                    <img src={`https://i.ytimg.com/vi/${carryOnYtId}/hqdefault.jpg`} alt="" loading="lazy" />
+                  )}
+                </div>
+                <div style={{ height: '3px', marginTop: '8px', background: 'var(--kyn-border)' }}>
+                  <div style={{ height: '100%', width: `${carryOnPct}%`, background: 'var(--kyn-label)' }} />
+                </div>
               </div>
-            </div>
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: '15px', color: '#9BC4B8', marginBottom: '4px' }}>Carry on watching</div>
-              <div style={{ fontSize: '16px', lineHeight: 1.35, marginBottom: '4px' }}>{carryOn.title}</div>
-              <div style={{ fontSize: '15px', color: 'rgba(236,230,218,0.8)' }}>
-                {carryOn.category}{carryOnLeft !== null ? ` · ${carryOnLeft} min left` : ''}
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: '16px', lineHeight: 1.35, marginBottom: '4px' }}>{carryOn.title}</div>
+                <div className="kyn-secondary">
+                  {carryOn.category}{carryOnLeft !== null ? ` · ${carryOnLeft} min left` : ''}
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </section>
         )}
       </div>
 
