@@ -4,6 +4,7 @@
 
 import { DateTime } from 'luxon'
 import { buildGoogleCalendarUrl, buildIcs, KynCalendarSession } from './kyn-calendar-links'
+import { formatSessionTime } from './session-time'
 
 const JOIN_URL = 'https://us02web.zoom.us/j/87536119646?pwd=VrNnKw3q9lqrgcf9lI6pBEg23f5ARG.1'
 const MEETING_ID = '875 3611 9646'
@@ -163,7 +164,7 @@ export interface KynRsvpReminderInput {
 export function buildKynRsvpReminderEmail(input: KynRsvpReminderInput): { subject: string; html: string; text: string } {
   const local = DateTime.fromJSDate(input.scheduledAtUtc, { zone: 'utc' }).setZone(input.timeZone)
   const day = local.toFormat('cccc')
-  const time = local.toFormat('h:mm a').toLowerCase()
+  const time = formatSessionTime(input.scheduledAtUtc, input.timeZone)
   const firstName = (input.name || '').trim().split(/\s+/)[0]
   // Titles are stored as sentences ("Pulling back right before it matters."), so the
   // closing full stop is dropped where the title sits inside a line

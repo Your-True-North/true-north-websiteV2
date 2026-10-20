@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { formatSessionTime } from '../../../lib/session-time';
 
 interface Session {
   id: number;
@@ -54,7 +55,7 @@ export default function NextSessionCard({ showDateTime = true }: { showDateTime?
               id: e.id,
               title: e.title,
               date: eventDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }),
-              time: eventDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }),
+              time: formatSessionTime(eventDate),
               description: e.description,
               isoDate: e.date,
               durationMinutes: e.duration_minutes || 60,
@@ -281,7 +282,7 @@ END:VCALENDAR`;
 
       {showDateTime && (
         <div style={{ fontSize: '16px', color: TEXT_2, marginTop: '12px' }}>
-          {nextSession.date} at {nextSession.time}
+          {nextSession.date} at {nextSession.time} your time
         </div>
       )}
 

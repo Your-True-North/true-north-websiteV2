@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import NextSessionCard from '../../components/calendar/NextSessionCard'
 import { features } from '../../../lib/features'
+import { formatSessionTime } from '../../../lib/session-time'
 
 interface Video {
   id: number
@@ -206,7 +207,7 @@ export default function CallsPage() {
   // The usual day and time, taken from the next session in his own time zone.
   // A Coming up row only shows its own date when it's off that day or time.
   const weekdayOf = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { weekday: 'long' })
-  const timeOf = (iso: string) => new Date(iso).toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' })
+  const timeOf = (iso: string) => formatSessionTime(new Date(iso))
   const usualDay = calendarEvents[0] ? weekdayOf(calendarEvents[0].date) : ''
   const usualTime = calendarEvents[0] ? timeOf(calendarEvents[0].date) : ''
   const isUsualSlot = (iso: string) => weekdayOf(iso) === usualDay && timeOf(iso) === usualTime
@@ -269,7 +270,7 @@ export default function CallsPage() {
                       {!isUsualSlot(event.date) && (
                         <div className="kyn-label" style={{ marginTop: '4px' }}>
                           {eventDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })} at{' '}
-                          {eventDate.toLocaleTimeString('en-GB', { hour: 'numeric', minute: '2-digit' })}
+                          {formatSessionTime(eventDate)} your time
                         </div>
                       )}
                     </div>
