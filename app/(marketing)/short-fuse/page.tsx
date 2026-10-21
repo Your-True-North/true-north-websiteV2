@@ -45,7 +45,7 @@ export default async function ShortFusePage() {
 
   return (
     <div style={{ fontFamily: sans }}>
-      <section style={{ background: C.dark, padding: 'clamp(64px, 10vw, 112px) 24px' }}>
+      <section style={{ background: C.dark, padding: 'clamp(112px, 14vw, 160px) 24px clamp(64px, 10vw, 112px)' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
           <p style={{ fontSize: '11px', letterSpacing: '3.5px', textTransform: 'uppercase', color: C.sage, margin: '0 0 20px' }}>
             Short Fuse · 14 days
