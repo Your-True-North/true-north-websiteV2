@@ -59,13 +59,21 @@ export default async function ShortFusePage() {
         </div>
       </section>
 
+      <style>{`
+        .sf-summary::-webkit-details-marker { display: none; }
+        .sf-sign::before { content: '+'; }
+        details[open] > .sf-summary .sf-sign::before { content: '\\2212'; }
+      `}</style>
       <section style={{ background: C.cream, padding: 'clamp(40px, 8vw, 80px) 24px' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
           {days.map(d => (
             <details key={d.day} open={d.day === 1} style={{ borderTop: `1px solid ${C.border}`, padding: '20px 0' }}>
-              <summary style={{ cursor: 'pointer', listStyle: 'revert' }}>
-                <span style={{ fontSize: '13px', color: C.sageMid, marginRight: '12px' }}>Day {d.day}</span>
-                <span style={{ fontFamily: serif, fontSize: '24px', color: C.ink }}>{d.title || `Day ${d.day}`}</span>
+              <summary className="sf-summary" style={{ cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
+                <span>
+                  <span style={{ display: 'block', fontSize: '13px', color: C.sageMid, marginBottom: '6px' }}>Day {d.day}</span>
+                  <span style={{ fontFamily: serif, fontSize: '24px', lineHeight: 1.2, color: C.ink }}>{d.title || `Day ${d.day}`}</span>
+                </span>
+                <span className="sf-sign" aria-hidden="true" style={{ fontSize: '24px', lineHeight: 1, color: C.sageMid, marginTop: '22px' }} />
               </summary>
               <div style={{ marginTop: '20px', color: C.body }}>
                 {d.youtube_id && (
