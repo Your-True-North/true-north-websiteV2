@@ -723,7 +723,7 @@ export default function TheMapPage() {
             marginBottom: '1.5rem',
             letterSpacing: '-0.02em',
           }}>
-            The men in your life need you to do this work.
+            The people in your life need you to do this work.
           </h2>
           <p style={{ fontSize: '1.0625rem', lineHeight: 1.8, color: C.mutedDark, marginBottom: '2.75rem' }}>
             Not the version of you that manages it better, but the version who has actually worked through it. Book the call. That is all this is.
