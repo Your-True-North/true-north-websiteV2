@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import TrackedYouTubePlayer from '../../../../../components/TrackedYouTubePlayer'
+import CourseDayText from '../../../../../components/CourseDayText'
 import { describeOpening } from '../../../../../../lib/session-time'
 
 interface DayData {
@@ -96,8 +97,7 @@ export default function CourseDayPage() {
 
   if (!data) return <p className="kyn-secondary">Loading...</p>
 
-  // The text keeps its own line breaks; lines starting with a bullet sit together as a list
-  const paragraphs = data.body.split('\n').map(l => l.trim()).filter(Boolean)
+  const hasText = data.body.trim() !== ''
 
   return (
     <div className="kyn-stack" style={{ paddingBottom: '24px' }}>
@@ -111,15 +111,9 @@ export default function CourseDayPage() {
         <TrackedYouTubePlayer videoId={data.video.id} youtubeId={data.video.youtubeId} />
       )}
 
-      {(paragraphs.length > 0 || data.pdfUrl) && (
+      {(hasText || data.pdfUrl) && (
         <section>
-          {paragraphs.map((p, i) =>
-            p.startsWith('•') ? (
-              <p key={i} style={{ fontSize: '16px', lineHeight: 1.55, margin: '0 0 8px', paddingLeft: '20px', textIndent: '-14px' }}>{p}</p>
-            ) : (
-              <p key={i} style={{ fontSize: '16px', lineHeight: 1.55, margin: '0 0 16px' }}>{p}</p>
-            )
-          )}
+          <CourseDayText body={data.body} title={data.title} />
           {data.pdfUrl && (
             <a href={data.pdfUrl} target="_blank" rel="noopener noreferrer" className="kyn-btn kyn-btn-secondary" style={{ marginTop: '8px' }}>
               Open the worksheet

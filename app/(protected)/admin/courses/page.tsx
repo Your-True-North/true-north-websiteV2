@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { COURSES, COURSE_DAYS } from '../../../../lib/courses'
+import CourseDayText from '../../../components/CourseDayText'
 
 interface Day {
   day: number
@@ -177,7 +178,9 @@ export default function AdminCoursesPage() {
                     {c.oldTitle !== null && c.oldTitle !== c.title && (
                       <p className="kyn-secondary" style={{ margin: '4px 0 0' }}>Was: {c.oldTitle || '(empty)'}</p>
                     )}
-                    <p style={{ margin: '12px 0 0', whiteSpace: 'pre-wrap', lineHeight: 1.5 }}>{c.body || '(no text)'}</p>
+                    <div style={{ marginTop: '12px' }}>
+                      {c.body ? <CourseDayText body={c.body} title={c.title} /> : <p style={{ margin: 0 }}>(no text)</p>}
+                    </div>
                     {c.oldBody !== null && c.oldBody !== c.body && (
                       <details style={{ marginTop: '12px' }}>
                         <summary className="kyn-secondary" style={{ cursor: 'pointer' }}>Current text</summary>
