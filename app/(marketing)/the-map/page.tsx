@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const BOOK_URL = 'https://calendly.com/callwithmason/the-map'
 const SPOTS_TOTAL = 10
-const SPOTS_TAKEN = 7 // update as cohort fills
+const SPOTS_TAKEN = 3 // update as cohort fills
 
 const C = {
   dark:       '#0c0c0a',
@@ -30,7 +30,7 @@ function CTA({ label = 'Book Your Discovery Call', dark = false }: { label?: str
       href={BOOK_URL}
       style={{
         display: 'inline-block',
-        background: `linear-gradient(135deg, ${C.sage}, #7fb069)`,
+        background: C.sage,
         color: '#0c0c0a',
         padding: '1.125rem 2.75rem',
         borderRadius: '4px',
@@ -131,7 +131,7 @@ export default function TheMapPage() {
     },
     {
       q: "What does a typical session look like?",
-      a: "Sessions are 1:1. We combine direct conversation, somatic practices, breathwork, and parts work depending on where you are in the programme. Every session is structured but responsive to what's actually happening for you that week.",
+      a: "Sessions are live and intimate, with Mason and your cohort of 10 men. We combine direct conversation, somatic practices, breathwork, and parts work depending on where you are in the programme. Every session is structured but responsive to what's actually happening for you that week.",
     },
     {
       q: "£333 a month feels like a lot.",
@@ -592,7 +592,7 @@ export default function TheMapPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: '3rem', textAlign: 'left' }}>
             {[
               ['Duration',    '12 weeks of structured, deep work'],
-              ['Format',      '1:1 sessions with Mason directly'],
+              ['Format',      'Live, intimate group sessions with Mason and your cohort'],
               ['Spots',       '10 men per cohort, strictly limited'],
               ['Investment',  '£333 per month'],
               ['Methods',     'Somatic therapy, nervous system work, breathwork, and direct coaching'],
