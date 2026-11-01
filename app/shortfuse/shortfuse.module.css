@@ -202,6 +202,86 @@
 .doneTitle:focus { outline: none; }
 .doneTitle:focus-visible { outline: 3px solid var(--sage); outline-offset: 3px; }
 
+/* follow-up questions after signup. Inherit the section's text colour, and use
+   --bg (the section colour) for the tick so it shows on paper, sage and navy. */
+.paper { --bg: var(--paper); }
+.sage { --bg: var(--sage); }
+.navy { --bg: var(--navy); }
+.followUp { display: flex; flex-direction: column; gap: 1.6rem; margin-top: 1.4rem; }
+.q { border: 0; margin: 0; padding: 0; min-width: 0; }
+.q legend,
+.qLabel {
+  display: block;
+  padding: 0 0 .5rem;
+  font-weight: 800;
+  font-stretch: 92%;
+  font-size: 1.1rem;
+  line-height: 1.25;
+}
+.q legend span,
+.qLabel span { font-weight: 500; opacity: .75; }
+.opt {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .8rem;
+  align-items: center;
+  min-height: 48px;
+  padding: .55rem 0;
+  border-top: 1px solid currentColor;
+  font-weight: 500;
+  cursor: pointer;
+}
+.opt:last-of-type { border-bottom: 1px solid currentColor; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.box {
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 2px solid currentColor;
+  display: grid;
+  place-items: center;
+}
+.round { border-radius: 50%; }
+.opt input:checked + .box { background: currentColor; }
+.opt input:checked + .box::after {
+  content: "";
+  width: .38rem;
+  height: .7rem;
+  border: solid var(--bg);
+  border-width: 0 3px 3px 0;
+  transform: translateY(-1px) rotate(45deg);
+}
+.opt input[type="radio"]:checked + .box::after {
+  width: .5rem;
+  height: .5rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg);
+  transform: none;
+}
+.opt input:focus-visible + .box { outline: 3px solid currentColor; outline-offset: 3px; }
+.words {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: 1.05rem;
+  color: inherit;
+  background: transparent;
+  border: 2px solid currentColor;
+  border-radius: 0;
+  padding: .6rem .7rem;
+  resize: vertical;
+}
+.words:focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+.sendRow { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
+.send { width: auto; min-width: 9rem; gap: 2rem; }
+/* Bigger tap area for Skip without moving its underline */
+.followUp .textgo { position: relative; }
+.followUp .textgo::after { content: ""; position: absolute; inset: -12px -10px; }
+.followUp .textgo:focus-visible { outline-color: currentColor; }
+.sf .thanks { margin-top: 1.4rem; font-weight: 800; font-stretch: 92%; font-size: 1.25rem; }
+.thanks:focus { outline: none; }
+
 /* hero photo */
 .heroPhoto { margin: 0; display: flex; flex-direction: column; gap: .6rem; }
 .portrait {

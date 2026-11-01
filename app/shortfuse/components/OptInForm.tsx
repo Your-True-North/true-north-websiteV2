@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import s from '../shortfuse.module.css'
+import FollowUp from './FollowUp'
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
@@ -10,13 +11,15 @@ type Props = { id: 'top' | 'middle' | 'bottom'; button: string; fine: string }
 
 // The same form sits at the top, middle and bottom of the page. It posts to our own
 // route, which adds the person to the Short Fuse form in Kit (the key stays on
-// the server). Kit's tag and sequence take it from there.
+// the server). Kit's tag and sequence take it from there. Once signed up, the
+// optional follow-up questions appear underneath.
 export default function OptInForm({ id, button, fine }: Props) {
   const [email, setEmail] = useState('')
   const [sending, setSending] = useState(false)
   const [invalid, setInvalid] = useState(false)
   const [message, setMessage] = useState('')
   const [done, setDone] = useState(false)
+  const [token, setToken] = useState('')
   const emailRef = useRef<HTMLInputElement>(null)
   const doneRef = useRef<HTMLParagraphElement>(null)
 
@@ -44,12 +47,14 @@ export default function OptInForm({ id, button, fine }: Props) {
       if (value) utm[key] = value
     }
     const company = (e.currentTarget.elements.namedItem('company') as HTMLInputElement | null)?.value || ''
+    // "That's me" lines ticked in Recognise, as line numbers
+    const recognised = Array.from(document.querySelectorAll<HTMLElement>('[data-line][aria-pressed="true"]')).map(el => Number(el.dataset.line))
 
     try {
       const res = await fetch('/api/shortfuse/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), company, utm, referrer: window.location.href }),
+        body: JSON.stringify({ email: email.trim(), company, utm, recognised, referrer: window.location.href }),
       })
       if (res.status === 422) {
         setInvalid(true)
@@ -59,6 +64,7 @@ export default function OptInForm({ id, button, fine }: Props) {
         return
       }
       if (!res.ok) throw new Error(String(res.status))
+      setToken((await res.json().catch(() => ({}))).token || '')
 
       const w = window as any
       if (typeof w.fbq === 'function') w.fbq('track', 'Lead', { content_name: 'The Short Fuse' })
@@ -77,7 +83,8 @@ export default function OptInForm({ id, button, fine }: Props) {
     <div id={`form-${id}`}>
       {done ? (
         <div className={s.done}>
-          <p className={s.doneTitle} ref={doneRef} tabIndex={-1}>Check your inbox. Day 1 is on its way.</p>
+          <p className={s.doneTitle} ref={doneRef} tabIndex={-1}>Day 1 is on its way. Check your inbox.</p>
+          <FollowUp id={id} email={email.trim()} token={token} />
           <p className={s.fine}>Can&apos;t see it? Check your promotions or spam folder.</p>
         </div>
       ) : (

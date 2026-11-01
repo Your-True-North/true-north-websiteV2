@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { LINES } from '../../../shortfuse/questions'
+import { issueToken } from '../token'
 
 // The Short Fuse opt-in (/shortfuse). Adds the person to the Short Fuse form in
-// Kit using the v4 API: create or update the subscriber (first name and UTMs),
+// Kit using the v4 API: create or update the subscriber (UTMs and the "That's me"
+// lines they ticked),
 // add them to the form, then tag them "Short Fuse".
 // Needs KIT_API_KEY (a v4 key), KIT_SHORT_FUSE_FORM_ID and KIT_SHORT_FUSE_TAG_ID.
 const KIT = 'https://api.kit.com/v4'
@@ -29,6 +32,11 @@ export async function POST(request: NextRequest) {
       if (value) fields[key] = value
     }
   }
+  // "That's me" lines ticked before signing up, sent as line numbers
+  if (Array.isArray(body.recognised)) {
+    const ticked = LINES.filter((_, i) => body.recognised.includes(i))
+    if (ticked.length) fields.recognised = ticked.join(' | ')
+  }
 
   const apiKey = process.env.KIT_API_KEY
   const formId = process.env.KIT_SHORT_FUSE_FORM_ID
@@ -45,13 +53,13 @@ export async function POST(request: NextRequest) {
     })
 
   try {
-    // 1. Create or update the subscriber. If Kit refuses the UTM fields (for
+    // 1. Create or update the subscriber. If Kit refuses the custom fields (for
     // example the custom fields don't exist yet), try once more without them
     // so the signup still goes through.
     const subscriber = { email_address: email, ...(firstName ? { first_name: firstName } : {}) }
     let res = await kit('/subscribers', Object.keys(fields).length ? { ...subscriber, fields } : subscriber)
     if (res.status === 422 && Object.keys(fields).length) {
-      console.warn('[shortfuse] Kit refused the UTM fields:', await res.text())
+      console.warn('[shortfuse] Kit refused the custom fields:', await res.text())
       res = await kit('/subscribers', subscriber)
     }
     if (res.status === 422) return NextResponse.json({ error: 'Invalid email' }, { status: 422 })
@@ -78,7 +86,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({ ok: true })
+    // The token lets this browser save the optional follow-up answers
+    return NextResponse.json({ ok: true, token: issueToken(email) })
   } catch (err: any) {
     console.error('[shortfuse] Kit:', err.message)
     return NextResponse.json({ error: 'Kit error' }, { status: 502 })
