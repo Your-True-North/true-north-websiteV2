@@ -1,32 +1,28 @@
 import { ImageResponse } from 'next/og'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 
 export const alt = "It's never really about what triggers you. The Short Fuse, a free 14 day course from True."
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 const HEADLINE = "It's never really about what triggers you."
-const SMALL = 'Your True NorthFree · 14 daysThe Short Fuse'
 
-// Archivo at a fixed width and weight. Satori can't use a variable font, so ask
-// Google for a static TTF cut of just the letters we draw.
-async function archivo(wdth: number, wght: number, text: string) {
-  try {
-    const css = await (await fetch(`https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@${wdth},${wght}&text=${encodeURIComponent(text)}`)).text()
-    const url = css.match(/src: url\((.+?)\) format\('(opentype|truetype)'\)/)?.[1]
-    return url ? await (await fetch(url)).arrayBuffer() : null
-  } catch {
-    return null
-  }
+// Archivo at two fixed widths, saved in og-fonts (Satori can't use a variable
+// font, and fetching from Google during the build failed on Vercel). The files
+// only hold capitals, numbers and the few marks used here.
+async function font(file: string) {
+  return readFile(join(process.cwd(), 'app/shortfuse/og-fonts', file))
 }
 
 export default async function Image() {
   const [big, small] = await Promise.all([
-    archivo(62.5, 800, HEADLINE.toUpperCase()),
-    archivo(125, 700, SMALL.toUpperCase()),
+    font('archivo-condensed-800.ttf'),
+    font('archivo-expanded-700.ttf'),
   ])
   const fonts = [
-    ...(big ? [{ name: 'Big', data: big, weight: 800 as const }] : []),
-    ...(small ? [{ name: 'Small', data: small, weight: 700 as const }] : []),
+    { name: 'Big', data: big, weight: 800 as const },
+    { name: 'Small', data: small, weight: 700 as const },
   ]
 
   return new ImageResponse(
