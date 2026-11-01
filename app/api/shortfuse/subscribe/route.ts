@@ -64,6 +64,7 @@ export async function POST(request: NextRequest) {
     }
     if (res.status === 422) return NextResponse.json({ error: 'Invalid email' }, { status: 422 })
     if (!res.ok) throw new Error(`create subscriber ${res.status}: ${await res.text()}`)
+    const subscriberId = Number((await res.json().catch(() => null))?.subscriber?.id)
 
     // 2. Add them to the Short Fuse form, which starts the tag and sequence.
     const added = await kit(`/forms/${encodeURIComponent(formId)}/subscribers`, {
@@ -87,7 +88,8 @@ export async function POST(request: NextRequest) {
     }
 
     // The token lets this browser save the optional follow-up answers
-    return NextResponse.json({ ok: true, token: issueToken(email) })
+    if (!subscriberId) console.error(`[shortfuse] Kit returned no subscriber id for ${email}, so answers can't be saved`)
+    return NextResponse.json({ ok: true, ...(subscriberId ? { token: issueToken(email, subscriberId) } : {}) })
   } catch (err: any) {
     console.error('[shortfuse] Kit:', err.message)
     return NextResponse.json({ error: 'Kit error' }, { status: 502 })

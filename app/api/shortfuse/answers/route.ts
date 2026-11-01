@@ -4,8 +4,8 @@ import { checkToken } from '../token'
 
 // Optional follow-up questions shown after a Short Fuse signup. Saves the answers
 // to the subscriber's custom fields in Kit (struggles, goal, own_words) using the
-// v4 API: look the subscriber up by email, then update them by id. Only works
-// with the token the signup handed back, and only for that email.
+// v4 API's update subscriber call. Only works with the token the signup handed
+// back, which holds that subscriber's id and only matches their email.
 // Always answers ok: he never sees an error for this step. Failures are logged.
 const KIT = 'https://api.kit.com/v4'
 
@@ -23,7 +23,8 @@ function plainText(v: unknown) {
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null)
   const email = typeof body?.email === 'string' ? body.email.trim().toLowerCase().slice(0, 254) : ''
-  if (!email || !checkToken(email, body?.token)) {
+  const id = email ? checkToken(email, body?.token) : null
+  if (!id) {
     console.error(`[shortfuse answers] Refused: no valid signup token for ${email || 'unknown email'}`)
     return ok()
   }
@@ -45,11 +46,6 @@ export async function POST(request: NextRequest) {
   const headers = { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Kit-Api-Key': apiKey }
 
   try {
-    const found = await fetch(`${KIT}/subscribers?email_address=${encodeURIComponent(email)}&status=all`, { headers })
-    if (!found.ok) throw new Error(`find subscriber ${found.status}: ${await found.text()}`)
-    const id = (await found.json()).subscribers?.[0]?.id
-    if (!id) throw new Error('subscriber not found')
-
     const updated = await fetch(`${KIT}/subscribers/${id}`, {
       method: 'PUT',
       headers,
