@@ -1190,7 +1190,7 @@ export default function Work() {
                 background: 'rgba(255, 255, 255, 0.05)',
                 borderRadius: '3px'
               }}>
-                "This is high-level, high-impact intestive work for those who are serious about change."
+                "This is high-level, high-impact intensive work for those who are serious about change."
               </blockquote>
 
               <div style={{textAlign: 'center'}}>
