@@ -515,7 +515,8 @@ export default function Work() {
                   <option value="1:1 Coaching Program" style={{ background: '#1a1a1a', color: '#ffffff' }}>1:1 Coaching Program</option>
                   <option value="Circle of Return Membership" style={{ background: '#1a1a1a', color: '#ffffff' }}>Know Your North (KYN)</option>
                   <option value="Men's Container" style={{ background: '#1a1a1a', color: '#ffffff' }}>Men's Container</option>
-                  <option value="Individual Sessions (Breathwork/Energy)" style={{ background: '#1a1a1a', color: '#ffffff' }}>Individual Sessions (Breathwork/Energy)</option>
+                  {/* Individual Sessions hidden Nov 2026, restore later
+                  <option value="Individual Sessions (Breathwork/Energy)" style={{ background: '#1a1a1a', color: '#ffffff' }}>Individual Sessions (Breathwork/Energy)</option> */}
                   <option value="Not sure yet - exploring options" style={{ background: '#1a1a1a', color: '#ffffff' }}>Not sure yet - exploring options</option>
                   <option value="Other" style={{ background: '#1a1a1a', color: '#ffffff' }}>Other</option>
                 </select>
@@ -927,7 +928,7 @@ export default function Work() {
                 lineHeight: '1.1',
                 textShadow: isMobile ? '2px 2px 4px rgba(0, 0, 0, 0.7)' : undefined
               }}>
-                Four ways to work with me.
+                Three ways to work with me.
               </h1>
               <div style={{
                 maxWidth: '600px',
@@ -1356,6 +1357,7 @@ export default function Work() {
               </div>
             </div>
 
+            {/* Individual Sessions hidden Nov 2026, restore later
             <div
               onMouseEnter={handleSessionAreaMouseEnter}
               onMouseLeave={handleSessionAreaMouseLeave}
@@ -1635,6 +1637,7 @@ export default function Work() {
                 </p>
               </div>
             </div>
+            */}
 
             <div style={{
               textAlign: 'center',
