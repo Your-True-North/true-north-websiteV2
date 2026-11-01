@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // Needs KIT_API_KEY (a v4 key) and KIT_SHORT_FUSE_FORM_ID.
 const KIT = 'https://api.kit.com/v4'
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign']
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
 
 const clean = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
 

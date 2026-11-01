@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import s from '../shortfuse.module.css'
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign']
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
 
 type Props = { id: 'top' | 'middle' | 'bottom'; button: string; fine: string }
 
