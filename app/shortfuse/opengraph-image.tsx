@@ -1,10 +1,10 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = "It's never really about what set you off. The Short Fuse, a free 14-day course from True."
+export const alt = "It's never really about what triggers you. The Short Fuse, a free 14 day course from True."
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-const HEADLINE = "It's never really about what set you off."
+const HEADLINE = "It's never really about what triggers you."
 const SMALL = 'Your True NorthFree · 14 daysThe Short Fuse'
 
 // Archivo at a fixed width and weight. Satori can't use a variable font, so ask

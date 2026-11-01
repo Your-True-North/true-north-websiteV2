@@ -4,15 +4,14 @@ import { useEffect, useRef, useState } from 'react'
 import s from '../shortfuse.module.css'
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign']
 
-type Props = { id: 'top' | 'bottom'; button: string; fine: string }
+type Props = { id: 'top' | 'middle' | 'bottom'; button: string; fine: string }
 
-// The same form sits at the top and bottom of the page. It posts to our own
+// The same form sits at the top, middle and bottom of the page. It posts to our own
 // route, which adds the person to the Short Fuse form in Kit (the key stays on
 // the server). Kit's tag and sequence take it from there.
 export default function OptInForm({ id, button, fine }: Props) {
-  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [sending, setSending] = useState(false)
   const [invalid, setInvalid] = useState(false)
@@ -50,7 +49,7 @@ export default function OptInForm({ id, button, fine }: Props) {
       const res = await fetch('/api/shortfuse/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ first_name: name.trim(), email: email.trim(), company, utm, referrer: window.location.href }),
+        body: JSON.stringify({ email: email.trim(), company, utm, referrer: window.location.href }),
       })
       if (res.status === 422) {
         setInvalid(true)
@@ -84,17 +83,6 @@ export default function OptInForm({ id, button, fine }: Props) {
       ) : (
         <form className={s.optin} noValidate onSubmit={submit}>
           <div className={s.field}>
-            <label htmlFor={`name-${id}`}>First name</label>
-            <input
-              id={`name-${id}`}
-              name="first_name"
-              autoComplete="given-name"
-              placeholder="Your name"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-          </div>
-          <div className={s.field}>
             <label htmlFor={`email-${id}`}>Email</label>
             <input
               ref={emailRef}
@@ -120,7 +108,7 @@ export default function OptInForm({ id, button, fine }: Props) {
             <span>{sending ? 'Sending…' : button}</span>
             <span className={s.ar} aria-hidden="true">→</span>
           </button>
-          <p className={s.fine}>{fine}</p>
+          <p className={s.fine}>{fine} <a href="/privacy">Privacy policy</a></p>
           <p className={s.status} id={statusId} role="status">{message}</p>
         </form>
       )}

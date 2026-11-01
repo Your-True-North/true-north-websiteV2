@@ -98,12 +98,20 @@
 }
 
 /* hero */
+.forWho {
+  font-size: .95rem;
+  font-weight: 600;
+  font-stretch: 100%;
+  color: var(--ink);
+  max-width: 34rem;
+  margin-bottom: .75rem !important;
+}
 .hero { padding-block: clamp(1.5rem, 4vw, 3rem) clamp(3rem, 7vw, 5rem); }
 .sf h1.mega {
   font-stretch: 66%;
   font-weight: 850 !important;
   text-transform: uppercase;
-  font-size: clamp(3.4rem, 14.5vw, 12.5rem);
+  font-size: clamp(2.9rem, 12.5vw, 12.5rem);
   line-height: .84;
   letter-spacing: -.012em;
   margin-bottom: clamp(1.8rem, 4vw, 3rem);
@@ -181,6 +189,11 @@
 .navy .go { background: var(--paper); color: var(--ink); }
 .navy .go:hover { background: var(--sage); }
 .fine { font-size: .82rem; margin-top: .7rem; opacity: .75; }
+.fine a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.fine a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+/* The middle form sits on sage, where the sage focus marks would vanish */
+.sage .field input:focus-visible { box-shadow: inset 0 -3px 0 var(--ink); }
+.sage .go:focus-visible { outline-color: var(--ink); }
 .status { font-size: .9rem; font-weight: 600; margin-top: .6rem; }
 .status:empty { display: none; }
 .trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }

@@ -6,13 +6,6 @@ const STEPS = [
   ['One a day', 'Watch it, sit with the question, notice what comes up.'],
 ]
 
-const LEARN = [
-  ["What's under it", "What's really sitting under your reactions, and why it keeps coming back."],
-  ['Where it lives', "How your body stores what you've never dealt with, and how to start letting it move."],
-  ['The gap', 'How to create space between the trigger and the reaction. That space is where your choice lives.'],
-  ['Your answers', "I'm not going to tell you what to do. I'll ask you questions. You already have the answers."],
-]
-
 export default function HowItWorks() {
   return (
     <section className={`${s.band} ${s.paper} ${s.howBand}`}>
@@ -29,14 +22,6 @@ export default function HowItWorks() {
               </li>
             ))}
           </ol>
-          <div className={s.learn}>
-            {LEARN.map(([title, text]) => (
-              <div key={title}>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
           <p className={s.ask}>&quot;Would the things that have been pissing me off recently still have bothered me if I was living my ideal life?&quot;</p>
         </div>
       </div>

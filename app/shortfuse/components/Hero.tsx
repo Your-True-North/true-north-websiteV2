@@ -6,13 +6,14 @@ export default function Hero() {
   return (
     <section className={`${s.hero} ${s.paper}`}>
       <div className={s.wrap}>
-        <h1 className={s.mega}>It&apos;s never really about what set you off.</h1>
+        <p className={s.forWho}>For men carrying anger, dissatisfaction, and a short fuse they&apos;re tired of.</p>
+        <h1 className={s.mega}>It&apos;s never really about what triggers you.</h1>
         <div className={s.heroRow}>
           <div className={s.heroCopy}>
             <p className={s.lede}>
-              You don&apos;t know it in the moment, but the reaction is bigger than the thing. <em>The Short Fuse</em> is 14 days of short videos to help you find what&apos;s actually lighting it.
+              In the moment, you don&apos;t see it. The reaction is bigger than the thing. <em>The Short Fuse</em> is a free 14 day course to help you find what&apos;s actually lighting it.
             </p>
-            <OptInForm id="top" button="Send me Day 1" fine="Free. One short video a day. Unsubscribe any time." />
+            <OptInForm id="top" button="Send me Day 1 free" fine="One short video a day. Unsubscribe any time." />
           </div>
           <div className={s.heroVid}>
             <figure className={s.heroPhoto}>

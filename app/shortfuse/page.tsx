@@ -14,7 +14,7 @@ import StickyBar from './components/StickyBar'
 // has its own masthead and footer instead of the site nav.
 const archivo = Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-archivo', display: 'swap' })
 
-const description = "It's never really about what set you off. A free 14-day course for men, from True."
+const description = "It's never really about what triggers you. A free 14 day course for men, from True."
 
 export const metadata: Metadata = {
   title: 'The Short Fuse | Your True North',

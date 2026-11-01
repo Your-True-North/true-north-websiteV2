@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import s from '../shortfuse.module.css'
-import { goToForm } from './goToForm'
+import OptInForm from './OptInForm'
 
 const LINES = [
   'You snap at the people you love over nothing, then feel like shit about it all night.',
@@ -46,8 +46,8 @@ export default function Recognise() {
           </div>
           <div className={s.tally}>
             <p aria-live="polite">{tally(count)}</p>
-            <button type="button" className={s.textgo} onClick={goToForm}>Start Day 1 →</button>
           </div>
+          <OptInForm id="middle" button="Send me Day 1 free" fine="One short video a day. Unsubscribe any time." />
         </div>
       </div>
     </section>
