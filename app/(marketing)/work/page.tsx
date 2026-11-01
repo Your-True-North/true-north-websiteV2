@@ -1234,61 +1234,6 @@ export default function Work() {
               border: '1px solid rgba(255, 255, 255, 0.15)',
               borderRadius: '3px',
               transition: 'all 0.4s ease',
-              animation: 'slideUp 0.8s ease-out 0.6s both'
-            }}>
-              <div style={{textAlign: 'center', marginBottom: '2rem'}}>
-                <h2 style={{
-                  fontSize: isMobile ? '2rem' : '2.8rem', 
-                  marginBottom: '1rem', 
-                  color: '#ffffff', 
-                  fontWeight: '700'
-                }}>
-                  Know Your North
-                </h2>
-                <p style={{
-                  fontSize: isMobile ? '1.1rem' : '1.3rem',
-                  color: 'rgba(255, 255, 255, 0.85)',
-                  marginBottom: '1rem'
-                }}>
-                  Ongoing community for committed souls who want to keep elevating
-                </p>
-                <p style={{
-                  fontSize: '1rem',
-                  color: 'rgba(255, 255, 255, 0.7)',
-                  fontStyle: 'italic'
-                }}>
-                  Because transformation happens in relationship.
-                </p>
-              </div>
-
-              <div style={{textAlign: 'center'}}>
-                <a href="/circle" style={{
-                  display: 'inline-block',
-                  padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
-                  background: 'transparent',
-                  border: '2px solid rgba(255, 255, 255, 0.7)',
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  textDecoration: 'none',
-                  fontWeight: '700',
-                  borderRadius: '3px',
-                  fontSize: isMobile ? '1rem' : '1.1rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px',
-                  transition: 'all 0.3s ease'
-                }}>
-                  Learn More
-                </a>
-              </div>
-            </div>
-
-            <div style={{
-              marginBottom: '5rem',
-              padding: isMobile ? '2rem' : '3rem',
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '3px',
-              transition: 'all 0.4s ease',
               animation: 'slideUp 0.8s ease-out 0.8s both'
             }}>
               <div style={{textAlign: 'center', marginBottom: '2rem'}}>
@@ -1354,6 +1299,61 @@ export default function Work() {
                 >
                   Learn More
                 </button>
+              </div>
+            </div>
+
+            <div style={{
+              marginBottom: '5rem',
+              padding: isMobile ? '2rem' : '3rem',
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              borderRadius: '3px',
+              transition: 'all 0.4s ease',
+              animation: 'slideUp 0.8s ease-out 0.6s both'
+            }}>
+              <div style={{textAlign: 'center', marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: isMobile ? '2rem' : '2.8rem', 
+                  marginBottom: '1rem', 
+                  color: '#ffffff', 
+                  fontWeight: '700'
+                }}>
+                  Know Your North
+                </h2>
+                <p style={{
+                  fontSize: isMobile ? '1.1rem' : '1.3rem',
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  marginBottom: '1rem'
+                }}>
+                  Ongoing community for committed souls who want to keep elevating
+                </p>
+                <p style={{
+                  fontSize: '1rem',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontStyle: 'italic'
+                }}>
+                  Because transformation happens in relationship.
+                </p>
+              </div>
+
+              <div style={{textAlign: 'center'}}>
+                <a href="/circle" style={{
+                  display: 'inline-block',
+                  padding: isMobile ? '1rem 2rem' : '1.2rem 2.5rem',
+                  background: 'transparent',
+                  border: '2px solid rgba(255, 255, 255, 0.7)',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  textDecoration: 'none',
+                  fontWeight: '700',
+                  borderRadius: '3px',
+                  fontSize: isMobile ? '1rem' : '1.1rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  transition: 'all 0.3s ease'
+                }}>
+                  Learn More
+                </a>
               </div>
             </div>
 
