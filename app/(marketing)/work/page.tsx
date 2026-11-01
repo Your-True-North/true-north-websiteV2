@@ -5,6 +5,10 @@ import Script from 'next/script'
 import { X, Play, Pause, RotateCcw } from 'lucide-react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
+// Alex's 1:1 testimonial in the 1:1 Coaching section. Paste his YouTube ID here;
+// the video stays hidden until it's set.
+const ALEX_VIDEO_ID = ''
+
 export default function Work() {
   const [isMobile, setIsMobile] = useState(false)
   const [showPackPopup, setShowPackPopup] = useState(false)
@@ -1180,6 +1184,8 @@ export default function Work() {
                 ))}
               </div>
 
+              {ALEX_VIDEO_ID && <ClientTestimonial id={ALEX_VIDEO_ID} caption="Alex, 1:1 client" title="Alex, 1:1 client testimonial" />}
+
               <blockquote style={{
                 fontSize: isMobile ? '1.1rem' : '1.2rem',
                 fontStyle: 'italic',
@@ -1831,5 +1837,64 @@ export default function Work() {
         }
       `}</style>
     </>
+  )
+}
+
+// Small portrait testimonial: a lazy thumbnail with a play button, and the
+// YouTube player only loads once it's clicked. Same pattern as TestimonialEmbed
+// on the anger page, copied here rather than imported across pages.
+function ClientTestimonial({ id, caption, title }: { id: string; caption: string; title: string }) {
+  const [loaded, setLoaded] = useState(false)
+
+  return (
+    <div style={{ width: '100%', maxWidth: '260px', margin: '0 auto' }}>
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        aspectRatio: '9/16',
+        borderRadius: '3px',
+        overflow: 'hidden',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        background: 'rgba(0, 0, 0, 0.3)'
+      }}>
+        {loaded ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`}
+            title={title}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setLoaded(true)}
+            aria-label={`Play video: ${title}`}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
+          >
+            <img
+              src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`}
+              alt=""
+              loading="lazy"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+            <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{
+                width: '56px', height: '56px', borderRadius: '50%',
+                background: 'rgba(0,0,0,0.6)', border: '1.5px solid rgba(255,255,255,0.5)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 4l14 8-14 8V4z" fill="#fff" />
+                </svg>
+              </span>
+            </span>
+          </button>
+        )}
+      </div>
+      <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.95rem', lineHeight: '1.4', textAlign: 'center', margin: '0.75rem 0 0' }}>
+        {caption}
+      </p>
+    </div>
   )
 }
