@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // The Short Fuse opt-in (/shortfuse). Adds the person to the Short Fuse form in
 // Kit using the v4 API: create or update the subscriber (first name and UTMs),
-// then add them to the form. The tag and sequence are set up on the form in Kit.
-// Needs KIT_API_KEY (a v4 key) and KIT_SHORT_FUSE_FORM_ID.
+// add them to the form, then tag them "Short Fuse".
+// Needs KIT_API_KEY (a v4 key), KIT_SHORT_FUSE_FORM_ID and KIT_SHORT_FUSE_TAG_ID.
 const KIT = 'https://api.kit.com/v4'
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
@@ -63,6 +63,20 @@ export async function POST(request: NextRequest) {
       ...(referrer ? { referrer } : {}),
     })
     if (!added.ok) throw new Error(`add to form ${added.status}: ${await added.text()}`)
+
+    // 3. Tag them "Short Fuse". They're signed up by now, so if tagging fails
+    // it's logged and the signup still succeeds.
+    const tagId = process.env.KIT_SHORT_FUSE_TAG_ID
+    if (!tagId) {
+      console.error(`[shortfuse] KIT_SHORT_FUSE_TAG_ID is not set, so ${email} was not tagged`)
+    } else {
+      try {
+        const tagged = await kit(`/tags/${encodeURIComponent(tagId)}/subscribers`, { email_address: email })
+        if (!tagged.ok) console.error(`[shortfuse] Tagging ${email} with tag ${tagId} failed: ${tagged.status} ${await tagged.text()}`)
+      } catch (err: any) {
+        console.error(`[shortfuse] Tagging ${email} with tag ${tagId} failed:`, err.message)
+      }
+    }
 
     return NextResponse.json({ ok: true })
   } catch (err: any) {
