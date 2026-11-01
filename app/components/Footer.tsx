@@ -84,7 +84,8 @@ export default function Footer() {
           </div>
           <div className="footer-bottom-right">
             <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
+            {/* Hidden until the terms page exists */}
+            {/* <Link href="/terms">Terms</Link> */}
             <span className="footer-location">Based in London</span>
           </div>
         </div>

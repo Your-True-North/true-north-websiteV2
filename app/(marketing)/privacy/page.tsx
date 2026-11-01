@@ -61,6 +61,9 @@ export default function PrivacyPage() {
             <li style={item}>Your name and account details if you become a member.</li>
             <li style={item}>How you found the site (for example, from Instagram), using tracking tags in the link.</li>
             <li style={item}>How you use the site, through the Meta pixel (see Cookies below).</li>
+            <li style={item}>Payment details if you become a member. These are handled by Stripe. We never see or store your full card number.</li>
+            <li style={item}>What you type into the Anger Decoder. Your answers are sent to Anthropic&apos;s AI to write your results.</li>
+            <li style={item}>Details you give when you book a call or join a live session (through Calendly and Zoom).</li>
           </ul>
 
           <Heading>Why we use it</Heading>
@@ -68,6 +71,7 @@ export default function PrivacyPage() {
             <li style={item}>To send you what you signed up for, and my emails. You can unsubscribe at any time using the link at the bottom of every email.</li>
             <li style={item}>To provide your membership if you join.</li>
             <li style={item}>To understand which posts and adverts bring people to the site.</li>
+            <li style={item}>To write your Anger Decoder results.</li>
           </ul>
 
           <Heading>Who we share it with</Heading>
@@ -99,8 +103,15 @@ export default function PrivacyPage() {
           </p>
 
           <Heading>Cookies</Heading>
+          <p style={para}>The site uses cookies from these services:</p>
+          <ul style={list}>
+            <li style={item}>Meta pixel: measures visits and signups from Instagram and Facebook.</li>
+            <li style={item}>Google Analytics: measures how the site is used.</li>
+            <li style={item}>YouTube and Vimeo: play the videos on the site.</li>
+            <li style={item}>ManyChat: runs the chat on the site.</li>
+          </ul>
           <p style={para}>
-            The site uses the Meta pixel, which sets cookies to measure visits and signups from Instagram and Facebook. You can block these cookies in your browser settings.
+            You can block or delete cookies in your browser settings. Some parts of the site, like videos, may not work properly if you do.
           </p>
 
           <Heading>Changes</Heading>
