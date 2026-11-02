@@ -34,7 +34,7 @@ export async function POST(request) {
 
     if (!customerId) {
       return NextResponse.json(
-        { error: 'No Stripe billing account found. If you believe this is an error please contact mason@yourtruenorth.me' },
+        { error: 'No Stripe billing account found. If you believe this is an error please contact navigate@yourtruenorth.me' },
         { status: 404 }
       )
     }
@@ -49,7 +49,7 @@ export async function POST(request) {
   } catch (error) {
     console.error('[Billing Portal] Error:', error)
     return NextResponse.json(
-      { error: 'Could not open billing portal. Please contact mason@yourtruenorth.me' },
+      { error: 'Could not open billing portal. Please contact navigate@yourtruenorth.me' },
       { status: 500 }
     )
   }
