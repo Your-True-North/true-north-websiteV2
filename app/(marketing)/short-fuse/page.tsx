@@ -107,10 +107,10 @@ export default async function ShortFusePage() {
             Do this work with other men.
           </h2>
           <p style={{ fontSize: '17px', lineHeight: 1.7, color: C.darkMuted, margin: '0 0 32px' }}>
-            KYN is for men carrying frustration, dissatisfaction, or a short fuse they&apos;re tired of. Weekly work, with other men. £25 a month.
+            The MAP is my twelve-week programme for men carrying frustration, dissatisfaction, or a short fuse they&apos;re tired of. Men who are done reading about it. Ten men a cohort. We go into the body, find what&apos;s underneath, and let it move.
           </p>
-          <Link href="/anger" style={{ display: 'inline-block', background: C.sage, color: C.ink, padding: '16px 36px', borderRadius: '4px', fontWeight: 600, fontSize: '16px', textDecoration: 'none' }}>
-            Find out about KYN
+          <Link href="/the-map" style={{ display: 'inline-block', background: C.sage, color: C.ink, padding: '16px 36px', borderRadius: '4px', fontWeight: 600, fontSize: '16px', textDecoration: 'none' }}>
+            See if The MAP is for you
           </Link>
         </div>
       </section>
