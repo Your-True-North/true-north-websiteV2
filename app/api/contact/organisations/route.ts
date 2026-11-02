@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
     const result = await resend.emails.send({
       from: 'KYN <kyn@yourtruenorth.me>',
-      to: 'mason@yourtruenorth.me',
+      to: 'navigate@yourtruenorth.me',
       subject: `Organisations enquiry from ${name}${organisation ? ` — ${organisation}` : ''}`,
       html: `
         <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px; background: #fafaf8;">

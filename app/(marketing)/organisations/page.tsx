@@ -49,10 +49,10 @@ function ContactDrawer({ open, onClose }: { open: boolean; onClose: () => void }
       if (data.success) {
         setSubmitted(true)
       } else {
-        setError('Something went wrong. Please email mason@yourtruenorth.me directly.')
+        setError('Something went wrong. Please email navigate@yourtruenorth.me directly.')
       }
     } catch {
-      setError('Something went wrong. Please email mason@yourtruenorth.me directly.')
+      setError('Something went wrong. Please email navigate@yourtruenorth.me directly.')
     } finally {
       setSubmitting(false)
     }
@@ -130,8 +130,8 @@ function ContactDrawer({ open, onClose }: { open: boolean; onClose: () => void }
 
           {/* Contact links */}
           <div style={{ display: 'flex', gap: '24px', marginBottom: '36px', paddingBottom: '32px', borderBottom: '0.5px solid rgba(255,255,255,0.1)' }}>
-            <a href="mailto:mason@yourtruenorth.me" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '7px' }}>
-              <span style={{ color: '#2d6a4f' }}>✉</span> mason@yourtruenorth.me
+            <a href="mailto:navigate@yourtruenorth.me" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '7px' }}>
+              <span style={{ color: '#2d6a4f' }}>✉</span> navigate@yourtruenorth.me
             </a>
             <a href="https://wa.me/447449052909" target="_blank" rel="noreferrer" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '7px' }}>
               <span style={{ color: '#2d6a4f' }}>↗</span> WhatsApp
@@ -535,7 +535,7 @@ export default function OrganisationsPage() {
             </div>
             {/* Links */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', textAlign: isMobile ? 'left' : 'center' }}>
-              <a href="mailto:mason@yourtruenorth.me" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>mason@yourtruenorth.me</a>
+              <a href="mailto:navigate@yourtruenorth.me" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>navigate@yourtruenorth.me</a>
               <a href="https://wa.me/447449052909" target="_blank" rel="noreferrer" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>WhatsApp +44 7449 052909</a>
               <a href="https://yourtruenorth.me" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>yourtruenorth.me</a>
             </div>
