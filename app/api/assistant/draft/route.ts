@@ -136,6 +136,12 @@ export async function POST(request: NextRequest) {
       result.draftsFolder = drafts
     }
 
+    if (!flag) {
+      result.flagCheck = { skipped: 'flag was not true', received: String(data.flag ?? '(nothing)').slice(0, 40) }
+    } else if (!originalId) {
+      result.flagCheck = { skipped: 'no messageId received' }
+    }
+
     if (flag && originalId) {
       const lock = await client.getMailboxLock('INBOX')
       try {
