@@ -50,25 +50,38 @@ const bare = (id: string) => id.replace(/^<|>$/g, '').trim().toLowerCase()
 // Find the original email in INBOX. Some servers don't support searching by
 // Message-ID header, so try that first (with and without brackets), then fall
 // back to sender + subject over the last 30 days and match the Message-ID exactly.
-async function findOriginal(client: ImapFlow, messageId: string, from: string, subject: string): Promise<number | null> {
+async function findOriginal(client: ImapFlow, messageId: string, from: string, subject: string, debug: Record<string, unknown>): Promise<number | null> {
   const target = bare(messageId)
+  debug.target = target
+  const tries: Record<string, unknown>[] = []
   for (const value of [messageId, target]) {
     try {
       const uids = await client.search({ header: { 'message-id': value } }, { uid: true })
-      if (uids && uids.length) return uids[uids.length - 1]
-    } catch {}
+      tries.push({ header: value.slice(0, 12), hits: uids ? uids.length : 0 })
+      if (uids && uids.length) { debug.tries = tries; return uids[uids.length - 1] }
+    } catch (e) {
+      tries.push({ header: value.slice(0, 12), error: String(e).slice(0, 80) })
+    }
   }
-  const query: Record<string, unknown> = { since: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) }
-  if (from) query.from = from
-  if (subject) query.subject = subject.replace(/^re:\s*/i, '').slice(0, 100)
-  let candidates: number[] = []
-  try {
-    candidates = (await client.search(query, { uid: true })) || []
-  } catch {}
-  for (const uid of candidates.slice(-20).reverse()) {
-    const msg = await client.fetchOne(String(uid), { envelope: true }, { uid: true })
-    if (msg && msg.envelope?.messageId && bare(msg.envelope.messageId) === target) return uid
+  // Fallback: newest emails from the same sender (no date limit), match the Message-ID exactly.
+  const queries: Record<string, unknown>[] = []
+  if (from) queries.push({ from })
+  if (subject) queries.push({ subject: subject.replace(/^re:\s*/i, '').slice(0, 100) })
+  for (const query of queries) {
+    let candidates: number[] = []
+    try {
+      candidates = (await client.search(query, { uid: true })) || []
+    } catch (e) {
+      tries.push({ by: Object.keys(query)[0], error: String(e).slice(0, 80) })
+      continue
+    }
+    tries.push({ by: Object.keys(query)[0], hits: candidates.length })
+    for (const uid of candidates.slice(-50).reverse()) {
+      const msg = await client.fetchOne(String(uid), { envelope: true }, { uid: true })
+      if (msg && msg.envelope?.messageId && bare(msg.envelope.messageId) === target) { debug.tries = tries; return uid }
+    }
   }
+  debug.tries = tries
   return null
 }
 
@@ -101,7 +114,7 @@ export async function POST(request: NextRequest) {
     logger: false,
   })
 
-  const result: { drafted: boolean; flagged: boolean; draftsFolder?: string } = { drafted: false, flagged: false }
+  const result: { drafted: boolean; flagged: boolean; draftsFolder?: string; flagCheck?: Record<string, unknown> } = { drafted: false, flagged: false }
 
   try {
     await client.connect()
@@ -126,7 +139,9 @@ export async function POST(request: NextRequest) {
     if (flag && originalId) {
       const lock = await client.getMailboxLock('INBOX')
       try {
-        const uid = await findOriginal(client, originalId, to, subject)
+        const flagCheck: Record<string, unknown> = {}
+        const uid = await findOriginal(client, originalId, to, subject, flagCheck)
+        result.flagCheck = flagCheck
         if (uid) {
           await client.messageFlagsAdd([uid], ['\\Flagged'], { uid: true })
           result.flagged = true
