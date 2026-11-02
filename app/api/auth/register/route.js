@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import pkg from 'pg'
 const { Client } = pkg
 
-const FALLBACK_DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
+const FALLBACK_DATABASE_URL = process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL
 
 export async function POST(request) {
   const client = new Client({

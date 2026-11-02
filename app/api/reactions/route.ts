@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Client } from 'pg'
 import jwt from 'jsonwebtoken'
 
-const DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
+const DATABASE_URL = process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL
 
 // Helper to get userId from JWT token (Authorization header or cookie)
 function getUserIdFromRequest(request: NextRequest): string | null {

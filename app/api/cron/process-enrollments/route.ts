@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import pkg from 'pg'
 const { Client } = pkg
 
-const FALLBACK_DATABASE_URL = 'postgresql://postgres:JSRVavPyKDfxvKqCDcRNArgvRdwflWwn@yamabiko.proxy.rlwy.net:39135/railway'
+const FALLBACK_DATABASE_URL = process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL
 const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY
 
 async function getClient() {
