@@ -46,7 +46,7 @@ RETURNING id, email, name;
 **Via Resend API:**
 ```bash
 curl -X POST 'https://api.resend.com/emails' \
-  -H 'Authorization: Bearer re_52udxHHg_BdqD67Rn5xMaNT5dujCfY7kW' \
+  -H 'Authorization: Bearer re_YOUR_RESEND_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
     "from": "Circle of Return <cor@thecor.yourtruenorth.me>",
