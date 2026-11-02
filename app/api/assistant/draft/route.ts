@@ -45,6 +45,33 @@ async function findDrafts(client: ImapFlow) {
   return named ? named.path : 'Drafts'
 }
 
+const bare = (id: string) => id.replace(/^<|>$/g, '').trim().toLowerCase()
+
+// Find the original email in INBOX. Some servers don't support searching by
+// Message-ID header, so try that first (with and without brackets), then fall
+// back to sender + subject over the last 30 days and match the Message-ID exactly.
+async function findOriginal(client: ImapFlow, messageId: string, from: string, subject: string): Promise<number | null> {
+  const target = bare(messageId)
+  for (const value of [messageId, target]) {
+    try {
+      const uids = await client.search({ header: { 'message-id': value } }, { uid: true })
+      if (uids && uids.length) return uids[uids.length - 1]
+    } catch {}
+  }
+  const query: Record<string, unknown> = { since: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) }
+  if (from) query.from = from
+  if (subject) query.subject = subject.replace(/^re:\s*/i, '').slice(0, 100)
+  let candidates: number[] = []
+  try {
+    candidates = (await client.search(query, { uid: true })) || []
+  } catch {}
+  for (const uid of candidates.slice(-20).reverse()) {
+    const msg = await client.fetchOne(String(uid), { envelope: true }, { uid: true })
+    if (msg && msg.envelope?.messageId && bare(msg.envelope.messageId) === target) return uid
+  }
+  return null
+}
+
 export async function POST(request: NextRequest) {
   if (!authorised(request)) return NextResponse.json({ ok: false, error: 'Unauthorised' }, { status: 401 })
   if (!process.env.IMAP_PASSWORD) return NextResponse.json({ ok: false, error: 'IMAP_PASSWORD is not set' }, { status: 500 })
@@ -99,9 +126,9 @@ export async function POST(request: NextRequest) {
     if (flag && originalId) {
       const lock = await client.getMailboxLock('INBOX')
       try {
-        const uids = await client.search({ header: { 'message-id': originalId } }, { uid: true })
-        if (uids && uids.length) {
-          await client.messageFlagsAdd(uids, ['\\Flagged'], { uid: true })
+        const uid = await findOriginal(client, originalId, to, subject)
+        if (uid) {
+          await client.messageFlagsAdd([uid], ['\\Flagged'], { uid: true })
           result.flagged = true
         }
       } finally {
