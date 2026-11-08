@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
 import { query } from '@/lib/db'
 import CourseDayText from '../../components/CourseDayText'
+import { dayForKey, SHORT_FUSE_COOKIE } from '../../../lib/shortfuse-days'
+import SaveKey from './SaveKey'
 
 export const metadata: Metadata = {
   title: 'Short Fuse | 14 days with True North',
@@ -34,8 +37,14 @@ interface Day {
   youtube_id: string | null
 }
 
-// Public version of the members' Short Fuse course: all 14 days open, no login.
-export default async function ShortFusePage() {
+// Public version of the members' Short Fuse course, no login. Days open one at a
+// time: each Day email links here with that day's key (see lib/shortfuse-days).
+export default async function ShortFusePage(props: { searchParams: Promise<{ k?: string }> }) {
+  const { k } = await props.searchParams
+  const fromLink = dayForKey(k)
+  const fromCookie = dayForKey((await cookies()).get(SHORT_FUSE_COOKIE)?.value)
+  const openUpTo = Math.max(fromLink, fromCookie)
+
   const result = await query(
     `SELECT d.day, d.title, d.body, d.pdf_url, v."youtubeId" AS youtube_id
      FROM course_days d LEFT JOIN videos v ON v.id = d.video_id
@@ -56,8 +65,14 @@ export default async function ShortFusePage() {
           <p style={{ fontSize: '17px', lineHeight: 1.7, color: C.darkMuted, margin: 0 }}>
             A 14 day course to help you release anger without guilt, shame or bottling it up. Five minutes a day to shift how you respond.
           </p>
+          <p style={{ fontSize: '15px', lineHeight: 1.7, color: C.darkMuted, margin: '20px 0 0' }}>
+            {openUpTo > 0
+              ? 'One day opens each day, with the email for that day.'
+              : <>Each day opens with its email. Not signed up yet? <Link href="/shortfuse" style={{ color: C.sage }}>Start the Short Fuse here</Link>.</>}
+          </p>
         </div>
       </section>
+      {fromLink > fromCookie && k && <SaveKey shortFuseKey={k} />}
 
       <style>{`
         .sf-summary::-webkit-details-marker { display: none; }
@@ -66,8 +81,13 @@ export default async function ShortFusePage() {
       `}</style>
       <section style={{ background: C.cream, padding: 'clamp(40px, 8vw, 80px) 24px' }}>
         <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          {days.map(d => (
-            <details key={d.day} open={d.day === 1} style={{ borderTop: `1px solid ${C.border}`, padding: '20px 0' }}>
+          {days.map(d => d.day > openUpTo ? (
+            <div key={d.day} style={{ borderTop: `1px solid ${C.border}`, padding: '20px 0', opacity: 0.55 }}>
+              <span style={{ display: 'block', fontSize: '13px', color: C.sageMid, marginBottom: '6px' }}>Day {d.day} · opens with your Day {d.day} email</span>
+              <span style={{ fontFamily: serif, fontSize: '24px', lineHeight: 1.2, color: C.ink }}>{d.title || `Day ${d.day}`}</span>
+            </div>
+          ) : (
+            <details key={d.day} open={d.day === openUpTo} style={{ borderTop: `1px solid ${C.border}`, padding: '20px 0' }}>
               <summary className="sf-summary" style={{ cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
                 <span>
                   <span style={{ display: 'block', fontSize: '13px', color: C.sageMid, marginBottom: '6px' }}>Day {d.day}</span>
