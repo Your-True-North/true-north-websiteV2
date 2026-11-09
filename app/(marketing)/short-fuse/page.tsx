@@ -34,14 +34,41 @@ interface Day {
   youtube_id: string | null
 }
 
+// Used when the database can't be read, so the page never crashes.
+// Titles and videos are the ones in the Day emails in Kit.
+const FALLBACK_DAYS: [string, string][] = [
+  ['Acknowledge Your Anger', 'zgzAaGmFInA'],
+  ['Understand the Role of Anger', 'c7XiJWWGdeI'],
+  ['Observe Without Judgement', '9-haOwvD9Zg'],
+  ['Identify Patterns and Triggers', 'q5vs3ygGRs4'],
+  ['Separate Anger from Action', '66IQ6csoxl4'],
+  ['Reflect on the Impact of Anger', 'KPsTW6bYq40'],
+  ['Ground Yourself in the Moment', 'sqlUHCpml-M'],
+  ['Set Boundaries for Emotional Wellbeing', 'MtyzjoAfGG4'],
+  ['Build Emotional Awareness', 'LcKyjjsRdj4'],
+  ['Practice Self-Compassion', 'fQrbFRaKy5Q'],
+  ['Release Stored Anger Safely', '__6jSaByaAk'],
+  ['Forgive Yourself and Others', 'XNbQ7NovW58'],
+  ['Develop Your Anger Action Plan', '6U0T1v9QbDw'],
+  ['Reflect and Commit', 'gqu-mHcPrXM'],
+]
+
 // Public version of the members' Short Fuse course: all 14 days open, no login.
 export default async function ShortFusePage() {
-  const result = await query(
-    `SELECT d.day, d.title, d.body, d.pdf_url, v."youtubeId" AS youtube_id
-     FROM course_days d LEFT JOIN videos v ON v.id = d.video_id
-     WHERE d.course = 'short-fuse' ORDER BY d.day`
-  )
-  const days: Day[] = result.rows
+  let days: Day[] = []
+  try {
+    const result = await query(
+      `SELECT d.day, d.title, d.body, d.pdf_url, v."youtubeId" AS youtube_id
+       FROM course_days d LEFT JOIN videos v ON v.id = d.video_id
+       WHERE d.course = 'short-fuse' ORDER BY d.day`
+    )
+    days = result.rows
+  } catch (err: any) {
+    console.error('[short-fuse page] Database read failed, showing the built-in days:', err?.message)
+  }
+  if (!days.length) {
+    days = FALLBACK_DAYS.map(([title, youtube_id], i) => ({ day: i + 1, title, body: '', pdf_url: null, youtube_id }))
+  }
 
   return (
     <div style={{ fontFamily: sans }}>
