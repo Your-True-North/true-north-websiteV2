@@ -1,7 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { cookies } from 'next/headers'
+import { Archivo } from 'next/font/google'
 import { query } from '@/lib/db'
 import CourseDayText from '../../components/CourseDayText'
+import { dayForKey, SHORT_FUSE_COOKIE } from '../../../lib/shortfuse-days'
+import SaveKey from './SaveKey'
+import s from '../../shortfuse/shortfuse.module.css'
+import c from './course.module.css'
 
 export const metadata: Metadata = {
   title: 'Short Fuse | 14 days with True North',
@@ -11,20 +17,8 @@ export const metadata: Metadata = {
 // Reads the course straight from the database, so a Pull from ConvertKit shows here once saved
 export const dynamic = 'force-dynamic'
 
-// Same palette and type as the other marketing pages (see map)
-const C = {
-  dark: '#13140f',
-  darkText: '#f0ebe0',
-  darkMuted: '#9a9a8c',
-  cream: '#f7f3ec',
-  ink: '#1a1a16',
-  body: '#3a3a34',
-  sage: '#8aaa96',
-  sageMid: '#6b9079',
-  border: '#ddd7cc',
-}
-const serif = '"Gambarino", Georgia, serif'
-const sans = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif'
+// Same typeface as the sign-up page (/shortfuse)
+const archivo = Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-archivo', display: 'swap' })
 
 interface Day {
   day: number
@@ -53,8 +47,24 @@ const FALLBACK_DAYS: [string, string][] = [
   ['Reflect and Commit', 'gqu-mHcPrXM'],
 ]
 
-// Public version of the members' Short Fuse course: all 14 days open, no login.
-export default async function ShortFusePage() {
+// Public version of the members' Short Fuse course, no login. Days open one at
+// a time: each Day email links here with that day's key (see lib/shortfuse-days),
+// which opens that day and the ones before it. Looks like the sign-up page.
+export default async function ShortFusePage(props: { searchParams: Promise<{ k?: string | string[] }> }) {
+  let openUpTo = 0
+  let linkKey = ''
+  let saveKey = false
+  try {
+    const params = await props.searchParams
+    linkKey = typeof params?.k === 'string' ? params.k : ''
+    const fromLink = dayForKey(linkKey)
+    const fromCookie = dayForKey((await cookies()).get(SHORT_FUSE_COOKIE)?.value)
+    openUpTo = Math.max(fromLink, fromCookie)
+    saveKey = fromLink > fromCookie
+  } catch (err: any) {
+    console.error('[short-fuse page] Reading the day key failed:', err?.message)
+  }
+
   let days: Day[] = []
   try {
     const result = await query(
@@ -70,77 +80,83 @@ export default async function ShortFusePage() {
     days = FALLBACK_DAYS.map(([title, youtube_id], i) => ({ day: i + 1, title, body: '', pdf_url: null, youtube_id }))
   }
 
-  return (
-    <div style={{ fontFamily: sans }}>
-      <section style={{ background: C.dark, padding: 'clamp(112px, 14vw, 160px) 24px clamp(64px, 10vw, 112px)' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <p style={{ fontSize: '11px', letterSpacing: '3.5px', textTransform: 'uppercase', color: C.sage, margin: '0 0 20px' }}>
-            Short Fuse · 14 days
-          </p>
-          <h1 style={{ fontFamily: serif, fontWeight: 400, fontSize: 'clamp(40px, 8vw, 68px)', lineHeight: 1.05, color: C.darkText, margin: '0 0 28px' }}>
-            Short Fuse
-          </h1>
-          <p style={{ fontSize: '17px', lineHeight: 1.7, color: C.darkMuted, margin: 0 }}>
-            A 14 day course to help you release anger without guilt, shame or bottling it up. Five minutes a day to shift how you respond.
-          </p>
-        </div>
-      </section>
+  const pad = (n: number) => String(n).padStart(2, '0')
 
-      <style>{`
-        .sf-summary::-webkit-details-marker { display: none; }
-        .sf-sign::before { content: '+'; }
-        details[open] > .sf-summary .sf-sign::before { content: '\\2212'; }
-      `}</style>
-      <section style={{ background: C.cream, padding: 'clamp(40px, 8vw, 80px) 24px' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          {days.map(d => (
-            <details key={d.day} open={d.day === 1} style={{ borderTop: `1px solid ${C.border}`, padding: '20px 0' }}>
-              <summary className="sf-summary" style={{ cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
-                <span>
-                  <span style={{ display: 'block', fontSize: '13px', color: C.sageMid, marginBottom: '6px' }}>Day {d.day}</span>
-                  <span style={{ fontFamily: serif, fontSize: '24px', lineHeight: 1.2, color: C.ink }}>{d.title || `Day ${d.day}`}</span>
-                </span>
-                <span className="sf-sign" aria-hidden="true" style={{ fontSize: '24px', lineHeight: 1, color: C.sageMid, marginTop: '22px' }} />
-              </summary>
-              <div style={{ marginTop: '20px', color: C.body }}>
-                {d.youtube_id && (
-                  <div style={{ position: 'relative', paddingTop: '56.25%', background: '#dcd4c5', borderRadius: '2px', overflow: 'hidden', marginBottom: '24px' }}>
-                    <iframe
-                      src={`https://www.youtube.com/embed/${d.youtube_id}?rel=0&modestbranding=1&playsinline=1`}
-                      title={`Short Fuse Day ${d.day}: ${d.title}`}
-                      loading="lazy"
-                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    />
-                  </div>
-                )}
-                <CourseDayText body={d.body} title={d.title} />
+  return (
+    <div className={`${archivo.variable} ${s.sf} ${c.page}`}>
+      {saveKey && <SaveKey shortFuseKey={linkKey} />}
+      <div className={s.wrap}>
+        <div className={s.mast}>
+          <span>Your True North</span>
+          <span>{openUpTo > 0 ? `Day ${openUpTo} of 14` : 'Free · 14 days'}</span>
+        </div>
+      </div>
+
+      <header className={`${s.wrap} ${c.head}`}>
+        <h1 className={c.sfTitle}>The Short Fuse</h1>
+        <p className={c.intro}>
+          A 14 day course to help you release anger without guilt, shame or bottling it up. Five minutes a day to shift how you respond.
+        </p>
+        {openUpTo === 0 && (
+          <p className={c.intro}>
+            Each day opens with its email. Not signed up yet? <Link href="/shortfuse">Start The Short Fuse here</Link>.
+          </p>
+        )}
+      </header>
+
+      <main className={`${s.wrap} ${c.days}`}>
+        {days.map(d => d.day > openUpTo ? (
+          <div key={d.day} className={`${c.day} ${c.row} ${c.locked}`}>
+            <span className={c.num}>Day {pad(d.day)}</span>
+            <span className={c.name}>{d.title || `Day ${d.day}`}</span>
+            <span className={c.tag}><span className={c.long}>Opens with your Day {d.day} email</span><span className={c.short}>Locked</span></span>
+          </div>
+        ) : (
+          <details key={d.day} className={c.day} open={d.day === openUpTo}>
+            <summary className={c.row}>
+              <span className={c.num}>Day {pad(d.day)}</span>
+              <span className={c.name}>{d.title || `Day ${d.day}`}</span>
+              {d.day === openUpTo && <span className={`${c.tag} ${c.today}`}>Today</span>}
+              <span className={c.sign} aria-hidden="true" />
+            </summary>
+            <div className={c.body}>
+              {d.youtube_id && (
+                <div className={c.video}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${d.youtube_id}?rel=0&modestbranding=1&playsinline=1`}
+                    title={`Short Fuse Day ${d.day}: ${d.title}`}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+              <div className={c.text}>
+                <CourseDayText body={d.body || ''} title={d.title} />
                 {d.pdf_url && (
-                  <a href={d.pdf_url} target="_blank" rel="noopener noreferrer" style={{ color: C.sageMid, fontSize: '16px' }}>
-                    Open the worksheet
-                  </a>
+                  <a href={d.pdf_url} target="_blank" rel="noopener noreferrer">Open the worksheet</a>
                 )}
               </div>
-            </details>
-          ))}
-          <div style={{ borderTop: `1px solid ${C.border}` }} />
-        </div>
-      </section>
+            </div>
+          </details>
+        ))}
+      </main>
 
-      <section style={{ background: C.dark, padding: 'clamp(56px, 9vw, 96px) 24px' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-          <h2 style={{ fontFamily: serif, fontWeight: 400, fontSize: 'clamp(30px, 5vw, 44px)', lineHeight: 1.15, color: C.darkText, margin: '0 0 20px' }}>
-            Do this work with other men.
-          </h2>
-          <p style={{ fontSize: '17px', lineHeight: 1.7, color: C.darkMuted, margin: '0 0 32px' }}>
+      <section className={`${s.navy} ${c.next}`}>
+        <div className={s.wrap}>
+          <h2 className={c.nextTitle}>Do this work with other men.</h2>
+          <p className={c.nextText}>
             The MAP is my twelve-week programme for men carrying frustration, dissatisfaction, or a short fuse they&apos;re tired of. Men who are done reading about it. Ten men a cohort. We go into the body, find what&apos;s underneath, and let it move.
           </p>
-          <Link href="/the-map" style={{ display: 'inline-block', background: C.sage, color: C.ink, padding: '16px 36px', borderRadius: '4px', fontWeight: 600, fontSize: '16px', textDecoration: 'none' }}>
-            See if The MAP is for you
+          <Link href="/the-map" className={`${s.go} ${c.nextGo}`}>
+            <span>See if The MAP is for you</span><span className={s.ar} aria-hidden="true">→</span>
           </Link>
         </div>
       </section>
+
+      <footer className={s.footer}>
+        <div className={s.wrap}>Your True North · yourtruenorth.me · @your_truenorth_</div>
+      </footer>
     </div>
   )
 }
