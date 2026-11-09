@@ -5,9 +5,9 @@ import Script from 'next/script'
 import { X, Play, Pause, RotateCcw } from 'lucide-react'
 import { trackEvent } from '@/app/components/GoogleAnalytics'
 
-// Alex's 1:1 testimonial in the 1:1 Coaching section. Paste his YouTube ID here;
-// the video stays hidden until it's set.
-const ALEX_VIDEO_ID = ''
+// Alex's 1:1 testimonial, a bubble on the corner of the 1:1 Coaching card.
+// Clear the ID to hide it.
+const ALEX_VIDEO_ID = '7Y1upKm8bZk'
 
 export default function Work() {
   const [isMobile, setIsMobile] = useState(false)
@@ -1140,12 +1140,15 @@ export default function Work() {
               }}>
                 DEEP WORK
               </div>
+
+              {ALEX_VIDEO_ID && <ClientBubble id={ALEX_VIDEO_ID} isMobile={isMobile} />}
               
               <h2 style={{
                 fontSize: isMobile ? '2rem' : '2.8rem', 
                 marginBottom: '1rem', 
                 color: '#ffffff', 
-                fontWeight: '700'
+                fontWeight: '700',
+                paddingRight: isMobile ? '64px' : 0
               }}>
                 1:1 Coaching
               </h2>
@@ -1183,8 +1186,6 @@ export default function Work() {
                   </div>
                 ))}
               </div>
-
-              {ALEX_VIDEO_ID && <ClientTestimonial id={ALEX_VIDEO_ID} caption="Alex, 1:1 client" title="Alex, 1:1 client testimonial" />}
 
               <blockquote style={{
                 fontSize: isMobile ? '1.1rem' : '1.2rem',
@@ -1840,61 +1841,146 @@ export default function Work() {
   )
 }
 
-// Small portrait testimonial: a lazy thumbnail with a play button, and the
-// YouTube player only loads once it's clicked. Same pattern as TestimonialEmbed
-// on the anger page, copied here rather than imported across pages.
-function ClientTestimonial({ id, caption, title }: { id: string; caption: string; title: string }) {
-  const [loaded, setLoaded] = useState(false)
+// Small round bubble pinned to the corner of the 1:1 Coaching card. Clicking it
+// opens the portrait video in an overlay; the player only loads while it's open,
+// so closing it stops the video.
+function ClientBubble({ id, isMobile }: { id: string; isMobile: boolean }) {
+  const [open, setOpen] = useState(false)
+  const size = isMobile ? 60 : 72
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [open])
 
   return (
-    <div style={{ width: '100%', maxWidth: '260px', margin: '0 auto' }}>
+    <>
       <div style={{
-        position: 'relative',
-        width: '100%',
-        aspectRatio: '9/16',
-        borderRadius: '3px',
-        overflow: 'hidden',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        background: 'rgba(0, 0, 0, 0.3)'
+        position: 'absolute',
+        top: isMobile ? '-20px' : '-26px',
+        right: isMobile ? '-8px' : '-26px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: isMobile ? 'flex-end' : 'center',
+        gap: '6px',
+        zIndex: 2
       }}>
-        {loaded ? (
-          <iframe
-            src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`}
-            title={title}
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
+        <button
+          type="button"
+          className="alex-bubble"
+          onClick={() => setOpen(true)}
+          aria-label="Play Alex's 1:1 client testimonial"
+          style={{
+            position: 'relative',
+            width: `${size}px`,
+            height: `${size}px`,
+            padding: 0,
+            borderRadius: '50%',
+            overflow: 'hidden',
+            border: '2px solid #d4af37',
+            background: '#000',
+            cursor: 'pointer',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)'
+          }}
+        >
+          <img
+            src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`}
+            alt=""
+            loading="lazy"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 35%' }}
           />
-        ) : (
-          <button
-            type="button"
-            onClick={() => setLoaded(true)}
-            aria-label={`Play video: ${title}`}
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
-          >
-            <img
-              src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`}
-              alt=""
-              loading="lazy"
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-            <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{
-                width: '56px', height: '56px', borderRadius: '50%',
-                background: 'rgba(0,0,0,0.6)', border: '1.5px solid rgba(255,255,255,0.5)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center'
-              }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M6 4l14 8-14 8V4z" fill="#fff" />
-                </svg>
-              </span>
-            </span>
-          </button>
-        )}
+          <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.25)' }}>
+            <svg width={isMobile ? 16 : 18} height={isMobile ? 16 : 18} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 4l14 8-14 8V4z" fill="#fff" />
+            </svg>
+          </span>
+        </button>
+        <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.8)', whiteSpace: 'nowrap' }}>
+          Hear from Alex
+        </span>
       </div>
-      <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.95rem', lineHeight: '1.4', textAlign: 'center', margin: '0.75rem 0 0' }}>
-        {caption}
-      </p>
-    </div>
+
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 10000,
+            background: 'rgba(0, 0, 0, 0.88)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem'
+          }}
+        >
+          <div onClick={(e) => e.stopPropagation()} style={{ position: 'relative', width: '100%', maxWidth: '360px', maxHeight: '100%', display: 'flex', flexDirection: 'column' }}>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close video"
+              autoFocus
+              style={{
+                alignSelf: 'flex-end',
+                marginBottom: '0.5rem',
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                background: 'rgba(255, 255, 255, 0.1)',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+            >
+              <X size={18} />
+            </button>
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              aspectRatio: '9/16',
+              maxHeight: 'calc(100vh - 8rem)',
+              borderRadius: '3px',
+              overflow: 'hidden',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              background: '#000'
+            }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`}
+                title="Alex, 1:1 client testimonial"
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <p style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.95rem', lineHeight: '1.4', textAlign: 'center', margin: '0.75rem 0 0' }}>
+              Alex, 1:1 client
+            </p>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        .alex-bubble {
+          animation: alexRing 3s ease-in-out infinite;
+        }
+        @keyframes alexRing {
+          0%, 100% { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 0 rgba(212, 175, 55, 0.45); }
+          50% { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 7px rgba(212, 175, 55, 0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .alex-bubble { animation: none; }
+        }
+      `}</style>
+    </>
   )
 }
