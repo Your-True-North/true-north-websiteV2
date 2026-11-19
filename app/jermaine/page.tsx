@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   robots: { index: false, follow: false },
+  icons: { icon: '/tn-compass-icon.png', apple: '/tn-compass-icon.png' },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
