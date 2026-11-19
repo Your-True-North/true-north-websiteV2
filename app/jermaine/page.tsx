@@ -18,13 +18,11 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://yourtruenorth.me/jermaine',
     siteName: 'True North',
-    images: [{ url: '/tn-jermaine-pw.jpg', width: 1200, height: 630, alt: 'True North' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: TITLE,
     description: DESCRIPTION,
-    images: ['/tn-jermaine-pw.jpg'],
   },
 }
 
