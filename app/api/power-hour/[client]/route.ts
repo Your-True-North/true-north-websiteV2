@@ -115,7 +115,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ cli
       }
     }
     if (!saved && !emailed) return NextResponse.json({ error: 'Could not send', why }, { status: 500 })
-    return NextResponse.json({ ok: true, saved, emailed })
+    return NextResponse.json({ ok: true, saved, emailed, why: emailed ? [] : why })
   }
   return NextResponse.json({ error: 'Bad request' }, { status: 400 })
 }

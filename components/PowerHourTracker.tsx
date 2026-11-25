@@ -100,7 +100,13 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
         try { const d = await r.json(); if (Array.isArray(d.why) && d.why.length) why = ' (' + d.why.join('; ') + ')' } catch {}
         throw new Error(why)
       }
-      setNote(''); setNoteStatus('Sent. True will see it.'); load()
+      let res: any = {}
+      try { res = await r.json() } catch {}
+      setNote('')
+      setNoteStatus(res.emailed === false
+        ? 'Saved. True will see it.' + (coach || !Array.isArray(res.why) || !res.why.length ? '' : ' (email not sent: ' + res.why.join('; ') + ')')
+        : 'Sent. True will see it.')
+      load()
     } catch (e: any) { setNoteStatus("Your note didn't send. Try again in a moment." + (e?.message || '')) }
     setSending(false)
   }
