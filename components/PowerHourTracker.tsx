@@ -58,6 +58,7 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
       const r = await fetch(api, { cache: 'no-store' })
       if (!r.ok) throw new Error()
       const d = await r.json()
+      if (d.error) throw new Error()
       setTicks(d.ticks || {}); setNotes(d.notes || []); setStatus('')
     } catch { setStatus("Couldn't load your ticks. Check your connection and refresh.") }
   }, [api])

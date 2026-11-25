@@ -48,7 +48,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ cli
     )
   } catch (e) {
     console.error('[power-hour] GET', e)
-    return NextResponse.json({ error: 'Could not load' }, { status: 500 })
+    const code = (e as any)?.code || (e as any)?.name || 'unknown'
+    return NextResponse.json({ error: 'Could not load', code }, { status: 200, headers: { 'Cache-Control': 'no-store' } })
   }
 }
 
