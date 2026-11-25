@@ -4,7 +4,7 @@ import { query } from '@/lib/db'
 import { rateLimit } from '@/lib/auth'
 import { POWER_HOUR_CLIENTS } from '@/lib/power-hour'
 
-// Public, no sign-in: ticks and notes for Power Hour client pages.
+// Public, no sign-in: ticks and notes for Power Hour client pages (uses DATABASE_PUBLIC_URL).
 // If the database can't be reached, ticks stay on the client's phone and notes still reach True by email.
 
 const resend = new Resend(process.env.RESEND_API_KEY)
