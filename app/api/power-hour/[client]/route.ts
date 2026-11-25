@@ -40,12 +40,12 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ cli
   try {
     await ensureTables()
     const ticks = await query(
-      'SELECT day, item, done FROM power_hour_ticks WHERE client = $1 AND day >= $2',
-      [client, cfg.start]
+      'SELECT day, item, done FROM power_hour_ticks WHERE client = $1 AND day >= $2 AND updated_at >= $3',
+      [client, cfg.start, cfg.since || '1970-01-01T00:00:00Z']
     )
     const notes = await query(
-      'SELECT body, created_at FROM power_hour_notes WHERE client = $1 ORDER BY created_at DESC LIMIT 20',
-      [client]
+      'SELECT body, created_at FROM power_hour_notes WHERE client = $1 AND created_at >= $2 ORDER BY created_at DESC LIMIT 20',
+      [client, cfg.since || '1970-01-01T00:00:00Z']
     )
     const byDay: Record<string, Record<string, boolean>> = {}
     for (const r of ticks.rows) (byDay[r.day] ||= {})[r.item] = r.done

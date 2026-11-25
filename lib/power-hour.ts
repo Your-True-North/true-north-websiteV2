@@ -7,6 +7,7 @@ export type PowerHourClient = {
   slug: string
   name: string
   start: string // YYYY-MM-DD: first day shown in the coach view
+  since?: string // ISO time: ticks and notes saved before this are ignored (a fresh start)
   items: PowerHourItem[]
   priority: string
   bonus: string
@@ -32,6 +33,7 @@ export const POWER_HOUR_CLIENTS: Record<string, PowerHourClient> = {
     slug: 'george',
     name: 'George',
     start: '2026-11-25',
+    since: '2026-11-25T14:20:00Z',
     items: [
       { key: 'W', title: 'Take 5 minutes', short: 'Breathe', detail: 'Deep breaths. Ground yourself' },
       { key: 'O', title: "Today's priority task", short: 'Priority', task: 'priority' },

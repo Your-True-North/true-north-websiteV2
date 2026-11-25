@@ -27,10 +27,19 @@ const css = `
 .ph-t{font-weight:600;font-size:17px}
 .ph-d{font-size:14px;color:#a3a39c;margin-top:2px}
 .ph-small{font-size:13px;color:#a3a39c}
-.ph-yday{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:16px;border-top:1px solid #2b2b2b}
+.ph-yday{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding-top:16px;border-top:1px solid #2b2b2b}
 .ph-dots{display:flex;gap:6px;flex-wrap:wrap}
 .ph-dot{font-size:13px;padding:3px 10px;border-radius:99px;border:1px solid #e07a6c;color:#e07a6c}
 .ph-dot.on{background:#3f9a72;border-color:#3f9a72;color:#fff}
+.ph-dot.wait{border-color:#4a4a4a;color:#a3a39c}
+.ph-days{display:flex;flex-direction:column;gap:14px;width:100%}
+.ph-day{display:flex;flex-direction:column;gap:6px}
+.ph-day-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ph-day-label{font-weight:600}
+.ph-pct{font-size:14px;font-variant-numeric:tabular-nums;color:#a3a39c}
+.ph-pct b{color:#f2f2ef}
+.ph-bar{height:6px;border-radius:99px;background:#2b2b2b;overflow:hidden}
+.ph-bar i{display:block;height:100%;background:#3f9a72}
 .ph-box{display:grid;gap:10px;background:#181818;border:1px solid #2b2b2b;border-radius:14px;padding:16px}
 .ph-box h2{font-size:16px;margin:0}
 .ph-box textarea{width:100%;box-sizing:border-box;font:inherit;font-size:16px;color:inherit;background:#0e0e0e;border:1px solid #2b2b2b;border-radius:8px;padding:8px 10px}
@@ -54,7 +63,7 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
   const [today, setToday] = useState('')
   const [yday, setYday] = useState('')
   const api = `/api/power-hour/${client.slug}`
-  const localKey = `power-hour:${client.slug}`
+  const localKey = `power-hour:${client.slug}:${client.since || ''}`
   const [offline, setOffline] = useState(false)
 
   const load = useCallback(async () => {
@@ -63,13 +72,13 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
       if (!r.ok) throw new Error()
       const d = await r.json()
       if (d.error) throw new Error()
-      const local = readLocal(localKey), server: Ticks = d.ticks || {}
+      const local = coach ? {} : readLocal(localKey), server: Ticks = d.ticks || {}
       const merged: Ticks = { ...local }
       for (const day of Object.keys(server)) merged[day] = { ...(local[day] || {}), ...server[day] }
-      setTicks(merged); writeLocal(localKey, merged)
+      setTicks(merged); if (!coach) writeLocal(localKey, merged)
       setNotes(d.notes || []); setOffline(!!d.offline); setStatus('')
-    } catch { setTicks(readLocal(localKey)) }
-  }, [api, localKey])
+    } catch { if (!coach) setTicks(readLocal(localKey)) }
+  }, [api, localKey, coach])
 
   useEffect(() => {
     setToday(dayKey(new Date())); setYday(dayKey(daysAgo(1)))
@@ -118,18 +127,18 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
     return (txt || 'Set on your next call') + due
   }
   const t = ticks[today] || {}
-  const y = ticks[yday] || {}
   const when = (at: string) => {
     const d = new Date(at)
     return isNaN(d.getTime()) ? '' : d.toLocaleString(undefined, { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })
   }
 
-  const coachDays: { key: string; label: string }[] = []
-  if (coach && today) {
-    for (let i = 0; i <= 60; i++) {
+  // Coach: today and every day since the start. Client: the last 7 days before today.
+  const pastDays: { key: string; label: string }[] = []
+  if (today) {
+    for (let i = coach ? 0 : 1; i <= (coach ? 60 : 7); i++) {
       const d = daysAgo(i), k = dayKey(d)
       if (k < client.start) break
-      coachDays.push({ key: k, label: i === 0 ? 'Today' : d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) })
+      pastDays.push({ key: k, label: i === 0 ? 'Today' : i === 1 ? 'Yesterday' : d.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'short' }) })
     }
   }
 
@@ -147,14 +156,12 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
           <section className="ph-box" aria-label="Days so far">
             <h2>{client.name}&apos;s days so far</h2>
             {offline && <div className="ph-status">His ticks can&apos;t reach the website right now, so they&apos;re only saved on his phone. His notes still come to your email.</div>}
-            {coachDays.length === 0 ? (
+            {pastDays.length === 0 ? (
               <div className="ph-small">His days will build up here from {client.start}.</div>
             ) : (
-              <div className="ph-week">
-                <span className="h" />
-                {client.items.map((i) => <span key={i.key} className="h c">{i.short}</span>)}
-                {coachDays.map((d) => (
-                  <Row key={d.key} label={d.label} items={client.items} ticks={ticks[d.key] || {}} isToday={d.key === today} />
+              <div className="ph-days">
+                {pastDays.map((d) => (
+                  <DayRow key={d.key} label={d.label} items={client.items} ticks={ticks[d.key] || {}} isToday={d.key === today} />
                 ))}
               </div>
             )}
@@ -173,12 +180,12 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
               ))}
             </section>
             {status && <div className="ph-status">{status}</div>}
-            {yday && yday >= client.start && (
-              <section className="ph-yday" aria-label="Yesterday">
-                <span className="ph-small">Yesterday&apos;s finished tasks</span>
-                <div className="ph-dots">
-                  {client.items.map((i) => (
-                    <span key={i.key} className={'ph-dot' + (y[i.key] ? ' on' : '')}>{(y[i.key] ? '✓ ' : '✗ ') + i.short}</span>
+            {pastDays.length > 0 && (
+              <section className="ph-yday" aria-label="Your last 7 days">
+                <span className="ph-small">How your last days went</span>
+                <div className="ph-days">
+                  {pastDays.map((d) => (
+                    <DayRow key={d.key} label={d.label} items={client.items} ticks={ticks[d.key] || {}} isToday={false} />
                   ))}
                 </div>
               </section>
@@ -206,13 +213,23 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
   )
 }
 
-function Row({ label, items, ticks, isToday }: { label: string; items: PowerHourClient['items']; ticks: Record<string, boolean>; isToday: boolean }) {
+function DayRow({ label, items, ticks, isToday }: { label: string; items: PowerHourClient['items']; ticks: Record<string, boolean>; isToday: boolean }) {
+  const done = items.filter((i) => ticks[i.key]).length
+  const pct = Math.round((done / items.length) * 100)
   return (
-    <>
-      <span>{label}</span>
-      {items.map((i) => (
-        <span key={i.key} className={'c ' + (ticks[i.key] ? 'y' : 'x')}>{ticks[i.key] ? '✓' : isToday ? '·' : '✗'}</span>
-      ))}
-    </>
+    <div className="ph-day">
+      <div className="ph-day-top">
+        <span className="ph-day-label">{label}</span>
+        <span className="ph-pct"><b>{pct}%</b> · {done} of {items.length}</span>
+      </div>
+      <div className="ph-bar" aria-hidden="true"><i style={{ width: pct + '%' }} /></div>
+      <div className="ph-dots">
+        {items.map((i) => (
+          <span key={i.key} className={'ph-dot' + (ticks[i.key] ? ' on' : isToday ? ' wait' : '')}>
+            {(ticks[i.key] ? '✓ ' : isToday ? '' : '✗ ') + i.short}
+          </span>
+        ))}
+      </div>
+    </div>
   )
 }
