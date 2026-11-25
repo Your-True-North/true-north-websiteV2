@@ -8,6 +8,8 @@ type Note = { t: string; at: string }
 const dayKey = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 const daysAgo = (n: number) => { const d = new Date(); d.setDate(d.getDate() - n); return d }
+const readLocal = (k: string): Ticks => { try { return JSON.parse(localStorage.getItem(k) || '{}') || {} } catch { return {} } }
+const writeLocal = (k: string, t: Ticks) => { try { localStorage.setItem(k, JSON.stringify(t)) } catch {} }
 
 const css = `
 .ph{min-height:100vh;background:#0e0e0e;color:#f2f2ef;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5}
@@ -52,6 +54,8 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
   const [today, setToday] = useState('')
   const [yday, setYday] = useState('')
   const api = `/api/power-hour/${client.slug}`
+  const localKey = `power-hour:${client.slug}`
+  const [offline, setOffline] = useState(false)
 
   const load = useCallback(async () => {
     try {
@@ -59,9 +63,13 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
       if (!r.ok) throw new Error()
       const d = await r.json()
       if (d.error) throw new Error()
-      setTicks(d.ticks || {}); setNotes(d.notes || []); setStatus('')
-    } catch { setStatus("Couldn't load your ticks. Check your connection and refresh.") }
-  }, [api])
+      const local = readLocal(localKey), server: Ticks = d.ticks || {}
+      const merged: Ticks = { ...local }
+      for (const day of Object.keys(server)) merged[day] = { ...(local[day] || {}), ...server[day] }
+      setTicks(merged); writeLocal(localKey, merged)
+      setNotes(d.notes || []); setOffline(!!d.offline); setStatus('')
+    } catch { setTicks(readLocal(localKey)) }
+  }, [api, localKey])
 
   useEffect(() => {
     setToday(dayKey(new Date())); setYday(dayKey(daysAgo(1)))
@@ -74,15 +82,11 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
   async function toggle(key: string) {
     if (!today) return
     const done = !(ticks[today]?.[key])
-    setTicks((t) => ({ ...t, [today]: { ...(t[today] || {}), [key]: done } }))
+    const next = { ...ticks, [today]: { ...(ticks[today] || {}), [key]: done } }
+    setTicks(next); writeLocal(localKey, next)
     try {
-      const r = await fetch(api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'tick', day: today, item: key, done }) })
-      if (!r.ok) throw new Error()
-      setStatus('')
-    } catch {
-      setTicks((t) => ({ ...t, [today]: { ...(t[today] || {}), [key]: !done } }))
-      setStatus("That tick didn't save. Check your connection and try again.")
-    }
+      await fetch(api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'tick', day: today, item: key, done }) })
+    } catch {}
   }
 
   async function sendNote() {
@@ -132,6 +136,7 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
         {coach ? (
           <section className="ph-box" aria-label="Days so far">
             <h2>{client.name}&apos;s days so far</h2>
+            {offline && <div className="ph-status">His ticks can&apos;t reach the website right now, so they&apos;re only saved on his phone. His notes still come to your email.</div>}
             {coachDays.length === 0 ? (
               <div className="ph-small">His days will build up here from {client.start}.</div>
             ) : (

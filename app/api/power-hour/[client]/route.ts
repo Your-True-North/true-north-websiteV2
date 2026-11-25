@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
 import { query } from '@/lib/db'
+import { rateLimit } from '@/lib/auth'
 import { POWER_HOUR_CLIENTS } from '@/lib/power-hour'
 
 // Public, no sign-in: ticks and notes for Power Hour client pages.
+// If the database can't be reached, ticks stay on the client's phone and notes still reach True by email.
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'KYN <kyn@yourtruenorth.me>'
+const TO_EMAIL = process.env.ADMIN_CONTACT_EMAIL || 'navigate@yourtruenorth.me'
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/
 
@@ -49,7 +56,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ cli
   } catch (e) {
     console.error('[power-hour] GET', e)
     const code = (e as any)?.code || (e as any)?.name || 'unknown'
-    return NextResponse.json({ error: 'Could not load', code }, { status: 200, headers: { 'Cache-Control': 'no-store' } })
+    return NextResponse.json({ ticks: {}, notes: [], offline: true, code }, { headers: { 'Cache-Control': 'no-store' } })
   }
 }
 
@@ -59,29 +66,48 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ cli
   if (!cfg) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   let body: any
   try { body = await req.json() } catch { return NextResponse.json({ error: 'Bad request' }, { status: 400 }) }
-  try {
-    await ensureTables()
-    if (body?.type === 'tick') {
-      const { day, item, done } = body
-      if (typeof day !== 'string' || !DAY.test(day) || !cfg.items.some((i) => i.key === item) || typeof done !== 'boolean') {
-        return NextResponse.json({ error: 'Bad request' }, { status: 400 })
-      }
+  if (body?.type === 'tick') {
+    const { day, item, done } = body
+    if (typeof day !== 'string' || !DAY.test(day) || !cfg.items.some((i) => i.key === item) || typeof done !== 'boolean') {
+      return NextResponse.json({ error: 'Bad request' }, { status: 400 })
+    }
+    try {
+      await ensureTables()
       await query(
         `INSERT INTO power_hour_ticks (client, day, item, done, updated_at) VALUES ($1, $2, $3, $4, NOW())
          ON CONFLICT (client, day, item) DO UPDATE SET done = $4, updated_at = NOW()`,
         [client, day, item, done]
       )
-      return NextResponse.json({ ok: true })
+      return NextResponse.json({ ok: true, saved: true })
+    } catch (e) {
+      console.error('[power-hour] tick', e)
+      return NextResponse.json({ ok: true, saved: false })
     }
-    if (body?.type === 'note') {
-      const text = typeof body.text === 'string' ? body.text.trim().slice(0, 2000) : ''
-      if (!text) return NextResponse.json({ error: 'Empty note' }, { status: 400 })
-      await query('INSERT INTO power_hour_notes (client, body) VALUES ($1, $2)', [client, text])
-      return NextResponse.json({ ok: true })
-    }
-    return NextResponse.json({ error: 'Bad request' }, { status: 400 })
-  } catch (e) {
-    console.error('[power-hour] POST', e)
-    return NextResponse.json({ error: 'Could not save' }, { status: 500 })
   }
+  if (body?.type === 'note') {
+    const text = typeof body.text === 'string' ? body.text.trim().slice(0, 2000) : ''
+    if (!text) return NextResponse.json({ error: 'Empty note' }, { status: 400 })
+    if (rateLimit(`power-hour-note:${client}`, 20, 60 * 60 * 1000).limited) {
+      return NextResponse.json({ error: 'Too many notes. Try again later.' }, { status: 429 })
+    }
+    let saved = false, emailed = false
+    try {
+      await ensureTables()
+      await query('INSERT INTO power_hour_notes (client, body) VALUES ($1, $2)', [client, text])
+      saved = true
+    } catch (e) { console.error('[power-hour] note db', e) }
+    try {
+      const { error } = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: TO_EMAIL,
+        subject: `Power Hour note from ${cfg.name}`,
+        text: `${text}\n\n\nFrom ${cfg.name}'s Power Hour page: https://yourtruenorth.me/${cfg.slug}`,
+      })
+      if (error) throw error
+      emailed = true
+    } catch (e) { console.error('[power-hour] note email', e) }
+    if (!saved && !emailed) return NextResponse.json({ error: 'Could not send' }, { status: 500 })
+    return NextResponse.json({ ok: true, saved, emailed })
+  }
+  return NextResponse.json({ error: 'Bad request' }, { status: 400 })
 }
