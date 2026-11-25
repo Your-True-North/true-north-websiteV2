@@ -38,7 +38,7 @@ export const POWER_HOUR_CLIENTS: Record<string, PowerHourClient> = {
       { key: 'N', title: 'Bonus task', short: 'Bonus', task: 'bonus' },
       { key: 'F', title: 'Another 5 minutes', short: 'Breathe again', detail: 'Deep, centred breathing' },
     ],
-    priority: '',
-    bonus: '',
+    priority: "What's one task you've been putting off that you want to start today?",
+    bonus: 'What have you got going on at the moment that needs your attention?',
   },
 }
