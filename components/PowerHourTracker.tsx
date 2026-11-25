@@ -95,9 +95,13 @@ export default function PowerHourTracker({ client, coach = false }: { client: Po
     setSending(true)
     try {
       const r = await fetch(api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'note', text }) })
-      if (!r.ok) throw new Error()
+      if (!r.ok) {
+        let why = ''
+        try { const d = await r.json(); if (Array.isArray(d.why) && d.why.length) why = ' (' + d.why.join('; ') + ')' } catch {}
+        throw new Error(why)
+      }
       setNote(''); setNoteStatus('Sent. True will see it.'); load()
-    } catch { setNoteStatus("Your note didn't send. Try again in a moment.") }
+    } catch (e: any) { setNoteStatus("Your note didn't send. Try again in a moment." + (e?.message || '')) }
     setSending(false)
   }
 

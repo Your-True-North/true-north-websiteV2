@@ -96,17 +96,25 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ cli
       await query('INSERT INTO power_hour_notes (client, body) VALUES ($1, $2)', [client, text])
       saved = true
     } catch (e) { console.error('[power-hour] note db', e) }
-    try {
-      const { error } = await resend.emails.send({
-        from: FROM_EMAIL,
-        to: TO_EMAIL,
-        subject: `Power Hour note from ${cfg.name}`,
-        text: `${text}\n\n\nFrom ${cfg.name}'s Power Hour page: https://yourtruenorth.me/${cfg.slug}`,
-      })
-      if (error) throw error
-      emailed = true
-    } catch (e) { console.error('[power-hour] note email', e) }
-    if (!saved && !emailed) return NextResponse.json({ error: 'Could not send' }, { status: 500 })
+    const why: string[] = []
+    if (!process.env.RESEND_API_KEY) why.push('no email key set')
+    for (const from of Array.from(new Set([FROM_EMAIL, 'True North <navigate@yourtruenorth.me>']))) {
+      if (emailed) break
+      try {
+        const { error } = await resend.emails.send({
+          from,
+          to: TO_EMAIL,
+          subject: `Power Hour note from ${cfg.name}`,
+          text: `${text}\n\n\nFrom ${cfg.name}'s Power Hour page: https://yourtruenorth.me/${cfg.slug}`,
+        })
+        if (error) throw error
+        emailed = true
+      } catch (e: any) {
+        console.error('[power-hour] note email', from, e)
+        why.push(String(e?.name || 'error') + ': ' + String(e?.message || '').slice(0, 160))
+      }
+    }
+    if (!saved && !emailed) return NextResponse.json({ error: 'Could not send', why }, { status: 500 })
     return NextResponse.json({ ok: true, saved, emailed })
   }
   return NextResponse.json({ error: 'Bad request' }, { status: 400 })
