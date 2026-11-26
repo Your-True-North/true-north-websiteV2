@@ -25,9 +25,8 @@ export const POWER_HOUR_CLIENTS: Record<string, PowerHourClient> = {
       { key: 'N', title: 'New task', short: 'New', task: 'bonus' },
       { key: 'F', title: 'Finish your bottle', short: 'Bottle', detail: 'Fully hydrated. Take a picture and celebrate breaking the pattern' },
     ],
-    priority: 'Go through your emails and make the calls you need to get the information (Glitter Box etc.), then send the invoice.',
-    bonus: "Follow up all the tables from Friday's party and chase the money that's owed.",
-    due: 'Friday',
+    priority: "What's one task you've been putting off that you want to start today?",
+    bonus: 'What have you got going on at the moment that needs your attention?',
   },
   george: {
     slug: 'george',
